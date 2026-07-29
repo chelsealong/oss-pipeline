@@ -51,7 +51,10 @@ jobs:
 
       - name: Scan upstream trackers
         env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
+          # Scanning only reads public repos, so the built-in GITHUB_TOKEN is a
+          # fine fallback and lets the scan half work before GH_PAT is added.
+          # The fix job genuinely needs the PAT (push to forks, open PRs).
+          GH_TOKEN: ${{ secrets.GH_PAT || github.token }}
         run: |
           keys="${{ inputs.repos }}"
           [ -z "$keys" ] && keys="$PIPELINE_REPOS"
