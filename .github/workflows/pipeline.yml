@@ -218,6 +218,14 @@ jobs:
           IMPL: ${{ steps.cand.outputs.implements_in }}
           NEEDS_ASSIGN: ${{ steps.cand.outputs.needs_assignment }}
         run: |
+          # Roughly one invocation in four dies within seconds with
+          # "Failed to authenticate. API Error: 403 Request not allowed". It is
+          # intermittent, not a configuration problem — the same command both
+          # succeeds and fails under identical flags in the same directory, and
+          # during one outage it took down unrelated sessions simultaneously.
+          # Retry only EARLY failures: a run that failed after doing real work
+          # may already have pushed a branch or opened a PR.
+          run_claude() {
           claude -p "$(cat <<EOF
           You are an autonomous OSS contribution agent. Fix exactly ONE issue.
 
@@ -262,6 +270,20 @@ jobs:
           EOF
           )" --permission-mode acceptEdits \
             --allowedTools "Bash Read Write Edit Glob Grep WebFetch"
+          }
+
+          for attempt in 1 2 3; do
+            start=$(date +%s)
+            if run_claude; then exit 0; fi
+            elapsed=$(( $(date +%s) - start ))
+            if [ "$elapsed" -gt 60 ]; then
+              echo "failed after ${elapsed}s - not retrying (may have done partial work)"
+              exit 1
+            fi
+            if [ "$attempt" -eq 3 ]; then echo "giving up after 3 attempts"; exit 1; fi
+            echo "attempt $attempt failed in ${elapsed}s; retrying in $((30 * attempt))s"
+            sleep $((30 * attempt))
+          done
 
       - name: Record outcome
         if: always()
