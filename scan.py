@@ -164,8 +164,9 @@ def search_issues(upstream: str, qualifier: str, limit: int) -> list[dict]:
 
     Uses the plain REST issues endpoint (5000 req/hr) instead of the search API
     (30 req/min, and very quick to trip GitHub's *secondary* burst limit). On a
-    shared Actions runner IP every single search call 403'd and a full scan spent
-    ~10 minutes in pure backoff, which is longer than the 5-minute schedule.
+    shared Actions runner IP every search call 403'd and a full scan spent ~10
+    minutes in pure backoff — longer than the 5-minute schedule. Switching cut a
+    full scan to ~1 minute.
 
     Label qualifiers map onto the REST `labels` filter; anything the endpoint
     cannot express is applied client-side by vet().
@@ -350,7 +351,23 @@ def main() -> int:
                     help="max issues to vet per repo (each costs up to 3 API calls)")
     ap.add_argument("--pop", metavar="KEY", help="print best unclaimed candidate for KEY")
     ap.add_argument("--claim", action="store_true", help="with --pop, mark it claimed")
+    ap.add_argument("--unclaim", nargs=2, metavar=("KEY", "NUMBER"),
+                    help="release a claim so the issue can be retried "
+                         "(use when a run failed without doing any work)")
     a = ap.parse_args()
+
+    if a.unclaim:
+        key, num = a.unclaim[0], int(a.unclaim[1])
+        p = STATE / f"{key}.json"
+        if not p.exists():
+            print(json.dumps({"error": f"no state for {key}"}))
+            return 1
+        d = json.loads(p.read_text())
+        before = list(d.get("claimed", []))
+        d["claimed"] = [n for n in before if n != num]
+        p.write_text(json.dumps(d, indent=2) + "\n")
+        print(json.dumps({"unclaimed": num, "remaining": d["claimed"]}))
+        return 0
 
     if a.pop:
         f = QUEUE / f"{a.pop}.json"
