@@ -89,19 +89,39 @@ jobs:
         env:
           IN_REPOS: ${{ inputs.repos }}
 
+      # The fix job checks out the repo fresh, so it cannot see this job's
+      # workspace. Hand the queue over explicitly rather than relying on the
+      # commit below having landed.
+      - name: Upload queue
+        uses: actions/upload-artifact@v4
+        with:
+          name: queue
+          path: |
+            queue/
+            state/
+          if-no-files-found: warn
+          retention-days: 7
+
       - name: Commit queue
         run: |
           git config user.name  "oss-pipeline[bot]"
           git config user.email "chelsealong@users.noreply.github.com"
-          git add -A queue state 2>/dev/null || true
+          # `git add -A queue state` fails atomically if either path is missing
+          # (empty dirs are not tracked, so `state/` is absent on a fresh
+          # checkout) and adds NOTHING — which silently kept the queue out of the
+          # repo entirely. Create both, and add them independently.
+          mkdir -p queue state
+          git add -A queue || true
+          git add -A state || true
           git diff --staged --quiet || git commit -m "chore(queue): refresh $(date -u +%Y-%m-%dT%H:%MZ)"
-          # Another run may have pushed while we scanned.
           git pull --rebase --autostash origin main || true
           git push origin main || echo "push skipped"
 
   fix:
     needs: scan
-    if: needs.scan.outputs.any == 'true' && inputs.dry_run != true && inputs.fix != false
+    # dry_run still runs this job so the plumbing (artifact -> pop -> cap check)
+    # is actually exercised; only the Claude/PR steps below are gated on it.
+    if: needs.scan.outputs.any == 'true' && inputs.fix != false
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 1          # one PR at a time; keeps the account out of spam territory
@@ -114,6 +134,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      # Without this the queue is missing entirely and every fix run no-ops.
+      - name: Download queue from scan job
+        uses: actions/download-artifact@v4
+        with:
+          name: queue
 
       - name: Resolve candidate
         id: cand
@@ -154,7 +180,7 @@ jobs:
           if [ "$n" -ge 2 ]; then echo "over=true" >> "$GITHUB_OUTPUT"; else echo "over=false" >> "$GITHUB_OUTPUT"; fi
 
       - name: Checkout target repo
-        if: steps.cand.outputs.skip != 'true' && steps.cap.outputs.over != 'true'
+        if: steps.cand.outputs.skip != 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
@@ -168,11 +194,11 @@ jobs:
           git config user.email "chelsealong@users.noreply.github.com"
 
       - name: Install Claude Code
-        if: steps.cand.outputs.skip != 'true' && steps.cap.outputs.over != 'true'
+        if: steps.cand.outputs.skip != 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true
         run: npm install -g @anthropic-ai/claude-code
 
       - name: Fix, test, open PR
-        if: steps.cand.outputs.skip != 'true' && steps.cap.outputs.over != 'true'
+        if: steps.cand.outputs.skip != 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true
         working-directory: work
         timeout-minutes: 45
         env:
@@ -233,9 +259,14 @@ jobs:
       - name: Record outcome
         if: always()
         run: |
-          mkdir -p logs
+          git config user.name  "oss-pipeline[bot]"
+          git config user.email "chelsealong@users.noreply.github.com"
+          mkdir -p logs state
           echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) ${{ matrix.key }} #${{ steps.cand.outputs.number }} skip=${{ steps.cand.outputs.skip }} over_cap=${{ steps.cap.outputs.over }}" >> logs/runs.log
-          git add -A state logs 2>/dev/null || true
+          # Add each path separately — a single `git add` over a missing path
+          # fails atomically and stages nothing.
+          git add -A state || true
+          git add -A logs || true
           git diff --staged --quiet || git commit -m "chore(state): ${{ matrix.key }} #${{ steps.cand.outputs.number }}"
           git pull --rebase --autostash origin main || true
           git push origin main || echo "push skipped"
