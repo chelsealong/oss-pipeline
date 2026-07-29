@@ -1,0 +1,238 @@
+name: OSS pipeline
+
+# Scan often (cheap, pure Python + gh), fix rarely (expensive, runs Claude Code).
+# Uses a Claude subscription token, NOT an API key — see README.
+on:
+  schedule:
+    # Every 5 minutes is GitHub's documented floor for `schedule`. Real delivery
+    # is often 5-20 min under load, so treat this as "within ~20 min", not instant.
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+    inputs:
+      repos:
+        description: 'Space-separated repo keys to scan (blank = all configured)'
+        required: false
+        default: ''
+      fix:
+        description: 'Run the fix stage too'
+        type: boolean
+        default: true
+      dry_run:
+        description: 'Resolve a candidate but do not run Claude / open a PR'
+        type: boolean
+        default: false
+
+# Never let two runs fight over the committed queue.
+concurrency:
+  group: oss-pipeline
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  # Repos handled here. openclaw + hermes are deliberately absent: their issues
+  # get self-claimed within seconds-to-minutes, which no scheduler can win, so
+  # they run locally at a lower cadence instead.
+  PIPELINE_REPOS: 'adk langfuse langfuse-python spec-kit'
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      any: ${{ steps.plan.outputs.any }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Scan upstream trackers
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          keys="${{ inputs.repos }}"
+          [ -z "$keys" ] && keys="$PIPELINE_REPOS"
+          args=""; for k in $keys; do args="$args --repo $k"; done
+          # Exit 2 means "degraded, kept a stale queue" — not fatal.
+          python scan.py $args --limit 10 --max-vet 6 || [ $? -eq 2 ]
+
+      - name: Plan fix targets
+        id: plan
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os, pathlib
+          keys = (os.environ.get("IN_REPOS") or os.environ["PIPELINE_REPOS"]).split()
+          targets = []
+          for k in keys:
+              f = pathlib.Path("queue") / f"{k}.json"
+              if not f.exists():
+                  continue
+              q = json.loads(f.read_text())
+              if q.get("partial"):        # rate-limited scan: queue may be stale
+                  continue
+              claimed = set()
+              s = pathlib.Path("state") / f"{k}.json"
+              if s.exists():
+                  claimed = set(json.loads(s.read_text()).get("claimed", []))
+              fresh = [c for c in q["candidates"] if c["number"] not in claimed]
+              if fresh:
+                  targets.append(k)
+          print(f"matrix={json.dumps(targets)}")
+          print(f"any={'true' if targets else 'false'}")
+          PY
+        env:
+          IN_REPOS: ${{ inputs.repos }}
+
+      - name: Commit queue
+        run: |
+          git config user.name  "oss-pipeline[bot]"
+          git config user.email "chelsealong@users.noreply.github.com"
+          git add -A queue state 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "chore(queue): refresh $(date -u +%Y-%m-%dT%H:%MZ)"
+          # Another run may have pushed while we scanned.
+          git pull --rebase --autostash origin main || true
+          git push origin main || echo "push skipped"
+
+  fix:
+    needs: scan
+    if: needs.scan.outputs.any == 'true' && inputs.dry_run != true && inputs.fix != false
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1          # one PR at a time; keeps the account out of spam territory
+      fail-fast: false
+      matrix:
+        key: ${{ fromJSON(needs.scan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Resolve candidate
+        id: cand
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          # --pop exits 1 when nothing is available; that is a normal outcome.
+          cand=$(python scan.py --pop "${{ matrix.key }}" --claim || true)
+          echo "candidate: $cand"
+          # A heredoc would take over stdin, so hand the JSON over via a file.
+          printf '%s' "$cand" > /tmp/cand.json
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, pathlib
+          raw = pathlib.Path("/tmp/cand.json").read_text().strip()
+          try:
+              c = json.loads(raw) if raw else {"error": "empty"}
+          except Exception:
+              c = {"error": "unparseable"}
+          if "error" in c:
+              print("skip=true")
+          else:
+              for k in ("number", "url", "upstream", "implements_in", "needs_assignment"):
+                  print(f"{k}={c[k]}")
+              print("skip=false")
+          PY
+
+      - name: Daily cap check
+        id: cap
+        if: steps.cand.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          up="${{ steps.cand.outputs.upstream }}"
+          today=$(date -u +%Y-%m-%d)
+          n=$(gh pr list --repo "$up" --author chelsealong --state all \
+                --search "created:>=$today" --json number --jq 'length' 2>/dev/null || echo 0)
+          echo "opened today on $up: $n"
+          if [ "$n" -ge 2 ]; then echo "over=true" >> "$GITHUB_OUTPUT"; else echo "over=false" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Checkout target repo
+        if: steps.cand.outputs.skip != 'true' && steps.cap.outputs.over != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          up="${{ steps.cand.outputs.implements_in }}"
+          name="${up##*/}"
+          git clone --depth 50 "https://x-access-token:${GH_TOKEN}@github.com/chelsealong/${name}.git" work
+          cd work
+          git remote add upstream "https://github.com/${up}.git"
+          git fetch --depth 50 upstream
+          git config user.name  "chelsealong"
+          git config user.email "chelsealong@users.noreply.github.com"
+
+      - name: Install Claude Code
+        if: steps.cand.outputs.skip != 'true' && steps.cap.outputs.over != 'true'
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Fix, test, open PR
+        if: steps.cand.outputs.skip != 'true' && steps.cap.outputs.over != 'true'
+        working-directory: work
+        timeout-minutes: 45
+        env:
+          # Subscription auth — generated locally with `claude setup-token`.
+          # No ANTHROPIC_API_KEY, so this does not consume API credit.
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          NUM: ${{ steps.cand.outputs.number }}
+          URL: ${{ steps.cand.outputs.url }}
+          UPSTREAM: ${{ steps.cand.outputs.upstream }}
+          IMPL: ${{ steps.cand.outputs.implements_in }}
+          NEEDS_ASSIGN: ${{ steps.cand.outputs.needs_assignment }}
+        run: |
+          claude -p "$(cat <<EOF
+          You are an autonomous OSS contribution agent. Fix exactly ONE issue.
+
+          The issue was already vetted (unassigned, no linked PR by three signals,
+          no comment claimants). Do NOT search for a different issue:
+
+            issue:            #${NUM}
+            url:              ${URL}
+            upstream:         ${UPSTREAM}
+            implements_in:    ${IMPL}
+            needs_assignment: ${NEEDS_ASSIGN}
+
+          The working directory is a checkout of the fork chelsealong/${IMPL##*/},
+          with 'upstream' pointing at ${IMPL}.
+
+          MANDATORY, in order:
+          1. Read the repo's own contributor docs (AGENTS.md / CLAUDE.md /
+             CONTRIBUTING.md) BEFORE writing code, and follow them exactly.
+          2. RE-VERIFY THE CLAIM NOW, before writing any code. Vetting is minutes
+             old at best and issues get claimed fast. Check all three signals:
+             closedByPullRequestsReferences; open PRs mentioning this issue number
+             AND touching the files you plan to change; and the issue comments.
+             If ANY signal shows it is taken, STOP and say so. Do not open a rival.
+          3. If needs_assignment is True and you do not hold the assignment, do NOT
+             implement — leave one short plain comment asking to be assigned, stop.
+          4. Implement the MINIMAL fix. Never touch CI/workflow files, release or
+             versioning machinery, generated files, or auth/credential/encryption code.
+          5. Add or update a test and PROVE IT FAILS WITHOUT THE FIX: stash the
+             source change, run the test, confirm it fails, restore. State this.
+          6. Run the repo's real lint + test commands. If something fails for
+             unrelated reasons, confirm the same failure on unmodified upstream/main
+             and say so. Never push a broken change.
+          7. Branch from upstream's default branch, push to origin (the fork), then:
+               gh pr create --repo ${UPSTREAM} --head chelsealong:<branch>
+             ALWAYS target ${UPSTREAM}. NEVER open a PR whose base is the fork —
+             that reaches no maintainer. Link the issue, include real test output,
+             and disclose AI assistance as that repo's policy requires.
+          8. Never force-push. Never merge. Exactly one issue.
+
+          If the right outcome is to do nothing, do nothing and explain why — that
+          is a normal result, not a failure.
+          EOF
+          )" --permission-mode bypassPermissions
+
+      - name: Record outcome
+        if: always()
+        run: |
+          mkdir -p logs
+          echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) ${{ matrix.key }} #${{ steps.cand.outputs.number }} skip=${{ steps.cand.outputs.skip }} over_cap=${{ steps.cap.outputs.over }}" >> logs/runs.log
+          git add -A state logs 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "chore(state): ${{ matrix.key }} #${{ steps.cand.outputs.number }}"
+          git pull --rebase --autostash origin main || true
+          git push origin main || echo "push skipped"
