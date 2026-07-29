@@ -204,6 +204,12 @@ jobs:
         env:
           # Subscription auth — generated locally with `claude setup-token`.
           # No ANTHROPIC_API_KEY, so this does not consume API credit.
+          #
+          # NOTE: do not switch to --permission-mode bypassPermissions. Repos
+          # that ship their own .claude/settings.json with hooks make Claude
+          # Code refuse it, surfacing as a misleading
+          # "Failed to authenticate. API Error: 403 Request not allowed".
+          # acceptEdits + explicit --allowedTools works everywhere.
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_PAT }}
           NUM: ${{ steps.cand.outputs.number }}
@@ -254,7 +260,8 @@ jobs:
           If the right outcome is to do nothing, do nothing and explain why — that
           is a normal result, not a failure.
           EOF
-          )" --permission-mode bypassPermissions
+          )" --permission-mode acceptEdits \
+            --allowedTools "Bash Read Write Edit Glob Grep WebFetch"
 
       - name: Record outcome
         if: always()
