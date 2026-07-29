@@ -259,14 +259,37 @@ jobs:
       - name: Record outcome
         if: always()
         run: |
+          set -u
           git config user.name  "oss-pipeline[bot]"
           git config user.email "chelsealong@users.noreply.github.com"
-          mkdir -p logs state
+
+          # The downloaded artifact leaves queue/*.json as UNTRACKED files. A
+          # `git pull --rebase` then aborts with "could not detach HEAD" because
+          # the rebase would overwrite them, the push is rejected as
+          # non-fast-forward, and the claim state is silently lost — which would
+          # let the same issue be re-claimed every run and produce duplicate PRs.
+          # So: keep our state, hard-sync to the remote tip, then re-apply it.
+          mkdir -p state logs
+          rm -rf /tmp/keep && mkdir -p /tmp/keep
+          cp -a state /tmp/keep/ 2>/dev/null || true
+          cp -a logs  /tmp/keep/ 2>/dev/null || true
+
+          git fetch -q origin main
+          rm -rf queue                      # artifact leftovers; scan already committed these
+          git reset -q --hard origin/main
+
+          mkdir -p state logs
+          cp -a /tmp/keep/state/. state/ 2>/dev/null || true
+          cp -a /tmp/keep/logs/.  logs/  2>/dev/null || true
           echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) ${{ matrix.key }} #${{ steps.cand.outputs.number }} skip=${{ steps.cand.outputs.skip }} over_cap=${{ steps.cap.outputs.over }}" >> logs/runs.log
-          # Add each path separately — a single `git add` over a missing path
-          # fails atomically and stages nothing.
+
+          # Add paths independently: one `git add` over a missing path fails
+          # atomically and stages nothing.
           git add -A state || true
           git add -A logs || true
-          git diff --staged --quiet || git commit -m "chore(state): ${{ matrix.key }} #${{ steps.cand.outputs.number }}"
-          git pull --rebase --autostash origin main || true
-          git push origin main || echo "push skipped"
+          if git diff --staged --quiet; then
+            echo "nothing to record"
+          else
+            git commit -q -m "chore(state): ${{ matrix.key }} #${{ steps.cand.outputs.number }}"
+            git push origin main || echo "push failed"
+          fi
