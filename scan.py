@@ -156,11 +156,35 @@ def gh(args: list[str], timeout: int = 60, kind: str = "other", retries: int = 3
     raise RateLimited("exhausted retries")
 
 
+_LABEL_RE = re.compile(r'label:"([^"]+)"|label:(\S+)')
+
+
 def search_issues(upstream: str, qualifier: str, limit: int) -> list[dict]:
-    q = f"repo:{upstream} is:open is:issue no:assignee {qualifier}"
-    out = gh(["api", "-X", "GET", "search/issues", "-f", f"q={q}", "-f", f"per_page={limit}",
-              "--jq", ".items"], kind="search")
-    return json.loads(out or "[]")
+    """List candidate issues.
+
+    Uses the plain REST issues endpoint (5000 req/hr) instead of the search API
+    (30 req/min, and very quick to trip GitHub's *secondary* burst limit). On a
+    shared Actions runner IP every single search call 403'd and a full scan spent
+    ~10 minutes in pure backoff, which is longer than the 5-minute schedule.
+
+    Label qualifiers map onto the REST `labels` filter; anything the endpoint
+    cannot express is applied client-side by vet().
+    """
+    # This endpoint returns pull requests mixed in with issues — on spec-kit four
+    # of the five newest items were PRs — so over-fetch and let the filter below
+    # cut it back to `limit` real issues.
+    fetch = min(100, max(limit * 4, 30))
+    params = ["-f", "state=open", "-f", "sort=created", "-f", "direction=desc",
+              "-f", f"per_page={fetch}"]
+    labels = [a or b for a, b in _LABEL_RE.findall(qualifier)]
+    if labels:
+        params += ["-f", f"labels={','.join(labels)}"]
+
+    out = gh(["api", "-X", "GET", f"repos/{upstream}/issues", *params], kind="other")
+    items = json.loads(out or "[]")
+    # `no:assignee` is search-only, so that filter is applied here too.
+    issues = [i for i in items if "pull_request" not in i and not i.get("assignees")]
+    return issues[:limit]
 
 
 def linked_prs(upstream: str, number: int) -> list[str]:
