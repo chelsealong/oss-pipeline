@@ -203,8 +203,12 @@ jobs:
             # the hour. Retrying just burns two more identical failures, so bail
             # out and let the next scheduled dispatch pick the candidate up.
             if grep -qi 'session limit' /tmp/claude.out 2>/dev/null; then
-              echo "SESSION LIMIT reached - abandoning this run, candidate stays queued"
-              exit 78
+              # Exhausted quota is not a defect — it resets on the hour and the
+              # candidate stays queued for the next dispatch. Exiting non-zero
+              # here sent a GitHub failure notification for every dispatch, which
+              # with hundreds of candidates a day is pure noise.
+              echo "::notice::SESSION LIMIT reached - skipping, candidate stays queued"
+              exit 0
             fi
             if [ "$elapsed" -gt 60 ]; then
               echo "failed after ${elapsed}s - not retrying (may have done partial work)"; exit 1

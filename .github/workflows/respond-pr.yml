@@ -152,8 +152,15 @@ jobs:
 
           for attempt in 1 2 3; do
             start=$(date +%s)
-            if run_claude; then rm -f FEEDBACK.txt; exit 0; fi
+            if run_claude 2>&1 | tee /tmp/claude.out; then rm -f FEEDBACK.txt; exit 0; fi
             elapsed=$(( $(date +%s) - start ))
+
+            # Quota exhaustion is not a defect; it resets hourly. Failing here
+            # would notify on every dispatch.
+            if grep -qi 'session limit' /tmp/claude.out 2>/dev/null; then
+              echo "::notice::SESSION LIMIT reached - skipping this response"
+              rm -f FEEDBACK.txt; exit 0
+            fi
             if [ "$elapsed" -gt 60 ]; then
               echo "failed after ${elapsed}s - not retrying (may have done partial work)"
               rm -f FEEDBACK.txt; exit 1
