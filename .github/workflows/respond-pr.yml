@@ -1,0 +1,172 @@
+name: Respond to PR feedback
+
+# Dispatched by the local watch-prs.py when a reviewer leaves genuinely new
+# feedback on one of our open PRs. Runs here rather than on the Mac because
+# Anthropic returns 403 to that machine's VPN exit (AS60068 Datacamp) and
+# `claude -p` cannot run there; runners exit AS8075 Microsoft and are accepted.
+#
+# An unanswered review request stalls a PR indefinitely, which is the difference
+# between a PR that merges and one that rots.
+on:
+  workflow_dispatch:
+    inputs:
+      upstream:
+        description: 'Upstream repo, e.g. openclaw/openclaw'
+        required: true
+      pr:
+        description: 'PR number'
+        required: true
+      dry_run:
+        description: 'Gather the feedback and print the plan; change nothing'
+        type: boolean
+        default: false
+
+concurrency:
+  group: oss-respond-${{ inputs.upstream }}-${{ inputs.pr }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  respond:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Collect the PR and its feedback
+        id: ctx
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          set -euo pipefail
+          UP="${{ inputs.upstream }}"; N="${{ inputs.pr }}"
+          gh pr view "$N" --repo "$UP" \
+            --json number,title,url,headRefName,state,labels,body \
+            > /tmp/pr.json
+          echo "head=$(jq -r .headRefName /tmp/pr.json)" >> "$GITHUB_OUTPUT"
+          echo "state=$(jq -r .state /tmp/pr.json)" >> "$GITHUB_OUTPUT"
+
+          # Everything a reviewer might have said, newest last.
+          {
+            echo "### PR body"; jq -r '.body // "(empty)"' /tmp/pr.json
+            echo; echo "### Labels"; jq -r '[.labels[].name] | join(", ")' /tmp/pr.json
+            echo; echo "### Issue comments"
+            gh api "repos/$UP/issues/$N/comments" \
+              --jq '.[] | "--- \(.user.login) at \(.created_at) ---\n\(.body)"' || true
+            echo; echo "### Reviews"
+            gh api "repos/$UP/pulls/$N/reviews" \
+              --jq '.[] | "--- \(.user.login) \(.state) at \(.submitted_at) ---\n\(.body // "(no body)")"' || true
+            echo; echo "### Inline review comments"
+            gh api "repos/$UP/pulls/$N/comments" \
+              --jq '.[] | "--- \(.user.login) on \(.path):\(.line // 0) ---\n\(.body)"' || true
+            echo; echo "### Failing checks"
+            gh pr checks "$N" --repo "$UP" 2>/dev/null | grep -viE '\bpass\b|skipping' || echo "(none)"
+          } > /tmp/feedback.txt
+          wc -l /tmp/feedback.txt
+
+      - name: Checkout the PR branch from the fork
+        if: steps.ctx.outputs.state == 'OPEN' && inputs.dry_run != true
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          set -euo pipefail
+          UP="${{ inputs.upstream }}"; NAME="${UP##*/}"
+          git clone --depth 50 --branch "${{ steps.ctx.outputs.head }}" \
+            "https://x-access-token:${GH_TOKEN}@github.com/chelsealong/${NAME}.git" work
+          cd work
+          git remote add upstream "https://github.com/${UP}.git"
+          git fetch --depth 50 upstream
+          # The CLA bot matches the COMMIT EMAIL; this is the address on the CLA.
+          git config user.name  "chelsealong"
+          git config user.email "chelsealong@126.com"
+
+      - name: Install Claude Code
+        if: steps.ctx.outputs.state == 'OPEN' && inputs.dry_run != true
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Address the feedback
+        if: steps.ctx.outputs.state == 'OPEN' && inputs.dry_run != true
+        working-directory: work
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          UP: ${{ inputs.upstream }}
+          N: ${{ inputs.pr }}
+          BRANCH: ${{ steps.ctx.outputs.head }}
+        run: |
+          cp /tmp/feedback.txt ./FEEDBACK.txt
+          run_claude() {
+          claude -p "$(cat <<EOF
+          Reviewer feedback has arrived on our own pull request ${UP}#${N}. Decide
+          what it actually asks for and do that — nothing more.
+
+          The full thread is in ./FEEDBACK.txt in this working directory (PR body,
+          labels, issue comments, reviews, inline comments, failing checks). READ IT
+          FIRST. This checkout is branch '${BRANCH}' of our fork, with 'upstream'
+          pointing at ${UP}. Git identity is already correct. Delete FEEDBACK.txt
+          before committing — it must never be part of the diff.
+
+          Classify the newest feedback, then act:
+
+          A. ASKS FOR A CODE CHANGE — make the minimal change requested. Keep or add
+             tests, and prove the test fails without the fix: the fix will be
+             committed, so 'git stash' does nothing — use
+             'git checkout HEAD~1 -- <source file>', run the test, confirm failure,
+             then 'git checkout HEAD -- <source file>'. Run the repo's real lint and
+             test commands. Commit and push to the SAME branch (new commits, never a
+             force-push). Then reply on the PR, briefly, saying what you changed.
+
+          B. ASKS FOR EVIDENCE OR PROOF — do not change code. Produce the evidence
+             the reviewer asked for by actually running things in this checkout, then
+             update the PR body with it via 'gh pr edit ${N} --repo ${UP} --body ...',
+             preserving the existing body and adding the evidence. Post real command
+             output, never invented output. If the environment genuinely cannot
+             produce it (needs a GPU, a live service, credentials), say exactly that
+             in a reply instead of faking it.
+
+          C. ASKS A QUESTION — answer it in one short, factual reply, citing file
+             paths and line numbers.
+
+          D. STATUS ONLY (CI result, bot notice, an approval with no request) — do
+             nothing at all and say so.
+
+          HARD RULES:
+          * Never argue with a reviewer. If you believe the feedback is mistaken,
+            do NOT push back — stop, change nothing, and explain your reasoning in
+            your final report to the human instead.
+          * Never force-push. Never merge. Never close the PR.
+          * Commit messages must NOT contain any Co-Authored-By trailer, and never
+            'Co-Authored-By: ... <noreply@anthropic.com>'. A CLA bot counts it as a
+            second contributor with no CLA and fails the whole check; adk-python#6516
+            sat red for hours on exactly that.
+          * One reply maximum. Be concise and specific; no restating the review back.
+          * If the thread shows the reviewer already got what they asked for, do
+            nothing rather than adding noise.
+
+          Finish with one paragraph: which category you chose, what you changed or
+          posted, and the evidence — or why doing nothing was right.
+          EOF
+          )" --permission-mode acceptEdits \
+            --allowedTools "Bash Read Write Edit Glob Grep WebFetch"
+          }
+
+          for attempt in 1 2 3; do
+            start=$(date +%s)
+            if run_claude; then rm -f FEEDBACK.txt; exit 0; fi
+            elapsed=$(( $(date +%s) - start ))
+            if [ "$elapsed" -gt 60 ]; then
+              echo "failed after ${elapsed}s - not retrying (may have done partial work)"
+              rm -f FEEDBACK.txt; exit 1
+            fi
+            [ "$attempt" -eq 3 ] && { echo "giving up"; rm -f FEEDBACK.txt; exit 1; }
+            echo "attempt $attempt failed in ${elapsed}s; retrying in $((30 * attempt))s"
+            sleep $((30 * attempt))
+          done
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "pr=${{ inputs.upstream }}#${{ inputs.pr }} state=${{ steps.ctx.outputs.state }}"
+          echo "branch=${{ steps.ctx.outputs.head }} dry_run=${{ inputs.dry_run }}"
+          echo "--- feedback gathered ---"
+          head -40 /tmp/feedback.txt 2>/dev/null || echo "(none)"
