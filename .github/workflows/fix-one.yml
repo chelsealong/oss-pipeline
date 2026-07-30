@@ -196,8 +196,16 @@ jobs:
           # Retry only fast failures; a run that already did work must not repeat.
           for attempt in 1 2 3; do
             start=$(date +%s)
-            if run_claude; then exit 0; fi
+            if run_claude 2>&1 | tee /tmp/claude.out; then rm -f /tmp/claude.out; exit 0; fi
             elapsed=$(( $(date +%s) - start ))
+
+            # A session-limit refusal will not clear on a 30s timer — it resets on
+            # the hour. Retrying just burns two more identical failures, so bail
+            # out and let the next scheduled dispatch pick the candidate up.
+            if grep -qi 'session limit' /tmp/claude.out 2>/dev/null; then
+              echo "SESSION LIMIT reached - abandoning this run, candidate stays queued"
+              exit 78
+            fi
             if [ "$elapsed" -gt 60 ]; then
               echo "failed after ${elapsed}s - not retrying (may have done partial work)"; exit 1
             fi
