@@ -1,0 +1,40 @@
+name: Probe Claude auth on runner
+
+# One-off diagnostic. Anthropic returns HTTP 403 to requests from consumer-VPN
+# datacenter ranges (observed from AS60068 Datacamp), which is what breaks the
+# local fixer. GitHub's runners are Azure address space — this checks whether
+# Anthropic accepts them, because if it does, the Claude-dependent step can run
+# here while detection stays local.
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Egress IP and reachability
+        run: |
+          echo "--- egress ---"
+          curl -sS --max-time 20 https://ipinfo.io/json || true
+          echo
+          echo "--- unauthenticated probe (401 = reachable, 403 = blocked) ---"
+          curl -sS --max-time 20 -o /dev/null -w 'api.anthropic.com HTTP %{http_code}\n' \
+            https://api.anthropic.com/v1/models || true
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Authenticate and run a trivial prompt
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          if [ -z "${CLAUDE_CODE_OAUTH_TOKEN:-}" ]; then
+            echo "RESULT: no CLAUDE_CODE_OAUTH_TOKEN secret set"; exit 1
+          fi
+          out=$(claude -p "Reply with exactly: OK" 2>&1) || true
+          echo "raw output: $out"
+          case "$out" in
+            *OK*)  echo "RESULT: SUCCESS - Claude works on GitHub runners" ;;
+            *403*) echo "RESULT: BLOCKED - runner IP also rejected (403)" ; exit 1 ;;
+            *)     echo "RESULT: OTHER FAILURE - see raw output above" ; exit 1 ;;
+          esac
