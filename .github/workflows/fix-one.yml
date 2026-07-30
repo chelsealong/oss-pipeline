@@ -1,0 +1,214 @@
+name: Fix one issue
+
+# Triggered by the local watcher the moment it vets a new upstream issue.
+#
+# Why the fix runs here and not on the Mac: Anthropic returns HTTP 403 to the
+# consumer-VPN datacenter range the Mac exits from (AS60068 Datacamp), so
+# `claude -p` dies there with "Failed to authenticate. API Error: 403". GitHub
+# runners exit from AS8075 Microsoft and get 401 (reachable) — verified by
+# probe-claude.yml, where `claude -p` returned OK.
+#
+# Detection stays local (fast, needs only the GitHub API, which the VPN reaches
+# fine); only the Claude-dependent step is offloaded. We are dispatched directly
+# rather than waiting on `schedule`, whose delivery was observed at twice in six
+# hours for a */5 cron.
+on:
+  workflow_dispatch:
+    inputs:
+      repo_key:
+        description: 'Repo key as defined in scan.py REPOS (e.g. adk, openclaw)'
+        required: true
+      issue:
+        description: 'Issue number, already vetted by the watcher'
+        required: true
+      dry_run:
+        description: 'Resolve and print the plan; do not run Claude or open a PR'
+        type: boolean
+        default: false
+
+# Serialise: one PR in flight at a time keeps the account clear of spam
+# enforcement, and two runs must never share a checkout.
+concurrency:
+  group: oss-fix-one
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Resolve repo config
+        id: cfg
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import os, sys
+          sys.path.insert(0, '.')
+          import scan
+          key = os.environ['KEY']
+          cfg = scan.REPOS.get(key)
+          if not cfg:
+              print("ok=false"); print(f"why=unknown repo key {key}"); raise SystemExit(0)
+          upstream = cfg['upstream']
+          print(f"ok=true")
+          print(f"upstream={upstream}")
+          print(f"implements_in={cfg.get('implements_in', upstream)}")
+          print(f"needs_assignment={cfg.get('needs_assignment', False)}")
+          # Repos whose own policy forbids an autonomous PR: push a branch only.
+          print(f"prepare_only={key in ('transformers',)}")
+          PY
+        env:
+          KEY: ${{ inputs.repo_key }}
+
+      - name: Daily cap
+        id: cap
+        if: steps.cfg.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          case "${{ inputs.repo_key }}" in
+            openclaw|hermes) cap=3 ;;
+            firecrawl|comfyui) cap=1 ;;
+            *) cap=2 ;;
+          esac
+          n=$(gh pr list --repo "${{ steps.cfg.outputs.implements_in }}" --author chelsealong \
+                --state all --search "created:>=$(date -u +%Y-%m-%d)" --json number --jq 'length' \
+                2>/dev/null || echo 0)
+          echo "opened today: $n / cap $cap"
+          if [ "$n" -ge "$cap" ]; then echo "over=true" >> "$GITHUB_OUTPUT"; else echo "over=false" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Checkout target fork
+        if: steps.cfg.outputs.ok == 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          impl="${{ steps.cfg.outputs.implements_in }}"
+          name="${impl##*/}"
+          git clone --depth 50 "https://x-access-token:${GH_TOKEN}@github.com/chelsealong/${name}.git" work
+          cd work
+          git remote add upstream "https://github.com/${impl}.git"
+          git fetch --depth 50 upstream
+          # The CLA bot matches the COMMIT EMAIL; chelsealong@126.com is the
+          # address registered on it. Using any other address fails the check.
+          git config user.name  "chelsealong"
+          git config user.email "chelsealong@126.com"
+
+      - name: Install Claude Code
+        if: steps.cfg.outputs.ok == 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Fix, test, open PR
+        if: steps.cfg.outputs.ok == 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true
+        working-directory: work
+        env:
+          # Subscription auth from `claude setup-token`. No ANTHROPIC_API_KEY, so
+          # this consumes no API credit.
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          KEY: ${{ inputs.repo_key }}
+          NUM: ${{ inputs.issue }}
+          UPSTREAM: ${{ steps.cfg.outputs.upstream }}
+          IMPL: ${{ steps.cfg.outputs.implements_in }}
+          NEEDS_ASSIGN: ${{ steps.cfg.outputs.needs_assignment }}
+          PREPARE_ONLY: ${{ steps.cfg.outputs.prepare_only }}
+        run: |
+          run_claude() {
+          claude -p "$(cat <<EOF
+          You are an autonomous OSS contribution agent. Handle exactly ONE issue.
+
+          It was already vetted by the watcher (open, unassigned, no linked PR by
+          three independent signals, no comment claimants). Do NOT pick a
+          different issue and do NOT re-triage the tracker.
+
+            repo key:         ${KEY}
+            issue:            #${NUM}
+            upstream:         ${UPSTREAM}
+            implements_in:    ${IMPL}
+            needs_assignment: ${NEEDS_ASSIGN}
+            prepare_only:     ${PREPARE_ONLY}
+
+          The working directory is a checkout of chelsealong/${IMPL##*/} with
+          'upstream' pointing at ${IMPL}. Git identity is already set correctly.
+
+          MANDATORY, in order:
+
+          1. Read the repo's own contributor docs (AGENTS.md / CLAUDE.md /
+             CONTRIBUTING.md) before writing code and follow them exactly,
+             including their risky-area exclusions.
+
+          2. RE-VERIFY THE CLAIM NOW, before writing any code. Vetting is minutes
+             old at best and issues get claimed within minutes on busy repos.
+             Check all three signals: closedByPullRequestsReferences; open PRs
+             mentioning this issue number AND touching the files you plan to
+             change; and the issue comments — including politely-worded claims
+             like "I don't want to race you", which keyword matching misses. If
+             ANY signal shows it is taken, STOP and say so. Never open a rival PR.
+
+          3. If needs_assignment is True and you do not already hold the
+             assignment, do NOT implement — leave one short plain comment asking
+             to be assigned, then stop.
+
+          4. Implement the MINIMAL fix. Never touch CI/workflow files, release or
+             versioning machinery, generated files, or auth/credential code.
+
+          5. Add or update a test and PROVE IT FAILS WITHOUT THE FIX. Because the
+             fix will already be committed, 'git stash' does nothing — use
+             'git checkout HEAD~1 -- <source file>', run the test, confirm it
+             fails, then 'git checkout HEAD -- <source file>'. State the evidence.
+
+          6. Run the repo's real lint and test commands. If something fails for
+             reasons unrelated to your change, confirm the same failure on
+             unmodified upstream/main and say so. Never push a broken change.
+
+          7. COMMIT MESSAGES MUST NOT CONTAIN A Co-Authored-By TRAILER, and never
+             'Co-Authored-By: ... <noreply@anthropic.com>'. A CLA bot counts that
+             as a second contributor with no CLA and fails the whole check —
+             adk-python#6516 sat red for hours on exactly this. langchain rejects
+             the trailer outright via an org ruleset.
+
+          8. Ship: if prepare_only is True, push the branch and stop — no PR.
+             Otherwise push and run
+               gh pr create --repo ${UPSTREAM} --head chelsealong:<branch>
+             ALWAYS targeting ${UPSTREAM}; NEVER open a PR whose base is the fork,
+             which reaches no maintainer and has happened once already. Include
+             whatever AI-assistance disclosure that repo's policy requires.
+
+          9. Never force-push. Never merge. Exactly one issue.
+
+          If the right outcome is to do nothing, do nothing and explain why — that
+          is a normal result, not a failure.
+
+          Finish with one paragraph: what changed, the test evidence, and the PR
+          URL, or the precise reason no PR was opened.
+          EOF
+          )" --permission-mode acceptEdits \
+            --allowedTools "Bash Read Write Edit Glob Grep WebFetch"
+          }
+
+          # Retry only fast failures; a run that already did work must not repeat.
+          for attempt in 1 2 3; do
+            start=$(date +%s)
+            if run_claude; then exit 0; fi
+            elapsed=$(( $(date +%s) - start ))
+            if [ "$elapsed" -gt 60 ]; then
+              echo "failed after ${elapsed}s - not retrying (may have done partial work)"; exit 1
+            fi
+            if [ "$attempt" -eq 3 ]; then echo "giving up after 3 attempts"; exit 1; fi
+            echo "attempt $attempt failed in ${elapsed}s; retrying in $((30 * attempt))s"
+            sleep $((30 * attempt))
+          done
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "repo_key=${{ inputs.repo_key }} issue=#${{ inputs.issue }}"
+          echo "resolved_ok=${{ steps.cfg.outputs.ok }} why=${{ steps.cfg.outputs.why }}"
+          echo "over_daily_cap=${{ steps.cap.outputs.over }} dry_run=${{ inputs.dry_run }}"
