@@ -263,7 +263,12 @@ jobs:
              ALWAYS target ${UPSTREAM}. NEVER open a PR whose base is the fork —
              that reaches no maintainer. Link the issue, include real test output,
              and disclose AI assistance as that repo's policy requires.
-          8. Never force-push. Never merge. Exactly one issue.
+          8. Commit messages must NOT contain a Co-Authored-By trailer, and never
+             'Co-Authored-By: ... <noreply@anthropic.com>'. A CLA bot counts it as a
+             second contributor with no CLA and fails the whole check (adk-python#6516),
+             and langchain rejects that trailer via an org ruleset.
+
+          9. Never force-push. Never merge. Exactly one issue.
 
           If the right outcome is to do nothing, do nothing and explain why — that
           is a normal result, not a failure.
