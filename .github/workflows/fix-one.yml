@@ -75,6 +75,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           case "${{ inputs.repo_key }}" in
+            adk) cap=5 ;;
             openclaw|hermes) cap=3 ;;
             firecrawl|comfyui) cap=1 ;;
             *) cap=2 ;;
