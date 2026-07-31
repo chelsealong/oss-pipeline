@@ -105,12 +105,33 @@ jobs:
         if: steps.cfg.outputs.ok == 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true
         run: npm install -g @anthropic-ai/claude-code
 
-      - name: Fix, test, open PR
+      # Generator and evaluator are deliberately SEPARATE claude invocations.
+      # A single run that both writes the fix and judges it is grading its own
+      # homework; a fresh context that never saw the reasoning is a real check.
+      # An earlier version of this pipeline had such a pass and it caught a real
+      # defect (a wrong-place fix that still passed the original tests) — that
+      # gate was lost when this workflow was written, and this restores it.
+      - name: Load lessons for this repo
+        id: lessons
+        run: |
+          # Durable corrections: what previous runs on THIS repo got wrong.
+          # Without this, every run re-derives the same knowledge and repeats the
+          # same mistakes — the CLA trailer, the politely-worded claim that
+          # keyword matching misses, the Studio issues that are out of scope.
+          f="lessons/${{ inputs.repo_key }}.md"
+          if [ -s "$f" ]; then
+            cp "$f" /tmp/lessons.md
+            echo "  $(wc -l < "$f") lines of prior lessons"
+          else
+            echo "(no prior lessons recorded for this repo)" > /tmp/lessons.md
+          fi
+          cat /tmp/lessons.md
+
+      - name: Generate fix and push branch (no PR yet)
+        id: gen
         if: steps.cfg.outputs.ok == 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true
         working-directory: work
         env:
-          # Subscription auth from `claude setup-token`. No ANTHROPIC_API_KEY, so
-          # this consumes no API credit.
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_PAT }}
           KEY: ${{ inputs.repo_key }}
@@ -123,6 +144,8 @@ jobs:
           run_claude() {
           claude -p "$(cat <<EOF
           You are an autonomous OSS contribution agent. Handle exactly ONE issue.
+          Do the work and PUSH A BRANCH, but do NOT open a pull request — a
+          separate reviewer decides that.
 
           It was already vetted by the watcher (open, unassigned, no linked PR by
           three independent signals, no comment claimants). Do NOT pick a
@@ -136,87 +159,259 @@ jobs:
             prepare_only:     ${PREPARE_ONLY}
 
           The working directory is a checkout of chelsealong/${IMPL##*/} with
-          'upstream' pointing at ${IMPL}. Git identity is already set correctly.
+          'upstream' pointing at ${IMPL}. Git identity is already correct.
+
+          LESSONS FROM PREVIOUS RUNS ON THIS REPO — read /tmp/lessons.md first.
+          Each line is something an earlier attempt got wrong here. Treat them as
+          hard constraints, not suggestions.
 
           MANDATORY, in order:
 
-          1. Read the repo's own contributor docs (AGENTS.md / CLAUDE.md /
-             CONTRIBUTING.md) before writing code and follow them exactly,
-             including their risky-area exclusions.
+          1. Read /tmp/lessons.md, then the repo's own contributor docs
+             (AGENTS.md / CLAUDE.md / CONTRIBUTING.md), and follow both,
+             including risky-area exclusions.
 
-          2. RE-VERIFY THE CLAIM NOW, before writing any code. Vetting is minutes
-             old at best and issues get claimed within minutes on busy repos.
-             Check all three signals: closedByPullRequestsReferences; open PRs
-             mentioning this issue number AND touching the files you plan to
-             change; and the issue comments — including politely-worded claims
-             like "I don't want to race you", which keyword matching misses. If
-             ANY signal shows it is taken, STOP and say so. Never open a rival PR.
+          2. RE-VERIFY THE CLAIM NOW, before writing code. Check
+             closedByPullRequestsReferences; open PRs mentioning this issue AND
+             touching the files you plan to change; and the comments — including
+             politely-worded claims like "I don't want to race you", which
+             keyword matching misses. If ANY signal shows it is taken, write
+             'SKIP: <reason>' to /tmp/outcome.txt and stop.
 
-          3. If needs_assignment is True and you do not already hold the
-             assignment, do NOT implement — leave one short plain comment asking
-             to be assigned, then stop.
+          3. If needs_assignment is True and you do not hold the assignment,
+             leave one short comment asking to be assigned, write
+             'SKIP: needs assignment' to /tmp/outcome.txt, and stop.
 
           4. Implement the MINIMAL fix. Never touch CI/workflow files, release or
              versioning machinery, generated files, or auth/credential code.
 
-          5. Add or update a test and PROVE IT FAILS WITHOUT THE FIX. Because the
-             fix will already be committed, 'git stash' does nothing — use
+          5. Add or update a test and PROVE IT FAILS WITHOUT THE FIX. The fix will
+             already be committed, so 'git stash' does nothing — use
              'git checkout HEAD~1 -- <source file>', run the test, confirm it
-             fails, then 'git checkout HEAD -- <source file>'. State the evidence.
+             fails, then 'git checkout HEAD -- <source file>'.
 
           6. Run the repo's real lint and test commands. If something fails for
-             reasons unrelated to your change, confirm the same failure on
-             unmodified upstream/main and say so. Never push a broken change.
+             unrelated reasons, confirm the same failure on unmodified
+             upstream/main. Never push a broken change.
 
-          7. COMMIT MESSAGES MUST NOT CONTAIN A Co-Authored-By TRAILER, and never
-             'Co-Authored-By: ... <noreply@anthropic.com>'. A CLA bot counts that
-             as a second contributor with no CLA and fails the whole check —
-             adk-python#6516 sat red for hours on exactly this. langchain rejects
-             the trailer outright via an org ruleset.
+          7. Commit messages must NOT contain any Co-Authored-By trailer, and
+             never 'Co-Authored-By: ... <noreply@anthropic.com>'. A CLA bot counts
+             it as a second contributor with no CLA and fails the whole check.
 
-          8. Ship: if prepare_only is True, push the branch and stop — no PR.
-             Otherwise push and run
-               gh pr create --repo ${UPSTREAM} --head chelsealong:<branch>
-             ALWAYS targeting ${UPSTREAM}; NEVER open a PR whose base is the fork,
-             which reaches no maintainer and has happened once already. Include
-             whatever AI-assistance disclosure that repo's policy requires.
+          8. Push the branch to origin. Then write these files:
+               /tmp/branch.txt   the branch name, one line
+               /tmp/pr-title.md  the PR title, one line
+               /tmp/pr-body.md   the full PR body, including real test output and
+                                 whatever AI-assistance disclosure that repo
+                                 requires
+               /tmp/outcome.txt  'READY' if the branch is pushed and worth a PR,
+                                 or 'SKIP: <reason>' if nothing should be opened
+             Do NOT run 'gh pr create'. Never force-push. Never merge.
 
-          9. Never force-push. Never merge. Exactly one issue.
-
-          If the right outcome is to do nothing, do nothing and explain why — that
-          is a normal result, not a failure.
-
-          Finish with one paragraph: what changed, the test evidence, and the PR
-          URL, or the precise reason no PR was opened.
+          If the right outcome is to do nothing, write SKIP with the reason and
+          explain. That is a normal result, not a failure.
           EOF
           )" --permission-mode acceptEdits \
             --allowedTools "Bash Read Write Edit Glob Grep WebFetch"
           }
 
-          # Retry only fast failures; a run that already did work must not repeat.
           for attempt in 1 2 3; do
             start=$(date +%s)
-            if run_claude 2>&1 | tee /tmp/claude.out; then rm -f /tmp/claude.out; exit 0; fi
+            if run_claude 2>&1 | tee /tmp/claude.out; then break; fi
             elapsed=$(( $(date +%s) - start ))
-
-            # A session-limit refusal will not clear on a 30s timer — it resets on
-            # the hour. Retrying just burns two more identical failures, so bail
-            # out and let the next scheduled dispatch pick the candidate up.
             if grep -qi 'session limit' /tmp/claude.out 2>/dev/null; then
-              # Exhausted quota is not a defect — it resets on the hour and the
-              # candidate stays queued for the next dispatch. Exiting non-zero
-              # here sent a GitHub failure notification for every dispatch, which
-              # with hundreds of candidates a day is pure noise.
               echo "::notice::SESSION LIMIT reached - skipping, candidate stays queued"
-              exit 0
+              echo "outcome=QUOTA" >> "$GITHUB_OUTPUT"; exit 0
             fi
             if [ "$elapsed" -gt 60 ]; then
-              echo "failed after ${elapsed}s - not retrying (may have done partial work)"; exit 1
+              echo "failed after ${elapsed}s - not retrying (may have done partial work)"
+              echo "outcome=ERROR" >> "$GITHUB_OUTPUT"; exit 1
             fi
-            if [ "$attempt" -eq 3 ]; then echo "giving up after 3 attempts"; exit 1; fi
-            echo "attempt $attempt failed in ${elapsed}s; retrying in $((30 * attempt))s"
+            [ "$attempt" -eq 3 ] && { echo "outcome=ERROR" >> "$GITHUB_OUTPUT"; exit 1; }
             sleep $((30 * attempt))
           done
+
+          out=$(head -1 /tmp/outcome.txt 2>/dev/null || echo "SKIP: no outcome written")
+          echo "generator outcome: $out"
+          case "$out" in
+            READY*) echo "outcome=READY" >> "$GITHUB_OUTPUT" ;;
+            *)      echo "outcome=SKIP" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+      - name: Adversarial review
+        id: review
+        if: steps.gen.outputs.outcome == 'READY'
+        working-directory: work
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          UPSTREAM: ${{ steps.cfg.outputs.upstream }}
+          NUM: ${{ inputs.issue }}
+        run: |
+          git diff upstream/HEAD...HEAD > /tmp/change.diff 2>/dev/null || \
+            git diff upstream/main...HEAD > /tmp/change.diff 2>/dev/null || true
+          wc -l /tmp/change.diff
+
+          claude -p "$(cat <<EOF
+          You are reviewing a pull request that ANOTHER agent prepared for
+          ${UPSTREAM}#${NUM}. You did not write it. Your job is to REFUTE it.
+          Assume it is wrong until the evidence says otherwise — a bad PR on a
+          third-party repo costs far more than a missed one.
+
+          The diff is /tmp/change.diff; the proposed PR body is /tmp/pr-body.md.
+          The full checkout is here, so read the surrounding code, not just the
+          diff.
+
+          Attack it on four fronts:
+          1. CORRECTNESS — does it actually fix the issue? Edge cases, error
+             paths, concurrency, off-by-one. Is the fix in the RIGHT PLACE, or
+             does it patch a symptom while the cause sits elsewhere?
+          2. SCOPE — anything beyond the minimal fix? Does it touch an area the
+             repo's own docs exclude (CI/workflows, generated files, release
+             machinery, auth/credentials)?
+          3. TEST HONESTY — would the new test ACTUALLY fail without the source
+             change? Verify it: 'git checkout HEAD~1 -- <source file>', run the
+             test, confirm failure, restore. A test that passes either way proves
+             nothing and is the single most common way a bad PR looks good.
+          4. EVIDENCE — is every claim in /tmp/pr-body.md backed by real command
+             output that you can reproduce here? Invented or copy-pasted output
+             is disqualifying.
+
+          Then write /tmp/verdict.txt with a FIRST LINE of exactly 'APPROVE' or
+          'BLOCK', followed by your reasoning. BLOCK if any front fails, and be
+          specific about what would have to change. Do not modify the code, do
+          not push, do not open anything.
+          EOF
+          )" --permission-mode acceptEdits \
+            --allowedTools "Bash Read Glob Grep" 2>&1 | tail -30 || true
+
+          v=$(head -1 /tmp/verdict.txt 2>/dev/null || echo "BLOCK")
+          echo "verdict: $v"
+          echo "--- reviewer reasoning ---"; sed -n '2,40p' /tmp/verdict.txt 2>/dev/null || true
+          case "$v" in
+            APPROVE*) echo "verdict=APPROVE" >> "$GITHUB_OUTPUT" ;;
+            *)        echo "verdict=BLOCK" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+      # act -> check -> re-prompt until the gate passes or the budget runs out.
+      # One remediation attempt only: if a fresh reviewer still refuses after the
+      # author has seen the objections, the change is probably wrong rather than
+      # badly explained, and grinding further just burns quota.
+      - name: Remediate once if blocked
+        id: remediate
+        if: steps.review.outputs.verdict == 'BLOCK'
+        working-directory: work
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          UPSTREAM: ${{ steps.cfg.outputs.upstream }}
+          NUM: ${{ inputs.issue }}
+        run: |
+          claude -p "$(cat <<EOF
+          An independent reviewer BLOCKED your change to ${UPSTREAM}#${NUM}. Their
+          objections are in /tmp/verdict.txt. Read them and decide honestly:
+
+          * If they are RIGHT — fix exactly what they identified, re-run the
+            tests (including proving the test still fails without the source
+            change via 'git checkout HEAD~1 -- <file>'), amend or add a commit,
+            push to the same branch, refresh /tmp/pr-body.md, and write 'FIXED'
+            to /tmp/remediation.txt.
+          * If the change cannot be salvaged, or the objection reveals the fix is
+            in the wrong place, write 'ABANDON: <reason>' to
+            /tmp/remediation.txt and change nothing further. Abandoning is a
+            perfectly good outcome — a wrong PR on a third-party repo costs far
+            more than a missing one.
+
+          Do not argue with the reviewer in the PR. Never force-push. Do not open
+          a pull request. No Co-Authored-By trailers.
+          EOF
+          )" --permission-mode acceptEdits \
+            --allowedTools "Bash Read Write Edit Glob Grep" 2>&1 | tail -20 || true
+
+          r=$(head -1 /tmp/remediation.txt 2>/dev/null || echo "ABANDON: no result")
+          echo "remediation: $r"
+          case "$r" in
+            FIXED*) echo "result=FIXED" >> "$GITHUB_OUTPUT" ;;
+            *)      echo "result=ABANDON" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+      - name: Re-review after remediation
+        id: rereview
+        if: steps.remediate.outputs.result == 'FIXED'
+        working-directory: work
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          UPSTREAM: ${{ steps.cfg.outputs.upstream }}
+          NUM: ${{ inputs.issue }}
+        run: |
+          git diff upstream/HEAD...HEAD > /tmp/change.diff 2>/dev/null || \
+            git diff upstream/main...HEAD > /tmp/change.diff 2>/dev/null || true
+          claude -p "$(cat <<EOF
+          You are re-reviewing ${UPSTREAM}#${NUM} after the author addressed an
+          earlier BLOCK. The original objections are in /tmp/verdict.txt and the
+          current diff is /tmp/change.diff.
+
+          Check ONLY whether each original objection is genuinely resolved — do
+          not invent new requirements. In particular re-verify that the test
+          still fails without the source change. Write /tmp/verdict.txt with a
+          first line of exactly 'APPROVE' or 'BLOCK' and your reasoning.
+          EOF
+          )" --permission-mode acceptEdits --allowedTools "Bash Read Glob Grep" 2>&1 | tail -20 || true
+
+          v=$(head -1 /tmp/verdict.txt 2>/dev/null || echo "BLOCK")
+          echo "re-review verdict: $v"
+          case "$v" in
+            APPROVE*) echo "verdict=APPROVE" >> "$GITHUB_OUTPUT" ;;
+            *)        echo "verdict=BLOCK" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+      - name: Open PR (only if the reviewer approved)
+        if: steps.gen.outputs.outcome == 'READY' && (steps.review.outputs.verdict == 'APPROVE' || steps.rereview.outputs.verdict == 'APPROVE')
+        working-directory: work
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          UPSTREAM: ${{ steps.cfg.outputs.upstream }}
+          PREPARE_ONLY: ${{ steps.cfg.outputs.prepare_only }}
+        run: |
+          if [ "$PREPARE_ONLY" = "true" ]; then
+            echo "::notice::prepare-only repo — branch pushed, no PR by policy"; exit 0
+          fi
+          BR=$(head -1 /tmp/branch.txt)
+          TITLE=$(head -1 /tmp/pr-title.md)
+          # Always target the real upstream: a fork-to-fork PR reaches no
+          # maintainer, which has happened once already.
+          gh pr create --repo "$UPSTREAM" --head "chelsealong:${BR}" \
+            --title "$TITLE" --body-file /tmp/pr-body.md
+
+      - name: Record the block as a durable lesson
+        if: steps.review.outputs.verdict == 'BLOCK' && steps.rereview.outputs.verdict != 'APPROVE'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          echo "::warning::Adversarial reviewer BLOCKED this change - branch pushed, no PR opened"
+          cat /tmp/verdict.txt 2>/dev/null || true
+
+          # Turn the rejection into an input for the next run on this repo,
+          # rather than letting the same mistake recur. One distilled line, not
+          # the whole verdict — a lessons file that grows without bound stops
+          # being read.
+          mkdir -p lessons
+          f="lessons/${{ inputs.repo_key }}.md"
+          {
+            printf -- "- [%s] issue #%s blocked by review: " \
+              "$(date -u +%Y-%m-%d)" "${{ inputs.issue }}"
+            sed -n '2,6p' /tmp/verdict.txt 2>/dev/null | tr '\n' ' ' | cut -c1-300
+            printf "\n"
+          } >> "$f"
+
+          git config user.name  "oss-pipeline[bot]"
+          git config user.email "chelsealong@users.noreply.github.com"
+          git add -A lessons || true
+          if ! git diff --staged --quiet; then
+            git commit -q -m "chore(lessons): ${{ inputs.repo_key }} #${{ inputs.issue }} blocked by review"
+            git pull --rebase -q origin main || true
+            git push -q origin main || echo "lesson push skipped"
+          fi
 
       - name: Summary
         if: always()
