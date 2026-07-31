@@ -96,7 +96,18 @@ jobs:
           git clone --depth 50 "https://x-access-token:${GH_TOKEN}@github.com/chelsealong/${name}.git" work
           cd work
           git remote add upstream "https://github.com/${impl}.git"
-          git fetch --depth 50 upstream
+          git fetch --depth 200 upstream
+
+          # Start from UPSTREAM's tip, never the fork's main, which drifts.
+          # Two adk PRs were based 358 commits back — before upstream pinned its
+          # third-party actions to commit SHAs (07-16, 07-20) — so the merge ref
+          # that pull_request_target builds still contained the unpinned
+          # workflows, zizmor's `unpinned-uses` rule fired, and the org-level
+          # "GitHub Actions Scan" failed. 10 of 11 recent scans passed; the only
+          # failure was ours. Rebasing onto upstream/main cleared it immediately.
+          DEF=$(git remote show upstream | awk "/HEAD branch/ {print \$NF}")
+          git checkout -q -B work-base "upstream/${DEF:-main}"
+          echo "based on upstream/${DEF:-main} @ $(git rev-parse --short HEAD)"
           # The CLA bot matches the COMMIT EMAIL; chelsealong@126.com is the
           # address registered on it. Using any other address fails the check.
           git config user.name  "chelsealong"
