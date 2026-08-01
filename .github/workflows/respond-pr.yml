@@ -156,7 +156,10 @@ jobs:
         run: |
           cp /tmp/feedback.txt ./FEEDBACK.txt
           run_claude() {
-          claude -p "$(cat <<EOF
+          # Bounded like fix-one.yml's calls. This one was missed: a hung
+          # session here burned to the 60-minute job timeout with nothing
+          # to show for it. Observed healthy runs take 1-18 minutes.
+          timeout 2400 claude -p "$(cat <<EOF
           Reviewer feedback has arrived on our own pull request ${UP}#${N}. Decide
           what it actually asks for and do that — nothing more.
 
