@@ -226,6 +226,68 @@ def check_session_waste() -> tuple[list[str], dict]:
     return problems, detail
 
 
+def check_merge_throughput() -> tuple[list[str], dict]:
+    """Opened vs merged, and who the queue is actually waiting on.
+
+    Added because the pipeline was measured on PRs opened, which is the half we
+    control and the half that does not matter. On 2026-08-01 it had 15 open PRs
+    and 2 merges, and in 9 of the 15 the last speaker was us — the bottleneck
+    had moved to maintainer review, where opening more PRs makes things worse,
+    not better.
+
+    Counts adk's Copybara merges: that repo merges internally, so GitHub reports
+    merged=false and adds a `merged` label. Missing this undercounts the only
+    metric the quota decision rests on.
+    """
+    q = ('{search(type:ISSUE, first:80, query:"is:pr author:%s"){nodes{'
+         '... on PullRequest{number state merged mergedAt closedAt createdAt'
+         ' repository{nameWithOwner} labels(first:20){nodes{name}}'
+         ' comments(last:1){nodes{author{login}}}}}}}' % ME)
+    raw = sh(["gh", "api", "graphql", "-f", f"query={q}"], 90)
+    d = {"open": 0, "merged_total": 0, "merged_7d": 0, "merged_24h": 0,
+         "opened_24h": 0, "closed_unmerged": 0, "awaiting_them": 0, "oldest_open_days": 0}
+    if not raw:
+        return [], d
+    try:
+        nodes = [n for n in json.loads(raw)["data"]["search"]["nodes"] if n]
+    except Exception:  # noqa: BLE001
+        return [], d
+
+    day = (now() - timedelta(hours=24)).isoformat()
+    week = (now() - timedelta(days=7)).isoformat()
+    for pr in nodes:
+        repo = (pr.get("repository") or {}).get("nameWithOwner", "")
+        if repo.startswith(f"{ME}/"):
+            continue                      # our own fork-side test PRs
+        names = {l["name"] for l in (pr.get("labels") or {}).get("nodes", [])}
+        merged = bool(pr.get("merged")) or "merged" in names
+        when = pr.get("mergedAt") or pr.get("closedAt") or ""
+        if (pr.get("createdAt") or "") > day:
+            d["opened_24h"] += 1
+        if merged:
+            d["merged_total"] += 1
+            if when > week:
+                d["merged_7d"] += 1
+            if when > day:
+                d["merged_24h"] += 1
+        elif pr.get("state") == "CLOSED":
+            d["closed_unmerged"] += 1
+        elif pr.get("state") == "OPEN":
+            d["open"] += 1
+            age = (now() - datetime.fromisoformat(pr["createdAt"].replace("Z", "+00:00"))).days
+            d["oldest_open_days"] = max(d["oldest_open_days"], age)
+            last = ((pr.get("comments") or {}).get("nodes") or [{}])
+            who = ((last[0] if last else {}).get("author") or {}).get("login")
+            if who in (ME, None):
+                d["awaiting_them"] += 1
+
+    problems = []
+    if d["open"] >= 12 and d["merged_7d"] == 0:
+        problems.append(f"{d['open']} PRs open and none merged in 7 days — "
+                        "opening more dilutes review attention rather than adding output")
+    return problems, d
+
+
 def check_prs() -> tuple[list[str], dict]:
     """Open PRs: staleness, and the branch-base problem that failed adk's scan."""
     q = ('{search(type:ISSUE, first:50, query:"is:pr is:open author:%s"){nodes{'
@@ -278,6 +340,7 @@ def main() -> int:
         "quota": check_quota(),
         "duplicates_30d": check_duplicates(),
         "session_waste": check_session_waste(),
+        "throughput": check_merge_throughput(),
         "open_prs": check_prs(),
     }
     problems = [p for probs, _ in checks.values() for p in probs]
@@ -311,6 +374,10 @@ def main() -> int:
     w = d["session_waste"]
     print(f"  sessions 24h: dispatched={w['dispatched']} spent={w['sessions_spent']} "
           f"saved-by-prevet={w['prevet_saved']} -> PRs={w['prs']}")
+    tp = d["throughput"]
+    print(f"  throughput  : open={tp['open']} merged 24h/7d/all={tp['merged_24h']}/{tp['merged_7d']}/{tp['merged_total']} "
+          f"opened24h={tp['opened_24h']} closed-unmerged={tp['closed_unmerged']}")
+    print(f"                waiting-on-them={tp['awaiting_them']}/{tp['open']} oldest-open={tp['oldest_open_days']}d")
     print(f"  open PRs    : {len(d['open_prs'])}")
     for p in d["open_prs"]:
         print(f"      {p['pr']:<34} checks={p['checks']:<8} idle={p['idle_days']}d")
