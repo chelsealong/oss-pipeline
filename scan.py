@@ -128,9 +128,21 @@ REPOS: dict[str, dict] = {
     },
 }
 
+# Missed "Hi, I'd like to work on this issue" on dify#39736 and dispatched a
+# fixer at an issue someone had claimed three days earlier. The old pattern
+# only covered "I'll take/work on"; people announce intent in many more ways,
+# and GitHub's comment box turns ' into the Unicode right single quote, which
+# `i'?ll` does not match. Both forms are accepted below.
+_APOS = "['\u2019]?"
 CLAIM_PHRASES = re.compile(
-    r"(i'?ll (take|work on|fix|pick)|working on (this|it)|assign (this )?to me|/assign"
-    r"|i have a (fix|pr)|opened a pr|raised a pr|pr is up|submitted a pr|on it\b)",
+    r"(i" + _APOS + r"(ll|d) (like to )?(take|work on|fix|pick|dig|look|try|handle|tackle|give)"
+    r"|i (would|want|wanna) (like )?to (work on|take|try|tackle|fix)"
+    r"|let me (take|work on|try|handle)"
+    r"|can i (work on|take|pick|be assigned)"
+    r"|working on (this|it)|assign (this )?to me|/assign"
+    r"|i have a (fix|pr)|opened a pr|raised a pr|pr is up|submitted a pr"
+    r"|(i" + _APOS + r"ll|i will|will) (submit|open|raise|create|send) a (pr|pull request|patch)"
+    r"|on it\b)",
     re.I,
 )
 
@@ -258,7 +270,15 @@ def claimants(upstream: str, number: int) -> list[str]:
                   "--jq", "[.[] | {u:.user.login, b:.body}]"])
     except Exception:  # noqa: BLE001
         return []
-    return [c["u"] for c in json.loads(out or "[]") if CLAIM_PHRASES.search(c.get("b") or "")]
+    who = []
+    for c in json.loads(out or "[]"):
+        # Strip quoted text: a maintainer replying to a claimant quotes their
+        # "I'd like to work on this", which would otherwise count as a second
+        # claimant and report the issue as "swarmed" for the wrong reason.
+        body = re.sub(r"^\s*>.*$", "", c.get("b") or "", flags=re.M)
+        if CLAIM_PHRASES.search(body):
+            who.append(c["u"])
+    return who
 
 
 def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
