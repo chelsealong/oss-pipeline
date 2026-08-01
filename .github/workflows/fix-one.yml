@@ -47,7 +47,7 @@ permissions:
 jobs:
   fix:
     runs-on: ubuntu-latest
-    timeout-minutes: 100
+    timeout-minutes: 130
     steps:
       - name: Wait for turn
         # One fix in flight at a time. Bounded: after the cap we proceed anyway
@@ -143,8 +143,100 @@ jobs:
           git config user.name  "chelsealong"
           git config user.email "chelsealong@126.com"
 
-      - name: Install Claude Code
+      - name: Re-vet before spending a session
+        id: pre
         if: steps.cfg.outputs.ok == 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true
+        # The watcher vetted this issue when it appeared; dispatch happens later,
+        # and by then someone may have claimed it or opened a PR. Of the last 18
+        # generator runs, 25% ended in a SKIP whose reason was purely mechanical
+        # ("already has a linked PR", "has an active claimant") — each one paid
+        # for a full agent session to discover something the GitHub API answers
+        # for free. Re-check here, before Claude Code is even installed.
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          UPSTREAM: ${{ steps.cfg.outputs.upstream }}
+          NUM: ${{ inputs.issue }}
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os, re, sys
+          sys.path.insert(0, '.')
+          import scan
+
+          up, num = os.environ['UPSTREAM'], int(os.environ['NUM'])
+
+          def out(k, v):
+              print(f"{k}={v}")
+
+          issue = json.loads(scan.gh(["api", f"repos/{up}/issues/{num}",
+                                      "--jq", "{state:.state,title:.title,assignees:[.assignees[].login]}"]))
+          if issue["state"] != "open":
+              out("taken", "true"); out("why", "issue is closed"); raise SystemExit(0)
+          if issue["assignees"]:
+              out("taken", "true"); out("why", f"assigned to {issue['assignees']}"); raise SystemExit(0)
+          if prs := scan.linked_prs(up, num):
+              out("taken", "true"); out("why", f"linked PR(s) {prs[:3]}"); raise SystemExit(0)
+          if who := scan.claimants(up, num):
+              out("taken", "true"); out("why", f"claimed by {who[0]}"); raise SystemExit(0)
+
+          # A competing PR often never references the issue number — it just
+          # describes the same fix in different words, so linked_prs cannot see
+          # it. dify#38956 was abandoned only after the agent had explored the
+          # repo and found #39133 doing the same thing.
+          #
+          # Multi-word queries are AND and match almost nothing ("signin redirect"
+          # -> 0 hits, "signin" -> #39133 first). So run one query per distinctive
+          # term and union the results; GitHub stems, so "redirects" finds
+          # "redirecting". Identifiers like agent_v2 are the strongest terms.
+          GENERIC = {"error", "issue", "when", "with", "that", "this", "from", "into",
+                     "does", "fail", "fails", "failed", "bug", "should", "cannot",
+                     "using", "after", "before", "support", "feature", "request",
+                     "problem", "wrong", "broken", "there", "would", "could"}
+
+          def pick_terms(title, k=3):
+              ws = [w for w in re.findall(r"[A-Za-z][A-Za-z0-9_]{4,}", title)
+                    if w.lower() not in GENERIC]
+              # Identifiers first (underscore or mixedCase), then longest.
+              ws.sort(key=lambda w: (("_" in w or not w.islower() and not w.istitle()), len(w)),
+                      reverse=True)
+              seen, out_ = set(), []
+              for w in ws:
+                  if w.lower() not in seen:
+                      seen.add(w.lower()); out_.append(w)
+              return out_[:k]
+
+          hits = {}
+          for term in pick_terms(issue["title"]):
+              try:
+                  raw = scan.gh(["search", "prs", "--repo", up, "--state", "open",
+                                 "--limit", "4", "--json", "number,title", term])
+              except Exception as e:  # noqa: BLE001
+                  print(f"::warning::PR search for {term!r} failed: {str(e)[:100]}", file=sys.stderr)
+                  continue
+              for rank, pr in enumerate(json.loads(raw or "[]")):
+                  # Dependency bumps rank on any keyword and are never a competing fix.
+                  if re.match(r"(chore|build)\(deps\)|bump \S+ from ", pr["title"], re.I):
+                      continue
+                  h = hits.setdefault(pr["number"],
+                                      {"t": " ".join(pr["title"].split())[:88], "n": 0, "best": 99})
+                  h["n"] += 1
+                  h["best"] = min(h["best"], rank)
+
+          near = sorted(hits.items(), key=lambda kv: (-kv[1]["n"], kv[1]["best"]))[:4]
+
+          # Advisory, not a hard block: a title match is a hint, and silently
+          # dropping a real candidate is worse than one wasted session. The agent
+          # is told to read these FIRST instead of rediscovering them late.
+          out("taken", "false")
+          out("competing", " | ".join(f"#{n} {h['t']}" for n, h in near))
+          PY
+
+      - name: Skip — taken since dispatch
+        if: steps.pre.outputs.taken == 'true'
+        run: |
+          echo "::notice::${{ steps.pre.outputs.why }} — no agent session spent"
+
+      - name: Install Claude Code
+        if: steps.cfg.outputs.ok == 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true && steps.pre.outputs.taken != 'true'
         run: npm install -g @anthropic-ai/claude-code
 
       # Generator and evaluator are deliberately SEPARATE claude invocations.
@@ -177,7 +269,7 @@ jobs:
 
       - name: Generate fix and push branch (no PR yet)
         id: gen
-        if: steps.cfg.outputs.ok == 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true
+        if: steps.cfg.outputs.ok == 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true && steps.pre.outputs.taken != 'true'
         working-directory: work
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
@@ -188,9 +280,10 @@ jobs:
           IMPL: ${{ steps.cfg.outputs.implements_in }}
           NEEDS_ASSIGN: ${{ steps.cfg.outputs.needs_assignment }}
           PREPARE_ONLY: ${{ steps.cfg.outputs.prepare_only }}
+          COMPETING: ${{ steps.pre.outputs.competing }}
         run: |
           run_claude() {
-          claude -p "$(cat <<EOF
+          timeout 2400 claude -p "$(cat <<EOF
           You are an autonomous OSS contribution agent. Handle exactly ONE issue.
           Do the work and PUSH A BRANCH, but do NOT open a pull request — a
           separate reviewer decides that.
@@ -213,18 +306,40 @@ jobs:
           Each line is something an earlier attempt got wrong here. Treat them as
           hard constraints, not suggestions.
 
+          THIS IS A ONE-SHOT NON-INTERACTIVE SESSION. When you end your turn the
+          process exits immediately and everything not yet written to disk is
+          lost. NEVER run a command in the background and then stop to wait for
+          it: there is no later turn in which a notification can reach you. Run
+          every build, lint and test in the FOREGROUND and wait for it there,
+          with a timeout if it may hang. Two runs (openclaw#117153, autogpt#8937)
+          burned 25 and 6 minutes of work and ended with the literal words "I'll
+          stop polling now and wait for their completion notifications" — no
+          branch, no outcome, nothing recoverable.
+
+          BEFORE ANY OTHER WORK, write a provisional
+          'SKIP: run did not reach a conclusion' to
+          $GITHUB_WORKSPACE/.loop/outcome.txt, and overwrite it the moment you know better.
+          A run that dies mid-way must still say something; "no outcome written"
+          tells the next run nothing and costs a full session to rediscover.
+
           MANDATORY, in order:
 
           1. Read $GITHUB_WORKSPACE/.loop/lessons.md, then the repo's own contributor docs
              (AGENTS.md / CLAUDE.md / CONTRIBUTING.md), and follow both,
              including risky-area exclusions.
 
-          2. RE-VERIFY THE CLAIM NOW, before writing code. Check
-             closedByPullRequestsReferences; open PRs mentioning this issue AND
-             touching the files you plan to change; and the comments — including
-             politely-worded claims like "I don't want to race you", which
-             keyword matching misses. If ANY signal shows it is taken, write
-             'SKIP: <reason>' to $GITHUB_WORKSPACE/.loop/outcome.txt and stop.
+          2. RE-VERIFY THE CLAIM NOW, before writing code. Assignees, linked PRs
+             and comment claimants were already re-checked mechanically a moment
+             ago and were clear, so do NOT repeat those queries. What machines
+             cannot judge is a PR that fixes this without naming the issue.
+             These open PRs have similar titles — read them FIRST, before
+             exploring the repo:
+
+               ${COMPETING:-(none found)}
+
+             Also weigh politely-worded claims like "I don't want to race you",
+             which keyword matching misses. If any signal shows it is taken,
+             write 'SKIP: <reason>' to $GITHUB_WORKSPACE/.loop/outcome.txt and stop.
 
           3. If needs_assignment is True and you do not hold the assignment,
              leave one short comment asking to be assigned, write
@@ -300,7 +415,7 @@ jobs:
             git diff upstream/main...HEAD > $GITHUB_WORKSPACE/.loop/change.diff 2>/dev/null || true
           wc -l $GITHUB_WORKSPACE/.loop/change.diff
 
-          claude -p "$(cat <<EOF
+          timeout 1200 claude -p "$(cat <<EOF
           You are reviewing a pull request that ANOTHER agent prepared for
           ${UPSTREAM}#${NUM}. You did not write it. Your job is to REFUTE it.
           Assume it is wrong until the evidence says otherwise — a bad PR on a
@@ -355,9 +470,12 @@ jobs:
           UPSTREAM: ${{ steps.cfg.outputs.upstream }}
           NUM: ${{ inputs.issue }}
         run: |
-          claude -p "$(cat <<EOF
+          timeout 1200 claude -p "$(cat <<EOF
           An independent reviewer BLOCKED your change to ${UPSTREAM}#${NUM}. Their
           objections are in $GITHUB_WORKSPACE/.loop/verdict.txt. Read them and decide honestly:
+
+          (One-shot session: never background a command and end your turn waiting
+          for it — the process exits and the work is lost. Foreground everything.)
 
           * If they are RIGHT — fix exactly what they identified, re-run the
             tests (including proving the test still fails without the source
@@ -394,7 +512,7 @@ jobs:
         run: |
           git diff upstream/HEAD...HEAD > $GITHUB_WORKSPACE/.loop/change.diff 2>/dev/null || \
             git diff upstream/main...HEAD > $GITHUB_WORKSPACE/.loop/change.diff 2>/dev/null || true
-          claude -p "$(cat <<EOF
+          timeout 1200 claude -p "$(cat <<EOF
           You are re-reviewing ${UPSTREAM}#${NUM} after the author addressed an
           earlier BLOCK. The original objections are in $GITHUB_WORKSPACE/.loop/verdict.txt and the
           current diff is $GITHUB_WORKSPACE/.loop/change.diff.
@@ -430,6 +548,44 @@ jobs:
           # maintainer, which has happened once already.
           gh pr create --repo "$UPSTREAM" --head "chelsealong:${BR}" \
             --title "$TITLE" --body-file $GITHUB_WORKSPACE/.loop/pr-body.md
+
+      # Record SKIPs as well as BLOCKs. A BLOCK costs four agent sessions and was
+      # always recorded; a SKIP costs one and was recorded nowhere, so the same
+      # dead end was rediscovered from scratch every time — openclaw returned
+      # "not a core bug, routes out of core" on two consecutive runs, and
+      # spec-kit re-derived that "[Extension]: ..." catalog submissions are not
+      # code changes. Those are exactly the durable corrections lessons exist for.
+      - name: Record the skip as a durable lesson
+        if: steps.gen.outputs.outcome == 'SKIP'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          reason=$(head -1 $GITHUB_WORKSPACE/.loop/outcome.txt 2>/dev/null || echo "")
+          case "$reason" in
+            ""|*"no outcome written"*|*"did not reach a conclusion"*)
+              echo "::warning::generator produced no usable outcome - nothing worth recording"
+              exit 0 ;;
+          esac
+
+          mkdir -p lessons
+          f="lessons/${{ inputs.repo_key }}.md"
+          line=$(printf -- "- [%s] #%s skipped: %s" "$(date -u +%Y-%m-%d)" \
+                   "${{ inputs.issue }}" "$(printf '%s' "$reason" | sed 's/^SKIP: //' | cut -c1-260)")
+          # Near-identical skips repeat; keep the file readable.
+          if [ -s "$f" ] && grep -qF "$(printf '%s' "$line" | cut -c30-120)" "$f"; then
+            echo "similar lesson already recorded"; exit 0
+          fi
+          printf '%s\n' "$line" >> "$f"
+
+          git config user.name  "oss-pipeline[bot]"
+          git config user.email "chelsealong@users.noreply.github.com"
+          git add -A lessons
+          git reset -q .loop 2>/dev/null || true
+          if ! git diff --staged --quiet; then
+            git commit -q -m "chore(lessons): ${{ inputs.repo_key }} #${{ inputs.issue }} skipped"
+            git pull --rebase -q origin main || true
+            git push -q origin main || echo "lesson push skipped"
+          fi
 
       - name: Record the block as a durable lesson
         if: steps.review.outputs.verdict == 'BLOCK' && steps.rereview.outputs.verdict != 'APPROVE'

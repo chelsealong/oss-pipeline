@@ -121,7 +121,12 @@ jobs:
     needs: scan
     # dry_run still runs this job so the plumbing (artifact -> pop -> cap check)
     # is actually exercised; only the Claude/PR steps below are gated on it.
-    if: needs.scan.outputs.any == 'true' && inputs.fix != false
+    # Explicit dispatch only. On a `schedule` run `inputs.fix` is null and
+    # `null != false` is true, so this legacy fixer was armed on every hourly
+    # tick — a second, older code path with no adversarial-review gate, racing
+    # the watcher-driven fix-one.yml for the same candidates and the same daily
+    # cap. Keep the scan job (cheap, API-only, useful redundancy); retire the fix.
+    if: needs.scan.outputs.any == 'true' && inputs.fix == true
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 1          # one PR at a time; keeps the account out of spam territory

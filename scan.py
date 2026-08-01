@@ -265,10 +265,16 @@ def linked_prs(upstream: str, number: int) -> list[str]:
 
 
 def claimants(upstream: str, number: int) -> list[str]:
+    # `-X GET` is not optional: `gh api -f` sends a POST, so this endpoint was
+    # being asked to CREATE a comment and answered 422 ("body wasn't supplied").
+    # The bare `except: return []` below turned that into "nobody has claimed
+    # this issue" for every issue, silently, forever — claim detection had never
+    # once fired. Any future failure is now logged rather than swallowed.
     try:
-        out = gh(["api", f"repos/{upstream}/issues/{number}/comments", "-f", "per_page=60",
-                  "--jq", "[.[] | {u:.user.login, b:.body}]"])
-    except Exception:  # noqa: BLE001
+        out = gh(["api", "-X", "GET", f"repos/{upstream}/issues/{number}/comments",
+                  "-f", "per_page=60", "--jq", "[.[] | {u:.user.login, b:.body}]"])
+    except Exception as e:  # noqa: BLE001
+        print(f"    claimants({upstream}#{number}) failed: {str(e)[:120]}", file=sys.stderr)
         return []
     who = []
     for c in json.loads(out or "[]"):
