@@ -187,9 +187,13 @@ def failing_checks(pr: dict) -> list[dict]:
     sha = commit.get("oid", "")[:12]
 
     ctx = (rollup.get("contexts") or {}).get("nodes") or []
+    # 100 is GraphQL's hard page limit for contexts, and openclaw PRs carry
+    # 109-143 checks — so on exactly the repo we care most about, an unknown
+    # slice of the results was being dropped without a word. Fall back to REST,
+    # which paginates, whenever the page comes back full.
     if len(ctx) >= 100:
-        log(f"  WARNING: {pr.get('_repo','?')}#{pr.get('number','?')} has a full page "
-            f"of {len(ctx)} checks; failures beyond it are invisible")
+        return _failing_checks_rest(pr.get("_repo", ""), commit.get("oid", ""), sha)
+
     out = []
     for c in ctx:
         name = c.get("name") or c.get("context") or ""
@@ -197,6 +201,51 @@ def failing_checks(pr: dict) -> list[dict]:
         if not name or not bad:
             continue
         out.append({"name": name, "sha": sha, "ours": not NOT_OUR_CHECKS.search(name)})
+    return out
+
+
+def _failing_checks_rest(repo: str, oid: str, sha: str) -> list[dict]:
+    """Same answer as the GraphQL path, but paginated.
+
+    Two endpoints, because they hold different things: Actions jobs are
+    check-runs, while Vercel and codecov report as commit statuses.
+    """
+    out, seen = [], set()
+    if not repo or not oid:
+        return out
+    # `--paginate` with `--jq` emits one result PER PAGE, so wrapping the filter
+    # in [] yields several arrays concatenated — not valid JSON. Emit one object
+    # per line and parse line by line instead.
+    runs = []
+    try:
+        raw = scan.gh(["api", "--paginate",
+                       f"repos/{repo}/commits/{oid}/check-runs?per_page=100",
+                       "--jq", ".check_runs[] | {n:.name, c:.conclusion}"])
+        for line in (raw or "").splitlines():
+            line = line.strip()
+            if line:
+                runs.append(json.loads(line))
+    except Exception as e:  # noqa: BLE001
+        log(f"  check-run enumeration failed for {repo}@{sha}: {str(e)[:120]}")
+        runs = []
+    for r in runs:
+        if r.get("c") in ("failure", "timed_out") and r.get("n") not in seen:
+            seen.add(r["n"])
+            out.append({"name": r["n"], "sha": sha, "ours": not NOT_OUR_CHECKS.search(r["n"])})
+    sts = []
+    try:
+        raw = scan.gh(["api", f"repos/{repo}/commits/{oid}/status?per_page=100",
+                       "--jq", ".statuses[] | {n:.context, c:.state}"])
+        for line in (raw or "").splitlines():
+            line = line.strip()
+            if line:
+                sts.append(json.loads(line))
+    except Exception:  # noqa: BLE001
+        sts = []
+    for r in sts:
+        if r.get("c") == "failure" and r.get("n") not in seen:
+            seen.add(r["n"])
+            out.append({"name": r["n"], "sha": sha, "ours": not NOT_OUR_CHECKS.search(r["n"])})
     return out
 
 
