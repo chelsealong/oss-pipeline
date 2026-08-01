@@ -47,25 +47,32 @@ jobs:
           echo "state=$(jq -r .state /tmp/pr.json)" >> "$GITHUB_OUTPUT"
 
           # Everything a reviewer might have said, newest last.
+          #
+          # Bounded per section. One real run produced a 1325-line context and
+          # there was no way to tell afterwards which section was responsible,
+          # because only the total was ever printed. Each section is now capped
+          # at its newest content — a bot's coverage table is not worth more
+          # room than the maintainer's actual request — and its size is logged,
+          # so "the context got huge" is a measurement instead of a suspicion.
           {
-            echo "### PR body"; jq -r '.body // "(empty)"' /tmp/pr.json
-            echo; echo "### Labels"; jq -r '[.labels[].name] | join(", ")' /tmp/pr.json
-            echo; echo "### Issue comments"
-            gh api "repos/$UP/issues/$N/comments" \
-              --jq '.[] | "--- \(.user.login) at \(.created_at) ---\n\(.body)"' || true
-            echo; echo "### Reviews"
-            gh api "repos/$UP/pulls/$N/reviews" \
-              --jq '.[] | "--- \(.user.login) \(.state) at \(.submitted_at) ---\n\(.body // "(no body)")"' || true
-            echo; echo "### Inline review comments"
-            gh api "repos/$UP/pulls/$N/comments" \
-              --jq '.[] | "--- \(.user.login) on \(.path):\(.line // 0) ---\n\(.body)"' || true
-            echo; echo "### Failing checks"
+            echo "### [ctx] PR body"; jq -r '.body // "(empty)"' /tmp/pr.json | head -100
+            echo; echo "### [ctx] Labels"; jq -r '[.labels[].name] | join(", ")' /tmp/pr.json
+            echo; echo "### [ctx] Issue comments"
+            { gh api "repos/$UP/issues/$N/comments" \
+              --jq '.[] | "--- \(.user.login) at \(.created_at) ---\n\(.body)"' || true; } | tail -200
+            echo; echo "### [ctx] Reviews"
+            { gh api "repos/$UP/pulls/$N/reviews" \
+              --jq '.[] | "--- \(.user.login) \(.state) at \(.submitted_at) ---\n\(.body // "(no body)")"' || true; } | tail -150
+            echo; echo "### [ctx] Inline review comments"
+            { gh api "repos/$UP/pulls/$N/comments" \
+              --jq '.[] | "--- \(.user.login) on \(.path):\(.line // 0) ---\n\(.body)"' || true; } | tail -150
+            echo; echo "### [ctx] Failing checks"
             gh pr checks "$N" --repo "$UP" 2>/dev/null | grep -viE '\bpass\b|skipping' || echo "(none)"
             # Names alone are not enough to fix anything. Pull the tail of each
             # failing Actions job so the agent sees the assertion, not just that
             # something went red. Non-Actions checks (Vercel, codecov) have no
             # log we can read and are filtered out by the watcher anyway.
-            echo; echo "### Failing check logs"
+            echo; echo "### [ctx] Failing check logs"
             # `gh pr checks` exits 8 when any check is failing — which is
             # precisely when this runs — and the step is `set -euo pipefail`,
             # so it must not be the last command in a pipeline.
@@ -86,7 +93,15 @@ jobs:
                   || echo "(log not readable — forks cannot read org-required workflow logs)"
               done
           } > /tmp/feedback.txt
-          wc -l /tmp/feedback.txt
+
+          # Per-section sizes, so a runaway section is visible in the run log.
+          awk '/^### \[ctx\] /{if(s)printf "  %-24s %4d lines\n", s, n; s=substr($0,11); n=0; next}{n++}
+               END{if(s)printf "  %-24s %4d lines\n", s, n}' /tmp/feedback.txt
+          total=$(wc -l < /tmp/feedback.txt)
+          echo "  TOTAL $total lines"
+          if [ "$total" -gt 900 ]; then
+            echo "::warning::feedback context is ${total} lines; check which section grew"
+          fi
 
       - name: Checkout the PR branch from the fork
         if: steps.ctx.outputs.state == 'OPEN' && inputs.dry_run != true
