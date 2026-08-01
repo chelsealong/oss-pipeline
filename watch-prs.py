@@ -118,8 +118,15 @@ def open_prs() -> list[dict]:
     except Exception as e:  # noqa: BLE001
         log(f"  PR search failed: {str(e)[:160]}")
         return []
+    nodes = ((data.get("data") or {}).get("search") or {}).get("nodes") or []
+    # Silent truncation is this codebase's recurring bug: contexts(last:40) hid
+    # the only failing check on a PR that had 46 of them, and nothing said so.
+    # A full page means there may be more we never looked at.
+    if len(nodes) >= 50:
+        log(f"  WARNING: PR search returned a full page ({len(nodes)}); "
+            "some open PRs are not being watched — raise `first:`")
     prs: list[dict] = []
-    for pr in ((data.get("data") or {}).get("search") or {}).get("nodes") or []:
+    for pr in nodes:
         if not pr:
             continue
         pr["_repo"] = (pr.get("repository") or {}).get("nameWithOwner", "?")
@@ -179,8 +186,12 @@ def failing_checks(pr: dict) -> list[dict]:
         return []
     sha = commit.get("oid", "")[:12]
 
+    ctx = (rollup.get("contexts") or {}).get("nodes") or []
+    if len(ctx) >= 100:
+        log(f"  WARNING: {pr.get('_repo','?')}#{pr.get('number','?')} has a full page "
+            f"of {len(ctx)} checks; failures beyond it are invisible")
     out = []
-    for c in ((rollup.get("contexts") or {}).get("nodes") or []):
+    for c in ctx:
         name = c.get("name") or c.get("context") or ""
         bad = c.get("conclusion") in ("FAILURE", "TIMED_OUT") or c.get("state") == "FAILURE"
         if not name or not bad:
