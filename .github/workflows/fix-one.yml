@@ -26,10 +26,19 @@ on:
         type: boolean
         default: false
 
-# Serialise: one PR in flight at a time keeps the account clear of spam
-# enforcement, and two runs must never share a checkout.
+# The group is per-issue, NOT a single shared lock. A shared group looks like a
+# queue but is not one: GitHub keeps at most ONE pending run per group and
+# cancels any earlier pending run when a newer one arrives. Dispatching three
+# candidates in a burst therefore produced one run and two silent
+# `completed/cancelled` — the watcher's own logs still said "dispatched", so the
+# loss was invisible. Per-issue groups only collapse genuine duplicates of the
+# same issue, which is what we actually wanted.
+#
+# Serialisation is still enforced, but by the wait-for-turn step below, which
+# holds a run until no older fix-one run is active. That queues instead of
+# discarding.
 concurrency:
-  group: oss-fix-one
+  group: oss-fix-one-${{ inputs.repo_key }}-${{ inputs.issue }}
   cancel-in-progress: false
 
 permissions:
@@ -40,6 +49,25 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
+      - name: Wait for turn
+        # One fix in flight at a time. Bounded: after the cap we proceed anyway
+        # rather than hang, because a stuck predecessor must not silently stop
+        # the pipeline — the failure mode we keep re-learning is "looks fine,
+        # produces nothing".
+        env:
+          GH_TOKEN: ${{ secrets.PIPELINE_TOKEN }}
+        run: |
+          set -uo pipefail
+          for i in $(seq 1 60); do
+            older=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow fix-one.yml \
+                      --status in_progress --limit 20 --json databaseId \
+                      --jq "[.[] | select(.databaseId < $GITHUB_RUN_ID)] | length" 2>/dev/null || echo 0)
+            [ "${older:-0}" -eq 0 ] && { echo "clear to run (waited $((i-1)) min)"; exit 0; }
+            echo "  $older older run(s) active; waiting (${i}/60)"
+            sleep 60
+          done
+          echo "::warning::waited 60min for a free slot; proceeding anyway"
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5

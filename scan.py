@@ -279,6 +279,19 @@ def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
     if issue.get("draft"):
         return False, "draft", {}
 
+    # An issue with no body is unfixable, not merely thin. AutoGPT collects
+    # client-side error reports whose entire content is the exception string in
+    # the title: no repro, no version, no stack, no environment. Three of those
+    # (#11089, #11095, #11098) were queued as candidates. Any "fix" for them is
+    # a guess at which of several call sites raised, and a guessed fix is the
+    # kind of PR that gets closed as invalid. Require enough body to reason from.
+    body = (issue.get("body") or "").strip()
+    # Checklists in an issue template are boilerplate, not content.
+    substance = re.sub(r"^\s*[-*]\s*\[[ xX]\]\s.*$", "", body, flags=re.M)
+    substance = re.sub(r"^\s*#{1,6}\s.*$", "", substance, flags=re.M).strip()
+    if len(substance) < 80:
+        return False, f"body has no substance ({len(substance)} chars after template)", {}
+
     prs = linked_prs(upstream, num)
     if prs:
         return False, f"already has PR(s): {prs[:3]}", {}
