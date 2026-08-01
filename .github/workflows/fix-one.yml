@@ -117,6 +117,7 @@ jobs:
           if [ "$n" -ge "$cap" ]; then echo "over=true" >> "$GITHUB_OUTPUT"; else echo "over=false" >> "$GITHUB_OUTPUT"; fi
 
       - name: Checkout target fork
+        id: fork
         if: steps.cfg.outputs.ok == 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
@@ -136,8 +137,17 @@ jobs:
           # "GitHub Actions Scan" failed. 10 of 11 recent scans passed; the only
           # failure was ours. Rebasing onto upstream/main cleared it immediately.
           DEF=$(git remote show upstream | awk "/HEAD branch/ {print \$NF}")
-          git checkout -q -B work-base "upstream/${DEF:-main}"
-          echo "based on upstream/${DEF:-main} @ $(git rev-parse --short HEAD)"
+          DEF="${DEF:-main}"
+          git checkout -q -B work-base "upstream/${DEF}"
+          echo "based on upstream/${DEF} @ $(git rev-parse --short HEAD)"
+          # Publish it: the review steps must diff against the SAME base. They
+          # used to guess `upstream/HEAD`, which `git remote show` queries from
+          # the remote but never creates as a local ref, so the guess always
+          # failed and they fell back to `upstream/main`. On AutoGPT, whose
+          # default branch is `master`, that stale branch turned a two-file
+          # change into a 339-file, 27k-line "diff" — the reviewer noticed and
+          # worked around it by hand, which is not a thing to rely on.
+          echo "default_branch=${DEF}" >> "$GITHUB_OUTPUT"
           # The CLA bot matches the COMMIT EMAIL; chelsealong@126.com is the
           # address registered on it. Using any other address fails the check.
           git config user.name  "chelsealong"
@@ -471,9 +481,18 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT }}
           UPSTREAM: ${{ steps.cfg.outputs.upstream }}
           NUM: ${{ inputs.issue }}
+          DEF: ${{ steps.fork.outputs.default_branch }}
         run: |
-          git diff upstream/HEAD...HEAD > $GITHUB_WORKSPACE/.loop/change.diff 2>/dev/null || \
-            git diff upstream/main...HEAD > $GITHUB_WORKSPACE/.loop/change.diff 2>/dev/null || true
+          # Diff against the branch we were actually cut from, resolved once in
+          # the checkout step, not guessed here.
+          base=$(git merge-base HEAD "upstream/${DEF}" 2>/dev/null || echo "")
+          if [ -n "$base" ]; then
+            git diff "$base" HEAD > $GITHUB_WORKSPACE/.loop/change.diff
+          else
+            echo "::warning::no merge base with upstream/${DEF}; falling back to the last commit"
+            git diff HEAD~1 HEAD > $GITHUB_WORKSPACE/.loop/change.diff || true
+          fi
+          echo "diff: $(git diff --name-only "${base:-HEAD~1}" HEAD | wc -l) file(s), $(wc -l < $GITHUB_WORKSPACE/.loop/change.diff) line(s) vs upstream/${DEF}"
           wc -l $GITHUB_WORKSPACE/.loop/change.diff
 
           timeout 1200 claude -p "$(cat <<EOF
@@ -585,9 +604,18 @@ jobs:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           UPSTREAM: ${{ steps.cfg.outputs.upstream }}
           NUM: ${{ inputs.issue }}
+          DEF: ${{ steps.fork.outputs.default_branch }}
         run: |
-          git diff upstream/HEAD...HEAD > $GITHUB_WORKSPACE/.loop/change.diff 2>/dev/null || \
-            git diff upstream/main...HEAD > $GITHUB_WORKSPACE/.loop/change.diff 2>/dev/null || true
+          # Diff against the branch we were actually cut from, resolved once in
+          # the checkout step, not guessed here.
+          base=$(git merge-base HEAD "upstream/${DEF}" 2>/dev/null || echo "")
+          if [ -n "$base" ]; then
+            git diff "$base" HEAD > $GITHUB_WORKSPACE/.loop/change.diff
+          else
+            echo "::warning::no merge base with upstream/${DEF}; falling back to the last commit"
+            git diff HEAD~1 HEAD > $GITHUB_WORKSPACE/.loop/change.diff || true
+          fi
+          echo "diff: $(git diff --name-only "${base:-HEAD~1}" HEAD | wc -l) file(s), $(wc -l < $GITHUB_WORKSPACE/.loop/change.diff) line(s) vs upstream/${DEF}"
           timeout 1200 claude -p "$(cat <<EOF
           You are re-reviewing ${UPSTREAM}#${NUM} after the author addressed an
           earlier BLOCK. The original objections are in $GITHUB_WORKSPACE/.loop/verdict.txt and the
