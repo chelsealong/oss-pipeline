@@ -1,0 +1,38 @@
+name: Probe both subscriptions
+
+# A pasted OAuth token fails silently in all the ways that matter: truncated on
+# copy, generated from the wrong account, or already expired. None of those show
+# up until a real fix run dies at 2am. Run this after changing either secret.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - run: npm install -g @anthropic-ai/claude-code
+
+      - name: Probe
+        env:
+          PRIMARY: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          SPARE: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN_2 }}
+        run: |
+          probe() {
+            local name="$1" tok="$2"
+            if [ -z "$tok" ]; then echo "$name: NOT SET"; return; fi
+            # Distinct accounts are the whole point of a fallback; identical
+            # tokens would give the appearance of redundancy with none of it.
+            echo "$name: fingerprint $(printf '%s' "$tok" | shasum -a 256 | cut -c1-12), ${#tok} chars"
+            out=$(CLAUDE_CODE_OAUTH_TOKEN="$tok" timeout 180 claude -p "Reply with exactly: OK" 2>&1 || true)
+            case "$out" in
+              *OK*)              echo "$name: AUTH OK" ;;
+              *"session limit"*) echo "$name: AUTH OK (currently out of quota)" ;;
+              *)                 echo "$name: FAILED -> $(printf '%s' "$out" | head -3 | tr '\n' ' ' | cut -c1-200)" ;;
+            esac
+          }
+          probe primary "$PRIMARY"
+          probe spare   "$SPARE"
