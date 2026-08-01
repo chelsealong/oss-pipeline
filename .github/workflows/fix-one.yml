@@ -501,15 +501,30 @@ jobs:
              output that you can reproduce here? Invented or copy-pasted output
              is disqualifying.
 
-          Then write $GITHUB_WORKSPACE/.loop/verdict.txt with a FIRST LINE of exactly 'APPROVE' or
-          'BLOCK', followed by your reasoning. BLOCK if any front fails, and be
+          Record your verdict in $GITHUB_WORKSPACE/.loop/verdict.txt: FIRST LINE exactly
+          'APPROVE' or 'BLOCK', then your reasoning. You do NOT have a Write
+          tool — that is deliberate, a reviewer must not be able to edit the code
+          it is judging — so use a shell redirect:
+
+            { echo BLOCK; echo; echo "<your reasoning>"; } > $GITHUB_WORKSPACE/.loop/verdict.txt
+
+          Do not end your turn until that file exists and has your verdict in it.
+          A previous run reasoned its way to a real, reproducible regression and
+          then finished with "just need the write permission granted" — the file
+          was never created, the reasoning was lost, and the remediation step
+          that depends on it burned a whole session with nothing to act on. BLOCK if any front fails, and be
           specific about what would have to change. Do not modify the code, do
           not push, do not open anything.
           EOF
           )" --permission-mode acceptEdits \
             --allowedTools "Bash Read Glob Grep" 2>&1 | tail -30 || true
 
-          v=$(head -1 $GITHUB_WORKSPACE/.loop/verdict.txt 2>/dev/null || echo "BLOCK")
+          if [ ! -s "$GITHUB_WORKSPACE/.loop/verdict.txt" ]; then
+            echo "::warning::reviewer produced NO verdict file - treating as blocked, but this is a reviewer failure, not a judgement on the change"
+            echo "verdict=NOVERDICT" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          v=$(head -1 $GITHUB_WORKSPACE/.loop/verdict.txt)
           echo "verdict: $v"
           echo "--- reviewer reasoning ---"; sed -n '2,40p' $GITHUB_WORKSPACE/.loop/verdict.txt 2>/dev/null || true
           case "$v" in
@@ -644,8 +659,15 @@ jobs:
           git reset -q .loop 2>/dev/null || true
           if ! git diff --staged --quiet; then
             git commit -q -m "chore(lessons): ${{ inputs.repo_key }} #${{ inputs.issue }} skipped"
+            # The checkout's GITHUB_TOKEN is contents:read, so `git push origin`
+            # was rejected 403 ("denied to github-actions[bot]") on every single
+            # run — the durable-corrections mechanism has never once worked from
+            # CI. Push with the PAT, which is what talks to GitHub everywhere
+            # else in this job.
+            git remote set-url --push origin \
+              "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             git pull --rebase -q origin main || true
-            git push -q origin main || echo "lesson push skipped"
+            git push -q origin HEAD:main || echo "::warning::lesson push failed"
           fi
 
       - name: Record the block as a durable lesson
@@ -675,13 +697,37 @@ jobs:
           git reset -q .loop 2>/dev/null || true
           if ! git diff --staged --quiet; then
             git commit -q -m "chore(lessons): ${{ inputs.repo_key }} #${{ inputs.issue }} blocked by review"
+            # The checkout's GITHUB_TOKEN is contents:read, so `git push origin`
+            # was rejected 403 ("denied to github-actions[bot]") on every single
+            # run — the durable-corrections mechanism has never once worked from
+            # CI. Push with the PAT, which is what talks to GitHub everywhere
+            # else in this job.
+            git remote set-url --push origin \
+              "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             git pull --rebase -q origin main || true
-            git push -q origin main || echo "lesson push skipped"
+            git push -q origin HEAD:main || echo "::warning::lesson push failed"
           fi
 
       - name: Summary
         if: always()
         run: |
+          # The whole outcome chain on one line. Diagnosing a run used to mean
+          # grepping the raw log for "generator outcome:" and "verdict:", which
+          # is how a quota block sat misread as a SKIP for weeks.
           echo "repo_key=${{ inputs.repo_key }} issue=#${{ inputs.issue }}"
           echo "resolved_ok=${{ steps.cfg.outputs.ok }} why=${{ steps.cfg.outputs.why }}"
           echo "over_daily_cap=${{ steps.cap.outputs.over }} dry_run=${{ inputs.dry_run }}"
+          echo "prevet_taken=${{ steps.pre.outputs.taken }} ${{ steps.pre.outputs.why }}"
+          echo "generator=${{ steps.gen.outputs.outcome }}"
+          echo "review=${{ steps.review.outputs.verdict }} remediation=${{ steps.remediate.outputs.result }} rereview=${{ steps.rereview.outputs.verdict }}"
+          {
+            echo "### ${{ inputs.repo_key }} #${{ inputs.issue }}"
+            echo ""
+            echo "| stage | result |"
+            echo "|---|---|"
+            echo "| pre-vet | ${{ steps.pre.outputs.taken == 'true' && steps.pre.outputs.why || 'clear' }} |"
+            echo "| generator | ${{ steps.gen.outputs.outcome || '-' }} |"
+            echo "| review | ${{ steps.review.outputs.verdict || '-' }} |"
+            echo "| remediation | ${{ steps.remediate.outputs.result || '-' }} |"
+            echo "| re-review | ${{ steps.rereview.outputs.verdict || '-' }} |"
+          } >> "$GITHUB_STEP_SUMMARY"
