@@ -67,12 +67,21 @@ REPOS: dict[str, dict] = {
         "searches": ['label:"help wanted"', "label:bug label:external"],
         "exclude_labels": {"open-swe", "open-swe-auto", "open-swe-dev", "open-swe-max", "codex"},
         "needs_assignment": True,
+        # Studio, the server and langgraph_api/langgraph_runtime_inmem live in
+        # SEPARATE repos that are not in this checkout — libs/ holds only
+        # langgraph, checkpoint*, cli, prebuilt and the SDKs. Claiming such an
+        # issue means asking for work we cannot do; #8408 (a Studio run_id bug)
+        # reached the queue before this filter existed.
+        "exclude_title": r"(studio|langgraph[_-]api|runtime[_-]inmem|deployment|langgraph platform|self[- ]host)",
     },
     "langchain": {
         "upstream": "langchain-ai/langchain",
         "searches": ['label:"help wanted"', "label:new-contributor"],
         "exclude_labels": {"open-swe", "codex"},
         "needs_assignment": True,
+        # Most partner integrations are released from their own repos, so an
+        # issue about one cannot be fixed from libs/ here.
+        "exclude_title": r"(langchain[- ](google|aws|openai|anthropic|community|mongodb|pinecone|weaviate|chroma|qdrant)|langsmith|langserve)",
     },
     "openclaw": {
         "upstream": "openclaw/openclaw",
@@ -96,6 +105,18 @@ REPOS: dict[str, dict] = {
     "firecrawl": {
         "upstream": "firecrawl/firecrawl",
         "searches": ["label:bug sort:created-desc", "sort:created-desc"],
+        "exclude_labels": set(),
+    },
+    "dify": {
+        "upstream": "langgenius/dify",
+        "searches": ['label:"good first issue"', 'label:"🙏 help wanted"', "label:bug sort:created-desc"],
+        "exclude_labels": set(),
+        # The PR template asks agent-created PRs to end the description with
+        # "From <Tool Name>", so this repo explicitly anticipates them.
+    },
+    "autogpt": {
+        "upstream": "Significant-Gravitas/AutoGPT",
+        "searches": ['label:"good first issue"', 'label:"help wanted"', "label:bug sort:created-desc"],
         "exclude_labels": set(),
     },
     "comfyui": {
