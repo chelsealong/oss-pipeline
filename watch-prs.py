@@ -107,7 +107,8 @@ def open_prs() -> list[dict]:
          # invisible here: 6 of 15 open PRs were failing checks while this
          # watcher reported nothing to do, because it only ever looked at things
          # humans wrote.
-         ' commits(last:1){nodes{commit{oid statusCheckRollup{state contexts(last:100){nodes{'
+         ' commits(last:1){nodes{commit{oid committedDate author{user{login}}'
+         '  statusCheckRollup{state contexts(last:100){nodes{'
          '  ... on CheckRun{name conclusion}'
          '  ... on StatusContext{context state}}}}}}}'
          '}}}}' % (ME, repo_filter))
@@ -185,6 +186,14 @@ def failing_checks(pr: dict) -> list[dict]:
             continue
         out.append({"name": name, "sha": sha, "ours": not NOT_OUR_CHECKS.search(name)})
     return out
+
+
+def last_commit_author(pr: dict) -> str | None:
+    try:
+        c = ((pr.get("commits") or {}).get("nodes") or [{}])[0]["commit"]
+        return ((c.get("author") or {}).get("user") or {}).get("login")
+    except (IndexError, KeyError, TypeError):
+        return None
 
 
 def feedback_items(pr: dict) -> list[dict]:
@@ -271,6 +280,16 @@ def one_pass(seen: dict) -> int:
     for pr in open_prs():
         repo, num = pr["_repo"], pr["number"]
         key = f"{repo}#{num}"
+
+        # If someone else pushed the newest commit, they have taken the branch
+        # over — and that is the single best sign a PR is about to land, which
+        # makes it the worst possible moment to push. On openclaw#117176 a
+        # maintainer validated the head at 120/120 green, then rebased and added
+        # two commits of their own; the responder was dispatched at it anyway
+        # and had to be cancelled by hand before it could write over their work.
+        if (author := last_commit_author(pr)) and author != ME:
+            log(f"  [{key}] newest commit is by {author}, not us — hands off")
+            continue
         rec = seen.setdefault(key, {"ids": [], "responses": {}})
         known = set(rec["ids"])
 
