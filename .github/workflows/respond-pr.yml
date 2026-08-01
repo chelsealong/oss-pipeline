@@ -154,6 +154,33 @@ jobs:
           N: ${{ inputs.pr }}
           BRANCH: ${{ steps.ctx.outputs.head }}
         run: |
+          cat > "$RUNNER_TEMP/fmt.py" <<'FMT'
+          import json, sys
+          try:
+              for line in sys.stdin:
+                  try:
+                      ev = json.loads(line)
+                  except ValueError:
+                      # Never swallow an unparsed line: the session-limit notice
+                      # is plain text and the quota guard greps this stream.
+                      print(line, end="", flush=True)
+                      continue
+                  for blk in (ev.get("message") or {}).get("content") or []:
+                      kind = blk.get("type")
+                      if kind == "tool_use":
+                          a = blk.get("input") or {}
+                          d = a.get("command") or a.get("file_path") or a.get("pattern") or ""
+                          nm = blk.get("name")
+                          print("  [" + str(nm) + "] " + str(d)[:150], flush=True)
+                      elif kind == "text" and blk.get("text", "").strip():
+                          print(blk["text"][:400], flush=True)
+                  if ev.get("type") == "result":
+                      print("  [result] " + str(ev.get("subtype")) +
+                            " turns=" + str(ev.get("num_turns")), flush=True)
+          except BrokenPipeError:
+              pass
+          FMT
+
           # The agent call is now a pipeline (claude | formatter). Without
           # pipefail its status would be the formatter's, i.e. always 0, and the
           # retry and quota branches below would never fire.
@@ -230,36 +257,7 @@ jobs:
           )" < /dev/null --permission-mode acceptEdits \
             --output-format stream-json --verbose \
             --allowedTools "Bash Read Write Edit Glob Grep WebFetch" \
-            | python3 -u -c '
-          # Default text output prints once, at the end. A run that is killed
-          # or hangs therefore leaves a completely empty log: 36 minutes of
-          # AutoGPT#13752 produced not one line between "Run cp" and "operation
-          # was canceled", so there was no way to tell slow from stuck and the
-          # decision to cancel was made on elapsed time alone. Stream the events
-          # and print one line per tool call.
-          import json, sys
-          try:
-              for line in sys.stdin:
-                  try:
-                      ev = json.loads(line)
-                  except ValueError:
-                      # Never swallow an unparsed line: "You have hit your
-                      # session limit" is plain text and the quota guard greps
-                      # this very stream.
-                      print(line, end="", flush=True)
-                      continue
-                  for blk in (ev.get("message") or {}).get("content") or []:
-                      if blk.get("type") == "tool_use":
-                          a = blk.get("input") or {}
-                          d = a.get("command") or a.get("file_path") or a.get("pattern") or ""
-                          print(f"  [{blk.get('name')}] {str(d)[:150]}", flush=True)
-                      elif blk.get("type") == "text" and blk.get("text", "").strip():
-                          print(blk["text"][:400], flush=True)
-                  if ev.get("type") == "result":
-                      print(f"  [result] {ev.get('subtype')} turns={ev.get('num_turns')}", flush=True)
-          except BrokenPipeError:
-              pass
-          '
+            | python3 -u "$RUNNER_TEMP/fmt.py"
           }
 
           # Two bugs shared with fix-one.yml. `cmd | tee` reports tee's exit
