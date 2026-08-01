@@ -61,6 +61,30 @@ jobs:
               --jq '.[] | "--- \(.user.login) on \(.path):\(.line // 0) ---\n\(.body)"' || true
             echo; echo "### Failing checks"
             gh pr checks "$N" --repo "$UP" 2>/dev/null | grep -viE '\bpass\b|skipping' || echo "(none)"
+            # Names alone are not enough to fix anything. Pull the tail of each
+            # failing Actions job so the agent sees the assertion, not just that
+            # something went red. Non-Actions checks (Vercel, codecov) have no
+            # log we can read and are filtered out by the watcher anyway.
+            echo; echo "### Failing check logs"
+            # `gh pr checks` exits 8 when any check is failing — which is
+            # precisely when this runs — and the step is `set -euo pipefail`,
+            # so it must not be the last command in a pipeline.
+            { gh pr checks "$N" --repo "$UP" --json name,state,link \
+                --jq '.[] | select(.state=="FAILURE") | select(.link|test("/actions/runs/")) | "\(.name)\t\(.link)"' \
+                2>/dev/null || true; } | while IFS=$'\t' read -r cname link; do
+                job="${link##*/job/}"; job="${job%%\?*}"
+                [ -z "$job" ] && continue
+                echo "--- $cname (job $job) ---"
+                # NOT the tail: a job's last 60 lines are post-job cleanup
+                # ("Removing credentials config", "Cleaning up orphan
+                # processes"). The failure sits in the middle, so anchor on the
+                # ##[error] marker and take what precedes it. Timestamps are
+                # stripped — 28 characters per line of pure noise.
+                { gh api "repos/$UP/actions/jobs/$job/logs" 2>/dev/null \
+                    | sed 's/^[0-9][0-9-]*T[0-9:.]*Z //' \
+                    | grep -aE -B25 '##\[error\]' | tail -40 | cut -c1-300; } \
+                  || echo "(log not readable — forks cannot read org-required workflow logs)"
+              done
           } > /tmp/feedback.txt
           wc -l /tmp/feedback.txt
 
