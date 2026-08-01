@@ -164,17 +164,24 @@ jobs:
             --allowedTools "Bash Read Write Edit Glob Grep WebFetch"
           }
 
+          # Two bugs shared with fix-one.yml. `cmd | tee` reports tee's exit
+          # status, which is always 0, so this loop exited on the first pass no
+          # matter what and the retry never ran. And `claude -p` exits 0 while
+          # printing "You've hit your session limit", so a quota block was
+          # recorded as a delivered response — watch-prs.py marks feedback seen
+          # at dispatch and never re-offers it, so the maintainer's comment would
+          # simply go unanswered, silently. Fail loudly instead.
           for attempt in 1 2 3; do
             start=$(date +%s)
-            if run_claude 2>&1 | tee /tmp/claude.out; then rm -f FEEDBACK.txt; exit 0; fi
-            elapsed=$(( $(date +%s) - start ))
+            run_claude 2>&1 | tee /tmp/claude.out; rc=${PIPESTATUS[0]}
 
-            # Quota exhaustion is not a defect; it resets hourly. Failing here
-            # would notify on every dispatch.
             if grep -qi 'session limit' /tmp/claude.out 2>/dev/null; then
-              echo "::notice::SESSION LIMIT reached - skipping this response"
-              rm -f FEEDBACK.txt; exit 0
+              echo "::warning::SESSION LIMIT - this reviewer feedback went UNANSWERED"
+              rm -f FEEDBACK.txt; exit 1
             fi
+
+            [ "$rc" -eq 0 ] && { rm -f FEEDBACK.txt; exit 0; }
+            elapsed=$(( $(date +%s) - start ))
             if [ "$elapsed" -gt 60 ]; then
               echo "failed after ${elapsed}s - not retrying (may have done partial work)"
               rm -f FEEDBACK.txt; exit 1

@@ -47,7 +47,7 @@ permissions:
 jobs:
   fix:
     runs-on: ubuntu-latest
-    timeout-minutes: 130
+    timeout-minutes: 180
     steps:
       - name: Wait for turn
         # One fix in flight at a time. Bounded: after the cap we proceed anyway
@@ -378,14 +378,52 @@ jobs:
             --allowedTools "Bash Read Write Edit Glob Grep WebFetch"
           }
 
+          # `cmd | tee` reports tee's exit status, which is always 0, so the old
+          # `if run_claude | tee ...; then break; fi` broke out on the first pass
+          # every time and the retry logic never once ran. Read PIPESTATUS.
+          #
+          # Quota is checked on the OUTPUT, not the status: claude prints
+          # "You've hit your session limit · resets 4:10am (UTC)" and exits 0.
+          # Sleeping until that reset is free here (public repo, free Actions
+          # minutes) and is the only way the candidate is not simply lost — the
+          # watcher marks an issue seen at dispatch and never re-offers it.
+          waited_for_reset=0
           for attempt in 1 2 3; do
             start=$(date +%s)
-            if run_claude 2>&1 | tee /tmp/claude.out; then break; fi
-            elapsed=$(( $(date +%s) - start ))
-            if grep -qi 'session limit' /tmp/claude.out 2>/dev/null; then
-              echo "::notice::SESSION LIMIT reached - skipping, candidate stays queued"
-              echo "outcome=QUOTA" >> "$GITHUB_OUTPUT"; exit 0
+            run_claude 2>&1 | tee /tmp/claude.out; rc=${PIPESTATUS[0]}
+
+            if grep -qi "session limit" /tmp/claude.out 2>/dev/null; then
+              if [ "$waited_for_reset" -eq 1 ]; then
+                echo "::notice::still rate limited after waiting - candidate abandoned"
+                echo "outcome=QUOTA" >> "$GITHUB_OUTPUT"; exit 0
+              fi
+              secs=$(python3 - <<'PYEOF'
+          import datetime, re, sys
+          m = re.search(r"resets\s+(\d{1,2}):(\d{2})\s*(am|pm)", open("/tmp/claude.out", errors="ignore").read(), re.I)
+          if not m:
+              print(0); sys.exit()
+          h, mi, ap = int(m.group(1)) % 12, int(m.group(2)), m.group(3).lower()
+          if ap == "pm":
+              h += 12
+          now = datetime.datetime.now(datetime.timezone.utc)
+          t = now.replace(hour=h, minute=mi, second=0, microsecond=0)
+          if t <= now:
+              t += datetime.timedelta(days=1)
+          print(int((t - now).total_seconds()) + 120)
+          PYEOF
+              )
+              if [ "${secs:-0}" -le 0 ] || [ "${secs:-0}" -gt 5400 ]; then
+                echo "::notice::SESSION LIMIT, reset time unusable (${secs:-?}s) - candidate stays queued"
+                echo "outcome=QUOTA" >> "$GITHUB_OUTPUT"; exit 0
+              fi
+              echo "::notice::SESSION LIMIT - sleeping ${secs}s until reset, then one retry"
+              sleep "$secs"
+              waited_for_reset=1
+              continue
             fi
+
+            [ "$rc" -eq 0 ] && break
+            elapsed=$(( $(date +%s) - start ))
             if [ "$elapsed" -gt 60 ]; then
               echo "failed after ${elapsed}s - not retrying (may have done partial work)"
               echo "outcome=ERROR" >> "$GITHUB_OUTPUT"; exit 1
@@ -393,6 +431,16 @@ jobs:
             [ "$attempt" -eq 3 ] && { echo "outcome=ERROR" >> "$GITHUB_OUTPUT"; exit 1; }
             sleep $((30 * attempt))
           done
+
+          # Quota exhaustion must be checked on the OUTPUT, not the exit code.
+          # `claude -p` prints "You've hit your session limit" and exits 0, so the
+          # retry loop above breaks normally and the provisional outcome.txt was
+          # being read as a genuine SKIP — a quota block recorded as a verdict on
+          # the issue, and the candidate dropped instead of retried.
+          if grep -qi "session limit" /tmp/claude.out 2>/dev/null; then
+            echo "::notice::SESSION LIMIT reached - candidate stays queued, nothing decided"
+            echo "outcome=QUOTA" >> "$GITHUB_OUTPUT"; exit 0
+          fi
 
           out=$(head -1 $GITHUB_WORKSPACE/.loop/outcome.txt 2>/dev/null || echo "SKIP: no outcome written")
           echo "generator outcome: $out"
