@@ -61,3 +61,44 @@ tried.
 * Duplicate saturation is high. Run the file/symbol search, not just the
   issue-number search — a competing PR often describes the same fix in different
   words and never references the issue.
+
+## Aim at the rating, not at "the code works"
+
+Measured over 60 merged openclaw PRs (any author), the reviewer's rating is
+what separates merged from stalled — not size and not risk area:
+
+| rating | merged in sample |
+|---|---|
+| 🐚 platinum hermit (4/6) | 33 |
+| 🦞 diamond lobster (5/6) | 14 |
+| 🦐 gold shrimp (3/6) | 4 |
+| 🦪 silver shellfish (2/6) | 3 |
+
+Two intuitions that turn out to be **wrong** here, both checked against that
+sample: 53% of merged PRs carry a 🚨 merge-risk label, so risk areas are not
+excluded; and `size: XL` is the single largest merged bucket (17), median +214
+lines, so small is not a requirement. Do not self-censor on either basis.
+
+`Overall readiness` behaves as the MINIMUM of two sub-scores — consistent with
+all three of ours:
+
+| PR | Proof confidence | Patch quality | Overall | Outcome |
+|---|---|---|---|---|
+| #116958 | 4/6 | 4/6 | **4/6** | merged in ~5h |
+| #115138 | 4/6 | 3/6 — one actionable P1 | **3/6** | stalled 4 days |
+| #116260 | 3/6 — proof too synthetic | 4/6 | **3/6** | stalled |
+
+So a strong leg cannot carry a weak one. #115138 had textbook evidence and
+still sits at gold shrimp because one P1 finding was left unaddressed.
+
+**Both legs, every time:**
+
+1. *Proof confidence* — a real terminal transcript of the affected path, not
+   test output. See the section above.
+2. *Patch quality* — zero actionable findings. When ClawSweeper lists a P1,
+   that PR is not "awaiting review", it is **awaiting us**. The `status: ⏳
+   waiting on author` label says so explicitly.
+
+And read the reviewer's re-reviews: it EDITS its original comment rather than
+posting a new one, so a verdict published days later carries the original
+comment's timestamp.
