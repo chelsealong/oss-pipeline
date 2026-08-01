@@ -64,6 +64,9 @@ def _norm(login: str) -> str:
 # ping-pong, and an agent that answers every message becomes noise on someone
 # else's repo.
 MAX_RESPONSES_PER_PR_PER_DAY = int(os.environ.get("MAX_PR_RESPONSES", "3"))
+# Separate, smaller budget for our own failing checks. Kept small because a
+# check that stays red after two attempts needs a human, not a third agent.
+MAX_CHECK_RESPONSES_PER_PR_PER_DAY = int(os.environ.get("MAX_PR_CHECK_RESPONSES", "2"))
 
 
 def log(msg: str) -> None:
@@ -148,7 +151,13 @@ NOT_OUR_CHECKS = re.compile(
     r"|\bcla\b|license/|dco"
     r"|dependabot|renovate"
     r"|triage|gemini|claude-review"
-    r"|check pr status|\ball checks\b|required checks?|ci[- ]status|merge[- ]queue",
+    # Gates by concept, not by one repo's wording. Matching the literal
+    # phrase "check pr status" caught AutoGPT and missed openclaw/ci-gate,
+    # which is the same thing under a different name. Anchored so a real
+    # job called gateway-tests or api-gateway-integration still counts as
+    # ours — it is a gate only if "gate" is its own word.
+    r"|check pr status|pr status check|\ball checks\b|required[- ]checks?"
+    r"|ci[- ]status|merge[- ]queue|\bci[- ]?gate\b|\bmerge[- ]?gate\b|[-_/ ]gate$",
     re.I,
 )
 
@@ -269,31 +278,58 @@ def one_pass(seen: dict) -> int:
         for item in feedback_items(pr):
             if item["id"] in known:
                 continue
-            known.add(item["id"])
             ok, why = actionable(item, pr)
             if ok:
+                # NOT marked seen yet. Marking happened here, before the daily
+                # cap was consulted, so anything the cap turned away was recorded
+                # as handled and never reconsidered — openclaw#117176 was refused
+                # six times in one day and its genuinely broken test
+                # (checks-node-compact-small-4) was silently retired on the first
+                # refusal. An item is seen once it has been acted on, not once it
+                # has been noticed.
                 fresh.append(item)
             else:
+                # Unactionable is a final judgement, so record it now and stop
+                # re-evaluating it every five minutes.
+                known.add(item["id"])
                 log(f"  [{key}] skip {item['kind']} by {item['author']} — {why}")
         rec["ids"] = sorted(known)
 
         if not fresh:
             continue
 
+        # A failing check of ours gets its own small budget rather than
+        # competing with conversation. openclaw#117176 spent today at its cap
+        # answering comments and was turned away six times while
+        # `checks-node-compact-small-4` — a real broken test on our own branch —
+        # was never once looked at. Talking is not more urgent than a red build.
+        has_check = any(i["kind"] == "check" for i in fresh)
         used = rec["responses"].get(today, 0)
-        if used >= MAX_RESPONSES_PER_PR_PER_DAY:
-            log(f"  [{key}] {len(fresh)} new item(s) but daily response cap reached ({used})")
+        used_checks = rec.setdefault("check_responses", {}).get(today, 0)
+        if has_check and used_checks < MAX_CHECK_RESPONSES_PER_PR_PER_DAY:
+            budget = "check"
+        elif used < MAX_RESPONSES_PER_PR_PER_DAY:
+            budget = "general"
+        else:
+            log(f"  [{key}] {len(fresh)} new item(s) but daily cap reached "
+                f"(general {used}/{MAX_RESPONSES_PER_PR_PER_DAY}, "
+                f"check {used_checks}/{MAX_CHECK_RESPONSES_PER_PR_PER_DAY})")
             continue
 
         who = ", ".join(sorted({i["author"] for i in fresh}))
         labels = [l["name"] for l in ((pr.get("labels") or {}).get("nodes") or [])]
-        log(f"  [{key}] {len(fresh)} new item(s) from {who}; labels: {', '.join(labels) or '-'}")
+        log(f"  [{key}] {len(fresh)} new item(s) from {who} [{budget} budget]; "
+            f"labels: {', '.join(labels) or '-'}")
         if dispatch(repo, num, who):
             # A dry run must not consume the day's budget; dispatch() returns
             # True in DRY_RUN so the flow can be exercised, which had already
             # pushed AutoGPT#13752 to its cap without ever contacting anything.
             if not DRY_RUN:
-                rec["responses"][today] = used + 1
+                if budget == "check":
+                    rec["check_responses"][today] = used_checks + 1
+                else:
+                    rec["responses"][today] = used + 1
+                rec["ids"] = sorted(set(rec["ids"]) | {i["id"] for i in fresh})
             dispatched += 1
 
     return dispatched
