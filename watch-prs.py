@@ -46,6 +46,7 @@ LOG = ROOT / "watch-prs.log"
 PIPELINE_REPO = "chelsealong/oss-pipeline"
 ME = "chelsealong"
 DRY_RUN = os.environ.get("DRY_RUN") == "1"
+RESEED = False
 
 # Accounts whose comments are pure status, never a request to act on.
 # NOTE: GraphQL returns bot logins WITHOUT the "[bot]" suffix that REST shows,
@@ -100,9 +101,9 @@ def open_prs() -> list[dict]:
          ' number title url updatedAt author{login} headRefName isDraft'
          ' repository{nameWithOwner}'
          ' labels(first:20){nodes{name}}'
-         ' comments(last:20){nodes{id createdAt author{login} body}}'
+         ' comments(last:20){nodes{id createdAt updatedAt author{login} body}}'
          ' reviews(last:10){nodes{id submittedAt state author{login} body}}'
-         ' reviewThreads(last:20){nodes{comments(last:5){nodes{id createdAt author{login} body path}}}}'
+         ' reviewThreads(last:20){nodes{comments(last:5){nodes{id createdAt updatedAt author{login} body path}}}}'
          # A red CI run is feedback too, and it is the kind nobody types. It was
          # invisible here: 6 of 15 open PRs were failing checks while this
          # watcher reported nothing to do, because it only ever looked at things
@@ -206,9 +207,15 @@ def feedback_items(pr: dict) -> list[dict]:
                       "author": "ci", "when": "", "kind": "check",
                       "body": f"Check `{chk['name']}` is failing on commit {chk['sha']}.",
                       "ours": chk["ours"]})
+    # Keyed by id AND updatedAt, not id alone. ClawSweeper posts a placeholder
+    # and then EDITS THAT SAME COMMENT with the real review — it says so in the
+    # placeholder text. Deduping on id meant every re-review it ever published
+    # was invisible: openclaw#115138 sat four days on a comment created 07-28
+    # whose body was an 08-01 verdict reading "Blocked - 8 items remain".
     for c in ((pr.get("comments") or {}).get("nodes") or []):
-        items.append({"id": c["id"], "author": (c.get("author") or {}).get("login", "?"),
-                      "when": c.get("createdAt", ""), "kind": "comment",
+        items.append({"id": f"{c['id']}@{c.get('updatedAt') or c.get('createdAt','')}",
+                      "author": (c.get("author") or {}).get("login", "?"),
+                      "when": c.get("updatedAt") or c.get("createdAt", ""), "kind": "comment",
                       "body": c.get("body") or ""})
     for r in ((pr.get("reviews") or {}).get("nodes") or []):
         items.append({"id": r["id"], "author": (r.get("author") or {}).get("login", "?"),
@@ -216,8 +223,10 @@ def feedback_items(pr: dict) -> list[dict]:
                       "body": r.get("body") or ""})
     for t in ((pr.get("reviewThreads") or {}).get("nodes") or []):
         for c in ((t.get("comments") or {}).get("nodes") or []):
-            items.append({"id": c["id"], "author": (c.get("author") or {}).get("login", "?"),
-                          "when": c.get("createdAt", ""), "kind": f"inline:{c.get('path','')}",
+            items.append({"id": f"{c['id']}@{c.get('updatedAt') or c.get('createdAt','')}",
+                          "author": (c.get("author") or {}).get("login", "?"),
+                          "when": c.get("updatedAt") or c.get("createdAt", ""),
+                          "kind": f"inline:{c.get('path','')}",
                           "body": c.get("body") or ""})
     return items
 
@@ -256,6 +265,9 @@ def save_seen(d: dict) -> None:
 
 
 def dispatch(repo: str, number: int, note: str) -> bool:
+    if RESEED:
+        log(f"  reseed: recording {repo}#{number} ({note}) without responding")
+        return True
     if DRY_RUN:
         log(f"  DRY_RUN would dispatch responder for {repo}#{number} ({note})")
         return True
@@ -343,7 +355,9 @@ def one_pass(seen: dict) -> int:
             # A dry run must not consume the day's budget; dispatch() returns
             # True in DRY_RUN so the flow can be exercised, which had already
             # pushed AutoGPT#13752 to its cap without ever contacting anything.
-            if not DRY_RUN:
+            if RESEED:
+                rec["ids"] = sorted(set(rec["ids"]) | {i["id"] for i in fresh})
+            elif not DRY_RUN:
                 if budget == "check":
                     rec["check_responses"][today] = used_checks + 1
                 else:
@@ -356,12 +370,19 @@ def one_pass(seen: dict) -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
+    ap.add_argument("--reseed", action="store_true",
+                    help="record everything currently visible as seen, dispatch nothing. "
+                         "Needed after changing the dedupe key: the new keys make every "
+                         "existing comment look new, and without this the next pass would "
+                         "answer months of already-handled feedback in one burst.")
     ap.add_argument("--loop", type=float, default=0,
                     help="seconds between passes; 0 = single pass")
     a = ap.parse_args()
 
+    global RESEED
+    RESEED = a.reseed
     seen = load_seen()
-    bootstrap = not seen
+    bootstrap = (not seen) or a.reseed
     if bootstrap:
         log("bootstrap: recording existing feedback without responding to it")
 
