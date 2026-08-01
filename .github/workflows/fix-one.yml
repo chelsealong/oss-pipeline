@@ -387,7 +387,7 @@ jobs:
           If the right outcome is to do nothing, write SKIP with the reason and
           explain. That is a normal result, not a failure.
           EOF
-          )" --permission-mode acceptEdits \
+          )" < /dev/null --permission-mode acceptEdits \
             --allowedTools "Bash Read Write Edit Glob Grep WebFetch"
           }
 
@@ -550,7 +550,7 @@ jobs:
           specific about what would have to change. Do not modify the code, do
           not push, do not open anything.
           EOF
-          )" --permission-mode acceptEdits \
+          )" < /dev/null --permission-mode acceptEdits \
             --allowedTools "Bash Read Glob Grep" 2>&1 | tail -30 || true
 
           if [ ! -s "$GITHUB_WORKSPACE/.loop/verdict.txt" ]; then
@@ -601,7 +601,7 @@ jobs:
           Do not argue with the reviewer in the PR. Never force-push. Do not open
           a pull request. No Co-Authored-By trailers.
           EOF
-          )" --permission-mode acceptEdits \
+          )" < /dev/null --permission-mode acceptEdits \
             --allowedTools "Bash Read Write Edit Glob Grep" 2>&1 | tail -20 || true
 
           r=$(head -1 $GITHUB_WORKSPACE/.loop/remediation.txt 2>/dev/null || echo "ABANDON: no result")
@@ -641,7 +641,7 @@ jobs:
           still fails without the source change. Write $GITHUB_WORKSPACE/.loop/verdict.txt with a
           first line of exactly 'APPROVE' or 'BLOCK' and your reasoning.
           EOF
-          )" --permission-mode acceptEdits --allowedTools "Bash Read Glob Grep" 2>&1 | tail -20 || true
+          )" < /dev/null --permission-mode acceptEdits --allowedTools "Bash Read Glob Grep" 2>&1 | tail -20 || true
 
           v=$(head -1 $GITHUB_WORKSPACE/.loop/verdict.txt 2>/dev/null || echo "BLOCK")
           echo "re-review verdict: $v"
