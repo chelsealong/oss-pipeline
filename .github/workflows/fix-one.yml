@@ -55,13 +55,24 @@ jobs:
         # the pipeline — the failure mode we keep re-learning is "looks fine,
         # produces nothing".
         env:
-          GH_TOKEN: ${{ secrets.PIPELINE_TOKEN }}
+          # PIPELINE_TOKEN does not exist and never did. `gh run list` therefore
+          # ran unauthenticated, failed, hit `|| echo 0`, and every run concluded
+          # that nothing older was active — so this step has never once waited.
+          # Six fix-one runs were observed in_progress simultaneously while this
+          # was supposedly serialising them.
+          GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           set -uo pipefail
           for i in $(seq 1 30); do
-            older=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow fix-one.yml \
-                      --status in_progress --limit 20 --json databaseId \
-                      --jq "[.[] | select(.databaseId < $GITHUB_RUN_ID)] | length" 2>/dev/null || echo 0)
+            if ! out=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow fix-one.yml \
+                         --status in_progress --limit 20 --json databaseId \
+                         --jq "[.[] | select(.databaseId < $GITHUB_RUN_ID)] | length" 2>&1); then
+              # Do not read an API failure as "the coast is clear" — that is
+              # exactly how the missing token turned this into a no-op.
+              echo "::warning::cannot list runs ($(printf '%s' "$out" | head -1)); proceeding without serialisation"
+              exit 0
+            fi
+            older="$out"
             [ "${older:-0}" -eq 0 ] && { echo "clear to run (waited $((i-1)) min)"; exit 0; }
             echo "  $older older run(s) active; waiting (${i}/30)"
             sleep 60
