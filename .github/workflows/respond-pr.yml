@@ -89,6 +89,7 @@ jobs:
         working-directory: work
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ALT_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN_2 }}
           GH_TOKEN: ${{ secrets.GH_PAT }}
           UP: ${{ inputs.upstream }}
           N: ${{ inputs.pr }}
@@ -171,12 +172,22 @@ jobs:
           # recorded as a delivered response — watch-prs.py marks feedback seen
           # at dispatch and never re-offers it, so the maintainer's comment would
           # simply go unanswered, silently. Fail loudly instead.
-          for attempt in 1 2 3; do
+          switched_token=0
+          for attempt in 1 2 3 4; do
             start=$(date +%s)
             run_claude 2>&1 | tee /tmp/claude.out; rc=${PIPESTATUS[0]}
 
             if grep -qi 'session limit' /tmp/claude.out 2>/dev/null; then
-              echo "::warning::SESSION LIMIT - this reviewer feedback went UNANSWERED"
+              # Unlike a fix, an unanswered review comment cannot wait an hour
+              # for a reset — the PR stalls meanwhile. Try the spare account, and
+              # if that is dry too, fail loudly rather than pretend we replied.
+              if [ -n "${ALT_OAUTH_TOKEN:-}" ] && [ "$switched_token" -eq 0 ]; then
+                echo "::notice::primary subscription out of quota - switching to the second account"
+                export CLAUDE_CODE_OAUTH_TOKEN="$ALT_OAUTH_TOKEN"
+                switched_token=1
+                continue
+              fi
+              echo "::warning::SESSION LIMIT on every account - this reviewer feedback went UNANSWERED"
               rm -f FEEDBACK.txt; exit 1
             fi
 
