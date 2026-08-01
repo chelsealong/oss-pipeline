@@ -47,7 +47,7 @@ permissions:
 jobs:
   fix:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 100
     steps:
       - name: Wait for turn
         # One fix in flight at a time. Bounded: after the cap we proceed anyway
@@ -58,15 +58,15 @@ jobs:
           GH_TOKEN: ${{ secrets.PIPELINE_TOKEN }}
         run: |
           set -uo pipefail
-          for i in $(seq 1 60); do
+          for i in $(seq 1 30); do
             older=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow fix-one.yml \
                       --status in_progress --limit 20 --json databaseId \
                       --jq "[.[] | select(.databaseId < $GITHUB_RUN_ID)] | length" 2>/dev/null || echo 0)
             [ "${older:-0}" -eq 0 ] && { echo "clear to run (waited $((i-1)) min)"; exit 0; }
-            echo "  $older older run(s) active; waiting (${i}/60)"
+            echo "  $older older run(s) active; waiting (${i}/30)"
             sleep 60
           done
-          echo "::warning::waited 60min for a free slot; proceeding anyway"
+          echo "::warning::waited 30min for a free slot; proceeding anyway"
 
       - uses: actions/checkout@v4
 
