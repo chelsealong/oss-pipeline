@@ -138,7 +138,13 @@ def open_prs() -> list[dict]:
 # every fork PR, forever.
 NOT_OUR_CHECKS = re.compile(
     r"vercel|netlify|cloudflare|deploy|preview"
-    r"|codecov|coveralls|sonarcloud|snyk|codeql|semgrep|socket"
+    r"|codecov|coveralls|sonarcloud|snyk|semgrep|socket"
+    # NOT codeql. It was in this list on the assumption that scanners fail
+    # on forks for infrastructure reasons, but it passed on AutoGPT#13750 and
+    # failed on #13752 in the same hour — it is content-dependent, and what it
+    # reported was six high-severity path-expression alerts on a file-upload
+    # change we had just written. Whether or not they are true positives, an
+    # alert on our own diff is ours to answer.
     r"|\bcla\b|license/|dco"
     r"|dependabot|renovate"
     r"|triage|gemini|claude-review"

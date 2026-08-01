@@ -76,10 +76,30 @@ jobs:
             # `gh pr checks` exits 8 when any check is failing — which is
             # precisely when this runs — and the step is `set -euo pipefail`,
             # so it must not be the last command in a pipeline.
+            # Two link shapes, and the second was being dropped entirely:
+            #   .../actions/runs/<run>/job/<job>   a workflow job -> read its log
+            #   .../runs/<check_run_id>            a check run    -> read its
+            #                                      annotations, which is where
+            #                                      scanners put their findings.
+            # CodeQL uses the second, so its six high-severity alerts on
+            # AutoGPT#13752 were invisible to the responder: nothing about them
+            # appears in the job log at all.
             { gh pr checks "$N" --repo "$UP" --json name,state,link \
-                --jq '.[] | select(.state=="FAILURE") | select(.link|test("/actions/runs/")) | "\(.name)\t\(.link)"' \
+                --jq '.[] | select(.state=="FAILURE") | "\(.name)\t\(.link)"' \
                 2>/dev/null || true; } | while IFS=$'\t' read -r cname link; do
-                job="${link##*/job/}"; job="${job%%\?*}"
+                case "$link" in
+                  */actions/runs/*/job/*) job="${link##*/job/}"; job="${job%%\?*}" ;;
+                  */runs/[0-9]*)
+                    cr="${link##*/runs/}"; cr="${cr%%\?*}"
+                    echo "--- $cname (check run $cr) ---"
+                    gh api "repos/$UP/check-runs/$cr" \
+                      --jq '"  " + (.output.title // "") + "\n" + ((.output.summary // "")[0:600])' 2>/dev/null || true
+                    gh api "repos/$UP/check-runs/$cr/annotations" \
+                      --jq '.[] | "  \(.annotation_level) \(.path):\(.start_line) \(.title // "")\n    \((.message // "")[0:300])"' \
+                      2>/dev/null | head -60 || true
+                    continue ;;
+                  *) continue ;;
+                esac
                 [ -z "$job" ] && continue
                 echo "--- $cname (job $job) ---"
                 # NOT the tail: a job's last 60 lines are post-job cleanup

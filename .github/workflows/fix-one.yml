@@ -505,7 +505,7 @@ jobs:
           The full checkout is here, so read the surrounding code, not just the
           diff.
 
-          Attack it on four fronts:
+          Attack it on five fronts:
           1. CORRECTNESS — does it actually fix the issue? Edge cases, error
              paths, concurrency, off-by-one. Is the fix in the RIGHT PLACE, or
              does it patch a symptom while the cause sits elsewhere?
@@ -516,7 +516,22 @@ jobs:
              change? Verify it: 'git checkout HEAD~1 -- <source file>', run the
              test, confirm failure, restore. A test that passes either way proves
              nothing and is the single most common way a bad PR looks good.
-          4. EVIDENCE — is every claim in $GITHUB_WORKSPACE/.loop/pr-body.md backed by real command
+          4. SECURITY — only if the change touches an attack surface: filesystem
+             paths built from request data, SQL or shell built by concatenation,
+             deserialisation, redirects, template rendering, authn/authz
+             decisions, secrets. For a path: is the value sanitised, then
+             RESOLVED, then checked to still be under the base directory, in
+             that order? A check before resolution is not a check. If the change
+             touches none of these, say so in one line and move on — do not
+             invent a threat model.
+
+             This front exists because it was missing: AutoGPT#13752 replaced
+             GCS uploads with local filesystem writes, the review approved it on
+             the other three fronts, and CodeQL then raised six high-severity
+             path-expression alerts. The guard turned out to be correct, but
+             nothing in the review had looked.
+
+          5. EVIDENCE — is every claim in $GITHUB_WORKSPACE/.loop/pr-body.md backed by real command
              output that you can reproduce here? Invented or copy-pasted output
              is disqualifying.
 
