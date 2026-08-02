@@ -41,6 +41,13 @@ REPOS: dict[str, dict] = {
         "exclude_labels": set(),
         # issues whose fix lives in a different repo
         "exclude_labels_scope": {"sdk-python", "sdk-js"},
+        # langfuse assigns a maintainer to essentially every issue as triage:
+        # 79 of 80 open `bug` issues have one (hassiebp 24, nimarb 21,
+        # marliessophie 15). Reading an assignee as "someone is already writing
+        # this fix" reduced the repo's entire supply to a single candidate.
+        # vet() still rejects anything with a linked PR or a comment claimant,
+        # which is what actually indicates work in progress.
+        "ignore_assignees": True,
     },
     "langfuse-python": {
         "upstream": "langfuse/langfuse",  # tracker lives here, fix lands in langfuse-python
@@ -99,8 +106,21 @@ REPOS: dict[str, dict] = {
     "hermes": {
         "upstream": "NousResearch/hermes-agent",
         "searches": ["label:type/bug sort:created-desc", "sort:created-desc"],
-        "exclude_labels": {"invalid", "needs-repro", "needs-decision", "duplicate"},
-        "exclude_label_prefix": "sweeper:",
+        # The sweeper's labels are three families, and only one disqualifies:
+        #   sweeper:cannot-reproduce / implemented-on-main / incoherent /
+        #     not-planned   -> genuinely "do not fix"
+        #   sweeper:risk-*   -> a risk annotation (compatibility, message
+        #     delivery, windows, ...)
+        #   sweeper:blast-*  -> blast radius
+        # Excluding the whole `sweeper:` prefix therefore dropped 20 of the 33
+        # open type/bug issues, including the exact class we have already fixed
+        # and landed: #75790 carries sweeper:risk-compatibility and
+        # sweeper:risk-platform-windows and its commits are on main.
+        "exclude_labels": {
+            "invalid", "needs-repro", "needs-decision", "duplicate",
+            "sweeper:cannot-reproduce", "sweeper:implemented-on-main",
+            "sweeper:incoherent", "sweeper:not-planned",
+        },
     },
     "firecrawl": {
         "upstream": "firecrawl/firecrawl",
@@ -192,7 +212,8 @@ def gh(args: list[str], timeout: int = 60, kind: str = "other", retries: int = 3
 _LABEL_RE = re.compile(r'label:"([^"]+)"|label:(\S+)')
 
 
-def search_issues(upstream: str, qualifier: str, limit: int) -> list[dict]:
+def search_issues(upstream: str, qualifier: str, limit: int,
+                  ignore_assignees: bool = False) -> list[dict]:
     """List candidate issues.
 
     Uses the plain REST issues endpoint (5000 req/hr) instead of the search API
@@ -217,7 +238,13 @@ def search_issues(upstream: str, qualifier: str, limit: int) -> list[dict]:
     out = gh(["api", "-X", "GET", f"repos/{upstream}/issues", *params], kind="other")
     items = json.loads(out or "[]")
     # `no:assignee` is search-only, so that filter is applied here too.
-    issues = [i for i in items if "pull_request" not in i and not i.get("assignees")]
+    # `no:assignee` is search-only, so that filter is applied here too — but it
+    # is a proxy for "someone is already on this", and on repos that assign a
+    # triager to every issue the proxy is simply wrong. See langfuse's config.
+    if ignore_assignees:
+        issues = [i for i in items if "pull_request" not in i]
+    else:
+        issues = [i for i in items if "pull_request" not in i and not i.get("assignees")]
     return issues[:limit]
 
 
@@ -343,7 +370,8 @@ def scan_repo(key: str, limit: int, max_vet: int) -> dict:
     errors: list[str] = []
     for qual in cfg["searches"]:
         try:
-            for it in search_issues(upstream, qual, limit):
+            for it in search_issues(upstream, qual, limit,
+                                    ignore_assignees=cfg.get("ignore_assignees", False)):
                 seen.setdefault(it["number"], it)
         except Exception as e:  # noqa: BLE001
             msg = f"search failed [{qual}]: {e}"
