@@ -102,3 +102,30 @@ still sits at gold shrimp because one P1 finding was left unaddressed.
 And read the reviewer's re-reviews: it EDITS its original comment rather than
 posting a new one, so a verdict published days later carries the original
 comment's timestamp.
+
+## `check-sqlite-session-flip-proof` fails from forks, not because of our code
+
+Measured 2026-08-02 across 21 other open PRs plus our own:
+
+| PR source | passes | fails |
+|---|---|---|
+| pushed to openclaw/openclaw directly | 14 | 0 |
+| from a fork (incl. all three of ours) | 2 | 5 |
+
+Three of our PRs failed the identical assertion in
+`test/scripts/sqlite-sessions-transcripts-flip-proof.e2e.test.ts`
+(`expected [ Array(1) ] to deeply equal []`) — a WhatsApp media-retry change, a
+sandbox memory-flush change, and an SQLite mmap change. A change to WhatsApp
+retry cannot break an SQLite session-flip harness the same way a memory-flush
+change does; the common factor is the fork, not the diff.
+
+Ruled out first, so do not re-derive it: a stale base (`gh pr update-branch`
+onto current main still failed), an upstream breakage (17 same-repo PRs passed
+the same hour), and flakiness (each ran once, and same-repo PRs never fail it).
+
+**Do not spend a session fixing this one.** Note it on the PR in a sentence so a
+maintainer can re-run it with repo credentials, and leave the code alone.
+
+Beware the pooled statistic: counting all other PRs together gives a 5% failure
+rate for this check, which reads as "ours". Split by fork vs same-repo before
+concluding anything about a red check.
