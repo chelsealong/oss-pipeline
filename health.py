@@ -41,6 +41,13 @@ from datetime import datetime, timedelta, timezone
 ROOT = pathlib.Path(__file__).resolve().parent
 REPORTS = ROOT / "health"
 ME = "chelsealong"
+ME_EMAIL = "chelsealong%40126.com"     # url-encoded for the commits API
+# Upstreams whose default branch is worth checking for our landed commits.
+REPO_LIST = [
+    "NousResearch/hermes-agent", "google/adk-python", "openclaw/openclaw",
+    "langfuse/langfuse", "langgenius/dify", "Significant-Gravitas/AutoGPT",
+    "github/spec-kit",
+]
 AGENTS = ["oss-watch", "oss-scan", "oss-fix", "oss-claim", "oss-prwatch"]
 
 
@@ -288,6 +295,38 @@ def check_merge_throughput() -> tuple[list[str], dict]:
     return problems, d
 
 
+def check_landed() -> tuple[list[str], dict]:
+    """Commits of ours on each upstream's default branch.
+
+    The only honest measure of output, because "merged" undercounts badly and
+    the quota decision was about to be made on that undercount:
+
+      * adk merges externally-authored PRs through Copybara, which closes the PR
+        with a `merged` label and merged=false.
+      * hermes "salvages" them — a maintainer re-lands the branch under their own
+        PR so privileged CI can run, keeps our commit authorship, and records the
+        contributor in contributors/emails/. Our #75790 was closed at 17:47 and
+        the identical work merged as #75910 at 17:47:46. Counting PR state alone
+        reported that day as zero merges.
+
+    Commits carry our author email through both paths, so this catches what PR
+    state cannot. It cannot see a squash that rewrites authorship — nothing can,
+    short of diffing content — so treat it as a floor, not a ceiling.
+    """
+    detail, total = {}, 0
+    for cfg in REPO_LIST:
+        raw = sh(["gh", "api", f"repos/{cfg}/commits?author={ME_EMAIL}&per_page=100",
+                  "--jq", "[.[] | .commit.author.date]"], 60)
+        try:
+            dates = json.loads(raw) if raw else []
+        except Exception:  # noqa: BLE001
+            dates = []
+        if dates:
+            detail[cfg] = {"total": len(dates), "latest": dates[0][:16]}
+            total += len(dates)
+    return [], {"by_repo": detail, "total": total}
+
+
 def check_prs() -> tuple[list[str], dict]:
     """Open PRs: staleness, and the branch-base problem that failed adk's scan."""
     q = ('{search(type:ISSUE, first:50, query:"is:pr is:open author:%s"){nodes{'
@@ -341,6 +380,7 @@ def main() -> int:
         "duplicates_30d": check_duplicates(),
         "session_waste": check_session_waste(),
         "throughput": check_merge_throughput(),
+        "landed": check_landed(),
         "open_prs": check_prs(),
     }
     problems = [p for probs, _ in checks.values() for p in probs]
@@ -378,6 +418,9 @@ def main() -> int:
     print(f"  throughput  : open={tp['open']} merged 24h/7d/all={tp['merged_24h']}/{tp['merged_7d']}/{tp['merged_total']} "
           f"opened24h={tp['opened_24h']} closed-unmerged={tp['closed_unmerged']}")
     print(f"                waiting-on-them={tp['awaiting_them']}/{tp['open']} oldest-open={tp['oldest_open_days']}d")
+    ld = d["landed"]
+    print(f"  landed      : {ld['total']} commit(s) on upstream default branches — "
+          + ", ".join(f"{k.split('/')[-1]}={v['total']}" for k, v in ld["by_repo"].items()))
     print(f"  open PRs    : {len(d['open_prs'])}")
     for p in d["open_prs"]:
         print(f"      {p['pr']:<34} checks={p['checks']:<8} idle={p['idle_days']}d")
