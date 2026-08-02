@@ -171,6 +171,10 @@ NOT_OUR_CHECKS = re.compile(
 )
 
 
+def _utc_day() -> str:
+    return datetime.now(timezone.utc).date().isoformat()
+
+
 def failing_checks(pr: dict) -> list[dict]:
     """Failing checks on the PR's newest commit, split into ours and not-ours.
 
@@ -263,7 +267,13 @@ def feedback_items(pr: dict) -> list[dict]:
     for chk in failing_checks(pr):
         # Not-ours checks are still recorded (so they are not re-examined every
         # five minutes) but are marked unactionable rather than dispatched.
-        items.append({"id": f"check:{chk['sha']}:{chk['name']}",
+        # The day is part of the key on purpose. Without it a failed repair
+        # attempt was permanent: the id is (sha, check), a failed attempt pushes
+        # no commit, so the sha never changes and the item is never reconsidered.
+        # AutoGPT#13752's CodeQL alerts and openclaw#116260's check-lint were
+        # both retired that way — dispatched once, unfixed, never looked at
+        # again. One retry per day, still bounded by the check budget.
+        items.append({"id": f"check:{chk['sha']}:{chk['name']}:{_utc_day()}",
                       "author": "ci", "when": "", "kind": "check",
                       "body": f"Check `{chk['name']}` is failing on commit {chk['sha']}.",
                       "ours": chk["ours"]})

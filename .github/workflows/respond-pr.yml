@@ -72,6 +72,27 @@ jobs:
             # failing Actions job so the agent sees the assertion, not just that
             # something went red. Non-Actions checks (Vercel, codecov) have no
             # log we can read and are filtered out by the watcher anyway.
+            # A name cannot say whose failure it is. `integration_test` on
+            # AutoGPT and `check-sqlite-session-flip-proof` on openclaw both
+            # failed on our PRs AND on other people's on the same day, while
+            # passing on others — content-dependent, not universally broken, and
+            # not decidable from the name. Give the agent the base rate and let
+            # it judge with the log in front of it.
+            echo; echo "### [ctx] Same check on other people's open PRs (base rate)"
+            { gh pr checks "$N" --repo "$UP" --json name,state \
+                --jq '.[] | select(.state=="FAILURE") | .name' 2>/dev/null || true; } \
+              | head -6 | while read -r cname; do
+                  [ -z "$cname" ] && continue
+                  pass=0; fail=0
+                  for sha in $(gh api "repos/$UP/pulls?state=open&per_page=10&sort=created&direction=desc" \
+                                 --jq ".[] | select(.user.login != \"chelsealong\") | .head.sha" 2>/dev/null | head -6); do
+                    c=$(gh api "repos/$UP/commits/$sha/check-runs?per_page=100" --paginate \
+                          --jq ".check_runs[] | select(.name==\"$cname\") | .conclusion" 2>/dev/null | head -1)
+                    case "$c" in success) pass=$((pass+1));; failure|timed_out) fail=$((fail+1));; esac
+                  done
+                  echo "  $cname: fails on $fail of $((pass+fail)) other open PRs that ran it"
+                done
+
             echo; echo "### [ctx] Failing check logs"
             # `gh pr checks` exits 8 when any check is failing — which is
             # precisely when this runs — and the step is `set -euo pipefail`,
