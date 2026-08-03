@@ -87,13 +87,17 @@ jobs:
             echo; echo "### [ctx] Same check on other people's open PRs (base rate)"
             { gh pr checks "$N" --repo "$UP" --json name,state \
                 --jq '.[] | select(.state=="FAILURE") | .name' 2>/dev/null || true; } \
-              | head -6 | while read -r cname; do
+              | sed -n '1,6p' | while read -r cname; do
                   [ -z "$cname" ] && continue
                   fp=0; ff=0; sp=0; sf=0
                   while IFS="|" read -r osha orepo; do
                     [ -z "$osha" ] && continue
-                    c=$(gh api "repos/$UP/commits/$osha/check-runs?per_page=100" --paginate \
-                          --jq ".check_runs[] | select(.name==\"$cname\") | .conclusion" 2>/dev/null | head -1)
+                    # Capture first, then take the first line. Piping a
+                    # still-paginating `gh` into `head` sends it SIGPIPE and
+                    # exit 141 kills the step under pipefail.
+                    all_c=$(gh api "repos/$UP/commits/$osha/check-runs?per_page=100" --paginate \
+                              --jq ".check_runs[] | select(.name==\"$cname\") | .conclusion" 2>/dev/null || true)
+                    c=$(printf '%s\n' "$all_c" | sed -n 1p)
                     if [ "$orepo" = "$UP" ]; then
                       case "$c" in success) sp=$((sp+1));; failure|timed_out) sf=$((sf+1));; esac
                     else
@@ -134,7 +138,7 @@ jobs:
                       --jq '"  " + (.output.title // "") + "\n" + ((.output.summary // "")[0:600])' 2>/dev/null || true
                     gh api "repos/$UP/check-runs/$cr/annotations" \
                       --jq '.[] | "  \(.annotation_level) \(.path):\(.start_line) \(.title // "")\n    \((.message // "")[0:300])"' \
-                      2>/dev/null | head -60 || true
+                      2>/dev/null | sed -n '1,60p' || true
                     continue ;;
                   *) continue ;;
                 esac
