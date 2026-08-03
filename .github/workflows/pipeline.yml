@@ -39,6 +39,7 @@ env:
 jobs:
   scan:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     outputs:
       matrix: ${{ steps.plan.outputs.matrix }}
       any: ${{ steps.plan.outputs.any }}
@@ -128,6 +129,7 @@ jobs:
     # cap. Keep the scan job (cheap, API-only, useful redundancy); retire the fix.
     if: needs.scan.outputs.any == 'true' && inputs.fix == true
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     strategy:
       max-parallel: 1          # one PR at a time; keeps the account out of spam territory
       fail-fast: false

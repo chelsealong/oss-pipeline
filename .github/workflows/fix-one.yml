@@ -669,6 +669,25 @@ jobs:
           UPSTREAM: ${{ steps.cfg.outputs.upstream }}
           PREPARE_ONLY: ${{ steps.cfg.outputs.prepare_only }}
         run: |
+          # Last-moment claim re-check. The pre-vet ran before the agent
+          # session, which is bounded at 40 minutes — and on dify a competing
+          # PR appears a median of 16 minutes after the issue is filed, often
+          # from the reporter themselves. Opening on top of one is the single
+          # rudest thing this pipeline can do, so pay one API call to avoid it.
+          if gh api "repos/${UPSTREAM}/issues/${NUM}" --jq '.state' 2>/dev/null | grep -qi closed; then
+            echo "::notice::${UPSTREAM}#${NUM} closed while we worked — not opening a PR"
+            exit 0
+          fi
+          rival=$(gh api graphql -f query="{repository(owner:\"${UPSTREAM%%/*}\",name:\"${UPSTREAM##*/}\"){issue(number:${NUM}){
+                    timelineItems(itemTypes:[CROSS_REFERENCED_EVENT],last:20){nodes{
+                      ... on CrossReferencedEvent{source{... on PullRequest{number state author{login}}}}}}}}}" \
+                  --jq '[.data.repository.issue.timelineItems.nodes[]?.source
+                         | select(.number != null and .state == "OPEN" and .author.login != "chelsealong")
+                         | .number] | join(",")' 2>/dev/null || true)
+          if [ -n "${rival:-}" ]; then
+            echo "::notice::${UPSTREAM}#${NUM} now has competing open PR(s) ${rival} — not opening ours"
+            exit 0
+          fi
           if [ "$PREPARE_ONLY" = "true" ]; then
             echo "::notice::prepare-only repo — branch pushed, no PR by policy"; exit 0
           fi
