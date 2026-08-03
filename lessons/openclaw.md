@@ -129,3 +129,40 @@ maintainer can re-run it with repo credentials, and leave the code alone.
 Beware the pooled statistic: counting all other PRs together gives a 5% failure
 rate for this check, which reads as "ours". Split by fork vs same-repo before
 concluding anything about a red check.
+
+## "fail-open" means invert the predicate, not extend the denylist
+
+openclaw#115138 spent five days and four rounds going **down** in rating:
+
+| round | what we pushed | rating after |
+|---|---|---|
+| — | original mmap gate | 🦐 gold shrimp 3/6 |
+| 1 | distinguish verified-local from unclassified WAL | 3/6 |
+| 2 | keep mmap off local Windows drives | 3/6 |
+| 3 | exclude MacFUSE/OSXFUSE | 3/6 |
+| 4 | exclude generic FUSE mounts | 🧂 unranked krab **1/6** |
+
+The reviewer's objection never changed across any of them:
+
+> Mmap gate remains fail-open: the branch enables mmap whenever the journal
+> policy equals "wal". That policy is also returned for any matched mount type
+> that is not one of the explicitly rejected network or FUSE types, so it is not
+> a positive local-filesystem proof.
+> **[P1] Make mmap eligibility fail closed for unlisted mounts**
+
+`resolveMountTypeJournalPolicy` returns `"wal"` as a *compatibility default* for
+anything it does not recognise. The PR reused that default as evidence of being
+on a local disk. Every round added one more entry to the reject list — Windows,
+MacFUSE, FUSE — while the flaw was that the list exists at all.
+
+**When a reviewer says a predicate is fail-open, adding exclusions is the wrong
+direction and will be read as not having understood.** Proof confidence stayed
+at 4/6 the whole time; patch quality fell 3 → 1. Enumerating cases *lowered* the
+score, because each round demonstrated the same misreading.
+
+Invert it: require a positively-recognised local mount type, and let everything
+unlisted fall through to disabled. One condition, no list.
+
+**Stop rule:** if the reviewer's headline finding is unchanged after two rounds,
+the next push must change the shape of the fix, not add another case. A third
+identical round is evidence the objection was never read.
