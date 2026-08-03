@@ -122,11 +122,28 @@ jobs:
                                 --jq ".[] | select(.user.login != \"chelsealong\") | \"\(.head.sha)|\(.head.repo.full_name)\"" \
                                 2>/dev/null | head -20)"
                   echo "  $cname: same-repo PRs fail $sf/$((sp+sf)); FORK PRs fail $ff/$((fp+ff))"
-                  if [ $((sp+sf)) -gt 3 ] && [ "$sf" -eq 0 ] && [ "$ff" -gt 0 ]; then
-                    echo "    ^ passes for everyone pushing to the repo directly and fails only from forks."
-                    echo "      That is an infrastructure limitation, not a defect in this PR. Say so on"
-                    echo "      the PR in one sentence and change no code for it."
-                  fi
+                  case "$(printf '%s' "$cname" | tr 'A-Z' 'a-z')" in
+                    *cla*|*license*|*dco*|*sign*)
+                      # A CLA check fits "same-repo passes, forks fail" perfectly,
+                      # for the obvious reason: employees signed and outside
+                      # contributors have not. The heuristic below read that as a
+                      # broken check and had the agent publicly tell Comfy-Org
+                      # their CLA requirement was an infrastructure limitation.
+                      # It is a requirement. Never explain one away.
+                      echo "    ^ this is a signing requirement, not a broken check. It fails because the"
+                      echo "      agreement is unsigned. Do NOT describe it as an infrastructure problem."
+                      echo "      Signing is a legal act by the human account owner — never sign, never post"
+                      echo "      the acceptance text, and never claim on their behalf that they agree."
+                      ;;
+                    *)
+                      if [ $((sp+sf)) -gt 3 ] && [ "$sf" -eq 0 ] && [ "$ff" -gt 0 ]; then
+                        echo "    ^ passes for everyone pushing to the repo directly and fails only from forks."
+                        echo "      That is likely an infrastructure limitation rather than a defect here, but"
+                        echo "      READ THE JOB LOG before saying so on the PR — the statistic alone is not"
+                        echo "      evidence, and a wrong claim on someone else's repo costs more than silence."
+                      fi
+                      ;;
+                  esac
                 done
 
             echo; echo "### [ctx] Failing check logs"
