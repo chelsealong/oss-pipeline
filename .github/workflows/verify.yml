@@ -1,0 +1,67 @@
+name: Verify pipeline
+
+# The local harness cannot execute the shell it checks: macOS ships bash 3.2,
+# which mis-parses a heredoc containing an apostrophe inside $( ) and reports
+# three healthy steps as syntax errors. So `verify.sh` matches patterns, and the
+# actual parse happens here on bash 5.x — the same shell the runners use.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install --quiet pyyaml
+
+      - name: bash --version
+        run: bash --version | head -1
+
+      - name: Parse every run block with the runner's own shell
+        run: |
+          python3 - <<'PY' > /tmp/blocks.txt
+          import yaml, pathlib, re, json, os
+          out = []
+          for f in sorted(pathlib.Path(".github/workflows").glob("*.yml")):
+              d = yaml.safe_load(f.read_text()) or {}
+              for jn, job in (d.get("jobs") or {}).items():
+                  for i, st in enumerate(job.get("steps", [])):
+                      run = st.get("run")
+                      if not run:
+                          continue
+                      # GitHub expressions are not shell; substitute a literal.
+                      src = re.sub(r"\$\{\{[^}]*\}\}", "PLACEHOLDER", run)
+                      out.append({"f": f.name, "j": jn, "i": i,
+                                  "n": st.get("name", f"step {i}"), "src": src})
+          print(json.dumps(out))
+          PY
+          python3 - <<'PY'
+          import json, subprocess, tempfile, os, sys
+          blocks = json.load(open("/tmp/blocks.txt"))
+          bad = 0
+          for b in blocks:
+              with tempfile.NamedTemporaryFile("w", suffix=".sh", delete=False) as tf:
+                  tf.write(b["src"]); path = tf.name
+              p = subprocess.run(["bash", "-n", path], capture_output=True, text=True)
+              os.unlink(path)
+              if p.returncode:
+                  bad += 1
+                  print(f"::error::{b['f']} / {b['j']} / {b['n']}: {p.stderr.strip().splitlines()[0]}")
+          print(f"{len(blocks)} run block(s) parsed, {bad} failed")
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: Static harness
+        run: |
+          # The scanner lives outside this repo on the workstation; point the
+          # harness at the copies tracked here so the sync check is meaningful.
+          SCANNER="$PWD" ./verify.sh

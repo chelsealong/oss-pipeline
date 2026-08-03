@@ -46,6 +46,21 @@ jobs:
           echo "head=$(jq -r .headRefName /tmp/pr.json)" >> "$GITHUB_OUTPUT"
           echo "state=$(jq -r .state /tmp/pr.json)" >> "$GITHUB_OUTPUT"
 
+          # Whose branch is it now? watch-prs.py refuses to dispatch at a PR a
+          # maintainer has taken over, but that decision is made minutes before
+          # this runs and manual dispatches skip it entirely. openclaw#117176
+          # was validated at 120/120 green by vincentkoc, who then rebased it
+          # and added two commits of their own; the responder was already in
+          # flight and had to be killed by hand. Re-check here, and again
+          # before pushing.
+          OWNER=$(gh api "repos/$UP/pulls/$N/commits" --paginate \
+                    --jq '.[-1].author.login' 2>/dev/null | tail -1)
+          echo "branch_owner=${OWNER:-unknown}" >> "$GITHUB_OUTPUT"
+          if [ -n "$OWNER" ] && [ "$OWNER" != "chelsealong" ]; then
+            echo "::warning::newest commit on $UP#$N is by $OWNER, not us — standing down"
+            echo "state=TAKEN_OVER" >> "$GITHUB_OUTPUT"
+          fi
+
           # Everything a reviewer might have said, newest last.
           #
           # Bounded per section. One real run produced a 1325-line context and
