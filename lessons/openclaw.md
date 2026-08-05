@@ -166,3 +166,36 @@ unlisted fall through to disabled. One condition, no list.
 **Stop rule:** if the reviewer's headline finding is unchanged after two rounds,
 the next push must change the shape of the fix, not add another case. A third
 identical round is evidence the objection was never read.
+
+## Keep it small — this repo merges outside PRs by size, not by score
+
+Measured 07-29..08-03 over 21 fork PRs that merged, with self-merges by people
+who hold write access excluded (`fuller-stack-dev` merged four of his own at
++228..+1469, which is not the same act as a maintainer accepting a stranger's
+patch and must not be averaged in):
+
+| additions | merged fork PRs |
+|---|---|
+| ≤120 lines | 12 of 15 |
+| 121–200 | 0 |
+| >200 | 3, all merged by one maintainer during a two-day queue sweep |
+
+Median accepted size: **+61 lines**. Time from open to merge: median 3h, max 14h.
+Nothing merges slowly here — a fork PR is taken within hours or it sits.
+
+Our own record matches exactly. #116958 was **+38/-2** and merged in 5 hours.
+The four that stalled are +190, +287, +297 and **+1234/29 files** — and two of
+them are CI-green `platinum hermit` / `diamond lobster` sitting untouched for
+days. Score is not the constraint; nobody has hours to read 29 files, and no
+rating fixes that.
+
+**So on openclaw: target one file, under ~100 added lines, one behaviour.** If
+the honest fix is larger, prefer a different issue — a large well-rated PR here
+is worth less than a small one, because it will not be read. This does not
+generalise: hermes salvages large patches routinely (#75792 was +274 across 3
+commits and was cherry-picked with authorship preserved).
+
+Earlier in this file a table shows `size: XL` as the largest merged bucket. That
+counted **all** merged PRs, which on this repo are overwhelmingly internal
+branches with write access. For a fork account it is misleading — use the
+numbers above.
