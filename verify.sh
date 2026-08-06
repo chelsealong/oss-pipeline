@@ -109,7 +109,28 @@ print("  ok     check-ownership classifier" if not bad else f"  {bad} problem(s)
 sys.exit(1 if bad else 0)
 PY
 
-echo "== 6. tracked copies match the scanner =="
+echo "== 6. queued work has a consumer =="
+python3 - <<PY2 || fail=$((fail+1))
+import sys, importlib.util
+spec = importlib.util.spec_from_file_location("w", "$SCANNER/watch.py")
+w = importlib.util.module_from_spec(spec); spec.loader.exec_module(w)
+bad = 0
+# The queue only ever filled up: its sole reader was run-fix.sh, which runs
+# claude locally and cannot authenticate from this machine. 8 of 13 repos
+# dispatched nothing for days while 24 vetted candidates sat unread.
+if not hasattr(w, "drain_queues"):
+    print("  FAIL  watch.py has no drain_queues — queued candidates have no consumer"); bad += 1
+else:
+    src = open("$SCANNER/watch.py").read()
+    if "budget_allows" not in src.split("def drain_queues")[1].split("def ")[0]:
+        print("  FAIL  drain_queues does not consult budget_allows — it could run away"); bad += 1
+    if "GATED" not in src.split("def drain_queues")[1].split("def ")[0]:
+        print("  FAIL  drain_queues does not skip GATED repos — those need claim.sh first"); bad += 1
+print("  ok     queue drainer present and gated" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY2
+
+echo "== 7. tracked copies match the scanner =="
 for f in scan.py watch-prs.py health.py; do
   if [ -f "$f" ] && [ -f "$SCANNER/$f" ]; then
     diff -q "$f" "$SCANNER/$f" >/dev/null 2>&1 && ok "$f in sync" || bad "$f differs from $SCANNER/$f"
