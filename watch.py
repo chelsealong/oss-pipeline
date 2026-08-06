@@ -358,6 +358,12 @@ def drain_queues(keys: list[str]) -> int:
     Budget stays the only gate, so this cannot run away: a repo whose sweep
     already spent its allowance drains nothing.
     """
+    # A dry run must not consume the queue. This function removes each candidate
+    # it dispatches and writes the queue back, so exercising it with trigger_fix
+    # stubbed out silently deleted four vetted candidates (adk#6606,
+    # spec-kit#3997, dify#40008/#40028) that were never sent anywhere. The same
+    # mistake was fixed in watch-prs.py days earlier and not carried over here.
+    dry = os.environ.get("DRY_RUN") == "1"
     sent = 0
     for key in keys:
         if key in GATED:
@@ -386,7 +392,8 @@ def drain_queues(keys: list[str]) -> int:
             trigger_fix(key, num)
             q["candidates"] = [c for c in q["candidates"] if c["number"] != num]
             sent += 1
-        f.write_text(json.dumps(q, indent=2) + "\n")
+        if not dry:
+            f.write_text(json.dumps(q, indent=2) + "\n")
     return sent
 
 
