@@ -41,6 +41,8 @@ ROOT = pathlib.Path(__file__).resolve().parent
 SEEN = scan.STATE / "seen.json"
 # Set NO_TRIGGER=1 to detect and queue without starting fixes (for testing).
 import os
+import subprocess
+import re
 NO_TRIGGER = os.environ.get("NO_TRIGGER") == "1"
 LOG = ROOT / "watch.log"
 
@@ -375,6 +377,83 @@ def already_dispatched(key: str, number: int) -> bool:
     return number in _dispatched().get(key, [])
 
 
+
+REFUNDED = scan.STATE / "budget-refunds.json"
+
+
+def reconcile_budget() -> int:
+    """Give back budget spent on runs that never had a chance to work.
+
+    A unit is deducted the moment a fix is dispatched, which is right: it stops
+    a retry storm. But it means an infrastructure failure spends the day's
+    allowance for nothing. On 2026-08-07, 23 of 27 runs died before the agent
+    started — sixteen on `gh: Bad credentials` during the 26 minutes between a
+    PAT being regenerated on github.com and the new value reaching the repo
+    secret, seven on Claude's org policy — and hermes, openclaw, comfyui and
+    langfuse all hit their daily cap having produced nothing. The budget said
+    the work was done; no work had been attempted.
+
+    So: a run that failed on credentials is not work. Refund it. Each run is
+    refunded at most once, tracked by run id.
+    """
+    try:
+        raw = subprocess.run(
+            ["gh", "run", "list", "--repo", PIPELINE_REPO, "--workflow", "fix-one.yml",
+             "--limit", "40", "--json", "databaseId,conclusion,createdAt"],
+            capture_output=True, text=True, timeout=90)
+        runs = json.loads(raw.stdout or "[]") if raw.returncode == 0 else []
+    except Exception as e:  # noqa: BLE001
+        log(f"  budget reconcile: cannot list runs ({str(e)[:80]})")
+        return 0
+
+    today = datetime.now(timezone.utc).date().isoformat()
+    try:
+        done = json.loads(REFUNDED.read_text()) if REFUNDED.exists() else {}
+    except Exception:  # noqa: BLE001
+        done = {}
+    if done.get("date") != today:
+        done = {"date": today, "runs": []}
+    seen_ids = set(done["runs"])
+
+    try:
+        budget = json.loads(BUDGET_FILE.read_text()) if BUDGET_FILE.exists() else {}
+    except Exception:  # noqa: BLE001
+        return 0
+    if budget.get("date") != today:
+        return 0
+
+    refunded = 0
+    for r in runs:
+        rid = r.get("databaseId")
+        if (r.get("conclusion") != "failure" or not rid or rid in seen_ids
+                or (r.get("createdAt") or "") < today):
+            continue
+        try:
+            lg = subprocess.run(
+                ["gh", "run", "view", str(rid), "--repo", PIPELINE_REPO, "--log"],
+                capture_output=True, text=True, timeout=120)
+            text = lg.stdout or ""
+        except Exception:  # noqa: BLE001
+            continue
+        if not re.search(r"Bad credentials|organization has disabled|subscription access"
+                         r"|Invalid bearer token|Failed to authenticate", text, re.I):
+            continue                      # a real failure; that unit was earned
+        m = re.search(r"repo_key=(\S+) issue=", text)
+        key = m.group(1) if m else None
+        seen_ids.add(rid)
+        if key and budget.get("used", {}).get(key, 0) > 0:
+            budget["used"][key] -= 1
+            refunded += 1
+            log(f"  [{key}] refunded 1 budget unit — run {rid} failed on credentials, not on work")
+
+    if refunded:
+        BUDGET_FILE.write_text(json.dumps(budget, indent=2) + "\n")
+    done["runs"] = sorted(seen_ids)[-200:]
+    scan.STATE.mkdir(parents=True, exist_ok=True)
+    REFUNDED.write_text(json.dumps(done, indent=2) + "\n")
+    return refunded
+
+
 def drain_queues(keys: list[str]) -> int:
     """Dispatch queued candidates that the live sweep never gets to.
 
@@ -475,6 +554,9 @@ def main() -> int:
                 # sweep: queued work is by definition not urgent, and one pass
                 # per ~10 minutes is plenty to spend a daily allowance.
                 if not bootstrap and sweeps % 120 == 0:
+                    # Reconcile before draining, so refunded units are available
+                    # to the drain that follows rather than a cycle later.
+                    reconcile_budget()
                     n = drain_queues(keys)
                     if n:
                         log(f"drained {n} queued candidate(s)")
