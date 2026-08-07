@@ -155,6 +155,22 @@ REPOS: dict[str, dict] = {
         "exclude_title": r"kernel|cuda|triton|quantiz|fp8|awq|gptq|marlin|cutlass|"
                          r"benchmark|throughput|latency|speed ?up|perf\b|nccl|tensor.?parallel",
     },
+    # Evaluated 2026-08-07 and deliberately NOT added, so it is not re-evaluated:
+    #
+    #   Arize-ai/phoenix — over six weeks, 300 sampled merges contained 5 PRs
+    #     from forks, by 5 different people, none of them returning. And the
+    #     licence is Elastic License 2.0, not an OSI licence: it forbids
+    #     offering the software as a hosted service and forbids circumventing
+    #     its licence-key functionality. Contributing to a commercial product
+    #     under those terms is a decision for a person to make, not a default.
+    #
+    #   openai/openai-agents-python — the best merge machinery measured
+    #     anywhere: 104 external PRs in six weeks, 4h median. But 12 open
+    #     issues, most of them server-side faults we cannot touch, and its
+    #     merged PRs reference no issue at all — contributors read the code and
+    #     open a PR directly. This pipeline selects from issues, so the supply
+    #     is empty for us. Revisit only if it learns to find work in code.
+    #
     # Added 2026-08-07. The most favourable numbers measured so far for the
     # kind of change this pipeline produces: over two weeks 18 of 20 sampled
     # fork PRs were merged by someone other than their author, by 11 distinct
