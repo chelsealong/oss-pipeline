@@ -341,6 +341,40 @@ def sweep(keys: list[str], seen: dict[str, list[int]], per_repo: int,
 
 
 
+
+DISPATCHED = scan.STATE / "dispatched.json"
+
+
+def _dispatched() -> dict:
+    try:
+        return json.loads(DISPATCHED.read_text()) if DISPATCHED.exists() else {}
+    except Exception:  # noqa: BLE001
+        return {}
+
+
+def record_dispatch(key: str, number: int) -> None:
+    """Remember that this issue was already sent to a fixer.
+
+    The queue cannot carry this memory: scan.py rebuilds queue/<key>.json from
+    scratch every cycle, so a candidate drain removes reappears twenty minutes
+    later and is dispatched again. spec-kit#3997 went out three times that way
+    and burned three agent sessions on one issue.
+    """
+    d = _dispatched()
+    lst = d.setdefault(key, [])
+    if number not in lst:
+        lst.append(number)
+        # Bounded: only recent history matters for dedup, and an unbounded file
+        # is its own failure mode.
+        d[key] = lst[-400:]
+        scan.STATE.mkdir(parents=True, exist_ok=True)
+        DISPATCHED.write_text(json.dumps(d, indent=2) + "\n")
+
+
+def already_dispatched(key: str, number: int) -> bool:
+    return number in _dispatched().get(key, [])
+
+
 def drain_queues(keys: list[str]) -> int:
     """Dispatch queued candidates that the live sweep never gets to.
 
@@ -385,11 +419,18 @@ def drain_queues(keys: list[str]) -> int:
             continue
         # Oldest first: the freshest are what the sweep already had a shot at.
         for rec in list(reversed(cands)):
+            num = rec["number"]
+            if already_dispatched(key, num):
+                # Drop it from the queue so the next rebuild does not resurrect
+                # it, but spend nothing on it.
+                q["candidates"] = [c for c in q["candidates"] if c["number"] != num]
+                continue
             if not budget_allows(key):
                 break
-            num = rec["number"]
             log(f"  [{key}] draining queued #{num} (queued {rec.get('age_hours', '?')}h old issue)")
             trigger_fix(key, num)
+            if not dry:
+                record_dispatch(key, num)
             q["candidates"] = [c for c in q["candidates"] if c["number"] != num]
             sent += 1
         if not dry:
