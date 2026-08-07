@@ -150,7 +150,7 @@ DISPATCH_BUDGET = {
     "adk": 8, "langfuse": 6, "langfuse-python": 6, "spec-kit": 6,
     "openclaw": 8,
     "dify": 5, "autogpt": 5,
-    "comfyui": 2, "firecrawl": 2,
+    "comfyui": 8, "firecrawl": 2,
     "hermes": 9,
     # New 2026-08-07 — dispatch headroom over the 3 PR/day cap, as elsewhere.
     "vllm": 5, "sglang": 5, "pydantic-ai": 5,

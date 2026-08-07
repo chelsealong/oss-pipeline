@@ -218,6 +218,25 @@ for f in scan.py watch-prs.py health.py; do
   fi
 done
 
+echo "== 11. dispatch inputs match the workflow's declared inputs =="
+# A renamed workflow_dispatch input does not error at the workflow; it makes
+# every dispatch 422 "Unexpected inputs provided" and the queue drains into
+# nothing, silently. Assert the names watch.py sends are the names fix-one
+# declares.
+python3 - "$SCANNER/watch.py" <<'PY3' || fail=$((fail+1))
+import re, sys, yaml
+bad = 0
+declared = set(yaml.safe_load(open(".github/workflows/fix-one.yml"))[True]["workflow_dispatch"]["inputs"])
+src = open(sys.argv[1]).read()
+for blk in re.findall(r'fix-one\.yml(.{0,400}?)(?:\]|\n\n)', src, re.S):
+    sent = set(re.findall(r'''["']([a-z_]+)=''', blk))
+    unknown = sent - declared
+    if unknown:
+        print(f"  FAIL  watch.py dispatches fix-one.yml with unknown input(s): {sorted(unknown)}"); bad += 1
+print("  ok     dispatch inputs match fix-one.yml" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1
