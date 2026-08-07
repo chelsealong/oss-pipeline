@@ -402,6 +402,18 @@ jobs:
           4. Implement the MINIMAL fix. Never touch CI/workflow files, release or
              versioning machinery, generated files, or auth/credential code.
 
+             That list includes DEPENDENCY MANIFESTS AND LOCKFILES — package.json,
+             pnpm-lock.yaml, uv.lock, poetry.lock, Cargo.lock, requirements.txt,
+             go.sum — even to "sync with main" or to refresh a security override.
+             A run on openclaw#115138 pushed a dependency-graph change to a
+             two-file SQLite fix and had to revert it fifteen minutes later. The
+             reviewer reads the file list before the diff: hermes triage told a
+             competing PR to strip its unrelated uv.lock and vercel-workers
+             changes while picking ours, at +49/-2, as the best fix.
+
+             If the branch genuinely fails to build on a stale dependency, that
+             is a merge-base problem. Merge upstream. Do not edit the manifest.
+
           5. Add or update a test and PROVE IT FAILS WITHOUT THE FIX. The fix will
              already be committed, so 'git stash' does nothing — use
              'git checkout HEAD~1 -- <source file>', run the test, confirm it

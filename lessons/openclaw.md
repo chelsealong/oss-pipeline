@@ -199,3 +199,20 @@ Earlier in this file a table shows `size: XL` as the largest merged bucket. That
 counted **all** merged PRs, which on this repo are overwhelmingly internal
 branches with write access. For a fork account it is misleading — use the
 numbers above.
+
+## Never touch dependencies, lockfiles or CI — not even to "sync with main"
+
+On 2026-08-07 the fixer working on #115138 pushed
+`fix(deps): sync stale security overrides with main`, then reverted it fifteen
+minutes later as `revert(deps): drop unauthorized dependency-graph changes`. It
+caught itself, which is good, but the commit should never have existed: this is
+a two-file SQLite change and the dependency graph is not part of it.
+
+Scope creep is not a style problem here, it is the difference between merged and
+ignored. hermes triage rejected a competing PR for exactly this — #75321 was
+told to remove "unrelated uv.lock, scipy-marker and vercel-workers changes"
+while our #74733 was picked as `best fix` at +49/-2. The reviewer reads the file
+list before the diff.
+
+If a build genuinely fails because a dependency is stale on the branch, that is
+a merge-base problem: rebase or merge upstream, do not edit the manifest.

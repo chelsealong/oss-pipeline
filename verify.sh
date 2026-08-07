@@ -146,7 +146,27 @@ print("  ok     every agent call is streamed, bounded and status-preserving" if 
 sys.exit(1 if bad else 0)
 PY2
 
-echo "== 7. queued work has a consumer =="
+echo "== 7. the generator prompt forbids out-of-scope edits =="
+python3 - <<PY2 || fail=$((fail+1))
+import yaml, pathlib, re, sys
+# openclaw#115138 got a dependency-graph commit on a two-file SQLite fix and
+# self-reverted. The prompt has to name lockfiles explicitly; "minimal fix" was
+# not enough.
+d = yaml.safe_load(pathlib.Path(".github/workflows/fix-one.yml").read_text()) or {}
+run = ""
+for jn, job in (d.get("jobs") or {}).items():
+    for st in job.get("steps", []):
+        if st.get("id") == "gen":
+            run = st.get("run") or ""
+bad = 0
+for term in ("lockfile", "pnpm-lock", "uv.lock", "manifest"):
+    if term.lower() not in run.lower():
+        print(f"  FAIL  generator prompt does not mention {term!r}"); bad += 1
+print("  ok     dependency edits are named and forbidden" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY2
+
+echo "== 8. queued work has a consumer =="
 python3 - <<PY2 || fail=$((fail+1))
 import sys, importlib.util
 spec = importlib.util.spec_from_file_location("w", "$SCANNER/watch.py")
@@ -167,7 +187,7 @@ print("  ok     queue drainer present and gated" if not bad else f"  {bad} probl
 sys.exit(1 if bad else 0)
 PY2
 
-echo "== 8. tracked copies match the scanner =="
+echo "== 9. tracked copies match the scanner =="
 for f in scan.py watch-prs.py health.py; do
   if [ -f "$f" ] && [ -f "$SCANNER/$f" ]; then
     diff -q "$f" "$SCANNER/$f" >/dev/null 2>&1 && ok "$f in sync" || bad "$f differs from $SCANNER/$f"
