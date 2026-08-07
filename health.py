@@ -392,6 +392,26 @@ def check_landed() -> tuple[list[str], dict]:
     return [], {"by_repo": detail, "total": total}
 
 
+def check_followups() -> tuple[list[str], dict]:
+    """Dated reminders that must not depend on anyone remembering.
+
+    A note in a memory file only surfaces if a session happens to load it. This
+    is read every day by the health check, so a commitment made to a maintainer
+    on one day is still visible on the day it comes due.
+    """
+    f = ROOT / "followups.json"
+    if not f.exists():
+        return [], {"due": 0, "items": []}
+    try:
+        items = json.loads(f.read_text()).get("items", [])
+    except Exception:  # noqa: BLE001
+        return ["followups.json is unreadable"], {"due": 0, "items": []}
+    today = now().date().isoformat()
+    due = [i for i in items if (i.get("due") or "9999") <= today]
+    problems = [f"follow-up due: {i['what'][:180]}" for i in due]
+    return problems, {"due": len(due), "items": [i.get("due") for i in items]}
+
+
 def check_prs() -> tuple[list[str], dict]:
     """Open PRs: staleness, and the branch-base problem that failed adk's scan."""
     q = ('{search(type:ISSUE, first:50, query:"is:pr is:open author:%s"){nodes{'
@@ -446,6 +466,7 @@ def main() -> int:
         "agent_reachable": check_agent_reachable(),
         "session_waste": check_session_waste(),
         "throughput": check_merge_throughput(),
+        "followups": check_followups(),
         "landed": check_landed(),
         "open_prs": check_prs(),
     }
@@ -487,6 +508,9 @@ def main() -> int:
     print(f"  throughput  : open={tp['open']} merged 24h/7d/all={tp['merged_24h']}/{tp['merged_7d']}/{tp['merged_total']} "
           f"opened24h={tp['opened_24h']} closed-unmerged={tp['closed_unmerged']}")
     print(f"                waiting-on-them={tp['awaiting_them']}/{tp['open']} oldest-open={tp['oldest_open_days']}d")
+    fu = d["followups"]
+    if fu["items"]:
+        print(f"  follow-ups : {fu['due']} due today, scheduled {', '.join(str(x) for x in fu['items'])}")
     ld = d["landed"]
     print(f"  landed      : {ld['total']} commit(s) on upstream default branches — "
           + ", ".join(f"{k.split('/')[-1]}={v['total']}" for k, v in ld["by_repo"].items()))
