@@ -264,6 +264,8 @@ def last_commit_author(pr: dict) -> str | None:
 def feedback_items(pr: dict) -> list[dict]:
     """Flatten every piece of feedback into (id, author, when, kind, body)."""
     items: list[dict] = []
+    if (st := standing_item(pr)):
+        items.append(st)
     for chk in failing_checks(pr):
         # Not-ours checks are still recorded (so they are not re-examined every
         # five minutes) but are marked unactionable rather than dispatched.
@@ -299,6 +301,25 @@ def feedback_items(pr: dict) -> list[dict]:
                           "kind": f"inline:{c.get('path','')}",
                           "body": c.get("body") or ""})
     return items
+
+
+# A label that says the PR is waiting on us is a standing obligation, not an
+# event. openclaw#116260 sat at `status: 📣 needs proof` for seven days with
+# green CI and no new comment, so an event-driven watcher had nothing to react
+# to and never looked at it again. Re-offer such a PR once a day.
+STANDING_OBLIGATION = ("needs proof", "waiting on author", "changes requested")
+
+
+def standing_item(pr: dict) -> dict | None:
+    labels = [l["name"].lower() for l in ((pr.get("labels") or {}).get("nodes") or [])]
+    hit = next((s for s in STANDING_OBLIGATION if any(s in l for l in labels)), None)
+    if not hit:
+        return None
+    return {"id": f"standing:{hit}:{_utc_day()}",
+            "author": "ci", "when": "", "kind": "check", "ours": True,
+            "body": f"This PR carries a label meaning it is waiting on us: {hit!r}. "
+                    "No new comment has arrived — the request is the standing one. "
+                    "Re-read the reviewer's last verdict and satisfy it."}
 
 
 def actionable(item: dict, pr: dict) -> tuple[bool, str]:
