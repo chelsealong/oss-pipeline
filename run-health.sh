@@ -28,7 +28,7 @@ printf '%s\n%s\n\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$OUT" >> health.log
 # Match only inside the PROBLEM(S) block; the summary lines above it contain
 # the same words at zero counts ("session-limit hits=0") and were tripping this.
 PROBLEMS=$(printf '%s' "$OUT" | sed -n '/PROBLEM(S)/,$p')
-if ! printf '%s' "$PROBLEMS" | grep -qE 'NONE dispatched|is not running|not loaded|no entries in the last hour|is PARTIAL|session-limit refusals|none merged in 7 days|sessions spent in 24h and no PR|cannot authenticate|runs failed in 24h|follow-up due'; then
+if ! printf '%s' "$PROBLEMS" | grep -qE 'NONE dispatched|is not running|not loaded|no entries in the last hour|is PARTIAL|session-limit refusals|none merged in 7 days|sessions spent in 24h and no PR|cannot authenticate|runs failed in 24h|follow-up due|sweep failures in 24h|non-network sweep failures'; then
   echo "problems are upstream-only; logged, not alerting"; exit 0
 fi
 

@@ -392,6 +392,37 @@ def check_landed() -> tuple[list[str], dict]:
     return [], {"by_repo": detail, "total": total}
 
 
+def check_sweep_health() -> tuple[list[str], dict]:
+    """How often the 5-second sweep fails to reach GitHub.
+
+    A single failure is nothing — the loop retries in seconds. A sustained one
+    is the pipeline's oldest failure mode wearing a new hat: the watcher keeps
+    running, the log keeps being written, and nothing is detected. Sweep
+    failures were logged and never counted, so a day of them would have looked
+    identical to a quiet day.
+
+    Measured baseline on 2026-08-07: 22 in 24 hours, all network — 14 "error
+    connecting to api.github.com", the rest connection resets and a TLS
+    handshake timeout. That is the normal rate for this machine's egress, so
+    the threshold sits above it rather than at zero.
+    """
+    lines = tail_since(ROOT / "watch.log", 24)
+    fails = [l for l in lines if "sweep failed" in l]
+    net = [l for l in fails if re.search(
+        r"error connecting|connection reset|read tcp|TLS handshake|timeout|EOF|"
+        r"Temporary failure|no such host", l, re.I)]
+    other = len(fails) - len(net)
+    d = {"sweep_failures_24h": len(fails), "network": len(net), "other": other}
+    problems = []
+    if len(fails) >= 60:
+        problems.append(f"{len(fails)} sweep failures in 24h — detection is degraded; "
+                        "the watcher is running but not reliably reaching GitHub")
+    elif other >= 10:
+        problems.append(f"{other} non-network sweep failures in 24h — these are not "
+                        "egress flakes and should be read")
+    return problems, d
+
+
 def check_followups() -> tuple[list[str], dict]:
     """Dated reminders that must not depend on anyone remembering.
 
@@ -466,6 +497,7 @@ def main() -> int:
         "agent_reachable": check_agent_reachable(),
         "session_waste": check_session_waste(),
         "throughput": check_merge_throughput(),
+        "sweep_health": check_sweep_health(),
         "followups": check_followups(),
         "landed": check_landed(),
         "open_prs": check_prs(),
@@ -508,6 +540,9 @@ def main() -> int:
     print(f"  throughput  : open={tp['open']} merged 24h/7d/all={tp['merged_24h']}/{tp['merged_7d']}/{tp['merged_total']} "
           f"opened24h={tp['opened_24h']} closed-unmerged={tp['closed_unmerged']}")
     print(f"                waiting-on-them={tp['awaiting_them']}/{tp['open']} oldest-open={tp['oldest_open_days']}d")
+    sw = d["sweep_health"]
+    print(f"  sweep 健康  : 24h 失败 {sw['sweep_failures_24h']} 次 "
+          f"(网络 {sw['network']}, 其他 {sw['other']})")
     fu = d["followups"]
     if fu["items"]:
         print(f"  follow-ups : {fu['due']} due today, scheduled {', '.join(str(x) for x in fu['items'])}")
