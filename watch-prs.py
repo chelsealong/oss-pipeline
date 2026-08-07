@@ -364,8 +364,13 @@ def dispatch(repo: str, number: int, note: str) -> bool:
         return True
     try:
         r = subprocess.run(
+            # Pass the reason. respond-pr rebuilds its own context from the
+            # thread and otherwise cannot tell why it was woken: a PR labelled
+            # "needs proof" has no new comment, so two runs read the thread,
+            # found nothing newer than our own last message, and closed as
+            # "status only" while the PR sat waiting on us.
             ["gh", "workflow", "run", "respond-pr.yml", "--repo", PIPELINE_REPO,
-             "-f", f"upstream={repo}", "-f", f"pr={number}"],
+             "-f", f"upstream={repo}", "-f", f"pr={number}", "-f", f"reason={note[:200]}"],
             capture_output=True, text=True, timeout=60)
         if r.returncode == 0:
             log(f"  -> dispatched respond-pr.yml for {repo}#{number}")

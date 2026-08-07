@@ -16,6 +16,11 @@ on:
       pr:
         description: 'PR number'
         required: true
+      reason:
+        description: 'Why the watcher dispatched this — a failing check, a new
+          review, or a standing label meaning the PR is waiting on us'
+        required: false
+        default: ''
       dry_run:
         description: 'Gather the feedback and print the plan; change nothing'
         type: boolean
@@ -226,6 +231,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT }}
           UP: ${{ inputs.upstream }}
           N: ${{ inputs.pr }}
+          REASON: ${{ inputs.reason }}
           BRANCH: ${{ steps.ctx.outputs.head }}
         run: |
           cat > "$RUNNER_TEMP/fmt.py" <<'FMT'
@@ -267,6 +273,27 @@ jobs:
           timeout 2400 claude -p "$(cat <<EOF
           Reviewer feedback has arrived on our own pull request ${UP}#${N}. Decide
           what it actually asks for and do that — nothing more.
+
+          THIS IS A ONE-SHOT NON-INTERACTIVE SESSION. When you end your turn the
+          process exits and anything not written to disk is lost. NEVER run a
+          command in the background and then stop to wait for it — no later turn
+          exists in which a notification can reach you. Run every build, lint and
+          test in the FOREGROUND. This guard was added to the fixer after two
+          runs burned 25 and 6 minutes waiting for notifications; it was not
+          carried over here, and openclaw#116260 then spent 39 turns doing the
+          same thing: backgrounding check-changed.mjs, polling for a completion
+          that never arrives, and finishing with "echo idle".
+
+          WHY YOU WERE CALLED: ${REASON:-(not recorded)}
+
+          That line is the watcher's reason, and it is not always visible in the
+          thread. A PR labelled "needs proof" or "waiting on author" carries a
+          standing obligation with no new comment attached to it — two runs read
+          the thread, found nothing newer than their own last message, and
+          closed as "Category D, status only" while the PR sat waiting on us for
+          a week. If the reason names a state rather than a message, go read the
+          reviewer's most recent verdict and satisfy it; do not conclude there is
+          nothing to do merely because nobody spoke today.
 
           The full thread is in ./FEEDBACK.txt in this working directory (PR body,
           labels, issue comments, reviews, inline comments, failing checks). READ IT
