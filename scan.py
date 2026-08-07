@@ -408,12 +408,21 @@ def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
         return False, f"already has PR(s): {prs[:3]}", {}
 
     who = claimants(upstream, num)
-    if len(who) >= 2:
-        return False, f"swarmed ({len(who)} claimants)", {}
-    if who:
-        return False, f"claimed by {who[0]}", {}
+    # Our own claim is the pipeline's own comment, not a rival. Counting it as
+    # one made claiming an act of self-exclusion: claim.sh commented, the next
+    # scan rejected the issue as "claimed by chelsealong", and it left the queue
+    # for good. langgraph accumulated eight such claims and zero PRs; adk had
+    # two. Gated repos still wait for the assignment — watch.promote_claims
+    # tracks that separately — but the issue stays visible either way.
+    others = [w for w in who if w.lower() != "chelsealong"]
+    if len(others) >= 2:
+        return False, f"swarmed ({len(others)} claimants)", {}
+    if others:
+        return False, f"claimed by {others[0]}", {}
 
-    return True, "clear", {"labels": sorted(labels), "comments": issue.get("comments", 0)}
+    return True, "clear", {"labels": sorted(labels),
+                           "comments": issue.get("comments", 0),
+                           "self_claimed": len(who) > len(others)}
 
 
 def age_hours(iso: str) -> float:

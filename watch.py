@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import pathlib
 import sys
 import time
@@ -185,6 +186,34 @@ def budget_allows(key: str) -> bool:
     return True
 
 
+def dispatch_fix(key: str, number: int) -> bool:
+    """Fire fix-one.yml at one issue. Returns True if the dispatch was accepted.
+
+    Split out of trigger_fix so promote_claims can reach it: trigger_fix
+    short-circuits every GATED repo into claim.sh, which is right for a
+    freshly vetted issue and wrong for one we have already been assigned.
+    """
+    import subprocess
+
+    if os.environ.get("DRY_RUN") == "1":
+        log(f"  DRY_RUN: would dispatch fix-one.yml for {key}#{number}")
+        return True
+    try:
+        r = subprocess.run(
+            ["gh", "workflow", "run", "fix-one.yml",
+             "--repo", PIPELINE_REPO,
+             "-f", f"repo_key={key}",
+             "-f", f"issue={number}"],
+            capture_output=True, text=True, timeout=60)
+        if r.returncode == 0:
+            log(f"  -> dispatched fix-one.yml for {key}#{number}")
+            return True
+        log(f"  dispatch failed for {key}#{number}: {r.stderr.strip()[:160]}")
+    except Exception as e:  # noqa: BLE001
+        log(f"  dispatch error for {key}#{number}: {e}")
+    return False
+
+
 def trigger_fix(key: str, number: int) -> None:
     """Act on a freshly vetted issue immediately, in the right place.
 
@@ -220,19 +249,8 @@ def trigger_fix(key: str, number: int) -> None:
     if not budget_allows(key):
         return
 
-    try:
-        r = subprocess.run(
-            ["gh", "workflow", "run", "fix-one.yml",
-             "--repo", PIPELINE_REPO,
-             "-f", f"repo_key={key}",
-             "-f", f"issue={number}"],
-            capture_output=True, text=True, timeout=60)
-        if r.returncode == 0:
-            log(f"  -> dispatched fix-one.yml for {key}#{number}")
-            return
-        log(f"  dispatch failed for {key}#{number}: {r.stderr.strip()[:160]}")
-    except Exception as e:  # noqa: BLE001
-        log(f"  dispatch error for {key}#{number}: {e}")
+    if dispatch_fix(key, number):
+        return
 
     # Local fallback: correct whenever the egress happens to be clean, and the
     # only route if GitHub dispatch is unavailable. run-fix.sh probes the network
@@ -246,6 +264,109 @@ def trigger_fix(key: str, number: int) -> None:
             log(f"  -> fell back to local run-fix.sh for {key}")
         except Exception as e:  # noqa: BLE001
             log(f"  local fallback failed for {key}: {e}")
+
+
+# A claim that has gone this long without an assignment is not going to get
+# one. Dropping it returns the issue to the queue so a repo with a hard gate
+# stops silently consuming detection capacity.
+CLAIM_EXPIRY_DAYS = 21
+ME = "chelsealong"
+
+
+def _assignment(upstream: str, number: int):
+    """(state, assignees, updated_at) for one issue, or None on API failure.
+
+    None means "ask again later", never "nothing there" — the bare-except that
+    turned a 422 into an empty claimant list is exactly how claim detection
+    stayed broken for weeks.
+    """
+    import subprocess
+    try:
+        r = subprocess.run(
+            ["gh", "api", f"repos/{upstream}/issues/{number}", "-X", "GET",
+             "--jq", '[.state, ([.assignees[].login]|join(",")), .updated_at]|@tsv'],
+            capture_output=True, text=True, timeout=60)
+    except Exception as e:  # noqa: BLE001
+        log(f"  assignment({upstream}#{number}) errored: {e}")
+        return None
+    if r.returncode != 0:
+        log(f"  assignment({upstream}#{number}) failed: {r.stderr.strip()[:120]}")
+        return None
+    parts = r.stdout.strip().split("\t")
+    if len(parts) < 3:
+        return None
+    state, who, updated = parts[0], parts[1], parts[2]
+    return state, [w for w in who.split(",") if w], updated
+
+
+def promote_claims(keys: list[str]) -> int:
+    """Dispatch a gated issue once the maintainer has actually assigned us.
+
+    claim.sh only asks; until this existed nothing consumed the answer.
+    drain_queues skips GATED outright, so an assignment that was granted
+    produced no PR, and vet() then rejected the same issue as "claimed by
+    chelsealong" so it never returned through the queue either. langgraph
+    sat at eight claims, seven comments and zero PRs for eight days inside
+    that gap, and pydantic-ai had just claimed three more into it.
+    """
+    from datetime import datetime, timezone
+
+    dry = os.environ.get("DRY_RUN") == "1"
+    now = datetime.now(timezone.utc)
+    n = 0
+    for key in keys:
+        if key not in GATED:
+            continue
+        upstream = (scan.REPOS.get(key) or {}).get("upstream")
+        p = scan.STATE / f"{key}.json"
+        if not upstream or not p.exists():
+            continue
+        try:
+            d = json.loads(p.read_text())
+        except Exception:  # noqa: BLE001
+            continue
+        claimed = list(d.get("claimed", []))
+        keep: list[int] = []
+        for num in claimed:
+            info = _assignment(upstream, num)
+            if info is None:
+                keep.append(num)          # transient — retry next cycle
+                continue
+            state, assignees, updated = info
+            low = [a.lower() for a in assignees]
+            if state != "open":
+                log(f"  [{key}] #{num} is {state} upstream — dropping claim")
+                continue
+            if ME in low:
+                if already_dispatched(key, num):
+                    keep.append(num)
+                    continue
+                if not budget_allows(key):
+                    keep.append(num)
+                    continue
+                log(f"  [{key}] #{num} assigned to {ME} — dispatching the fix")
+                if dispatch_fix(key, num):
+                    if not dry:
+                        record_dispatch(key, num)
+                    n += 1
+                keep.append(num)
+                continue
+            if assignees:
+                log(f"  [{key}] #{num} went to {','.join(assignees)} — dropping claim")
+                continue
+            try:
+                age = (now - datetime.fromisoformat(
+                    updated.replace("Z", "+00:00"))).days
+            except Exception:  # noqa: BLE001
+                age = 0
+            if age >= CLAIM_EXPIRY_DAYS:
+                log(f"  [{key}] #{num} unassigned after {age}d — expiring claim")
+                continue
+            keep.append(num)
+        if keep != claimed and not dry:
+            d["claimed"] = keep
+            p.write_text(json.dumps(d, indent=2) + "\n")
+    return n
 
 
 def load_seen() -> dict[str, list[int]]:
@@ -567,6 +688,12 @@ def main() -> int:
                     n = drain_queues(keys)
                     if n:
                         log(f"drained {n} queued candidate(s)")
+                    # The other half of the gated flow: claim.sh asks, this
+                    # acts on the answer. Without it an assignment that was
+                    # granted produced nothing at all.
+                    m = promote_claims(keys)
+                    if m:
+                        log(f"promoted {m} assigned claim(s)")
             except Exception as e:  # noqa: BLE001
                 # One bad sweep must not kill a long-lived watcher.
                 log(f"sweep failed: {str(e)[:200]}")

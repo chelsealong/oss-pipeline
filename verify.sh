@@ -207,6 +207,20 @@ else:
         print("  FAIL  drain_queues does not consult budget_allows — it could run away"); bad += 1
     if "GATED" not in src.split("def drain_queues")[1].split("def ")[0]:
         print("  FAIL  drain_queues does not skip GATED repos — those need claim.sh first"); bad += 1
+# Same failure class, second instance: claim.sh wrote state/<key>.json and
+# nothing read it. drain_queues skips GATED, so a granted assignment produced
+# no PR — langgraph sat at eight claims and zero PRs for eight days. Any state
+# the pipeline writes must have something that acts on it.
+if not hasattr(w, "promote_claims"):
+    print("  FAIL  watch.py has no promote_claims — claim.sh writes claims nobody reads"); bad += 1
+else:
+    pc = src.split("def promote_claims")[1].split("\ndef ")[0]
+    if "dispatch_fix" not in pc:
+        print("  FAIL  promote_claims never dispatches — assignments would go unused"); bad += 1
+    if "already_dispatched" not in pc:
+        print("  FAIL  promote_claims does not check already_dispatched — it would re-fire every cycle"); bad += 1
+    if "budget_allows" not in pc:
+        print("  FAIL  promote_claims does not consult budget_allows"); bad += 1
 print("  ok     queue drainer present and gated" if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY2
