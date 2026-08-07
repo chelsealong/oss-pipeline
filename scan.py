@@ -155,6 +155,20 @@ REPOS: dict[str, dict] = {
         "exclude_title": r"kernel|cuda|triton|quantiz|fp8|awq|gptq|marlin|cutlass|"
                          r"benchmark|throughput|latency|speed ?up|perf\b|nccl|tensor.?parallel",
     },
+    # Added 2026-08-07. The most favourable numbers measured so far for the
+    # kind of change this pipeline produces: over two weeks 18 of 20 sampled
+    # fork PRs were merged by someone other than their author, by 11 distinct
+    # outside contributors, at a median of +19 added lines — the smallest median
+    # of any repo here, and the size that actually lands. MIT, pure Python, no
+    # hardware to reason about.
+    #
+    # It carries no "good first issue" or "help wanted" labels, so selection
+    # runs off `bug` (66 open at the time of adding).
+    "pydantic-ai": {
+        "upstream": "pydantic/pydantic-ai",
+        "searches": ["label:bug sort:created-desc"],
+        "exclude_labels": {"question", "documentation"},
+    },
     "dify": {
         "upstream": "langgenius/dify",
         "searches": ['label:"good first issue"', 'label:"🙏 help wanted"', "label:bug sort:created-desc"],
