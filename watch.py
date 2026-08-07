@@ -148,7 +148,7 @@ PIPELINE_REPO = "chelsealong/oss-pipeline"
 #              circuit breaker in run-fix.sh is what keeps that safe, since
 #              repeated duplicates are the actual ban vector there.
 DISPATCH_BUDGET = {
-    "adk": 8, "langfuse": 6, "langfuse-python": 6, "spec-kit": 6,
+    "adk": 10, "langfuse": 6, "langfuse-python": 6, "spec-kit": 6,
     "openclaw": 8,
     "dify": 5, "autogpt": 5,
     "comfyui": 8, "firecrawl": 2,
