@@ -187,6 +187,71 @@ def check_duplicates() -> tuple[list[str], dict]:
     return problems, detail
 
 
+def check_agent_reachable() -> tuple[list[str], dict]:
+    """Whether the agent step can run at all.
+
+    On 2026-08-07 the organisation disabled Claude subscription access for
+    Claude Code. Twenty consecutive fix-one runs died on
+    "Your organization has disabled Claude subscription access", each one
+    spending a dispatch-budget unit and a runner and producing nothing. The
+    daily report said everything was fine.
+
+    Nothing here caught it. `check_quota` matches only "session limit", which is
+    a different failure. `check_session_waste` alerts on sessions spent with no
+    PR — but it counts a session as spent when the *generator step succeeded*,
+    and a run that cannot authenticate never gets that far, so its counter stayed
+    at zero and the threshold was never reached. The statistic excluded exactly
+    the case it was meant to detect.
+
+    So this counts run outcomes, which cannot be argued with, and looks for the
+    auth strings directly.
+    """
+    raw = sh(["gh", "run", "list", "--repo", "chelsealong/oss-pipeline",
+              "--workflow", "fix-one.yml", "--limit", "40",
+              "--json", "databaseId,conclusion,createdAt"], 90)
+    d = {"completed_24h": 0, "failed_24h": 0, "auth_failures": 0, "which": ""}
+    if not raw:
+        return [], d
+    cutoff = (now() - timedelta(hours=24)).isoformat()
+    try:
+        runs = [r for r in json.loads(raw)
+                if (r.get("createdAt") or "") > cutoff and r.get("conclusion")]
+    except Exception:  # noqa: BLE001
+        return [], d
+
+    d["completed_24h"] = len(runs)
+    failed = [r for r in runs if r["conclusion"] == "failure"]
+    d["failed_24h"] = len(failed)
+
+    # Sample three, and name which credential failed. Both kinds happened on
+    # 2026-08-07 within the same half hour and were initially reported as one:
+    # three runs died on Claude's org policy, then sixteen on `gh: Bad
+    # credentials` because the GitHub PAT was regenerated on github.com 26
+    # minutes before the new value was written to the repo secret. Diagnosing
+    # "auth is broken" without saying WHICH sends the fix to the wrong place.
+    d["which"] = ""
+    for r in failed[:3]:
+        log = sh(["gh", "run", "view", str(r["databaseId"]),
+                  "--repo", "chelsealong/oss-pipeline", "--log"], 120) or ""
+        if re.search(r"Bad credentials", log, re.I):
+            d["auth_failures"] += 1
+            d["which"] = "GH_PAT (gh: Bad credentials)"
+        elif re.search(r"organization has disabled|subscription access|"
+                       r"Invalid bearer token|Failed to authenticate", log, re.I):
+            d["auth_failures"] += 1
+            d["which"] = d["which"] or "CLAUDE_CODE_OAUTH_TOKEN"
+
+    problems = []
+    if d["auth_failures"]:
+        problems.append(f"fix-one cannot authenticate — {d['which']} — the agent step "
+                        "is failing for every run and each one still spends a "
+                        "dispatch-budget unit")
+    elif d["completed_24h"] >= 6 and d["failed_24h"] * 2 > d["completed_24h"]:
+        problems.append(f"{d['failed_24h']} of {d['completed_24h']} fix-one runs failed in 24h — "
+                        "the pipeline is spending budget on runs that cannot succeed")
+    return problems, d
+
+
 def check_session_waste() -> tuple[list[str], dict]:
     """How many agent sessions were spent, and how many produced nothing.
 
@@ -378,6 +443,7 @@ def main() -> int:
         "queues": check_queues(),
         "quota": check_quota(),
         "duplicates_30d": check_duplicates(),
+        "agent_reachable": check_agent_reachable(),
         "session_waste": check_session_waste(),
         "throughput": check_merge_throughput(),
         "landed": check_landed(),
@@ -411,6 +477,9 @@ def main() -> int:
     print(f"  queues      : {len(live)} with work, "
           f"{sum(1 for q in d['queues'].values() if q['partial'])} partial")
     print(f"  dup 30d     : " + ", ".join(f"{k.split('/')[-1]}={v}" for k, v in d["duplicates_30d"].items()))
+    ar = d["agent_reachable"]
+    print(f"  agent 可达  : 24h 完成 {ar['completed_24h']} 失败 {ar['failed_24h']} "
+          f"认证失败样本 {ar['auth_failures']}" + (f" [{ar['which']}]" if ar.get("which") else ""))
     w = d["session_waste"]
     print(f"  sessions 24h: dispatched={w['dispatched']} spent={w['sessions_spent']} "
           f"saved-by-prevet={w['prevet_saved']} -> PRs={w['prs']}")
