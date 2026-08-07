@@ -29,7 +29,7 @@ DRY_RUN="${DRY_RUN:-0}"
 # PR there, #7282, was open for 18 seconds — and the review bot that ran anyway
 # called the change "a straightforward bug fix ... with good test coverage".
 # Nothing was wrong with the work; it was opened without asking.
-declare -a GATED=(gemini-cli langgraph langchain pydantic-ai)
+declare -a GATED=(gemini-cli langchain pydantic-ai)
 
 # Keep at most this many open assignments per repo. gemini-cli enforces its own
 # cap and will refuse politely; the others have no bot, and hoarding assignments

@@ -183,9 +183,15 @@ bad = 0
 if "Signed-off-by" not in gen or "vllm" not in gen:
     print("  FAIL  generator prompt does not require Signed-off-by for vllm (DCO)"); bad += 1
 w = pathlib.Path("watch.py").read_text()
+cfg = pathlib.Path("scan.py").read_text()
+# Only repos we still scan. Dropping one from REPOS must not leave a check
+# demanding it stay gated — but a repo that IS configured and auto-closes
+# unassigned PRs must be in GATED, which is what cost pydantic-ai #7282.
 for repo in ("pydantic-ai", "langgraph", "langchain", "gemini-cli"):
+    if f'"{repo}": {{' not in cfg:
+        continue
     if repo not in w.split("GATED")[1].split("}")[0]:
-        print(f"  FAIL  {repo} is not in GATED but auto-closes unassigned PRs"); bad += 1
+        print(f"  FAIL  {repo} is configured but not in GATED — it auto-closes unassigned PRs"); bad += 1
 print("  ok     assignment gates and DCO are encoded" if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY2

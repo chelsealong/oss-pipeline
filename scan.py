@@ -69,18 +69,22 @@ REPOS: dict[str, dict] = {
         "exclude_labels": {"🔒Maintainers only"},
         "needs_assignment": True,  # PR without prior assignment is auto-closed
     },
-    "langgraph": {
-        "upstream": "langchain-ai/langgraph",
-        "searches": ['label:"help wanted"', "label:bug label:external"],
-        "exclude_labels": {"open-swe", "open-swe-auto", "open-swe-dev", "open-swe-max", "codex"},
-        "needs_assignment": True,
-        # Studio, the server and langgraph_api/langgraph_runtime_inmem live in
-        # SEPARATE repos that are not in this checkout — libs/ holds only
-        # langgraph, checkpoint*, cli, prebuilt and the SDKs. Claiming such an
-        # issue means asking for work we cannot do; #8408 (a Studio run_id bug)
-        # reached the queue before this filter existed.
-        "exclude_title": r"(studio|langgraph[_-]api|runtime[_-]inmem|deployment|langgraph platform|self[- ]host)",
-    },
+    # langgraph REMOVED 2026-08-07. Measured, not guessed:
+    #   * require_issue_link.yml (live since 2026-03-24) closes every PR
+    #     labelled `external` unless the author is assigned to the linked
+    #     issue. Since then: 1 external PR merged, 522 closed unmerged.
+    #   * That one, #7544, got in because a maintainer manually removed the
+    #     label — the override path, not the assignment path. NO PR has ever
+    #     passed via `reopen_on_assignment.yml`, which is the route we were
+    #     waiting on.
+    #   * Of 232 people who publicly asked to take an issue, exactly one ever
+    #     merged anything (YassinNouh21) and all five of his merges predate
+    #     the gate; his post-gate code PRs were not merged.
+    #   * Our own record: 8 claims, 7 comments since 2026-07-30, zero
+    #     assignments — and no assign event ever occurred on any of them.
+    # Its 2 dispatch units went to hermes, which turns 6 PRs into 5 landed
+    # commits. Re-adding it needs a route through the override, not a longer
+    # wait for an assignment that does not come.
     "langchain": {
         "upstream": "langchain-ai/langchain",
         "searches": ['label:"help wanted"', "label:new-contributor"],
