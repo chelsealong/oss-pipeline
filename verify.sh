@@ -166,7 +166,31 @@ print("  ok     dependency edits are named and forbidden" if not bad else f"  {b
 sys.exit(1 if bad else 0)
 PY2
 
-echo "== 8. queued work has a consumer =="
+echo "== 8. per-repo contribution gates are encoded =="
+python3 - <<PY2 || fail=$((fail+1))
+import yaml, pathlib, sys
+# Every gate below cost a PR to discover. pydantic-ai closed ours after 18
+# seconds because its pr-guard requires assignment; vllm enforces DCO per
+# commit. Neither showed up in the repo's merge statistics, which is what was
+# measured before adding them.
+gen = ""
+d = yaml.safe_load(pathlib.Path(".github/workflows/fix-one.yml").read_text()) or {}
+for jn, job in (d.get("jobs") or {}).items():
+    for st in job.get("steps", []):
+        if st.get("id") == "gen":
+            gen = st.get("run") or ""
+bad = 0
+if "Signed-off-by" not in gen or "vllm" not in gen:
+    print("  FAIL  generator prompt does not require Signed-off-by for vllm (DCO)"); bad += 1
+w = pathlib.Path("watch.py").read_text()
+for repo in ("pydantic-ai", "langgraph", "langchain", "gemini-cli"):
+    if repo not in w.split("GATED")[1].split("}")[0]:
+        print(f"  FAIL  {repo} is not in GATED but auto-closes unassigned PRs"); bad += 1
+print("  ok     assignment gates and DCO are encoded" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY2
+
+echo "== 9. queued work has a consumer =="
 python3 - <<PY2 || fail=$((fail+1))
 import sys, importlib.util
 spec = importlib.util.spec_from_file_location("w", "$SCANNER/watch.py")
@@ -187,7 +211,7 @@ print("  ok     queue drainer present and gated" if not bad else f"  {bad} probl
 sys.exit(1 if bad else 0)
 PY2
 
-echo "== 9. tracked copies match the scanner =="
+echo "== 10. tracked copies match the scanner =="
 for f in scan.py watch-prs.py health.py; do
   if [ -f "$f" ] && [ -f "$SCANNER/$f" ]; then
     diff -q "$f" "$SCANNER/$f" >/dev/null 2>&1 && ok "$f in sync" || bad "$f differs from $SCANNER/$f"

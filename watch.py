@@ -115,7 +115,12 @@ def to_rest_shape(node: dict) -> dict:
 # gemini-self-assign-issue.yml on gemini-cli). Sending these to run-fix.sh would
 # spend a full Claude run only to discover it must ask for an assignment instead,
 # so route them to the cheap claim path.
-GATED = {"langgraph", "langchain", "gemini-cli"}
+# Repos that close an unassigned PR automatically. Opening one there is not a
+# race we lose, it is a PR closed within seconds by a bot — pydantic-ai#7282 was
+# open for 18 seconds. Its pr-guard.yml bypasses MEMBER/OWNER/COLLABORATOR and
+# requires everyone else to be assigned to the linked issue first, which is why
+# maintainers' PRs there show no assignee and ours must have one.
+GATED = {"langgraph", "langchain", "gemini-cli", "pydantic-ai"}
 
 # Where fix-one.yml lives.
 PIPELINE_REPO = "chelsealong/oss-pipeline"

@@ -427,6 +427,13 @@ jobs:
              never 'Co-Authored-By: ... <noreply@anthropic.com>'. A CLA bot counts
              it as a second contributor with no CLA and fails the whole check.
 
+             SEPARATELY: if repo key is 'vllm', every commit MUST carry a
+             Signed-off-by trailer — commit with `git commit -s`. That repo
+             enforces DCO on each commit and a missing sign-off fails the check.
+             This is not the same thing as Co-Authored-By and does not conflict
+             with the rule above: sign-off asserts the author certifies the
+             contribution, and the author is us. Do not add it anywhere else.
+
           8. Push the branch to origin. Then write these files:
                $GITHUB_WORKSPACE/.loop/branch.txt   the branch name, one line
                $GITHUB_WORKSPACE/.loop/pr-title.md  the PR title, one line
