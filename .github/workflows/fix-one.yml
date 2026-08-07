@@ -307,6 +307,35 @@ jobs:
           PREPARE_ONLY: ${{ steps.cfg.outputs.prepare_only }}
           COMPETING: ${{ steps.pre.outputs.competing }}
         run: |
+          cat > "$RUNNER_TEMP/fmt.py" <<'FMT'
+          import json, sys
+          try:
+              for line in sys.stdin:
+                  try:
+                      ev = json.loads(line)
+                  except ValueError:
+                      # Never swallow an unparsed line: the session-limit notice
+                      # is plain text and the quota guard greps this stream.
+                      print(line, end="", flush=True)
+                      continue
+                  for blk in (ev.get("message") or {}).get("content") or []:
+                      kind = blk.get("type")
+                      if kind == "tool_use":
+                          a = blk.get("input") or {}
+                          d = a.get("command") or a.get("file_path") or a.get("pattern") or ""
+                          nm = blk.get("name")
+                          print("  [" + str(nm) + "] " + str(d)[:150], flush=True)
+                      elif kind == "text" and blk.get("text", "").strip():
+                          print(blk["text"][:400], flush=True)
+                  if ev.get("type") == "result":
+                      print("  [result] " + str(ev.get("subtype")) +
+                            " turns=" + str(ev.get("num_turns")), flush=True)
+          except BrokenPipeError:
+              pass
+          FMT
+
+          # pipefail: the formatter must not mask the agent's exit status.
+          set -o pipefail
           run_claude() {
           timeout 2400 claude -p "$(cat <<EOF
           You are an autonomous OSS contribution agent. Handle exactly ONE issue.
@@ -400,7 +429,9 @@ jobs:
           explain. That is a normal result, not a failure.
           EOF
           )" < /dev/null --permission-mode acceptEdits \
-            --allowedTools "Bash Read Write Edit Glob Grep WebFetch"
+            --output-format stream-json --verbose \
+            --allowedTools "Bash Read Write Edit Glob Grep WebFetch" \
+            | python3 -u "$RUNNER_TEMP/fmt.py"
           }
 
           # `cmd | tee` reports tee's exit status, which is always 0, so the old
@@ -495,6 +526,9 @@ jobs:
           NUM: ${{ inputs.issue }}
           DEF: ${{ steps.fork.outputs.default_branch }}
         run: |
+          # The agent call pipes into the stream formatter; without pipefail
+          # the pipeline reports the formatter's status, which is always 0.
+          set -o pipefail
           # Diff against the branch we were actually cut from, resolved once in
           # the checkout step, not guessed here.
           base=$(git merge-base HEAD "upstream/${DEF}" 2>/dev/null || echo "")
@@ -512,6 +546,11 @@ jobs:
           ${UPSTREAM}#${NUM}. You did not write it. Your job is to REFUTE it.
           Assume it is wrong until the evidence says otherwise — a bad PR on a
           third-party repo costs far more than a missed one.
+
+          THIS IS A ONE-SHOT NON-INTERACTIVE SESSION. Never start a command in
+          the background and then end your turn waiting for it — no later turn
+          exists in which a notification can reach you. Run every check in the
+          foreground.
 
           The diff is $GITHUB_WORKSPACE/.loop/change.diff; the proposed PR body is $GITHUB_WORKSPACE/.loop/pr-body.md.
           The full checkout is here, so read the surrounding code, not just the
@@ -563,7 +602,9 @@ jobs:
           not push, do not open anything.
           EOF
           )" < /dev/null --permission-mode acceptEdits \
-            --allowedTools "Bash Read Glob Grep" 2>&1 | tail -30 || true
+            --output-format stream-json --verbose \
+            --allowedTools "Bash Read Glob Grep" \
+            | python3 -u "$RUNNER_TEMP/fmt.py" 2>&1 | tail -30 || true
 
           if [ ! -s "$GITHUB_WORKSPACE/.loop/verdict.txt" ]; then
             echo "::warning::reviewer produced NO verdict file - treating as blocked, but this is a reviewer failure, not a judgement on the change"
@@ -592,6 +633,9 @@ jobs:
           UPSTREAM: ${{ steps.cfg.outputs.upstream }}
           NUM: ${{ inputs.issue }}
         run: |
+          # The agent call pipes into the stream formatter; without pipefail
+          # the pipeline reports the formatter's status, which is always 0.
+          set -o pipefail
           timeout 1200 claude -p "$(cat <<EOF
           An independent reviewer BLOCKED your change to ${UPSTREAM}#${NUM}. Their
           objections are in $GITHUB_WORKSPACE/.loop/verdict.txt. Read them and decide honestly:
@@ -614,7 +658,9 @@ jobs:
           a pull request. No Co-Authored-By trailers.
           EOF
           )" < /dev/null --permission-mode acceptEdits \
-            --allowedTools "Bash Read Write Edit Glob Grep" 2>&1 | tail -20 || true
+            --output-format stream-json --verbose \
+            --allowedTools "Bash Read Write Edit Glob Grep" \
+            | python3 -u "$RUNNER_TEMP/fmt.py" 2>&1 | tail -20 || true
 
           r=$(head -1 $GITHUB_WORKSPACE/.loop/remediation.txt 2>/dev/null || echo "ABANDON: no result")
           echo "remediation: $r"
@@ -633,6 +679,9 @@ jobs:
           NUM: ${{ inputs.issue }}
           DEF: ${{ steps.fork.outputs.default_branch }}
         run: |
+          # The agent call pipes into the stream formatter; without pipefail
+          # the pipeline reports the formatter's status, which is always 0.
+          set -o pipefail
           # Diff against the branch we were actually cut from, resolved once in
           # the checkout step, not guessed here.
           base=$(git merge-base HEAD "upstream/${DEF}" 2>/dev/null || echo "")
@@ -648,12 +697,20 @@ jobs:
           earlier BLOCK. The original objections are in $GITHUB_WORKSPACE/.loop/verdict.txt and the
           current diff is $GITHUB_WORKSPACE/.loop/change.diff.
 
+          THIS IS A ONE-SHOT NON-INTERACTIVE SESSION. Never start a command in
+          the background and then end your turn waiting for it — no later turn
+          exists in which a notification can reach you. Run every check in the
+          foreground.
+
           Check ONLY whether each original objection is genuinely resolved — do
           not invent new requirements. In particular re-verify that the test
           still fails without the source change. Write $GITHUB_WORKSPACE/.loop/verdict.txt with a
           first line of exactly 'APPROVE' or 'BLOCK' and your reasoning.
           EOF
-          )" < /dev/null --permission-mode acceptEdits --allowedTools "Bash Read Glob Grep" 2>&1 | tail -20 || true
+          )" < /dev/null --permission-mode acceptEdits \
+            --output-format stream-json --verbose \
+            --allowedTools "Bash Read Glob Grep" 2>&1 \
+            | python3 -u "$RUNNER_TEMP/fmt.py" | tail -40 || true
 
           v=$(head -1 $GITHUB_WORKSPACE/.loop/verdict.txt 2>/dev/null || echo "BLOCK")
           echo "re-review verdict: $v"

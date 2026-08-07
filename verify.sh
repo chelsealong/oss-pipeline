@@ -109,7 +109,44 @@ print("  ok     check-ownership classifier" if not bad else f"  {bad} problem(s)
 sys.exit(1 if bad else 0)
 PY
 
-echo "== 6. queued work has a consumer =="
+echo "== 6. guards apply to every agent call, not just one file =="
+python3 - <<PY2 || fail=$((fail+1))
+import yaml, pathlib, re, sys
+# Three times in one day a guard was added to one workflow and not the other:
+# the one-shot session rule, the dispatch reason, and streaming output. fix-one
+# generates every new PR and was the one left blind — a run that ended without
+# a conclusion could not be diagnosed at all. Structural rules belong in a
+# check, not in whoever remembers.
+bad = 0
+for f in sorted(pathlib.Path(".github/workflows").glob("*.yml")):
+    d = yaml.safe_load(f.read_text()) or {}
+    for jn, job in (d.get("jobs") or {}).items():
+        for st in job.get("steps", []):
+            run = st.get("run") or ""
+            if "claude -p" not in run:
+                continue
+            # Probes send a fixed one-line prompt and assert on the reply; they
+            # do no work, so streaming and a one-shot rule would be noise. The
+            # rules below are for calls that change a repository.
+            if f.name.startswith("probe-"):
+                continue
+            # pipeline.yml's fixer is retired — armed only by explicit dispatch
+            # after it was found running on every scheduled tick with no review
+            # gate. Left in place, not maintained.
+            if f.name == "pipeline.yml":
+                continue
+            name = f"{f.name}/{st.get('name')}"
+            if "output-format stream-json" not in run:
+                print(f"  FAIL  {name}: claude -p without streaming output — a failed run leaves no trace"); bad += 1
+            if not re.search(r"ONE-SHOT|one-shot|never background", run, re.I):
+                print(f"  FAIL  {name}: prompt lacks the one-shot session rule"); bad += 1
+            if "pipefail" not in run and "PIPESTATUS" not in run:
+                print(f"  FAIL  {name}: piped agent call without pipefail/PIPESTATUS — the agent's status is masked"); bad += 1
+print("  ok     every agent call is streamed, bounded and status-preserving" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY2
+
+echo "== 7. queued work has a consumer =="
 python3 - <<PY2 || fail=$((fail+1))
 import sys, importlib.util
 spec = importlib.util.spec_from_file_location("w", "$SCANNER/watch.py")
@@ -130,7 +167,7 @@ print("  ok     queue drainer present and gated" if not bad else f"  {bad} probl
 sys.exit(1 if bad else 0)
 PY2
 
-echo "== 7. tracked copies match the scanner =="
+echo "== 8. tracked copies match the scanner =="
 for f in scan.py watch-prs.py health.py; do
   if [ -f "$f" ] && [ -f "$SCANNER/$f" ]; then
     diff -q "$f" "$SCANNER/$f" >/dev/null 2>&1 && ok "$f in sync" || bad "$f differs from $SCANNER/$f"
