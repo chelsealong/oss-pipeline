@@ -287,8 +287,22 @@ def check_session_waste() -> tuple[list[str], dict]:
             detail["prevet_saved"] += 1
         if "Generate fix and push branch (no PR yet)=success" in steps:
             detail["sessions_spent"] += 1
-        if "Open PR (only if the reviewer approved)=success" in steps:
-            detail["prs"] += 1
+        # NOT the step's conclusion. That step exits 0 on several legitimate
+        # early paths — issue closed, a rival PR appeared, prepare-only repos —
+        # so "success" and "a PR exists" are different facts. On 2026-08-07 it
+        # reported 3 PRs on a day when GitHub had none, which hid that a
+        # reviewed dify fix had been silently dropped by a broken rival check.
+        pass
+
+    # Count what GitHub says exists, not what a step reported.
+    raw_prs = sh(["gh", "api", "graphql", "-f",
+                  'query={search(type:ISSUE,first:50,query:"is:pr author:' + ME +
+                  ' created:>=' + (now() - timedelta(hours=24)).date().isoformat() +
+                  '"){issueCount}}', "--jq", ".data.search.issueCount"], 60)
+    try:
+        detail["prs"] = int((raw_prs or "0").strip())
+    except ValueError:
+        detail["prs"] = 0
 
     problems = []
     spent = detail["sessions_spent"]

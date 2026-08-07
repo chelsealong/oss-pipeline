@@ -737,6 +737,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
           UPSTREAM: ${{ steps.cfg.outputs.upstream }}
+          NUM: ${{ inputs.issue }}
           PREPARE_ONLY: ${{ steps.cfg.outputs.prepare_only }}
         run: |
           # Last-moment claim re-check. The pre-vet ran before the agent
@@ -748,12 +749,31 @@ jobs:
             echo "::notice::${UPSTREAM}#${NUM} closed while we worked — not opening a PR"
             exit 0
           fi
-          rival=$(gh api graphql -f query="{repository(owner:\"${UPSTREAM%%/*}\",name:\"${UPSTREAM##*/}\"){issue(number:${NUM}){
-                    timelineItems(itemTypes:[CROSS_REFERENCED_EVENT],last:20){nodes{
-                      ... on CrossReferencedEvent{source{... on PullRequest{number state author{login}}}}}}}}}" \
-                  --jq '[.data.repository.issue.timelineItems.nodes[]?.source
-                         | select(.number != null and .state == "OPEN" and .author.login != "chelsealong")
-                         | .number] | join(",")' 2>/dev/null || true)
+          # A GraphQL error is not a rival. The first version piped the raw
+          # response through jq without checking `.errors`, so an error body —
+          # a non-empty string — was read as "there is a competing PR" and the
+          # PR was silently dropped. dify#40144 passed the adversarial review
+          # and was discarded that way, and the run still reported success.
+          # Compounding it, NUM was absent from this step's env, so the query
+          # asked for `issue(number:)` and could only ever error.
+          rival_raw=$(gh api graphql -f query="{repository(owner:\"${UPSTREAM%%/*}\",name:\"${UPSTREAM##*/}\"){issue(number:${NUM}){
+                        timelineItems(itemTypes:[CROSS_REFERENCED_EVENT],last:20){nodes{
+                          ... on CrossReferencedEvent{source{... on PullRequest{number state author{login}}}}}}}}}" 2>/dev/null || true)
+          if printf '%s' "$rival_raw" | grep -q '"errors"'; then
+            echo "::warning::rival-PR check errored; opening the PR rather than dropping reviewed work"
+            rival=""
+          else
+            rival=$(printf '%s' "$rival_raw" | python3 -c "
+          import json,sys
+          try: d=json.load(sys.stdin)
+          except Exception: print(''); raise SystemExit
+          n=(((d.get('data') or {}).get('repository') or {}).get('issue') or {})
+          items=((n.get('timelineItems') or {}).get('nodes') or [])
+          out=[str(s['number']) for i in items if (s:=(i or {}).get('source'))
+               and s.get('number') and s.get('state')=='OPEN'
+               and (s.get('author') or {}).get('login')!='chelsealong']
+          print(','.join(out))" 2>/dev/null || true)
+          fi
           if [ -n "${rival:-}" ]; then
             echo "::notice::${UPSTREAM}#${NUM} now has competing open PR(s) ${rival} — not opening ours"
             exit 0
