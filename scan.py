@@ -127,6 +127,34 @@ REPOS: dict[str, dict] = {
         "searches": ["label:bug sort:created-desc", "sort:created-desc"],
         "exclude_labels": set(),
     },
+    # Two inference engines added 2026-08-07. Both were measured against the
+    # repos already here and are markedly more open to outsiders: over two weeks
+    # vllm merged 74 of 100 sampled PRs from forks, by 60 distinct external
+    # authors, median 21h and +28 lines; sglang 19 of 100 by 16 authors, median
+    # 20h and +20 lines. Compare openclaw (8 external authors, +180 median) or
+    # hermes (2). The small median patch size is the point: it is the size this
+    # pipeline actually lands.
+    #
+    # Neither needs a GPU of ours. sglang runs its 1gpu/2gpu jobs on fork PRs
+    # automatically and the logs are readable through the Actions API; vllm gates
+    # CI behind a maintainer applying `ready`, observed 2.7-4.4h after opening.
+    # So their CI is the test rig — which is also why the excludes below matter:
+    # a kernel or quantisation change cannot be reasoned about without hardware,
+    # and using someone's GPU cluster to iterate on a guess is rude.
+    "vllm": {
+        "upstream": "vllm-project/vllm",
+        "searches": ['label:"good first issue"', 'label:"help wanted"'],
+        "exclude_labels": {"performance", "quantization", "kernel", "rocm", "tpu"},
+        "exclude_title": r"kernel|cuda|triton|quantiz|fp8|awq|gptq|marlin|cutlass|"
+                         r"benchmark|throughput|latency|speed ?up|perf\b|nccl|tensor.?parallel",
+    },
+    "sglang": {
+        "upstream": "sgl-project/sglang",
+        "searches": ['label:"good first issue"', 'label:"help wanted"'],
+        "exclude_labels": {"performance", "quantization", "amd", "rocm", "npu"},
+        "exclude_title": r"kernel|cuda|triton|quantiz|fp8|awq|gptq|marlin|cutlass|"
+                         r"benchmark|throughput|latency|speed ?up|perf\b|nccl|tensor.?parallel",
+    },
     "dify": {
         "upstream": "langgenius/dify",
         "searches": ['label:"good first issue"', 'label:"🙏 help wanted"', "label:bug sort:created-desc"],

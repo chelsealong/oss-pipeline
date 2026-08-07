@@ -147,6 +147,8 @@ DISPATCH_BUDGET = {
     "dify": 5, "autogpt": 5,
     "comfyui": 2, "firecrawl": 2,
     "hermes": 9,
+    # New 2026-08-07 — dispatch headroom over the 3 PR/day cap, as elsewhere.
+    "vllm": 5, "sglang": 5,
 }
 DEFAULT_BUDGET = 2
 BUDGET_FILE = scan.STATE / "dispatch-budget.json"
