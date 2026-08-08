@@ -201,11 +201,13 @@ REPOS: dict[str, dict] = {
         "exclude_labels": set(),
         # The PR template asks agent-created PRs to end the description with
         # "From <Tool Name>", so this repo explicitly anticipates them.
+        "max_vet": 40,
     },
     "autogpt": {
         "upstream": "Significant-Gravitas/AutoGPT",
         "searches": ['label:"good first issue"', 'label:"help wanted"', "label:bug sort:created-desc"],
         "exclude_labels": set(),
+        "max_vet": 40,
     },
     "comfyui": {
         "upstream": "Comfy-Org/ComfyUI",
