@@ -143,6 +143,7 @@ REPOS: dict[str, dict] = {
             "sweeper:cannot-reproduce", "sweeper:implemented-on-main",
             "sweeper:incoherent", "sweeper:not-planned",
         },
+        "max_vet": 40,
     },
     "firecrawl": {
         "upstream": "firecrawl/firecrawl",
