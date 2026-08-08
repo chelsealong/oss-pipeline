@@ -149,17 +149,21 @@ REPOS: dict[str, dict] = {
     # and using someone's GPU cluster to iterate on a guess is rude.
     "vllm": {
         "upstream": "vllm-project/vllm",
-        "searches": ['label:"good first issue"', 'label:"help wanted"'],
+        "searches": ['label:"good first issue"', 'label:"help wanted"',
+                     'label:bug sort:created-desc'],
         "exclude_labels": {"performance", "quantization", "kernel", "rocm", "tpu"},
         "exclude_title": r"kernel|cuda|triton|quantiz|fp8|awq|gptq|marlin|cutlass|"
                          r"benchmark|throughput|latency|speed ?up|perf\b|nccl|tensor.?parallel",
+        "max_vet": 40,
     },
     "sglang": {
         "upstream": "sgl-project/sglang",
-        "searches": ['label:"good first issue"', 'label:"help wanted"'],
+        "searches": ['label:"good first issue"', 'label:"help wanted"',
+                     'label:bug sort:created-desc'],
         "exclude_labels": {"performance", "quantization", "amd", "rocm", "npu"},
         "exclude_title": r"kernel|cuda|triton|quantiz|fp8|awq|gptq|marlin|cutlass|"
                          r"benchmark|throughput|latency|speed ?up|perf\b|nccl|tensor.?parallel",
+        "max_vet": 40,
     },
     # Evaluated 2026-08-07 and deliberately NOT added, so it is not re-evaluated:
     #

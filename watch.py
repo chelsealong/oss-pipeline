@@ -179,11 +179,29 @@ def budget_allows(key: str) -> bool:
     if used >= cap:
         log(f"  [{key}] daily dispatch budget reached ({used}/{cap}); leaving in queue")
         return False
+    return True
+
+
+def budget_charge(key: str) -> None:
+    """Spend one unit. Called only once a dispatch has actually started.
+
+    budget_allows used to consume as it checked, and both drain_queues and
+    trigger_fix called it — so every drained candidate was charged twice, and
+    a failed `gh workflow run` was charged anyway.
+    """
+    from datetime import datetime, timezone
+    today = datetime.now(timezone.utc).date().isoformat()
+    try:
+        d = json.loads(BUDGET_FILE.read_text()) if BUDGET_FILE.exists() else {}
+    except Exception:  # noqa: BLE001
+        d = {}
+    if d.get("date") != today:
+        d = {"date": today, "used": {}}
+    used = d["used"].get(key, 0)
     d["used"][key] = used + 1
     scan.STATE.mkdir(parents=True, exist_ok=True)
     BUDGET_FILE.write_text(json.dumps(d, indent=2) + "\n")
-    log(f"  [{key}] dispatch budget {used + 1}/{cap}")
-    return True
+    log(f"  [{key}] dispatch budget {used + 1}/{DISPATCH_BUDGET.get(key, DEFAULT_BUDGET)}")
 
 
 def dispatch_fix(key: str, number: int) -> bool:
@@ -214,7 +232,7 @@ def dispatch_fix(key: str, number: int) -> bool:
     return False
 
 
-def trigger_fix(key: str, number: int) -> None:
+def trigger_fix(key: str, number: int) -> bool:
     """Act on a freshly vetted issue immediately, in the right place.
 
     Waiting for a schedule is what loses these: a prepared fix for hermes#74265
@@ -236,21 +254,24 @@ def trigger_fix(key: str, number: int) -> None:
         script = ROOT / "claim.sh"
         if not script.exists():
             log(f"  cannot claim {key}: {script} missing")
-            return
+            return False
         try:
             subprocess.Popen([str(script), key],
                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                              start_new_session=True)
             log(f"  -> triggered claim.sh for {key}")
+            budget_charge(key)
+            return True
         except Exception as e:  # noqa: BLE001
             log(f"  failed to trigger claim.sh for {key}: {e}")
-        return
+        return False
 
     if not budget_allows(key):
-        return
+        return False
 
     if dispatch_fix(key, number):
-        return
+        budget_charge(key)
+        return True
 
     # Local fallback: correct whenever the egress happens to be clean, and the
     # only route if GitHub dispatch is unavailable. run-fix.sh probes the network
@@ -262,8 +283,11 @@ def trigger_fix(key: str, number: int) -> None:
                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                              start_new_session=True)
             log(f"  -> fell back to local run-fix.sh for {key}")
+            budget_charge(key)
+            return True
         except Exception as e:  # noqa: BLE001
             log(f"  local fallback failed for {key}: {e}")
+    return False
 
 
 # A claim that has gone this long without an assignment is not going to get
@@ -347,6 +371,7 @@ def promote_claims(keys: list[str]) -> int:
                 log(f"  [{key}] #{num} assigned to {ME} — dispatching the fix")
                 if dispatch_fix(key, num):
                     if not dry:
+                        budget_charge(key)
                         record_dispatch(key, num)
                     n += 1
                 keep.append(num)
@@ -635,7 +660,11 @@ def drain_queues(keys: list[str]) -> int:
             if not budget_allows(key):
                 break
             log(f"  [{key}] draining queued #{num} (queued {rec.get('age_hours', '?')}h old issue)")
-            trigger_fix(key, num)
+            # Only spend the ledger entry on a dispatch that actually started.
+            # Recording it unconditionally meant a failed `gh workflow run`
+            # retired the candidate for good and still charged the budget.
+            if not trigger_fix(key, num):
+                continue
             if not dry:
                 record_dispatch(key, num)
             q["candidates"] = [c for c in q["candidates"] if c["number"] != num]
