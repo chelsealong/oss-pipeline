@@ -67,9 +67,17 @@ REPOS: dict[str, dict] = {
     },
     "gemini-cli": {
         "upstream": "google-gemini/gemini-cli",
-        "searches": ['label:"help wanted" label:effort/small', 'label:"help wanted"'],
+        # help wanted is 29/30 self-assigned already — its /assign bot works too
+        # well. The untapped supply is kind/bug (99 unassigned) and good first
+        # issue; neither can be self-assigned, and neither needs to be.
+        "searches": ['label:"help wanted"', 'label:"good first issue"',
+                     "label:kind/bug sort:created-desc"],
+        "max_vet": 40,
         "exclude_labels": {"🔒Maintainers only"},
-        "needs_assignment": True,  # PR without prior assignment is auto-closed
+        # Corrected 2026-08-08: there is no require_issue_link workflow here and
+        # nothing auto-closes. 891 PRs carrying status/need-issue have merged,
+        # and 18 of the 25 most recent merges are from non-members.
+        "needs_assignment": False
     },
     # langgraph REMOVED 2026-08-07. Measured, not guessed:
     #   * require_issue_link.yml (live since 2026-03-24) closes every PR
@@ -89,7 +97,11 @@ REPOS: dict[str, dict] = {
     # wait for an assignment that does not come.
     "langchain": {
         "upstream": "langchain-ai/langchain",
-        "searches": ['label:"help wanted"', "label:new-contributor"],
+        # new-contributor is a PR label, not an issue label — it matched nothing.
+        # The issues that actually get assigned and merged carry bug + external:
+        # ccurme and hwchase17 assigned three external contributors in two days.
+        "searches": ['label:"help wanted"', "label:bug sort:created-desc"],
+        "max_vet": 40,
         "exclude_labels": {"open-swe", "codex"},
         "needs_assignment": True,
         # Most partner integrations are released from their own repos, so an

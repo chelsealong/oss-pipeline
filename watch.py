@@ -121,7 +121,7 @@ def to_rest_shape(node: dict) -> dict:
 # open for 18 seconds. Its pr-guard.yml bypasses MEMBER/OWNER/COLLABORATOR and
 # requires everyone else to be assigned to the linked issue first, which is why
 # maintainers' PRs there show no assignee and ours must have one.
-GATED = {"langchain", "gemini-cli", "pydantic-ai"}
+GATED = {"langchain", "pydantic-ai"}
 
 # Where fix-one.yml lives.
 PIPELINE_REPO = "chelsealong/oss-pipeline"
@@ -155,6 +155,8 @@ DISPATCH_BUDGET = {
     "hermes": 11,
     # New 2026-08-07 — dispatch headroom over the 3 PR/day cap, as elsewhere.
     "vllm": 5, "sglang": 5, "pydantic-ai": 5,
+    "langchain": 4,
+    "gemini-cli": 4,
 }
 DEFAULT_BUDGET = 2
 BUDGET_FILE = scan.STATE / "dispatch-budget.json"

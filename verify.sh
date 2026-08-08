@@ -187,7 +187,12 @@ cfg = pathlib.Path("scan.py").read_text()
 # Only repos we still scan. Dropping one from REPOS must not leave a check
 # demanding it stay gated — but a repo that IS configured and auto-closes
 # unassigned PRs must be in GATED, which is what cost pydantic-ai #7282.
-for repo in ("pydantic-ai", "langgraph", "langchain", "gemini-cli"):
+# gemini-cli removed 2026-08-08: it has no require_issue_link workflow and
+# nothing auto-closes there. 891 PRs carrying status/need-issue have merged and
+# 18 of its 25 most recent merges are from non-members, so gating it behind an
+# assignment blocked the only supply that was actually open (kind/bug, 99
+# unassigned) while its help-wanted pool sat 29/30 self-assigned.
+for repo in ("pydantic-ai", "langgraph", "langchain"):
     if f'"{repo}": {{' not in cfg:
         continue
     if repo not in w.split("GATED")[1].split("}")[0]:
