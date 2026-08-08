@@ -287,6 +287,39 @@ print("  ok     every budget can reach its cap" if not bad else f"  {bad} proble
 sys.exit(1 if bad else 0)
 PY3
 
+echo "== 13. the stream formatter cannot fail a run =="
+# It is an observability aid with the power to kill a 40-minute session. It has
+# now done so twice: once via a shell-quoting NameError, and once because a
+# WebSearch event carries `message` as a str and `(ev.get("message") or {})`
+# raised AttributeError. Feed it the shapes that broke it and assert exit 0.
+python3 - <<'PY3' || fail=$((fail+1))
+import os, re, subprocess, sys, tempfile, textwrap
+src = open(".github/workflows/fix-one.yml").read()
+i = src.index("cat > \"$RUNNER_TEMP/fmt.py\" <<'FMT'")
+j = src.index("\n          FMT\n", i)
+body = textwrap.dedent(src[src.index("\n", i) + 1:j])
+d = tempfile.mkdtemp(); f = os.path.join(d, "fmt.py")
+open(f, "w").write(body)
+EVENTS = [
+    '{"message": "a plain string", "type": "assistant"}',
+    '{"message": {"content": "not a list"}}',
+    '{"message": {"content": [null, 3, "str"]}}',
+    '{"message": {"content": [{"type": "tool_use", "name": "B", "input": "notadict"}]}}',
+    '{"message": {"content": [{"type": "text", "text": null}]}}',
+    '{"message": null, "type": "result", "subtype": "success", "num_turns": 7}',
+    '"a bare json string"', '[]', 'not json at all',
+]
+r = subprocess.run([sys.executable, "-u", f], input="\n".join(EVENTS) + "\n",
+                   capture_output=True, text=True, timeout=60)
+bad = 0
+if r.returncode != 0:
+    print(f"  FAIL  formatter exited {r.returncode} on malformed events"); bad += 1
+if "Traceback" in r.stderr:
+    print("  FAIL  formatter raised on a malformed event"); bad += 1
+print("  ok     formatter survives malformed events" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

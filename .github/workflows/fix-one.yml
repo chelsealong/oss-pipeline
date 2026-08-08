@@ -312,6 +312,18 @@ jobs:
         run: |
           cat > "$RUNNER_TEMP/fmt.py" <<'FMT'
           import json, sys
+
+          # This is an observability aid. It must never be able to fail the step:
+          # a WebSearch event carries `message` as a str, and the old
+          # `(ev.get("message") or {}).get("content")` raised AttributeError,
+          # killed the pipe and took a 6-minute session down with it. Every level
+          # is now type-checked, and any event that still surprises us is printed
+          # raw instead of raising.
+          def blocks(ev):
+              msg = ev.get("message") if isinstance(ev, dict) else None
+              content = msg.get("content") if isinstance(msg, dict) else None
+              return content if isinstance(content, list) else []
+
           try:
               for line in sys.stdin:
                   try:
@@ -321,18 +333,27 @@ jobs:
                       # is plain text and the quota guard greps this stream.
                       print(line, end="", flush=True)
                       continue
-                  for blk in (ev.get("message") or {}).get("content") or []:
-                      kind = blk.get("type")
-                      if kind == "tool_use":
-                          a = blk.get("input") or {}
-                          d = a.get("command") or a.get("file_path") or a.get("pattern") or ""
-                          nm = blk.get("name")
-                          print("  [" + str(nm) + "] " + str(d)[:150], flush=True)
-                      elif kind == "text" and blk.get("text", "").strip():
-                          print(blk["text"][:400], flush=True)
-                  if ev.get("type") == "result":
-                      print("  [result] " + str(ev.get("subtype")) +
-                            " turns=" + str(ev.get("num_turns")), flush=True)
+                  try:
+                      for blk in blocks(ev):
+                          if not isinstance(blk, dict):
+                              continue
+                          kind = blk.get("type")
+                          if kind == "tool_use":
+                              a = blk.get("input")
+                              a = a if isinstance(a, dict) else {}
+                              d = a.get("command") or a.get("file_path") or a.get("pattern") or ""
+                              print("  [" + str(blk.get("name")) + "] " + str(d)[:150], flush=True)
+                          elif kind == "text":
+                              t = blk.get("text")
+                              if isinstance(t, str) and t.strip():
+                                  print(t[:400], flush=True)
+                      if isinstance(ev, dict) and ev.get("type") == "result":
+                          print("  [result] " + str(ev.get("subtype")) +
+                                " turns=" + str(ev.get("num_turns")), flush=True)
+                  except BrokenPipeError:
+                      raise
+                  except Exception as e:
+                      print("  [fmt] skipped an event (" + type(e).__name__ + ")", flush=True)
           except BrokenPipeError:
               pass
           FMT
