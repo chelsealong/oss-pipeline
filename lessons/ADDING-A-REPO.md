@@ -40,3 +40,21 @@ Run these against a recent **external fork** PR, not a maintainer's:
    that repo is unusable to it no matter how open it is.
 
 `verify.sh` check 8 asserts that the gates found this way stay encoded.
+
+## Contribution-count gates
+
+vllm's `pre-run-check` fails every PR whose author has fewer than 4 merged
+PRs there, unless a maintainer applies `verified`, `ready` or
+`ready-run-all-tests`. Discovered on vllm#51474 — our first PR to that repo,
+which reported CI failure for a reason that has nothing to do with the patch:
+
+    PR must have the 'verified', 'ready', or 'ready-run-all-tests' label to run
+    pre-commit, or the author must have at least 4 merged PRs (found 0).
+
+Treat this exactly like a CLA check. It is a gating requirement, not a defect:
+never try to satisfy it in code, never explain it away to the maintainer, and
+never report the PR as broken on our side. It clears when a maintainer labels
+the PR, and every first contribution to such a repo will show red until then.
+
+Check for it before adding a repo: read `.github/workflows` for a job that
+counts the author's merged PRs or requires a hand-applied label to run CI.

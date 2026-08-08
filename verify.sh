@@ -248,17 +248,29 @@ echo "== 11. dispatch inputs match the workflow's declared inputs =="
 # every dispatch 422 "Unexpected inputs provided" and the queue drains into
 # nothing, silently. Assert the names watch.py sends are the names fix-one
 # declares.
-python3 - "$SCANNER/watch.py" <<'PY3' || fail=$((fail+1))
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
 import re, sys, yaml
 bad = 0
-declared = set(yaml.safe_load(open(".github/workflows/fix-one.yml"))[True]["workflow_dispatch"]["inputs"])
-src = open(sys.argv[1]).read()
-for blk in re.findall(r'fix-one\.yml(.{0,400}?)(?:\]|\n\n)', src, re.S):
-    sent = set(re.findall(r'''["']([a-z_]+)=''', blk))
-    unknown = sent - declared
-    if unknown:
-        print(f"  FAIL  watch.py dispatches fix-one.yml with unknown input(s): {sorted(unknown)}"); bad += 1
-print("  ok     dispatch inputs match fix-one.yml" if not bad else f"  {bad} problem(s)")
+# Both dispatchers, both workflows: respond-pr.yml takes `upstream`, not
+# `repo_key`, and sending the wrong name 422s exactly as silently.
+SCANNER = sys.argv[1]
+PAIRS = [("fix-one.yml", "watch.py"), ("respond-pr.yml", "watch-prs.py")]
+for wf, script in PAIRS:
+    declared = set(yaml.safe_load(open(f".github/workflows/{wf}"))[True]["workflow_dispatch"]["inputs"])
+    try:
+        src = open(f"{SCANNER}/{script}").read()
+    except OSError:
+        print(f"  FAIL  cannot read {SCANNER}/{script}"); bad += 1; continue
+    hits = re.findall(re.escape(wf) + r'(.{0,400}?)(?:\]|\n\n)', src, re.S)
+    if not hits:
+        print(f"  FAIL  {script} never dispatches {wf} — the trigger was lost"); bad += 1
+        continue
+    for blk in hits:
+        sent = set(re.findall(r'''["']([a-z_]+)=''', blk))
+        unknown = sent - declared
+        if unknown:
+            print(f"  FAIL  {script} dispatches {wf} with unknown input(s): {sorted(unknown)}"); bad += 1
+print("  ok     dispatch inputs match both workflows" if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY3
 
