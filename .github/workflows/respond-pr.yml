@@ -151,6 +151,20 @@ jobs:
                   esac
                 done
 
+            # Whether a red check is even ours is the first thing to settle,
+            # and it is mechanical: compare the paths the failing tests name
+            # against the paths this PR touches. Both openclaw failures we
+            # chased on 2026-08-08 were in unrelated subsystems — #120398
+            # changes src/process/supervisor/adapters/child.ts and the failing
+            # test is test/scripts/package-acceptance-workflow.test.ts; #118377
+            # changes src/channels/draft-stream-controls.ts and the failures are
+            # in src/gateway/server-methods/agent.*. A dispatch reason asserting
+            # "failing on our own code" was wrong, and the agent was right to
+            # refuse it. Give it the comparison instead of a claim.
+            echo; echo "### [ctx] Files this PR changes"
+            gh pr view "$N" --repo "$UP" --json files \
+              --jq '.files[].path' 2>/dev/null | head -60 || echo "(unavailable)"
+
             echo; echo "### [ctx] Failing check logs"
             # `gh pr checks` exits 8 when any check is failing — which is
             # precisely when this runs — and the step is `set -euo pipefail`,

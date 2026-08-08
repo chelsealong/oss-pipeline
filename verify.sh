@@ -403,6 +403,44 @@ print(f"  ok     {len(POS)} claims caught, {len(NEG)} lookalikes ignored" if not
 sys.exit(1 if bad else 0)
 PY3
 
+echo "== 16. context sections reference variables their own run block defines =="
+# Three times now a step has referenced a name it never had: NUM absent from
+# the Open PR env, repo_key sent to a workflow that declares upstream, and
+# $PR_NUM/$UPSTREAM written into a collect block whose variables are $N and
+# $UP. Each expands to empty and fails silently — "(unavailable)" instead of
+# the PR's file list. Assert every $VAR a run block uses is either assigned in
+# that block, listed in its env, or a GitHub/runner builtin.
+python3 - <<'PY3' || fail=$((fail+1))
+import re, sys, yaml
+BUILTIN = {"GITHUB_OUTPUT", "GITHUB_ENV", "GITHUB_WORKSPACE", "GITHUB_TOKEN",
+           "GITHUB_STEP_SUMMARY", "RUNNER_TEMP", "HOME", "PATH", "GITHUB_PATH",
+           "GITHUB_REPOSITORY", "GITHUB_SHA", "GITHUB_REF", "PIPESTATUS",
+           "GITHUB_RUN_ID", "GITHUB_RUN_NUMBER", "GITHUB_ACTOR", "GITHUB_EVENT_NAME",
+           "GITHUB_SERVER_URL", "GITHUB_API_URL", "RUNNER_OS", "RUNNER_ARCH",
+           # awk field/record builtins — these appear inside embedded awk scripts
+           "NF", "NR", "FS", "OFS", "RS", "ORS"}
+bad = 0
+for wf in ("fix-one.yml", "respond-pr.yml"):
+    doc = yaml.safe_load(open(f".github/workflows/{wf}"))
+    for job in doc["jobs"].values():
+        for st in job.get("steps", []):
+            run = st.get("run")
+            if not run:
+                continue
+            env = set((st.get("env") or {}) ) | set(job.get("env") or {}) | set(doc.get("env") or {})
+            # Assignments are not always at line start: this file writes
+            # `UP="..."; N="..."`, and requiring ^ reported N undefined.
+            assigned = set(re.findall(r'(?:^|[;&|(]|\bthen\b|\bdo\b)\s*([A-Z_][A-Z0-9_]*)=', run, re.M))
+            assigned |= set(re.findall(r'\b([A-Z_][A-Z0-9_]*)=\$\(', run))
+            assigned |= set(re.findall(r'^\s*(?:export|local|declare)\s+([A-Z_][A-Z0-9_]*)', run, re.M))
+            used = set(re.findall(r'\$\{?([A-Z_][A-Z0-9_]*)\}?', run))
+            unknown = used - assigned - env - BUILTIN
+            if unknown:
+                print(f"  FAIL  {wf} step {st.get('name','?')!r} uses undefined {sorted(unknown)}"); bad += 1
+print("  ok     every run block defines the variables it reads" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1
