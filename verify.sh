@@ -257,6 +257,31 @@ print("  ok     dispatch inputs match fix-one.yml" if not bad else f"  {bad} pro
 sys.exit(1 if bad else 0)
 PY3
 
+echo "== 12. dispatch budget can actually reach the PR cap =="
+# Two knobs, two files, opposite failure modes. A budget below the cap makes
+# the cap unreachable — we would starve a repo while believing it was allowed
+# more. comfyui sat at budget 2 / cap 1 for days with ten vetted candidates
+# unread because the budget was being used as if it were the cap.
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import re, sys
+sys.path.insert(0, sys.argv[1])
+import watch, scan
+src = open(".github/workflows/fix-one.yml").read()
+caps = {}
+for names, n in re.findall(r'^\s+([a-z0-9|_*-]+)\) cap=(\d+)', src, re.M):
+    for k in names.split("|"):
+        caps[k] = int(n)
+default_cap = caps.get("*", 2)
+bad = 0
+for k in scan.REPOS:
+    b = watch.DISPATCH_BUDGET.get(k, watch.DEFAULT_BUDGET)
+    c = caps.get(k, default_cap)
+    if b < c:
+        print(f"  FAIL  {k}: dispatch budget {b} < PR cap {c} — the cap is unreachable"); bad += 1
+print("  ok     every budget can reach its cap" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

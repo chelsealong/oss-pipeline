@@ -115,11 +115,14 @@ jobs:
         run: |
           case "${{ inputs.repo_key }}" in
             adk) cap=7 ;;
-            openclaw) cap=6 ;;
-            dify|autogpt) cap=5 ;;
-            vllm|sglang|pydantic-ai) cap=3 ;;
             hermes) cap=9 ;;
-            firecrawl|comfyui) cap=1 ;;
+            spec-kit) cap=5 ;;
+            openclaw) cap=4 ;;
+            comfyui) cap=3 ;;
+            dify|autogpt) cap=3 ;;
+            vllm|sglang|pydantic-ai) cap=3 ;;
+            langfuse|langfuse-python) cap=3 ;;
+            firecrawl) cap=1 ;;
             *) cap=2 ;;
           esac
           n=$(gh pr list --repo "${{ steps.cfg.outputs.implements_in }}" --author chelsealong \

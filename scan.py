@@ -48,12 +48,14 @@ REPOS: dict[str, dict] = {
         # vet() still rejects anything with a linked PR or a comment claimant,
         # which is what actually indicates work in progress.
         "ignore_assignees": True,
+        "max_vet": 40,
     },
     "langfuse-python": {
         "upstream": "langfuse/langfuse",  # tracker lives here, fix lands in langfuse-python
         "searches": ["label:sdk-python", "label:integration-langchain", "label:integration-openai"],
         "exclude_labels": set(),
         "implements_in": "langfuse/langfuse-python",
+        "max_vet": 40,
     },
     "spec-kit": {
         "upstream": "github/spec-kit",
@@ -452,7 +454,13 @@ def scan_repo(key: str, limit: int, max_vet: int) -> dict:
     ok, rejected = [], []
     # vet freshest-first and stop early: unclaimed issues are almost always recent,
     # and each vet costs up to three API calls.
-    ordered = sorted(seen.items(), key=lambda kv: kv[1]["created_at"], reverse=True)[:max_vet]
+    # Per-repo vetting depth. The default takes only the freshest few, which
+    # suits a fast tracker where unclaimed issues are recent. It starves a
+    # high-backlog, low-velocity one: langfuse carries ~198 open bugs, and of
+    # the 15 freshest, 7 already had a PR — so the queue came back empty while
+    # most of the backlog was never looked at.
+    depth = cfg.get("max_vet", max_vet)
+    ordered = sorted(seen.items(), key=lambda kv: kv[1]["created_at"], reverse=True)[:depth]
     for num, it in ordered:
         try:
             passed, why, extra = vet(cfg, upstream, it)
