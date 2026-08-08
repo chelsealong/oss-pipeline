@@ -423,7 +423,13 @@ jobs:
              leave one short comment asking to be assigned, write
              'SKIP: needs assignment' to $GITHUB_WORKSPACE/.loop/outcome.txt, and stop.
 
-          4. Implement the MINIMAL fix. Never touch CI/workflow files, release or
+          4. Implement the MINIMAL fix. On openclaw a patch adding more than
+             120 lines, and on comfyui more than 250, is REFUSED at PR time and
+             the whole session is wasted — external PRs that land on openclaw
+             run a median of +61 lines, and the only one of ours that merged
+             there is +38. If the smallest correct fix cannot fit, say so and
+             stop rather than writing a large one.
+             Never touch CI/workflow files, release or
              versioning machinery, generated files, or auth/credential code.
 
              That list includes DEPENDENCY MANIFESTS AND LOCKFILES — package.json,
@@ -769,8 +775,33 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT }}
           UPSTREAM: ${{ steps.cfg.outputs.upstream }}
           NUM: ${{ inputs.issue }}
+          REPO_KEY: ${{ inputs.repo_key }}
           PREPARE_ONLY: ${{ steps.cfg.outputs.prepare_only }}
         run: |
+          # Size ceiling, per repo. On openclaw this is the whole story: of our
+          # eight PRs there the only one that merged is +38/-2, and the seven
+          # still open are +47, +140, +189, +191, +287, +358 and +1234 — while
+          # external PRs that land there run a median of +61. "Keep it minimal"
+          # was advice in a prompt and produced a 1234-line patch, so it is a
+          # gate now. Over the ceiling we do not open: a patch that large is not
+          # going to merge there, and spending a maintainer's attention on it
+          # costs goodwill we need for the small ones.
+          case "${REPO_KEY}" in
+            openclaw) max_added=120 ;;
+            comfyui)  max_added=250 ;;
+            *)        max_added=0 ;;
+          esac
+          if [ "${max_added}" -gt 0 ] && [ -f "$GITHUB_WORKSPACE/.loop/change.diff" ]; then
+            added=$(grep -c '^+[^+]' "$GITHUB_WORKSPACE/.loop/change.diff" || true)
+            added=${added:-0}
+            if [ "$added" -gt "$max_added" ]; then
+              echo "::warning::patch adds ${added} lines, over ${REPO_KEY}'s ${max_added}-line ceiling — not opening"
+              echo "over_size=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "size ok: +${added} lines, ceiling ${max_added}"
+          fi
+
           # Last-moment claim re-check. The pre-vet ran before the agent
           # session, which is bounded at 40 minutes — and on dify a competing
           # PR appears a median of 16 minutes after the issue is filed, often

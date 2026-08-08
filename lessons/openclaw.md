@@ -216,3 +216,27 @@ list before the diff.
 
 If a build genuinely fails because a dependency is stale on the branch, that is
 a merge-base problem: rebase or merge upstream, do not edit the manifest.
+
+## Size is the gate, and it is now mechanical
+
+Measured 2026-08-08 across all eight PRs we have opened here:
+
+| PR | added | state |
+|---|---|---|
+| #116958 | +38 | **merged** |
+| #118377 | +47 | open, one node test red |
+| #120398 | +140 | open, lint + test-types red |
+| #117719 | +189 | open |
+| #116260 | +191 | open, in a clawsweeper re-review loop |
+| #117757 | +287 | open, CHANGES_REQUESTED, taken over |
+| #115138 | +358 | open |
+| #117176 | +1234 | open, taken over |
+
+The only one that merged is the smallest, and external PRs that land here run
+a median of +61. "Keep it minimal" was advice in a prompt and produced a
+1234-line patch, so fix-one.yml now refuses to open an openclaw PR that adds
+more than 120 lines, and the generator is told the number up front.
+
+If the smallest correct fix does not fit under the ceiling, the right move is
+to stop and say so — not to write the large one. A patch that size will not
+merge here, and it spends attention we need for the small ones.

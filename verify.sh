@@ -332,6 +332,42 @@ print("  ok     formatter survives malformed events" if not bad else f"  {bad} p
 sys.exit(1 if bad else 0)
 PY3
 
+echo "== 14. the per-repo patch size ceiling is wired up =="
+# On openclaw size is the whole story: the only PR of ours that merged is +38
+# and the seven still open run +47 to +1234, against a +61 median for external
+# PRs that land there. The ceiling only works if REPO_KEY actually reaches the
+# step — NUM was missing from this same step's env once, and the guard that
+# depended on it could only ever fail.
+python3 - <<'PY3' || fail=$((fail+1))
+import sys, yaml
+bad = 0
+wf = yaml.safe_load(open(".github/workflows/fix-one.yml"))
+step = None
+for j in wf["jobs"].values():
+    for st in j.get("steps", []):
+        if str(st.get("name", "")).startswith("Open PR"):
+            step = st
+if step is None:
+    print("  FAIL  no Open PR step found"); sys.exit(1)
+run = step.get("run") or ""
+env = step.get("env") or {}
+if "max_added" not in run:
+    print("  FAIL  Open PR step has no size ceiling"); bad += 1
+if "REPO_KEY" not in env:
+    print("  FAIL  REPO_KEY missing from the Open PR step env — the ceiling can never match"); bad += 1
+if "openclaw)" not in run:
+    print("  FAIL  openclaw has no ceiling, and size is the only thing gating it there"); bad += 1
+gen = ""
+for j in wf["jobs"].values():
+    for st in j.get("steps", []):
+        if st.get("id") == "gen":
+            gen = st.get("run") or ""
+if "120" not in gen:
+    print("  FAIL  the generator is not told openclaw's ceiling — it would burn a session then be refused"); bad += 1
+print("  ok     size ceiling wired into both the gate and the prompt" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1
