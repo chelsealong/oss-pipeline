@@ -368,6 +368,41 @@ print("  ok     size ceiling wired into both the gate and the prompt" if not bad
 sys.exit(1 if bad else 0)
 PY3
 
+echo "== 15. claim detection catches real claims and not lookalikes =="
+# Missing a claim is the rudest failure this pipeline has: on langchain#38814
+# two people had already claimed — one saying they had a patch ready — and we
+# posted a third claim on top of them, because "I'd like to attempt a fix" was
+# not in the verb list and "have a minimal patch ready" was not in the noun
+# list. False positives are costly too: bare `pr` matched inside "problem".
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import importlib.util, re, sys
+spec = importlib.util.spec_from_file_location("scan", sys.argv[1] + "/scan.py")
+scan = importlib.util.module_from_spec(spec); spec.loader.exec_module(scan)
+
+def detect(b):   # mirrors claimants(): quoted text is stripped first
+    return bool(scan.CLAIM_PHRASES.search(re.sub(r"^\s*>.*$", "", b, flags=re.M).lower()))
+
+POS = ["I'd like to attempt a fix — applying the same check",
+       "I reproduced this against the current source and have a minimal patch ready.",
+       "I'll take this one", "I'd like to work on this", "working on it", "/assign",
+       "I have a fix for this", "I've got a patch locally", "I will open a PR shortly",
+       "let me handle this", "I'd like to submit a PR for this"]
+NEG = ["Does anyone have a fix for this?", "Would be great if someone could take a look.",
+       "This is blocking me — any workaround?", "Thanks, that worked!",
+       "I have a question about the config.", "Is there a PR for this already?",
+       "> I'd like to take this one", "> I have a minimal patch ready\n\nThanks, go ahead.",
+       "I have a similar problem on Windows.", "I have a prod deployment affected by this."]
+bad = 0
+for t in POS:
+    if not detect(t):
+        print(f"  FAIL  missed a claim: {t[:58]}"); bad += 1
+for t in NEG:
+    if detect(t):
+        print(f"  FAIL  false claim on: {t[:58]}"); bad += 1
+print(f"  ok     {len(POS)} claims caught, {len(NEG)} lookalikes ignored" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1
