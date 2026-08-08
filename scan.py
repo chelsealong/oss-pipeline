@@ -73,6 +73,10 @@ REPOS: dict[str, dict] = {
         "searches": ['label:"help wanted"', 'label:"good first issue"',
                      "label:kind/bug sort:created-desc"],
         "max_vet": 40,
+        # kind/bug on this tracker also carries auto-filed release-CI reports and
+        # end-user support threads. Neither is a code defect we can fix from this
+        # checkout, and a session spent on one produces nothing.
+        "exclude_title": r"(nightly release failed|release failed for|geminicli\.com feedback|feedback: \[|high memory usage detected|blocking my custom domain|was deleted)",
         "exclude_labels": {"🔒Maintainers only"},
         # Corrected 2026-08-08: there is no require_issue_link workflow here and
         # nothing auto-closes. 891 PRs carrying status/need-issue have merged,

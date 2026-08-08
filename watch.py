@@ -651,8 +651,14 @@ def drain_queues(keys: list[str]) -> int:
         cands = q.get("candidates") or []
         if not cands:
             continue
-        # Oldest first: the freshest are what the sweep already had a shot at.
-        for rec in list(reversed(cands)):
+        # Freshest first. This used to be oldest-first, to avoid re-treading
+        # what the live sweep had just seen — but record_dispatch now dedupes
+        # exactly, so that reason is gone, and the ordering was actively
+        # harmful: on a busy tracker an issue is old precisely because nobody
+        # could act on it. Draining gemini-cli oldest-first spent its whole
+        # daily budget on "Possible bug", "Where is oauth authentication?" and
+        # a report in Spanish, while five well-scoped crashes waited.
+        for rec in list(cands):
             num = rec["number"]
             if already_dispatched(key, num):
                 # Drop it from the queue so the next rebuild does not resurrect
