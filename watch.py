@@ -150,7 +150,7 @@ PIPELINE_REPO = "chelsealong/oss-pipeline"
 DISPATCH_BUDGET = {
     "adk": 10, "langfuse": 6, "langfuse-python": 6, "spec-kit": 8,
     "openclaw": 6,
-    "dify": 4, "autogpt": 4,
+    "dify": 6, "autogpt": 4,
     "comfyui": 8, "firecrawl": 2,
     "hermes": 20,
     # New 2026-08-07 — dispatch headroom over the 3 PR/day cap, as elsewhere.
