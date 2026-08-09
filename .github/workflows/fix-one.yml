@@ -606,7 +606,19 @@ jobs:
           The full checkout is here, so read the surrounding code, not just the
           diff.
 
-          Attack it on five fronts:
+          Attack it on six fronts:
+          0. NO-OP — does this change behaviour AT ALL? Setting a value to the
+             default it already holds, re-calling an idempotent setter, or
+             guarding a condition that cannot occur are all no-ops that look
+             like fixes and pass their own tests. hermes#82124 was closed for
+             exactly this: setFocusable(true) on a window Electron already
+             defaults to focusable, copied from a window that deliberately
+             creates itself focusable:false. If the patch copies a pattern from
+             elsewhere in the repo, find out WHY that site needs it and confirm
+             the same reason applies here. Then check the report is still live:
+             read the code it quotes on CURRENT main — if that code was moved or
+             replaced, the bug may already be gone. Prove behaviour changed, or
+             BLOCK.
           1. CORRECTNESS — does it actually fix the issue? Edge cases, error
              paths, concurrency, off-by-one. Is the fix in the RIGHT PLACE, or
              does it patch a symptom while the cause sits elsewhere?
@@ -617,6 +629,10 @@ jobs:
              change? Verify it: 'git checkout HEAD~1 -- <source file>', run the
              test, confirm failure, restore. A test that passes either way proves
              nothing and is the single most common way a bad PR looks good.
+             Necessary but not sufficient: a test asserting "the helper calls
+             setFocusable(true)" fails without the helper and still proves
+             nothing about behaviour — that is how hermes#82124 got through.
+             The test must assert the OBSERVABLE effect, not that a line ran.
           4. SECURITY — only if the change touches an attack surface: filesystem
              paths built from request data, SQL or shell built by concatenation,
              deserialisation, redirects, template rendering, authn/authz
