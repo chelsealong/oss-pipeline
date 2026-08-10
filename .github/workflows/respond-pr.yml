@@ -246,10 +246,41 @@ jobs:
           UP: ${{ inputs.upstream }}
           N: ${{ inputs.pr }}
           REASON: ${{ inputs.reason }}
+          REPO_KEY_HINT: ${{ inputs.upstream }}
           BRANCH: ${{ steps.ctx.outputs.head }}
         run: |
+          # Size ceiling, mirroring fix-one.yml. Without it here the
+          # responder grows a PR past the limit the opener refused to cross:
+          # openclaw#120398 went 2 files/+140 to 4 files/+387 and #118377
+          # +47 to +96, both by answering review comments with more code, in
+          # the one repo where size is the whole gate (+61 median for external
+          # PRs that land there).
+          case "${UP}" in
+            openclaw/openclaw)  MAX_ADDED=120 ;;
+            Comfy-Org/ComfyUI)  MAX_ADDED=250 ;;
+            *)                  MAX_ADDED=0 ;;
+          esac
+          export MAX_ADDED
+          if [ "$MAX_ADDED" -gt 0 ]; then
+            base=$(git merge-base HEAD "upstream/$(git symbolic-ref --short refs/remotes/upstream/HEAD 2>/dev/null | sed 's|^upstream/||' || echo main)" 2>/dev/null || echo "")
+            before=$(git diff "${base:-HEAD~1}" HEAD 2>/dev/null | grep -c '^+[^+]' || true)
+            echo "size before responding: +${before:-0}, ceiling ${MAX_ADDED}"
+          fi
+
           cat > "$RUNNER_TEMP/fmt.py" <<'FMT'
           import json, sys
+
+          # This is an observability aid. It must never be able to fail the step:
+          # a WebSearch event carries `message` as a str, and the old
+          # `(ev.get("message") or {}).get("content")` raised AttributeError,
+          # killed the pipe and took a 6-minute session down with it. Every level
+          # is now type-checked, and any event that still surprises us is printed
+          # raw instead of raising.
+          def blocks(ev):
+              msg = ev.get("message") if isinstance(ev, dict) else None
+              content = msg.get("content") if isinstance(msg, dict) else None
+              return content if isinstance(content, list) else []
+
           try:
               for line in sys.stdin:
                   try:
@@ -259,18 +290,27 @@ jobs:
                       # is plain text and the quota guard greps this stream.
                       print(line, end="", flush=True)
                       continue
-                  for blk in (ev.get("message") or {}).get("content") or []:
-                      kind = blk.get("type")
-                      if kind == "tool_use":
-                          a = blk.get("input") or {}
-                          d = a.get("command") or a.get("file_path") or a.get("pattern") or ""
-                          nm = blk.get("name")
-                          print("  [" + str(nm) + "] " + str(d)[:150], flush=True)
-                      elif kind == "text" and blk.get("text", "").strip():
-                          print(blk["text"][:400], flush=True)
-                  if ev.get("type") == "result":
-                      print("  [result] " + str(ev.get("subtype")) +
-                            " turns=" + str(ev.get("num_turns")), flush=True)
+                  try:
+                      for blk in blocks(ev):
+                          if not isinstance(blk, dict):
+                              continue
+                          kind = blk.get("type")
+                          if kind == "tool_use":
+                              a = blk.get("input")
+                              a = a if isinstance(a, dict) else {}
+                              d = a.get("command") or a.get("file_path") or a.get("pattern") or ""
+                              print("  [" + str(blk.get("name")) + "] " + str(d)[:150], flush=True)
+                          elif kind == "text":
+                              t = blk.get("text")
+                              if isinstance(t, str) and t.strip():
+                                  print(t[:400], flush=True)
+                      if isinstance(ev, dict) and ev.get("type") == "result":
+                          print("  [result] " + str(ev.get("subtype")) +
+                                " turns=" + str(ev.get("num_turns")), flush=True)
+                  except BrokenPipeError:
+                      raise
+                  except Exception as e:
+                      print("  [fmt] skipped an event (" + type(e).__name__ + ")", flush=True)
           except BrokenPipeError:
               pass
           FMT
@@ -287,6 +327,14 @@ jobs:
           timeout 2400 claude -p "$(cat <<EOF
           Reviewer feedback has arrived on our own pull request ${UP}#${N}. Decide
           what it actually asks for and do that — nothing more.
+
+          HARD SIZE LIMIT: when MAX_ADDED is non-zero, the WHOLE PR — not just
+          your addition — must stay under that many added lines. openclaw#120398
+          went +140 -> +387 and #118377 +47 -> +96 by answering review comments
+          with more code, in the one repo where external PRs that land run a
+          median of +61. If the feedback cannot be addressed within the limit,
+          say so in a comment and change nothing. Measure it:
+            git diff "$(git merge-base HEAD upstream/main)" HEAD | grep -c "^+[^+]"
 
           THIS IS A ONE-SHOT NON-INTERACTIVE SESSION. When you end your turn the
           process exits and anything not written to disk is lost. NEVER run a

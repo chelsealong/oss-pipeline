@@ -306,12 +306,16 @@ echo "== 13. the stream formatter cannot fail a run =="
 # raised AttributeError. Feed it the shapes that broke it and assert exit 0.
 python3 - <<'PY3' || fail=$((fail+1))
 import os, re, subprocess, sys, tempfile, textwrap
-src = open(".github/workflows/fix-one.yml").read()
-i = src.index("cat > \"$RUNNER_TEMP/fmt.py\" <<'FMT'")
-j = src.index("\n          FMT\n", i)
-body = textwrap.dedent(src[src.index("\n", i) + 1:j])
-d = tempfile.mkdtemp(); f = os.path.join(d, "fmt.py")
-open(f, "w").write(body)
+# BOTH workflows. respond-pr.yml kept the fragile version for a day after
+# fix-one.yml was hardened — the fourth time a fix landed in one file and not
+# the other — and it is the workflow that answers reviewers, so it runs more.
+BODIES = []
+for wf in ("fix-one.yml", "respond-pr.yml"):
+    src = open(f".github/workflows/{wf}").read()
+    i = src.index("cat > \"$RUNNER_TEMP/fmt.py\" <<'FMT'")
+    j = src.index("\n          FMT\n", i)
+    BODIES.append((wf, textwrap.dedent(src[src.index("\n", i) + 1:j])))
+d = tempfile.mkdtemp()
 EVENTS = [
     '{"message": "a plain string", "type": "assistant"}',
     '{"message": {"content": "not a list"}}',
@@ -321,14 +325,17 @@ EVENTS = [
     '{"message": null, "type": "result", "subtype": "success", "num_turns": 7}',
     '"a bare json string"', '[]', 'not json at all',
 ]
-r = subprocess.run([sys.executable, "-u", f], input="\n".join(EVENTS) + "\n",
-                   capture_output=True, text=True, timeout=60)
 bad = 0
-if r.returncode != 0:
-    print(f"  FAIL  formatter exited {r.returncode} on malformed events"); bad += 1
-if "Traceback" in r.stderr:
-    print("  FAIL  formatter raised on a malformed event"); bad += 1
-print("  ok     formatter survives malformed events" if not bad else f"  {bad} problem(s)")
+for wf, body in BODIES:
+    f = os.path.join(d, f"fmt_{wf}.py")
+    open(f, "w").write(body)
+    r = subprocess.run([sys.executable, "-u", f], input="\n".join(EVENTS) + "\n",
+                       capture_output=True, text=True, timeout=60)
+    if r.returncode != 0:
+        print(f"  FAIL  {wf} formatter exited {r.returncode} on malformed events"); bad += 1
+    if "Traceback" in r.stderr:
+        print(f"  FAIL  {wf} formatter raised on a malformed event"); bad += 1
+print("  ok     both formatters survive malformed events" if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY3
 
@@ -357,6 +364,13 @@ if "REPO_KEY" not in env:
     print("  FAIL  REPO_KEY missing from the Open PR step env — the ceiling can never match"); bad += 1
 if "openclaw)" not in run:
     print("  FAIL  openclaw has no ceiling, and size is the only thing gating it there"); bad += 1
+# The responder can inflate a PR past the ceiling the opener refused to cross,
+# and did: openclaw#120398 +140 -> +387, #118377 +47 -> +96.
+resp = open(".github/workflows/respond-pr.yml").read()
+if "MAX_ADDED" not in resp:
+    print("  FAIL  respond-pr.yml has no size ceiling — it can grow a PR past the opener's limit"); bad += 1
+if "HARD SIZE LIMIT" not in resp:
+    print("  FAIL  the responder prompt never states the ceiling, so the agent cannot respect it"); bad += 1
 gen = ""
 for j in wf["jobs"].values():
     for st in j.get("steps", []):
