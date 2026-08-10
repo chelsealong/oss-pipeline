@@ -182,6 +182,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT }}
           UPSTREAM: ${{ steps.cfg.outputs.upstream }}
           NUM: ${{ inputs.issue }}
+          REPO_KEY: ${{ inputs.repo_key }}
         run: |
           python - <<'PY' >> "$GITHUB_OUTPUT"
           import json, os, re, sys
@@ -197,7 +198,14 @@ jobs:
                                       "--jq", "{state:.state,title:.title,assignees:[.assignees[].login]}"]))
           if issue["state"] != "open":
               out("taken", "true"); out("why", "issue is closed"); raise SystemExit(0)
-          if issue["assignees"]:
+          # Honour the repo's own ignore_assignees. langfuse assigns a triager to
+          # nearly every bug, which is exactly why its config sets the flag — but
+          # this check ignored the config and killed all 11 langfuse dispatches at
+          # the pre-vet, for zero PRs. Look the config up by REPO_KEY, not by
+          # upstream: langfuse and langfuse-python share one upstream and only one
+          # of them sets the flag.
+          cfg = scan.REPOS.get(os.environ.get("REPO_KEY", ""), {})
+          if issue["assignees"] and not cfg.get("ignore_assignees"):
               out("taken", "true"); out("why", f"assigned to {issue['assignees']}"); raise SystemExit(0)
           if prs := scan.linked_prs(up, num):
               out("taken", "true"); out("why", f"linked PR(s) {prs[:3]}"); raise SystemExit(0)

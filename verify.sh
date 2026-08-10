@@ -455,6 +455,38 @@ print("  ok     every run block defines the variables it reads" if not bad else 
 sys.exit(1 if bad else 0)
 PY3
 
+echo "== 17. the cloud re-vet honours the same config the scanner does =="
+# scan.py's search skips the assignee filter for repos that set
+# ignore_assignees, because langfuse assigns a triager to nearly every bug.
+# fix-one.yml's re-vet applied the filter anyway and killed all 11 langfuse
+# dispatches before a session started — 11 dispatches, 0 PRs, for a check the
+# config explicitly disables. Any repo carrying the flag must survive the
+# re-vet with an assignee present.
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import sys, yaml
+sys.path.insert(0, sys.argv[1])
+import scan
+bad = 0
+wf = yaml.safe_load(open(".github/workflows/fix-one.yml"))
+pre = None
+for j in wf["jobs"].values():
+    for st in j.get("steps", []):
+        if st.get("id") == "pre":
+            pre = st
+if pre is None:
+    print("  FAIL  no re-vet step"); sys.exit(1)
+run, env = pre.get("run") or "", pre.get("env") or {}
+if "ignore_assignees" not in run:
+    print("  FAIL  the re-vet ignores ignore_assignees — it will kill every dispatch to a triaged repo"); bad += 1
+if "REPO_KEY" not in env:
+    print("  FAIL  REPO_KEY missing from the re-vet env — the config lookup cannot resolve"); bad += 1
+flagged = [k for k, c in scan.REPOS.items() if c.get("ignore_assignees")]
+if not flagged:
+    print("  note   no repo currently sets ignore_assignees")
+print("  ok     re-vet honours ignore_assignees" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1
