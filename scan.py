@@ -34,6 +34,15 @@ REPOS: dict[str, dict] = {
         "searches": ['label:"good first issue"', 'label:"help wanted"', "sort:created-desc"],
         "exclude_labels": {"spam", "needs review"},
         "exclude_title": r"^\s*(question|how do i|help)\b",
+        # adk's CONTRIBUTING.md: "For other issues, please kindly ask before
+        # contributing to avoid duplication." Its good-first-issue pool is
+        # empty and help-wanted has 2, so effectively every candidate we take
+        # falls under that sentence — and we had opened 10 PRs there without a
+        # word. We announce before starting instead of waiting for a reply:
+        # the wait would cost the 6-40 minute lead that is our whole advantage,
+        # and the announcement still does the duplication work it is for —
+        # uuzzrm opened a second PR on #6647 a full day after ours.
+        "announce_before_work": True,
     },
     "langfuse": {
         "upstream": "langfuse/langfuse",

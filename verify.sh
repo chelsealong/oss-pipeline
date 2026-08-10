@@ -63,8 +63,8 @@ bad = 0
 HAZ = [
     (r"--paginate[^\n|]*\|\s*head\b",
      "`gh --paginate | head` SIGPIPEs the writer; exit 141 kills the step (use sed -n)"),
-    (r"gh api (?!.*-X GET)(?!.*graphql)[^\n]*\s-f\s",
-     "`gh api -f` without `-X GET` sends a POST"),
+    (r"gh api (?!.*-X [A-Z]+)(?!.*graphql)[^\n]*\s-f\s",
+     "`gh api -f` with no explicit -X sends a POST"),
 ]
 for f in sorted(pathlib.Path(".github/workflows").glob("*.yml")):
     d = yaml.safe_load(f.read_text()) or {}
@@ -484,6 +484,38 @@ flagged = [k for k, c in scan.REPOS.items() if c.get("ignore_assignees")]
 if not flagged:
     print("  note   no repo currently sets ignore_assignees")
 print("  ok     re-vet honours ignore_assignees" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
+echo "== 18. an announcement is always withdrawn when no PR follows =="
+# adk's CONTRIBUTING asks to be told before work starts, so we comment and
+# start immediately. A comment we do not honour is worse than none: it tells
+# everyone else the issue is taken while nothing is coming, which is how
+# langgraph#8408 sat "claimed" with no work for weeks. Announce and withdraw
+# must exist together, and the withdraw must run even when the job fails.
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import sys, yaml
+sys.path.insert(0, sys.argv[1])
+import scan
+bad = 0
+wf = yaml.safe_load(open(".github/workflows/fix-one.yml"))
+steps = [st for j in wf["jobs"].values() for st in j.get("steps", [])]
+ann = next((s for s in steps if s.get("id") == "announce"), None)
+wd = next((s for s in steps if "Withdraw" in str(s.get("name", ""))), None)
+opener = next((s for s in steps if s.get("id") == "openpr"), None)
+flagged = [k for k, c in scan.REPOS.items() if c.get("announce_before_work")]
+if flagged and ann is None:
+    print(f"  FAIL  {flagged} ask to be announced to, but no announce step exists"); bad += 1
+if ann is not None:
+    if wd is None:
+        print("  FAIL  announce step with no withdrawal — an unhonoured claim would stand"); bad += 1
+    elif "always()" not in str(wd.get("if", "")):
+        print("  FAIL  withdrawal is not always() — a failed run would leave the claim"); bad += 1
+    if opener is None or "opened=true" not in (opener.get("run") or ""):
+        print("  FAIL  Open PR does not report success, so withdrawal cannot tell"); bad += 1
+    if "grep -qx 'chelsealong'" not in (ann.get("run") or ""):
+        print("  FAIL  announce is not idempotent — it would comment twice on a retry"); bad += 1
+print("  ok     announce and withdraw are wired together" if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY3
 

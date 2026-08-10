@@ -101,6 +101,8 @@ jobs:
           print(f"upstream={upstream}")
           print(f"implements_in={cfg.get('implements_in', upstream)}")
           print(f"needs_assignment={cfg.get('needs_assignment', False)}")
+          # Repos whose CONTRIBUTING asks to be told before work starts.
+          print(f"announce={cfg.get('announce_before_work', False)}")
           # Repos whose own policy forbids an autonomous PR: push a branch only.
           print(f"prepare_only={key in ('transformers',)}")
           PY
@@ -268,6 +270,38 @@ jobs:
         if: steps.pre.outputs.taken == 'true'
         run: |
           echo "::notice::${{ steps.pre.outputs.why }} — no agent session spent"
+
+      # adk's CONTRIBUTING asks contributors to say something before taking an
+      # issue that is not labelled good-first-issue or help-wanted, which is
+      # effectively all of them there. We announce and start immediately rather
+      # than waiting for a reply: the wait would cost the 6-40 minute lead that
+      # is the whole advantage, and the note still does the work it is for —
+      # uuzzrm opened a duplicate PR on adk#6647 a full day after ours.
+      # If this run ends without a PR the comment is deleted again, so we never
+      # leave a claim we did not honour.
+      - name: Announce before starting
+        id: announce
+        if: steps.cfg.outputs.ok == 'true' && steps.cfg.outputs.announce == 'True' && steps.pre.outputs.taken != 'true' && inputs.dry_run != true
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          UPSTREAM: ${{ steps.cfg.outputs.upstream }}
+          NUM: ${{ inputs.issue }}
+        run: |
+          set -euo pipefail
+          # Never announce twice on the same thread.
+          if gh api "repos/${UPSTREAM}/issues/${NUM}/comments" --paginate \
+               --jq '.[].user.login' 2>/dev/null | grep -qx 'chelsealong'; then
+            echo "already announced on ${UPSTREAM}#${NUM}"
+            exit 0
+          fi
+          body='Picking this one up now — opening a PR shortly. Flagging it here so nobody duplicates the work; if someone is already on it, say so and I will drop mine.'
+          id=$(gh api -X POST "repos/${UPSTREAM}/issues/${NUM}/comments" -f body="$body" --jq '.id' 2>/dev/null || true)
+          if [ -n "${id:-}" ]; then
+            echo "comment_id=${id}" >> "$GITHUB_OUTPUT"
+            echo "announced on ${UPSTREAM}#${NUM} (comment ${id})"
+          else
+            echo "::warning::could not announce on ${UPSTREAM}#${NUM}; proceeding"
+          fi
 
       - name: Install Claude Code
         if: steps.cfg.outputs.ok == 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true && steps.pre.outputs.taken != 'true'
@@ -794,6 +828,7 @@ jobs:
           esac
 
       - name: Open PR (only if the reviewer approved)
+        id: openpr
         if: steps.gen.outputs.outcome == 'READY' && (steps.review.outputs.verdict == 'APPROVE' || steps.rereview.outputs.verdict == 'APPROVE')
         working-directory: work
         env:
@@ -874,6 +909,7 @@ jobs:
           # maintainer, which has happened once already.
           gh pr create --repo "$UPSTREAM" --head "chelsealong:${BR}" \
             --title "$TITLE" --body-file $GITHUB_WORKSPACE/.loop/pr-body.md
+          echo "opened=true" >> "$GITHUB_OUTPUT"
 
       # Record SKIPs as well as BLOCKs. A BLOCK costs four agent sessions and was
       # always recorded; a SKIP costs one and was recorded nowhere, so the same
@@ -956,6 +992,23 @@ jobs:
               "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             git pull --rebase -q origin main || true
             git push -q origin HEAD:main || echo "::warning::lesson push failed"
+          fi
+
+      # Withdraw the announcement if this run produced nothing. A claim we did
+      # not honour is worse than no claim: it tells everyone else the issue is
+      # taken while nothing is coming. langgraph#8408 sat in our ledger as
+      # "claimed" with no comment and no work for weeks.
+      - name: Withdraw the announcement if no PR was opened
+        if: always() && steps.announce.outputs.comment_id != '' && steps.openpr.outputs.opened != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          UPSTREAM: ${{ steps.cfg.outputs.upstream }}
+          CID: ${{ steps.announce.outputs.comment_id }}
+        run: |
+          if gh api -X DELETE "repos/${UPSTREAM}/issues/comments/${CID}" 2>/dev/null; then
+            echo "::notice::withdrew the announcement on ${UPSTREAM} — this run opened no PR"
+          else
+            echo "::warning::could not withdraw announcement comment ${CID}"
           fi
 
       - name: Summary
