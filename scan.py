@@ -119,7 +119,7 @@ REPOS: dict[str, dict] = {
         "needs_assignment": True,
         # Most partner integrations are released from their own repos, so an
         # issue about one cannot be fixed from libs/ here.
-        "exclude_title": r"(langchain[- ](google|aws|openai|anthropic|community|mongodb|pinecone|weaviate|chroma|qdrant)|langsmith|langserve)",
+        "exclude_title": r"(langchain[- ](google|aws|openai|anthropic|community|mongodb|pinecone|weaviate|chroma|qdrant)|langsmith|langserve|sitemapload|sitemap loader|recursiveurlload|webbaseload|seleniumurlload|playwrightload)",
     },
     "openclaw": {
         "upstream": "openclaw/openclaw",
