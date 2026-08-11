@@ -116,7 +116,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           case "${{ inputs.repo_key }}" in
-            adk) cap=7 ;;
+            adk) cap=5 ;;
             hermes) cap=10 ;;
             spec-kit) cap=5 ;;
             openclaw) cap=4 ;;
@@ -467,7 +467,7 @@ jobs:
              'SKIP: needs assignment' to $GITHUB_WORKSPACE/.loop/outcome.txt, and stop.
 
           4. Implement the MINIMAL fix. On openclaw a patch adding more than
-             120 lines, and on comfyui more than 250, is REFUSED at PR time and
+             120 lines, and on comfyui more than 150, is REFUSED at PR time and
              the whole session is wasted — external PRs that land on openclaw
              run a median of +61 lines, and the only one of ours that merged
              there is +38. If the smallest correct fix cannot fit, say so and
@@ -848,7 +848,7 @@ jobs:
           # costs goodwill we need for the small ones.
           case "${REPO_KEY}" in
             openclaw) max_added=120 ;;
-            comfyui)  max_added=250 ;;
+            comfyui)  max_added=150 ;;
             *)        max_added=0 ;;
           esac
           if [ "${max_added}" -gt 0 ] && [ -f "$GITHUB_WORKSPACE/.loop/change.diff" ]; then
