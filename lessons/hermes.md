@@ -61,3 +61,49 @@ Three separate mistakes, each generalisable:
 fix-one.yml's adversarial reviewer now opens with a NO-OP front covering all
 three, and the TEST HONESTY front says explicitly that failing-without-the-change
 is necessary but not sufficient.
+
+## Why 34 PRs produced 5 commits, and all five on one day
+
+Measured 2026-08-11. Nothing has landed since 2026-08-01, while the PR
+count went from ~5 to 34.
+
+The repo is not the problem. hermes merges 45-135 PRs a day; teknium1 has
+opened 253 PRs since 08-05 and kshitijk4poor 114. None of the six issues
+behind our oldest open PRs has been closed by anyone else, so the work
+was not taken. Engagement is real too: 10 of our 30 open PRs have a human
+on them, and on `#81591` an unrelated user cherry-picked our fix and
+confirmed it end to end.
+
+Size is not the differentiator here either. The three external PRs merged
+by someone other than their author in the last three days run +13, +108
+and +1679.
+
+What separates them from us:
+
+| author | merged | comments on threads they did not open |
+|---|---:|---:|
+| helix4u | 117 | 22 |
+| embwl0x | 5 | 39 (35 on issues) |
+| victor-kyriazakos | 5 | 2 |
+| **us** | **0** | **0** |
+
+We answer reviewers on our own PRs — 13 of 30 carry a reply from us — and
+we have never once spoken on a thread we did not open. Every contributor
+who lands work here is a participant in the tracker first. embwl0x has
+commented on 35 issues and merged 5 PRs; we have commented on none and
+merged none.
+
+Volume made it worse. The two that landed were salvaged on 2026-08-01,
+when we held four or five open PRs. The quota then went to 10/day, the
+open count reached 30, and the landing rate went to zero — in a repo
+where a single author's stack competes with maintainers pushing 250 PRs a
+week. Cap is 4/day now.
+
+**Do not read this as "comment more to look busy."** The measurable thing
+is that our PRs arrive with no prior presence on the thread. Where the
+pipeline already has an announce step (adk), that is the shape to reuse.
+
+Caveat on method: GitHub's `commenter:` search index is unreliable — it
+reported 2 comments for us when a direct count over the same PRs found 13.
+The 0 above is the `commenter:X -author:X` form, which agrees with a
+manual check.
