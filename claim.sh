@@ -29,7 +29,7 @@ DRY_RUN="${DRY_RUN:-0}"
 # PR there, #7282, was open for 18 seconds — and the review bot that ran anyway
 # called the change "a straightforward bug fix ... with good test coverage".
 # Nothing was wrong with the work; it was opened without asking.
-declare -a GATED=(langchain pydantic-ai)
+declare -a GATED=()   # SUSPENDED 2026-08-12 — see note above
 
 # Keep at most this many open assignments per repo. gemini-cli enforces its own
 # cap and will refuse politely; the others have no bot, and hoarding assignments
@@ -53,6 +53,26 @@ claim_one_repo() {
            --jq 'length' 2>/dev/null || echo 0)
   if [ "${held:-0}" -ge "$MAX_OPEN_CLAIMS" ]; then
     log "[$key] SKIP - already holding $held assignment(s), cap $MAX_OPEN_CLAIMS"
+    return 0
+  fi
+
+  # Delivery gate. pydantic blocked us for eight identical claims with zero PRs
+  # behind them. A claim is a promise; making more of them while the previous
+  # ones are unfulfilled is what reads as squatting. Refuse to claim again in a
+  # repo where we already hold unfulfilled claims.
+  local held_unfulfilled
+  held_unfulfilled=$(cd "$SCANNER" && python3 - "$key" <<'PYGATE'
+import json, pathlib, sys
+key = sys.argv[1]
+state = pathlib.Path("state") / f"{key}.json"
+claimed = json.loads(state.read_text()).get("claimed", []) if state.exists() else []
+ledger = pathlib.Path("state") / "delivered.json"
+delivered = set(json.loads(ledger.read_text()).get(key, [])) if ledger.exists() else set()
+print(len([n for n in claimed if n not in delivered]))
+PYGATE
+)
+  if [ "${held_unfulfilled:-0}" -ge "${MAX_UNFULFILLED:-2}" ]; then
+    log "[$key] SKIP - holding ${held_unfulfilled} unfulfilled claim(s); not asking for more"
     return 0
   fi
 

@@ -88,3 +88,42 @@ what its issue templates promise will happen next. If the project opens the PR,
 our job is to stay out of the way. And when a maintainer asks us to stop
 something, it belongs in `scan.py` and in verify.sh the same day — verify check
 19 exists because this one was asked three times before it was encoded.
+
+## We were blocked from an org. This is how.
+
+pydantic blocked `chelsealong` on 2026-08-12 at 06:54 UTC. The cause is not in
+dispute and is entirely ours.
+
+`claim.sh` posted one sentence — *"I'd like to take this one if it's still open
+— happy to put up a PR."* — verbatim, on eight pydantic-ai issues over five
+days: #7281, #7211, #7147, #7133, #7284, #7338, #7347, #7397. **Zero PRs came
+out of any of them.** Our only PR there, #7282, had already been closed by their
+`pr-guard` bot in 18 seconds.
+
+Two details make it worse:
+
+- #7397 was opened by `dsfaccini`, the maintainer who nine hours earlier had
+  apologised to us on #7338 and asked us not to duplicate work in flight. We
+  answered that by dropping the same canned line on his own issue. The block
+  came three hours later.
+- #7211 had already been marked `not-a-bug, signal 3/10` by pydantic's own
+  triage bot. We claimed it anyway.
+
+From the other side that is indistinguishable from a bot squatting on a tracker,
+and the block was a reasonable response.
+
+**What the API cannot tell you.** An org block is invisible from the blocked
+side: our comments stayed visible and unminimised, the repo stayed readable, the
+fork stayed alive, `involves:chelsealong` kept returning rows. I checked all of
+that and reported "no evidence of a block" — which was wrong. The only signals
+are the email GitHub sends the blocked account, and a 403 on the next write.
+Never conclude "not blocked" from a read-only check.
+
+**The structural fix.** Claiming is now gated on delivery: `claim.sh` refuses to
+claim in a repo where we already hold `MAX_UNFULFILLED` (default 2) claims with
+no PR behind them. langchain was sitting at 5 comments / 4 claims / 0 PRs — the
+same pattern, one repo away from the same outcome — and is now blocked from
+claiming further by that gate. Claiming is suspended outright for the moment.
+
+A claim is a promise made in public. Volume without delivery is the failure
+mode, and it does not need malice to get you removed.

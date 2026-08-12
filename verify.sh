@@ -556,6 +556,29 @@ print("  ok     spec-kit catalog submissions are excluded" if not bad else f"  {
 sys.exit(1 if bad else 0)
 PY3
 
+echo "== 20. claiming cannot outrun delivery =="
+# pydantic blocked us on 2026-08-12. claim.sh had posted the identical line
+# "I'd like to take this one..." on eight of their issues over five days and
+# delivered zero PRs. langchain was receiving the same pattern — 5 comments, 4
+# claims, 0 PRs — when this was found. A claim is a promise; more promises while
+# the old ones are unkept is what reads as squatting.
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import sys
+bad = 0
+src = open(sys.argv[1] + "/claim.sh").read()
+if "MAX_UNFULFILLED" not in src:
+    print("  FAIL  claim.sh has no unfulfilled-claim gate — it can promise without delivering"); bad += 1
+if "pydantic-ai" in src.split("declare -a GATED=(")[1].split(")")[0]:
+    print("  FAIL  pydantic-ai is still in claim.sh's GATED list — that org has blocked us"); bad += 1
+scan_src = open(sys.argv[1] + "/scan.py").read()
+if '"pydantic-ai": {' in scan_src:
+    print("  FAIL  pydantic-ai is configured again — the org blocked us; do not re-add"); bad += 1
+if "pydantic-ai REMOVED" not in scan_src:
+    print("  FAIL  the pydantic-ai removal note is gone — the reason must stay recorded"); bad += 1
+print("  ok     claiming is gated on delivery, pydantic-ai stays out" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

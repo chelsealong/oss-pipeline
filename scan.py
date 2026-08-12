@@ -216,11 +216,16 @@ REPOS: dict[str, dict] = {
     #
     # It carries no "good first issue" or "help wanted" labels, so selection
     # runs off `bug` (66 open at the time of adding).
-    "pydantic-ai": {
-        "upstream": "pydantic/pydantic-ai",
-        "searches": ["label:bug sort:created-desc"],
-        "exclude_labels": {"question", "documentation"},
-    },
+    # pydantic-ai REMOVED 2026-08-12: the org BLOCKED us. Cause is ours and is
+    # not in dispute. claim.sh posted the identical line "I'd like to take this
+    # one if it's still open — happy to put up a PR." on EIGHT of their issues
+    # over five days (#7281 #7211 #7147 #7133 #7284 #7338 #7347 #7397) and
+    # delivered zero PRs from any of them. The last went up 3 hours before the
+    # block, onto an issue opened by dsfaccini — the maintainer who had, nine
+    # hours earlier, apologised to us and asked us not to duplicate work. One
+    # of the eight (#7211) their own triage bot had already marked
+    # "not-a-bug, signal 3/10". From their side that is a bot squatting on a
+    # tracker. Do not re-add.
     "dify": {
         "upstream": "langgenius/dify",
         "searches": ['label:"good first issue"', 'label:"🙏 help wanted"', "label:bug sort:created-desc"],
