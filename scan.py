@@ -69,10 +69,20 @@ REPOS: dict[str, dict] = {
     "spec-kit": {
         "upstream": "github/spec-kit",
         "searches": ["label:bug sort:created-desc", "sort:created-desc"],
-        "exclude_labels": set(),
+        # Catalog submissions go through spec-kit's OWN agentic workflow, which
+        # does the validation and opens the PR itself. mnriem asked us to stop
+        # three times — #4027/#4025 on 08-10, #4043 on 08-11, then #4060/#4061/
+        # #4062 on 08-12: "Please instruct your agents to update its
+        # configuration to NOT open PRs against extension submissions." Seven of
+        # our PRs there were closed for exactly this. Every spec-kit PR of ours
+        # that merged (#3929 #4012 #4016 #4045) is a plain code fix.
+        "exclude_labels": {"extension-submission", "preset-submission",
+                           "bundle-submission"},
         # slash-command changes need manual agent-testing evidence pasted into the PR;
-        # matched narrowly so ordinary CLI bugs that merely mention templates still qualify
-        "exclude_title": r"(/speckit|slash[- ]command)",
+        # matched narrowly so ordinary CLI bugs that merely mention templates still
+        # qualify. The bracketed prefixes catch a submission before its label lands —
+        # #4068 was titled "[Extension]: Add specjudge" with only `enhancement` on it.
+        "exclude_title": r"(/speckit|slash[- ]command|^\[(extension|preset|bundle)\])",
     },
     "gemini-cli": {
         "upstream": "google-gemini/gemini-cli",

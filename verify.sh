@@ -519,6 +519,37 @@ print("  ok     announce and withdraw are wired together" if not bad else f"  {b
 sys.exit(1 if bad else 0)
 PY3
 
+echo "== 19. repos that told us to stop are actually excluded =="
+# spec-kit's maintainer asked three times, across seven closed PRs, that we not
+# open PRs for catalog submissions — those flow through the project's own
+# agentic workflow, which validates and opens the PR itself. A request like that
+# has to live in the config, not in a person's memory.
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import re, sys
+sys.path.insert(0, sys.argv[1])
+import scan
+bad = 0
+cfg = scan.REPOS.get("spec-kit")
+if cfg is None:
+    print("  note   spec-kit is no longer configured"); sys.exit(0)
+need = {"extension-submission", "preset-submission", "bundle-submission"}
+missing = need - set(cfg.get("exclude_labels") or ())
+if missing:
+    print(f"  FAIL  spec-kit does not exclude {sorted(missing)} — mnriem asked three times"); bad += 1
+pat = cfg.get("exclude_title") or ""
+# The label lands after the issue is filed; #4068 was "[Extension]: Add specjudge"
+# with only `enhancement` on it, so the title prefix has to carry it too.
+for t in ("[Extension]: Add specjudge", "[Preset]: Add x", "[Bundle]: Add y"):
+    if not re.search(pat, t, re.I):
+        print(f"  FAIL  spec-kit title filter misses {t!r}"); bad += 1
+for t in ("argument-hint injection is not fold-aware",
+          "reject duplicate provides.templates entries"):
+    if re.search(pat, t, re.I):
+        print(f"  FAIL  spec-kit title filter would drop a code fix: {t!r}"); bad += 1
+print("  ok     spec-kit catalog submissions are excluded" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

@@ -58,3 +58,33 @@ the PR, and every first contribution to such a repo will show red until then.
 
 Check for it before adding a repo: read `.github/workflows` for a job that
 counts the author's merged PRs or requires a hand-applied label to run CI.
+
+## Some repos submit through their own agent, and PRs bypass it
+
+spec-kit takes community catalog entries — extensions, presets, bundles — via
+its own agentic workflow: the workflow validates the submission and opens the
+PR itself. A PR from us for the same submission sidesteps that and is always
+closed. `mnriem` said so three times across seven of our PRs:
+
+> I appreciate you filing the PR, but community extension submission flow
+> through an agentic workflow that does the validation and the creation of the
+> PR. I am going to close this PR as it sidesteps that process  — #4027, 08-10
+
+> Please instruct your agents to update its configuration to NOT open PRs
+> against extension submissions. Thank you!  — #4062, 08-12
+
+The tell is on the issue, not the PR: `extension-submission`,
+`preset-submission`, `bundle-submission` labels, and titles beginning
+`[Extension]:` / `[Preset]:` / `[Bundle]:`. Both are needed — #4068 carried only
+`enhancement` when we picked it up, and the submission label landed later.
+
+Every spec-kit PR of ours that merged (#3929, #4012, #4016, #4045) is a plain
+code fix, and those drew "Thank you!". The repo is one of our best converters;
+the problem was entirely which issues we took from it.
+
+**When adding a repo, look for a submission path that is not "open a PR".**
+Search its `.github/workflows` for a job that creates PRs from issues, and read
+what its issue templates promise will happen next. If the project opens the PR,
+our job is to stay out of the way. And when a maintainer asks us to stop
+something, it belongs in `scan.py` and in verify.sh the same day — verify check
+19 exists because this one was asked three times before it was encoded.
