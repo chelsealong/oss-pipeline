@@ -531,7 +531,13 @@ import scan
 bad = 0
 cfg = scan.REPOS.get("spec-kit")
 if cfg is None:
-    print("  note   spec-kit is no longer configured"); sys.exit(0)
+    # Removed 2026-08-13 on Bruce's instruction. Assert it stays gone rather
+    # than quietly passing, so a future re-add has to be deliberate.
+    import re as _re
+    src = open(sys.argv[1] + "/scan.py").read()
+    if "spec-kit REMOVED" not in src:
+        print("  FAIL  spec-kit is unconfigured but the removal note is gone — was it re-added and dropped?"); sys.exit(1)
+    print("  ok     spec-kit removed on instruction, note intact"); sys.exit(0)
 need = {"extension-submission", "preset-submission", "bundle-submission"}
 missing = need - set(cfg.get("exclude_labels") or ())
 if missing:
