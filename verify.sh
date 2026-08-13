@@ -579,6 +579,38 @@ print("  ok     claiming is gated on delivery, pydantic-ai stays out" if not bad
 sys.exit(1 if bad else 0)
 PY3
 
+echo "== 21. the responder respects each repo's real merge window =="
+# hermes merges at a median PR age of 0.2h; all 40 of its most recent merges
+# landed inside 48h, the oldest at 46.5h. Past that a PR is one of 20,623 open
+# ones there and answering its triage bot cannot change the outcome — 30 of our
+# 33 open PRs were already past it. The window must survive a missing or
+# malformed createdAt without skipping a live PR.
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import importlib.util, sys
+from datetime import datetime, timezone, timedelta
+spec = importlib.util.spec_from_file_location("wp", sys.argv[1] + "/watch-prs.py")
+wp = importlib.util.module_from_spec(spec); spec.loader.exec_module(wp)
+bad = 0
+if not getattr(wp, "MERGE_WINDOW_HOURS", None):
+    print("  FAIL  no merge-window table"); sys.exit(1)
+src = open(sys.argv[1] + "/watch-prs.py").read()
+if "createdAt" not in src.split("number title url")[1][:60]:
+    print("  FAIL  the PR query does not fetch createdAt, so age cannot be computed"); bad += 1
+now = datetime.now(timezone.utc)
+iso = lambda h: (now - timedelta(hours=h)).isoformat().replace("+00:00", "Z")
+H = "NousResearch/hermes-agent"
+CASES = [({"_repo": H, "createdAt": iso(10)}, False), ({"_repo": H, "createdAt": iso(47)}, False),
+         ({"_repo": H, "createdAt": iso(49)}, True),  ({"_repo": H, "createdAt": iso(300)}, True),
+         ({"_repo": "google/adk-python", "createdAt": iso(300)}, False),
+         ({"_repo": H}, False), ({"_repo": H, "createdAt": "garbage"}, False)]
+for pr, want in CASES:
+    got, _ = wp.past_merge_window(pr)
+    if got != want:
+        print(f"  FAIL  {pr.get('createdAt','(none)')[:24]} in {pr['_repo']}: got {got}, want {want}"); bad += 1
+print("  ok     merge window applied, and safe on missing/bad timestamps" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

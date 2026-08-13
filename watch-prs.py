@@ -58,6 +58,38 @@ NOISE_AUTHORS = {
 }
 
 
+# How long a repo actually looks at a PR. Measured, not guessed: across the 40
+# most recent hermes merges the median age at merge is 0.2h, 37 of 40 landed
+# inside 24h and ALL 40 inside 48h — the oldest was 46.5h. Past that a PR there
+# is one of 20,623 open ones and nothing we write on it changes the outcome, so
+# spending an agent session answering its triage bot is waste. Repos absent from
+# this table have no window applied.
+MERGE_WINDOW_HOURS = {"NousResearch/hermes-agent": 48}
+
+
+def pr_age_hours(pr: dict):
+    created = pr.get("createdAt")
+    if not created:
+        return None
+    from datetime import datetime, timezone
+    try:
+        t = datetime.fromisoformat(created.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return (datetime.now(timezone.utc) - t).total_seconds() / 3600
+
+
+def past_merge_window(pr: dict):
+    """(True, why) if this repo has stopped looking at PRs this old."""
+    window = MERGE_WINDOW_HOURS.get(pr.get("_repo") or "")
+    if window is None:
+        return False, ""
+    age = pr_age_hours(pr)
+    if age is None or age <= window:
+        return False, ""
+    return True, f"{age:.0f}h old, past {pr['_repo']}'s {window}h merge window"
+
+
 def _norm(login: str) -> str:
     return login[:-5] if login.endswith("[bot]") else login
 
@@ -98,7 +130,7 @@ def open_prs() -> list[dict]:
     repo_filter = " ".join(f"repo:{r}" for r in upstreams())
     q = ('{search(type:ISSUE, first:50, query:"is:pr is:open author:%s %s"){nodes{'
          '... on PullRequest{'
-         ' number title url updatedAt author{login} headRefName isDraft'
+         ' number title url createdAt updatedAt author{login} headRefName isDraft'
          ' repository{nameWithOwner}'
          ' labels(first:20){nodes{name}}'
          ' comments(last:20){nodes{id createdAt updatedAt author{login} body}}'
@@ -397,6 +429,12 @@ def one_pass(seen: dict) -> int:
         # and had to be cancelled by hand before it could write over their work.
         if (author := last_commit_author(pr)) and author != ME:
             log(f"  [{key}] newest commit is by {author}, not us — hands off")
+            continue
+
+        # Nothing we say after the window closes has ever changed an outcome.
+        stale, why = past_merge_window(pr)
+        if stale:
+            log(f"  [{key}] {why} — not spending a session")
             continue
         rec = seen.setdefault(key, {"ids": [], "responses": {}})
         known = set(rec["ids"])
