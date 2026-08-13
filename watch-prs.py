@@ -62,9 +62,14 @@ NOISE_AUTHORS = {
 # most recent hermes merges the median age at merge is 0.2h, 37 of 40 landed
 # inside 24h and ALL 40 inside 48h — the oldest was 46.5h. Past that a PR there
 # is one of 20,623 open ones and nothing we write on it changes the outcome, so
-# spending an agent session answering its triage bot is waste. Repos absent from
-# this table have no window applied.
-MERGE_WINDOW_HOURS = {"NousResearch/hermes-agent": 48}
+# spending an agent session answering its triage bot is waste.
+#
+# Set to 72 rather than the observed maximum of 46.5h, on Bruce's call: 40
+# merges is a small sample, the falsification pass did find older external
+# merges (evgyur at 7.6 days, a batch of afourniernv's), and the asymmetry
+# favours margin — skipping a live PR costs a real chance, while answering a
+# dead one costs one session. Repos absent from this table have no window.
+MERGE_WINDOW_HOURS = {"NousResearch/hermes-agent": 72}
 
 
 def pr_age_hours(pr: dict):

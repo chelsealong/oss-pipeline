@@ -599,8 +599,11 @@ if "createdAt" not in src.split("number title url")[1][:60]:
 now = datetime.now(timezone.utc)
 iso = lambda h: (now - timedelta(hours=h)).isoformat().replace("+00:00", "Z")
 H = "NousResearch/hermes-agent"
-CASES = [({"_repo": H, "createdAt": iso(10)}, False), ({"_repo": H, "createdAt": iso(47)}, False),
-         ({"_repo": H, "createdAt": iso(49)}, True),  ({"_repo": H, "createdAt": iso(300)}, True),
+# Boundary cases read the table rather than hard-coding it, so raising the
+# window does not silently leave this check testing the old one.
+W = wp.MERGE_WINDOW_HOURS[H]
+CASES = [({"_repo": H, "createdAt": iso(1)}, False), ({"_repo": H, "createdAt": iso(W - 1)}, False),
+         ({"_repo": H, "createdAt": iso(W + 1)}, True),  ({"_repo": H, "createdAt": iso(W * 5)}, True),
          ({"_repo": "google/adk-python", "createdAt": iso(300)}, False),
          ({"_repo": H}, False), ({"_repo": H, "createdAt": "garbage"}, False)]
 for pr, want in CASES:
