@@ -3,41 +3,27 @@
   "upstream": "langfuse/langfuse",
   "implements_in": "langfuse/langfuse",
   "needs_assignment": false,
-  "scanned_at": "2026-08-13T07:16:33+00:00",
+  "scanned_at": "2026-08-13T08:45:16+00:00",
   "partial": false,
   "errors": [],
   "candidates": [
     {
-      "number": 16056,
-      "title": "bug(annotation-queues): createMany writes spurious \"create\" audit logs for pre-existing queue items",
-      "url": "https://github.com/langfuse/langfuse/issues/16056",
-      "created_at": "2026-08-13T07:09:27Z",
-      "age_hours": 0.1,
+      "number": 16059,
+      "title": "bug: mismatch between evaluator filter preview and actual executed traces",
+      "url": "https://github.com/langfuse/langfuse/issues/16059",
+      "created_at": "2026-08-13T08:32:11Z",
+      "age_hours": 0.2,
       "reason": "clear",
       "labels": [
         "bug",
-        "feat-annotation",
-        "feat-audit-logs"
-      ],
-      "comments": 1,
-      "self_claimed": false
-    },
-    {
-      "number": 15977,
-      "title": "bug: Scores page fails on ClickHouse 26.6 with FINAL LEFT JOIN query",
-      "url": "https://github.com/langfuse/langfuse/issues/15977",
-      "created_at": "2026-08-11T08:28:37Z",
-      "age_hours": 46.8,
-      "reason": "clear",
-      "labels": [
-        "[Core] ClickHouse database",
-        "bug",
-        "feat-scores",
+        "feat-evals",
+        "feat-otel",
+        "integration-otel",
         "langfuse/langfuse",
         "self-hosting",
         "\ud83d\udc1e\u2754 unconfirmed bug"
       ],
-      "comments": 2,
+      "comments": 1,
       "self_claimed": false
     },
     {
@@ -45,7 +31,7 @@
       "title": "[bug] ClickHouse writer drops records permanently after max retries",
       "url": "https://github.com/langfuse/langfuse/issues/15959",
       "created_at": "2026-08-10T17:43:11Z",
-      "age_hours": 61.6,
+      "age_hours": 63.0,
       "reason": "clear",
       "labels": [
         "[Core] ClickHouse database",
@@ -62,7 +48,7 @@
       "title": "bug: Missing pricing for priority tokens for GPT5.4 models",
       "url": "https://github.com/langfuse/langfuse/issues/15942",
       "created_at": "2026-08-10T12:12:10Z",
-      "age_hours": 67.1,
+      "age_hours": 68.6,
       "reason": "clear",
       "labels": [
         "billing",
@@ -79,7 +65,7 @@
       "title": "[aw] Weekly CI runtime analyst is missing required tool",
       "url": "https://github.com/langfuse/langfuse/issues/15933",
       "created_at": "2026-08-10T06:02:18Z",
-      "age_hours": 73.2,
+      "age_hours": 74.7,
       "reason": "clear",
       "labels": [
         "CI",
@@ -92,11 +78,19 @@
   ],
   "rejected": [
     {
+      "number": 16056,
+      "title": "bug(annotation-queues): re-adding objects creates duplicate queue items \u2014 skipDuplicates has no unique constraint to act on",
+      "url": "https://github.com/langfuse/langfuse/issues/16056",
+      "created_at": "2026-08-13T07:09:27Z",
+      "age_hours": 1.6,
+      "reason": "already has PR(s): ['closing-ref PR#16057(OPEN)', 'xref PR#16057(OPEN)']"
+    },
+    {
       "number": 16036,
       "title": "bug: langfuse-cli \"api dataset-items create\" \u2014 \"nullable\" cannot be used without \"type\", input/expectedOutput/metadata unbindable",
       "url": "https://github.com/langfuse/langfuse/issues/16036",
       "created_at": "2026-08-12T12:53:28Z",
-      "age_hours": 18.4,
+      "age_hours": 19.9,
       "reason": "claimed by dosubot[bot]"
     },
     {
@@ -104,7 +98,7 @@
       "title": "bug: dataset batch-add JSONPath mapping fails on nested metadata for OTLP-ingested observations, but resolves in the mapping Preview",
       "url": "https://github.com/langfuse/langfuse/issues/15964",
       "created_at": "2026-08-10T21:50:00Z",
-      "age_hours": 57.4,
+      "age_hours": 58.9,
       "reason": "already has PR(s): ['closing-ref PR#15967(OPEN)', 'xref PR#15967(OPEN)']"
     },
     {
@@ -112,7 +106,7 @@
       "title": "total_cost stays $0.00 on v4.6.0 for provided cost_details with mixed keys (input/output/cache_read, no total) even when the model IS in the pricing table",
       "url": "https://github.com/langfuse/langfuse/issues/15961",
       "created_at": "2026-08-10T19:56:30Z",
-      "age_hours": 59.3,
+      "age_hours": 60.8,
       "reason": "already has PR(s): ['closing-ref PR#15969(OPEN)', 'xref PR#15969(OPEN)']"
     },
     {
@@ -120,15 +114,15 @@
       "title": "[bug] Admin access webhook failures suppress retries and can hang requests",
       "url": "https://github.com/langfuse/langfuse/issues/15957",
       "created_at": "2026-08-10T17:43:06Z",
-      "age_hours": 61.6,
-      "reason": "already has PR(s): ['closing-ref PR#16032(OPEN)', 'closing-ref PR#16051(OPEN)', 'xref PR#16032(OPEN)']"
+      "age_hours": 63.0,
+      "reason": "already has PR(s): ['closing-ref PR#16032(CLOSED)', 'closing-ref PR#16051(OPEN)', 'xref PR#16032(CLOSED)']"
     },
     {
       "number": 15952,
       "title": "bug: AI SDK 7 telemetry messages render as raw JSON (parts[] not handled by the ChatML adapter)",
       "url": "https://github.com/langfuse/langfuse/issues/15952",
       "created_at": "2026-08-10T16:32:41Z",
-      "age_hours": 62.7,
+      "age_hours": 64.2,
       "reason": "already has PR(s): ['closing-ref PR#16016(OPEN)', 'xref PR#16016(OPEN)']"
     },
     {
@@ -136,7 +130,7 @@
       "title": "chore(web): remove expired searchBar feature-preview plumbing (TODO past due 2026-06-19)",
       "url": "https://github.com/langfuse/langfuse/issues/15733",
       "created_at": "2026-08-03T18:03:19Z",
-      "age_hours": 229.2,
+      "age_hours": 230.7,
       "reason": "already has PR(s): ['closing-ref PR#15743(OPEN)', 'closing-ref PR#15877(OPEN)', 'closing-ref PR#15962(OPEN)']"
     }
   ]
