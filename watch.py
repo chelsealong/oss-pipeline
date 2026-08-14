@@ -153,8 +153,9 @@ DISPATCH_BUDGET = {
     "dify": 6, "autogpt": 4,
     "comfyui": 8, "firecrawl": 2,
     "hermes": 6,
-    # New 2026-08-07 — dispatch headroom over the 3 PR/day cap, as elsewhere.
-    "vllm": 5, "sglang": 5, "pydantic-ai": 5,
+    # Dispatch headroom over each repo's PR/day cap; verify check 12 asserts
+    # budget >= cap so a cap can never be unreachable.
+    "sglang": 5,
     "langchain": 4,
     "gemini-cli": 4,
 }

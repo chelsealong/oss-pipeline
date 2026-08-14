@@ -41,13 +41,29 @@ from datetime import datetime, timedelta, timezone
 ROOT = pathlib.Path(__file__).resolve().parent
 REPORTS = ROOT / "health"
 ME = "chelsealong"
-ME_EMAIL = "chelsealong%40126.com"     # url-encoded for the commits API
+# Every identity our commits have carried. adk's Copybara preserves the author
+# it finds on the PR's commits, and #6498 went in under jialongli001@gmail.com
+# while #6649 carried chelsealong@126.com — searching one address undercounted
+# adk by one from 2026-07-28 until this was noticed on 08-13. Add, never
+# replace: an old address keeps mattering for as long as its commits are on a
+# default branch.
+ME_EMAILS = ["chelsealong@126.com", "jialongli001@gmail.com"]
+ME_EMAIL = ME_EMAILS[0]
 # Upstreams whose default branch is worth checking for our landed commits.
-REPO_LIST = [
-    "NousResearch/hermes-agent", "google/adk-python", "openclaw/openclaw",
-    "langfuse/langfuse", "langgenius/dify", "Significant-Gravitas/AutoGPT",
-    "github/spec-kit",
-]
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import scan  # REPOS — REPO_LIST is derived from it, never hand-maintained
+
+# Derived from the scanner's config so it cannot drift. It had: spec-kit was
+# still listed after removal while ComfyUI — which has a landed commit — was
+# never added, so the landed count silently omitted a repo.
+#
+# RETIRED keeps repos we no longer scan but where our commits are on a default
+# branch. That output is real and stays visible; dropping it would make the
+# programme look like it lost work it did not lose.
+RETIRED = ["github/spec-kit"]
+REPO_LIST = sorted(
+    {c.get("implements_in") or c["upstream"] for c in scan.REPOS.values()} | set(RETIRED)
+)
 AGENTS = ["oss-watch", "oss-scan", "oss-fix", "oss-claim", "oss-prwatch"]
 
 
@@ -394,12 +410,19 @@ def check_landed() -> tuple[list[str], dict]:
     """
     detail, total = {}, 0
     for cfg in REPO_LIST:
-        raw = sh(["gh", "api", f"repos/{cfg}/commits?author={ME_EMAIL}&per_page=100",
-                  "--jq", "[.[] | .commit.author.date]"], 60)
-        try:
-            dates = json.loads(raw) if raw else []
-        except Exception:  # noqa: BLE001
-            dates = []
+        # Every identity, not just the current one: adk's Copybara preserves
+        # whatever author the PR's commits carried, and #6498 went in under the
+        # old gmail address while #6649 carried the 126.com one. Searching a
+        # single address undercounted adk by one for sixteen days.
+        dates = []
+        for addr in ME_EMAILS:
+            raw = sh(["gh", "api", f"repos/{cfg}/commits?author={addr}&per_page=100",
+                      "--jq", "[.[] | .commit.author.date]"], 60)
+            try:
+                dates += json.loads(raw) if raw else []
+            except Exception:  # noqa: BLE001
+                pass
+        dates = sorted(set(dates), reverse=True)
         if dates:
             detail[cfg] = {"total": len(dates), "latest": dates[0][:16]}
             total += len(dates)

@@ -173,15 +173,12 @@ REPOS: dict[str, dict] = {
     # So their CI is the test rig — which is also why the excludes below matter:
     # a kernel or quantisation change cannot be reasoned about without hardware,
     # and using someone's GPU cluster to iterate on a guess is rude.
-    "vllm": {
-        "upstream": "vllm-project/vllm",
-        "searches": ['label:"good first issue"', 'label:"help wanted"',
-                     'label:bug sort:created-desc'],
-        "exclude_labels": {"performance", "quantization", "kernel", "rocm", "tpu"},
-        "exclude_title": r"kernel|cuda|triton|quantiz|fp8|awq|gptq|marlin|cutlass|"
-                         r"benchmark|throughput|latency|speed ?up|perf\b|nccl|tensor.?parallel",
-        "max_vet": 40,
-    },
+    # vllm SUSPENDED 2026-08-13 on Bruce's instruction. Two PRs, zero landed:
+    # its pre-run-check refuses to run CI for an author with fewer than 4 merged
+    # PRs there unless a maintainer applies `verified`/`ready`/`ready-run-all-tests`,
+    # so a first contribution shows red for a reason that has nothing to do with
+    # the patch and can only be cleared by someone else. The DCO sign-off work
+    # (git commit -s) stays in fix-one.yml for whenever this comes back.
     "sglang": {
         "upstream": "sgl-project/sglang",
         "searches": ['label:"good first issue"', 'label:"help wanted"',

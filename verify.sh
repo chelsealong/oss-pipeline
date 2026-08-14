@@ -614,6 +614,39 @@ print("  ok     merge window applied, and safe on missing/bad timestamps" if not
 sys.exit(1 if bad else 0)
 PY3
 
+echo "== 22. landed-commit counting sees every identity and every repo =="
+# adk's Copybara preserves whatever author the PR's commits carried: #6498 went
+# in as jialongli001@gmail.com and #6649 as chelsealong@126.com. health.py
+# searched one address and reported adk as 1 landed commit instead of 2, from
+# 2026-07-28 until 08-13. REPO_LIST had drifted the other way — spec-kit still
+# listed after removal, ComfyUI never added despite having a landed commit — so
+# it is derived from scan.REPOS now, plus an explicit RETIRED list.
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import importlib.util, sys
+sys.path.insert(0, sys.argv[1])
+spec = importlib.util.spec_from_file_location("h", sys.argv[1] + "/health.py")
+h = importlib.util.module_from_spec(spec); spec.loader.exec_module(h)
+import scan
+bad = 0
+emails = getattr(h, "ME_EMAILS", None)
+if not emails or len(emails) < 2:
+    print("  FAIL  health.py searches a single author identity — Copybara rewrites it"); bad += 1
+elif not any("jialongli001" in e for e in emails):
+    print("  FAIL  the old gmail identity is missing; adk#6498 lands under it"); bad += 1
+src = open(sys.argv[1] + "/health.py").read()
+defn = src.split("REPO_LIST = sorted(")[1][:200] if "REPO_LIST = sorted(" in src else ""
+if "scan.REPOS" not in defn:
+    print("  FAIL  REPO_LIST is hand-maintained again — it drifts silently"); bad += 1
+active = {c.get("implements_in") or c["upstream"] for c in scan.REPOS.values()}
+missing = active - set(h.REPO_LIST)
+if missing:
+    print(f"  FAIL  REPO_LIST misses configured repos: {sorted(missing)}"); bad += 1
+if "github/spec-kit" not in h.REPO_LIST:
+    print("  FAIL  a retired repo with landed commits vanished from the report"); bad += 1
+print("  ok     all identities searched, repo list derived" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1
