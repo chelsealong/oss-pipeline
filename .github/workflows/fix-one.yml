@@ -118,12 +118,12 @@ jobs:
           case "${{ inputs.repo_key }}" in
             adk) cap=5 ;;
             hermes) cap=4 ;;
-            spec-kit) cap=5 ;;
+            spec-kit) cap=3 ;;   # re-enabled 2026-08-14; was 5 before the removal
             openclaw) cap=4 ;;
             comfyui) cap=3 ;;
             dify) cap=5 ;;
             autogpt) cap=3 ;;
-            vllm|sglang|pydantic-ai) cap=3 ;;
+            sglang) cap=3 ;;
             langfuse|langfuse-python) cap=3 ;;
             firecrawl) cap=1 ;;
             *) cap=2 ;;

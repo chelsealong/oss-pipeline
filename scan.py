@@ -66,14 +66,38 @@ REPOS: dict[str, dict] = {
         "implements_in": "langfuse/langfuse-python",
         "max_vet": 40,
     },
-    # spec-kit REMOVED 2026-08-13 on Bruce's instruction: "stop everything on
-    # spec-kit". Its maintainer asked three times, across seven closed PRs, that
-    # we not open PRs for catalog submissions — those go through the project's
-    # own agentic workflow — and we kept doing it for two days because the
-    # request lived in a conversation instead of in this file. Four code fixes of
-    # ours did merge there (#3929, #4012, #4016, #4045, a 36% rate, our best),
-    # so this is a trust decision rather than a yield one. Do not re-add without
-    # Bruce saying so.
+    # spec-kit re-enabled 2026-08-14 on Bruce's instruction, at 3 PRs/day.
+    # It was removed on 08-13 after its maintainer asked three times that we stop
+    # opening PRs for catalog submissions. The exclusions below are the whole
+    # reason it can come back — they were written on 08-12 and went away with the
+    # config block, so restoring the repo without them would repeat the offence
+    # exactly. verify check 19 asserts they stay.
+    "spec-kit": {
+        "upstream": "github/spec-kit",
+        "searches": ["label:bug sort:created-desc", "sort:created-desc"],
+        # Catalog submissions go through spec-kit's OWN agentic workflow, which
+        # does the validation and opens the PR itself. mnriem asked us to stop
+        # three times — #4027/#4025 on 08-10, #4043 on 08-11, then #4060/#4061/
+        # #4062 on 08-12: "Please instruct your agents to update its
+        # configuration to NOT open PRs against extension submissions." Seven of
+        # our PRs there were closed for exactly this. Every spec-kit PR of ours
+        # that merged (#3929 #4012 #4016 #4045) is a plain code fix.
+        "exclude_labels": {"extension-submission", "preset-submission",
+                           "bundle-submission",
+                           # `agentic-workflows` marks auto-filed reports that
+                           # spec-kit's OWN workflows failed — #4077 is the
+                           # catalog submission workflow reporting its own break,
+                           # and its body says "Assign this issue to an agent",
+                           # meaning theirs. Debugging their submission machinery
+                           # is the same intrusion mnriem asked us to stop, one
+                           # layer down.
+                           "agentic-workflows"},
+        # slash-command changes need manual agent-testing evidence pasted into the PR;
+        # matched narrowly so ordinary CLI bugs that merely mention templates still
+        # qualify. The bracketed prefixes catch a submission before its label lands —
+        # #4068 was titled "[Extension]: Add specjudge" with only `enhancement` on it.
+        "exclude_title": r"(/speckit|slash[- ]command|^\[(extension|preset|bundle|aw)\])",
+    },
     "gemini-cli": {
         "upstream": "google-gemini/gemini-cli",
         # help wanted is 29/30 self-assigned already — its /assign bot works too

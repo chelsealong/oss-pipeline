@@ -538,14 +538,18 @@ if cfg is None:
     if "spec-kit REMOVED" not in src:
         print("  FAIL  spec-kit is unconfigured but the removal note is gone — was it re-added and dropped?"); sys.exit(1)
     print("  ok     spec-kit removed on instruction, note intact"); sys.exit(0)
-need = {"extension-submission", "preset-submission", "bundle-submission"}
+need = {"extension-submission", "preset-submission", "bundle-submission",
+        # Their own workflows' failure reports: #4077 is the catalog submission
+        # workflow reporting its own break and asking for an agent — theirs.
+        "agentic-workflows"}
 missing = need - set(cfg.get("exclude_labels") or ())
 if missing:
     print(f"  FAIL  spec-kit does not exclude {sorted(missing)} — mnriem asked three times"); bad += 1
 pat = cfg.get("exclude_title") or ""
 # The label lands after the issue is filed; #4068 was "[Extension]: Add specjudge"
 # with only `enhancement` on it, so the title prefix has to carry it too.
-for t in ("[Extension]: Add specjudge", "[Preset]: Add x", "[Bundle]: Add y"):
+for t in ("[Extension]: Add specjudge", "[Preset]: Add x", "[Bundle]: Add y",
+          "[aw] Add Community Extension from Issue Submission failed"):
     if not re.search(pat, t, re.I):
         print(f"  FAIL  spec-kit title filter misses {t!r}"); bad += 1
 for t in ("argument-hint injection is not fold-aware",
