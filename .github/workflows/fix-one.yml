@@ -607,6 +607,22 @@ jobs:
             *)      echo "outcome=SKIP" >> "$GITHUB_OUTPUT" ;;
           esac
 
+      # A quota refusal exits 0 and reports success, so the watcher never learned
+      # the subscription was empty and kept dispatching into it: on 2026-08-14,
+      # 14 of the 23 runs that reached Claude were refused in under 70 seconds
+      # while the sweep carried on spending the day's per-repo allowances.
+      #
+      # This step exists to be findable. It fails, and it fails under a name the
+      # watcher can match from `/runs/{id}/jobs` without downloading a log —
+      # reconcile_budget's log fetch takes minutes per run and cannot be done 14
+      # times a cycle.
+      - name: QUOTA EXHAUSTED — stop dispatching
+        if: steps.gen.outputs.outcome == 'QUOTA'
+        run: |
+          echo "::error::Claude quota exhausted; this run did no work."
+          echo "The watcher pauses dispatching when it sees this step fail."
+          exit 1
+
       - name: Adversarial review
         id: review
         if: steps.gen.outputs.outcome == 'READY'

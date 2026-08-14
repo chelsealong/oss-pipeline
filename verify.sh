@@ -651,6 +651,58 @@ print("  ok     all identities searched, repo list derived" if not bad else f"  
 sys.exit(1 if bad else 0)
 PY3
 
+echo "== 23. a quota refusal stops dispatching instead of reporting success =="
+# `claude -p` prints "You've hit your session limit" and exits 0, so the run
+# reported success and the watcher kept dispatching into an empty subscription:
+# on 2026-08-14, 14 of the 23 runs that reached Claude were turned away in under
+# 70 seconds while per-repo allowances drained. fix-one.yml now fails a named
+# step; the watcher finds it via the jobs endpoint (a log download takes minutes
+# per run and cannot be done every cycle) and pauses.
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import importlib.util, json, pathlib, sys, tempfile, yaml
+sys.path.insert(0, sys.argv[1])
+spec = importlib.util.spec_from_file_location("w", sys.argv[1] + "/watch.py")
+w = importlib.util.module_from_spec(spec); spec.loader.exec_module(w)
+bad = 0
+
+wf = yaml.safe_load(open(".github/workflows/fix-one.yml"))
+steps = [st for j in wf["jobs"].values() for st in j.get("steps", [])]
+q = next((st for st in steps if "QUOTA EXHAUSTED" in str(st.get("name", ""))), None)
+if q is None:
+    print("  FAIL  fix-one.yml has no QUOTA EXHAUSTED step — a refusal still reports success"); bad += 1
+else:
+    if "QUOTA" not in str(q.get("if", "")):
+        print("  FAIL  the QUOTA step does not key on the generator outcome"); bad += 1
+    if "exit 1" not in (q.get("run") or ""):
+        print("  FAIL  the QUOTA step does not fail, so the run stays green and invisible"); bad += 1
+
+for name in ("quota_paused", "note_quota_exhausted", "check_quota_runs"):
+    if not hasattr(w, name):
+        print(f"  FAIL  watch.py has no {name}"); bad += 1
+src = open(sys.argv[1] + "/watch.py").read()
+if "quota_paused()" not in src.split("def budget_allows")[1].split("\ndef ")[0]:
+    print("  FAIL  budget_allows ignores the pause — dispatching continues while empty"); bad += 1
+if "--log" in src.split("def check_quota_runs")[1].split("\ndef ")[0]:
+    print("  FAIL  check_quota_runs downloads logs; that takes minutes per run"); bad += 1
+
+# Behaviour, including the failure modes that must NOT stop the pipeline.
+tmp = pathlib.Path(tempfile.mkdtemp())
+w.QUOTA_STATE = tmp / "q.json"; w.scan.STATE = tmp; w.log = lambda m: None
+if w.quota_paused():
+    print("  FAIL  paused with no state file"); bad += 1
+w.note_quota_exhausted(hours=1)
+if not w.quota_paused():
+    print("  FAIL  not paused after a quota refusal"); bad += 1
+w.note_quota_exhausted(hours=-1)
+if w.quota_paused():
+    print("  FAIL  still paused after the window expired"); bad += 1
+w.QUOTA_STATE.write_text("not json")
+if w.quota_paused():
+    print("  FAIL  a corrupt state file halts the pipeline — it must fail open"); bad += 1
+print("  ok     quota refusal is visible and pauses dispatch" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

@@ -164,8 +164,77 @@ DEFAULT_BUDGET = 2
 BUDGET_FILE = scan.STATE / "dispatch-budget.json"
 
 
+QUOTA_STATE = scan.STATE / "quota-pause.json"
+QUOTA_STEP = "QUOTA EXHAUSTED"
+
+
+def quota_paused() -> bool:
+    """True while the Claude subscription is known to be empty.
+
+    A quota refusal exits 0 and the run reports success, so nothing upstream
+    noticed: on 2026-08-14, 14 of the 23 runs that reached Claude were turned
+    away in under 70 seconds and the sweep kept dispatching into an empty
+    subscription, spending per-repo allowances on runs that never read a line of
+    code. fix-one.yml now fails a step named QUOTA EXHAUSTED, which check_quota
+    below finds without downloading a log.
+    """
+    from datetime import datetime, timezone
+    try:
+        d = json.loads(QUOTA_STATE.read_text()) if QUOTA_STATE.exists() else {}
+    except Exception:  # noqa: BLE001
+        return False
+    until = d.get("until")
+    if not until:
+        return False
+    try:
+        return datetime.now(timezone.utc) < datetime.fromisoformat(until)
+    except ValueError:
+        return False
+
+
+def note_quota_exhausted(hours: float = 1.0) -> None:
+    """Pause dispatching. Short by default — the real reset time is unknown."""
+    from datetime import datetime, timezone, timedelta
+    until = (datetime.now(timezone.utc) + timedelta(hours=hours)).isoformat()
+    scan.STATE.mkdir(parents=True, exist_ok=True)
+    QUOTA_STATE.write_text(json.dumps({"until": until}, indent=2) + "\n")
+    log(f"  QUOTA: dispatching paused until {until[:16]}")
+
+
+def check_quota_runs() -> bool:
+    """Look for a recent run that failed on the QUOTA step. Cheap: the jobs
+    endpoint carries step names and conclusions, so no log download."""
+    import subprocess
+    try:
+        raw = subprocess.run(
+            ["gh", "run", "list", "--repo", PIPELINE_REPO, "--workflow", "fix-one.yml",
+             "--limit", "8", "--json", "databaseId,conclusion"],
+            capture_output=True, text=True, timeout=60)
+        runs = json.loads(raw.stdout or "[]") if raw.returncode == 0 else []
+    except Exception:  # noqa: BLE001
+        return False
+    for r in runs:
+        if r.get("conclusion") != "failure":
+            continue
+        try:
+            j = subprocess.run(
+                ["gh", "api", f"repos/{PIPELINE_REPO}/actions/runs/{r['databaseId']}/jobs",
+                 "--jq", "[.jobs[0].steps[] | select(.conclusion==\"failure\") | .name] | join(\"|\")"],
+                capture_output=True, text=True, timeout=60)
+        except Exception:  # noqa: BLE001
+            continue
+        if QUOTA_STEP in (j.stdout or ""):
+            note_quota_exhausted()
+            return True
+    return False
+
+
 def budget_allows(key: str) -> bool:
     """Consume one unit of today's dispatch budget for `key`, if any is left."""
+    if quota_paused():
+        log(f"  [{key}] Claude quota exhausted — not dispatching")
+        return False
+
     # UTC, not local. This machine is UTC+8, so date.today() rolled over at
     # 16:00 UTC while every other daily boundary in the pipeline — fix-one.yml's
     # PR cap, run-fix.sh's cap, watch-prs.py's response cap, health.py's whole
@@ -724,6 +793,10 @@ def main() -> int:
                     # Reconcile before draining, so refunded units are available
                     # to the drain that follows rather than a cycle later.
                     reconcile_budget()
+                    # Before spending anything, find out whether the last few
+                    # runs were turned away by the subscription.
+                    if not quota_paused():
+                        check_quota_runs()
                     n = drain_queues(keys)
                     if n:
                         log(f"drained {n} queued candidate(s)")
