@@ -12,6 +12,7 @@ name: Fix one issue
 # fine); only the Claude-dependent step is offloaded. We are dispatched directly
 # rather than waiting on `schedule`, whose delivery was observed at twice in six
 # hours for a */5 cron.
+run-name: "fix ${{ inputs.repo_key }}#${{ inputs.issue }}"
 on:
   workflow_dispatch:
     inputs:

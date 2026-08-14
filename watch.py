@@ -165,6 +165,7 @@ BUDGET_FILE = scan.STATE / "dispatch-budget.json"
 
 
 QUOTA_STATE = scan.STATE / "quota-pause.json"
+QUOTA_REFUNDED = scan.STATE / "quota-refunded.json"
 QUOTA_STEP = "QUOTA EXHAUSTED"
 
 
@@ -192,10 +193,18 @@ def quota_paused() -> bool:
         return False
 
 
-def note_quota_exhausted(hours: float = 1.0) -> None:
-    """Pause dispatching. Short by default — the real reset time is unknown."""
+def note_quota_exhausted(minutes: float = 12.0) -> None:
+    """Pause briefly, then try again.
+
+    The subscription window rolls, so capacity trickles back continuously rather
+    than arriving all at once at a reset. Waiting an hour throws away the part
+    that came back in the first ten minutes. Bruce's call: treat a refusal as
+    "not now" rather than "not today", and keep probing. A refused run costs
+    nothing to repeat — this repo is public, so Actions minutes are free, and
+    the run dies in about a minute.
+    """
     from datetime import datetime, timezone, timedelta
-    until = (datetime.now(timezone.utc) + timedelta(hours=hours)).isoformat()
+    until = (datetime.now(timezone.utc) + timedelta(minutes=minutes)).isoformat()
     scan.STATE.mkdir(parents=True, exist_ok=True)
     QUOTA_STATE.write_text(json.dumps({"until": until}, indent=2) + "\n")
     log(f"  QUOTA: dispatching paused until {until[:16]}")
@@ -227,6 +236,83 @@ def check_quota_runs() -> bool:
             note_quota_exhausted()
             return True
     return False
+
+
+def refund_quota_runs() -> int:
+    """Undo the accounting for runs the subscription refused.
+
+    A dispatch charges a unit and records the candidate as done the moment it
+    goes out, which is right for a run that works. A run refused by the quota
+    did no work: charging it spends the day's allowance on nothing, and
+    recording it retires the candidate for good. Both are undone here so the
+    issue comes back round.
+
+    The run title carries `fix <repo_key>#<issue>`, which is why it is set —
+    reading it from a list costs one call, where the log fetch reconcile_budget
+    uses takes minutes per run and cannot be done for every refusal.
+    """
+    import subprocess
+    try:
+        raw = subprocess.run(
+            ["gh", "run", "list", "--repo", PIPELINE_REPO, "--workflow", "fix-one.yml",
+             "--limit", "30", "--json", "databaseId,conclusion,displayTitle,createdAt"],
+            capture_output=True, text=True, timeout=90)
+        runs = json.loads(raw.stdout or "[]") if raw.returncode == 0 else []
+    except Exception:  # noqa: BLE001
+        return 0
+
+    from datetime import datetime, timezone
+    today = datetime.now(timezone.utc).date().isoformat()
+    try:
+        done = json.loads(QUOTA_REFUNDED.read_text()) if QUOTA_REFUNDED.exists() else {}
+    except Exception:  # noqa: BLE001
+        done = {}
+    if done.get("date") != today:
+        done = {"date": today, "runs": []}
+    seen = set(done["runs"])
+
+    try:
+        budget = json.loads(BUDGET_FILE.read_text()) if BUDGET_FILE.exists() else {}
+        ledger = json.loads(DISPATCHED.read_text()) if DISPATCHED.exists() else {}
+    except Exception:  # noqa: BLE001
+        return 0
+    if budget.get("date") != today:
+        return 0
+
+    n = 0
+    for r in runs:
+        rid = r.get("databaseId")
+        if r.get("conclusion") != "failure" or not rid or rid in seen:
+            continue
+        if (r.get("createdAt") or "") < today:
+            continue
+        m = re.match(r"fix ([\w.-]+)#(\d+)", r.get("displayTitle") or "")
+        if not m:
+            continue
+        try:
+            j = subprocess.run(
+                ["gh", "api", f"repos/{PIPELINE_REPO}/actions/runs/{rid}/jobs",
+                 "--jq", '[.jobs[0].steps[] | select(.conclusion=="failure") | .name] | join("|")'],
+                capture_output=True, text=True, timeout=60)
+        except Exception:  # noqa: BLE001
+            continue
+        if QUOTA_STEP not in (j.stdout or ""):
+            continue
+        key, num = m.group(1), int(m.group(2))
+        seen.add(rid)
+        if budget.get("used", {}).get(key, 0) > 0:
+            budget["used"][key] -= 1
+        if num in ledger.get(key, []):
+            ledger[key] = [x for x in ledger[key] if x != num]
+        n += 1
+        log(f"  [{key}] #{num} refunded — the subscription refused it, no work was done")
+
+    if n:
+        BUDGET_FILE.write_text(json.dumps(budget, indent=2) + "\n")
+        DISPATCHED.write_text(json.dumps(ledger, indent=2) + "\n")
+    done["runs"] = sorted(seen)[-300:]
+    QUOTA_REFUNDED.write_text(json.dumps(done, indent=2) + "\n")
+    return n
 
 
 def budget_allows(key: str) -> bool:
@@ -795,6 +881,9 @@ def main() -> int:
                     reconcile_budget()
                     # Before spending anything, find out whether the last few
                     # runs were turned away by the subscription.
+                    # Refund first: a unit handed back by a refused run is
+                    # available to the drain that follows, not a cycle later.
+                    refund_quota_runs()
                     if not quota_paused():
                         check_quota_runs()
                     n = drain_queues(keys)

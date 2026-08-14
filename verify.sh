@@ -690,16 +690,34 @@ tmp = pathlib.Path(tempfile.mkdtemp())
 w.QUOTA_STATE = tmp / "q.json"; w.scan.STATE = tmp; w.log = lambda m: None
 if w.quota_paused():
     print("  FAIL  paused with no state file"); bad += 1
-w.note_quota_exhausted(hours=1)
+w.note_quota_exhausted(10)
 if not w.quota_paused():
     print("  FAIL  not paused after a quota refusal"); bad += 1
-w.note_quota_exhausted(hours=-1)
+w.note_quota_exhausted(-1)
 if w.quota_paused():
     print("  FAIL  still paused after the window expired"); bad += 1
 w.QUOTA_STATE.write_text("not json")
 if w.quota_paused():
     print("  FAIL  a corrupt state file halts the pipeline — it must fail open"); bad += 1
-print("  ok     quota refusal is visible and pauses dispatch" if not bad else f"  {bad} problem(s)")
+# Bruce's strategy: a refusal is "not now", not "not today". It must not spend
+# the day's allowance and must not retire the candidate, and the pause has to be
+# short because the subscription window rolls — capacity returns continuously.
+if not hasattr(w, "refund_quota_runs"):
+    print("  FAIL  a refused run still spends budget and retires its candidate"); bad += 1
+w.QUOTA_STATE = tmp / "unit.json"
+w.note_quota_exhausted(10)
+try:
+    from datetime import datetime, timezone
+    until = datetime.fromisoformat(json.loads(w.QUOTA_STATE.read_text())["until"])
+    mins = (until - datetime.now(timezone.utc)).total_seconds() / 60
+except Exception as e:  # noqa: BLE001
+    print(f"  FAIL  cannot read the pause window back: {e}"); bad += 1; mins = -1
+if not (5 <= mins <= 30):
+    print(f"  FAIL  a pause of 10 lasts {mins:.0f} minutes — the unit is wrong, and the window rolls"); bad += 1
+wf_src = open(".github/workflows/fix-one.yml").read()
+if "run-name:" not in wf_src or "inputs.repo_key" not in wf_src.split("run-name:")[1][:80]:
+    print("  FAIL  run-name does not carry repo_key#issue — refunds would need a log fetch"); bad += 1
+print("  ok     quota refusal is visible, refunded, and pauses briefly" if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY3
 
