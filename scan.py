@@ -72,6 +72,36 @@ REPOS: dict[str, dict] = {
     # reason it can come back — they were written on 08-12 and went away with the
     # config block, so restoring the repo without them would repeat the offence
     # exactly. verify check 19 asserts they stay.
+    # Added 2026-08-15 after screening 15 repos on four criteria: OSI licence,
+    # no "ask first and wait" rule in CONTRIBUTING, a language we can actually
+    # run tests in, and a real external-merge record. Of 14 recently merged PRs
+    # sampled, 14 were by non-members merged by someone else — the highest rate
+    # of anything measured, ours included. Median +33 lines, which matches what
+    # we produce. Median 227h to merge, so do not judge it inside a week.
+    "llama-index": {
+        "upstream": "run-llama/llama_index",
+        "searches": ['label:bug sort:created-desc', "sort:created-desc"],
+        # `triage` is not an exclusion here. Its description is "Issue needs to be
+        # triaged/prioritized" and it sits on about half the open issues — the
+        # same shape as adk's `needs review`, but adk's untriaged pool was old
+        # feature requests, whereas this repo merges 14 of 14 sampled external
+        # PRs. Dropping half the supply of the most permeable repo we found to
+        # avoid a maintainer saying "not a bug" is the wrong trade.
+        "exclude_labels": set(),
+        "max_vet": 40,
+    },
+    # 11 of 14 sampled merges were genuine external contributions, median 56h,
+    # median +42 lines. Its labels are emoji-prefixed, which the REST `labels`
+    # filter matches literally — hence the exact strings below rather than "bug".
+    "crawl4ai": {
+        "upstream": "unclecode/crawl4ai",
+        # The label name contains a space, so it must be quoted — _LABEL_RE stops
+        # at whitespace otherwise and "\U0001F41E Bug" arrives as just the emoji.
+        "searches": ['label:"\U0001F41E Bug" sort:created-desc'],
+        "exclude_labels": {"\u2699\uFE0F In-progress", "\u2699 Done",
+                           "\u2753 Question"},
+        "max_vet": 40,
+    },
     "spec-kit": {
         "upstream": "github/spec-kit",
         "searches": ["label:bug sort:created-desc", "sort:created-desc"],
