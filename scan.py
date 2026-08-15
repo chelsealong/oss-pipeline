@@ -449,6 +449,14 @@ def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
         return False, "fix belongs to a different repo", {}
     if (pat := cfg.get("exclude_title")) and re.search(pat, title, re.I):
         return False, "title matches exclusion", {}
+    # An unfilled template title means the reporter did not describe the problem.
+    # langfuse#16160 and #16162 both arrived as "bug: <short description>" from
+    # one account, and their bodies are abuse rather than a report — the
+    # substance check counts characters, and invective has plenty. This is
+    # repo-independent: nobody's template placeholder is a workable issue.
+    if re.search(r"<\s*(short description|title|summary|brief description|one line)\s*>"
+                 r"|^\s*(bug|feature|\[bug\]|\[feature\])\s*:\s*$", title, re.I):
+        return False, "title is an unfilled template placeholder", {}
     if (pat := cfg.get("require_body")) and not re.search(pat, issue.get("body") or "", re.I):
         return False, "body lacks required in-scope signal", {}
     if issue.get("draft"):

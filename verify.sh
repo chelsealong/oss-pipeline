@@ -736,6 +736,35 @@ print("  ok     quota refusal is visible, refunded, and pauses briefly" if not b
 sys.exit(1 if bad else 0)
 PY3
 
+echo "== 24. unfilled template titles are refused =="
+# langfuse#16160 and #16162 arrived from one account as "bug: <short
+# description>", and their bodies are abuse rather than a report. The substance
+# check counts characters and invective has plenty, so only the title gives it
+# away. This is repo-independent — nobody's placeholder is a workable issue.
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import sys
+sys.path.insert(0, sys.argv[1])
+import scan
+bad = 0
+CFG = scan.REPOS.get("langfuse") or next(iter(scan.REPOS.values()))
+REJECT = ["bug: <short description>", "[bug] <title>", "feature: <summary>",
+          "Bug: <Short Description>", "bug:"]
+KEEP = ["bug: UI Trace is not visible in a one glance",
+        "[bug] ClickHouse writer drops records permanently after a failover",
+        "fix the <div> wrapper in the trace table",
+        "bug: cannot configure <model> temperature"]
+for t in REJECT:
+    ok, why, _ = scan.vet(CFG, "x/y", {"number": 1, "title": t, "body": "x" * 400, "labels": []})
+    if ok or "placeholder" not in why:
+        print(f"  FAIL  accepted a placeholder title: {t!r} ({why})"); bad += 1
+for t in KEEP:
+    _, why, _ = scan.vet(CFG, "x/y", {"number": 1, "title": t, "body": "x" * 400, "labels": []})
+    if "placeholder" in why:
+        print(f"  FAIL  a real title was read as a placeholder: {t!r}"); bad += 1
+print("  ok     placeholder titles refused, real ones kept" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1
