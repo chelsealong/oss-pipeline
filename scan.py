@@ -260,15 +260,12 @@ REPOS: dict[str, dict] = {
     # so a first contribution shows red for a reason that has nothing to do with
     # the patch and can only be cleared by someone else. The DCO sign-off work
     # (git commit -s) stays in fix-one.yml for whenever this comes back.
-    "sglang": {
-        "upstream": "sgl-project/sglang",
-        "searches": ['label:"good first issue"', 'label:"help wanted"',
-                     'label:bug sort:created-desc'],
-        "exclude_labels": {"performance", "quantization", "amd", "rocm", "npu"},
-        "exclude_title": r"kernel|cuda|triton|quantiz|fp8|awq|gptq|marlin|cutlass|"
-                         r"benchmark|throughput|latency|speed ?up|perf\b|nccl|tensor.?parallel",
-        "max_vet": 40,
-    },
+    # sglang REMOVED 2026-08-15 on Bruce's instruction. Added 2026-08-07 and it
+    # never dispatched once in eight days: 19 of the 29 issues vetted already
+    # carried a PR, the rest hit the kernel/CUDA/quantization exclusions that
+    # exist because we cannot test GPU work. Zero PRs, zero commits. The repo is
+    # not hostile — it is contested by people who can run the hardware, which we
+    # cannot. vllm was suspended two days earlier for the adjacent reason.
     # Evaluated 2026-08-07 and deliberately NOT added, so it is not re-evaluated:
     #
     #   Arize-ai/phoenix — over six weeks, 300 sampled merges contained 5 PRs

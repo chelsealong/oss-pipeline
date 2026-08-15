@@ -155,7 +155,6 @@ DISPATCH_BUDGET = {
     "hermes": 10,
     # Dispatch headroom over each repo's PR/day cap; verify check 12 asserts
     # budget >= cap so a cap can never be unreachable.
-    "sglang": 5,
     # New 2026-08-15, on trial at 3 PRs/day each.
     "llama-index": 5, "crawl4ai": 5,
     "litellm": 5, "mem0": 5,
