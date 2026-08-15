@@ -647,7 +647,22 @@ if missing:
     print(f"  FAIL  REPO_LIST misses configured repos: {sorted(missing)}"); bad += 1
 if "github/spec-kit" not in h.REPO_LIST:
     print("  FAIL  a retired repo with landed commits vanished from the report"); bad += 1
-print("  ok     all identities searched, repo list derived" if not bad else f"  {bad} problem(s)")
+# Credit is not a commit. hermes#86244 landed our analysis under teknium1's
+# authorship — real, but not a commit of ours — while AutoGPT#13761/#13764
+# matched only because an overlap bot listed our open PRs in a comment. The
+# metric is only useful if it excludes bot noise and does not double-count
+# salvages, which already appear in the commit total.
+if not hasattr(h, "check_credited"):
+    print("  FAIL  no credited metric"); bad += 1
+else:
+    cs = open(sys.argv[1] + "/health.py").read().split("def check_credited")[1].split("\ndef ")[0]
+    if "CREDIT" not in cs:
+        print("  FAIL  check_credited counts any mention, including bot comments"); bad += 1
+    if "pulls/{it['n']}/commits" not in cs:
+        print("  FAIL  check_credited does not exclude salvages — they are already counted as landed"); bad += 1
+    if '"credited": check_credited()' not in open(sys.argv[1] + "/health.py").read():
+        print("  FAIL  the credited metric is not reported"); bad += 1
+print("  ok     all identities searched, repo list derived, credit kept separate" if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY3
 

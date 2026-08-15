@@ -390,6 +390,57 @@ def check_merge_throughput() -> tuple[list[str], dict]:
     return problems, d
 
 
+def check_credited() -> tuple[list[str], dict]:
+    """Merged upstream PRs that credit us without carrying our commits.
+
+    hermes#86244 is the case this exists for: teknium1 wrote the fix himself and
+    the body says "credit to @chelsealong for the #85709 analysis". The work
+    landed and our name is on it, but the commit is his, so check_landed cannot
+    see it.
+
+    Kept strictly apart from the commit count and never added to it. Two reasons
+    to distrust this number:
+
+      * a salvage PR mentions us because it CARRIES our commits — those are
+        already counted as landed, so they are excluded here by checking whether
+        the PR has a commit of ours;
+      * most mentions are machinery. AutoGPT#13761 and #13764 matched only
+        because a PR-overlap bot listed our open PRs in a comment. Only the PR
+        body counts, and only when it reads like credit.
+
+    A soft metric is fine as long as it is labelled soft.
+    """
+    repos = sorted({c.get("implements_in") or c["upstream"] for c in scan.REPOS.values()} | set(RETIRED))
+    qual = "+".join(f"repo:{r}" for r in repos)
+    raw = sh(["gh", "api",
+              f"search/issues?q=type:pr+is:merged+{ME}+-author:{ME}+{qual}&per_page=50",
+              "-X", "GET", "--jq",
+              '[.items[] | {n:.number, repo:(.repository_url|split("/")[4:6]|join("/")),'
+              ' by:.user.login, at:.closed_at, body:(.body // "")}]'], 90)
+    try:
+        items = json.loads(raw) if raw else []
+    except Exception:  # noqa: BLE001
+        return [], {"credited": 0, "items": []}
+
+    CREDIT = re.compile(r"(credit|thanks|thank you|reported by|analysis|found by|"
+                        r"spotted by|based on|per @)", re.I)
+    out = []
+    for it in items:
+        # The body is the only place a human writes credit; bot comments are noise.
+        if ME not in it["body"] or not CREDIT.search(it["body"]):
+            continue
+        # A salvage carries our commits and is already counted as landed.
+        mine = sh(["gh", "api", f"repos/{it['repo']}/pulls/{it['n']}/commits",
+                   "--jq", f'[.[] | select(.commit.author.email | test("{ME_EMAILS[0].replace("%40","@")}"))] | length'], 45)
+        try:
+            if int(mine or 0) > 0:
+                continue
+        except ValueError:
+            pass
+        out.append({"repo": it["repo"], "number": it["n"], "by": it["by"], "at": it["at"][:10]})
+    return [], {"credited": len(out), "items": out}
+
+
 def check_landed() -> tuple[list[str], dict]:
     """Commits of ours on each upstream's default branch.
 
@@ -537,6 +588,8 @@ def main() -> int:
         "sweep_health": check_sweep_health(),
         "followups": check_followups(),
         "landed": check_landed(),
+        # Soft, and reported separately on purpose: credit is not a commit.
+        "credited": check_credited(),
         "open_prs": check_prs(),
     }
     problems = [p for probs, _ in checks.values() for p in probs]
