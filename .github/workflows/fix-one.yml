@@ -125,7 +125,7 @@ jobs:
             dify) cap=5 ;;
             autogpt) cap=3 ;;
             sglang) cap=3 ;;
-            llama-index|crawl4ai) cap=3 ;;   # added 2026-08-15, on trial
+            llama-index|crawl4ai|litellm|mem0) cap=3 ;;   # added 2026-08-15, on trial
             langfuse) cap=6 ;;
             langfuse-python) cap=3 ;;
             firecrawl) cap=1 ;;
@@ -871,6 +871,7 @@ jobs:
           case "${REPO_KEY}" in
             openclaw) max_added=120 ;;
             comfyui)  max_added=150 ;;
+            litellm)  max_added=150 ;;   # its median merge is +223; ours should be the small end
             *)        max_added=0 ;;
           esac
           if [ "${max_added}" -gt 0 ] && [ -f "$GITHUB_WORKSPACE/.loop/change.diff" ]; then

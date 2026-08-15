@@ -102,6 +102,33 @@ REPOS: dict[str, dict] = {
                            "\u2753 Question"},
         "max_vet": 40,
     },
+    # Added 2026-08-15. I eliminated this on the first pass for a NOASSERTION
+    # licence, which was wrong: everything outside `enterprise/` is MIT, and
+    # that is one directory to avoid rather than n8n's `.ee.` files scattered
+    # through the tree with unlicensed branches on top. 5 of 16 sampled merges
+    # were genuine external contributions, median 26h, and all 35 open issues on
+    # the first page are unassigned. Median merge is +223, so the size ceiling
+    # in fix-one.yml matters here more than the merge rate does.
+    "litellm": {
+        "upstream": "BerriAI/litellm",
+        "searches": ['label:bug sort:created-desc', "sort:created-desc"],
+        "exclude_labels": set(),
+        # enterprise/ is under a separate licence; nothing there is ours to fix.
+        "exclude_title": r"(enterprise|/enterprise)",
+        "max_vet": 40,
+    },
+    # Added 2026-08-15, also a corrected rejection. Its CONTRIBUTING says "for
+    # anything beyond a trivial fix, wait for a maintainer to confirm the
+    # approach" — scoped to significant work, not the blanket "ask and wait
+    # before you pick it up" that keeps n8n out. Apache-2.0, median +32 which is
+    # exactly our size. The reservation is the merge rate: 1 of 16 sampled, the
+    # same 6% as hermes, so this is on trial and judged on landed commits.
+    "mem0": {
+        "upstream": "mem0ai/mem0",
+        "searches": ['label:bug sort:created-desc'],
+        "exclude_labels": {"enhancement"},   # those are the "wait first" class
+        "max_vet": 40,
+    },
     "spec-kit": {
         "upstream": "github/spec-kit",
         "searches": ["label:bug sort:created-desc", "sort:created-desc"],

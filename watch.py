@@ -158,6 +158,7 @@ DISPATCH_BUDGET = {
     "sglang": 5,
     # New 2026-08-15, on trial at 3 PRs/day each.
     "llama-index": 5, "crawl4ai": 5,
+    "litellm": 5, "mem0": 5,
     "spec-kit": 5,   # cap is 3/day; headroom for runs that produce no patch
     "langchain": 4,
     "gemini-cli": 4,
