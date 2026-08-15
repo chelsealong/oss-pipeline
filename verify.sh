@@ -765,6 +765,51 @@ print("  ok     placeholder titles refused, real ones kept" if not bad else f"  
 sys.exit(1 if bad else 0)
 PY3
 
+echo "== 25. the announcement's promise is actually kept =="
+# The note we leave says "if someone is already on it, say so and I will drop
+# mine". On adk#6730 the issue's own author said so six minutes after we
+# announced, and we opened the PR two minutes after that — nothing was watching.
+# Two places have to honour it: before publishing, and after.
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import importlib.util, sys, yaml
+sys.path.insert(0, sys.argv[1])
+spec = importlib.util.spec_from_file_location("wp", sys.argv[1] + "/watch-prs.py")
+wp = importlib.util.module_from_spec(spec); spec.loader.exec_module(wp)
+bad = 0
+
+wf = yaml.safe_load(open(".github/workflows/fix-one.yml"))
+steps = [st for j in wf["jobs"].values() for st in j.get("steps", [])]
+ann = next((s for s in steps if s.get("id") == "announce"), None)
+opener = next((s for s in steps if s.get("id") == "openpr"), None)
+if ann and "at=" not in (ann.get("run") or ""):
+    print("  FAIL  the announcement records no timestamp, so replies cannot be dated"); bad += 1
+if opener is None or "ANNOUNCED_AT" not in (opener.get("env") or {}):
+    print("  FAIL  Open PR cannot see when we announced"); bad += 1
+elif "CLAIM_PHRASES" not in (opener.get("run") or ""):
+    print("  FAIL  Open PR does not read replies to the announcement before publishing"); bad += 1
+
+for name in ("someone_claimed_the_issue", "stand_down"):
+    if not hasattr(wp, name):
+        print(f"  FAIL  watch-prs.py has no {name} — a claim after publishing is ignored"); bad += 1
+src = open(sys.argv[1] + "/watch-prs.py").read()
+if "body createdAt" not in src:
+    print("  FAIL  the PR query omits body, so the linked issue cannot be found"); bad += 1
+if "stand_down(pr" not in src.split("def one_pass")[1]:
+    print("  FAIL  stand_down is never called from the main loop"); bad += 1
+
+# Behaviour: a claim before we opened must NOT trigger a stand-down.
+pr = {"_repo": "google/adk-python", "number": 6731,
+      "createdAt": "2026-08-15T23:59:00Z", "body": "Fixes #6730"}
+who, _ = wp.someone_claimed_the_issue(pr)
+if who is not None:
+    print(f"  FAIL  stood down for a claim that predates our PR ({who})"); bad += 1
+if wp.someone_claimed_the_issue({"_repo": "x/y", "number": 1, "createdAt": "2020-01-01T00:00:00Z",
+                                 "body": "no closing reference"})[0] is not None:
+    print("  FAIL  stood down on a PR with no linked issue"); bad += 1
+print("  ok     the promise is enforced before and after publishing" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

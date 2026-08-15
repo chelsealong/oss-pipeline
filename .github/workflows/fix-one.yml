@@ -301,6 +301,8 @@ jobs:
           id=$(gh api -X POST "repos/${UPSTREAM}/issues/${NUM}/comments" -f body="$body" --jq '.id' 2>/dev/null || true)
           if [ -n "${id:-}" ]; then
             echo "comment_id=${id}" >> "$GITHUB_OUTPUT"
+            # The Open PR step reads replies that arrived after this moment.
+            echo "at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
             echo "announced on ${UPSTREAM}#${NUM} (comment ${id})"
           else
             echo "::warning::could not announce on ${UPSTREAM}#${NUM}; proceeding"
@@ -856,6 +858,7 @@ jobs:
           NUM: ${{ inputs.issue }}
           REPO_KEY: ${{ inputs.repo_key }}
           PREPARE_ONLY: ${{ steps.cfg.outputs.prepare_only }}
+          ANNOUNCED_AT: ${{ steps.announce.outputs.at }}
         run: |
           # Size ceiling, per repo. On openclaw this is the whole story: of our
           # eight PRs there the only one that merged is +38/-2, and the seven
@@ -879,6 +882,36 @@ jobs:
               exit 0
             fi
             echo "size ok: +${added} lines, ceiling ${max_added}"
+          fi
+
+          # Did anyone answer the announcement? adk#6730 was filed at 11:16:28,
+          # we announced at 11:17:07 promising "if someone is already on it, say
+          # so and I will drop mine", the issue author replied at 11:24:38 saying
+          # they wanted it, and we opened the PR at 11:26:21 anyway. The promise
+          # was real; the mechanism to keep it was not.
+          if [ -n "${ANNOUNCED_AT:-}" ]; then
+            claimed=$(python - <<'PYCLAIM'
+          import json, os, re, sys
+          sys.path.insert(0, '.')
+          import scan
+          up = os.environ['UPSTREAM']; num = int(os.environ['NUM'])
+          since = os.environ['ANNOUNCED_AT']
+          raw = scan.gh(["api", f"repos/{up}/issues/{num}/comments", "--paginate",
+                         "--jq", '[.[] | {u: .user.login, at: .created_at, b: .body}]'])
+          who = []
+          for c in json.loads(raw or "[]"):
+              if c["u"] == "chelsealong" or c["at"] <= since:
+                  continue
+              body = re.sub(r"^\s*>.*$", "", c["b"] or "", flags=re.M)
+              if scan.CLAIM_PHRASES.search(body.lower()):
+                  who.append(c["u"])
+          print(",".join(sorted(set(who))))
+          PYCLAIM
+            )
+            if [ -n "${claimed:-}" ]; then
+              echo "::notice::${claimed} answered the announcement on ${UPSTREAM}#${NUM} - standing down"
+              exit 0
+            fi
           fi
 
           # Last-moment claim re-check. The pre-vet ran before the agent

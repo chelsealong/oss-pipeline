@@ -84,6 +84,59 @@ def pr_age_hours(pr: dict):
     return (datetime.now(timezone.utc) - t).total_seconds() / 3600
 
 
+def someone_claimed_the_issue(pr: dict):
+    """(login, issue) if a human claimed our PR's issue after we opened it.
+
+    The announcement on adk#6730 promised "if someone is already on it, say so
+    and I will drop mine". The issue's own author said so six minutes later and
+    we published anyway, because nothing was watching. Blocking the open is only
+    half the promise — a claim that lands after we publish has to close the PR.
+    """
+    import re as _re
+    body = pr.get("body") or ""
+    m = _re.search(r"(?i)(?:closes|fixes|resolves)\s+#(\d+)", body)
+    if not m:
+        return None, None
+    num = int(m.group(1))
+    repo = pr.get("_repo") or ""
+    opened = pr.get("createdAt") or ""
+    try:
+        raw = scan.gh(["api", f"repos/{repo}/issues/{num}/comments", "--paginate",
+                       "--jq", '[.[] | {u: .user.login, at: .created_at, b: .body}]'])
+        comments = json.loads(raw or "[]")
+    except Exception:  # noqa: BLE001
+        return None, None
+    for c in comments:
+        if c["u"] == ME or "[bot]" in c["u"] or c["at"] <= opened:
+            continue
+        # Quoted text is someone repeating a claim, not making one.
+        text = _re.sub(r"^\s*>.*$", "", c["b"] or "", flags=_re.M).lower()
+        if scan.CLAIM_PHRASES.search(text):
+            return c["u"], num
+    return None, None
+
+
+def stand_down(pr: dict, who: str, issue: int) -> bool:
+    """Close our PR because someone else claimed the issue. Keeps the promise."""
+    import subprocess
+    repo, num = pr["_repo"], pr["number"]
+    note = (f"Closing this — @{who} said on #{issue} that they want to work on it, "
+            "and the note I left there promised to drop mine if someone was already "
+            "on it. If any of this diff is useful, take it freely.")
+    try:
+        subprocess.run(["gh", "pr", "comment", str(num), "--repo", repo, "--body", note],
+                       capture_output=True, text=True, timeout=60)
+        r = subprocess.run(["gh", "pr", "close", str(num), "--repo", repo],
+                           capture_output=True, text=True, timeout=60)
+        if r.returncode == 0:
+            log(f"  [{repo}#{num}] stood down — {who} claimed #{issue}")
+            return True
+        log(f"  [{repo}#{num}] could not close: {r.stderr.strip()[:120]}")
+    except Exception as e:  # noqa: BLE001
+        log(f"  [{repo}#{num}] stand-down failed: {e}")
+    return False
+
+
 def past_merge_window(pr: dict):
     """(True, why) if this repo has stopped looking at PRs this old."""
     window = MERGE_WINDOW_HOURS.get(pr.get("_repo") or "")
@@ -135,7 +188,7 @@ def open_prs() -> list[dict]:
     repo_filter = " ".join(f"repo:{r}" for r in upstreams())
     q = ('{search(type:ISSUE, first:50, query:"is:pr is:open author:%s %s"){nodes{'
          '... on PullRequest{'
-         ' number title url createdAt updatedAt author{login} headRefName isDraft'
+         ' number title url body createdAt updatedAt author{login} headRefName isDraft'
          ' repository{nameWithOwner}'
          ' labels(first:20){nodes{name}}'
          ' comments(last:20){nodes{id createdAt updatedAt author{login} body}}'
@@ -434,6 +487,14 @@ def one_pass(seen: dict) -> int:
         # and had to be cancelled by hand before it could write over their work.
         if (author := last_commit_author(pr)) and author != ME:
             log(f"  [{key}] newest commit is by {author}, not us — hands off")
+            continue
+
+        # Keeping the announcement's promise: if someone claimed the issue after
+        # we opened, the PR comes down. This runs before the merge-window check —
+        # standing down matters even on a PR too old to be worth answering.
+        who, claimed_issue = someone_claimed_the_issue(pr)
+        if who:
+            stand_down(pr, who, claimed_issue)
             continue
 
         # Nothing we say after the window closes has ever changed an outcome.
