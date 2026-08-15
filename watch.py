@@ -152,7 +152,7 @@ DISPATCH_BUDGET = {
     "openclaw": 6,
     "dify": 6, "autogpt": 4,
     "comfyui": 8, "firecrawl": 2,
-    "hermes": 6,
+    "hermes": 10,
     # Dispatch headroom over each repo's PR/day cap; verify check 12 asserts
     # budget >= cap so a cap can never be unreachable.
     "sglang": 5,

@@ -107,3 +107,31 @@ Caveat on method: GitHub's `commenter:` search index is unreliable — it
 reported 2 comments for us when a direct count over the same PRs found 13.
 The 0 above is the `commenter:X -author:X` form, which agrees with a
 manual check.
+
+## Salvage lands 3-5 days late — do not judge inside that window
+
+On 2026-08-12 I concluded hermes was failing: 34 PRs, "nothing landed since
+08-01", 6% conversion, and cut it to 4 PRs/day. The evidence was that our
+commits on main stopped at 08-01.
+
+On 2026-08-15 two more landed:
+
+| commit | we wrote it | teknium1's PR | merged |
+|---|---|---|---|
+| `f0748b45` stop empty REST transcript refresh | 08-10 | #86588 | 08-15 03:23 |
+| `49d72a02` verify Windows gateway cold-start | 08-12 | #86687 | 08-15 05:03 |
+
+Three and five days between our PR and the salvage. The first two salvages
+took 16h and 151h, and I generalised from the 16h one. hermes is now the
+repo with the most landed commits of any (7), and both of these arrived
+*after* the cut.
+
+**The rule: a repo whose landing path is salvage cannot be judged on a
+window shorter than a week.** Our PR staying open means nothing there —
+the maintainer's PR is where the work appears, under their number, and
+`is:merged` on our account never shows it. Count commits on the default
+branch, and give it seven days before drawing a conclusion.
+
+Cap back to 7/day on 2026-08-15. Not 10: the run to 30+ open PRs in one
+repo was its own problem, and the 20,623-PR backlog there means volume
+still buys nothing.
