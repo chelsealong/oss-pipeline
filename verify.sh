@@ -396,7 +396,12 @@ scan = importlib.util.module_from_spec(spec); spec.loader.exec_module(scan)
 def detect(b):   # mirrors claimants(): quoted text is stripped first
     return bool(scan.CLAIM_PHRASES.search(re.sub(r"^\s*>.*$", "", b, flags=re.M).lower()))
 
-POS = ["I'd like to attempt a fix — applying the same check",
+# Offering to TEST is not claiming. "I will try this to run the build locally"
+# on adk#6691 closed adk#6697 automatically — a PR a collaborator had just
+# called "the right one to land", while its reporter was verifying it against
+# AlloyDB. Bare `try` is out; a claim now needs "try to <verb>".
+POS = ["I'll try to fix this today", "I will look into this and send a patch",
+       "I'd like to attempt a fix — applying the same check",
        "I reproduced this against the current source and have a minimal patch ready.",
        "I'll take this one", "I'd like to work on this", "working on it", "/assign",
        "I have a fix for this", "I've got a patch locally", "I will open a PR shortly",
@@ -405,7 +410,11 @@ NEG = ["Does anyone have a fix for this?", "Would be great if someone could take
        "This is blocking me — any workaround?", "Thanks, that worked!",
        "I have a question about the config.", "Is there a PR for this already?",
        "> I'd like to take this one", "> I have a minimal patch ready\n\nThanks, go ahead.",
-       "I have a similar problem on Windows.", "I have a prod deployment affected by this."]
+       "I have a similar problem on Windows.", "I have a prod deployment affected by this.",
+       "sure I will try this to run the build locally instead of 2.6.1 and will update.",
+       "I'll try your branch and report back",
+       "I will try the build from #6697 and see if it works",
+       "let me try this patch on my setup"]
 bad = 0
 for t in POS:
     if not detect(t):
@@ -806,7 +815,18 @@ if who is not None:
 if wp.someone_claimed_the_issue({"_repo": "x/y", "number": 1, "createdAt": "2020-01-01T00:00:00Z",
                                  "body": "no closing reference"})[0] is not None:
     print("  FAIL  stood down on a PR with no linked issue"); bad += 1
-print("  ok     the promise is enforced before and after publishing" if not bad else f"  {bad} problem(s)")
+# Independent of claim quality: a PR someone else is already engaged with is the
+# maintainers' call, not ours. adk#6697 had a collaborator's endorsement on it.
+if not hasattr(wp, "has_outside_engagement"):
+    print("  FAIL  stand_down has no engagement guard — it can discard a live review"); bad += 1
+else:
+    if wp.has_outside_engagement({"comments": {"nodes": [{"author": {"login": "someone"}}]}}) != "someone":
+        print("  FAIL  engagement guard misses a human comment"); bad += 1
+    if wp.has_outside_engagement({"comments": {"nodes": [{"author": {"login": "a-bot[bot]"}}]}}):
+        print("  FAIL  engagement guard counts bots, which would disable stand_down entirely"); bad += 1
+    if "has_outside_engagement(pr)" not in open(sys.argv[1] + "/watch-prs.py").read().split("def one_pass")[1]:
+        print("  FAIL  the engagement guard is never consulted in the loop"); bad += 1
+print("  ok     the promise is enforced, and live reviews are not discarded" if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY3
 

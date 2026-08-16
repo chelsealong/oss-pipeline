@@ -116,6 +116,27 @@ def someone_claimed_the_issue(pr: dict):
     return None, None
 
 
+def has_outside_engagement(pr: dict) -> str:
+    """Who besides us has spoken on this PR.
+
+    A second guard on stand_down, independent of how good the claim detection
+    is. adk#6697 was closed automatically while a collaborator had written "that
+    PR looks like the right one to land" and the reporter was mid-way through
+    verifying it against AlloyDB. Even a correct claim elsewhere should not
+    discard a review already in progress — that is the maintainer's call, not
+    ours. Cheap: the PR's comments are already in the payload.
+    """
+    for c in ((pr.get("comments") or {}).get("nodes") or []):
+        who = ((c.get("author") or {}).get("login") or "")
+        if who and who != ME and "[bot]" not in who:
+            return who
+    for rv in ((pr.get("reviews") or {}).get("nodes") or []):
+        who = ((rv.get("author") or {}).get("login") or "")
+        if who and who != ME and "[bot]" not in who:
+            return who
+    return ""
+
+
 def stand_down(pr: dict, who: str, issue: int) -> bool:
     """Close our PR because someone else claimed the issue. Keeps the promise."""
     import subprocess
@@ -493,9 +514,12 @@ def one_pass(seen: dict) -> int:
         # we opened, the PR comes down. This runs before the merge-window check —
         # standing down matters even on a PR too old to be worth answering.
         who, claimed_issue = someone_claimed_the_issue(pr)
-        if who:
+        if who and not (engaged := has_outside_engagement(pr)):
             stand_down(pr, who, claimed_issue)
             continue
+        elif who:
+            log(f"  [{key}] {who} claimed the issue, but {engaged} is already "
+                "engaged here — leaving it to the maintainers")
 
         # Nothing we say after the window closes has ever changed an outcome.
         stale, why = past_merge_window(pr)

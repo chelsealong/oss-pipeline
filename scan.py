@@ -331,9 +331,9 @@ REPOS: dict[str, dict] = {
 # `i'?ll` does not match. Both forms are accepted below.
 _APOS = "['\u2019]?"
 CLAIM_PHRASES = re.compile(
-    r"(i" + _APOS + r"(ll|d) (like to )?(take|work on|fix|pick|dig|look|try|handle|tackle|give|attempt|submit|open|raise)"
-    r"|i (would|want|wanna) (like )?to (work on|take|try|tackle|fix)"
-    r"|let me (take|work on|try|handle)"
+    r"(i" + _APOS + r"(ll|d) (like to )?(take|work on|fix|pick|dig|handle|tackle|attempt|submit|open|raise|try(?:ing)?\s+to\s+\w+|look\s+into)"
+    r"|i (would|want|wanna) (like )?to (work on|take|tackle|fix|try\s+to\s+\w+)"
+    r"|let me (take|work on|handle|try\s+to\s+\w+)"
     r"|can i (work on|take|pick|be assigned)"
     r"|working on (this|it)|assign (this )?to me|/assign"
     r"|i(['’]ve got|\b[^.!?]{0,80}?\b(have|prepared)) (a|an|my)[\w\s-]{0,24}(fix|pr|pull request|patch|change)\b|opened a pr|raised a pr|pr is up|submitted a pr"
