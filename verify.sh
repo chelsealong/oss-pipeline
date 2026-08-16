@@ -890,6 +890,37 @@ print("  ok     no-ops skipped, real requests survive an outage" if not bad else
 sys.exit(1 if bad else 0)
 PY3
 
+say "28. shadow triage records without deciding, and cannot break a dispatch"
+python3 - "$SCANNER" <<'PY3'
+import sys, pathlib
+sys.path.insert(0, sys.argv[1])
+bad = 0
+w = pathlib.Path(sys.argv[1] + "/watch.py").read_text()
+if "ledger.record" not in w:
+    print("  FAIL  dispatches are not being recorded — the ledger never fills"); bad += 1
+# record() sits in the dispatch hot path. It must not reach the network, and a
+# failure in it must not fail the dispatch it is only observing.
+import inspect, ledger
+src = inspect.getsource(ledger.record)
+for token in ("gh(", "urlopen", "subprocess", "_ask"):
+    if token in src:
+        print(f"  FAIL  ledger.record touches {token} — the hot path must stay offline"); bad += 1
+if "try:" not in w.split("ledger.record")[0][-400:]:
+    print("  FAIL  ledger.record is not guarded — it can fail a real dispatch"); bad += 1
+# Shadow means shadow: nothing may consult a score to decide anything.
+for f in ("watch.py", "scan.py", "watch-prs.py"):
+    t = pathlib.Path(sys.argv[1] + "/" + f).read_text()
+    if "score_pending" in t and "if " in t.split("score_pending")[1][:80]:
+        print(f"  FAIL  {f} appears to branch on a shadow score"); bad += 1
+# An unsettled dispatch must never be scored as a negative: fix-one queues
+# behind a concurrency group, and calling a queued run a failure would bias
+# the comparison in favour of the judge.
+if ledger.SETTLE_HOURS < 6:
+    print(f"  FAIL  SETTLE_HOURS={ledger.SETTLE_HOURS} labels queued runs as failures"); bad += 1
+print("  ok     recorded offline, decides nothing, settles late" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

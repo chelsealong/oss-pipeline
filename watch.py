@@ -386,6 +386,14 @@ def dispatch_fix(key: str, number: int) -> bool:
             capture_output=True, text=True, timeout=60)
         if r.returncode == 0:
             log(f"  -> dispatched fix-one.yml for {key}#{number}")
+            # Shadow triage: note the dispatch so a cheap judge can be scored
+            # against the expensive one later. Offline and best-effort — the
+            # ledger exists to settle an argument, never to hold up a dispatch.
+            try:
+                import ledger
+                ledger.record(key, number)
+            except Exception as e:  # noqa: BLE001
+                log(f"  (ledger record failed, ignored: {str(e)[:80]})")
             return True
         log(f"  dispatch failed for {key}#{number}: {r.stderr.strip()[:160]}")
     except Exception as e:  # noqa: BLE001
@@ -897,6 +905,20 @@ def main() -> int:
                     m = promote_claims(keys)
                     if m:
                         log(f"promoted {m} assigned claim(s)")
+
+                # Shadow triage, on a much slower cadence than dispatching:
+                # it decides nothing, so it should never compete for a sweep.
+                # An hour of drift costs nothing when the question it answers
+                # needs a week of dispatches to accumulate an answer.
+                if not bootstrap and sweeps % 720 == 0:
+                    try:
+                        import ledger
+                        scored = ledger.score_pending(limit=25)
+                        settled = ledger.reconcile()
+                        if scored or settled:
+                            log(f"shadow triage: scored {scored}, settled {settled}")
+                    except Exception as e:  # noqa: BLE001
+                        log(f"shadow triage skipped: {str(e)[:120]}")
             except Exception as e:  # noqa: BLE001
                 # One bad sweep must not kill a long-lived watcher.
                 log(f"sweep failed: {str(e)[:200]}")
