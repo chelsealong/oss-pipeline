@@ -593,11 +593,16 @@ sys.exit(1 if bad else 0)
 PY3
 
 echo "== 21. the responder respects each repo's real merge window =="
-# hermes merges at a median PR age of 0.2h; all 40 of its most recent merges
-# landed inside 48h, the oldest at 46.5h. Past that a PR is one of 20,623 open
-# ones there and answering its triage bot cannot change the outcome — 30 of our
-# 33 open PRs were already past it. The window must survive a missing or
-# malformed createdAt without skipping a live PR.
+# Each repo's window comes from where its landings actually stop, and the two
+# in the table stop in different places for different reasons. hermes lands by
+# salvage — a maintainer cherry-picks our commits into their own PR — and those
+# arrived at 16h, 151h, 3 days and 5 days, so its window is 10 days. adk lands
+# by Copybara import: over 204 external PRs the median was 4.5 days and 97% of
+# landings were inside 14 days, so past that a PR is finished, not slow.
+# The window must survive a missing or malformed createdAt without skipping a
+# live PR, and every repo in the table must be exercised at its own boundary —
+# a case written for a repo that had no window keeps passing after one is added
+# and stops testing anything.
 python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
 import importlib.util, sys
 from datetime import datetime, timezone, timedelta
@@ -611,14 +616,25 @@ if "createdAt" not in src.split("number title url")[1][:60]:
     print("  FAIL  the PR query does not fetch createdAt, so age cannot be computed"); bad += 1
 now = datetime.now(timezone.utc)
 iso = lambda h: (now - timedelta(hours=h)).isoformat().replace("+00:00", "Z")
-H = "NousResearch/hermes-agent"
-# Boundary cases read the table rather than hard-coding it, so raising the
-# window does not silently leave this check testing the old one.
-W = wp.MERGE_WINDOW_HOURS[H]
-CASES = [({"_repo": H, "createdAt": iso(1)}, False), ({"_repo": H, "createdAt": iso(W - 1)}, False),
-         ({"_repo": H, "createdAt": iso(W + 1)}, True),  ({"_repo": H, "createdAt": iso(W * 5)}, True),
-         ({"_repo": "google/adk-python", "createdAt": iso(300)}, False),
-         ({"_repo": H}, False), ({"_repo": H, "createdAt": "garbage"}, False)]
+# Boundary cases read the table rather than hard-coding it, so raising a
+# window does not silently leave this check testing the old one. Every repo
+# in the table is exercised, so adding one cannot leave it untested.
+CASES = []
+for repo, W in wp.MERGE_WINDOW_HOURS.items():
+    CASES += [({"_repo": repo, "createdAt": iso(1)}, False),
+              ({"_repo": repo, "createdAt": iso(W - 1)}, False),
+              ({"_repo": repo, "createdAt": iso(W + 1)}, True),
+              ({"_repo": repo, "createdAt": iso(W * 5)}, True),
+              ({"_repo": repo}, False),
+              ({"_repo": repo, "createdAt": "garbage"}, False)]
+# A repo with no entry must never be aged out.
+CASES += [({"_repo": "langgenius/dify", "createdAt": iso(9000)}, False)]
+# The windows are measurements, not preferences. Guard the two that were
+# derived above so a casual edit cannot quietly revert them.
+if wp.MERGE_WINDOW_HOURS.get("NousResearch/hermes-agent") != 240:
+    print("  FAIL  hermes window is not 10 days — salvage lands up to 5 days out"); bad += 1
+if wp.MERGE_WINDOW_HOURS.get("google/adk-python") != 336:
+    print("  FAIL  adk window is not 14 days — 97% of its landings are inside it"); bad += 1
 for pr, want in CASES:
     got, _ = wp.past_merge_window(pr)
     if got != want:
@@ -918,6 +934,32 @@ for f in ("watch.py", "scan.py", "watch-prs.py"):
 if ledger.SETTLE_HOURS < 6:
     print(f"  FAIL  SETTLE_HOURS={ledger.SETTLE_HOURS} labels queued runs as failures"); bad += 1
 print("  ok     recorded offline, decides nothing, settles late" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
+say "29. the responder sees every open PR, not the newest page of them"
+python3 - "$SCANNER" <<'PY3'
+import sys, pathlib, importlib.util
+sys.path.insert(0, sys.argv[1])
+bad = 0
+src = pathlib.Path(sys.argv[1] + "/watch-prs.py").read_text()
+spec = importlib.util.spec_from_file_location("wp", sys.argv[1] + "/watch-prs.py")
+wp = importlib.util.module_from_spec(spec); spec.loader.exec_module(wp)
+# We held 99 open PRs while open_prs() asked for 50 and merely logged a warning
+# when it got 50 back. The half it never saw was the OLD half — which is also
+# the half a merge window exists to age out, so the window looked like it was
+# working while doing nothing at all. A warning is not a fix.
+if "pageInfo" not in src or "hasNextPage" not in src:
+    print("  FAIL  open_prs does not page — PRs past the first page are unwatched"); bad += 1
+if "raise `first:`" in src:
+    print("  FAIL  still only warning about truncation instead of paging past it"); bad += 1
+if getattr(wp, "MAX_PR_PAGES", 0) < 4:
+    print("  FAIL  page cap too low to cover the PRs we actually hold"); bad += 1
+# A failure partway through paging must return the pages that did arrive.
+# Dropping them would idle the responder completely on a transient error.
+if "_tag(nodes)" not in src:
+    print("  FAIL  a mid-page failure discards the PRs already fetched"); bad += 1
+print("  ok     paged, bounded, and partial results survive an error" if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY3
 

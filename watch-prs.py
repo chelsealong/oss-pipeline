@@ -72,7 +72,27 @@ NOISE_AUTHORS = {
 # merges (evgyur at 7.6 days, a batch of afourniernv's), and the asymmetry
 # favours margin — skipping a live PR costs a real chance, while answering a
 # dead one costs one session. Repos absent from this table have no window.
-MERGE_WINDOW_HOURS = {"NousResearch/hermes-agent": 72}
+MERGE_WINDOW_HOURS = {
+    # hermes: 10 days, raised from 72h on 2026-08-16 at Bruce's call. 72h was
+    # set from a 40-merge sample of direct merges, but this repo does not land
+    # our work by merging our PR — a maintainer cherry-picks the commits into
+    # their own. Those salvages arrived at 16h, 151h, 3 days and 5 days, so a
+    # 72h window stopped us answering reviewers on PRs that were still on their
+    # way to landing. The same mistake as cutting its quota at day three.
+    "NousResearch/hermes-agent": 240,
+    # adk: 14 days. External PRs land at a median of 4.5 days and p75 of 7.4;
+    # 97% of the landings measured over 204 external PRs happened inside 14
+    # days. Past that the PR is not slow, it is finished — cheesebee123's has
+    # carried `ready to pull` for 87 days without moving.
+    #
+    # Nothing visible on GitHub says so. Only 3% of landed external PRs ever
+    # got a maintainer review, and `ready to pull` sat on 8 external PRs that
+    # were closed without landing against 2 that landed, both of them adk-bot's
+    # own release chores. We had read an approval plus that label on #6531 as
+    # "closest to landing"; on this evidence it is the opposite signal, and the
+    # only real one is adk-bot's Copybara comment.
+    "google/adk-python": 336,
+}
 
 
 def pr_age_hours(pr: dict):
@@ -203,6 +223,22 @@ def upstreams() -> list[str]:
     return out
 
 
+# 50 per page, so this caps the watcher at 400 open PRs. Well above the 99 we
+# hold today, and a bound rather than an unbounded loop against a live API.
+MAX_PR_PAGES = 8
+
+
+def _tag(nodes: list[dict]) -> list[dict]:
+    """Attach _repo to whatever pages did arrive, so a mid-page failure still
+    returns usable work instead of discarding it."""
+    out = []
+    for pr in nodes:
+        if pr:
+            pr["_repo"] = (pr.get("repository") or {}).get("nameWithOwner", "?")
+            out.append(pr)
+    return out
+
+
 def open_prs() -> list[dict]:
     """Our open PRs across every tracked upstream, with all feedback attached.
 
@@ -213,7 +249,8 @@ def open_prs() -> list[dict]:
     # ~440 PRs/day, so ours never appear in a "first: 20" window and were being
     # missed entirely. One search covers every repo at once.
     repo_filter = " ".join(f"repo:{r}" for r in upstreams())
-    q = ('{search(type:ISSUE, first:50, query:"is:pr is:open author:%s %s"){nodes{'
+    q = ('{search(type:ISSUE, first:50, after:%%s, query:"is:pr is:open author:%s %s")'
+         '{pageInfo{hasNextPage endCursor} nodes{'
          '... on PullRequest{'
          ' number title url body createdAt updatedAt author{login} headRefName isDraft'
          ' repository{nameWithOwner}'
@@ -230,18 +267,30 @@ def open_prs() -> list[dict]:
          '  ... on CheckRun{name conclusion}'
          '  ... on StatusContext{context state}}}}}}}'
          '}}}}' % (ME, repo_filter))
-    try:
-        data = json.loads(scan.gh(["api", "graphql", "-f", f"query={q}"]))
-    except Exception as e:  # noqa: BLE001
-        log(f"  PR search failed: {str(e)[:160]}")
-        return []
-    nodes = ((data.get("data") or {}).get("search") or {}).get("nodes") or []
-    # Silent truncation is this codebase's recurring bug: contexts(last:40) hid
-    # the only failing check on a PR that had 46 of them, and nothing said so.
-    # A full page means there may be more we never looked at.
-    if len(nodes) >= 50:
-        log(f"  WARNING: PR search returned a full page ({len(nodes)}); "
-            "some open PRs are not being watched — raise `first:`")
+
+    # Page. The previous version asked for 50 and logged a warning when it got
+    # 50 back, which is how 99 open PRs came to be watched 50 at a time: every
+    # sweep re-read the newest 50 and the other 49 were never seen at all. The
+    # PRs that fall off a newest-first page are the old ones — exactly the ones
+    # a merge window is meant to age out, so both features were dead together.
+    nodes: list[dict] = []
+    cursor, pages = "null", 0
+    while pages < MAX_PR_PAGES:
+        try:
+            data = json.loads(scan.gh(["api", "graphql", "-f", f"query={q % cursor}"]))
+        except Exception as e:  # noqa: BLE001
+            log(f"  PR search failed: {str(e)[:160]}")
+            return nodes and _tag(nodes) or []
+        search = (data.get("data") or {}).get("search") or {}
+        nodes += search.get("nodes") or []
+        pages += 1
+        info = search.get("pageInfo") or {}
+        if not info.get("hasNextPage") or not info.get("endCursor"):
+            break
+        cursor = json.dumps(info["endCursor"])      # GraphQL wants it quoted
+    else:
+        log(f"  WARNING: stopped after {MAX_PR_PAGES} pages ({len(nodes)} PRs); "
+            "some open PRs are still unwatched")
     prs: list[dict] = []
     for pr in nodes:
         if not pr:
