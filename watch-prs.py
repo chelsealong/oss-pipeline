@@ -38,7 +38,10 @@ import sys
 import time
 from datetime import datetime, timezone
 
-import scan  # REPOS, gh(), STATE
+import scan
+if str(pathlib.Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import intent  # REPOS, gh(), STATE
 
 ROOT = pathlib.Path(__file__).resolve().parent
 SEEN = scan.STATE / "pr-seen.json"
@@ -110,8 +113,11 @@ def someone_claimed_the_issue(pr: dict):
         if c["u"] == ME or "[bot]" in c["u"] or c["at"] <= opened:
             continue
         # Quoted text is someone repeating a claim, not making one.
-        text = _re.sub(r"^\s*>.*$", "", c["b"] or "", flags=_re.M).lower()
-        if scan.CLAIM_PHRASES.search(text):
+        text = _re.sub(r"^\s*>.*$", "", c["b"] or "", flags=_re.M)
+        # default=False, unlike scan.claimants. A True here closes a PR of ours,
+        # so an unreachable judge must produce silence, not a mass close.
+        claimed, why = intent.is_claim(text, author=c["u"], default=False)
+        if claimed:
             return c["u"], num
     return None, None
 

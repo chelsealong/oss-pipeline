@@ -830,6 +830,34 @@ print("  ok     the promise is enforced, and live reviews are not discarded" if 
 sys.exit(1 if bad else 0)
 PY3
 
+say "26. claim intent is judged by a model, and each caller sets the safe default"
+python3 - "$SCANNER" <<'PY3'
+import sys, os, pathlib
+sys.path.insert(0, sys.argv[1])
+bad = 0
+scan_src = pathlib.Path(sys.argv[1] + "/scan.py").read_text()
+wp_src   = pathlib.Path(sys.argv[1] + "/watch-prs.py").read_text()
+if "intent.is_claim" not in scan_src:
+    print("  FAIL  scan.claimants is still deciding by phrase list"); bad += 1
+if "intent.is_claim" not in wp_src:
+    print("  FAIL  watch-prs stand_down is still deciding by phrase list"); bad += 1
+# The two call sites face opposite costs and must not share a default.
+# scan: an unreachable judge should skip the issue (lose a candidate).
+# watch-prs: a "claimed" verdict CLOSES our own PR, so an outage must be silent.
+if "default=True" not in scan_src:
+    print("  FAIL  scan.claimants must fail closed (default=True)"); bad += 1
+if "default=False" not in wp_src:
+    print("  FAIL  watch-prs must fail open (default=False) or an outage closes every PR"); bad += 1
+import intent
+intent._load_key = lambda: ""          # simulate the judge being unreachable
+a, _ = intent.is_claim("I will fix this myself", default=True)
+b, _ = intent.is_claim("I will fix this myself", default=False)
+if (a, b) != (True, False):
+    print(f"  FAIL  default is not honoured on failure: got {a} and {b}"); bad += 1
+print("  ok     model decides; failures fall the safe way at each call site" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

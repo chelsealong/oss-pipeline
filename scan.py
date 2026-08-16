@@ -330,6 +330,13 @@ REPOS: dict[str, dict] = {
 # and GitHub's comment box turns ' into the Unicode right single quote, which
 # `i'?ll` does not match. Both forms are accepted below.
 _APOS = "['\u2019]?"
+# scan.py is imported from workflow steps and from verify.sh with varying
+# working directories, so a bare `import intent` resolves only by luck. Anchor
+# it to this file's own directory.
+if str(pathlib.Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import intent
+
 CLAIM_PHRASES = re.compile(
     r"(i" + _APOS + r"(ll|d) (like to )?(take|work on|fix|pick|dig|handle|tackle|attempt|submit|open|raise|try(?:ing)?\s+to\s+\w+|look\s+into)"
     r"|i (would|want|wanna) (like )?to (work on|take|tackle|fix|try\s+to\s+\w+)"
@@ -479,14 +486,31 @@ def claimants(upstream: str, number: int) -> list[str]:
     except Exception as e:  # noqa: BLE001
         print(f"    claimants({upstream}#{number}) failed: {str(e)[:120]}", file=sys.stderr)
         return []
-    who = []
+    who, judged = [], 0
     for c in json.loads(out or "[]"):
+        u = c["u"]
+        if "[bot]" in u or u in who:
+            continue
         # Strip quoted text: a maintainer replying to a claimant quotes their
         # "I'd like to work on this", which would otherwise count as a second
         # claimant and report the issue as "swarmed" for the wrong reason.
         body = re.sub(r"^\s*>.*$", "", c.get("b") or "", flags=re.M)
-        if CLAIM_PHRASES.search(body):
-            who.append(c["u"])
+        # Our own comment is the pipeline's claim. Its wording is ours and never
+        # ambiguous, so spend no judgement on it — vet() only needs to know it
+        # is there, to set self_claimed.
+        if u.lower() == "chelsealong":
+            if CLAIM_PHRASES.search(body):
+                who.append(u)
+            continue
+        if judged >= 15:
+            # A thread this long is a swarm by any reading; stop paying for it.
+            break
+        claimed, why = intent.is_claim(body, author=u, default=True)
+        judged += 1
+        if claimed:
+            who.append(u)
+            if len([w for w in who if w.lower() != "chelsealong"]) >= 2:
+                break
     return who
 
 
