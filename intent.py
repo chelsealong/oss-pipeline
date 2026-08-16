@@ -115,12 +115,103 @@ def _log(msg: str) -> None:
         pass
 
 
+def _strip_markup(text: str) -> str:
+    """Drop what carries no intent: quoted text, HTML comments, images, badges.
+
+    Bot comments are mostly machinery — `<!-- coderabbit-cli-agent-hint:v3 ... -->`,
+    shield badges, collapsed <details> wrappers. Left in, they crowd out the one
+    sentence that decides the verdict and cost tokens to no purpose.
+    """
+    t = re.sub(r"<!--.*?-->", " ", text or "", flags=re.S)
+    t = re.sub(r"^\s*>.*$", "", t, flags=re.M)
+    t = re.sub(r"!\[[^\]]*\]\([^)]*\)", " ", t)      # images and badges
+    # Drop <details> WITH ITS CONTENTS, not just the tags. coderabbitai wraps a
+    # multi-hundred-line "Analysis chain" — the shell it ran and everything the
+    # shell printed — in front of the one sentence that is the actual finding.
+    # Stripping only the tags left the log in place, it filled the 1200-char
+    # window, and the judge correctly reported "analysis log with no findings"
+    # on three real Major-severity defects. The finding lives after the log.
+    # Unterminated <details> is common — GitHub renders it fine and coderabbitai
+    # emits it. `.*?</details>` simply fails to match there, leaving the whole
+    # log in. Take to the close when there is one, to the end when there is not.
+    t = re.sub(r"<details>.*?(?:</details>|\Z)", " ", t, flags=re.S | re.I)
+    t = re.sub(r"</?(details|summary|sub|sup)>", " ", t, flags=re.I)
+    # Fenced blocks are evidence, not intent, and are the other thing that
+    # crowds the window. Keep a stub so "there was code here" survives.
+    t = re.sub(r"```.*?```", " [code] ", t, flags=re.S)
+    return re.sub(r"[ \t]+", " ", t).strip()
+
+
+
+# Send the comment whole up to this length. A 14k-char review is ~4k tokens on
+# a flash model — nothing next to the Claude session the verdict decides. Every
+# windowing scheme tried here lost a real finding to the elision: head-only lost
+# the "Addressed in commit <sha>" footers, head+tail lost the middle of a 16k
+# ClawSweeper review that did request a change. Windowing is a last resort for
+# genuinely huge comments, not an optimisation.
+WHOLE_UNDER = 20_000
+
+
+def _window(t: str, head: int = 6000, tail: int = 6000) -> str:
+    """Head AND tail. What decides a feedback comment is usually at the end.
+
+    coderabbitai and cubic append "Addressed in commit <sha>" after the finding;
+    gemini closes with "I have no further comments". Reading only the first N
+    characters saw the severity banner and the restatement of the diff, and
+    called four already-resolved findings actionable. A 14k-char ClawSweeper
+    review put its actual objections past a head-only window entirely.
+    """
+    t = t.strip()
+    if len(t) <= WHOLE_UNDER:
+        return t
+    # A long structured review puts its findings in the middle, between the
+    # "what this changes" preamble and the footer of bot commands. ClawSweeper's
+    # 16k-char review was read as a status banner because both ends are boiler-
+    # plate. Widen rather than sample: tokens here are cheap next to a Claude
+    # session, and the alternative is missing the only real objection on a PR.
+    return t[:head] + "\n[...]\n" + t[-tail:]
+
+
+def _ask(system: str, user: str, *, author: str = "?") -> dict | None:
+    """One judgement call. None means the judge could not answer — callers decide."""
+    api = _load_key()
+    if not api:
+        _log(f"NOKEY author={author} :: {user[:80]!r}")
+        return None
+    payload = json.dumps({
+        "model": MODEL,
+        "messages": [{"role": "system", "content": system},
+                     {"role": "user", "content": user}],
+        "max_tokens": 200,
+        "temperature": 0,
+    }).encode()
+    req = urllib.request.Request(
+        ENDPOINT, data=payload,
+        headers={"Authorization": f"Bearer {api}", "Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+            content = json.loads(r.read().decode())["choices"][0]["message"]["content"]
+    except (urllib.error.URLError, OSError, KeyError, ValueError, TimeoutError) as e:
+        _log(f"ERROR {type(e).__name__} author={author} :: {user[:80]!r}")
+        return None
+    m = re.search(r"\{.*\}", content, re.S)
+    if not m:
+        _log(f"UNPARSED author={author} :: {content[:120]!r}")
+        return None
+    try:
+        return json.loads(m.group(0))
+    except Exception:  # noqa: BLE001
+        _log(f"BADJSON author={author} :: {content[:120]!r}")
+        return None
+
+
+
 def is_claim(text: str, *, author: str = "?", default: bool = True) -> tuple[bool, str]:
     """(claiming?, why). `default` is the verdict when the judge cannot answer.
 
     Pass the value that is SAFE for your call site, not the one that is likely.
     """
-    body = re.sub(r"^\s*>.*$", "", text or "", flags=re.M).strip()
+    body = _strip_markup(text)
     if not body:
         return False, "empty"
     if not MAYBE_CLAIM.search(body):
@@ -133,40 +224,14 @@ def is_claim(text: str, *, author: str = "?", default: bool = True) -> tuple[boo
         hit = cache[key]
         return bool(hit["claim"]), hit.get("why", "cached")
 
-    api = _load_key()
-    if not api:
-        _log(f"NOKEY author={author} :: {snippet[:80]!r}")
-        return default, f"no API key — defaulting to {default}"
-
-    payload = json.dumps({
-        "model": MODEL,
-        "messages": [{"role": "system", "content": SYSTEM},
-                     {"role": "user", "content": snippet}],
-        "max_tokens": 200,
-        "temperature": 0,
-    }).encode()
-    req = urllib.request.Request(
-        ENDPOINT, data=payload,
-        headers={"Authorization": f"Bearer {api}", "Content-Type": "application/json"})
+    verdict = _ask(SYSTEM, snippet, author=author)
+    if verdict is None:
+        return default, f"judge unavailable — default {default}"
     try:
-        with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
-            data = json.loads(r.read().decode())
-        content = data["choices"][0]["message"]["content"]
-    except (urllib.error.URLError, OSError, KeyError, ValueError, TimeoutError) as e:
-        _log(f"ERROR {type(e).__name__} author={author} :: {snippet[:80]!r}")
-        return default, f"judge unavailable ({type(e).__name__}) — default {default}"
-
-    m = re.search(r"\{.*\}", content, re.S)
-    if not m:
-        _log(f"UNPARSED author={author} :: {content[:120]!r}")
-        return default, f"judge returned no JSON — default {default}"
-    try:
-        verdict = json.loads(m.group(0))
         claim = bool(verdict["claim"])
         why = str(verdict.get("why", ""))[:60]
     except Exception:  # noqa: BLE001
-        _log(f"BADJSON author={author} :: {content[:120]!r}")
-        return default, f"judge returned bad JSON — default {default}"
+        return default, f"judge answer unusable — default {default}"
 
     cache[key] = {"claim": claim, "why": why}
     _save(cache)
@@ -185,3 +250,68 @@ if __name__ == "__main__":
         print(f"  {mark} want={str(want):<5} got={str(got):<5} {why[:34]:<34} {text[:52]!r}")
     print(f"  {len(cases) - wrong}/{len(cases)} correct")
     sys.exit(1 if wrong else 0)
+
+
+# ---------------------------------------------------------------------------
+# Feedback triage: does a comment on our PR need a Claude session at all?
+#
+# 64% of respond-pr sessions in the week to 2026-08-16 ended within two minutes:
+# the runner checked out the branch, installed Claude, and Claude found nothing
+# to do. The rule gate that lets them through cannot tell the difference, because
+# the difference is not in the author. `gemini-code-assist` posts both "I'm
+# currently reviewing this pull request and will post my feedback shortly" and
+# real defect reports; `coderabbitai` posts both a walkthrough banner and the
+# findings. An author blocklist would silence the useful half with the noise.
+#
+# Three outcomes, and only one of them is a skip:
+#   CODE    a concrete defect or change request  -> dispatch
+#   REPLY   a question or objection aimed at us  -> dispatch (an unanswered
+#           review request stalls a PR, which is the whole point of responder)
+#   NOTHING status banner, placeholder, "0 issues found", praise -> skip
+FEEDBACK_SYSTEM = (
+    "You triage comments left on a pull request WE opened. Decide what the "
+    "comment requires from us.\n\n"
+    "CODE — it reports a defect, requests a change, or makes a concrete "
+    "suggestion about the diff.\n"
+    "REPLY — it asks us a question, raises an objection, reports a duplicate or "
+    "competing PR, or otherwise needs a human answer but no code change.\n"
+    "NOTHING — it needs neither. This covers: a bot saying it has started or "
+    "will review shortly; a walkthrough, summary or banner with no finding; "
+    "\"0 issues found\" or \"all issues addressed\"; a notice that automated "
+    "review is disabled; praise, thanks, or confirmation that our fix works; a "
+    "review header that only counts findings posted separately as their own "
+    "comments.\n\n"
+    'Reply with JSON only: {"needs": "CODE"|"REPLY"|"NOTHING", "why": "<8 words or fewer>"}'
+)
+
+
+def feedback_needs(text: str, *, author: str = "?", default: str = "CODE") -> tuple[str, str]:
+    """(CODE|REPLY|NOTHING, why). `default` applies when the judge cannot answer.
+
+    Defaults to CODE, not NOTHING: an unreachable judge must not silence a real
+    review request. The cost of being wrong that way is one wasted session; the
+    cost the other way is a PR that rots unanswered.
+    """
+    body = _strip_markup(text)
+    if not body:
+        return "NOTHING", "empty after markup"
+
+    key = "fb:" + hashlib.sha256(_window(body).encode("utf-8", "replace")).hexdigest()[:16]
+    cache = _cache()
+    if key in cache:
+        hit = cache[key]
+        return str(hit["needs"]), hit.get("why", "cached")
+
+    verdict = _ask(FEEDBACK_SYSTEM, _window(body), author=author)
+    if verdict is None:
+        return default, f"judge unavailable — default {default}"
+    needs = str(verdict.get("needs", "")).upper()
+    if needs not in {"CODE", "REPLY", "NOTHING"}:
+        _log(f"BADENUM author={author} :: {needs!r}")
+        return default, f"judge returned {needs!r} — default {default}"
+    why = str(verdict.get("why", ""))[:60]
+
+    cache[key] = {"needs": needs, "why": why}
+    _save(cache)
+    _log(f"{needs:<7} author={author} why={why!r} :: {body[:70]!r}")
+    return needs, why

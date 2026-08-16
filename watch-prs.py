@@ -455,7 +455,26 @@ def actionable(item: dict, pr: dict) -> tuple[bool, str]:
         return False, "bare approval"
     if not item["body"].strip():
         return False, "empty body"
-    return True, "actionable"
+
+    # Everything above is cheap and certain. What remains is the majority, and
+    # the rules cannot separate it: 64% of responder sessions in the week to
+    # 2026-08-16 ended inside two minutes because Claude checked out the branch,
+    # read the comment, and found nothing to do. The difference is not the
+    # author — gemini-code-assist posts both "I'm currently reviewing this pull
+    # request and will post my feedback shortly" and real defect reports, and
+    # coderabbitai posts both a walkthrough banner and the findings, so an
+    # author blocklist silences the useful half with the noise. It is not a
+    # phrase either: the strongest single signal turned out to be a footer,
+    # "Addressed in commit <sha>", appended to a finding we have already fixed.
+    #
+    # Measured over 49 real comments on our open PRs: 30 of 31 no-op comments
+    # skipped, zero actionable ones lost. default=CODE, so an unreachable judge
+    # dispatches — an item ruled unactionable here is marked seen and never
+    # reconsidered, and that door must not close on an API timeout.
+    needs, why = intent.feedback_needs(item["body"], author=author, default="CODE")
+    if needs == "NOTHING":
+        return False, f"no response needed: {why}"
+    return True, f"actionable ({needs.lower()}: {why})"
 
 
 def load_seen() -> dict:

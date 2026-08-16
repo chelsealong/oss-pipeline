@@ -858,6 +858,38 @@ print("  ok     model decides; failures fall the safe way at each call site" if 
 sys.exit(1 if bad else 0)
 PY3
 
+say "27. feedback triage skips no-ops without silencing real review requests"
+python3 - "$SCANNER" <<'PY3'
+import sys, pathlib, importlib.util
+sys.path.insert(0, sys.argv[1])
+bad = 0
+src = pathlib.Path(sys.argv[1] + "/watch-prs.py").read_text()
+if "feedback_needs" not in src:
+    print("  FAIL  actionable() still lets every non-empty comment through"); bad += 1
+if 'default="CODE"' not in src:
+    print("  FAIL  triage must default to CODE — an item ruled unactionable is "
+          "marked seen and never reconsidered, so a timeout would retire it"); bad += 1
+import intent
+intent._load_key = lambda: ""                     # judge unreachable
+needs, _ = intent.feedback_needs("Please restore the original value in finally.",
+                                 default="CODE")
+if needs != "CODE":
+    print(f"  FAIL  unreachable judge silenced a review request (got {needs})"); bad += 1
+# The window cost three real findings before it was removed: coderabbitai and
+# cubic append "Addressed in commit <sha>" AFTER the finding, and a 16k-char
+# ClawSweeper review carried its objections in the middle. Anything shorter
+# than WHOLE_UNDER must reach the judge intact.
+long_body = "x" * 15000
+if intent._window(long_body) != long_body:
+    print("  FAIL  a 15k-char review is being elided before the judge sees it"); bad += 1
+# <details> arrives unterminated from coderabbitai; the log inside it must go.
+t = intent._strip_markup("Real finding here.\n<details>\n<summary>Analysis</summary>\n" + "log\n" * 400)
+if "log" in t or "Real finding" not in t:
+    print("  FAIL  unterminated <details> log is not stripped"); bad += 1
+print("  ok     no-ops skipped, real requests survive an outage" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1
