@@ -1055,6 +1055,41 @@ print("  ok     chain tried in order, cooled down, and always recoverable" if no
 sys.exit(1 if bad else 0)
 PY3
 
+say "32. an abandoned PR does not retire the issue it failed to fix"
+python3 - "$SCANNER" <<'PY3'
+import sys, pathlib
+sys.path.insert(0, sys.argv[1])
+bad = 0
+src = pathlib.Path(sys.argv[1] + "/scan.py").read_text()
+fn = src.split("def linked_prs")[1].split("\ndef ")[0]
+# A closed, unmerged PR is someone who tried and gave up; the issue is open
+# precisely because nobody finished. AutoGPT#11044 had two of them (#12639,
+# #12824) and we skipped it for three weeks. Only OPEN and MERGED disqualify.
+if 'state") == "CLOSED"' not in fn and "!= \"CLOSED\"" not in fn:
+    print("  FAIL  linked_prs still counts closed-unmerged PRs as disqualifying"); bad += 1
+# The search fallback is full text, so the issue number matches line numbers,
+# hashes and log output. firecrawl#4316 (2026-08-16) was disqualified by a PR
+# from June and one from a year earlier, neither of which mentions it.
+if "merged_at" not in fn:
+    print("  FAIL  the search path cannot tell a merged PR from an abandoned one"); bad += 1
+if "issue_created" not in fn:
+    print("  FAIL  the search path has no date guard — older PRs match by coincidence"); bad += 1
+import scan
+CASES = [
+    ("Significant-Gravitas/AutoGPT", 11044, False, "two abandoned PRs"),
+    ("google-gemini/gemini-cli", 28445, False, "one abandoned PR"),
+    ("google/adk-python", 6530, True, "our own OPEN PR#6531"),
+]
+for up, num, want_blocked, note in CASES:
+    hits = scan.linked_prs(up, num)
+    blocked = bool([h for h in hits if not h.startswith("?")])
+    if blocked != want_blocked:
+        print(f"  FAIL  {up}#{num} ({note}): blocked={blocked}, want {want_blocked} :: {hits[:2]}")
+        bad += 1
+print("  ok     abandoned PRs reopened, live and merged ones still block" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

@@ -458,26 +458,45 @@ def search_issues(upstream: str, qualifier: str, limit: int,
 
 
 def linked_prs(upstream: str, number: int) -> list[str]:
-    """Three independent signals; any hit disqualifies the issue."""
+    """Linked PRs that actually disqualify the issue: OPEN or MERGED, never CLOSED.
+
+    A closed, unmerged PR is somebody who tried and gave up. The issue is still
+    open precisely because nobody finished it, which makes it a candidate rather
+    than a taken one. Counting those cost us the four repos that produced
+    nothing in nineteen days: a sample of the newest issues in autogpt,
+    firecrawl, gemini-cli and langfuse-python found 12 issues blocked ONLY by
+    closed PRs against 8 that were workable — the pool more than doubles.
+
+    AutoGPT#11044 is the clearest case: two different people opened PRs for it
+    (#12639, #12824), both closed unmerged, and the issue is still open. We
+    treated that as "already has PR(s)" and skipped it for three weeks.
+
+    MERGED still disqualifies. So does OPEN. Only abandonment is reopened.
+    """
     hits: list[str] = []
     owner, name = upstream.split("/")
 
     # (1) structured closing references + cross-referenced PRs
     gql = (
         '{repository(owner:"%s",name:"%s"){issue(number:%d){'
+        "createdAt "
         "closedByPullRequestsReferences(first:10,includeClosedPrs:true){nodes{number state}}"
         "timelineItems(itemTypes:[CROSS_REFERENCED_EVENT],last:30){nodes{"
         "... on CrossReferencedEvent{source{... on PullRequest{number state}}}}}"
         "}}}" % (owner, name, number)
     )
+    issue_created = ""
     try:
         d = json.loads(gh(["api", "graphql", "-f", f"query={gql}"]))
         iss = d["data"]["repository"]["issue"] or {}
+        issue_created = iss.get("createdAt") or ""
         for n in (iss.get("closedByPullRequestsReferences") or {}).get("nodes", []) or []:
+            if n.get("state") == "CLOSED":
+                continue                     # opened, abandoned, still ours to take
             hits.append(f"closing-ref PR#{n['number']}({n['state']})")
         for n in (iss.get("timelineItems") or {}).get("nodes", []) or []:
             src = (n or {}).get("source") or {}
-            if src.get("number"):
+            if src.get("number") and src.get("state") != "CLOSED":
                 hits.append(f"xref PR#{src['number']}({src.get('state')})")
     except Exception as e:  # noqa: BLE001
         hits.append(f"?graphql-failed:{e}"[:80])
@@ -487,11 +506,24 @@ def linked_prs(upstream: str, number: int) -> list[str]:
 
     # (2) PR full-text search by issue number
     try:
+        # The search API reports a merged PR as state "closed" like any other,
+        # so state alone cannot tell abandonment from success — `merged_at` can.
         q = f"repo:{upstream} is:pr {number}"
         out = gh(["api", "-X", "GET", "search/issues", "-f", f"q={q}", "-f", "per_page=10",
-                  "--jq", "[.items[] | {n:.number,s:.state}]"], kind="search")
+                  "--jq", "[.items[] | {n:.number,s:.state,m:.pull_request.merged_at,c:.created_at}]"],
+                 kind="search")
         for it in json.loads(out or "[]"):
-            hits.append(f"search PR#{it['n']}({it['s']})")
+            if it["s"] == "closed" and not it.get("m"):
+                continue                     # closed without merging — abandoned
+            # This search is full text, so the issue number matches anything
+            # that happens to contain those digits — a line number in a diff, a
+            # lockfile hash, a log line. firecrawl#4316 (filed 2026-08-16) was
+            # disqualified by PR#3713 from June and PR#2092 from a year before,
+            # neither of which mentions it at all. A PR that fixes an issue is
+            # opened after it exists; anything older is a coincidence.
+            if issue_created and (it.get("c") or "") < issue_created:
+                continue
+            hits.append(f"search PR#{it['n']}({'merged' if it.get('m') else it['s']})")
     except RateLimited:
         raise
     except Exception:  # noqa: BLE001
