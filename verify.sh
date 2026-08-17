@@ -963,6 +963,58 @@ print("  ok     paged, bounded, and partial results survive an error" if not bad
 sys.exit(1 if bad else 0)
 PY3
 
+say "30. an issue is dispatched once, and a late hands-off label still stops it"
+python3 - "$SCANNER" "$(cd "$(dirname "$0")" && pwd)" <<'PY3'
+import sys, pathlib, re
+from datetime import datetime, timezone, timedelta
+sys.path.insert(0, sys.argv[1])
+bad = 0
+w = pathlib.Path(sys.argv[1] + "/watch.py").read_text()
+# Dedup has to live where a dispatch actually starts. It used to live at each
+# caller, and the live-sweep caller simply did not do it: the sweep fired
+# trigger_fix(), scan.py rebuilt the queue with that issue still in it,
+# drain_queues asked already_dispatched() and got False, and the issue went out
+# again hours later. langfuse#16160/#16162 and spec-kit#4128/#4131/#4132 each
+# burned two sessions that way.
+body = w.split("def dispatch_fix")[1].split("def trigger_fix")[0]
+if "record_dispatch(" not in body:
+    print("  FAIL  dispatch_fix does not record — the queue can hand the issue out twice"); bad += 1
+fb = w.split("fell back to local run-fix.sh")[1][:400]
+if "record_dispatch(" not in fb:
+    print("  FAIL  the local fallback dispatches without recording"); bad += 1
+
+# The queue carries the verdict from detection time. A repo that says "hands
+# off" after we queued must still be obeyed: openclaw #124306 was labelled
+# no-new-fix-pr at 23:57 and dispatched at 00:09, because the re-vet fetched
+# state, title and assignees and never asked about labels.
+f = pathlib.Path(sys.argv[2] + "/.github/workflows/fix-one.yml").read_text()
+revet = f.split("Re-vet before spending a session")[1].split("- name:")[0]
+if "labels" not in revet or "exclude_labels" not in revet:
+    print("  FAIL  the re-vet does not re-read labels — a late hands-off label is ignored"); bad += 1
+
+import scan
+oc = scan.REPOS["openclaw"]["exclude_labels"]
+for need in ("clawsweeper:no-new-fix-pr", "clawsweeper:not-repro-on-main"):
+    if need not in oc:
+        print(f"  FAIL  openclaw does not exclude {need}"); bad += 1
+# Arriving before a self-triaging repo has decided is worse than arriving late.
+now = datetime.now(timezone.utc)
+def probe(cfg, minutes):
+    iss = {"number": 1, "title": "fix: a concrete crash in the gateway path",
+           "labels": [], "assignees": [], "comments": 0, "body": "x" * 400,
+           "created_at": (now - timedelta(minutes=minutes)).isoformat().replace("+00:00", "Z")}
+    return scan.vet(cfg, "openclaw/openclaw", iss)
+ok, why, _ = probe(scan.REPOS["openclaw"], 5)
+if ok or "triage" not in why:
+    print(f"  FAIL  openclaw takes issues younger than its triage latency ({why[:50]})"); bad += 1
+# A repo without the setting must not be delayed at all.
+ok2, why2, _ = probe(scan.REPOS["hermes"], 1)
+if "triage" in why2:
+    print("  FAIL  min_age_minutes is leaking into repos that did not set it"); bad += 1
+print("  ok     dispatched once, late labels honoured, triage not raced" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

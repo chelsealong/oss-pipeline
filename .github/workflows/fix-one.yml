@@ -199,7 +199,9 @@ jobs:
               print(f"{k}={v}")
 
           issue = json.loads(scan.gh(["api", f"repos/{up}/issues/{num}",
-                                      "--jq", "{state:.state,title:.title,assignees:[.assignees[].login]}"]))
+                                      "--jq", "{state:.state,title:.title,"
+                                              "assignees:[.assignees[].login],"
+                                              "labels:[.labels[].name]}"]))
           if issue["state"] != "open":
               out("taken", "true"); out("why", "issue is closed"); raise SystemExit(0)
           # Honour the repo's own ignore_assignees. langfuse assigns a triager to
@@ -209,6 +211,20 @@ jobs:
           # upstream: langfuse and langfuse-python share one upstream and only one
           # of them sets the flag.
           cfg = scan.REPOS.get(os.environ.get("REPO_KEY", ""), {})
+          # Labels are re-read here because a repo can say "hands off" AFTER we
+          # queued the issue, and the queue carries the old verdict. openclaw
+          # #124306 was filed at 23:40, ClawSweeper applied both
+          # `clawsweeper:no-new-fix-pr` and `clawsweeper:needs-maintainer-review`
+          # at 23:57, and we dispatched at 00:09 — twelve minutes after being
+          # told not to, because this step fetched state, title and assignees
+          # and never asked about labels. The exclusions were correct in
+          # scan.py the whole time; nothing re-applied them.
+          labels = set(issue.get("labels") or [])
+          if bad := labels & set(cfg.get("exclude_labels") or ()):
+              out("taken", "true"); out("why", f"excluded label {sorted(bad)}"); raise SystemExit(0)
+          if pfx := cfg.get("exclude_label_prefix"):
+              if hit := [l for l in labels if l.startswith(pfx)]:
+                  out("taken", "true"); out("why", f"excluded label {hit[:2]}"); raise SystemExit(0)
           if issue["assignees"] and not cfg.get("ignore_assignees"):
               out("taken", "true"); out("why", f"assigned to {issue['assignees']}"); raise SystemExit(0)
           if prs := scan.linked_prs(up, num):

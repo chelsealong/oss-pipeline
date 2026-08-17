@@ -205,6 +205,9 @@ REPOS: dict[str, dict] = {
     "openclaw": {
         "upstream": "openclaw/openclaw",
         "searches": ["label:clawsweeper:queueable-fix", "sort:created-desc"],
+        # Wait past ClawSweeper's p90 triage latency (36 min) before taking an
+        # untriaged issue, so its verdict is visible rather than raced.
+        "min_age_minutes": 40,
         "exclude_labels": {
             "clawsweeper:no-new-fix-pr",
             "clawsweeper:linked-pr-open",
@@ -212,6 +215,18 @@ REPOS: dict[str, dict] = {
             "clawsweeper:needs-product-decision",
             "clawsweeper:needs-security-review",
             "clawsweeper:needs-info",
+            # ClawSweeper triages this repo itself and says plainly what it
+            # wants. Racing it wastes sessions on issues it has already ruled
+            # out: #124314 was filed at 00:09 and dispatched at 00:10, and the
+            # agent spent a whole session to conclude "already fixed on main" —
+            # which is precisely what `not-repro-on-main` means. The rest are
+            # gates we cannot pass: we have no way to run a live repro, an
+            # idea-archive entry is parked by design, and bulk-filed marks a
+            # filing spree rather than a defect.
+            "clawsweeper:not-repro-on-main",
+            "clawsweeper:needs-live-repro",
+            "clawsweeper:idea-archive",
+            "clawsweeper:bulk-filed",
             "r: spam",
         },
     },
@@ -532,6 +547,25 @@ def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
     # one account, and their bodies are abuse rather than a report — the
     # substance check counts characters, and invective has plenty. This is
     # repo-independent: nobody's template placeholder is a workable issue.
+    # Some repos triage themselves, and arriving before they finish is worse
+    # than arriving late. openclaw's ClawSweeper reaches a verdict at a median
+    # of 8 minutes and within 36 at p90; of the 36 issues it ruled on over
+    # three days, only 7 were `queueable-fix` and 29 carried at least one
+    # hands-off label. Racing it means roughly four dispatches in five land on
+    # something it is about to rule out — #124314 was filed at 00:09, taken at
+    # 00:10, and cost a full session to conclude "already fixed on main", which
+    # is what ClawSweeper's `not-repro-on-main` would have said for free.
+    # Speed is only an advantage where nobody else is deciding.
+    if mins := cfg.get("min_age_minutes"):
+        created = issue.get("created_at") or issue.get("createdAt") or ""
+        if created:
+            try:
+                if age_hours(created) * 60 < mins:
+                    return False, f"only {age_hours(created)*60:.0f} min old; " \
+                                  f"waiting {mins} min for the repo's own triage", {}
+            except Exception:  # noqa: BLE001
+                pass
+
     if re.search(r"<\s*(short description|title|summary|brief description|one line)\s*>"
                  r"|^\s*(bug|feature|\[bug\]|\[feature\])\s*:\s*$", title, re.I):
         return False, "title is an unfilled template placeholder", {}

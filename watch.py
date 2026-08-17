@@ -386,6 +386,15 @@ def dispatch_fix(key: str, number: int) -> bool:
             capture_output=True, text=True, timeout=60)
         if r.returncode == 0:
             log(f"  -> dispatched fix-one.yml for {key}#{number}")
+            # Dedup belongs HERE, at the one point where a cloud dispatch
+            # actually starts, not at each caller. The live sweep called
+            # trigger_fix() and never recorded, so scan.py rebuilt the queue
+            # with that issue still in it, drain_queues asked
+            # already_dispatched() and got False, and the issue went out a
+            # second time hours later — langfuse#16160/#16162 and spec-kit
+            # #4128/#4131/#4132 each burned two sessions that way. Callers that
+            # also record are harmless; record_dispatch is idempotent.
+            record_dispatch(key, number)
             # Shadow triage: note the dispatch so a cheap judge can be scored
             # against the expensive one later. Offline and best-effort — the
             # ledger exists to settle an argument, never to hold up a dispatch.
@@ -453,6 +462,9 @@ def trigger_fix(key: str, number: int) -> bool:
                              start_new_session=True)
             log(f"  -> fell back to local run-fix.sh for {key}")
             budget_charge(key)
+            # Same reason as the cloud path: a started fix must be remembered,
+            # whichever route it took, or the queue will hand it out again.
+            record_dispatch(key, number)
             return True
         except Exception as e:  # noqa: BLE001
             log(f"  local fallback failed for {key}: {e}")
