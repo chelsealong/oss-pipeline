@@ -46,7 +46,18 @@ REPOS: dict[str, dict] = {
     },
     "langfuse": {
         "upstream": "langfuse/langfuse",
-        "searches": ['label:"good first issue"', "label:bug sort:created-desc"],
+        # Widened 2026-08-17. The old pair saw almost nothing: langfuse has 302
+        # open issues, 202 carry `bug`, and exactly ONE carries `good first
+        # issue` — so one search was dead and the other skipped every issue
+        # labelled `unconfirmed-bug`, `documentation` or `feature`. Five real
+        # candidates were invisible that way, including #16036, whose title
+        # literally begins "bug:" while its label is `unconfirmed-bug`.
+        #
+        # Features are in scope here, unlike adk. langfuse merged 50 of 57
+        # external closed PRs (88%), and `feat` lands at 90% against `fix` at
+        # 88%, so filtering by kind would only cost candidates. adk is the
+        # opposite — feat 18% against fix 52% over 64 PRs — and is left as is.
+        "searches": ["label:bug sort:created-desc", "sort:created-desc"],
         "exclude_labels": set(),
         # issues whose fix lives in a different repo
         "exclude_labels_scope": {"sdk-python", "sdk-js"},

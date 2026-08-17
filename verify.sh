@@ -1015,6 +1015,46 @@ print("  ok     dispatched once, late labels honoured, triage not raced" if not 
 sys.exit(1 if bad else 0)
 PY3
 
+say "31. the judge falls down a model chain instead of going silent"
+python3 - "$SCANNER" "$(cd "$(dirname "$0")" && pwd)" <<'PY3'
+import sys, pathlib
+sys.path.insert(0, sys.argv[1])
+bad = 0
+import intent
+if len(getattr(intent, "MODELS", [])) < 2:
+    print("  FAIL  no fallback chain — one model outage silences every judgement"); bad += 1
+if intent.MODELS[0] != "qwen3.7-max":
+    print(f"  FAIL  chain does not start at qwen3.7-max (got {intent.MODELS[0]})"); bad += 1
+real = intent._ask_one
+try:
+    # Everything but the last entry fails: the call must still be answered.
+    intent._down.clear()
+    intent._ask_one = lambda m, *a, **k: None if m != intent.MODELS[-1] else {"claim": True, "why": "x"}
+    if intent._ask("s", "u") is None:
+        print("  FAIL  the chain gives up before reaching the last model"); bad += 1
+    # A failed model is put on cooldown, so an outage is not re-paid every call.
+    intent._down.clear()
+    intent._ask_one = lambda m, *a, **k: None
+    intent._ask("s", "u")
+    if not intent._down:
+        print("  FAIL  failures are not cooled down — every call re-pays the timeout"); bad += 1
+    # ...but a cooldown must never become permanent silence.
+    intent._ask("s", "u")
+    if intent._down:
+        print("  FAIL  all-down state is not cleared; the judge can never recover"); bad += 1
+finally:
+    intent._ask_one = real
+    intent._down.clear()
+# The key has to exist where the code runs. It was absent from Actions entirely
+# until 2026-08-17, so every cloud re-vet judged commented issues "claimed".
+f = pathlib.Path(sys.argv[2] + "/.github/workflows/fix-one.yml").read_text()
+revet = f.split("Re-vet before spending a session")[1].split("- name:")[0]
+if "QWEN_API_KEY" not in revet:
+    print("  FAIL  the re-vet has no QWEN_API_KEY — claimants() fails closed and skips"); bad += 1
+print("  ok     chain tried in order, cooled down, and always recoverable" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

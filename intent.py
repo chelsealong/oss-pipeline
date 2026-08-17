@@ -43,7 +43,19 @@ ROOT = pathlib.Path(__file__).resolve().parent
 CACHE = ROOT / "state" / "intent-cache.json"
 LOG = ROOT / "intent.log"
 ENDPOINT = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
-MODEL = "qwen3.7-flash"
+# Tried in order. The first that answers wins; a model that fails is skipped
+# for COOLDOWN seconds so one outage does not pay its timeout on every call,
+# and the list is re-entered from the top afterwards rather than degrading
+# permanently. All four were probed working on 2026-08-17.
+MODELS = [
+    "qwen3.7-max",
+    "qwen3.7-max-2026-05-20",
+    "qwen3.7-max-preview",
+    "qwen3.7-plus",
+]
+MODEL = MODELS[0]          # kept for logs and for anything that reads a name
+COOLDOWN = 300.0
+_down: dict[str, float] = {}
 TIMEOUT = 25
 
 # Deliberately loose: anything a claim could possibly contain. Its only job is to
@@ -173,13 +185,38 @@ def _window(t: str, head: int = 6000, tail: int = 6000) -> str:
 
 
 def _ask(system: str, user: str, *, author: str = "?") -> dict | None:
-    """One judgement call. None means the judge could not answer — callers decide."""
+    """One judgement call, down the model list. None means none of them answered."""
     api = _load_key()
     if not api:
         _log(f"NOKEY author={author} :: {user[:80]!r}")
         return None
+    import time as _time
+    now = _time.monotonic()
+    tried = []
+    for model in MODELS:
+        if _down.get(model, 0.0) > now:
+            continue                       # still cooling down from a failure
+        tried.append(model)
+        got = _ask_one(model, system, user, api, author=author)
+        if got is not None:
+            if model is not MODELS[0]:
+                _log(f"FALLBACK to {model} (tried {tried[:-1]})")
+            return got
+        _down[model] = now + COOLDOWN
+    if not tried:
+        # Every model is cooling down. Clear the marks so the next call is a
+        # real attempt rather than a silent no — a stale cooldown must not
+        # become a permanent outage.
+        _down.clear()
+        _log(f"ALLDOWN author={author}; cooldowns cleared")
+    else:
+        _log(f"ALLFAILED author={author} tried={tried}")
+    return None
+
+
+def _ask_one(model: str, system: str, user: str, api: str, *, author: str) -> dict | None:
     payload = json.dumps({
-        "model": MODEL,
+        "model": model,
         "messages": [{"role": "system", "content": system},
                      {"role": "user", "content": user}],
         "max_tokens": 200,
@@ -192,16 +229,16 @@ def _ask(system: str, user: str, *, author: str = "?") -> dict | None:
         with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
             content = json.loads(r.read().decode())["choices"][0]["message"]["content"]
     except (urllib.error.URLError, OSError, KeyError, ValueError, TimeoutError) as e:
-        _log(f"ERROR {type(e).__name__} author={author} :: {user[:80]!r}")
+        _log(f"ERROR {model} {type(e).__name__} author={author} :: {user[:80]!r}")
         return None
     m = re.search(r"\{.*\}", content, re.S)
     if not m:
-        _log(f"UNPARSED author={author} :: {content[:120]!r}")
+        _log(f"UNPARSED {model} author={author} :: {content[:120]!r}")
         return None
     try:
         return json.loads(m.group(0))
     except Exception:  # noqa: BLE001
-        _log(f"BADJSON author={author} :: {content[:120]!r}")
+        _log(f"BADJSON {model} author={author} :: {content[:120]!r}")
         return None
 
 

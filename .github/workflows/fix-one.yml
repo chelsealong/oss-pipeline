@@ -50,35 +50,23 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     steps:
-      - name: Wait for turn
-        # One fix in flight at a time. Bounded: after the cap we proceed anyway
-        # rather than hang, because a stuck predecessor must not silently stop
-        # the pipeline — the failure mode we keep re-learning is "looks fine,
-        # produces nothing".
-        env:
-          # PIPELINE_TOKEN does not exist and never did. `gh run list` therefore
-          # ran unauthenticated, failed, hit `|| echo 0`, and every run concluded
-          # that nothing older was active — so this step has never once waited.
-          # Six fix-one runs were observed in_progress simultaneously while this
-          # was supposedly serialising them.
-          GH_TOKEN: ${{ secrets.GH_PAT }}
-        run: |
-          set -uo pipefail
-          for i in $(seq 1 30); do
-            if ! out=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow fix-one.yml \
-                         --status in_progress --limit 20 --json databaseId \
-                         --jq "[.[] | select(.databaseId < $GITHUB_RUN_ID)] | length" 2>&1); then
-              # Do not read an API failure as "the coast is clear" — that is
-              # exactly how the missing token turned this into a no-op.
-              echo "::warning::cannot list runs ($(printf '%s' "$out" | head -1)); proceeding without serialisation"
-              exit 0
-            fi
-            older="$out"
-            [ "${older:-0}" -eq 0 ] && { echo "clear to run (waited $((i-1)) min)"; exit 0; }
-            echo "  $older older run(s) active; waiting (${i}/30)"
-            sleep 60
-          done
-          echo "::warning::waited 30min for a free slot; proceeding anyway"
+      # `Wait for turn` was removed on 2026-08-17. It claimed to hold one fix
+      # in flight at a time, and it did nothing of the kind: over 45 runs the
+      # median wait was 30.3 minutes, 71% waited the full 30-minute cap and
+      # then proceeded anyway, and peak observed concurrency in the same window
+      # was 30 runs. So it serialised nothing and charged half an hour for it —
+      # 17.9 hours of pure delay across those 45 runs.
+      #
+      # What that cost, concretely: spec-kit#4131 was filed at 09:42:52, the
+      # watcher saw it 10.5s later and dispatched 4s after that. The run then
+      # sat in this step from 09:43:14 to 10:11:34. SebTardif opened a PR for
+      # the same issue at 09:56, thirteen minutes into our wait, and our re-vet
+      # correctly skipped. A fourteen-second head start was spent here.
+      #
+      # It existed to protect the Claude subscription. It is not what protects
+      # it: the `QUOTA EXHAUSTED` step below fails the run on a refusal, and
+      # watch.py pauses dispatching and refunds the budget. Over the three days
+      # to 2026-08-17 no run hit the quota at all.
 
       - uses: actions/checkout@v4
 
@@ -183,6 +171,10 @@ jobs:
         # for a full agent session to discover something the GitHub API answers
         # for free. Re-check here, before Claude Code is even installed.
         env:
+          # claimants() judges intent with a model and fails CLOSED, so a
+          # missing key silently reports every commented issue as claimed.
+          # The secret did not exist here at all until 2026-08-17.
+          QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
           GH_TOKEN: ${{ secrets.GH_PAT }}
           UPSTREAM: ${{ steps.cfg.outputs.upstream }}
           NUM: ${{ inputs.issue }}
