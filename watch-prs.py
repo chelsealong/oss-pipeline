@@ -38,6 +38,7 @@ import sys
 import time
 from datetime import datetime, timezone
 
+import re as _re
 import scan
 if str(pathlib.Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -107,6 +108,12 @@ def pr_age_hours(pr: dict):
     return (datetime.now(timezone.utc) - t).total_seconds() / 3600
 
 
+def linked_issue(pr: dict):
+    """The issue our PR closes, from its body. None when it names none."""
+    m = _re.search(r"(?i)(?:closes|fixes|resolves)\s+#(\d+)", pr.get("body") or "")
+    return int(m.group(1)) if m else None
+
+
 def someone_claimed_the_issue(pr: dict):
     """(login, issue) if a human claimed our PR's issue after we opened it.
 
@@ -115,12 +122,9 @@ def someone_claimed_the_issue(pr: dict):
     we published anyway, because nothing was watching. Blocking the open is only
     half the promise — a claim that lands after we publish has to close the PR.
     """
-    import re as _re
-    body = pr.get("body") or ""
-    m = _re.search(r"(?i)(?:closes|fixes|resolves)\s+#(\d+)", body)
-    if not m:
+    num = linked_issue(pr)
+    if num is None:
         return None, None
-    num = int(m.group(1))
     repo = pr.get("_repo") or ""
     opened = pr.get("createdAt") or ""
     try:
@@ -137,9 +141,30 @@ def someone_claimed_the_issue(pr: dict):
         # default=False, unlike scan.claimants. A True here closes a PR of ours,
         # so an unreachable judge must produce silence, not a mass close.
         claimed, why = intent.is_claim(text, author=c["u"], default=False)
+        if claimed and _claim_is_about_another(text, num):
+            # arunpshankar wrote on adk#6672 that they would send a PR. They
+            # meant #6778, a separate issue they had just filed at a triager's
+            # request. We closed #6673 — a fix that a collaborator had said on
+            # the same thread was moving toward merge as-is — and were asked to
+            # reopen it. A claim that names a different number is a claim on
+            # that number, and this thread is not evidence about ours.
+            log(f"  [{repo}#{pr.get('number')}] {c['u']} claims work, but names "
+                f"another issue — not treating it as a claim on #{num}")
+            continue
         if claimed:
             return c["u"], num
     return None, None
+
+
+def _claim_is_about_another(text: str, issue: int) -> bool:
+    """True when the claim points at a number that is not the issue in question.
+
+    Only fires when EVERY number mentioned is something else. A comment that
+    says "I'll take this, see also #123" still claims this one.
+    """
+    nums = {int(n) for n in _re.findall(r"#(\d{2,7})", text or "")}
+    nums.discard(issue)
+    return bool(nums) and issue not in {int(n) for n in _re.findall(r"#(\d{2,7})", text or "")}
 
 
 def has_outside_engagement(pr: dict) -> str:
@@ -160,6 +185,27 @@ def has_outside_engagement(pr: dict) -> str:
         who = ((rv.get("author") or {}).get("login") or "")
         if who and who != ME and "[bot]" not in who:
             return who
+    # The sentence that should have stopped us closing adk#6673 was not on the
+    # PR at all: surajksharma07 wrote on issue #6672 that #6673 was moving
+    # toward merge as-is. Engagement about our PR can live on the issue, so read
+    # the issue's comments for mentions of our number before standing down.
+    num, issue = pr.get("number"), linked_issue(pr)
+    if not (issue and num):
+        return ""
+    try:
+        raw = scan.gh(["api", f"repos/{pr['_repo']}/issues/{issue}/comments",
+                       "--paginate", "--jq",
+                       '[.[] | {u: .user.login, b: .body}]'])
+        for c in json.loads(raw or "[]"):
+            who = c.get("u") or ""
+            if who == ME or "[bot]" in who:
+                continue
+            if f"#{num}" in (c.get("b") or ""):
+                return f"{who} (on issue #{issue})"
+    except Exception:  # noqa: BLE001
+        # An API failure must not read as "nobody is engaged" — that is the
+        # direction that closes a live PR.
+        return "unknown (issue comments unreadable)"
     return ""
 
 
@@ -177,11 +223,123 @@ def stand_down(pr: dict, who: str, issue: int) -> bool:
                            capture_output=True, text=True, timeout=60)
         if r.returncode == 0:
             log(f"  [{repo}#{num}] stood down — {who} claimed #{issue}")
+            _record_stand_down(repo, num, who, issue)
             return True
         log(f"  [{repo}#{num}] could not close: {r.stderr.strip()[:120]}")
     except Exception as e:  # noqa: BLE001
         log(f"  [{repo}#{num}] stand-down failed: {e}")
     return False
+
+
+STOOD_DOWN = scan.STATE / "stood-down.json"
+# How long to keep re-reading a PR we closed ourselves. A correction arrives
+# within hours if it arrives at all — arunpshankar's came 1h42m after we closed
+# adk#6673 — and a PR is stale after a week anyway.
+STAND_DOWN_WATCH_DAYS = 7
+
+REOPEN_SYSTEM = (
+    "You are reading comments left on a pull request that its own author CLOSED, "
+    "because someone appeared to claim the underlying issue. Decide whether any "
+    "comment asks for the pull request to be REOPENED, or retracts or corrects "
+    "the claim that caused it to be closed.\n\n"
+    "Answer true for: an explicit request to reopen; a statement that the "
+    "claim was a misunderstanding, was about a different issue, or that the "
+    "commenter is not working on this after all; a maintainer saying the change "
+    "was wanted or was close to merging.\n"
+    "Answer false for: thanks; agreement that closing was right; anything about "
+    "a different change; bot notices.\n\n"
+    'Reply with JSON only: {"reopen": true|false, "why": "<10 words or fewer>"}'
+)
+
+
+def _record_stand_down(repo: str, num: int, who: str, issue: int) -> None:
+    """Remember a PR we closed, so a correction can still reach us.
+
+    open_prs() searches `is:open`, so a closed PR leaves the watcher's view for
+    good. When arunpshankar asked us to reopen adk#6673 — a change a
+    collaborator had said was moving toward merge — the request landed somewhere
+    nothing would ever read again. It was found by hand, days later.
+    """
+    try:
+        d = json.loads(STOOD_DOWN.read_text()) if STOOD_DOWN.exists() else {}
+    except Exception:  # noqa: BLE001
+        d = {}
+    d[f"{repo}#{num}"] = {
+        "at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "who": who, "issue": issue, "handled": False,
+    }
+    try:
+        scan.STATE.mkdir(parents=True, exist_ok=True)
+        STOOD_DOWN.write_text(json.dumps(d, indent=1) + "\n")
+    except Exception as e:  # noqa: BLE001
+        log(f"  could not record stand-down for {repo}#{num}: {e}")
+
+
+def check_stand_downs() -> int:
+    """Re-read PRs we closed ourselves and reopen any we were asked to.
+
+    Reopening is the safe direction here. The only person inconvenienced by a
+    wrong reopen is us; the cost of missing a real request is a change that was
+    heading to merge, thrown away by our own automation.
+    """
+    import intent
+    try:
+        d = json.loads(STOOD_DOWN.read_text()) if STOOD_DOWN.exists() else {}
+    except Exception:  # noqa: BLE001
+        return 0
+    now = datetime.now(timezone.utc)
+    reopened, dirty = 0, False
+    for key, rec in list(d.items()):
+        if rec.get("handled"):
+            continue
+        try:
+            age = (now - datetime.fromisoformat(rec["at"])).days
+        except Exception:  # noqa: BLE001
+            age = 0
+        if age > STAND_DOWN_WATCH_DAYS:
+            rec["handled"] = True
+            dirty = True
+            continue
+        repo, _, num = key.rpartition("#")
+        try:
+            raw = scan.gh(["api", f"repos/{repo}/issues/{num}/comments",
+                           "--paginate", "--jq",
+                           '[.[] | {u: .user.login, at: .created_at, b: .body}]'])
+            comments = json.loads(raw or "[]")
+        except Exception:  # noqa: BLE001
+            continue
+        for c in comments:
+            if c["u"] == ME or "[bot]" in c["u"] or c["at"] <= rec["at"]:
+                continue
+            verdict = intent._ask(REOPEN_SYSTEM, intent._strip_markup(c["b"] or ""),
+                                  author=c["u"])
+            if not verdict or not verdict.get("reopen"):
+                continue
+            log(f"  [{key}] {c['u']} asks us to reopen: {verdict.get('why','')}")
+            if DRY_RUN:
+                log(f"  DRY_RUN would reopen {key}")
+            else:
+                r = subprocess.run(["gh", "pr", "reopen", str(num), "--repo", repo],
+                                   capture_output=True, text=True, timeout=60)
+                if r.returncode != 0:
+                    log(f"  [{key}] reopen failed: {r.stderr.strip()[:120]}")
+                    break
+                note = (f"Reopened — thank you for the correction. I closed this on "
+                        f"@{rec['who']}'s note about #{rec['issue']} and read it as a "
+                        "claim on this change; that was my mistake, not yours.")
+                subprocess.run(["gh", "pr", "comment", str(num), "--repo", repo,
+                                "--body", note], capture_output=True, text=True, timeout=60)
+                log(f"  [{key}] reopened")
+            rec["handled"] = True
+            dirty = True
+            reopened += 1
+            break
+    if dirty:
+        try:
+            STOOD_DOWN.write_text(json.dumps(d, indent=1) + "\n")
+        except Exception:  # noqa: BLE001
+            pass
+    return reopened
 
 
 def past_merge_window(pr: dict):
@@ -662,6 +820,14 @@ def one_pass(seen: dict) -> int:
                     rec["responses"][today] = used + 1
                 rec["ids"] = sorted(set(rec["ids"]) | {i["id"] for i in fresh})
             dispatched += 1
+
+    # A PR we closed ourselves is invisible to open_prs(), so a correction can
+    # only reach us here. Cheap: only unhandled entries from the last week.
+    try:
+        if (n := check_stand_downs()):
+            log(f"reopened {n} PR(s) we had closed in error")
+    except Exception as e:  # noqa: BLE001
+        log(f"stand-down recheck failed: {str(e)[:120]}")
 
     return dispatched
 

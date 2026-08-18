@@ -798,6 +798,7 @@ echo "== 25. the announcement's promise is actually kept =="
 python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
 import importlib.util, sys, yaml
 sys.path.insert(0, sys.argv[1])
+import scan
 spec = importlib.util.spec_from_file_location("wp", sys.argv[1] + "/watch-prs.py")
 wp = importlib.util.module_from_spec(spec); spec.loader.exec_module(wp)
 bad = 0
@@ -823,11 +824,38 @@ if "stand_down(pr" not in src.split("def one_pass")[1]:
     print("  FAIL  stand_down is never called from the main loop"); bad += 1
 
 # Behaviour: a claim before we opened must NOT trigger a stand-down.
-pr = {"_repo": "google/adk-python", "number": 6731,
-      "createdAt": "2026-08-15T23:59:00Z", "body": "Fixes #6730"}
-who, _ = wp.someone_claimed_the_issue(pr)
-if who is not None:
-    print(f"  FAIL  stood down for a claim that predates our PR ({who})"); bad += 1
+#
+# Synthetic, deliberately. This used to call the live adk#6730 and assert that
+# YASHcode-IIITV's claim predated a hardcoded timestamp. On 2026-08-18 they
+# commented again — "I will be posting the pr shortly" — and the check began
+# failing on correct code, because it was asserting the state of the world
+# rather than the behaviour of the function. A test whose truth depends on what
+# a stranger does next is not a test.
+import json as _json
+_real_gh = scan.gh
+def _fake_gh(args, **kw):
+    if "comments" in " ".join(args):
+        return _json.dumps([
+            {"u": "someone-else", "at": "2026-08-15T11:22:00Z",
+             "b": "i would like to work on this issue"},              # before ours
+            {"u": "chelsealong", "at": "2026-08-16T09:00:00Z",
+             "b": "I'll take this"},                                   # ours, ignored
+        ])
+    return _real_gh(args, **kw)
+scan.gh = _fake_gh
+try:
+    pr = {"_repo": "google/adk-python", "number": 6731,
+          "createdAt": "2026-08-15T23:59:00Z", "body": "Fixes #6730"}
+    who, _ = wp.someone_claimed_the_issue(pr)
+    if who is not None:
+        print(f"  FAIL  stood down for a claim that predates our PR ({who})"); bad += 1
+    # ...and the same claim, made after we opened, must trigger one.
+    pr_late = dict(pr, createdAt="2026-08-15T11:00:00Z")
+    who2, _ = wp.someone_claimed_the_issue(pr_late)
+    if who2 != "someone-else":
+        print(f"  FAIL  a claim made after we opened was missed (got {who2})"); bad += 1
+finally:
+    scan.gh = _real_gh
 if wp.someone_claimed_the_issue({"_repo": "x/y", "number": 1, "createdAt": "2020-01-01T00:00:00Z",
                                  "body": "no closing reference"})[0] is not None:
     print("  FAIL  stood down on a PR with no linked issue"); bad += 1
@@ -1122,6 +1150,43 @@ if "_common.md" not in step:
 if "cat \"$f\" >>" not in step:
     print("  FAIL  the per-repo file overwrites rather than appends to the common one"); bad += 1
 print("  ok     forks exist and every repo inherits the common lessons" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
+say "34. a stand-down can be taken back, and a claim about another issue is not one"
+python3 - "$SCANNER" <<'PY3'
+import sys, importlib.util, json, pathlib, tempfile
+sys.path.insert(0, sys.argv[1])
+spec = importlib.util.spec_from_file_location("wp", sys.argv[1] + "/watch-prs.py")
+wp = importlib.util.module_from_spec(spec); spec.loader.exec_module(wp)
+bad = 0
+# adk#6673: arunpshankar wrote on issue #6672 that they would send a PR. They
+# meant #6778, a separate issue. We closed a change a collaborator had said was
+# moving toward merge, and were asked to reopen it.
+for text, issue, want, note in [
+    ("I'll send a PR for #6778", 6672, True, "names only another issue"),
+    ("I'd like to work on this", 6672, False, "names nothing"),
+    ("I'll take #6672, see also #6778", 6672, False, "names this one too"),
+]:
+    if wp._claim_is_about_another(text, issue) != want:
+        print(f"  FAIL  {note}: {text!r} vs #{issue}"); bad += 1
+# The request to reopen arrived on a PR that open_prs() can no longer see,
+# because it searches is:open. Without a ledger nothing ever reads it again.
+if not hasattr(wp, "check_stand_downs") or not hasattr(wp, "_record_stand_down"):
+    print("  FAIL  a closed PR is never revisited — a correction cannot reach us"); bad += 1
+src = pathlib.Path(sys.argv[1] + "/watch-prs.py").read_text()
+if "_record_stand_down(" not in src.split("def stand_down")[1].split("\ndef ")[0]:
+    print("  FAIL  stand_down closes without recording, so the ledger stays empty"); bad += 1
+if "check_stand_downs()" not in src.split("def one_pass")[1]:
+    print("  FAIL  the recheck is never called from the loop"); bad += 1
+# Engagement about our PR can live on the issue rather than the PR: the sentence
+# that should have stopped us was surajksharma07's, on #6672.
+eng = src.split("def has_outside_engagement")[1].split("\ndef ")[0]
+if "issues/" not in eng or "linked_issue" not in eng:
+    print("  FAIL  the engagement guard still only reads the PR, not the linked issue"); bad += 1
+if "unknown (issue comments unreadable)" not in eng:
+    print("  FAIL  an API failure reads as 'nobody engaged', which closes live PRs"); bad += 1
+print("  ok     corrections can reach us; a claim elsewhere is not a claim here" if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY3
 
