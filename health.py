@@ -652,5 +652,21 @@ def main() -> int:
     return 0 if report["ok"] else 1
 
 
+
+def update_landings() -> None:
+    """Keep the durable landing ledger current, incrementally.
+
+    health.py already runs on a schedule, so the ledger stays fresh without a
+    new launchd job. Only commits newer than the newest recorded are fetched,
+    which is the whole point — the count is never rebuilt from scratch again.
+    """
+    try:
+        import landings
+        n, total = landings.update()
+        print(f"  landings   : ledger +{n}, {total} total on upstream default branches")
+    except Exception as e:  # noqa: BLE001
+        print(f"  landings   : ledger update failed ({str(e)[:90]})")
+
 if __name__ == "__main__":
+    update_landings()
     sys.exit(main())

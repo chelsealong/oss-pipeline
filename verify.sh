@@ -1190,6 +1190,43 @@ print("  ok     corrections can reach us; a claim elsewhere is not a claim here"
 sys.exit(1 if bad else 0)
 PY3
 
+say "35. the landing count is stored, verified, and never rebuilt from scratch"
+python3 - "$SCANNER" <<'PY3'
+import sys, json, pathlib
+sys.path.insert(0, sys.argv[1])
+import landings
+bad = 0
+d = landings._load()
+if len(d.get("commits") or {}) < 25:
+    print(f"  FAIL  ledger holds only {len(d.get('commits') or {})} commits — it should be seeded"); bad += 1
+# Every recount before the ledger went wrong in the same three ways. Each is
+# guarded here so a future edit cannot quietly reintroduce one.
+src = pathlib.Path(sys.argv[1] + "/landings.py").read_text()
+if 'c["repo"] != repo' not in src:
+    print("  FAIL  fork matches are not filtered — search/commits returns other people's forks"); bad += 1
+if "--paginate" not in src:
+    print("  FAIL  the commit search is unpaginated and will silently truncate"); bad += 1
+if '"behind"' not in src:
+    print("  FAIL  commits are not verified as ancestors of the default branch"); bad += 1
+if "rate limit" not in src.lower():
+    print("  FAIL  no rate-limit retry — the search bucket is 30/min and this needs 30"); bad += 1
+# A failed lookup must be visible, not zero. hermes reported 0 PRs and 0
+# commits while holding 56 and 11, because both failures returned empty.
+if '{"total": None}' not in src:
+    print("  FAIL  a failed PR count returns 0 rather than unknown"); bad += 1
+# Incremental, not a rebuild: `since` comes from what is already stored.
+if "committer-date:>" not in src or "since" not in src:
+    print("  FAIL  update() does not narrow by date, so every run is a full recount"); bad += 1
+# Landed is a commit on main, which is not the same as a merged PR.
+h = [v for v in d["commits"].values() if "hermes" in v["repo"]]
+if len(h) < 5:
+    print(f"  FAIL  hermes shows {len(h)} landings; its PRs close unmerged and are salvaged"); bad += 1
+if "update_landings" not in pathlib.Path(sys.argv[1] + "/health.py").read_text():
+    print("  FAIL  nothing keeps the ledger current on a schedule"); bad += 1
+print("  ok     stored, fork-filtered, ancestry-verified, incremental" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1
