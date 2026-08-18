@@ -17,7 +17,31 @@ what gets measured when deciding to add a repo.
 
 ## Checklist
 
-Run these against a recent **external fork** PR, not a maintainer's:
+Run these against a recent **external fork** PR, not a maintainer's.
+
+`verify.sh` check 33 enforces step 0 mechanically. The rest are still read-and-
+do, so do them before the first dispatch rather than after the first failure.
+
+0. **Create the fork, first, before anything else.** litellm, llama-index, mem0
+   and crawl4ai were added on 08-15 with no fork under `chelsealong`. Every
+   dispatch for two days did the same thing: passed vetting, consumed a daily
+   budget unit, started a runner, failed at `Checkout target fork`, and ended.
+   Seven runs on one day alone. Nothing surfaced it, because the failure was
+   after the cheap steps and before Claude, so it neither burned quota nor
+   produced an obvious symptom — the repos simply looked unproductive.
+
+   `gh repo fork` is not reliable here: it printed nothing, exited 0, and
+   created no fork. Use the API and read the response back:
+
+   ```
+   gh api -X POST repos/<owner>/<name>/forks --jq '.full_name'
+   gh api repos/chelsealong/<name> --jq '.parent.full_name'   # confirm
+   ```
+
+   Check the fork's default branch too. litellm's is
+   `litellm_internal_staging`, not `main`, and that is also where its PRs go —
+   fix-one derives it from `git remote show upstream`, but a config that hard-
+   codes `main` anywhere would target the wrong base.
 
 1. **Assignment gate** — read `.github/workflows/*` for a guard
    (`pr-guard`, `duplicate`, `unlinked`). Then read bot comments on a real fork

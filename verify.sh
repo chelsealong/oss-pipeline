@@ -1090,6 +1090,41 @@ print("  ok     abandoned PRs reopened, live and merged ones still block" if not
 sys.exit(1 if bad else 0)
 PY3
 
+say "33. every configured repo has a fork, and every repo gets the common lessons"
+python3 - "$SCANNER" "$(cd "$(dirname "$0")" && pwd)" <<'PY3'
+import sys, json, pathlib, subprocess
+sys.path.insert(0, sys.argv[1])
+import scan
+bad = 0
+root = pathlib.Path(sys.argv[2])
+# Adding a repo without forking it first cost litellm, llama-index, mem0 and
+# crawl4ai two days: every dispatch passed vetting, spent a budget unit, booted
+# a runner and died at `Checkout target fork`. The checklist did not mention it
+# and nothing checked, so the repos just looked unproductive.
+missing = []
+for key, cfg in scan.REPOS.items():
+    name = cfg["upstream"].split("/")[1]
+    r = subprocess.run(["gh", "api", f"repos/chelsealong/{name}", "--jq", ".parent.full_name"],
+                       capture_output=True, text=True, timeout=30)
+    if r.returncode != 0 or r.stdout.strip() != cfg["upstream"]:
+        missing.append(f"{key} -> chelsealong/{name}")
+if missing:
+    print(f"  FAIL  no usable fork for: {', '.join(missing)}"); bad += 1
+# Lessons paid for on one repo must reach the others. Only hermes and openclaw
+# had files, so fourteen agents ran with "(no prior lessons recorded)".
+common = root / "lessons" / "_common.md"
+if not common.is_file() or common.stat().st_size < 500:
+    print("  FAIL  lessons/_common.md missing or empty — nothing transfers between repos"); bad += 1
+wf = (root / ".github/workflows/fix-one.yml").read_text()
+step = wf.split("Load lessons for this repo")[1].split("- name:")[0]
+if "_common.md" not in step:
+    print("  FAIL  fix-one loads only the per-repo file; common lessons never reach the agent"); bad += 1
+if "cat \"$f\" >>" not in step:
+    print("  FAIL  the per-repo file overwrites rather than appends to the common one"); bad += 1
+print("  ok     forks exist and every repo inherits the common lessons" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

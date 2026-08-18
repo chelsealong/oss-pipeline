@@ -338,12 +338,23 @@ jobs:
           # Without this, every run re-derives the same knowledge and repeats the
           # same mistakes — the CLA trailer, the politely-worded claim that
           # keyword matching misses, the Studio issues that are out of scope.
+          # _common.md first, then the repo's own file. Only two of sixteen
+          # repos had a lesson file, so fourteen agents started every run with
+          # "(no prior lessons recorded)" and re-derived — or re-made — the
+          # same mistakes: the no-op fix, the tautological test, the lockfile
+          # edit. Knowledge paid for on one repo now reaches all of them.
+          : > $GITHUB_WORKSPACE/.loop/lessons.md
+          if [ -s lessons/_common.md ]; then
+            cat lessons/_common.md >> $GITHUB_WORKSPACE/.loop/lessons.md
+            printf '\n\n' >> $GITHUB_WORKSPACE/.loop/lessons.md
+            echo "  $(wc -l < lessons/_common.md) lines of common lessons"
+          fi
           f="lessons/${{ inputs.repo_key }}.md"
           if [ -s "$f" ]; then
-            cp "$f" $GITHUB_WORKSPACE/.loop/lessons.md
-            echo "  $(wc -l < "$f") lines of prior lessons"
+            cat "$f" >> $GITHUB_WORKSPACE/.loop/lessons.md
+            echo "  + $(wc -l < "$f") lines specific to ${{ inputs.repo_key }}"
           else
-            echo "(no prior lessons recorded for this repo)" > $GITHUB_WORKSPACE/.loop/lessons.md
+            echo "  (nothing recorded yet for ${{ inputs.repo_key }} specifically)"
           fi
           cat $GITHUB_WORKSPACE/.loop/lessons.md
 
