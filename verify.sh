@@ -1272,6 +1272,44 @@ print("  ok     one retry after a cooldown, then the issue is done" if not bad e
 sys.exit(1 if bad else 0)
 PY3
 
+say "37. every streamed line says which phase produced it"
+python3 - "$(cd "$(dirname "$0")" && pwd)" <<'PY3'
+import json, os, pathlib, subprocess, sys, tempfile
+bad = 0
+wf = pathlib.Path(sys.argv[1] + "/.github/workflows/fix-one.yml").read_text()
+# GitHub attributes streamed output to "UNKNOWN STEP", so filtering a run log by
+# step name returns nothing. A check for "did this session run its tests?" came
+# back as zero test commands on a run that had in fact run pytest six times,
+# including the git-stash proof — the wrong answer stood for two hours because
+# the question could not be asked. The marker has to be in the text.
+for phase in ("gen", "review", "remediate", "rereview"):
+    if f"CLAUDE_PHASE: {phase}" not in wf:
+        print(f"  FAIL  no CLAUDE_PHASE={phase} on its step"); bad += 1
+body = wf.split('cat > "$RUNNER_TEMP/fmt.py" <<\'FMT\'\n')[1].split("\n          FMT")[0]
+code = "\n".join(l[10:] if l.startswith(" " * 10) else l for l in body.split("\n"))
+f = pathlib.Path(tempfile.mkdtemp()) / "fmt.py"
+f.write_text(code)
+events = [
+    {"message": {"content": [{"type": "tool_use", "name": "Bash",
+                              "input": {"command": "uv run pytest -q"}}]}},
+    {"message": {"content": [{"type": "text", "text": "Running the tests."}]}},
+    {"type": "result", "subtype": "success", "num_turns": 3},
+]
+inp = "\n".join(json.dumps(e) for e in events) + "\nYou've hit your session limit\n"
+r = subprocess.run(["python3", str(f)], input=inp, capture_output=True, text=True,
+                   env={**os.environ, "CLAUDE_PHASE": "gen"})
+lines = [l for l in r.stdout.splitlines() if l.strip()]
+tagged = [l for l in lines if l.startswith("gen ")]
+if len(tagged) != 3:
+    print(f"  FAIL  {len(tagged)}/3 event kinds carry the phase: {lines}"); bad += 1
+# The quota notice is plain text and the guard greps for it — it must pass
+# through untouched rather than being prefixed or swallowed.
+if not any("hit your session limit" in l for l in lines):
+    print("  FAIL  the session-limit notice does not survive the formatter"); bad += 1
+print("  ok     phase on every event, raw text still passes through" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

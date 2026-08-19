@@ -406,6 +406,7 @@ jobs:
         if: steps.cfg.outputs.ok == 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true && steps.pre.outputs.taken != 'true'
         working-directory: work
         env:
+          CLAUDE_PHASE: gen
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           # Optional second subscription. Empty when the secret is not set, in
           # which case the fallback below is skipped entirely.
@@ -420,7 +421,16 @@ jobs:
           COMPETING: ${{ steps.pre.outputs.competing }}
         run: |
           cat > "$RUNNER_TEMP/fmt.py" <<'FMT'
-          import json, sys
+          import json, os, sys
+
+          # Every line carries its phase. GitHub attributes streamed output to
+          # "UNKNOWN STEP", so a log filtered by step name comes back empty —
+          # which is how a check for "did this session run tests?" reported zero
+          # test commands on a run that had run pytest six times, including the
+          # git-stash proof. The answer was wrong for two hours because the
+          # question could not be asked. The marker is in the text now, so it
+          # survives whatever the platform does with attribution.
+          PHASE = os.environ.get("CLAUDE_PHASE", "agent")
 
           # This is an observability aid. It must never be able to fail the step:
           # a WebSearch event carries `message` as a str, and the old
@@ -451,13 +461,13 @@ jobs:
                               a = blk.get("input")
                               a = a if isinstance(a, dict) else {}
                               d = a.get("command") or a.get("file_path") or a.get("pattern") or ""
-                              print("  [" + str(blk.get("name")) + "] " + str(d)[:150], flush=True)
+                              print(PHASE + " [" + str(blk.get("name")) + "] " + str(d)[:150], flush=True)
                           elif kind == "text":
                               t = blk.get("text")
                               if isinstance(t, str) and t.strip():
-                                  print(t[:400], flush=True)
+                                  print(PHASE + " " + t[:400], flush=True)
                       if isinstance(ev, dict) and ev.get("type") == "result":
-                          print("  [result] " + str(ev.get("subtype")) +
+                          print(PHASE + " [result] " + str(ev.get("subtype")) +
                                 " turns=" + str(ev.get("num_turns")), flush=True)
                   except BrokenPipeError:
                       raise
@@ -698,6 +708,7 @@ jobs:
         if: steps.gen.outputs.outcome == 'READY'
         working-directory: work
         env:
+          CLAUDE_PHASE: review
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_PAT }}
           UPSTREAM: ${{ steps.cfg.outputs.upstream }}
@@ -822,6 +833,7 @@ jobs:
         if: steps.review.outputs.verdict == 'BLOCK'
         working-directory: work
         env:
+          CLAUDE_PHASE: remediate
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_PAT }}
           UPSTREAM: ${{ steps.cfg.outputs.upstream }}
@@ -868,6 +880,7 @@ jobs:
         if: steps.remediate.outputs.result == 'FIXED'
         working-directory: work
         env:
+          CLAUDE_PHASE: rereview
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           UPSTREAM: ${{ steps.cfg.outputs.upstream }}
           NUM: ${{ inputs.issue }}
