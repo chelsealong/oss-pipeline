@@ -688,27 +688,64 @@ def _dispatched() -> dict:
         return {}
 
 
-def record_dispatch(key: str, number: int) -> None:
-    """Remember that this issue was already sent to a fixer.
+# A dispatch is remembered so the same issue is not sent twice — spec-kit#3997
+# went out three times and burned three sessions. But remembering it FOREVER is
+# its own failure: a dispatch that produced nothing because of a bug, a rate
+# limit, or a condition that has since gone away is indistinguishable from one
+# the agent judged unfixable, and the candidate is burned either way.
+#
+# Measured 2026-08-19: mem0, crawl4ai, llama-index and langfuse between them had
+# 13 queued candidates and not one had never been dispatched. mem0#6995 had been
+# skipped for `xref PR#6996(CLOSED)` — the abandoned-PR bug fixed on 08-18 — and
+# #7019 for a PR that has since closed unmerged. Both pass vetting now. Neither
+# would ever have been tried again.
+#
+# So the tombstone expires. A second attempt is allowed after RETRY_AFTER_DAYS,
+# and only ever a second: vet() still has to pass, which is the gate that
+# decides whether the issue is worth a session at all.
+RETRY_AFTER_DAYS = 3
+MAX_ATTEMPTS = 2
 
-    The queue cannot carry this memory: scan.py rebuilds queue/<key>.json from
-    scratch every cycle, so a candidate drain removes reappears twenty minutes
-    later and is dispatched again. spec-kit#3997 went out three times that way
-    and burned three agent sessions on one issue.
-    """
+
+def record_dispatch(key: str, number: int) -> None:
+    """Remember this dispatch, with when it happened and how many there were."""
     d = _dispatched()
-    lst = d.setdefault(key, [])
-    if number not in lst:
-        lst.append(number)
-        # Bounded: only recent history matters for dedup, and an unbounded file
-        # is its own failure mode.
-        d[key] = lst[-400:]
-        scan.STATE.mkdir(parents=True, exist_ok=True)
-        DISPATCHED.write_text(json.dumps(d, indent=2) + "\n")
+    rec = d.setdefault(key, {})
+    if isinstance(rec, list):                 # migrate the old bare-number form
+        rec = {str(n): {"at": "1970-01-01T00:00:00+00:00", "attempts": MAX_ATTEMPTS}
+               for n in rec}
+        d[key] = rec
+    cur = rec.get(str(number)) or {"attempts": 0}
+    rec[str(number)] = {
+        "at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "attempts": int(cur.get("attempts", 0)) + 1,
+    }
+    # Bounded: only recent history matters, and an unbounded file is its own
+    # failure mode.
+    if len(rec) > 400:
+        keep = sorted(rec.items(), key=lambda kv: kv[1].get("at", ""))[-400:]
+        rec = dict(keep)
+    d[key] = rec
+    scan.STATE.mkdir(parents=True, exist_ok=True)
+    DISPATCHED.write_text(json.dumps(d, indent=2) + "\n")
 
 
 def already_dispatched(key: str, number: int) -> bool:
-    return number in _dispatched().get(key, [])
+    """True while this issue should not be sent again."""
+    rec = _dispatched().get(key) or {}
+    if isinstance(rec, list):                 # pre-migration file
+        return number in rec
+    hit = rec.get(str(number))
+    if not hit:
+        return False
+    if int(hit.get("attempts", 1)) >= MAX_ATTEMPTS:
+        return True
+    try:
+        age = (datetime.now(timezone.utc)
+               - datetime.fromisoformat(hit["at"])).total_seconds() / 86400
+    except Exception:  # noqa: BLE001
+        return True                           # unparsable: keep the old behaviour
+    return age < RETRY_AFTER_DAYS
 
 
 

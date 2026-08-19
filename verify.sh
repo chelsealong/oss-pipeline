@@ -1227,6 +1227,51 @@ print("  ok     stored, fork-filtered, ancestry-verified, incremental" if not ba
 sys.exit(1 if bad else 0)
 PY3
 
+say "36. a dispatch is remembered, but not forever"
+python3 - "$SCANNER" <<'PY3'
+import sys, json, pathlib, importlib.util, tempfile
+from datetime import datetime, timezone, timedelta
+sys.path.insert(0, sys.argv[1])
+spec = importlib.util.spec_from_file_location("w", sys.argv[1] + "/watch.py")
+w = importlib.util.module_from_spec(spec); spec.loader.exec_module(w)
+bad = 0
+# Dedup exists because spec-kit#3997 went out three times. But a permanent
+# tombstone burns candidates whose dispatch failed for a reason that has since
+# gone away: on 2026-08-19 mem0, crawl4ai, llama-index and langfuse held 13
+# queued candidates between them and not one had never been dispatched.
+# mem0#6995 had been skipped for an abandoned PR — a bug fixed the day before.
+tmp = pathlib.Path(tempfile.mkdtemp()) / "d.json"
+w.DISPATCHED = tmp
+now = datetime.now(timezone.utc)
+tmp.write_text(json.dumps({"r": {
+    "1": {"at": now.isoformat(), "attempts": 1},
+    "2": {"at": (now - timedelta(days=w.RETRY_AFTER_DAYS + 1)).isoformat(), "attempts": 1},
+    "3": {"at": (now - timedelta(days=99)).isoformat(), "attempts": w.MAX_ATTEMPTS},
+}}))
+for num, want, note in [(1, True, "just dispatched"),
+                        (2, False, "past the cooldown with attempts left"),
+                        (3, True, "attempts exhausted")]:
+    if w.already_dispatched("r", num) != want:
+        print(f"  FAIL  #{num} ({note}): got {not want}"); bad += 1
+if w.MAX_ATTEMPTS > 2:
+    print(f"  FAIL  MAX_ATTEMPTS={w.MAX_ATTEMPTS} — retrying more than once burns sessions"); bad += 1
+if w.RETRY_AFTER_DAYS < 1:
+    print("  FAIL  the cooldown is short enough to re-dispatch inside one day"); bad += 1
+# The old file was a bare list of numbers. Reading one must not crash or, worse,
+# silently treat every past dispatch as fresh.
+tmp.write_text(json.dumps({"r": [7, 8]}))
+if not w.already_dispatched("r", 7) or w.already_dispatched("r", 9):
+    print("  FAIL  the pre-migration list format is not honoured"); bad += 1
+# Recording must produce the new shape, and count attempts.
+tmp.write_text("{}")
+w.record_dispatch("r", 5); w.record_dispatch("r", 5)
+rec = json.loads(tmp.read_text())["r"]["5"]
+if rec.get("attempts") != 2 or "at" not in rec:
+    print(f"  FAIL  record_dispatch does not track attempts ({rec})"); bad += 1
+print("  ok     one retry after a cooldown, then the issue is done" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1
