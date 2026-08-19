@@ -93,6 +93,12 @@ MERGE_WINDOW_HOURS = {
     # "closest to landing"; on this evidence it is the opposite signal, and the
     # only real one is adk-bot's Copybara comment.
     "google/adk-python": 336,
+    # ComfyUI: 7 days. Its external PRs merge at a median of 0.5 days, p75 3.1,
+    # p90 7.2, and 37 of 37 sampled merged inside 14 — this is the fastest repo
+    # we track. Ours sit instead: 17 open, only one with a human approval, the
+    # other sixteen carrying nothing but coderabbitai's, which approves almost
+    # everything and means nothing. Past a week the queue has moved on.
+    "Comfy-Org/ComfyUI": 168,
 }
 
 

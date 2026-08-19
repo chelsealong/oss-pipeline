@@ -264,6 +264,146 @@ def update_credited() -> int:
     return added
 
 
+
+# ---------------------------------------------------------------------------
+# What maintainers actually said.
+#
+# Numbers are the weakest evidence we hold. "31 commits" invites the question of
+# whether they mattered; sallyom writing "this is the best-fix owner-boundary
+# repair" about openclaw#124954, or spec-kit's mnriem — who had asked us three
+# times to stop opening a certain kind of PR — replying "Thank you!" to a code
+# fix, does not.
+#
+# Only humans with standing in the project, and only substantive evaluation. A
+# bot's approval is not evidence; ComfyUI's approves nearly everything. A
+# template thank-you is not evidence either, which is why the judgement is left
+# to a model rather than a keyword list: "thanks for the contribution" and "this
+# is the right fix of the three proposed" both contain "thank".
+QUOTE_SYSTEM = (
+    "You are reading a comment left by a maintainer on a pull request from an "
+    "outside contributor. Decide whether it contains a SUBSTANTIVE evaluation of "
+    "the contributor's work — a judgement about its quality, correctness, or "
+    "value — as opposed to routine process.\n\n"
+    "NOT substantive: a templated thank-you; a request for changes; a note that "
+    "CI failed; an automated summary; asking a question; saying it was merged "
+    "with no assessment.\n"
+    "Substantive: calling the fix correct, best, or the right approach; saying it "
+    "found a real bug others missed; praising the analysis, the tests or the "
+    "report; thanking us for a specific thing they name.\n\n"
+    "Quote the single strongest sentence VERBATIM. Do not paraphrase.\n\n"
+    "Also say whether the evaluation is favourable to the contributor. Record "
+    "both kinds: a refusal explaining why a patch was wrong is as worth keeping "
+    "as praise, and only recording praise would make the record useless.\n\n"
+    'Reply with JSON only: {"substantive": true|false, "favourable": true|false, '
+    '"quote": "", "who_matters": "<their role in one or two words>"}'
+)
+
+
+def merge_authority(repo: str) -> set:
+    """Logins that have actually merged pull requests here.
+
+    authorAssociation is the wrong test and it cost us the best quote we have.
+    sallyom merged openclaw#124954 by squash and wrote "this is the best-fix
+    owner-boundary repair" — and GitHub reports them as CONTRIBUTOR, because
+    that field describes their relationship to the repo as an AUTHOR, not their
+    permissions. Who merges things is the signal.
+    """
+    out = set()
+    # Whoever merged one of OUR pull requests unquestionably has standing here,
+    # and this is the set we actually care about. Sampling the repo's newest 60
+    # merges alone missed sallyom, who squash-merged openclaw#124954 and left
+    # the strongest quote we have.
+    for q, path in ((f"repo:{repo} author:chelsealong is:pr is:merged",
+                     ["data", "search", "nodes"]),):
+        try:
+            raw = _gh(["api", "graphql", "-f", "query=" + (
+                '{search(query:"%s", type:ISSUE, first:50){nodes{... on PullRequest{'
+                "mergedBy{login}}}}}" % q)])
+            d = json.loads(raw)
+            for n in d["data"]["search"]["nodes"]:
+                if n and n.get("mergedBy"):
+                    out.add(n["mergedBy"]["login"])
+        except Exception:  # noqa: BLE001
+            pass
+    try:
+        raw = _gh(["api", "graphql", "-f", "query=" + (
+            '{repository(owner:"%s",name:"%s"){pullRequests(states:MERGED,first:100,'
+            "orderBy:{field:UPDATED_AT,direction:DESC}){nodes{mergedBy{login}}}}}"
+            % tuple(repo.split("/")))])
+        for n in json.loads(raw)["data"]["repository"]["pullRequests"]["nodes"]:
+            if n and n.get("mergedBy"):
+                out.add(n["mergedBy"]["login"])
+    except Exception:  # noqa: BLE001
+        pass
+    return {w for w in out if w}
+
+
+def quotes(repo: str) -> list[dict]:
+    """Substantive maintainer evaluations on our PRs in this repo."""
+    import intent
+    q = f"repo:{repo} author:chelsealong is:pr"
+    try:
+        raw = _gh(["api", "graphql", "-f", "query=" + (
+            '{search(query:"%s", type:ISSUE, first:50){nodes{... on PullRequest{'
+            "number url "
+            "comments(first:40){nodes{author{login} authorAssociation bodyText createdAt}} "
+            "reviews(first:20){nodes{author{login} authorAssociation state bodyText createdAt}}"
+            "}}}}" % q)])
+        nodes = json.loads(raw)["data"]["search"]["nodes"]
+    except Exception as e:  # noqa: BLE001
+        print(f"  {repo}: quote search failed ({str(e)[:70]})", file=sys.stderr)
+        return []
+    authority = merge_authority(repo)
+    out = []
+    for pr in nodes:
+        if not pr or not pr.get("number"):
+            continue
+        said = []
+        for c in (pr.get("comments") or {}).get("nodes", []) or []:
+            said.append(c)
+        for r in (pr.get("reviews") or {}).get("nodes", []) or []:
+            said.append(r)
+        for c in said:
+            who = ((c.get("author") or {}).get("login") or "")
+            assoc = c.get("authorAssociation") or ""
+            body = (c.get("bodyText") or "").strip()
+            # Standing matters, and bots have none. ComfyUI's bot approves
+            # almost everything, so its approval says nothing about the code.
+            if not who or "[bot]" in who or who == "chelsealong":
+                continue
+            if assoc not in ("COLLABORATOR", "MEMBER", "OWNER") and who not in authority:
+                continue
+            if len(body) < 25:
+                continue
+            v = intent._ask(QUOTE_SYSTEM, intent._strip_markup(body)[:4000], author=who)
+            if not v or not v.get("substantive") or not v.get("quote"):
+                continue
+            out.append({"repo": repo, "pr": pr["number"], "url": pr.get("url", ""),
+                        "who": who, "assoc": assoc,
+                        "favourable": bool(v.get("favourable", True)),
+                        "role": str(v.get("who_matters", ""))[:60],
+                        "at": (c.get("createdAt") or "")[:10],
+                        "quote": str(v["quote"])[:400]})
+    return out
+
+
+def update_quotes(repos: list | None = None) -> int:
+    d = _load()
+    d.setdefault("quotes", {})
+    added = 0
+    for repo in (repos or upstreams()):
+        for qt in quotes(repo):
+            key = f"{qt['repo']}#{qt['pr']}@{qt['who']}@{qt['at']}"
+            if key in d["quotes"]:
+                continue
+            d["quotes"][key] = qt
+            added += 1
+            print(f"  \u201c{qt['quote'][:70]}\u201d — {qt['who']} on {qt['repo']}#{qt['pr']}")
+    if added:
+        _save(d)
+    return added
+
+
 def report() -> None:
     d = _load()
     by: dict[str, list] = {}
@@ -292,6 +432,16 @@ def report() -> None:
         for c in sorted(cred, key=lambda x: x.get("at", "")):
             print(f"    {c['at']}  {c['repo']}#{c['pr']} by {c['by']}")
             print(f"        {c['evidence'][:110]}")
+    qt = list((d.get("quotes") or {}).values())
+    if qt:
+        for good in (True, False):
+            sub = [q for q in qt if bool(q.get("favourable", True)) is good]
+            if not sub:
+                continue
+            print(f"\n  what maintainers said — {'favourable' if good else 'critical'}, {len(sub)}:")
+            for q in sorted(sub, key=lambda x: x.get("at", "")):
+                print(f"    {q['at']}  {q['repo']}#{q['pr']}  {q['who']}")
+                print(f"        \u201c{q['quote'][:150]}\u201d")
     noted = [v for v in d["commits"].values() if v.get("notes")]
     if noted:
         print("\n  带备注的:")

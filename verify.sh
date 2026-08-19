@@ -647,6 +647,11 @@ if wp.MERGE_WINDOW_HOURS.get("NousResearch/hermes-agent") != 240:
     print("  FAIL  hermes window is not 10 days — salvage lands up to 5 days out"); bad += 1
 if wp.MERGE_WINDOW_HOURS.get("google/adk-python") != 336:
     print("  FAIL  adk window is not 14 days — 97% of its landings are inside it"); bad += 1
+# ComfyUI is the fastest repo we track: external PRs merge at a median of 0.5
+# days, p90 7.2, and 37 of 37 sampled inside 14. A longer window here would
+# spend sessions answering PRs the queue has already moved past.
+if wp.MERGE_WINDOW_HOURS.get("Comfy-Org/ComfyUI") != 168:
+    print("  FAIL  ComfyUI window is not 7 days — its p90 merge is 7.2 days"); bad += 1
 for pr, want in CASES:
     got, _ = wp.past_merge_window(pr)
     if got != want:
