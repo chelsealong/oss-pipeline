@@ -360,8 +360,14 @@ jobs:
               pb = investigate.playbook_markdown(key)
               if pb:
                   out.append(pb)
-          except Exception:
-              pass
+              else:
+                  print("  (no playbook produced for this repo)", file=sys.stderr)
+          except Exception as e:
+              # Visibly. The first live run produced no playbook at all and the
+              # bare `except: pass` here meant there was nothing to diagnose —
+              # the same silence that made a broken test-evidence step look
+              # like a step with nothing to say.
+              print(f"  playbook failed: {type(e).__name__}: {e}", file=sys.stderr)
           if v.get("where"):
               out.append("Files a preliminary pass located for this issue:")
               out += [f"  - {w}" for w in v["where"]]
@@ -730,11 +736,21 @@ jobs:
         continue-on-error: true
         env:
           QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
+          DEF: ${{ steps.fork.outputs.default_branch }}
+        working-directory: work
         run: |
           : > "$GITHUB_WORKSPACE/.loop/testcheck.md"
+          # The diff is produced here rather than assumed. This step first ran
+          # before the reviewer, which is where change.diff was being written,
+          # so it died on FileNotFoundError and reported nothing at all — a
+          # check that silently produces no output is worse than no check,
+          # because the reviewer below reads an empty file and moves on.
+          base=$(git merge-base HEAD "upstream/${DEF}" 2>/dev/null || echo "")
+          git diff "${base:-HEAD~1}" HEAD > "$GITHUB_WORKSPACE/.loop/change.diff" || true
           python3 - <<'PY' || true
           import os, sys
           sys.path.insert(0, os.getcwd())
+          sys.path.insert(0, os.environ["GITHUB_WORKSPACE"])
           import testcheck
           ws = os.environ["GITHUB_WORKSPACE"]
           diff = open(ws + "/.loop/change.diff", errors="replace").read()

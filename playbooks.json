@@ -1,0 +1,114 @@
+{
+ "litellm": {
+  "one_file": "",
+  "suite": "make test",
+  "tests_live": "tests/test_litellm/",
+  "naming": "",
+  "notes": "Files do not specify single-test commands or naming conventions.",
+  "at": "2026-08-19T03:41:28+00:00"
+ },
+ "comfyui": {
+  "one_file": "pytest <file>",
+  "suite": "pytest",
+  "tests_live": "tests, tests-unit",
+  "naming": "",
+  "notes": "CI uses custom comfy-action. Naming convention not specified in provided files.",
+  "at": "2026-08-19T03:43:36+00:00"
+ },
+ "hermes": {
+  "one_file": "",
+  "suite": "python3 scripts/run_tests_parallel.py",
+  "tests_live": "",
+  "naming": "",
+  "notes": "CI uses a custom Python script for parallel test slicing; specific test runner and paths are not defined.",
+  "at": "2026-08-19T03:43:57+00:00"
+ },
+ "langfuse": {
+  "one_file": "",
+  "suite": "turbo run test",
+  "tests_live": "",
+  "naming": "",
+  "notes": "Monorepo using Turbo; suite command found in package.json, but specific test runner and paths are not detailed.",
+  "at": "2026-08-19T03:44:20+00:00"
+ },
+ "adk": {
+  "one_file": "",
+  "suite": "pytest tests/unittests",
+  "tests_live": "tests/unittests",
+  "naming": "",
+  "notes": "Tox runs pytest on tests/unittests. Single-file execution and naming conventions are not specified.",
+  "at": "2026-08-19T04:24:44+00:00"
+ },
+ "dify": {
+  "one_file": "uv run --project api pytest <file>",
+  "suite": "uv run --project api pytest -p no:benchmark --timeout \"${PYTEST_TIMEOUT:-20}\" -n auto api/tests/unit_tests api/providers/vdb/*/tests/unit_tests api/providers/trace/*/tests/unit_tests --ignore=api/test",
+  "tests_live": "api/tests/unit_tests, api/providers/vdb/*/tests/unit_tests, api/providers/trace/*/tests/unit_tests, api/tests/unit_tests/controllers",
+  "naming": "",
+  "notes": "Controller tests run separately without xdist. Integration tests also use pytest.",
+  "at": "2026-08-19T04:25:17+00:00"
+ },
+ "openclaw": {
+  "one_file": "",
+  "suite": "",
+  "tests_live": "test",
+  "naming": "",
+  "notes": "Test runner is Vitest, configured in test/vitest/vitest.config.ts. Tests live in the test directory.",
+  "at": "2026-08-19T04:25:44+00:00"
+ },
+ "spec-kit": {
+  "one_file": "",
+  "suite": "uv run pytest",
+  "tests_live": "tests",
+  "naming": "test_*.py",
+  "notes": "Uses pytest via uv. Ruff lints src and tests.",
+  "at": "2026-08-19T04:26:12+00:00"
+ },
+ "gemini-cli": {
+  "one_file": "vitest run <file>",
+  "suite": "npm run test",
+  "tests_live": "sea/, scripts/tests/, evals/, and packages/*",
+  "naming": "*.test.js",
+  "notes": "Vitest is used to run tests across multiple workspaces and specific configuration directories.",
+  "at": "2026-08-19T04:26:45+00:00"
+ },
+ "llama-index": {
+  "one_file": "",
+  "suite": "uv run -- pytest",
+  "tests_live": "Within each project folder",
+  "naming": "",
+  "notes": "CI uses llama-dev, Makefile uses pants, and contributing guide recommends uv run -- pytest.",
+  "at": "2026-08-19T04:27:30+00:00"
+ },
+ "mem0": {
+  "one_file": "pytest tests/<file>",
+  "suite": "hatch run test",
+  "tests_live": "tests/",
+  "naming": "",
+  "notes": "Tests use pytest and are executed via hatch or make.",
+  "at": "2026-08-19T04:28:00+00:00"
+ },
+ "crawl4ai": {
+  "one_file": "",
+  "suite": "pytest",
+  "tests_live": "",
+  "naming": "",
+  "notes": "CONTRIBUTING.md mentions running pytest to verify, but no test directories, naming conventions, or single-file commands are specified.",
+  "at": "2026-08-19T04:28:28+00:00"
+ },
+ "firecrawl": {
+  "one_file": "pnpm harness pnpm exec vitest run path/to/test.ts",
+  "suite": "pnpm harness pnpm test:snips (API) or pnpm run test (JS SDK)",
+  "tests_live": "",
+  "naming": "",
+  "notes": "Run commands from their respective app directories (apps/api or apps/js-sdk/firecrawl).",
+  "at": "2026-08-19T04:29:36+00:00"
+ },
+ "autogpt": {
+  "one_file": "poetry run pytest <file>",
+  "suite": "poetry run pytest forge/forge forge/tests",
+  "tests_live": "classic/forge/tests",
+  "naming": "",
+  "notes": "Run from 'classic' dir. CI uses Poetry, MinIO, and Playwright.",
+  "at": "2026-08-19T04:30:14+00:00"
+ }
+}

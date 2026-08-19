@@ -42,6 +42,7 @@ here: nothing calls this in the dispatch path yet.
 from __future__ import annotations
 
 import json
+import pathlib
 import re
 import sys
 
@@ -226,7 +227,18 @@ if __name__ == "__main__":
 # `find / -maxdepth 4 -iname "pyt*"` and `pip list | grep pytest` before it
 # could run anything — and that is per session, on a repo we have dispatched
 # 25 times. The answer is in the repository's own files and does not change.
+# Two locations, in this order. scan.STATE is an absolute path on the machine
+# that runs the watcher; on a GitHub runner it does not exist, so the cache was
+# never read there and every run rebuilt the playbook from seven API calls and
+# a model call — then failed to write it back, silently. The repo-local copy is
+# committed data, refreshed by the local job and shipped with the checkout,
+# which is the same arrangement queue/ already uses.
+PLAYBOOKS_REPO = pathlib.Path(__file__).resolve().parent / "playbooks.json"
 PLAYBOOKS = scan.STATE / "playbooks.json"
+
+
+def _playbook_paths() -> list:
+    return [PLAYBOOKS_REPO, PLAYBOOKS]
 PLAYBOOK_AGE_DAYS = 7
 CONFIG_FILES = ["Makefile", "tox.ini", "pyproject.toml", "package.json",
                 "noxfile.py", "CONTRIBUTING.md", "justfile", "pytest.ini",
@@ -245,10 +257,13 @@ PLAYBOOK_SYSTEM = (
 
 
 def _playbooks() -> dict:
-    try:
-        return json.loads(PLAYBOOKS.read_text()) if PLAYBOOKS.exists() else {}
-    except Exception:  # noqa: BLE001
-        return {}
+    for path in _playbook_paths():
+        try:
+            if path.exists():
+                return json.loads(path.read_text())
+        except Exception:  # noqa: BLE001
+            continue
+    return {}
 
 
 def playbook(repo_key: str, refresh: bool = False) -> dict:
@@ -297,11 +312,12 @@ def playbook(repo_key: str, refresh: bool = False) -> dict:
            ("one_file", "suite", "tests_live", "naming", "notes")}
     rec["at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     book[repo_key] = rec
-    try:
-        scan.STATE.mkdir(parents=True, exist_ok=True)
-        PLAYBOOKS.write_text(json.dumps(book, indent=1, ensure_ascii=False) + "\n")
-    except Exception:  # noqa: BLE001
-        pass
+    for path in _playbook_paths():
+        try:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(book, indent=1, ensure_ascii=False) + "\n")
+        except Exception:  # noqa: BLE001
+            continue
     return rec
 
 
