@@ -995,6 +995,7 @@ jobs:
         if: steps.gen.outputs.outcome == 'READY' && (steps.review.outputs.verdict == 'APPROVE' || steps.rereview.outputs.verdict == 'APPROVE')
         working-directory: work
         env:
+          DEF: ${{ steps.fork.outputs.default_branch }}
           GH_TOKEN: ${{ secrets.GH_PAT }}
           UPSTREAM: ${{ steps.cfg.outputs.upstream }}
           NUM: ${{ inputs.issue }}
@@ -1016,9 +1017,20 @@ jobs:
             litellm)  max_added=150 ;;   # its median merge is +223; ours should be the small end
             *)        max_added=0 ;;
           esac
-          if [ "${max_added}" -gt 0 ] && [ -f "$GITHUB_WORKSPACE/.loop/change.diff" ]; then
-            added=$(grep -c '^+[^+]' "$GITHUB_WORKSPACE/.loop/change.diff" || true)
-            added=${added:-0}
+          if [ "${max_added}" -gt 0 ]; then
+            # Recompute. The file on disk was written by the reviewer, before
+            # any commit the remediation step pushed, so the gate was reading a
+            # stale diff: openclaw#126138 was measured at +107 and merged into
+            # GitHub's view as +190.
+            base=$(git merge-base HEAD "upstream/${DEF}" 2>/dev/null || echo "HEAD~1")
+            git diff "$base" HEAD > "$GITHUB_WORKSPACE/.loop/change.diff" || true
+            # `^+[^+]` requires a character after the +, so every ADDED BLANK
+            # LINE was invisible — 16 of them on that same PR. Count the way
+            # GitHub does: every line starting with + except the +++ header.
+            plus=$(grep -c '^+' "$GITHUB_WORKSPACE/.loop/change.diff" || true)
+            hdr=$(grep -c '^+++' "$GITHUB_WORKSPACE/.loop/change.diff" || true)
+            added=$(( ${plus:-0} - ${hdr:-0} ))
+            [ "$added" -lt 0 ] && added=0
             if [ "$added" -gt "$max_added" ]; then
               echo "::warning::patch adds ${added} lines, over ${REPO_KEY}'s ${max_added}-line ceiling — not opening"
               echo "over_size=true" >> "$GITHUB_OUTPUT"

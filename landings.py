@@ -185,6 +185,85 @@ def update(rebuild: bool = False) -> tuple[int, int]:
     return added, len(d["commits"])
 
 
+
+# ---------------------------------------------------------------------------
+# Credited but not authored.
+#
+# hermes#89815 merged on 2026-08-19 saying "Supersedes #75649, #86637, #87672,
+# #88642" and "Credit: @rikkarth, @chelsealong, @lilShawtty-byte,
+# @olympusbuildz". Our analysis and fix went in; every commit is under the
+# maintainer's name. Counting commits on main — which is the only honest
+# measure of authorship — that is a zero, and the ledger was right to leave the
+# total at 33.
+#
+# It is still a real contribution, and it is the kind of evidence an
+# immigration filing rests on. So it is recorded, and recorded SEPARATELY. A
+# number that survives being checked line by line is worth more than a larger
+# one that collapses, and merging the two categories would make every figure we
+# quote arguable.
+#
+# The double-counting trap: most PRs here are salvages where authorship WAS
+# preserved (teknium1 writes "with your authorship preserved"), and those
+# already appear as our commits. A PR belongs in this list only when NONE of
+# its commits carries one of our addresses.
+CREDIT_MARKS = ("chelsealong",)
+
+
+def credited(repo: str) -> list[dict]:
+    """Merged PRs by others that name us and carry no commit of ours."""
+    q = f"repo:{repo} is:pr is:merged chelsealong in:body"
+    try:
+        raw = _gh(["api", "graphql", "-f", "query=" + (
+            '{search(query:"%s", type:ISSUE, first:40){nodes{... on PullRequest{'
+            "number title author{login} mergedAt body "
+            "commits(first:30){nodes{commit{author{email}}}}}}}}" % q)])
+        nodes = json.loads(raw)["data"]["search"]["nodes"]
+    except Exception as e:  # noqa: BLE001
+        print(f"  {repo}: credit search failed ({str(e)[:70]})", file=sys.stderr)
+        return []
+    out = []
+    for pr in nodes:
+        if not pr or not pr.get("number"):
+            continue
+        if (pr.get("author") or {}).get("login") == "chelsealong":
+            continue
+        emails = {(c["commit"]["author"] or {}).get("email", "")
+                  for c in (pr.get("commits") or {}).get("nodes", [])}
+        if any(e in emails for e in ME_EMAILS):
+            continue          # authorship preserved — already counted as a commit
+        body = pr.get("body") or ""
+        # Require an explicit naming, not an incidental mention.
+        line = next((l for l in body.splitlines()
+                     if any(m in l.lower() for m in CREDIT_MARKS)
+                     and any(k in l.lower() for k in
+                             ("credit", "co-auth", "thanks", "supersede", "authorship",
+                              "based on", "originally"))), "")
+        if not line:
+            continue
+        out.append({"repo": repo, "pr": pr["number"], "by": pr["author"]["login"],
+                    "at": (pr.get("mergedAt") or "")[:10],
+                    "title": (pr.get("title") or "")[:80],
+                    "evidence": line.strip()[:200]})
+    return out
+
+
+def update_credited() -> int:
+    d = _load()
+    d.setdefault("credited", {})
+    added = 0
+    for repo in upstreams():
+        for c in credited(repo):
+            key = f"{c['repo']}#{c['pr']}"
+            if key in d["credited"]:
+                continue
+            d["credited"][key] = c
+            added += 1
+            print(f"  ~ credited (no commit of ours): {key} by {c['by']} — {c['title'][:44]}")
+    if added:
+        _save(d)
+    return added
+
+
 def report() -> None:
     d = _load()
     by: dict[str, list] = {}
@@ -207,6 +286,12 @@ def report() -> None:
               f"{('?' if op is None else op):>6}{len(rows):>8}   {last}")
     print("  " + "-" * 74)
     print(f"  {'合计':<30}{TP:>4}{TO:>6}{TC:>8}")
+    cred = list((d.get("credited") or {}).values())
+    if cred:
+        print(f"\n  credited but NOT authored — {len(cred)}, deliberately not in the total above:")
+        for c in sorted(cred, key=lambda x: x.get("at", "")):
+            print(f"    {c['at']}  {c['repo']}#{c['pr']} by {c['by']}")
+            print(f"        {c['evidence'][:110]}")
     noted = [v for v in d["commits"].values() if v.get("notes")]
     if noted:
         print("\n  带备注的:")
@@ -219,5 +304,6 @@ if __name__ == "__main__":
         report()
     else:
         n, total = update(rebuild="--rebuild" in sys.argv)
-        print(f"\n  {n} new, {total} total")
+        c = update_credited()
+        print(f"\n  {n} new commit(s), {total} total; {c} new credited-only")
         report()

@@ -380,6 +380,18 @@ if "120" not in gen:
     print("  FAIL  the generator is not told openclaw's ceiling — it would burn a session then be refused"); bad += 1
 print("  ok     size ceiling wired into both the gate and the prompt" if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
+
+# The gate has to measure what the maintainer sees. It did not: openclaw#126138
+# passed at "+107" against a 120 ceiling and GitHub reports it as +190. Two
+# faults compounded — `^+[^+]` needs a character after the +, so every added
+# BLANK line was invisible (16 on that PR), and the diff on disk was written by
+# the reviewer before the remediation step's commits.
+if "grep -c '^+[^+]'" in run:
+    print("  FAIL  size counted with ^+[^+] — added blank lines are not counted"); bad += 1
+if "^+++" not in run:
+    print("  FAIL  size count does not subtract the +++ header, so it over- or under-counts"); bad += 1
+if "git merge-base" not in run or "change.diff" not in run.split("max_added")[1][:900]:
+    print("  FAIL  the gate reuses a diff it did not compute — it can be stale"); bad += 1
 PY3
 
 echo "== 15. claim detection catches real claims and not lookalikes =="
@@ -1225,6 +1237,22 @@ if "update_landings" not in pathlib.Path(sys.argv[1] + "/health.py").read_text()
     print("  FAIL  nothing keeps the ledger current on a schedule"); bad += 1
 print("  ok     stored, fork-filtered, ancestry-verified, incremental" if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
+
+# Credited-but-not-authored is real evidence and is kept SEPARATE on purpose.
+# hermes#89815 merged saying "Credit: @rikkarth, @chelsealong, ..." with every
+# commit under the maintainer's name; our work went in, our authorship did not.
+# Folding it into the commit total would make every figure we quote arguable,
+# and the figures exist to survive being checked.
+if "credited" not in src:
+    print("  FAIL  credited-but-not-authored contributions are not recorded at all"); bad += 1
+if 'if any(e in emails for e in ME_EMAILS)' not in src:
+    print("  FAIL  nothing excludes salvages that DID preserve authorship — double counting"); bad += 1
+cred = d.get("credited") or {}
+for key, c in cred.items():
+    if key in d["commits"]:
+        print(f"  FAIL  {key} counted as both a commit and a credit"); bad += 1
+    if not c.get("evidence"):
+        print(f"  FAIL  {key} recorded with no quotable evidence line"); bad += 1
 PY3
 
 say "36. a dispatch is remembered, but not forever"
