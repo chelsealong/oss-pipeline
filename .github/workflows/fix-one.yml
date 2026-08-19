@@ -325,6 +325,49 @@ jobs:
       # An earlier version of this pipeline had such a pass and it caught a real
       # defect (a wrong-place fix that still passed the original tests) — that
       # gate was lost when this workflow was written, and this restores it.
+      - name: Locate the code before spending the session
+        # Advisory only, and deliberately so. Measured against nine issues whose
+        # fixes actually landed, this judgement is right whenever it finds the
+        # code and wrong when it does not — three false "do not attempt" out of
+        # nine. Gating on that would discard a third of the work that lands.
+        #
+        # What it is reliably good at is the other half of its answer: it
+        # returned `mixpanelClient.ts:82`, `model-discovery-context.ts:46` and
+        # `vae.py:684` for issues where those were exactly right. Generation is
+        # 59% of all Claude time and starts by finding the file, so handing that
+        # over is pure saving with no risk of dropping a candidate.
+        continue-on-error: true
+        env:
+          QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          REPO_KEY: ${{ inputs.repo_key }}
+          NUM: ${{ inputs.issue }}
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/.loop"
+          : > "$GITHUB_WORKSPACE/.loop/briefing.md"
+          python3 - <<'PY' || echo "(investigation unavailable)" > "$GITHUB_WORKSPACE/.loop/briefing.md"
+          import json, os, sys
+          sys.path.insert(0, os.getcwd())
+          import investigate
+          v = investigate.investigate(os.environ["REPO_KEY"], int(os.environ["NUM"]))
+          out = []
+          if v.get("where"):
+              out.append("Files a preliminary pass located for this issue:")
+              out += [f"  - {w}" for w in v["where"]]
+          if v.get("change"):
+              out.append(f"\nWhat it believes the change is: {v['change']}")
+          if not v.get("do"):
+              out.append(f"\nIt judged this NOT worth attempting: {v.get('why','')}")
+              out.append("That judgement is advisory and has a measured false-negative "
+                         "rate of about one in three. Read the code and decide yourself; "
+                         "if it is wrong, proceed.")
+          if out:
+              out.insert(0, "## Preliminary investigation (advisory, not a decision)\n")
+              open(os.environ["GITHUB_WORKSPACE"] + "/.loop/briefing.md", "w").write("\n".join(out))
+          PY
+          cat "$GITHUB_WORKSPACE/.loop/briefing.md"
+        id: brief
+
       - name: Load lessons for this repo
         id: lessons
         run: |
@@ -428,6 +471,10 @@ jobs:
           set -o pipefail
           run_claude() {
           timeout 2400 claude -p "$(cat <<EOF
+          A preliminary pass may have located the relevant code for you; read
+          \$GITHUB_WORKSPACE/.loop/briefing.md FIRST if it is non-empty. It is advisory,
+          including its recommendation not to attempt — verify against the code
+          and disagree with it freely, but do not re-find what it already found.
           You are an autonomous OSS contribution agent. Handle exactly ONE issue.
           Do the work and PUSH A BRANCH, but do NOT open a pull request — a
           separate reviewer decides that.
