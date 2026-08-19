@@ -349,8 +349,19 @@ jobs:
           import json, os, sys
           sys.path.insert(0, os.getcwd())
           import investigate
-          v = investigate.investigate(os.environ["REPO_KEY"], int(os.environ["NUM"]))
+          key = os.environ["REPO_KEY"]
+          v = investigate.investigate(key, int(os.environ["NUM"]))
           out = []
+          # Stable repo knowledge, cached for a week. One litellm session spent
+          # four consecutive commands on `which python3`, `pytest --version`,
+          # `find / -iname "pyt*"` and `pip list | grep pytest` before it could
+          # run anything — on a repo we had dispatched 25 times.
+          try:
+              pb = investigate.playbook_markdown(key)
+              if pb:
+                  out.append(pb)
+          except Exception:
+              pass
           if v.get("where"):
               out.append("Files a preliminary pass located for this issue:")
               out += [f"  - {w}" for w in v["where"]]
@@ -703,6 +714,39 @@ jobs:
           echo "The watcher pauses dispatching when it sees this step fail."
           exit 1
 
+      - name: Inspect the tests the session wrote
+        # Tests are 56% of the lines we ship — +1533 against +1206 source over
+        # 26 PRs — and until now nothing looked at them. Two checks of
+        # different kinds: whether the change was actually removed and the
+        # tests re-run (a rule; the log says so or it does not), and whether
+        # the tests assert behaviour rather than that a line executed (a
+        # judgement; hermes#82124 was closed as a no-op for exactly that, and
+        # its test did fail without the change, so no mechanical check would
+        # have caught it).
+        #
+        # Evidence for the reviewer below, never a gate. A second gate over the
+        # same diff only means two things can silently disagree.
+        if: steps.gen.outputs.outcome == 'READY'
+        continue-on-error: true
+        env:
+          QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
+        run: |
+          : > "$GITHUB_WORKSPACE/.loop/testcheck.md"
+          python3 - <<'PY' || true
+          import os, sys
+          sys.path.insert(0, os.getcwd())
+          import testcheck
+          ws = os.environ["GITHUB_WORKSPACE"]
+          diff = open(ws + "/.loop/change.diff", errors="replace").read()
+          try:
+              log = open("/tmp/claude.out", errors="replace").read()
+          except OSError:
+              log = ""
+          r = testcheck.check(diff, log)
+          open(ws + "/.loop/testcheck.md", "w").write(testcheck.as_markdown(r))
+          PY
+          cat "$GITHUB_WORKSPACE/.loop/testcheck.md"
+
       - name: Adversarial review
         id: review
         if: steps.gen.outputs.outcome == 'READY'
@@ -731,6 +775,10 @@ jobs:
           wc -l $GITHUB_WORKSPACE/.loop/change.diff
 
           timeout 1200 claude -p "$(cat <<EOF
+          An automated pass over the tests alone is in
+          \$GITHUB_WORKSPACE/.loop/testcheck.md — read it first. It reports whether the
+          change was actually removed and the tests re-run, and any objection to
+          what the tests assert. It is evidence, not a verdict: you decide.
           You are reviewing a pull request that ANOTHER agent prepared for
           ${UPSTREAM}#${NUM}. You did not write it. Your job is to REFUTE it.
           Assume it is wrong until the evidence says otherwise — a bad PR on a

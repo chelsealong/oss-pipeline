@@ -216,3 +216,106 @@ if __name__ == "__main__":
     else:
         key, num = sys.argv[1], int(sys.argv[2])
         print(json.dumps(investigate(key, num), indent=2, ensure_ascii=False))
+
+
+# ---------------------------------------------------------------------------
+# Per-repo playbook: how this project runs its tests, and where they live.
+#
+# Every session rediscovers this. In one litellm run the agent spent four
+# consecutive commands on `which python3`, `python3 -m pytest --version`,
+# `find / -maxdepth 4 -iname "pyt*"` and `pip list | grep pytest` before it
+# could run anything — and that is per session, on a repo we have dispatched
+# 25 times. The answer is in the repository's own files and does not change.
+PLAYBOOKS = scan.STATE / "playbooks.json"
+PLAYBOOK_AGE_DAYS = 7
+CONFIG_FILES = ["Makefile", "tox.ini", "pyproject.toml", "package.json",
+                "noxfile.py", "CONTRIBUTING.md", "justfile", "pytest.ini",
+                "setup.cfg", "jest.config.js", "vitest.config.ts"]
+
+PLAYBOOK_SYSTEM = (
+    "You are reading a repository's own build and test configuration. Report "
+    "only what these files actually show — do not guess a conventional answer "
+    "for the language.\n\n"
+    "Give the exact command to run ONE test file, the command to run the suite, "
+    "where tests live, and the naming convention for a new test file. If a file "
+    "does not say, leave that field empty rather than inventing it.\n\n"
+    'Reply with JSON only: {"one_file": "", "suite": "", "tests_live": "", '
+    '"naming": "", "notes": "<20 words or fewer>"}'
+)
+
+
+def _playbooks() -> dict:
+    try:
+        return json.loads(PLAYBOOKS.read_text()) if PLAYBOOKS.exists() else {}
+    except Exception:  # noqa: BLE001
+        return {}
+
+
+def playbook(repo_key: str, refresh: bool = False) -> dict:
+    """How to run this repo's tests. Cached — the answer is stable."""
+    from datetime import datetime, timezone
+    cfg = scan.REPOS.get(repo_key)
+    if not cfg:
+        return {}
+    book = _playbooks()
+    hit = book.get(repo_key)
+    if hit and not refresh:
+        try:
+            age = (datetime.now(timezone.utc)
+                   - datetime.fromisoformat(hit["at"])).days
+            if age < PLAYBOOK_AGE_DAYS:
+                return hit
+        except Exception:  # noqa: BLE001
+            pass
+
+    upstream = cfg["upstream"]
+    found = []
+    # The CI workflow is the most reliable source there is: it does not describe
+    # how to run the tests, it runs them. ComfyUI and hermes both returned
+    # nothing useful from their manifests alone.
+    try:
+        raw = scan.gh(["api", "-X", "GET", f"repos/{upstream}/actions/workflows",
+                       "--jq", "[.workflows[] | select(.name|test(\"test|ci|check\";\"i\")) | .path][:2]"])
+        for wf in json.loads(raw or "[]"):
+            got = fetch_code(upstream, [wf], [])
+            for g in got:
+                if g["found"] and g["text"].strip():
+                    found.append(f"=== {g['path']} (CI: this is what actually runs) ===\n{g['text'][:3000]}")
+    except Exception:  # noqa: BLE001
+        pass
+    for name in CONFIG_FILES:
+        got = fetch_code(upstream, [name], [])
+        for g in got:
+            if g["found"] and g["text"].strip():
+                found.append(f"=== {g['path']} ===\n{g['text'][:3500]}")
+    if not found:
+        return hit or {}
+    verdict = intent._ask(PLAYBOOK_SYSTEM, "\n\n".join(found)[:20000], author=repo_key)
+    if verdict is None:
+        return hit or {}
+    rec = {k: str(verdict.get(k, ""))[:200] for k in
+           ("one_file", "suite", "tests_live", "naming", "notes")}
+    rec["at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    book[repo_key] = rec
+    try:
+        scan.STATE.mkdir(parents=True, exist_ok=True)
+        PLAYBOOKS.write_text(json.dumps(book, indent=1, ensure_ascii=False) + "\n")
+    except Exception:  # noqa: BLE001
+        pass
+    return rec
+
+
+def playbook_markdown(repo_key: str) -> str:
+    b = playbook(repo_key)
+    if not b or not (b.get("one_file") or b.get("suite")):
+        return ""
+    out = ["## How this repository runs its tests\n",
+           "Read from its own config, so you do not have to look. If it is wrong, "
+           "trust what you see in the repo.\n"]
+    for label, key in (("run one test file", "one_file"), ("run the suite", "suite"),
+                       ("tests live in", "tests_live"), ("new test files are named", "naming")):
+        if b.get(key):
+            out.append(f"- {label}: `{b[key]}`")
+    if b.get("notes"):
+        out.append(f"- {b['notes']}")
+    return "\n".join(out) + "\n"
