@@ -84,3 +84,21 @@ on issues not labelled good-first-issue". These are cheap to honour and they
 are the difference between a PR that gets read and one that gets closed with a
 template reply. Where a repo asks to be asked first, being fast is not a
 defence — spec-kit was lost for two days that way.
+
+
+## Sample by when something finished, not by when it started
+
+Measuring how long a repo takes to merge an outside PR by looking at its
+newest-created merged PRs gives an answer that is wrong in a predictable
+direction: the slow ones have not merged yet, so they cannot appear in the
+sample at all. Only the fast ones are visible, and the estimate collapses
+towards zero.
+
+That method reported openclaw's slowest external merge as 4 hours, and a
+24-hour cutoff was set on it. openclaw#121306 merged the same day at ten days
+old — sixty times the supposed maximum. Re-sampled by MERGE time over 84 PRs:
+p50 1h, p75 24h, p90 140h, longest 507h.
+
+The same shape appears whenever a population is sampled through the event that
+removes it from the population. Ask what is missing from the sample before
+trusting a distribution built from it.

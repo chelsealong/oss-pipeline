@@ -73,38 +73,32 @@ NOISE_AUTHORS = {
 # merges (evgyur at 7.6 days, a batch of afourniernv's), and the asymmetry
 # favours margin — skipping a live PR costs a real chance, while answering a
 # dead one costs one session. Repos absent from this table have no window.
+# Windows come from the p90 of how long external PRs actually take to land,
+# with margin, because skipping a live PR costs a real chance while answering a
+# dead one costs one session.
+#
+# HOW TO MEASURE THIS, because getting it wrong once already cost a landing.
+# Sample by MERGE time (`is:merged sort:updated-desc`), never by creation time.
+# Sampling the newest-created merged PRs selects for the ones that merged fast —
+# the slow ones have not merged yet and are invisible. On 2026-08-20 that method
+# reported openclaw's slowest external merge as 4h, and the window was set to
+# 24h on that basis. openclaw#121306 merged the same day at 10 days old, 60x the
+# supposed maximum. Re-measured by merge time over 84 PRs: p50 1h, p75 24h,
+# p90 140h, longest 507h.
 MERGE_WINDOW_HOURS = {
-    # hermes: 10 days, raised from 72h on 2026-08-16 at Bruce's call. 72h was
-    # set from a 40-merge sample of direct merges, but this repo does not land
-    # our work by merging our PR — a maintainer cherry-picks the commits into
-    # their own. Those salvages arrived at 16h, 151h, 3 days and 5 days, so a
-    # 72h window stopped us answering reviewers on PRs that were still on their
-    # way to landing. The same mistake as cutting its quota at day three.
+    # hermes lands by salvage — a maintainer cherry-picks our commits into their
+    # own PR — and those arrived at 16h, 151h, 3 days and 5 days. Its merged-PR
+    # latency (p90 6h) describes other people's direct merges, not our path.
     "NousResearch/hermes-agent": 240,
-    # adk: 14 days. External PRs land at a median of 4.5 days and p75 of 7.4;
-    # 97% of the landings measured over 204 external PRs happened inside 14
-    # days. Past that the PR is not slow, it is finished — cheesebee123's has
-    # carried `ready to pull` for 87 days without moving.
-    #
-    # Nothing visible on GitHub says so. Only 3% of landed external PRs ever
-    # got a maintainer review, and `ready to pull` sat on 8 external PRs that
-    # were closed without landing against 2 that landed, both of them adk-bot's
-    # own release chores. We had read an approval plus that label on #6531 as
-    # "closest to landing"; on this evidence it is the opposite signal, and the
-    # only real one is adk-bot's Copybara comment.
+    # adk: 14 days, and this one is NOT from merged-PR latency — only 3 external
+    # PRs there merge at all, because Copybara imports and closes them. Measured
+    # instead on actual landings over 204 external PRs: 97% inside 14 days.
     "google/adk-python": 336,
-    # ComfyUI: 7 days. Its external PRs merge at a median of 0.5 days, p75 3.1,
-    # p90 7.2, and 37 of 37 sampled merged inside 14 — this is the fastest repo
-    # we track. Ours sit instead: 17 open, only one with a human approval, the
-    # other sixteen carrying nothing but coderabbitai's, which approves almost
-    # everything and means nothing. Past a week the queue has moved on.
-    "Comfy-Org/ComfyUI": 168,
-    # openclaw: 24h. Measured over 55 external merges — p50 0h, p75 1h, p90 1h,
-    # longest 4h. It decides within an afternoon or not at all. We were holding
-    # twelve open PRs there at a median age of two days and answering reviewers
-    # on all of them. 24 rather than 8 only because skipping a live PR costs a
-    # real chance while answering a dead one costs one session.
-    "openclaw/openclaw": 24,
+    # ComfyUI: p90 212h (8.8 days) by merge time, against the 7.2 days the
+    # biased sample claimed. 10 days.
+    "Comfy-Org/ComfyUI": 240,
+    # openclaw: p90 140h (5.8 days). 7 days, not the 24h a biased sample gave.
+    "openclaw/openclaw": 168,
 }
 
 

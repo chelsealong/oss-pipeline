@@ -650,11 +650,20 @@ if wp.MERGE_WINDOW_HOURS.get("google/adk-python") != 336:
 # ComfyUI is the fastest repo we track: external PRs merge at a median of 0.5
 # days, p90 7.2, and 37 of 37 sampled inside 14. A longer window here would
 # spend sessions answering PRs the queue has already moved past.
-if wp.MERGE_WINDOW_HOURS.get("Comfy-Org/ComfyUI") != 168:
-    print("  FAIL  ComfyUI window is not 7 days — its p90 merge is 7.2 days"); bad += 1
-# openclaw decides in hours: 55 external merges at p50 0h, p90 1h, longest 4h.
-if wp.MERGE_WINDOW_HOURS.get("openclaw/openclaw") != 24:
-    print("  FAIL  openclaw window is not 24h — its slowest observed merge was 4h"); bad += 1
+# These two were set from a biased sample and had to be corrected. Sampling the
+# newest-CREATED merged PRs selects for the ones that merged fast: the slow ones
+# have not merged yet and cannot appear. That method put openclaw's slowest
+# external merge at 4h and the window at 24h; openclaw#121306 merged the same
+# day at 10 days old. Re-measured by MERGE time over 84 PRs: p90 140h.
+if wp.MERGE_WINDOW_HOURS.get("Comfy-Org/ComfyUI") != 240:
+    print("  FAIL  ComfyUI window is not 10 days — its p90 by merge time is 8.8"); bad += 1
+if wp.MERGE_WINDOW_HOURS.get("openclaw/openclaw") != 168:
+    print("  FAIL  openclaw window is not 7 days — its p90 by merge time is 5.8"); bad += 1
+# The method note has to stay next to the numbers, or the next person measures
+# it the same wrong way.
+wsrc = src.split("MERGE_WINDOW_HOURS = {")[0][-1400:]
+if "merge time" not in wsrc.lower() or "creation" not in wsrc.lower():
+    print("  FAIL  the sampling-bias warning is gone from beside the window table"); bad += 1
 
 # A failing check is only ours if our change could have caused it. Four
 # unrelated PRs of ours — an arXiv link fix, two Desktop changes, a skills
