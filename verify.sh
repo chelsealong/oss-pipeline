@@ -1281,6 +1281,34 @@ for key, c in cred.items():
         print(f"  FAIL  {key} counted as both a commit and a credit"); bad += 1
     if not c.get("evidence"):
         print(f"  FAIL  {key} recorded with no quotable evidence line"); bad += 1
+
+# `compare/HEAD...<sha>` answers "identical" when the commit IS the current tip,
+# and only "behind" once something lands on top of it. Accepting behind alone
+# meant the NEWEST landing was always invisible — adk e4ba7040 was the head of
+# main forty-five minutes after import and read as not-landed. The bias is
+# permanent and always in the same direction: it undercounts by exactly the
+# result we look at most often.
+if '("behind", "identical")' not in src:
+    print("  FAIL  on_default_branch rejects 'identical' — the newest landing is invisible"); bad += 1
+import landings as _L
+_real = _L._gh
+try:
+    _L._gh = lambda *a, **k: "identical\n"
+    if not _L.on_default_branch("x/y", "deadbeef"):
+        print("  FAIL  a commit that IS the tip is not counted as landed"); bad += 1
+    _L._gh = lambda *a, **k: "behind\n"
+    if not _L.on_default_branch("x/y", "deadbeef"):
+        print("  FAIL  an ancestor of the tip is not counted as landed"); bad += 1
+    # The distinction that matters must survive: a commit on our own fork branch
+    # answers "diverged", and counting those would inflate every figure.
+    _L._gh = lambda *a, **k: "diverged\n"
+    if _L.on_default_branch("x/y", "deadbeef"):
+        print("  FAIL  a fork-only commit is being counted as landed"); bad += 1
+    _L._gh = lambda *a, **k: "ahead\n"
+    if _L.on_default_branch("x/y", "deadbeef"):
+        print("  FAIL  an unmerged descendant is being counted as landed"); bad += 1
+finally:
+    _L._gh = _real
 PY3
 
 say "36. a dispatch is remembered, but not forever"

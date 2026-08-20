@@ -106,7 +106,11 @@ def on_default_branch(repo: str, sha: str) -> bool:
         out = _gh(["api", f"repos/{repo}/compare/HEAD...{sha}", "--jq", ".status"])
     except Exception:  # noqa: BLE001
         return False
-    return out.strip() == "behind"
+    # "identical" means the commit IS the current tip, which is as landed as it
+    # gets — and it is what the newest landing always reports. adk e4ba7040 was
+    # the head of main forty-five minutes after being imported and this returned
+    # False for it, so the freshest result was the one the ledger could not see.
+    return out.strip() in ("behind", "identical")
 
 
 def fetch_new(repo: str, since: str | None) -> list[dict]:
