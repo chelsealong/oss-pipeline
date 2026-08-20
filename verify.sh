@@ -652,6 +652,29 @@ if wp.MERGE_WINDOW_HOURS.get("google/adk-python") != 336:
 # spend sessions answering PRs the queue has already moved past.
 if wp.MERGE_WINDOW_HOURS.get("Comfy-Org/ComfyUI") != 168:
     print("  FAIL  ComfyUI window is not 7 days — its p90 merge is 7.2 days"); bad += 1
+# openclaw decides in hours: 55 external merges at p50 0h, p90 1h, longest 4h.
+if wp.MERGE_WINDOW_HOURS.get("openclaw/openclaw") != 24:
+    print("  FAIL  openclaw window is not 24h — its slowest observed merge was 4h"); bad += 1
+
+# A failing check is only ours if our change could have caused it. Four
+# unrelated PRs of ours — an arXiv link fix, two Desktop changes, a skills
+# validator — all failed hermes's `Run tests slice 10/12` on a test in
+# tests/gateway/test_goal_continuation_drain.py that none of them touches,
+# while other authors were failing slices 9/12 and 2/12 in the same hour.
+if not hasattr(wp, "broken_for_everyone"):
+    print("  FAIL  nothing checks whether a failing check is failing for everyone"); bad += 1
+if wp._norm_check("Run tests slice 10/12") != wp._norm_check("Run tests slice 9/12"):
+    print("  FAIL  shard numbers are not normalised, so a broken suite reads as ours"); bad += 1
+# Fork-only failures cannot be seen that way: they never appear on a PR opened
+# from a branch inside the org. openclaw's check-sqlite-session-flip-proof was
+# traced to fork isolation and written into lessons, and was still being treated
+# as ours.
+if not wp.FORK_ONLY_CHECKS.get("openclaw/openclaw"):
+    print("  FAIL  established fork-only checks are not recorded"); bad += 1
+if wp._is_ours({"_repo": "openclaw/openclaw"}, "check-sqlite-session-flip-proof"):
+    print("  FAIL  a known fork-only check still counts as ours"); bad += 1
+if not wp._is_ours({"_repo": "openclaw/openclaw"}, "build / tsc"):
+    print("  FAIL  a genuine build failure is being dismissed as not ours"); bad += 1
 for pr, want in CASES:
     got, _ = wp.past_merge_window(pr)
     if got != want:

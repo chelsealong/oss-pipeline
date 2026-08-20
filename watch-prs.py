@@ -99,6 +99,12 @@ MERGE_WINDOW_HOURS = {
     # other sixteen carrying nothing but coderabbitai's, which approves almost
     # everything and means nothing. Past a week the queue has moved on.
     "Comfy-Org/ComfyUI": 168,
+    # openclaw: 24h. Measured over 55 external merges — p50 0h, p75 1h, p90 1h,
+    # longest 4h. It decides within an afternoon or not at all. We were holding
+    # twelve open PRs there at a median age of two days and answering reviewers
+    # on all of them. 24 rather than 8 only because skipping a live PR costs a
+    # real chance while answering a dead one costs one session.
+    "openclaw/openclaw": 24,
 }
 
 
@@ -505,6 +511,75 @@ def _utc_day() -> str:
     return datetime.now(timezone.utc).date().isoformat()
 
 
+# Cached per repo for one pass. A check that is failing on OTHER people's open
+# PRs is broken for everyone, not caused by us.
+_BROKEN_FOR_ALL: dict = {}
+
+
+def _norm_check(name: str) -> str:
+    """Collapse shard numbers so `slice 10/12` and `slice 9/12` compare equal.
+
+    hermes runs its suite in twelve shards. Four of our PRs — an arXiv link fix,
+    two Desktop changes and a skills validator — all failed `Run tests slice
+    10/12`, on the same test in tests/gateway/test_goal_continuation_drain.py,
+    which none of them goes anywhere near. Other authors were failing slices
+    9/12 and 2/12 in the same hour. Compared literally, no other PR failed
+    "10/12" and ours looked unique; normalised, it is plainly the suite.
+    """
+    return _re.sub(r"\d+", "N", (name or "").lower()).strip()
+
+
+def broken_for_everyone(repo: str) -> set:
+    """Normalised names of checks failing on other authors' open PRs here."""
+    if repo in _BROKEN_FOR_ALL:
+        return _BROKEN_FOR_ALL[repo]
+    q = ('{search(query:"repo:%s is:pr is:open sort:created-desc", type:ISSUE, first:30)'
+         "{nodes{... on PullRequest{author{login} commits(last:1){nodes{commit{"
+         "statusCheckRollup{contexts(last:40){nodes{... on CheckRun{name conclusion}}}}"
+         "}}}}}}}" % repo)
+    out = set()
+    try:
+        data = json.loads(scan.gh(["api", "graphql", "-f", f"query={q}"]))
+        for pr in (data["data"]["search"]["nodes"] or []):
+            if not pr or ((pr.get("author") or {}).get("login")) == ME:
+                continue
+            roll = ((pr.get("commits") or {}).get("nodes") or [{}])[0]
+            roll = ((roll or {}).get("commit") or {}).get("statusCheckRollup") or {}
+            for c in ((roll.get("contexts") or {}).get("nodes") or []):
+                if c and c.get("conclusion") == "FAILURE" and c.get("name"):
+                    out.add(_norm_check(c["name"]))
+    except Exception as e:  # noqa: BLE001
+        # Empty, not "everything is broken". Guessing that a check is not ours
+        # is the direction that ignores a regression we caused.
+        log(f"  could not sample {repo}'s other PRs: {str(e)[:90]}")
+        return set()
+    _BROKEN_FOR_ALL[repo] = out
+    return out
+
+
+# Checks established by investigation to fail for forks regardless of the diff.
+# The "failing for other authors too" signal cannot see these: a fork-only
+# failure never appears on a PR opened from a branch in the org. Each entry here
+# is a finding written down in lessons/<repo>.md, not a guess — openclaw's
+# check-sqlite-session-flip-proof was traced to fork isolation and recorded, and
+# then this filter went on treating it as ours anyway.
+FORK_ONLY_CHECKS = {
+    "openclaw/openclaw": (r"check-sqlite-session-flip-proof",),
+}
+
+
+def _is_ours(pr: dict, name: str) -> bool:
+    """Is this failing check plausibly caused by our change?"""
+    name = name or ""
+    if NOT_OUR_CHECKS.search(name):
+        return False
+    repo = pr.get("_repo") or ""
+    for pat in FORK_ONLY_CHECKS.get(repo, ()):
+        if _re.search(pat, name, _re.I):
+            return False
+    return _norm_check(name) not in broken_for_everyone(repo)
+
+
 def failing_checks(pr: dict) -> list[dict]:
     """Failing checks on the PR's newest commit, split into ours and not-ours.
 
@@ -534,7 +609,7 @@ def failing_checks(pr: dict) -> list[dict]:
         bad = c.get("conclusion") in ("FAILURE", "TIMED_OUT") or c.get("state") == "FAILURE"
         if not name or not bad:
             continue
-        out.append({"name": name, "sha": sha, "ours": not NOT_OUR_CHECKS.search(name)})
+        out.append({"name": name, "sha": sha, "ours": _is_ours(pr, name)})
     return out
 
 
@@ -565,7 +640,7 @@ def _failing_checks_rest(repo: str, oid: str, sha: str) -> list[dict]:
     for r in runs:
         if r.get("c") in ("failure", "timed_out") and r.get("n") not in seen:
             seen.add(r["n"])
-            out.append({"name": r["n"], "sha": sha, "ours": not NOT_OUR_CHECKS.search(r["n"])})
+            out.append({"name": r["n"], "sha": sha, "ours": _is_ours(pr, r["n"])})
     sts = []
     try:
         raw = scan.gh(["api", f"repos/{repo}/commits/{oid}/status?per_page=100",
@@ -579,7 +654,7 @@ def _failing_checks_rest(repo: str, oid: str, sha: str) -> list[dict]:
     for r in sts:
         if r.get("c") == "failure" and r.get("n") not in seen:
             seen.add(r["n"])
-            out.append({"name": r["n"], "sha": sha, "ours": not NOT_OUR_CHECKS.search(r["n"])})
+            out.append({"name": r["n"], "sha": sha, "ours": _is_ours(pr, r["n"])})
     return out
 
 
