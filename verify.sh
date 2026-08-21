@@ -1092,35 +1092,64 @@ print("  ok     dispatched once, late labels honoured, triage not raced" if not 
 sys.exit(1 if bad else 0)
 PY3
 
-say "31. the judge falls down a model chain instead of going silent"
+say "31. the judge falls down a live model chain and retires what fails"
 python3 - "$SCANNER" "$(cd "$(dirname "$0")" && pwd)" <<'PY3'
-import sys, pathlib
+import io, json, pathlib, sys, tempfile, urllib.error
 sys.path.insert(0, sys.argv[1])
-bad = 0
 import intent
-if len(getattr(intent, "MODELS", [])) < 2:
-    print("  FAIL  no fallback chain — one model outage silences every judgement"); bad += 1
-if intent.MODELS[0] != "qwen3.7-max":
-    print(f"  FAIL  chain does not start at qwen3.7-max (got {intent.MODELS[0]})"); bad += 1
-real = intent._ask_one
+bad = 0
+if len(intent.MODELS) < 4:
+    print("  FAIL  no fallback chain — one outage silences every judgement"); bad += 1
+if intent.MODELS[0] != "qwen3.7-max-preview":
+    print(f"  FAIL  chain does not start at qwen3.7-max-preview (got {intent.MODELS[0]})"); bad += 1
+# qwen3.7-max and qwen3.7-max-2026-05-20 exhausted their free tier on 2026-08-21.
+# Free quota does not come back, so they are removed, not demoted.
+for gone in ("qwen3.7-max", "qwen3.7-max-2026-05-20"):
+    if gone in intent.MODELS:
+        print(f"  FAIL  {gone} is exhausted and still on the chain"); bad += 1
+# qwen3.7-plus answered a real comment in 32.9s. At the old 25s timeout it was
+# on the chain and unreachable, and the whole chain reported ALLFAILED.
+if intent.TIMEOUT < 40:
+    print(f"  FAIL  TIMEOUT={intent.TIMEOUT}s is below the observed 32.9s answer"); bad += 1
+
+real = intent.urllib.request.urlopen
+intent.RETIRED = pathlib.Path(tempfile.mkdtemp()) / "r.json"
+seen = []
+def fake(req, timeout=None):
+    m = json.loads(req.data)["model"]
+    seen.append(m)
+    if m == intent.MODELS[0]:
+        raise urllib.error.HTTPError("u", 403, "F", {}, io.BytesIO(
+            b'{"error":{"message":"Free quota exhausted.","type":"AllocationQuota"}}'))
+    if m == intent.MODELS[1]:
+        raise TimeoutError("slow")
+    class R:
+        def __enter__(self): return self
+        def __exit__(self, *a): pass
+        def read(self):
+            return json.dumps({"choices": [{"message": {"content": '{"claim":true,"why":"x"}'}}]}).encode()
+    return R()
 try:
-    # Everything but the last entry fails: the call must still be answered.
+    intent.urllib.request.urlopen = fake
     intent._down.clear()
-    intent._ask_one = lambda m, *a, **k: None if m != intent.MODELS[-1] else {"claim": True, "why": "x"}
     if intent._ask("s", "u") is None:
-        print("  FAIL  the chain gives up before reaching the last model"); bad += 1
-    # A failed model is put on cooldown, so an outage is not re-paid every call.
-    intent._down.clear()
-    intent._ask_one = lambda m, *a, **k: None
-    intent._ask("s", "u")
-    if not intent._down:
-        print("  FAIL  failures are not cooled down — every call re-pays the timeout"); bad += 1
-    # ...but a cooldown must never become permanent silence.
-    intent._ask("s", "u")
-    if intent._down:
-        print("  FAIL  all-down state is not cleared; the judge can never recover"); bad += 1
+        print("  FAIL  the chain gives up instead of reaching a working model"); bad += 1
+    # A 403 for exhausted quota is terminal: no second opinion is needed and a
+    # second attempt only pays the cost twice.
+    if intent.MODELS[0] not in intent.dead_models():
+        print("  FAIL  an exhausted-quota 403 does not retire the model at once"); bad += 1
+    # Anything else gets two strikes, then goes.
+    intent._down.clear(); intent._ask("s", "u")
+    if intent.MODELS[1] not in intent.dead_models():
+        print(f"  FAIL  {intent.MODELS[1]} still live after {intent.STRIKES_TO_RETIRE} failures"); bad += 1
+    # Retired means no request at all, not a cheap failure.
+    seen.clear(); intent._down.clear(); intent._ask("s", "u")
+    if any(m in seen for m in intent.dead_models()):
+        print(f"  FAIL  a retired model is still being called: {seen}"); bad += 1
+    if intent.live_models() and intent.live_models()[0] in intent.dead_models():
+        print("  FAIL  live_models() returns a retired model"); bad += 1
 finally:
-    intent._ask_one = real
+    intent.urllib.request.urlopen = real
     intent._down.clear()
 # The key has to exist where the code runs. It was absent from Actions entirely
 # until 2026-08-17, so every cloud re-vet judged commented issues "claimed".
@@ -1128,7 +1157,7 @@ f = pathlib.Path(sys.argv[2] + "/.github/workflows/fix-one.yml").read_text()
 revet = f.split("Re-vet before spending a session")[1].split("- name:")[0]
 if "QWEN_API_KEY" not in revet:
     print("  FAIL  the re-vet has no QWEN_API_KEY — claimants() fails closed and skips"); bad += 1
-print("  ok     chain tried in order, cooled down, and always recoverable" if not bad else f"  {bad} problem(s)")
+print("  ok     chain live-filtered, terminal failures retired at once" if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY3
 

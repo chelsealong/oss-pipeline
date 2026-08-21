@@ -43,19 +43,88 @@ ROOT = pathlib.Path(__file__).resolve().parent
 CACHE = ROOT / "state" / "intent-cache.json"
 LOG = ROOT / "intent.log"
 ENDPOINT = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
-# Tried in order. The first that answers wins; a model that fails is skipped
-# for COOLDOWN seconds so one outage does not pay its timeout on every call,
-# and the list is re-entered from the top afterwards rather than degrading
-# permanently. All four were probed working on 2026-08-17.
+# Tried in order, first answer wins. Two kinds of failure, handled differently
+# because they mean different things:
+#
+#   * A 403 "Free quota exhausted" is PERMANENT — the allowance does not come
+#     back. Retrying it costs 0.5s on every judgement forever and, worse, is
+#     re-probed from scratch on each watcher restart. Such a model is written to
+#     state and never tried again.
+#   * A timeout or a network error is transient, so the model is skipped for
+#     COOLDOWN seconds and then re-entered from the top.
+#
+# Order set by Bruce on 2026-08-21 after qwen3.7-max and qwen3.7-max-2026-05-20
+# exhausted their free tier. Those two are removed rather than demoted: there is
+# nothing to wait for.
 MODELS = [
-    "qwen3.7-max",
-    "qwen3.7-max-2026-05-20",
     "qwen3.7-max-preview",
+    "qwen3.7-max-2026-05-17",
+    "qwen3.7-plus-2026-05-26",
     "qwen3.7-plus",
+    "qwen3.7-max-2026-06-08",
+    "kimi-k2.7-code",
+    "glm-5.2",
+    "qwen3.7-flash",
+    "deepseek-v4-flash-0731",
 ]
 MODEL = MODELS[0]          # kept for logs and for anything that reads a name
 COOLDOWN = 300.0
+# Raised from 25s. qwen3.7-plus answered in 32.9s on a real comment, so at 25 it
+# was on the chain without ever being reachable — the whole chain then reported
+# ALLFAILED on a long comment from steipete.
+TIMEOUT = 45
+RETIRED = ROOT / "state" / "models-retired.json"
+# Two strikes and the model is gone for good. Bruce's rule, and it is the right
+# one: a model that has failed twice is not worth a third request on every
+# judgement forever, and a retired entry costs nothing because the skip happens
+# before any network call is made. The record is a state file rather than an
+# edit to MODELS above — self-rewriting source is a worse failure mode than a
+# file, and this survives restarts either way, which is the actual requirement.
+STRIKES_TO_RETIRE = 2
 _down: dict[str, float] = {}
+
+
+def _retired() -> dict:
+    """{model: {"strikes": n, "why": "", "retired": bool}}"""
+    try:
+        return json.loads(RETIRED.read_text()) if RETIRED.exists() else {}
+    except Exception:  # noqa: BLE001
+        return {}
+
+
+def _save_retired(d: dict) -> None:
+    try:
+        RETIRED.parent.mkdir(parents=True, exist_ok=True)
+        RETIRED.write_text(json.dumps(d, indent=1, sort_keys=True) + "\n")
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def dead_models() -> set:
+    return {m for m, v in _retired().items() if v.get("retired")}
+
+
+def _strike(model: str, why: str, *, immediate: bool = False) -> None:
+    """Record a failure. Retire at STRIKES_TO_RETIRE, or at once if terminal."""
+    d = _retired()
+    rec = d.setdefault(model, {"strikes": 0, "why": "", "retired": False})
+    if rec.get("retired"):
+        return
+    rec["strikes"] = int(rec.get("strikes", 0)) + 1
+    rec["why"] = why[:120]
+    # A 403 for exhausted quota needs no second opinion: the allowance is gone
+    # and will not return, so waiting for a second strike only pays the cost
+    # twice.
+    if immediate or rec["strikes"] >= STRIKES_TO_RETIRE:
+        rec["retired"] = True
+        _log(f"RETIRED {model} after {rec['strikes']} strike(s) — {why[:80]}")
+    _save_retired(d)
+
+
+def live_models() -> list:
+    """The chain with retired entries removed. This is what actually runs."""
+    dead = dead_models()
+    return [m for m in MODELS if m not in dead]
 TIMEOUT = 25
 
 # Deliberately loose: anything a claim could possibly contain. Its only job is to
@@ -192,8 +261,11 @@ def _ask(system: str, user: str, *, author: str = "?") -> dict | None:
         return None
     import time as _time
     now = _time.monotonic()
+    dead = dead_models()
     tried = []
     for model in MODELS:
+        if model in dead:
+            continue                       # retired; no request is made at all
         if _down.get(model, 0.0) > now:
             continue                       # still cooling down from a failure
         tried.append(model)
@@ -204,11 +276,14 @@ def _ask(system: str, user: str, *, author: str = "?") -> dict | None:
             return got
         _down[model] = now + COOLDOWN
     if not tried:
-        # Every model is cooling down. Clear the marks so the next call is a
-        # real attempt rather than a silent no — a stale cooldown must not
-        # become a permanent outage.
-        _down.clear()
-        _log(f"ALLDOWN author={author}; cooldowns cleared")
+        # Everything live is cooling down. Clear the transient marks so the next
+        # call is a real attempt — a stale cooldown must not become a permanent
+        # outage. Exhausted models are NOT cleared: that state is real.
+        if _down:
+            _down.clear()
+            _log(f"ALLDOWN author={author}; cooldowns cleared ({len(dead)} retired)")
+        else:
+            _log(f"NOMODELS author={author}; all {len(dead)} models retired")
     else:
         _log(f"ALLFAILED author={author} tried={tried}")
     return None
@@ -228,7 +303,19 @@ def _ask_one(model: str, system: str, user: str, api: str, *, author: str) -> di
     try:
         with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
             content = json.loads(r.read().decode())["choices"][0]["message"]["content"]
+    except urllib.error.HTTPError as e:
+        body = ""
+        try:
+            body = e.read().decode("utf-8", "replace")[:300]
+        except Exception:  # noqa: BLE001
+            pass
+        # The message is the only way to tell "your allowance is gone" from
+        # "try again later", and the two deserve opposite treatment.
+        quota = e.code in (402, 403) and ("quota" in body.lower() or "allocation" in body.lower())
+        _strike(model, f"HTTP {e.code} {body[:60]}", immediate=quota)
+        return None
     except (urllib.error.URLError, OSError, KeyError, ValueError, TimeoutError) as e:
+        _strike(model, type(e).__name__)
         _log(f"ERROR {model} {type(e).__name__} author={author} :: {user[:80]!r}")
         return None
     m = re.search(r"\{.*\}", content, re.S)
