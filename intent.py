@@ -77,13 +77,24 @@ COOLDOWN = 300.0
 # it costs the model.
 TIMEOUT = 90
 RETIRED = ROOT / "state" / "models-retired.json"
-# Two strikes and the model is gone for good. Bruce's rule, and it is the right
-# one: a model that has failed twice is not worth a third request on every
-# judgement forever, and a retired entry costs nothing because the skip happens
-# before any network call is made. The record is a state file rather than an
-# edit to MODELS above — self-rewriting source is a worse failure mode than a
-# file, and this survives restarts either way, which is the actual requirement.
+# Two strikes retires a model, but only for failures that say something about
+# the MODEL. The distinction had to be added within a day of the rule:
+#
+# One comment (lorengordon's, on a long thread) produced a failure on all eight
+# live models in a single call — two timeouts and six URLErrors. Eight models do
+# not break at once; that was the network, or that one input. Every one of them
+# took a strike, and qwen3.7-max-2026-05-17 was retired on the second, an hour
+# after answering a probe in 6.2s. A few outages at that rate empty the chain,
+# and an empty chain means every judgement falls to its default.
+#
+# So:
+#   * HTTP 403 "quota exhausted" retires at once. It is a statement of fact and
+#     it will not read differently on a second attempt.
+#   * A timeout or network error counts a strike, but strikes EXPIRE, and a call
+#     where every model failed records none at all — that is evidence about the
+#     network, not about nine separate models.
 STRIKES_TO_RETIRE = 2
+STRIKE_TTL_HOURS = 24
 _down: dict[str, float] = {}
 
 
@@ -109,19 +120,46 @@ def dead_models() -> set:
 
 def _strike(model: str, why: str, *, immediate: bool = False) -> None:
     """Record a failure. Retire at STRIKES_TO_RETIRE, or at once if terminal."""
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc)
     d = _retired()
-    rec = d.setdefault(model, {"strikes": 0, "why": "", "retired": False})
+    rec = d.setdefault(model, {"strikes": 0, "why": "", "retired": False, "at": ""})
     if rec.get("retired"):
         return
+    # Expire stale strikes. A model that failed once yesterday and works today
+    # has not accumulated evidence against itself.
+    if not immediate and rec.get("at"):
+        try:
+            age = (now - datetime.fromisoformat(rec["at"])).total_seconds() / 3600
+            if age > STRIKE_TTL_HOURS:
+                rec["strikes"] = 0
+        except Exception:  # noqa: BLE001
+            pass
     rec["strikes"] = int(rec.get("strikes", 0)) + 1
     rec["why"] = why[:120]
-    # A 403 for exhausted quota needs no second opinion: the allowance is gone
-    # and will not return, so waiting for a second strike only pays the cost
-    # twice.
+    rec["at"] = now.isoformat(timespec="seconds")
     if immediate or rec["strikes"] >= STRIKES_TO_RETIRE:
         rec["retired"] = True
         _log(f"RETIRED {model} after {rec['strikes']} strike(s) — {why[:80]}")
     _save_retired(d)
+
+
+def _unstrike(models: list) -> None:
+    """Undo strikes from a call in which everything failed.
+
+    Eight models failing in one call is evidence about the network. Charging
+    each of them for it is how a chain empties itself over an afternoon.
+    """
+    d = _retired()
+    changed = False
+    for m in models:
+        rec = d.get(m)
+        if rec and not rec.get("retired") and rec.get("strikes"):
+            rec["strikes"] = max(0, int(rec["strikes"]) - 1)
+            changed = True
+    if changed:
+        _save_retired(d)
+        _log(f"UNSTRIKE {len(models)} model(s) — every model failed, so this was not the models")
 
 
 def live_models() -> list:
@@ -287,6 +325,10 @@ def _ask(system: str, user: str, *, author: str = "?") -> dict | None:
         else:
             _log(f"NOMODELS author={author}; all {len(dead)} models retired")
     else:
+        # Nothing answered. If more than one was tried, the common factor is not
+        # the models — hand the strikes back before they retire a working chain.
+        if len(tried) > 1:
+            _unstrike([m for m in tried if not _retired().get(m, {}).get("retired")])
         _log(f"ALLFAILED author={author} tried={tried}")
     return None
 

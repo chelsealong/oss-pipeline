@@ -1145,6 +1145,22 @@ try:
     intent._down.clear(); intent._ask("s", "u")
     if intent.MODELS[1] not in intent.dead_models():
         print(f"  FAIL  {intent.MODELS[1]} still live after {intent.STRIKES_TO_RETIRE} failures"); bad += 1
+    # A call in which EVERY model failed is evidence about the network, not
+    # about nine separate models. One comment produced a failure on all eight
+    # live models in a single call and retired a model that had answered a
+    # probe in 6.2s an hour earlier. Strikes from such a call are handed back.
+    intent.RETIRED = pathlib.Path(tempfile.mkdtemp()) / "r2.json"
+    intent._down.clear()
+    intent.urllib.request.urlopen = lambda req, timeout=None: (
+        (_ for _ in ()).throw(urllib.error.URLError("network down")))
+    intent._ask("s", "u")
+    left = {m: v.get("strikes", 0) for m, v in intent._retired().items() if v.get("strikes")}
+    if left:
+        print(f"  FAIL  a total outage charged strikes to {left}"); bad += 1
+    if intent.dead_models():
+        print(f"  FAIL  a total outage retired {sorted(intent.dead_models())}"); bad += 1
+    if intent.STRIKE_TTL_HOURS < 1:
+        print("  FAIL  strikes never expire, so transient failures accumulate forever"); bad += 1
     # Retired means no request at all, not a cheap failure.
     seen.clear(); intent._down.clear(); intent._ask("s", "u")
     if any(m in seen for m in intent.dead_models()):
