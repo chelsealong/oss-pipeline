@@ -79,7 +79,7 @@ jobs:
         run: |
           python - <<'PY' >> "$GITHUB_OUTPUT"
           import os, sys
-          sys.path.insert(0, '.')
+          sys.path.insert(0, os.environ["GITHUB_WORKSPACE"])
           import scan
           key = os.environ['KEY']
           cfg = scan.REPOS.get(key)
@@ -1047,7 +1047,12 @@ jobs:
           if [ -n "${ANNOUNCED_AT:-}" ]; then
             claimed=$(python - <<'PYCLAIM'
           import json, os, re, sys
-          sys.path.insert(0, '.')
+          # This step runs in work/ — the fork checkout — so '.' is not where
+          # scan.py lives. It raised ModuleNotFoundError and, because the shell
+          # is `bash -e`, took the whole step down: five adk PRs were fully
+          # generated and reviewed and then never opened. The guard meant to
+          # keep a promise silently discarded the work instead.
+          sys.path.insert(0, os.environ["GITHUB_WORKSPACE"])
           import scan
           up = os.environ['UPSTREAM']; num = int(os.environ['NUM'])
           since = os.environ['ANNOUNCED_AT']

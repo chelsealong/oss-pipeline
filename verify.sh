@@ -1483,6 +1483,41 @@ print(f"  ok     all {seen} checks report into the counter" if not bad else f"  
 sys.exit(1 if bad else 0)
 PY3
 
+say "39. a step that runs in work/ can still import the pipeline's own modules"
+python3 - "$(cd "$(dirname "$0")" && pwd)" <<'PY3' || fail=$((fail+1))
+import pathlib, sys, yaml
+bad = 0
+root = pathlib.Path(sys.argv[1])
+wf = yaml.safe_load((root / ".github/workflows/fix-one.yml").read_text())
+# The Open PR step runs in work/, the fork checkout. `sys.path.insert(0, '.')`
+# there points at the target repo, so `import scan` raised ModuleNotFoundError,
+# and because the shell is `bash -e` it took the whole step down: five adk PRs
+# were generated, reviewed, approved and then never opened. A guard written to
+# keep a promise discarded the work instead — and it failed loudly in the log
+# while looking, from outside, like a run that simply produced nothing.
+for job in wf["jobs"].values():
+    for st in job.get("steps", []):
+        run = str(st.get("run") or "")
+        if "sys.path.insert" not in run:
+            continue
+        name = str(st.get("name", "?"))
+        wd = st.get("working-directory")
+        # Examine the insert LINES, not the whole step. Every one of these steps
+        # mentions $GITHUB_WORKSPACE somewhere for file paths, so a substring
+        # test over the step body passes no matter what the path insert says —
+        # the first version of this check was written that way and did not catch
+        # the bug it was written for.
+        inserts = [l.strip() for l in run.split("\n") if "sys.path.insert" in l]
+        if not wd:
+            continue                      # runs at the repo root; '.' is correct
+        if not any("GITHUB_WORKSPACE" in l for l in inserts):
+            print(f"  FAIL  '{name}' runs in {wd}/ and no sys.path.insert names "
+                  f"GITHUB_WORKSPACE: {inserts}")
+            bad += 1
+print("  ok     every module import resolves from the directory it runs in" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1
