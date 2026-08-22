@@ -120,8 +120,30 @@ REPOS: dict[str, dict] = {
     # were genuine external contributions, median 26h, and all 35 open issues on
     # the first page are unassigned. Median merge is +223, so the size ceiling
     # in fix-one.yml matters here more than the merge rate does.
+    # PAUSED 2026-08-22. BerriAI/litellm refuses PR creation from this account:
+    #
+    #   GraphQL: chelsealong does not have the correct permissions
+    #   to execute `CreatePullRequest`
+    #
+    # Reproduced deliberately with a branch that was already pushed, rebased and
+    # reviewed. It is NOT an account block — writes to our own existing PRs
+    # there still succeed, and we opened PRs on three other repos the same day.
+    # It is a repository-level restriction on creating pull requests, most likely
+    # a GitHub interaction limit, which is invisible to the restricted account
+    # and expires on its own. Last successful create 08-19 02:19; first refusal
+    # 08-20 00:39 — the same window in which litellm merged 345 PRs, so a
+    # temporary limit during a flood is the plausible reading.
+    #
+    # Five dispatches since then each ran generation and adversarial review to
+    # completion — about 40 minutes of Claude apiece — and were refused at the
+    # final step. Those five branches are still on the fork with good content;
+    # if the limit lifts they can be opened by hand without regenerating.
+    #
+    # To resume: try `gh pr create` on one of those branches. If it succeeds,
+    # delete this comment and the `paused` flag.
     "litellm": {
         "upstream": "BerriAI/litellm",
+        "paused": "cannot create PRs — repo-level restriction, see comment above",
         "searches": ['label:bug sort:created-desc', "sort:created-desc"],
         "exclude_labels": set(),
         # enterprise/ is under a separate licence; nothing there is ours to fix.
@@ -573,6 +595,12 @@ def claimants(upstream: str, number: int) -> list[str]:
 
 
 def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
+    # First, and before any API call. A paused repo is one we have established
+    # cannot accept our work — spending a scan on it, let alone a session, is
+    # pure waste. litellm burned five full generate-and-review cycles being
+    # refused at `gh pr create`.
+    if why := cfg.get("paused"):
+        return False, f"repo paused: {why}", {}
     labels = {l["name"] for l in issue.get("labels", [])}
     num, title = issue["number"], issue.get("title", "")
 

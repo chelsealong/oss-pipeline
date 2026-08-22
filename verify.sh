@@ -1518,6 +1518,44 @@ print("  ok     every module import resolves from the directory it runs in" if n
 sys.exit(1 if bad else 0)
 PY3
 
+say "40. a paused repo is refused before anything is spent on it"
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import sys, pathlib
+sys.path.insert(0, sys.argv[1])
+import scan
+bad = 0
+src = pathlib.Path(sys.argv[1] + "/scan.py").read_text()
+# litellm refuses PR creation from this account with "does not have the correct
+# permissions to execute CreatePullRequest" — not a block (writes to our own
+# PRs there still work) but a repo-level restriction. Five dispatches ran
+# generation and adversarial review to completion, ~40 minutes of Claude each,
+# and were refused at the final step.
+fn = src.split("def vet(")[1].split("\n\ndef ")[0]
+first = [l.strip() for l in fn.split("\n") if l.strip() and not l.strip().startswith("#")][:4]
+if not any('cfg.get("paused")' in l for l in first):
+    print(f"  FAIL  the paused check is not at the top of vet(): {first}"); bad += 1
+paused = {k: v.get("paused") for k, v in scan.REPOS.items() if v.get("paused")}
+for key, why in paused.items():
+    cfg = scan.REPOS[key]
+    ok, reason, _ = scan.vet(cfg, cfg["upstream"], {
+        "number": 1, "title": "fix: a concrete defect", "labels": [],
+        "body": "x" * 500, "comments": 0, "assignees": []})
+    if ok or "paused" not in reason:
+        print(f"  FAIL  {key} is paused but vet() accepted it ({reason[:50]})"); bad += 1
+    if not why or len(str(why)) < 15:
+        print(f"  FAIL  {key} is paused with no stated reason — nobody can tell when to resume"); bad += 1
+# A pause must not leak to repos that did not ask for one.
+live = scan.REPOS["hermes"]
+_, r, _ = scan.vet(live, live["upstream"], {
+    "number": 1, "title": "fix: x", "labels": [], "body": "x" * 500,
+    "comments": 0, "assignees": []})
+if "paused" in r:
+    print("  FAIL  the pause is leaking into repos that are not paused"); bad += 1
+print(f"  ok     {len(paused)} paused repo(s) refused up front, others unaffected"
+      if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1
