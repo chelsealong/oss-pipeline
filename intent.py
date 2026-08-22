@@ -69,10 +69,13 @@ MODELS = [
 ]
 MODEL = MODELS[0]          # kept for logs and for anything that reads a name
 COOLDOWN = 300.0
-# Raised from 25s. qwen3.7-plus answered in 32.9s on a real comment, so at 25 it
-# was on the chain without ever being reachable — the whole chain then reported
-# ALLFAILED on a long comment from steipete.
-TIMEOUT = 45
+# 90s, up from 25. qwen3.7-plus answered a real comment in 32.9s and kimi took
+# 21.4s on a one-liner, so 25 left models on the chain that could never be
+# reached — the whole chain logged ALLFAILED on a long comment from steipete.
+# Generous on purpose: under the two-strike rule a timeout retires a model
+# permanently, so a ceiling that is merely tight does not cost one slow answer,
+# it costs the model.
+TIMEOUT = 90
 RETIRED = ROOT / "state" / "models-retired.json"
 # Two strikes and the model is gone for good. Bruce's rule, and it is the right
 # one: a model that has failed twice is not worth a third request on every
@@ -125,7 +128,6 @@ def live_models() -> list:
     """The chain with retired entries removed. This is what actually runs."""
     dead = dead_models()
     return [m for m in MODELS if m not in dead]
-TIMEOUT = 25
 
 # Deliberately loose: anything a claim could possibly contain. Its only job is to
 # keep comments with no first-person marker away from the model. The precise

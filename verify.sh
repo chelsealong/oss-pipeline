@@ -924,7 +924,7 @@ sys.exit(1 if bad else 0)
 PY3
 
 say "26. claim intent is judged by a model, and each caller sets the safe default"
-python3 - "$SCANNER" <<'PY3'
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
 import sys, os, pathlib
 sys.path.insert(0, sys.argv[1])
 bad = 0
@@ -952,7 +952,7 @@ sys.exit(1 if bad else 0)
 PY3
 
 say "27. feedback triage skips no-ops without silencing real review requests"
-python3 - "$SCANNER" <<'PY3'
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
 import sys, pathlib, importlib.util
 sys.path.insert(0, sys.argv[1])
 bad = 0
@@ -984,7 +984,7 @@ sys.exit(1 if bad else 0)
 PY3
 
 say "28. shadow triage records without deciding, and cannot break a dispatch"
-python3 - "$SCANNER" <<'PY3'
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
 import sys, pathlib
 sys.path.insert(0, sys.argv[1])
 bad = 0
@@ -1015,7 +1015,7 @@ sys.exit(1 if bad else 0)
 PY3
 
 say "29. the responder sees every open PR, not the newest page of them"
-python3 - "$SCANNER" <<'PY3'
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
 import sys, pathlib, importlib.util
 sys.path.insert(0, sys.argv[1])
 bad = 0
@@ -1041,7 +1041,7 @@ sys.exit(1 if bad else 0)
 PY3
 
 say "30. an issue is dispatched once, and a late hands-off label still stops it"
-python3 - "$SCANNER" "$(cd "$(dirname "$0")" && pwd)" <<'PY3'
+python3 - "$SCANNER" "$(cd "$(dirname "$0")" && pwd)" <<'PY3' || fail=$((fail+1))
 import sys, pathlib, re
 from datetime import datetime, timezone, timedelta
 sys.path.insert(0, sys.argv[1])
@@ -1093,7 +1093,7 @@ sys.exit(1 if bad else 0)
 PY3
 
 say "31. the judge falls down a live model chain and retires what fails"
-python3 - "$SCANNER" "$(cd "$(dirname "$0")" && pwd)" <<'PY3'
+python3 - "$SCANNER" "$(cd "$(dirname "$0")" && pwd)" <<'PY3' || fail=$((fail+1))
 import io, json, pathlib, sys, tempfile, urllib.error
 sys.path.insert(0, sys.argv[1])
 import intent
@@ -1109,8 +1109,11 @@ for gone in ("qwen3.7-max", "qwen3.7-max-2026-05-20"):
         print(f"  FAIL  {gone} is exhausted and still on the chain"); bad += 1
 # qwen3.7-plus answered a real comment in 32.9s. At the old 25s timeout it was
 # on the chain and unreachable, and the whole chain reported ALLFAILED.
-if intent.TIMEOUT < 40:
-    print(f"  FAIL  TIMEOUT={intent.TIMEOUT}s is below the observed 32.9s answer"); bad += 1
+# Under the two-strike rule a timeout retires a model for good, so a tight
+# ceiling does not cost one slow answer — it costs the model. qwen3.7-plus
+# answered a real comment in 32.9s; kimi took 21.4s on a one-liner.
+if intent.TIMEOUT < 90:
+    print(f"  FAIL  TIMEOUT={intent.TIMEOUT}s — too tight now that a timeout retires the model"); bad += 1
 
 real = intent.urllib.request.urlopen
 intent.RETIRED = pathlib.Path(tempfile.mkdtemp()) / "r.json"
@@ -1162,7 +1165,7 @@ sys.exit(1 if bad else 0)
 PY3
 
 say "32. an abandoned PR does not retire the issue it failed to fix"
-python3 - "$SCANNER" <<'PY3'
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
 import sys, pathlib
 sys.path.insert(0, sys.argv[1])
 bad = 0
@@ -1197,7 +1200,7 @@ sys.exit(1 if bad else 0)
 PY3
 
 say "33. every configured repo has a fork, and every repo gets the common lessons"
-python3 - "$SCANNER" "$(cd "$(dirname "$0")" && pwd)" <<'PY3'
+python3 - "$SCANNER" "$(cd "$(dirname "$0")" && pwd)" <<'PY3' || fail=$((fail+1))
 import sys, json, pathlib, subprocess
 sys.path.insert(0, sys.argv[1])
 import scan
@@ -1232,7 +1235,7 @@ sys.exit(1 if bad else 0)
 PY3
 
 say "34. a stand-down can be taken back, and a claim about another issue is not one"
-python3 - "$SCANNER" <<'PY3'
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
 import sys, importlib.util, json, pathlib, tempfile
 sys.path.insert(0, sys.argv[1])
 spec = importlib.util.spec_from_file_location("wp", sys.argv[1] + "/watch-prs.py")
@@ -1269,7 +1272,7 @@ sys.exit(1 if bad else 0)
 PY3
 
 say "35. the landing count is stored, verified, and never rebuilt from scratch"
-python3 - "$SCANNER" <<'PY3'
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
 import sys, json, pathlib
 sys.path.insert(0, sys.argv[1])
 import landings
@@ -1350,7 +1353,7 @@ finally:
 PY3
 
 say "36. a dispatch is remembered, but not forever"
-python3 - "$SCANNER" <<'PY3'
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
 import sys, json, pathlib, importlib.util, tempfile
 from datetime import datetime, timezone, timedelta
 sys.path.insert(0, sys.argv[1])
@@ -1395,7 +1398,7 @@ sys.exit(1 if bad else 0)
 PY3
 
 say "37. every streamed line says which phase produced it"
-python3 - "$(cd "$(dirname "$0")" && pwd)" <<'PY3'
+python3 - "$(cd "$(dirname "$0")" && pwd)" <<'PY3' || fail=$((fail+1))
 import json, os, pathlib, subprocess, sys, tempfile
 bad = 0
 wf = pathlib.Path(sys.argv[1] + "/.github/workflows/fix-one.yml").read_text()
@@ -1429,6 +1432,38 @@ if len(tagged) != 3:
 if not any("hit your session limit" in l for l in lines):
     print("  FAIL  the session-limit notice does not survive the formatter"); bad += 1
 print("  ok     phase on every event, raw text still passes through" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
+say "38. every check in this file can actually fail the run"
+python3 - "$(cd "$(dirname "$0")" && pwd)" <<'PY3' || fail=$((fail+1))
+import pathlib, re, sys
+bad = 0
+lines = (pathlib.Path(sys.argv[1]) / "verify.sh").read_text().split("\n")
+# Checks 26 through 37 — twelve of them, every one I added — ran their
+# assertions, printed FAIL, and were then ignored, because the heredoc line
+# lacked `|| fail=$((fail+1))`. The script still said "PASS — safe to commit".
+# A harness that cannot fail is worse than no harness: it is a claim of
+# verification with nothing behind it, and it was reported as green repeatedly.
+cur, missing, seen = None, [], 0
+for i, l in enumerate(lines):
+    m = re.match(r'^(?:say|echo) "(?:== )?(\d+)\.', l)
+    if m:
+        cur = m.group(1)
+    if re.match(r"^python3 - .*<<", l) and cur:
+        seen += 1
+        if "fail=" not in l:
+            missing.append(f"{cur} (line {i + 1})")
+        cur = None
+if missing:
+    print(f"  FAIL  these checks discard their exit status: {', '.join(missing)}"); bad += 1
+if seen < 30:
+    print(f"  FAIL  only found {seen} python checks — the scan is not seeing the file"); bad += 1
+# And the summary must key off that counter, not off the last command.
+body = "\n".join(lines)
+if 'if [ "$fail" -eq 0 ]' not in body:
+    print("  FAIL  the PASS/FAIL summary does not read the failure counter"); bad += 1
+print(f"  ok     all {seen} checks report into the counter" if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY3
 
