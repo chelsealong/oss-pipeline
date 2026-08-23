@@ -104,19 +104,31 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
+          # Two kinds of cap, and only one of them is ours to raise.
+          #
+          # RELATIONSHIP caps are a promise to a maintainer and stay where they
+          # are. spec-kit is 3 because Bruce set it there when re-enabling the
+          # repo after mnriem asked three times that we stop a class of PR.
+          #
+          # Everything else was Claude-quota rationing, and that turned out not
+          # to be the binding constraint — no run hit the quota in the three
+          # days to 08-17, and there is a second account behind it. Meanwhile on
+          # 08-23 hermes exhausted its dispatch allowance with fourteen vetted
+          # candidates still queued and the day produced no landings at all.
+          # hermes is where 13 of our 39 landings come from and it lands by
+          # salvage, which needs volume.
+          #
+          # So these are raised to sit above real daily supply. What limits us
+          # now is supply and the quota guard, both measured: fix-one fails the
+          # run on a refusal and watch.py pauses and refunds.
           case "${{ inputs.repo_key }}" in
-            adk) cap=5 ;;
-            hermes) cap=7 ;;   # 08-15: salvage lands 3-5 days late; the 4/day cut was called too early
-            spec-kit) cap=3 ;;   # re-enabled 2026-08-14; was 5 before the removal
-            openclaw) cap=4 ;;
-            comfyui) cap=3 ;;
-            dify) cap=5 ;;
-            autogpt) cap=3 ;;
-            llama-index|crawl4ai|litellm|mem0) cap=3 ;;   # added 2026-08-15, on trial
-            langfuse) cap=6 ;;
-            langfuse-python) cap=3 ;;
-            firecrawl) cap=1 ;;
-            *) cap=2 ;;
+            spec-kit) cap=3 ;;   # relationship cap — Bruce's, do not raise
+            firecrawl) cap=4 ;;  # was 1; its whole issue flow is small
+            hermes) cap=20 ;;
+            adk|dify|langfuse|openclaw|comfyui) cap=12 ;;
+            autogpt|langfuse-python|gemini-cli) cap=8 ;;
+            llama-index|crawl4ai|litellm|mem0) cap=8 ;;
+            *) cap=6 ;;
           esac
           n=$(gh pr list --repo "${{ steps.cfg.outputs.implements_in }}" --author chelsealong \
                 --state all --search "created:>=$(date -u +%Y-%m-%d)" --json number --jq 'length' \

@@ -1556,6 +1556,48 @@ print(f"  ok     {len(paused)} paused repo(s) refused up front, others unaffecte
 sys.exit(1 if bad else 0)
 PY3
 
+say "41. nothing but supply and the quota guard limits dispatch"
+python3 - "$SCANNER" "$(cd "$(dirname "$0")" && pwd)" <<'PY3' || fail=$((fail+1))
+import importlib.util, pathlib, re, sys
+sys.path.insert(0, sys.argv[1])
+spec = importlib.util.spec_from_file_location("w", sys.argv[1] + "/watch.py")
+w = importlib.util.module_from_spec(spec); spec.loader.exec_module(w)
+bad = 0
+# On 2026-08-23 hermes hit its dispatch allowance at 10/10 with FOURTEEN vetted
+# candidates still queued, every other repo's queue was empty, and the day
+# produced no landings. hermes is where 13 of our 39 landings come from and it
+# lands by salvage, which needs volume. The allowance was rationing Claude
+# quota, and quota was never the binding constraint — no run hit it in the three
+# days to 08-17, and a second account sits behind it.
+wf = pathlib.Path(sys.argv[2] + "/.github/workflows/fix-one.yml").read_text()
+caps = dict(re.findall(r"^\s+([a-z0-9|-]+)\)\s+cap=(\d+)", wf, re.M))
+for repo, floor in (("hermes", 15), ("adk|dify|langfuse|openclaw|comfyui", 10)):
+    got = int(caps.get(repo, 0))
+    if got < floor:
+        print(f"  FAIL  PR cap for {repo} is {got}, still rationing rather than guarding"); bad += 1
+# spec-kit's 3 is a promise to a maintainer, not rationing. It must NOT drift up
+# with the others: mnriem asked three times that we stop a class of PR there,
+# and Bruce set this number when re-enabling the repo.
+if caps.get("spec-kit") != "3":
+    print(f"  FAIL  spec-kit's relationship cap changed to {caps.get('spec-kit')}"); bad += 1
+if "relationship cap" not in wf:
+    print("  FAIL  the two kinds of cap are no longer distinguished in the file"); bad += 1
+# The dispatch guard has to sit above any real day's supply, or it is a policy
+# again under a different name.
+for k, v in w.DISPATCH_BUDGET.items():
+    if v < 15:
+        print(f"  FAIL  dispatch guard for {k} is {v} — low enough to bind on a normal day"); bad += 1
+if w.DEFAULT_BUDGET < 15:
+    print(f"  FAIL  DEFAULT_BUDGET={w.DEFAULT_BUDGET} binds before supply does"); bad += 1
+# And the thing that actually stops us must still be wired.
+src = pathlib.Path(sys.argv[1] + "/watch.py").read_text()
+if "quota_paused()" not in src.split("def budget_allows")[1][:600]:
+    print("  FAIL  budget_allows no longer consults the quota pause"); bad += 1
+print("  ok     guards sit above supply, quota pause intact, promises kept"
+      if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

@@ -147,22 +147,20 @@ PIPELINE_REPO = "chelsealong/oss-pipeline"
 #              5 PRs/day by explicit decision; the rolling 30-day duplicate
 #              circuit breaker in run-fix.sh is what keeps that safe, since
 #              repeated duplicates are the actual ban vector there.
+# Runaway guards, not daily allowances. See budget_allows() for why: these were
+# policy until 2026-08-23, when hermes hit its 10 with fourteen vetted
+# candidates waiting and the day produced no landings. What limits dispatch now
+# is supply (an empty queue) and the Claude quota pause, both of which are
+# measured rather than guessed. These numbers exist only to stop a loop, so they
+# sit far above any real day's supply — a run that reaches one is a bug report.
 DISPATCH_BUDGET = {
-    "adk": 7, "langfuse": 9, "langfuse-python": 6,
-    "openclaw": 6,
-    "dify": 6, "autogpt": 4,
-    "comfyui": 8, "firecrawl": 2,
-    "hermes": 10,
-    # Dispatch headroom over each repo's PR/day cap; verify check 12 asserts
-    # budget >= cap so a cap can never be unreachable.
-    # New 2026-08-15, on trial at 3 PRs/day each.
-    "llama-index": 5, "crawl4ai": 5,
-    "litellm": 5, "mem0": 5,
-    "spec-kit": 5,   # cap is 3/day; headroom for runs that produce no patch
-    "langchain": 4,
-    "gemini-cli": 4,
+    "hermes": 60,
+    "openclaw": 40, "comfyui": 40, "dify": 40, "adk": 40,
+    "langfuse": 40, "langfuse-python": 30, "spec-kit": 40,
+    "litellm": 30, "llama-index": 30, "crawl4ai": 30, "mem0": 30,
+    "gemini-cli": 30, "langchain": 20, "autogpt": 20, "firecrawl": 20,
 }
-DEFAULT_BUDGET = 2
+DEFAULT_BUDGET = 20
 BUDGET_FILE = scan.STATE / "dispatch-budget.json"
 
 
@@ -338,7 +336,21 @@ def budget_allows(key: str) -> bool:
     used = d["used"].get(key, 0)
     cap = DISPATCH_BUDGET.get(key, DEFAULT_BUDGET)
     if used >= cap:
-        log(f"  [{key}] daily dispatch budget reached ({used}/{cap}); leaving in queue")
+        # A runaway guard, not a policy. It was a policy — a per-repo daily
+        # allowance set when Claude quota was assumed to be the binding
+        # constraint — and on 2026-08-23 it cost us the day: hermes hit 10/10
+        # with FOURTEEN vetted candidates still in its queue, while every other
+        # repo had an empty queue. hermes is where 13 of our 39 landings come
+        # from and it lands by salvage, which needs volume.
+        #
+        # The real limit is the subscription, and that is already enforced where
+        # it can be measured: fix-one.yml fails the run on a quota refusal,
+        # quota_paused() stops dispatching, and the unit is refunded. Supply is
+        # the other limit and it enforces itself — an empty queue dispatches
+        # nothing. So the number here only exists to stop a loop, and it is set
+        # far above any real day's supply.
+        log(f"  [{key}] runaway guard hit ({used}/{cap}) — this is not normal; "
+            "supply or the quota pause should have stopped this first")
         return False
     return True
 
