@@ -212,6 +212,26 @@ def update(rebuild: bool = False) -> tuple[int, int]:
 # its commits carries one of our addresses.
 CREDIT_MARKS = ("chelsealong",)
 
+# Automation accounts whose logins carry no `[bot]` suffix. The suffix test alone
+# let `clawsweeper` — openclaw's own review automation — supply 13 of the first
+# 20 recorded "maintainer evaluations". Its output reads exactly like a careful
+# human review ("a focused owner-boundary repair with credible terminal proof"),
+# which is precisely why it is dangerous: this record exists to be quoted, and
+# quoting a bot as a maintainer would forfeit the credibility of everything
+# beside it. Names, not patterns — a pattern would eventually eat a person.
+NOT_HUMAN = {
+    "clawsweeper", "coderabbitai", "cubic-dev-ai", "greptile-apps",
+    "gemini-code-assist", "adk-bot", "claude", "devin-ai-integration",
+    "codecov", "codspeed-hq", "claassistant", "sonarcloud", "vercel",
+    "github-actions", "dependabot", "renovate", "linear-code", "alt-glitch",
+}
+
+
+def _is_human(login: str) -> bool:
+    if not login or "[bot]" in login:
+        return False
+    return login.lower() not in NOT_HUMAN
+
 
 def credited(repo: str) -> list[dict]:
     """Merged PRs by others that name us and carry no commit of ours."""
@@ -373,7 +393,7 @@ def quotes(repo: str) -> list[dict]:
             body = (c.get("bodyText") or "").strip()
             # Standing matters, and bots have none. ComfyUI's bot approves
             # almost everything, so its approval says nothing about the code.
-            if not who or "[bot]" in who or who == "chelsealong":
+            if not _is_human(who) or who == "chelsealong":
                 continue
             if assoc not in ("COLLABORATOR", "MEMBER", "OWNER") and who not in authority:
                 continue

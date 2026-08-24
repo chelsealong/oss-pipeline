@@ -265,32 +265,74 @@
    "at": "2026-08-20T07:36:17.000Z",
    "msg": "fix(snippets): implement delete for published snippet workflow versions (#41003)",
    "notes": ""
+  },
+  "google/adk-python@775c1bd36e": {
+   "repo": "google/adk-python",
+   "sha": "775c1bd36e",
+   "at": "2026-08-20T18:57:27.000-07:00",
+   "msg": "feat: support opt-in session retention in MultimodalToolResultsPlugin",
+   "notes": ""
+  },
+  "openclaw/openclaw@b3b33d2419": {
+   "repo": "openclaw/openclaw",
+   "sha": "b3b33d2419",
+   "at": "2026-08-23T15:21:05.000-04:00",
+   "msg": "fix(agents): treat native hook relay records with a dead pid as absent (#128112)",
+   "notes": ""
+  },
+  "NousResearch/hermes-agent@f93593d165": {
+   "repo": "NousResearch/hermes-agent",
+   "sha": "f93593d165",
+   "at": "2026-08-22T21:36:55.000-07:00",
+   "msg": "test(gateway): cover browser-use as an explicit non-nous selection",
+   "notes": ""
+  },
+  "NousResearch/hermes-agent@ce9ddd35e7": {
+   "repo": "NousResearch/hermes-agent",
+   "sha": "ce9ddd35e7",
+   "at": "2026-08-22T21:36:55.000-07:00",
+   "msg": "fix(gateway): fix 3-tuple/4-tuple arity crash in get_gateway_eligible_tools",
+   "notes": ""
+  },
+  "NousResearch/hermes-agent@4edb24276f": {
+   "repo": "NousResearch/hermes-agent",
+   "sha": "4edb24276f",
+   "at": "2026-08-22T21:36:55.000-07:00",
+   "msg": "fix(tools): don't pre-check keyless local backends in Tool Gateway checklist",
+   "notes": ""
+  },
+  "openclaw/openclaw@d2e62c6b82": {
+   "repo": "openclaw/openclaw",
+   "sha": "d2e62c6b82",
+   "at": "2026-08-23T21:58:53.000-07:00",
+   "msg": "fix(diffs): stop lightweight CLI registration from crashing when runtime.state is unavaila",
+   "notes": ""
   }
  },
  "prs": {
   "google/adk-python": {
-   "total": 20,
+   "total": 21,
    "open": 11,
    "merged": 0,
-   "closed": 9
+   "closed": 10
   },
   "langfuse/langfuse": {
-   "total": 7,
-   "open": 4,
+   "total": 12,
+   "open": 9,
    "merged": 3,
    "closed": 0
   },
   "run-llama/llama_index": {
-   "total": 4,
-   "open": 4,
+   "total": 5,
+   "open": 5,
    "merged": 0,
    "closed": 0
   },
   "unclecode/crawl4ai": {
-   "total": 1,
+   "total": 2,
    "open": 1,
    "merged": 0,
-   "closed": 0
+   "closed": 1
   },
   "BerriAI/litellm": {
    "total": 5,
@@ -305,16 +347,16 @@
    "closed": 0
   },
   "github/spec-kit": {
-   "total": 14,
-   "open": 1,
+   "total": 16,
+   "open": 3,
    "merged": 5,
    "closed": 8
   },
   "google-gemini/gemini-cli": {
    "total": 5,
-   "open": 5,
+   "open": 4,
    "merged": 0,
-   "closed": 0
+   "closed": 1
   },
   "langchain-ai/langchain": {
    "total": 0,
@@ -323,20 +365,17 @@
    "closed": 0
   },
   "openclaw/openclaw": {
-   "total": 17,
-   "open": 12,
-   "merged": 3,
-   "closed": 2
+   "total": null
   },
   "NousResearch/hermes-agent": {
-   "total": 64,
-   "open": 51,
+   "total": 110,
+   "open": 92,
    "merged": 1,
-   "closed": 12
+   "closed": 17
   },
   "firecrawl/firecrawl": {
-   "total": 1,
-   "open": 1,
+   "total": 3,
+   "open": 3,
    "merged": 0,
    "closed": 0
   },
@@ -353,13 +392,13 @@
    "closed": 0
   },
   "Comfy-Org/ComfyUI": {
-   "total": 19,
-   "open": 17,
+   "total": 25,
+   "open": 23,
    "merged": 1,
    "closed": 1
   }
  },
- "updated": "2026-08-20T10:05:14+00:00",
+ "updated": "2026-08-24T05:25:04+00:00",
  "credited": {
   "NousResearch/hermes-agent#86244": {
    "repo": "NousResearch/hermes-agent",
@@ -376,6 +415,22 @@
    "at": "2026-08-19",
    "title": "fix(desktop): keep auto-speak silent across the stream-id rewrite (supersedes #7",
    "evidence": "Credit: @rikkarth, @chelsealong, @lilShawtty-byte, @olympusbuildz"
+  },
+  "NousResearch/hermes-agent#93488": {
+   "repo": "NousResearch/hermes-agent",
+   "pr": 93488,
+   "by": "teknium1",
+   "at": "2026-08-24",
+   "title": "Colon-bearing session ids no longer break sandbox mounts (#92414, consolidates 6",
+   "evidence": "Consolidation of a six-PR race — earliest-filed #92331 by @HexLab98 cherry-picked as the base (primary credit), with pieces layered from #92396 (@salch-cred: base.py placement + singularity wiring), #"
+  },
+  "NousResearch/hermes-agent#93560": {
+   "repo": "NousResearch/hermes-agent",
+   "pr": 93560,
+   "by": "teknium1",
+   "at": "2026-08-24",
+   "title": "fix(desktop): deleted Bot Mode groups no longer return as 0-bot ghost rows (#933",
+   "evidence": "Salvage of #93373 by @helix4u (clean cherry-pick, authorship preserved). Fixes #93345. Duplicate #93372 by @chelsealong — submitted first (by 8 seconds) — closed with credit."
   }
  },
  "quotes": {
@@ -390,61 +445,6 @@
    "at": "2026-08-11",
    "quote": "This sidesteps that and as such cannot be accepted"
   },
-  "openclaw/openclaw#126138@clawsweeper@2026-08-19": {
-   "repo": "openclaw/openclaw",
-   "pr": 126138,
-   "url": "https://github.com/openclaw/openclaw/pull/126138",
-   "who": "clawsweeper",
-   "assoc": "CONTRIBUTOR",
-   "favourable": true,
-   "role": "reviewer",
-   "at": "2026-08-19",
-   "quote": "Focused regression coverage and boundary-level before/after evidence support a correct repair, with a current-main rebase refresh still needed."
-  },
-  "openclaw/openclaw#125672@clawsweeper@2026-08-18": {
-   "repo": "openclaw/openclaw",
-   "pr": 125672,
-   "url": "https://github.com/openclaw/openclaw/pull/125672",
-   "who": "clawsweeper",
-   "assoc": "CONTRIBUTOR",
-   "favourable": true,
-   "role": "maintainer",
-   "at": "2026-08-18",
-   "quote": "A focused owner-boundary repair with credible terminal proof and regressions for both direct and mirrored proposal state."
-  },
-  "openclaw/openclaw#125618@clawsweeper@2026-08-18": {
-   "repo": "openclaw/openclaw",
-   "pr": 125618,
-   "url": "https://github.com/openclaw/openclaw/pull/125618",
-   "who": "clawsweeper",
-   "assoc": "CONTRIBUTOR",
-   "favourable": true,
-   "role": "automated reviewer",
-   "at": "2026-08-18",
-   "quote": "The source repair is focused and compatible, but mock-only proof remains a merge gate."
-  },
-  "openclaw/openclaw#124962@clawsweeper@2026-08-17": {
-   "repo": "openclaw/openclaw",
-   "pr": 124962,
-   "url": "https://github.com/openclaw/openclaw/pull/124962",
-   "who": "clawsweeper",
-   "assoc": "CONTRIBUTOR",
-   "favourable": true,
-   "role": "maintainer",
-   "at": "2026-08-17",
-   "quote": "The implementation is focused and addresses the prior blocker, but real behavior proof remains a merge gate."
-  },
-  "openclaw/openclaw#124954@clawsweeper@2026-08-17": {
-   "repo": "openclaw/openclaw",
-   "pr": 124954,
-   "url": "https://github.com/openclaw/openclaw/pull/124954",
-   "who": "clawsweeper",
-   "assoc": "CONTRIBUTOR",
-   "favourable": true,
-   "role": "maintainer",
-   "at": "2026-08-17",
-   "quote": "A focused root-cause repair with owner-boundary and route-re-resolution coverage, plus credible after-fix runtime output."
-  },
   "openclaw/openclaw#124954@sallyom@2026-08-17": {
    "repo": "openclaw/openclaw",
    "pr": 124954,
@@ -456,72 +456,6 @@
    "at": "2026-08-17",
    "quote": "This is the best-fix owner-boundary repair: it preserves the already-authorized agent through both model-resolution passes, with no API, config, persistence, or default-behavior compatibility change."
   },
-  "openclaw/openclaw#122890@clawsweeper@2026-08-13": {
-   "repo": "openclaw/openclaw",
-   "pr": 122890,
-   "url": "https://github.com/openclaw/openclaw/pull/122890",
-   "who": "clawsweeper",
-   "assoc": "CONTRIBUTOR",
-   "favourable": false,
-   "role": "maintainer",
-   "at": "2026-08-13",
-   "quote": "The real behavior proof is strong for the reduced traffic path, but the incomplete local projection remains a merge-blocking correctness gap."
-  },
-  "openclaw/openclaw#121314@clawsweeper@2026-08-10": {
-   "repo": "openclaw/openclaw",
-   "pr": 121314,
-   "url": "https://github.com/openclaw/openclaw/pull/121314",
-   "who": "clawsweeper",
-   "assoc": "CONTRIBUTOR",
-   "favourable": true,
-   "role": "maintainer",
-   "at": "2026-08-10",
-   "quote": "This PR repairs a current Signal ingress gap, and the contributor’s new real handler-plus-durable-queue trace resolves the previous proof request."
-  },
-  "openclaw/openclaw#121306@clawsweeper@2026-08-10": {
-   "repo": "openclaw/openclaw",
-   "pr": 121306,
-   "url": "https://github.com/openclaw/openclaw/pull/121306",
-   "who": "clawsweeper",
-   "assoc": "CONTRIBUTOR",
-   "favourable": true,
-   "role": "automated reviewer",
-   "at": "2026-08-10",
-   "quote": "The patch is a focused, correct repair for the macOS onboarding diagnostic gap, but it still needs after-fix native macOS behavior proof before merge."
-  },
-  "openclaw/openclaw#120398@clawsweeper@2026-08-08": {
-   "repo": "openclaw/openclaw",
-   "pr": 120398,
-   "url": "https://github.com/openclaw/openclaw/pull/120398",
-   "who": "clawsweeper",
-   "assoc": "CONTRIBUTOR",
-   "favourable": false,
-   "role": "contributor",
-   "at": "2026-08-08",
-   "quote": "current main now fixes the same service-managed command-tree cleanup problem through a relay and in-group cleanup owner, so this Linux-only branch has no remaining landing value."
-  },
-  "openclaw/openclaw#118377@clawsweeper@2026-08-03": {
-   "repo": "openclaw/openclaw",
-   "pr": 118377,
-   "url": "https://github.com/openclaw/openclaw/pull/118377",
-   "who": "clawsweeper",
-   "assoc": "CONTRIBUTOR",
-   "favourable": true,
-   "role": "maintainer",
-   "at": "2026-08-03",
-   "quote": "The owner-boundary patch is coherent and regression-tested, but real behavior proof and a maintainer contract decision remain merge gates."
-  },
-  "openclaw/openclaw#117757@clawsweeper@2026-08-02": {
-   "repo": "openclaw/openclaw",
-   "pr": 117757,
-   "url": "https://github.com/openclaw/openclaw/pull/117757",
-   "who": "clawsweeper",
-   "assoc": "CONTRIBUTOR",
-   "favourable": true,
-   "role": "maintainer",
-   "at": "2026-08-02",
-   "quote": "The repair and proof are strong, but this stale head must be rebased and receive green required CI before it can land."
-  },
   "openclaw/openclaw#117757@vincentkoc@2026-08-02": {
    "repo": "openclaw/openclaw",
    "pr": 117757,
@@ -532,17 +466,6 @@
    "role": "outside contributor",
    "at": "2026-08-02",
    "quote": "Exact-head ClawSweeper: no findings, best-fix judgment yes, proof sufficient; its only rank-up move is completing required CI."
-  },
-  "openclaw/openclaw#117719@clawsweeper@2026-08-02": {
-   "repo": "openclaw/openclaw",
-   "pr": 117719,
-   "url": "https://github.com/openclaw/openclaw/pull/117719",
-   "who": "clawsweeper",
-   "assoc": "CONTRIBUTOR",
-   "favourable": true,
-   "role": "maintainer",
-   "at": "2026-08-02",
-   "quote": "A focused owner-boundary repair with strong submitted behavior evidence; the remaining blocker is the maintainer-owned delivery trade-off."
   },
   "NousResearch/hermes-agent#89637@teknium1@2026-08-19": {
    "repo": "NousResearch/hermes-agent",

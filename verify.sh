@@ -1366,6 +1366,26 @@ try:
         print("  FAIL  an unmerged descendant is being counted as landed"); bad += 1
 finally:
     _L._gh = _real
+
+# Automated reviewers must never enter the quote record. `clawsweeper` — the
+# openclaw review bot — supplied 12 of the first 20 entries, because its login
+# has no `[bot]` suffix and its prose is indistinguishable from a careful human
+# review. This record exists to be quoted in a filing; a bot in it would forfeit
+# the credibility of everything beside it.
+if "NOT_HUMAN" not in src or "clawsweeper" not in src:
+    print("  FAIL  no named list of non-[bot] automation accounts"); bad += 1
+import landings as _LL
+for who in ("clawsweeper", "coderabbitai", "adk-bot", "some-name[bot]"):
+    if _LL._is_human(who):
+        print(f"  FAIL  {who} counts as a human evaluator"); bad += 1
+for who in ("teknium1", "sallyom", "mnriem"):
+    if not _LL._is_human(who):
+        print(f"  FAIL  {who} is a real maintainer and is being filtered out"); bad += 1
+for key, q in (d.get("quotes") or {}).items():
+    if not _LL._is_human(q.get("who", "")):
+        print(f"  FAIL  stored quote from non-human account: {key}"); bad += 1
+    if not q.get("quote"):
+        print(f"  FAIL  {key} recorded with no verbatim quote"); bad += 1
 PY3
 
 say "36. a dispatch is remembered, but not forever"
