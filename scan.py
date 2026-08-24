@@ -562,7 +562,8 @@ def claimants(upstream: str, number: int) -> list[str]:
     # once fired. Any future failure is now logged rather than swallowed.
     try:
         out = gh(["api", "-X", "GET", f"repos/{upstream}/issues/{number}/comments",
-                  "-f", "per_page=60", "--jq", "[.[] | {u:.user.login, b:.body}]"])
+                  "-f", "per_page=60",
+                  "--jq", "[.[] | {u:.user.login, b:.body, at:.created_at}]"])
     except Exception as e:  # noqa: BLE001
         print(f"    claimants({upstream}#{number}) failed: {str(e)[:120]}", file=sys.stderr)
         return []
@@ -588,10 +589,52 @@ def claimants(upstream: str, number: int) -> list[str]:
         claimed, why = intent.is_claim(body, author=u, default=True)
         judged += 1
         if claimed:
+            if _claim_went_cold(upstream, number, u, c.get("at") or ""):
+                continue
             who.append(u)
             if len([w for w in who if w.lower() != "chelsealong"]) >= 2:
                 break
     return who
+
+
+# A claim reserves the issue, but not indefinitely. adk#6877 was filed at 11:05
+# by MarlzRana, who commented that he already had a PR ready; we detected it at
+# 11:09 and stood down. Forty minutes later there was still no PR from anyone,
+# and on #6878 — same author, same subject, filed 25 minutes later — the same
+# thing happened: we reached it eleven seconds after it was opened, he claimed
+# it a minute later, we withdrew, and no PR appeared.
+#
+# Standing down is right. Standing down forever is not: the issue then belongs
+# to nobody, which serves the project least of all. So a claim expires unless it
+# produces something.
+#
+# Deliberately long. The point is not to race a slow contributor — 48 hours is
+# far past anyone's working session, and if they are still on it there will be a
+# draft, a branch, or another comment by then.
+CLAIM_COLD_HOURS = 48
+
+
+def _claim_went_cold(upstream: str, number: int, who: str, at: str) -> bool:
+    """True when a claim is old enough to have produced a PR and has not."""
+    if not at:
+        return False
+    try:
+        age = age_hours(at)
+    except Exception:  # noqa: BLE001
+        return False
+    if age < CLAIM_COLD_HOURS:
+        return False
+    # Only expire it if nothing came of it. Any live PR against the issue — from
+    # the claimant or anyone else — means the claim was honoured and linked_prs
+    # will refuse the issue on its own anyway.
+    try:
+        if linked_prs(upstream, number):
+            return False
+    except Exception:  # noqa: BLE001
+        return False        # unreadable: leave the claim standing
+    print(f"    claim by {who} on {upstream}#{number} is {age:.0f}h old with no "
+          f"PR — no longer treating it as reserved", file=sys.stderr)
+    return True
 
 
 def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:

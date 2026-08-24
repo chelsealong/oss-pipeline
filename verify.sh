@@ -1503,6 +1503,61 @@ print(f"  ok     all {seen} checks report into the counter" if not bad else f"  
 sys.exit(1 if bad else 0)
 PY3
 
+say "42. a claim reserves an issue, but not forever"
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import pathlib, sys
+from datetime import datetime, timedelta, timezone
+sys.path.insert(0, sys.argv[1])
+import scan
+bad = 0
+# Standing down when someone claims an issue is right. Standing down forever is
+# not. adk#6877 was filed 11:05 by its reporter, who commented that he already
+# had a PR ready; we reached it at 11:09 and withdrew. Forty minutes later no PR
+# existed from anyone. On #6878 — same author, same subject — we arrived eleven
+# seconds after it opened, he claimed it a minute later, we withdrew again, and
+# again no PR appeared. An issue reserved by a claim that produces nothing
+# belongs to nobody.
+if not hasattr(scan, "_claim_went_cold"):
+    print("  FAIL  a claim never expires, so a dropped claim parks the issue for good"); bad += 1
+    sys.exit(1)
+if scan.CLAIM_COLD_HOURS < 24:
+    print(f"  FAIL  CLAIM_COLD_HOURS={scan.CLAIM_COLD_HOURS} is short enough to race a "
+          "contributor who is genuinely mid-session"); bad += 1
+now = datetime.now(timezone.utc)
+iso = lambda h: (now - timedelta(hours=h)).isoformat().replace("+00:00", "Z")
+# A fresh claim always stands, and must cost no API call to decide that.
+real_linked = scan.linked_prs
+try:
+    scan.linked_prs = lambda *a, **k: (_ for _ in ()).throw(
+        AssertionError("linked_prs called for a fresh claim"))
+    if scan._claim_went_cold("o/r", 1, "someone", iso(2)):
+        print("  FAIL  a two-hour-old claim was treated as abandoned"); bad += 1
+    # No timestamp is not evidence of age.
+    if scan._claim_went_cold("o/r", 1, "someone", ""):
+        print("  FAIL  a claim with no timestamp was expired"); bad += 1
+    # Old claim WITH a live PR still stands — the claim was honoured.
+    scan.linked_prs = lambda *a, **k: ["closing-ref PR#9(OPEN)"]
+    if scan._claim_went_cold("o/r", 1, "someone", iso(200)):
+        print("  FAIL  a claim that produced a PR was expired anyway"); bad += 1
+    # Old claim with nothing to show for it expires.
+    scan.linked_prs = lambda *a, **k: []
+    if not scan._claim_went_cold("o/r", 1, "someone", iso(200)):
+        print("  FAIL  a 200-hour-old claim with no PR still reserves the issue"); bad += 1
+    # An unreadable answer must leave the claim standing, not clear it.
+    scan.linked_prs = lambda *a, **k: (_ for _ in ()).throw(RuntimeError("api down"))
+    if scan._claim_went_cold("o/r", 1, "someone", iso(200)):
+        print("  FAIL  an API failure expires the claim — that direction takes someone's work"); bad += 1
+finally:
+    scan.linked_prs = real_linked
+src = pathlib.Path(sys.argv[1] + "/scan.py").read_text()
+if "_claim_went_cold(" not in src.split("def claimants")[1].split("\ndef ")[0]:
+    print("  FAIL  claimants() does not consult the expiry"); bad += 1
+if "at:.created_at" not in src:
+    print("  FAIL  comment timestamps are not fetched, so age cannot be known"); bad += 1
+print("  ok     fresh claims hold, dropped ones expire, failures hold" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 say "39. a step that runs in work/ can still import the pipeline's own modules"
 python3 - "$(cd "$(dirname "$0")" && pwd)" <<'PY3' || fail=$((fail+1))
 import pathlib, sys, yaml
