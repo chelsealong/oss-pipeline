@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import traceback
 import os
 import pathlib
 import re
@@ -562,12 +563,19 @@ FORK_ONLY_CHECKS = {
 }
 
 
-def _is_ours(pr: dict, name: str) -> bool:
-    """Is this failing check plausibly caused by our change?"""
+def _is_ours(repo: str, name: str) -> bool:
+    """Is this failing check plausibly caused by our change?
+
+    Takes the repo slug, not the PR: the REST pagination path has a repo string
+    and no PR dict, and when this took a `pr` that path referenced an
+    out-of-scope name. It raised NameError on every openclaw PR (>=100 check
+    contexts) for two days and 375 passes, and because the raise happened inside
+    one_pass, save_seen never ran either.
+    """
     name = name or ""
     if NOT_OUR_CHECKS.search(name):
         return False
-    repo = pr.get("_repo") or ""
+    repo = repo or ""
     for pat in FORK_ONLY_CHECKS.get(repo, ()):
         if _re.search(pat, name, _re.I):
             return False
@@ -603,7 +611,7 @@ def failing_checks(pr: dict) -> list[dict]:
         bad = c.get("conclusion") in ("FAILURE", "TIMED_OUT") or c.get("state") == "FAILURE"
         if not name or not bad:
             continue
-        out.append({"name": name, "sha": sha, "ours": _is_ours(pr, name)})
+        out.append({"name": name, "sha": sha, "ours": _is_ours(pr.get("_repo", ""), name)})
     return out
 
 
@@ -634,7 +642,7 @@ def _failing_checks_rest(repo: str, oid: str, sha: str) -> list[dict]:
     for r in runs:
         if r.get("c") in ("failure", "timed_out") and r.get("n") not in seen:
             seen.add(r["n"])
-            out.append({"name": r["n"], "sha": sha, "ours": _is_ours(pr, r["n"])})
+            out.append({"name": r["n"], "sha": sha, "ours": _is_ours(repo, r["n"])})
     sts = []
     try:
         raw = scan.gh(["api", f"repos/{repo}/commits/{oid}/status?per_page=100",
@@ -648,7 +656,7 @@ def _failing_checks_rest(repo: str, oid: str, sha: str) -> list[dict]:
     for r in sts:
         if r.get("c") == "failure" and r.get("n") not in seen:
             seen.add(r["n"])
-            out.append({"name": r["n"], "sha": sha, "ours": _is_ours(pr, r["n"])})
+            out.append({"name": r["n"], "sha": sha, "ours": _is_ours(repo, r["n"])})
     return out
 
 
@@ -942,7 +950,13 @@ def main() -> int:
             else:
                 save_seen(seen)
         except Exception as e:  # noqa: BLE001
+            # A bare message hid a NameError for two days and 375 passes: the
+            # text "name 'pr' is not defined" names the symbol but not the
+            # function, and there is more than one place it could come from.
+            # Log the frame that raised.
             log(f"pass failed: {str(e)[:200]}")
+            for line in traceback.format_exc().strip().splitlines()[-6:]:
+                log(f"    {line}")
 
         if not a.loop:
             return 0

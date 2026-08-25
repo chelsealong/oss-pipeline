@@ -31,6 +31,7 @@ Every check below is derived from a failure that actually occurred:
 from __future__ import annotations
 
 import argparse
+import collections
 import json
 import pathlib
 import re
@@ -511,6 +512,94 @@ def check_sweep_health() -> tuple[list[str], dict]:
     return problems, d
 
 
+def check_prwatch_health(hours: float = 24) -> tuple[list[str], dict]:
+    """Does the PR watcher's pass actually COMPLETE?
+
+    Every other watcher check in this file reads watch.log. Nothing read
+    watch-prs.log, so on 2026-08-23 a NameError in the REST check-run path
+    (`_is_ours` took a PR dict, the paginated path had only a repo string)
+    killed one_pass on its 375th consecutive attempt without a single alert.
+    Liveness looked perfect: the log advanced every five minutes, because a
+    failing pass logs just as much as a working one.
+
+    Two consequences, both worth their own alarm:
+      - zero completions means the PRs late in the iteration were never read;
+      - save_seen() sits inside the same try, so nothing was ever recorded, and
+        the same feedback was re-dispatched 2,488 times across 44 PRs in two
+        days. One PR was dispatched 197 times.
+
+    So: alert on failure RATIO, not failure count, and alert separately when a
+    single PR is dispatched far more often than it could have new feedback.
+    """
+    lines = tail_since(ROOT / "watch-prs.log", hours)
+    failed = sum(1 for l in lines if "pass failed" in l)
+    complete = sum(1 for l in lines if "pass complete" in l or "bootstrap complete" in l)
+    disp = collections.Counter(
+        m.group(1) for l in lines
+        if (m := re.search(r"dispatched respond-pr\.yml for (\S+)", l)))
+    worst, worst_n = (disp.most_common(1) or [("-", 0)])[0]
+    problems = []
+    if not lines:
+        problems.append(f"watch-prs.log has had no entries in {hours:g}h — "
+                        "the PR watcher is not running")
+    elif failed and not complete:
+        problems.append(
+            f"{failed} PR-watch passes failed and NONE completed in {hours:g}h — "
+            "one_pass is raising every time; save_seen never runs, so feedback "
+            "is re-dispatched indefinitely")
+    elif failed > complete:
+        problems.append(f"{failed} PR-watch passes failed vs {complete} completed "
+                        f"in {hours:g}h — the pass is failing more often than not")
+    # A PR can legitimately be re-dispatched a few times a day. Not 197.
+    if worst_n >= 20:
+        problems.append(f"{worst} was dispatched {worst_n} times in {hours:g}h — "
+                        "the seen-state is not being persisted")
+    return problems, {"passes_failed": failed, "passes_completed": complete,
+                      "dispatches": sum(disp.values()),
+                      "distinct_prs_dispatched": len(disp),
+                      "most_dispatched": worst, "most_dispatched_n": worst_n}
+
+
+def check_judge_chain(hours: float = 24) -> tuple[list[str], dict]:
+    """Is the qwen judgement chain still answering, and why did models die?
+
+    intent.log had no reader. Two failures hide there. First, if every model is
+    retired or cooling down, `_ask` returns None and every caller falls back to
+    its own default -- claims are believed, feedback is treated as CODE -- which
+    looks exactly like normal operation in every other log. Second, retirement
+    is permanent, so the REASON matters: a 403 "Free quota exhausted" never comes
+    back, but a TimeoutError is this machine's egress and probably will. Dropping
+    a model for two timeouts throws away capacity that was never actually gone.
+    """
+    lines = tail_since(ROOT / "intent.log", hours)
+    nokey = sum(1 for l in lines if l.startswith("NOKEY") or " NOKEY" in l)
+    problems, transient = [], []
+    live = dead = []
+    try:
+        sys.path.insert(0, str(ROOT))
+        import intent as _intent
+        live = list(_intent.live_models())
+        dead = sorted(_intent.dead_models())
+        retired = json.loads((ROOT / "state" / "models-retired.json").read_text())
+        transient = [m for m in dead
+                     if re.search(r"Timeout|URLError|connection|reset|EOF",
+                                  str(retired.get(m, {}).get("why", "")), re.I)]
+    except Exception as e:  # noqa: BLE001
+        problems.append(f"cannot read the judge chain state: {str(e)[:120]}")
+        retired = {}
+    if not live:
+        problems.append("every judgement model is retired or down — is_claim and "
+                        "feedback_needs are returning their callers' defaults, "
+                        "which no other log distinguishes from a real verdict")
+    if nokey:
+        problems.append(f"{nokey} judgement(s) in {hours:g}h ran with no API key")
+    if transient:
+        problems.append(f"retired on a transient error, not quota: {', '.join(transient)} "
+                        "— these are recoverable and were dropped permanently")
+    return problems, {"live": live, "dead": dead, "retired_on_transient": transient,
+                      "nokey_%gh" % hours: nokey, "judgements_%gh" % hours: len(lines)}
+
+
 def check_followups() -> tuple[list[str], dict]:
     """Dated reminders that must not depend on anyone remembering.
 
@@ -586,6 +675,8 @@ def main() -> int:
         "session_waste": check_session_waste(),
         "throughput": check_merge_throughput(),
         "sweep_health": check_sweep_health(),
+        "prwatch_health": check_prwatch_health(),
+        "judge_chain": check_judge_chain(),
         "followups": check_followups(),
         "landed": check_landed(),
         # Soft, and reported separately on purpose: credit is not a commit.

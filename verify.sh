@@ -237,7 +237,11 @@ sys.exit(1 if bad else 0)
 PY2
 
 echo "== 10. tracked copies match the scanner =="
-for f in scan.py watch-prs.py health.py; do
+# Naming the files by hand left intent.py -- the judgement chain, the model
+# order, the retirement ledger -- unchecked for as long as it existed. Derive
+# the list instead: every .py this repo tracks that the scanner also has is a
+# shared file, and a hand-maintained list is one more thing to forget.
+for f in $(git ls-files '*.py' 2>/dev/null); do
   if [ -f "$f" ] && [ -f "$SCANNER/$f" ]; then
     diff -q "$f" "$SCANNER/$f" >/dev/null 2>&1 && ok "$f in sync" || bad "$f differs from $SCANNER/$f"
   fi
@@ -680,9 +684,9 @@ if wp._norm_check("Run tests slice 10/12") != wp._norm_check("Run tests slice 9/
 # as ours.
 if not wp.FORK_ONLY_CHECKS.get("openclaw/openclaw"):
     print("  FAIL  established fork-only checks are not recorded"); bad += 1
-if wp._is_ours({"_repo": "openclaw/openclaw"}, "check-sqlite-session-flip-proof"):
+if wp._is_ours("openclaw/openclaw", "check-sqlite-session-flip-proof"):
     print("  FAIL  a known fork-only check still counts as ours"); bad += 1
-if not wp._is_ours({"_repo": "openclaw/openclaw"}, "build / tsc"):
+if not wp._is_ours("openclaw/openclaw", "build / tsc"):
     print("  FAIL  a genuine build failure is being dismissed as not ours"); bad += 1
 for pr, want in CASES:
     got, _ = wp.past_merge_window(pr)
@@ -1747,6 +1751,43 @@ if h and h.get("sample"):
 if "landed" not in src or "landings" not in src:
     print("  FAIL  outcomes are not read from the landings ledger"); bad += 1
 print("  ok     proposes only, samples by merge time, measures our own path"
+      if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
+say "45. every long-lived loop's log is read by a health check"
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import pathlib, re, sys
+# A NameError killed watch-prs.py's pass on 375 consecutive attempts over two
+# days with no alert, because every watcher check in health.py reads watch.log
+# and nothing read watch-prs.log. Liveness was monitored; success was not. The
+# blind spot was not the bug -- it was that a whole log file had no reader.
+root = pathlib.Path(sys.argv[1])
+health = (root / "health.py").read_text()
+bad = 0
+# Which logs does a long-lived loop actually write?
+logs = set()
+for f in root.glob("*.py"):
+    src = f.read_text()
+    for m in re.finditer(r'ROOT\s*/\s*"([\w.-]+\.log)"', src):
+        logs.add(m.group(1))
+    for m in re.finditer(r'LOG\s*=\s*ROOT\s*/\s*"([\w.-]+\.log)"', src):
+        logs.add(m.group(1))
+if not logs:
+    print("  FAIL  found no log paths to check -- the detector is broken"); bad += 1
+# Mentioning the file is not reading it: the first version of this check looked
+# for the bare name, and check_prwatch_health's own docstring says "watch-prs.log"
+# in prose -- so deleting the actual read left the check green. Require the path
+# to be CONSTRUCTED in health.py, which is what reading it takes.
+for lg in sorted(logs):
+    if not re.search(r'ROOT\s*/\s*"%s"' % re.escape(lg), health):
+        print(f"  FAIL  {lg} is written by the pipeline but no health check reads it"); bad += 1
+# And reading it is not enough: a failing pass writes just as many lines as a
+# working one, so at least one check must compare failures against completions.
+if not re.search(r"passes_completed|pass complete", health):
+    print("  FAIL  no health check distinguishes a pass that COMPLETED from one that "
+          "merely logged -- liveness is not success"); bad += 1
+print(f"  ok     {len(logs)} loop log(s), all read; completion is checked"
       if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY3

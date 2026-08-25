@@ -31,6 +31,7 @@ Design notes that matter more than the code:
 from __future__ import annotations
 
 import hashlib
+import datetime as _dt
 import json
 import os
 import pathlib
@@ -229,9 +230,14 @@ def _save(cache: dict) -> None:
 
 
 def _log(msg: str) -> None:
+    # Timestamped to match every other log in the pipeline. Without one, this
+    # file could not be windowed at all: health.py's tail_since() found no
+    # datable lines, so a check reading intent.log always saw zero events and
+    # its "ran with no API key" arm could never fire.
     try:
+        stamp = _dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds")
         with LOG.open("a") as f:
-            f.write(msg + "\n")
+            f.write(f"{stamp} {msg}\n")
     except Exception:  # noqa: BLE001
         pass
 
@@ -312,7 +318,17 @@ def _ask(system: str, user: str, *, author: str = "?") -> dict | None:
         got = _ask_one(model, system, user, api, author=author)
         if got is not None:
             if model is not MODELS[0]:
-                _log(f"FALLBACK to {model} (tried {tried[:-1]})")
+                # Retired models are skipped without entering `tried`, so this
+                # read "FALLBACK to X (tried [])" -- which looks like we fell
+                # back without trying anything. Name the reason instead.
+                skipped = [m for m in MODELS[:MODELS.index(model)] if m in dead]
+                failed = tried[:-1]
+                why = []
+                if skipped:
+                    why.append(f"retired: {','.join(skipped)}")
+                if failed:
+                    why.append(f"failed now: {','.join(failed)}")
+                _log(f"FALLBACK to {model} ({'; '.join(why) or 'first live model'})")
             return got
         _down[model] = now + COOLDOWN
     if not tried:
