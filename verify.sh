@@ -1710,6 +1710,47 @@ print("  ok     lesson pushes authenticate correctly and fail loudly" if not bad
 sys.exit(1 if bad else 0)
 PY3
 
+say "44. the weekly re-measurement proposes, and measures the right population"
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import pathlib, sys
+sys.path.insert(0, sys.argv[1])
+bad = 0
+src = pathlib.Path(sys.argv[1] + "/evolve.py").read_text()
+import evolve
+# It must never apply anything. A system that rewrites its own operating
+# parameters with no audit trail cannot be debugged when it gets worse, and
+# "it got worse" is the case that matters.
+for forbidden in ("write_text", "set-url", "git commit", "git push"):
+    body = src.split('if __name__')[0]
+    if forbidden in body and "HISTORY" not in body.split(forbidden)[0][-200:]:
+        print(f"  FAIL  evolve.py can write outside its own history file ({forbidden})"); bad += 1
+# Sample by merge time, not creation. Sampling newest-CREATED merged PRs selects
+# for the ones that merged fast, because the slow ones have not merged yet.
+if "sort:updated-desc" not in src or "sort:created" in src:
+    print("  FAIL  the merge sample is taken by creation date — the fast-merge bias"); bad += 1
+# And measure OUR path where we have one. The first run of this tool proposed
+# cutting hermes 240h -> 24h off the repo's 4h external merge latency, which
+# would have re-broken the salvage window fixed days earlier: our work does not
+# arrive there by our PR being merged.
+if not hasattr(evolve, "our_landing_latency"):
+    print("  FAIL  no measurement of our own landing latency — wrong population"); bad += 1
+h = evolve.measure("hermes")
+if h and h.get("sample"):
+    if h.get("latency_from") != "ours":
+        print(f"  FAIL  hermes latency taken from {h.get('latency_from')}; its salvage path "
+              "is the only one we are actually in"); bad += 1
+    if h.get("merge_p90_h", 0) < 24:
+        print(f"  FAIL  hermes p90 measured at {h.get('merge_p90_h')}h — that is the repo's "
+              "population, not ours"); bad += 1
+# The fitness signal is the outcome, not the maintainer's explanation: the
+# largest rejection category across 930k agentic PRs is UNKNOWN, at 38.8%.
+if "landed" not in src or "landings" not in src:
+    print("  FAIL  outcomes are not read from the landings ledger"); bad += 1
+print("  ok     proposes only, samples by merge time, measures our own path"
+      if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1
