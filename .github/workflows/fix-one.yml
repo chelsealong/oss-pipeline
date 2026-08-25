@@ -1176,8 +1176,21 @@ jobs:
             # else in this job.
             git remote set-url --push origin \
               "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            # Clear the auth header actions/checkout installs globally. That
+            # header OVERRIDES credentials embedded in the remote URL, so the
+            # set-url above achieved nothing for three weeks: every push was
+            # still attempted as github-actions[bot] and refused 403. The
+            # mechanism that records what we learn has never written one line.
+            git config --unset-all "http.https://github.com/.extraheader" 2>/dev/null || true
             git pull --rebase -q origin main || true
-            git push -q origin HEAD:main || echo "::warning::lesson push failed"
+            if git push -q origin HEAD:main; then
+              echo "  lesson pushed"
+            else
+              # Loudly. A warning is how this stayed broken: the step reported
+              # success on every run while pushing nothing at all.
+              echo "::error::lesson push failed — the durable-corrections loop is not recording"
+              exit 1
+            fi
           fi
 
       - name: Record the block as a durable lesson
@@ -1214,8 +1227,21 @@ jobs:
             # else in this job.
             git remote set-url --push origin \
               "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            # Clear the auth header actions/checkout installs globally. That
+            # header OVERRIDES credentials embedded in the remote URL, so the
+            # set-url above achieved nothing for three weeks: every push was
+            # still attempted as github-actions[bot] and refused 403. The
+            # mechanism that records what we learn has never written one line.
+            git config --unset-all "http.https://github.com/.extraheader" 2>/dev/null || true
             git pull --rebase -q origin main || true
-            git push -q origin HEAD:main || echo "::warning::lesson push failed"
+            if git push -q origin HEAD:main; then
+              echo "  lesson pushed"
+            else
+              # Loudly. A warning is how this stayed broken: the step reported
+              # success on every run while pushing nothing at all.
+              echo "::error::lesson push failed — the durable-corrections loop is not recording"
+              exit 1
+            fi
           fi
 
       # Withdraw the announcement if this run produced nothing. A claim we did

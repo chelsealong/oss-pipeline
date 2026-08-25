@@ -1673,6 +1673,43 @@ print("  ok     guards sit above supply, quota pause intact, promises kept"
 sys.exit(1 if bad else 0)
 PY3
 
+say "43. the loop that records what we learn can actually write"
+python3 - "$(cd "$(dirname "$0")" && pwd)" <<'PY3' || fail=$((fail+1))
+import pathlib, re, sys, yaml
+bad = 0
+root = pathlib.Path(sys.argv[1])
+wf = (root / ".github/workflows/fix-one.yml").read_text()
+# lessons/ holds 636 lines and 16 commits, every one written by hand. The
+# automatic path — append the generator's SKIP reason to lessons/<repo>.md and
+# push — has never recorded a single line. It failed 403 on every run since it
+# was written, because actions/checkout installs a global auth header that
+# OVERRIDES credentials embedded in the remote URL, so `set-url --push` with the
+# PAT achieved nothing. The step then swallowed the failure into a ::warning::
+# and reported success, which is why three weeks passed without anyone noticing.
+pushes = [b for b in wf.split("git push") if b]
+for i, block in enumerate(wf.split("git remote set-url --push")[1:], 1):
+    # 1600, not 900: the first version of this check used a window that ended
+    # one byte before the `::error::` it was looking for, and reported correct
+    # code as broken. Make the window comfortably larger than the block it has
+    # to contain.
+    window = block[:1600]
+    if "extraheader" not in window:
+        print(f"  FAIL  push site {i} does not clear checkout's auth header — "
+              "the PAT in the URL is ignored and the push 403s"); bad += 1
+    if "::warning::lesson push failed" in window:
+        print(f"  FAIL  push site {i} still downgrades a failed push to a warning"); bad += 1
+    if "::error::" not in window or "exit 1" not in window:
+        print(f"  FAIL  push site {i} does not fail the step when the push fails"); bad += 1
+if wf.count("git remote set-url --push") < 2:
+    print("  FAIL  expected both the skip and block recorders to push"); bad += 1
+# And the recorder has to be reachable at all.
+for name in ("Record the skip as a durable lesson", "Record the block as a durable lesson"):
+    if name not in wf:
+        print(f"  FAIL  '{name}' step is gone"); bad += 1
+print("  ok     lesson pushes authenticate correctly and fail loudly" if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1
