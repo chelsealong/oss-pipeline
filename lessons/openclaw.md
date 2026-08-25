@@ -240,3 +240,4 @@ more than 120 lines, and the generator is told the number up front.
 If the smallest correct fix does not fit under the ceiling, the right move is
 to stop and say so — not to write the large one. A patch that size will not
 merge here, and it spends attention we need for the small ones.
+- [2026-08-25] #129377 skipped: Root cause found but the correct fix is architectural, exceeds the size gate, and needs a maintainer product decision — not a minimal patch.
