@@ -241,3 +241,5 @@ If the smallest correct fix does not fit under the ceiling, the right move is
 to stop and say so — not to write the large one. A patch that size will not
 merge here, and it spends attention we need for the small ones.
 - [2026-08-25] #129377 skipped: Root cause found but the correct fix is architectural, exceeds the size gate, and needs a maintainer product decision — not a minimal patch.
+- [2026-08-25] issue #129455 blocked by review:  FRONT 0 (NO-OP): Not a pure no-op in the trivial sense — the prompt text bytes genuinely change, and a revert-and-rerun of the added test confirms a real diff (see FRONT 3). But see FRONT 1: in the one scenario that matters (the reported bug), the new instruction is overridden by unchanged enforc
+
