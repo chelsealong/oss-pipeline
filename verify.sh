@@ -1650,10 +1650,29 @@ bad = 0
 # days to 08-17, and a second account sits behind it.
 wf = pathlib.Path(sys.argv[2] + "/.github/workflows/fix-one.yml").read_text()
 caps = dict(re.findall(r"^\s+([a-z0-9|-]+)\)\s+cap=(\d+)", wf, re.M))
-for repo, floor in (("hermes", 15), ("adk|dify|langfuse|openclaw|comfyui", 10)):
-    got = int(caps.get(repo, 0))
-    if got < floor:
-        print(f"  FAIL  PR cap for {repo} is {got}, still rationing rather than guarding"); bad += 1
+# SUPERSEDED 2026-08-30. The floors above (hermes>=15, the group >=10) were
+# right while every repo was running: they stopped quota rationing from creeping
+# back as a "cap". After the 08-25 credit stop Bruce reopened four repos at three
+# PRs a day each. That is a deliberate ramp, so the numeric floor no longer
+# applies to them -- but the thing it protected still must: a low cap is only
+# acceptable because everything else is PAUSED, not quietly throttled. So assert
+# the shape of the policy instead of the size of the number.
+ACTIVE = {"adk", "langfuse", "openclaw", "hermes"}
+for repo in sorted(ACTIVE):
+    got = caps.get(repo) or caps.get("adk|langfuse|openclaw|hermes")
+    if got != "3":
+        print(f"  FAIL  resumption cap for {repo} is {got}, not the 3 Bruce set"); bad += 1
+if "resumption cap" not in wf:
+    print("  FAIL  the resumption cap is no longer labelled as deliberate"); bad += 1
+# The safety property: anything not in the resumption set must be paused, not
+# left running under a cap someone could raise without revisiting the decision.
+spec = importlib.util.spec_from_file_location("sc", sys.argv[1] + "/scan.py")
+sc = importlib.util.module_from_spec(spec); spec.loader.exec_module(sc)
+for key, cfg in sc.REPOS.items():
+    if key not in ACTIVE and not cfg.get("paused"):
+        print(f"  FAIL  {key} is neither in the resumption set nor paused"); bad += 1
+    if key in ACTIVE and cfg.get("paused"):
+        print(f"  FAIL  {key} is in the resumption set but paused"); bad += 1
 # spec-kit's 3 is a promise to a maintainer, not rationing. It must NOT drift up
 # with the others: mnriem asked three times that we stop a class of PR there,
 # and Bruce set this number when re-enabling the repo.

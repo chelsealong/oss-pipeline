@@ -121,11 +121,18 @@ jobs:
           # So these are raised to sit above real daily supply. What limits us
           # now is supply and the quota guard, both measured: fix-one fails the
           # run on a refusal and watch.py pauses and refunds.
+          # A third kind, added 2026-08-30. The whole pipeline was stopped on
+          # 08-25 over Claude credit. Bruce reopened four repos — adk, langfuse,
+          # openclaw, hermes — at three PRs per repo per day. That is a
+          # RESUMPTION cap: a deliberate ramp after an outage, not quota
+          # rationing, and not a promise to a maintainer. It is Bruce's to move.
+          # Every other repo is paused in scan.REPOS rather than capped, so a
+          # number here can never quietly reopen one.
           case "${{ inputs.repo_key }}" in
             spec-kit) cap=3 ;;   # relationship cap — Bruce's, do not raise
+            adk|langfuse|openclaw|hermes) cap=3 ;;  # resumption cap — Bruce's, 2026-08-30
             firecrawl) cap=4 ;;  # was 1; its whole issue flow is small
-            hermes) cap=20 ;;
-            adk|dify|langfuse|openclaw|comfyui) cap=12 ;;
+            dify|comfyui) cap=12 ;;
             autogpt|langfuse-python|gemini-cli) cap=8 ;;
             llama-index|crawl4ai|litellm|mem0) cap=8 ;;
             *) cap=6 ;;

@@ -72,6 +72,7 @@ REPOS: dict[str, dict] = {
     },
     "langfuse-python": {
         "upstream": "langfuse/langfuse",  # tracker lives here, fix lands in langfuse-python
+        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ["label:sdk-python", "label:integration-langchain", "label:integration-openai"],
         "exclude_labels": set(),
         "implements_in": "langfuse/langfuse-python",
@@ -91,6 +92,7 @@ REPOS: dict[str, dict] = {
     # we produce. Median 227h to merge, so do not judge it inside a week.
     "llama-index": {
         "upstream": "run-llama/llama_index",
+        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ['label:bug sort:created-desc', "sort:created-desc"],
         # `triage` is not an exclusion here. Its description is "Issue needs to be
         # triaged/prioritized" and it sits on about half the open issues — the
@@ -106,6 +108,7 @@ REPOS: dict[str, dict] = {
     # filter matches literally — hence the exact strings below rather than "bug".
     "crawl4ai": {
         "upstream": "unclecode/crawl4ai",
+        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         # The label name contains a space, so it must be quoted — _LABEL_RE stops
         # at whitespace otherwise and "\U0001F41E Bug" arrives as just the emoji.
         "searches": ['label:"\U0001F41E Bug" sort:created-desc'],
@@ -158,12 +161,14 @@ REPOS: dict[str, dict] = {
     # same 6% as hermes, so this is on trial and judged on landed commits.
     "mem0": {
         "upstream": "mem0ai/mem0",
+        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ['label:bug sort:created-desc'],
         "exclude_labels": {"enhancement"},   # those are the "wait first" class
         "max_vet": 40,
     },
     "spec-kit": {
         "upstream": "github/spec-kit",
+        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ["label:bug sort:created-desc", "sort:created-desc"],
         # Catalog submissions go through spec-kit's OWN agentic workflow, which
         # does the validation and opens the PR itself. mnriem asked us to stop
@@ -190,6 +195,7 @@ REPOS: dict[str, dict] = {
     },
     "gemini-cli": {
         "upstream": "google-gemini/gemini-cli",
+        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         # help wanted is 29/30 self-assigned already — its /assign bot works too
         # well. The untapped supply is kind/bug (99 unassigned) and good first
         # issue; neither can be self-assigned, and neither needs to be.
@@ -224,6 +230,7 @@ REPOS: dict[str, dict] = {
     # wait for an assignment that does not come.
     "langchain": {
         "upstream": "langchain-ai/langchain",
+        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         # new-contributor is a PR label, not an issue label — it matched nothing.
         # The issues that actually get assigned and merged carry bug + external:
         # ccurme and hwchase17 assigned three external contributors in two days.
@@ -285,6 +292,7 @@ REPOS: dict[str, dict] = {
     },
     "firecrawl": {
         "upstream": "firecrawl/firecrawl",
+        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ["label:bug sort:created-desc", "sort:created-desc"],
         "exclude_labels": set(),
     },
@@ -351,6 +359,7 @@ REPOS: dict[str, dict] = {
     # tracker. Do not re-add.
     "dify": {
         "upstream": "langgenius/dify",
+        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ['label:"good first issue"', 'label:"🙏 help wanted"', "label:bug sort:created-desc"],
         "exclude_labels": set(),
         # The PR template asks agent-created PRs to end the description with
@@ -359,12 +368,14 @@ REPOS: dict[str, dict] = {
     },
     "autogpt": {
         "upstream": "Significant-Gravitas/AutoGPT",
+        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ['label:"good first issue"', 'label:"help wanted"', "label:bug sort:created-desc"],
         "exclude_labels": set(),
         "max_vet": 40,
     },
     "comfyui": {
         "upstream": "Comfy-Org/ComfyUI",
+        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ["sort:created-desc"],
         "exclude_labels": set(),
         # only CPU-verifiable areas are in scope for our pipeline
