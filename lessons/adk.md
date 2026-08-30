@@ -1,1 +1,2 @@
 - [2026-08-25] #6899 skipped: Not a fixable bug without a maintainer design decision that isn't ours to make.
+- [2026-08-30] #6949 skipped: #6949 is a feature request ("Describe the Solution You'd Like") asking for two new BaseMemoryService methods, and the reporter explicitly deferred implementation pending maintainer sign-off on the method names/signatures ("happy to open a PR if you're OK with 
