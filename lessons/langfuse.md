@@ -1,2 +1,3 @@
 - [2026-08-25] #16549 skipped: could not reproduce the reported bug against current main; a speculative fix would not be verifiable
 - [2026-08-30] #16735 skipped: issue #16735 is already assigned to a Langfuse maintainer (hassiebp), so it is not unclaimed. Separately, the issue body itself is not a bug report or actionable feature request — it documents a working OpenAI-adapter config (custom baseURL + customModels + 
+- [2026-08-30] #16654 skipped: issue #16654 is currently assigned to wochinge (a Langfuse maintainer), per `gh api repos/langfuse/langfuse/issues/16654 --jq '.assignees'`. The task prompt said assignees were mechanically re-checked and clear, but that check is stale/wrong as of now. Per thi
