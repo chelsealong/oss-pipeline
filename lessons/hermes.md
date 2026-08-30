@@ -139,3 +139,4 @@ still buys nothing.
 
 - [2026-08-30] issue #98273 blocked by review:  FRONT 0 — NO-OP (fails the PR):  The added `term.refresh(0, term.rows - 1)` after `webgl.dispose()` almost certainly duplicates a repaint the real @xterm/addon-webgl + @xterm/xterm 
 
+- [2026-08-30] #98295 skipped: issue #98295 (mechanical wheel/touchpad scrolling stuck at 1 row/event in native terminals due to nativeStep's 40ms acceleration window in ui-tui/src/lib/wheelAccel.ts) is already fixed by open PR #83675 ("fix(tui): accelerate mechanical wheel scrolling in nat
