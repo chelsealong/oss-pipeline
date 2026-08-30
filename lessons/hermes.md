@@ -135,3 +135,5 @@ branch, and give it seven days before drawing a conclusion.
 Cap back to 7/day on 2026-08-15. Not 10: the run to 30+ open PRs in one
 repo was its own problem, and the 20,623-PR backlog there means volume
 still buys nothing.
+- [2026-08-30] issue #98243 blocked by review:  FRONT 0 (NO-OP) — FAILS, this is the deciding issue.  `hermes_cli/model_switch.py::list_authenticated_providers()` already contains a post-pass (lines ~3890-3906, added in commit d474ba5615, "Surface a custom / 
+
