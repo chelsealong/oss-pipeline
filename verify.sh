@@ -1811,6 +1811,38 @@ print(f"  ok     {len(logs)} loop log(s), all read; completion is checked"
 sys.exit(1 if bad else 0)
 PY3
 
+say "46. quota hand-off fires for every way an account can run dry"
+python3 - "$(cd "$(dirname "$0")" && pwd)" <<'PY3' || fail=$((fail+1))
+import pathlib, re, sys
+# The hand-off to CLAUDE_CODE_OAUTH_TOKEN_2 is triggered by grepping Claude's
+# own output. It matched exactly one string, "session limit", which is what a
+# Max/Pro subscription prints. A console account paying from a credit balance
+# prints something else, so a credit-funded primary would have failed WITHOUT
+# ever reaching the spare -- and the spare would have looked unused rather than
+# unreachable. Assert the detector covers both funding models.
+root = pathlib.Path(sys.argv[1])
+MUST = ["session limit", "credit balance", "insufficient", "quota exceeded"]
+bad = 0
+for wf in ("fix-one.yml", "respond-pr.yml"):
+    src = (root / ".github" / "workflows" / wf).read_text()
+    greps = re.findall(r"grep -qiE? ['\"]([^'\"]*)['\"] /tmp/claude\.out", src)
+    if not greps:
+        print(f"  FAIL  {wf} no longer greps claude output for exhaustion"); bad += 1
+        continue
+    for g in greps:
+        missing = [m for m in MUST if m not in g]
+        if missing:
+            print(f"  FAIL  {wf} exhaustion pattern misses {missing}"); bad += 1
+# And the spare must still be wired, or widening the pattern changes nothing.
+for wf in ("fix-one.yml", "respond-pr.yml"):
+    src = (root / ".github" / "workflows" / wf).read_text()
+    if "ALT_OAUTH_TOKEN" not in src or "CLAUDE_CODE_OAUTH_TOKEN_2" not in src:
+        print(f"  FAIL  {wf} no longer reads the spare subscription"); bad += 1
+print("  ok     both funding models detected, spare account still wired"
+      if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

@@ -436,7 +436,10 @@ jobs:
             start=$(date +%s)
             run_claude 2>&1 | tee /tmp/claude.out; rc=${PIPESTATUS[0]}
 
-            if grep -qi 'session limit' /tmp/claude.out 2>/dev/null; then
+            # Same widening as fix-one.yml: a credit-funded token does not
+            # say "session limit" when it runs dry, and matching only that
+            # string would skip the hand-off to the spare account entirely.
+            if grep -qiE 'session limit|credit balance|insufficient[ _]quota|out of credit|quota exceeded|billing|upgrade your plan' /tmp/claude.out 2>/dev/null; then
               # Unlike a fix, an unanswered review comment cannot wait an hour
               # for a reset — the PR stalls meanwhile. Try the spare account, and
               # if that is dry too, fail loudly rather than pretend we replied.

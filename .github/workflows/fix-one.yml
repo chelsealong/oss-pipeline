@@ -660,7 +660,13 @@ jobs:
             start=$(date +%s)
             run_claude 2>&1 | tee /tmp/claude.out; rc=${PIPESTATUS[0]}
 
-            if grep -qi "session limit" /tmp/claude.out 2>/dev/null; then
+            # Exhaustion wording depends on what is behind the token. A Max/Pro
+            # subscription says "session limit"; a console account paying from a
+            # credit balance says something else entirely. Matching only the
+            # first string means a credit-funded primary would fail without ever
+            # handing over to the spare, and the spare would look untouched
+            # rather than unreachable.
+            if grep -qiE "session limit|credit balance|insufficient[ _]quota|out of credit|quota exceeded|billing|upgrade your plan" /tmp/claude.out 2>/dev/null; then
               if [ -n "${ALT_OAUTH_TOKEN:-}" ] && [ "$switched_token" -eq 0 ]; then
                 echo "::notice::primary subscription is out of quota - switching to the second account"
                 export CLAUDE_CODE_OAUTH_TOKEN="$ALT_OAUTH_TOKEN"
@@ -711,8 +717,8 @@ jobs:
           # retry loop above breaks normally and the provisional outcome.txt was
           # being read as a genuine SKIP — a quota block recorded as a verdict on
           # the issue, and the candidate dropped instead of retried.
-          if grep -qi "session limit" /tmp/claude.out 2>/dev/null; then
-            echo "::notice::SESSION LIMIT reached - candidate stays queued, nothing decided"
+          if grep -qiE "session limit|credit balance|insufficient[ _]quota|out of credit|quota exceeded|billing|upgrade your plan" /tmp/claude.out 2>/dev/null; then
+            echo "::notice::QUOTA/CREDIT exhausted - candidate stays queued, nothing decided"
             echo "outcome=QUOTA" >> "$GITHUB_OUTPUT"; exit 0
           fi
 
