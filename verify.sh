@@ -1134,7 +1134,14 @@ def fake(req, timeout=None):
         raise urllib.error.HTTPError("u", 403, "F", {}, io.BytesIO(
             b'{"error":{"message":"Free quota exhausted.","type":"AllocationQuota"}}'))
     if m == intent.MODELS[1]:
-        raise TimeoutError("slow")
+        # Was TimeoutError. A timeout is transport and no longer strikes a
+        # model, so the two-strike rule is now exercised with an actual model
+        # fault: a body the parser cannot use.
+        class Bad:
+            def __enter__(self): return self
+            def __exit__(self, *a): pass
+            def read(self): return b'{"unexpected": "shape"}'
+        return Bad()
     class R:
         def __enter__(self): return self
         def __exit__(self, *a): pass
@@ -1153,7 +1160,18 @@ try:
     # Anything else gets two strikes, then goes.
     intent._down.clear(); intent._ask("s", "u")
     if intent.MODELS[1] not in intent.dead_models():
-        print(f"  FAIL  {intent.MODELS[1]} still live after {intent.STRIKES_TO_RETIRE} failures"); bad += 1
+        print(f"  FAIL  {intent.MODELS[1]} still live after {intent.STRIKES_TO_RETIRE} unusable answers"); bad += 1
+    # The inverse, which is the failure this whole taxonomy exists to prevent:
+    # a model that only ever times out must survive, because a timeout is this
+    # machine's egress and says nothing about the model.
+    intent.RETIRED = pathlib.Path(tempfile.mkdtemp()) / "r_timeout.json"
+    intent._down.clear()
+    intent.urllib.request.urlopen = lambda req, timeout=None: (
+        (_ for _ in ()).throw(TimeoutError("slow")))
+    for _ in range(intent.STRIKES_TO_RETIRE + 2):
+        intent._down.clear(); intent._ask("s", "u")
+    if intent.dead_models():
+        print(f"  FAIL  a timeout retired {sorted(intent.dead_models())} — transport is not evidence"); bad += 1
     # A call in which EVERY model failed is evidence about the network, not
     # about nine separate models. One comment produced a failure on all eight
     # live models in a single call and retired a model that had answered a
@@ -1857,6 +1875,65 @@ for wf in ("fix-one.yml", "respond-pr.yml"):
     if "ALT_OAUTH_TOKEN" not in src or "CLAUDE_CODE_OAUTH_TOKEN_2" not in src:
         print(f"  FAIL  {wf} no longer reads the spare subscription"); bad += 1
 print("  ok     both funding models detected, spare account still wired"
+      if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
+say "47. a failure is classified before it is charged to a model"
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import socket, sys, urllib.error
+sys.path.insert(0, sys.argv[1])
+import intent
+bad = 0
+# Every non-HTTP exception used to take the same path and strike the MODEL, so
+# 774 URLError and 102 TimeoutError entries -- this machine's egress -- retired
+# three working models. The vendor's own table (Model Studio error codes) says
+# what each condition means; assert we follow it.
+CASES = [
+    (404, '{"code":"ModelNotFound"}',                        "RETIRE"),
+    (403, '{"code":"Endpoint.AccessDenied"}',                "RETIRE"),
+    (403, '{"code":"Model.AccessDenied"}',                   "RETIRE"),
+    (403, '{"message":"Free quota exhausted."}',             "RETIRE"),
+    (403, '{"code":"AllocationQuota.FreeTierOnly"}',         "RETIRE"),
+    # 429 Throttling.AllocationQuota contains the word "quota" and lifts by
+    # itself. Matching "quota" before "throttling" retires a model for being
+    # rate limited, which is the specific inversion this check exists to stop.
+    (429, '{"code":"Throttling.AllocationQuota","message":"Allocated quota exceeded"}', "COOLDOWN"),
+    (429, '{"code":"Throttling.RateQuota"}',                 "COOLDOWN"),
+    (429, '{"code":"Throttling.BurstRate"}',                 "COOLDOWN"),
+    (400, '{"code":"Arrearage"}',                            "COOLDOWN"),
+    (500, '{"code":"InternalError"}',                        "COOLDOWN"),
+    (401, '{"code":"InvalidApiKey"}',                        "GLOBAL"),
+    (400, '{"code":"InvalidParameter"}',                     "STRIKE"),
+]
+for code, body, want in CASES:
+    got = intent.classify_http(code, body)
+    if got != want:
+        print(f"  FAIL  HTTP {code} {body[:34]} -> {got}, want {want}"); bad += 1
+for exc, want in ((urllib.error.URLError("x"), "COOLDOWN"), (TimeoutError(), "COOLDOWN"),
+                  (socket.timeout(), "COOLDOWN"), (OSError(), "COOLDOWN"),
+                  (KeyError("choices"), "STRIKE"), (ValueError("bad json"), "STRIKE")):
+    got = intent.classify_exc(exc)
+    if got != want:
+        print(f"  FAIL  {type(exc).__name__} -> {got}, want {want}"); bad += 1
+# A cooldown must not reach _strike at all, or the classification is decorative.
+src = open(sys.argv[1] + "/intent.py").read()
+body = src.split("def _apply(")[1].split("\ndef ")[0]
+if "_strike" in body.split("V_COOLDOWN")[1].split("return")[0]:
+    print("  FAIL  the cooldown branch still reaches _strike"); bad += 1
+# COOLDOWN is the duration constant in this module; shadowing it with a verdict
+# name would silently set every cooldown to the string "COOLDOWN".
+if not isinstance(intent.COOLDOWN, (int, float)):
+    print(f"  FAIL  intent.COOLDOWN is {intent.COOLDOWN!r}, not a duration"); bad += 1
+# And nothing may be retired for a transport failure.
+import json as _j, pathlib as _p, re as _re
+f = _p.Path(sys.argv[1]) / "state" / "models-retired.json"
+if f.exists():
+    for k, v in _j.loads(f.read_text()).items():
+        if v.get("retired") and _re.search(r"Timeout|URLError|OSError|connection reset",
+                                           str(v.get("why", "")), _re.I):
+            print(f"  FAIL  {k} is retired for a transport failure: {v.get('why')[:50]}"); bad += 1
+print("  ok     vendor taxonomy followed; transport never retires a model"
       if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY3

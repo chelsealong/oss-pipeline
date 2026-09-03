@@ -119,6 +119,65 @@ def dead_models() -> set:
     return {m for m, v in _retired().items() if v.get("retired")}
 
 
+# Failure taxonomy, from Alibaba Cloud Model Studio's published error codes
+# (help.aliyun.com/en/model-studio/error-code). The previous code sorted every
+# non-HTTP exception into one bucket and struck the MODEL for it. That is how
+# three working models were thrown away: the 774 URLError and 102 TimeoutError
+# entries in intent.log are this machine's egress, not a model saying anything.
+#
+#   V_RETIRE   the model is gone, or its free tier is spent and we will not pay
+#              for it. Retrying can never succeed.
+#   V_COOLDOWN transport, throttling, or server-side. It will work again;
+#              striking a model for it is a category error.
+#   V_STRIKE   the model answered with something unusable. Evidence about the
+#              model, so it accumulates.
+#   V_GLOBAL   the credential is wrong. Not attributable to any model, and
+#              charging one would eventually empty the whole chain.
+#
+# Named V_* because COOLDOWN is already the cooldown duration in this module.
+V_RETIRE, V_COOLDOWN, V_STRIKE, V_GLOBAL = "RETIRE", "COOLDOWN", "STRIKE", "GLOBAL"
+
+_GONE = ("modelnotfound", "model_not_supported", "endpoint.accessdenied",
+         "model.accessdenied", "accessdenied.unpurchased")
+# The vendor calls a spent free tier temporary because paying fixes it. For an
+# account that will not pay it is permanent, which is why it retires here.
+_SPENT = ("free quota exhausted", "freetieronly",
+          "free tier of the model has been exhausted")
+_THROTTLE = ("throttling", "ratequota", "burstrate", "allocated quota exceeded",
+             "requests rate limit", "try again later")
+
+
+def classify_http(code: int, body: str) -> str:
+    """How to treat an HTTP failure from the judge endpoint."""
+    b = (body or "").lower()
+    if code == 401 or "invalidapikey" in b or "invalid api-key" in b:
+        return V_GLOBAL
+    if code == 404 or any(g in b for g in _GONE):
+        return V_RETIRE
+    # Checked BEFORE _SPENT on purpose: 429 Throttling.AllocationQuota carries
+    # the word "quota" and lifts by itself, so matching on "quota" first would
+    # retire a model for being rate limited.
+    if code == 429 or any(t in b for t in _THROTTLE):
+        return V_COOLDOWN
+    if any(q in b for q in _SPENT):
+        return V_RETIRE
+    if code == 400 and "arrearage" in b:
+        return V_COOLDOWN
+    if 500 <= code < 600:
+        return V_COOLDOWN
+    return V_STRIKE
+
+
+def classify_exc(exc: BaseException) -> str:
+    """Transport failures are not evidence about a model; bad shapes are."""
+    import socket
+    if isinstance(exc, (KeyError, ValueError)):
+        return V_STRIKE
+    if isinstance(exc, (TimeoutError, socket.timeout, urllib.error.URLError, OSError)):
+        return V_COOLDOWN
+    return V_STRIKE
+
+
 def _strike(model: str, why: str, *, immediate: bool = False) -> None:
     """Record a failure. Retire at STRIKES_TO_RETIRE, or at once if terminal."""
     from datetime import datetime, timezone
@@ -144,6 +203,19 @@ def _strike(model: str, why: str, *, immediate: bool = False) -> None:
         _log(f"RETIRED {model} after {rec['strikes']} strike(s) — {why[:80]}")
     _save_retired(d)
 
+
+def _apply(model: str, verdict: str, why: str, *, author: str = "?", user: str = "") -> None:
+    """Turn a classification into the one action it warrants."""
+    import time as _t
+    if verdict == V_GLOBAL:
+        _log(f"CREDENTIAL {why[:100]} — not charged to any model")
+        return
+    if verdict == V_COOLDOWN:
+        _down[model] = _t.monotonic() + COOLDOWN
+        _log(f"COOLDOWN {model} {why[:80]} author={author} :: {user[:60]!r}")
+        return
+    _strike(model, why, immediate=(verdict == V_RETIRE))
+    _log(f"ERROR {model} {why[:80]} author={author} :: {user[:80]!r}")
 
 def _unstrike(models: list) -> None:
     """Undo strikes from a call in which everything failed.
@@ -369,14 +441,11 @@ def _ask_one(model: str, system: str, user: str, api: str, *, author: str) -> di
             body = e.read().decode("utf-8", "replace")[:300]
         except Exception:  # noqa: BLE001
             pass
-        # The message is the only way to tell "your allowance is gone" from
-        # "try again later", and the two deserve opposite treatment.
-        quota = e.code in (402, 403) and ("quota" in body.lower() or "allocation" in body.lower())
-        _strike(model, f"HTTP {e.code} {body[:60]}", immediate=quota)
+        _apply(model, classify_http(e.code, body), f"HTTP {e.code} {body[:60]}",
+               author=author, user=user)
         return None
     except (urllib.error.URLError, OSError, KeyError, ValueError, TimeoutError) as e:
-        _strike(model, type(e).__name__)
-        _log(f"ERROR {model} {type(e).__name__} author={author} :: {user[:80]!r}")
+        _apply(model, classify_exc(e), type(e).__name__, author=author, user=user)
         return None
     m = re.search(r"\{.*\}", content, re.S)
     if not m:
