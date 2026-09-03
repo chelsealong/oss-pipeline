@@ -1,1 +1,2 @@
 - [2026-09-03] #4423 skipped: Issue #4423 is stage 3 of a 3-stage migration ("This issue is implemented only after #4421 and #4422 have shipped in earlier minor releases"); #4421 (add extension) and #4422 (deprecate core command) are still open/unshipped, so this issue is explicitly not ac
+- [2026-09-03] #4427 skipped: Issue author explicitly claimed the work ("I plan to work on this together with @markuswondrak"), and the issue is a large multi-stage feature request (new `preset update` command with staged/atomic rollback, manifest diffing, catalog provenance, constitution 
