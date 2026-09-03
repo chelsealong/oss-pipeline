@@ -570,9 +570,18 @@ def check_judge_chain(hours: float = 24) -> tuple[list[str], dict]:
     is permanent, so the REASON matters: a 403 "Free quota exhausted" never comes
     back, but a TimeoutError is this machine's egress and probably will. Dropping
     a model for two timeouts throws away capacity that was never actually gone.
+
+    Waiting for the chain to be EMPTY is waiting too long. On 2026-09-02 a
+    single outage struck all four live models within the same second; two more
+    such minutes and there would have been nothing left, and the first visible
+    symptom would have been silently worse judgements, not an error. So this
+    alerts on headroom, not on exhaustion.
     """
     lines = tail_since(ROOT / "intent.log", hours)
-    nokey = sum(1 for l in lines if l.startswith("NOKEY") or " NOKEY" in l)
+    nokey = sum(1 for l in lines if "NOKEY" in l)
+    allfailed = sum(1 for l in lines if "ALLFAILED" in l)
+    cooldowns = sum(1 for l in lines if " COOLDOWN " in l)
+    creds = [l for l in lines if "CREDENTIAL" in l]
     problems, transient = [], []
     live = dead = []
     try:
@@ -587,16 +596,33 @@ def check_judge_chain(hours: float = 24) -> tuple[list[str], dict]:
     except Exception as e:  # noqa: BLE001
         problems.append(f"cannot read the judge chain state: {str(e)[:120]}")
         retired = {}
+    MIN_LIVE = 3
     if not live:
         problems.append("every judgement model is retired or down — is_claim and "
                         "feedback_needs are returning their callers' defaults, "
                         "which no other log distinguishes from a real verdict")
+    elif len(live) < MIN_LIVE:
+        problems.append(f"only {len(live)} model(s) left on the chain ({', '.join(live)}) "
+                        f"— below the {MIN_LIVE} needed to survive one outage, and the "
+                        "chain emptying is silent at every call site")
+    if creds:
+        problems.append(f"{len(creds)} credential failure(s) in {hours:g}h — the key is "
+                        "rejected, and no model is at fault: " + creds[-1][-90:].strip())
     if nokey:
         problems.append(f"{nokey} judgement(s) in {hours:g}h ran with no API key")
     if transient:
         problems.append(f"retired on a transient error, not quota: {', '.join(transient)} "
                         "— these are recoverable and were dropped permanently")
-    return problems, {"live": live, "dead": dead, "retired_on_transient": transient,
+    # A chain that fails end to end is evidence about the network. It is not a
+    # fault on its own, but a sustained rate means every caller is quietly
+    # running on its own default.
+    if len(lines) >= 20 and allfailed / max(1, len(lines)) > 0.15:
+        problems.append(f"{allfailed} of {len(lines)} judgements in {hours:g}h failed on "
+                        "every live model — callers are falling back to defaults")
+    return problems, {"live": live, "n_live": len(live), "min_live": MIN_LIVE,
+                      "dead": dead, "retired_on_transient": transient,
+                      "credential_failures": len(creds), "allfailed_%gh" % hours: allfailed,
+                      "cooldowns_%gh" % hours: cooldowns,
                       "nokey_%gh" % hours: nokey, "judgements_%gh" % hours: len(lines)}
 
 

@@ -951,6 +951,13 @@ if "default=True" not in scan_src:
 if "default=False" not in wp_src:
     print("  FAIL  watch-prs must fail open (default=False) or an outage closes every PR"); bad += 1
 import intent
+# The harness must not write into the production judgement log. Checks 26 and 27
+# deliberately run with no API key to test the fail direction, and every run
+# appended NOKEY lines to intent.log — 327 of them, which is every NOKEY entry
+# the log holds. health.py then reported "24 judgements ran with no API key" as
+# a production fault that had never happened.
+import tempfile as _tf, pathlib as _pl
+intent.LOG = _pl.Path(_tf.mkdtemp()) / "intent-harness.log"
 intent._load_key = lambda: ""          # simulate the judge being unreachable
 a, _ = intent.is_claim("I will fix this myself", default=True)
 b, _ = intent.is_claim("I will fix this myself", default=False)
@@ -972,6 +979,13 @@ if 'default="CODE"' not in src:
     print("  FAIL  triage must default to CODE — an item ruled unactionable is "
           "marked seen and never reconsidered, so a timeout would retire it"); bad += 1
 import intent
+# The harness must not write into the production judgement log. Checks 26 and 27
+# deliberately run with no API key to test the fail direction, and every run
+# appended NOKEY lines to intent.log — 327 of them, which is every NOKEY entry
+# the log holds. health.py then reported "24 judgements ran with no API key" as
+# a production fault that had never happened.
+import tempfile as _tf, pathlib as _pl
+intent.LOG = _pl.Path(_tf.mkdtemp()) / "intent-harness.log"
 intent._load_key = lambda: ""                     # judge unreachable
 needs, _ = intent.feedback_needs("Please restore the original value in finally.",
                                  default="CODE")
@@ -1106,6 +1120,13 @@ python3 - "$SCANNER" "$(cd "$(dirname "$0")" && pwd)" <<'PY3' || fail=$((fail+1)
 import io, json, pathlib, sys, tempfile, urllib.error
 sys.path.insert(0, sys.argv[1])
 import intent
+# The harness must not write into the production judgement log. Checks 26 and 27
+# deliberately run with no API key to test the fail direction, and every run
+# appended NOKEY lines to intent.log — 327 of them, which is every NOKEY entry
+# the log holds. health.py then reported "24 judgements ran with no API key" as
+# a production fault that had never happened.
+import tempfile as _tf, pathlib as _pl
+intent.LOG = _pl.Path(_tf.mkdtemp()) / "intent-harness.log"
 bad = 0
 if len(intent.MODELS) < 4:
     print("  FAIL  no fallback chain — one outage silences every judgement"); bad += 1
@@ -1884,6 +1905,13 @@ python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
 import socket, sys, urllib.error
 sys.path.insert(0, sys.argv[1])
 import intent
+# The harness must not write into the production judgement log. Checks 26 and 27
+# deliberately run with no API key to test the fail direction, and every run
+# appended NOKEY lines to intent.log — 327 of them, which is every NOKEY entry
+# the log holds. health.py then reported "24 judgements ran with no API key" as
+# a production fault that had never happened.
+import tempfile as _tf, pathlib as _pl
+intent.LOG = _pl.Path(_tf.mkdtemp()) / "intent-harness.log"
 bad = 0
 # Every non-HTTP exception used to take the same path and strike the MODEL, so
 # 774 URLError and 102 TimeoutError entries -- this machine's egress -- retired
@@ -1934,6 +1962,45 @@ if f.exists():
                                            str(v.get("why", "")), _re.I):
             print(f"  FAIL  {k} is retired for a transport failure: {v.get('why')[:50]}"); bad += 1
 print("  ok     vendor taxonomy followed; transport never retires a model"
+      if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
+say "48. the harness leaves no trace in production state"
+python3 - "$SCANNER" "$(cd "$(dirname "$0")" && pwd)" <<'PY3' || fail=$((fail+1))
+import pathlib, re, sys
+# Checks 26 and 27 run the judge with no API key on purpose, to prove the fail
+# direction. Every run appended NOKEY lines to the real intent.log -- 327 of
+# them, which was every NOKEY entry it held -- and health.py duly reported "24
+# judgements ran with no API key" as a production fault that had never
+# happened. A harness that writes into the data it is checking cannot be
+# trusted about that data.
+root = pathlib.Path(sys.argv[2])
+# Scan only the part of the file BEFORE this check: the regex below contains
+# the literal `intent.LOG = ` and would otherwise match itself.
+full = (root / "verify.sh").read_text()
+src = full.split('say "48.')[0]
+bad = 0
+imports = src.count("import intent\n")
+redirects = src.count("intent.LOG = ")
+if imports and redirects < imports:
+    print(f"  FAIL  {imports} checks import intent but only {redirects} redirect intent.LOG"); bad += 1
+# The redirect must go somewhere temporary, not to another real path.
+for m in re.finditer(r"intent\.LOG = ([^\n]+)", src):
+    if "mkdtemp" not in m.group(1) and "tempfile" not in m.group(1):
+        print(f"  FAIL  intent.LOG redirected to something that is not temporary: {m.group(1)[:60]}")
+        bad += 1
+# And the production log must carry no harness fixture text.
+log = pathlib.Path(sys.argv[1]) / "intent.log"
+FIXTURES = ("I will fix this myself", "Please restore the original value in finally")
+if log.exists():
+    body = log.read_text()
+    for f in FIXTURES:
+        n = body.count(f)
+        if n:
+            print(f"  FAIL  production intent.log holds {n} harness fixture line(s): {f!r}")
+            bad += 1
+print("  ok     harness writes to temp, production log is clean"
       if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY3
