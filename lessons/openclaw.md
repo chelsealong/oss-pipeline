@@ -249,3 +249,4 @@ merge here, and it spends attention we need for the small ones.
 - [2026-08-31] #134379 skipped: Root cause confirmed but a minimal patch cannot fix it correctly.
 - [2026-09-03] #136778 skipped: Issue #136778 carries a protected `maintainer` label. ClawSweeper's own review comment (2026-09-03) explicitly states "the protected `maintainer` label keeps this issue in explicit maintainer handling rather than an automatic repair lane" and frames it as "Kee
 - [2026-09-03] #137024 skipped: Already fixed on current main. Commit f1f299a40b76f815a2c947c2ae8e05232f0c643f ("fix(cron): preserve NO_REPLY after completed tool calls", fixes canonical issue #135658) is present in this checkout's history (verified via git merge-base --is-ancestor against H
+- [2026-09-03] #137207 skipped: Confirmed real regression via direct code reading, but the correct fix exceeds the minimal-patch mandate and needs a maintainer design decision, not a small patch.
