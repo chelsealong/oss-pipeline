@@ -11,6 +11,11 @@ set -uo pipefail
 cd "${VERIFY_ROOT:-$(dirname "$0")}" || exit 1
 SCANNER="${SCANNER:-/Users/jialong/.local/share/oss-scanner}"
 fail=0
+# `say` was never defined here. On macOS it resolved to /usr/bin/say — the
+# text-to-speech binary — which exits 0, so every section header was spoken or
+# discarded instead of printed and the local run looked fine. On the Linux
+# runner it is "command not found", which is how this surfaced. Define it.
+say()  { printf '\n== %s ==\n' "$1"; }
 note() { printf '  %-6s %s\n' "$1" "$2"; }
 bad()  { fail=$((fail+1)); note "FAIL" "$1"; }
 ok()   { note "ok" "$1"; }
@@ -1298,7 +1303,13 @@ sys.path.insert(0, sys.argv[1])
 import landings
 bad = 0
 d = landings._load()
-if len(d.get("commits") or {}) < 25:
+# The ledger lives on the workstation and is deliberately not committed, so on
+# a runner it is empty. That is not a defect, but it must not pass silently
+# either: a check that quietly stops checking is worse than one that fails.
+LEDGER = pathlib.Path(sys.argv[1]) / "state" / "landings.json"
+if not LEDGER.exists():
+    print(f"  SKIP  ledger absent at {LEDGER} — data assertions not run here")
+elif len(d.get("commits") or {}) < 25:
     print(f"  FAIL  ledger holds only {len(d.get('commits') or {})} commits — it should be seeded"); bad += 1
 # Every recount before the ledger went wrong in the same three ways. Each is
 # guarded here so a future edit cannot quietly reintroduce one.
@@ -1320,7 +1331,7 @@ if "committer-date:>" not in src or "since" not in src:
     print("  FAIL  update() does not narrow by date, so every run is a full recount"); bad += 1
 # Landed is a commit on main, which is not the same as a merged PR.
 h = [v for v in d["commits"].values() if "hermes" in v["repo"]]
-if len(h) < 5:
+if LEDGER.exists() and len(h) < 5:
     print(f"  FAIL  hermes shows {len(h)} landings; its PRs close unmerged and are salvaged"); bad += 1
 if "update_landings" not in pathlib.Path(sys.argv[1] + "/health.py").read_text():
     print("  FAIL  nothing keeps the ledger current on a schedule"); bad += 1
@@ -1757,7 +1768,14 @@ if "sort:updated-desc" not in src or "sort:created" in src:
 # arrive there by our PR being merged.
 if not hasattr(evolve, "our_landing_latency"):
     print("  FAIL  no measurement of our own landing latency — wrong population"); bad += 1
-h = evolve.measure("hermes")
+# `latency_from == "ours"` requires the ledger to supply >=5 of our own hermes
+# landings. On a runner the ledger is absent, so the measurement legitimately
+# falls back to the repo population and the assertion below would report a
+# defect that does not exist. Skip it there, loudly, the same way check 35 does.
+LEDGER44 = pathlib.Path(sys.argv[1]) / "state" / "landings.json"
+h = evolve.measure("hermes") if LEDGER44.exists() else None
+if not LEDGER44.exists():
+    print(f"  SKIP  ledger absent — 'measures our own path' not asserted here")
 if h and h.get("sample"):
     if h.get("latency_from") != "ours":
         print(f"  FAIL  hermes latency taken from {h.get('latency_from')}; its salvage path "
