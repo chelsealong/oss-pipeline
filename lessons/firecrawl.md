@@ -1,0 +1,1 @@
+- [2026-09-03] #4459 skipped: Issue #4459 is an RFC proposing a new optional "policy layer" feature (credit caps, egress allowlisting, signed receipts), not a concrete defect. The author explicitly asks "Interest in this as an optional hardening layer? Happy to contribute implementation + 
