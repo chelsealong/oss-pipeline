@@ -1,0 +1,1 @@
+- [2026-09-03] #16022 skipped: feature request for a new FILE_3D->MESH loader node, not a bug fix; requires new API design (format support, error semantics) beyond a minimal fix
