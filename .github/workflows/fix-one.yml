@@ -128,11 +128,17 @@ jobs:
           # rationing, and not a promise to a maintainer. It is Bruce's to move.
           # Every other repo is paused in scan.REPOS rather than capped, so a
           # number here can never quietly reopen one.
+          # The 2026-08-30 resumption cap of 3 is lifted: credit is back and Bruce
+          # restored the previous per-day numbers on 2026-09-03. What replaces it
+          # is not another daily cap but a five-hour SESSION ceiling shared by
+          # both dispatchers (scan.SESSION_CEILING), because the subscription
+          # window belongs to the account and these four repos together allow 56
+          # PRs a day — fine spread out, ruinous in one burst.
           case "${{ inputs.repo_key }}" in
             spec-kit) cap=3 ;;   # relationship cap — Bruce's, do not raise
-            adk|langfuse|openclaw|hermes) cap=3 ;;  # resumption cap — Bruce's, 2026-08-30
             firecrawl) cap=4 ;;  # was 1; its whole issue flow is small
-            dify|comfyui) cap=12 ;;
+            hermes) cap=20 ;;
+            adk|dify|langfuse|openclaw|comfyui) cap=12 ;;
             autogpt|langfuse-python|gemini-cli) cap=8 ;;
             llama-index|crawl4ai|litellm|mem0) cap=8 ;;
             *) cap=6 ;;
@@ -141,6 +147,28 @@ jobs:
                 --state all --search "created:>=$(date -u +%Y-%m-%d)" --json number --jq 'length' \
                 2>/dev/null || echo 0)
           echo "opened today: $n / cap $cap"
+
+          # A second, different limit: how many of ours may be OPEN at once.
+          # openclaw enforces its own — openclaw-barnacle[bot] closes a PR when
+          # the author has more than 20 active in the repo, and on 2026-08-24
+          # and 08-25 it closed four of ours within minutes of opening because
+          # the daily cap of 12 knew nothing about the standing total. A PR
+          # closed by a bot costs the work, the session, and a little goodwill.
+          # 18 leaves two of headroom under their 20.
+          case "${{ inputs.repo_key }}" in
+            openclaw) active_cap=18 ;;
+            *)        active_cap=0  ;;   # 0 = not enforced here
+          esac
+          if [ "$active_cap" -gt 0 ]; then
+            a=$(gh pr list --repo "${{ steps.cfg.outputs.implements_in }}" --author chelsealong \
+                  --state open --json number --jq 'length' 2>/dev/null || echo 0)
+            echo "currently open: $a / active cap $active_cap"
+            if [ "$a" -ge "$active_cap" ]; then
+              echo "::notice::$a open PRs, at or over the $active_cap ceiling — not opening another"
+              echo "over=true" >> "$GITHUB_OUTPUT"; exit 0
+            fi
+          fi
+
           if [ "$n" -ge "$cap" ]; then echo "over=true" >> "$GITHUB_OUTPUT"; else echo "over=false" >> "$GITHUB_OUTPUT"; fi
 
       - name: Checkout target fork

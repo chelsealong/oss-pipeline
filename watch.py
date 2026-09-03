@@ -321,6 +321,13 @@ def budget_allows(key: str) -> bool:
         log(f"  [{key}] Claude quota exhausted — not dispatching")
         return False
 
+    # The five-hour subscription window belongs to the ACCOUNT, so this gate is
+    # shared with watch-prs.py rather than counted per repo or per workflow.
+    ok, why = scan.session_headroom()
+    if not ok:
+        log(f"  [{key}] {why} — holding until the window rolls")
+        return False
+
     # UTC, not local. This machine is UTC+8, so date.today() rolled over at
     # 16:00 UTC while every other daily boundary in the pipeline — fix-one.yml's
     # PR cap, run-fix.sh's cap, watch-prs.py's response cap, health.py's whole
@@ -398,6 +405,7 @@ def dispatch_fix(key: str, number: int) -> bool:
             capture_output=True, text=True, timeout=60)
         if r.returncode == 0:
             log(f"  -> dispatched fix-one.yml for {key}#{number}")
+            scan.note_session("fix-one", key, number)
             # Dedup belongs HERE, at the one point where a cloud dispatch
             # actually starts, not at each caller. The live sweep called
             # trigger_fix() and never recorded, so scan.py rebuilt the queue

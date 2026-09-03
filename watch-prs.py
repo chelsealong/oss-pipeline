@@ -788,6 +788,12 @@ def dispatch(repo: str, number: int, note: str) -> bool:
     if DRY_RUN:
         log(f"  DRY_RUN would dispatch responder for {repo}#{number} ({note})")
         return True
+    # respond-pr spends the same account allowance as fix-one, and neither could
+    # see the other's spend before this gate existed.
+    ok, why = scan.session_headroom()
+    if not ok:
+        log(f"  [{repo}#{number}] {why} — not responding until the window rolls")
+        return False
     try:
         r = subprocess.run(
             # Pass the reason. respond-pr rebuilds its own context from the
@@ -800,6 +806,7 @@ def dispatch(repo: str, number: int, note: str) -> bool:
             capture_output=True, text=True, timeout=60)
         if r.returncode == 0:
             log(f"  -> dispatched respond-pr.yml for {repo}#{number}")
+            scan.note_session("respond-pr", repo, number)
             return True
         log(f"  dispatch failed for {repo}#{number}: {r.stderr.strip()[:160]}")
     except Exception as e:  # noqa: BLE001

@@ -72,7 +72,6 @@ REPOS: dict[str, dict] = {
     },
     "langfuse-python": {
         "upstream": "langfuse/langfuse",  # tracker lives here, fix lands in langfuse-python
-        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ["label:sdk-python", "label:integration-langchain", "label:integration-openai"],
         "exclude_labels": set(),
         "implements_in": "langfuse/langfuse-python",
@@ -92,7 +91,6 @@ REPOS: dict[str, dict] = {
     # we produce. Median 227h to merge, so do not judge it inside a week.
     "llama-index": {
         "upstream": "run-llama/llama_index",
-        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ['label:bug sort:created-desc', "sort:created-desc"],
         # `triage` is not an exclusion here. Its description is "Issue needs to be
         # triaged/prioritized" and it sits on about half the open issues — the
@@ -108,7 +106,6 @@ REPOS: dict[str, dict] = {
     # filter matches literally — hence the exact strings below rather than "bug".
     "crawl4ai": {
         "upstream": "unclecode/crawl4ai",
-        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         # The label name contains a space, so it must be quoted — _LABEL_RE stops
         # at whitespace otherwise and "\U0001F41E Bug" arrives as just the emoji.
         "searches": ['label:"\U0001F41E Bug" sort:created-desc'],
@@ -161,14 +158,12 @@ REPOS: dict[str, dict] = {
     # same 6% as hermes, so this is on trial and judged on landed commits.
     "mem0": {
         "upstream": "mem0ai/mem0",
-        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ['label:bug sort:created-desc'],
         "exclude_labels": {"enhancement"},   # those are the "wait first" class
         "max_vet": 40,
     },
     "spec-kit": {
         "upstream": "github/spec-kit",
-        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ["label:bug sort:created-desc", "sort:created-desc"],
         # Catalog submissions go through spec-kit's OWN agentic workflow, which
         # does the validation and opens the PR itself. mnriem asked us to stop
@@ -195,7 +190,6 @@ REPOS: dict[str, dict] = {
     },
     "gemini-cli": {
         "upstream": "google-gemini/gemini-cli",
-        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         # help wanted is 29/30 self-assigned already — its /assign bot works too
         # well. The untapped supply is kind/bug (99 unassigned) and good first
         # issue; neither can be self-assigned, and neither needs to be.
@@ -230,7 +224,6 @@ REPOS: dict[str, dict] = {
     # wait for an assignment that does not come.
     "langchain": {
         "upstream": "langchain-ai/langchain",
-        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         # new-contributor is a PR label, not an issue label — it matched nothing.
         # The issues that actually get assigned and merged carry bug + external:
         # ccurme and hwchase17 assigned three external contributors in two days.
@@ -292,7 +285,6 @@ REPOS: dict[str, dict] = {
     },
     "firecrawl": {
         "upstream": "firecrawl/firecrawl",
-        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ["label:bug sort:created-desc", "sort:created-desc"],
         "exclude_labels": set(),
     },
@@ -359,7 +351,6 @@ REPOS: dict[str, dict] = {
     # tracker. Do not re-add.
     "dify": {
         "upstream": "langgenius/dify",
-        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ['label:"good first issue"', 'label:"🙏 help wanted"', "label:bug sort:created-desc"],
         "exclude_labels": set(),
         # The PR template asks agent-created PRs to end the description with
@@ -368,14 +359,12 @@ REPOS: dict[str, dict] = {
     },
     "autogpt": {
         "upstream": "Significant-Gravitas/AutoGPT",
-        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ['label:"good first issue"', 'label:"help wanted"', "label:bug sort:created-desc"],
         "exclude_labels": set(),
         "max_vet": 40,
     },
     "comfyui": {
         "upstream": "Comfy-Org/ComfyUI",
-        "paused": "not in the 2026-08-30 resumption set — Bruce reopened only adk, langfuse, openclaw and hermes after the credit pause",
         "searches": ["sort:created-desc"],
         "exclude_labels": set(),
         # only CPU-verifiable areas are in scope for our pipeline
@@ -647,6 +636,66 @@ def _claim_went_cold(upstream: str, number: int, who: str, at: str) -> bool:
           f"PR — no longer treating it as reserved", file=sys.stderr)
     return True
 
+
+
+# ---------------------------------------------------------------------------
+# Claude session rate, shared by both dispatchers.
+#
+# The subscription resets on a five-hour window, and that window belongs to the
+# ACCOUNT, not to a workflow: fix-one and respond-pr draw on the same
+# allowance, and they record separately (dispatched.json vs nothing at all), so
+# neither could see the other's spend. Per-repo daily caps do not help here —
+# four repos at their restored caps allow 56 PRs a day, which is fine spread
+# out and ruinous in one burst.
+#
+# The ceiling is set from measurement, not taste: across 13 five-hour windows
+# the busiest ran 27 real Claude sessions (runs lasting >=90s; the rest were
+# turned away by the daily cap before reaching Claude) and did not exhaust the
+# subscription. 30 therefore sits just above anything we have actually done, so
+# it never binds on a normal day and stops only a runaway.
+SESSION_LOG = STATE / "claude-sessions.json"
+SESSION_WINDOW_HOURS = 5.0
+SESSION_CEILING = 30
+
+
+def note_session(kind: str, key: str, number: int | str = "") -> None:
+    """Record that a Claude session was started. Cheap, append-and-prune."""
+    import datetime as _dt
+    now = _dt.datetime.now(_dt.timezone.utc)
+    try:
+        rows = json.loads(SESSION_LOG.read_text()) if SESSION_LOG.exists() else []
+    except Exception:  # noqa: BLE001
+        rows = []
+    rows.append({"at": now.isoformat(timespec="seconds"), "kind": kind,
+                 "key": key, "number": str(number)})
+    cut = now - _dt.timedelta(hours=SESSION_WINDOW_HOURS * 4)
+    rows = [r for r in rows if r.get("at", "") >= cut.isoformat(timespec="seconds")]
+    try:
+        STATE.mkdir(parents=True, exist_ok=True)
+        SESSION_LOG.write_text(json.dumps(rows, indent=1) + "\n")
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def sessions_in_window(hours: float = SESSION_WINDOW_HOURS) -> int:
+    """How many Claude sessions have been started in the last `hours`."""
+    import datetime as _dt
+    cut = (_dt.datetime.now(_dt.timezone.utc)
+           - _dt.timedelta(hours=hours)).isoformat(timespec="seconds")
+    try:
+        rows = json.loads(SESSION_LOG.read_text()) if SESSION_LOG.exists() else []
+    except Exception:  # noqa: BLE001
+        return 0
+    return sum(1 for r in rows if r.get("at", "") >= cut)
+
+
+def session_headroom() -> tuple[bool, str]:
+    """(may dispatch, why not). The five-hour window is the account's, not ours."""
+    n = sessions_in_window()
+    if n >= SESSION_CEILING:
+        return False, (f"{n} Claude sessions started in the last "
+                       f"{SESSION_WINDOW_HOURS:g}h, ceiling is {SESSION_CEILING}")
+    return True, ""
 
 def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
     # First, and before any API call. A paused repo is one we have established
