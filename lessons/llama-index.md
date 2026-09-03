@@ -1,0 +1,1 @@
+- [2026-09-03] #22947 skipped: issue #22947 is a promotional resource announcement (third-party "GeoMind" knowledge source website) asking LlamaIndex to consider it as a data source, not a code defect or feature request with an actionable code change. No PR is appropriate.
