@@ -1,0 +1,1 @@
+- [2026-09-04] #41143 skipped: Maintainer already closed a matching fix. PR #41176 ("fix(agent): memoize and fail-open LOG provider icon enrichment", Fixes #41143) implemented the same memoize+fail-open fix in AgentMessageTransformer with 7 new tests and a clean regression run, but was clos
