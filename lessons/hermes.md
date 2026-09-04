@@ -169,3 +169,4 @@ still buys nothing.
 - [2026-09-04] #102585 skipped: issue #102585 is explicitly sequenced behind two prerequisite issues (#102582, #102584) via tracking issue #102586, and neither has landed. Verified on current main: hermes_cli/moa_cmd.py::_pick_slot() only prompts for provider/model; there is no per-slot reas
 - [2026-09-04] issue #102592 blocked by review:  FRONT 0 — NO-OP (fails, decisive): The diff adds `discover_plugins()` inside `web_server.start_server()`, right after `apply_nofile_soft_limit()`. But the ONLY production caller of `start_server()` in the entire repo is `cmd_dashboard()` in hermes_cli/main.py 
 
+- [2026-09-04] #102619 skipped: issue #102619 is already fixed on current main. hermes_cli/local_runtime/hardware.py::probe_budget() already budgets Apple Silicon / unified-memory machines from RAM (sysctl hw.memsize) minus a 20% headroom (_UMA_HEADROOM_FRACTION) instead of discrete GPU memo
