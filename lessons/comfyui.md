@@ -1,1 +1,2 @@
 - [2026-09-03] #16022 skipped: feature request for a new FILE_3D->MESH loader node, not a bug fix; requires new API design (format support, error semantics) beyond a minimal fix
+- [2026-09-04] #16097 skipped: #16097 is a user-support issue (labeled "User Support"), not a code bug. sqlalchemy is already declared in requirements.txt and is only missing because the reporter's Windows portable build's embedded Python wasn't updated after a git pull — the portable dis
