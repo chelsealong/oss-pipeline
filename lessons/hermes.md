@@ -171,3 +171,4 @@ still buys nothing.
 
 - [2026-09-04] #102619 skipped: issue #102619 is already fixed on current main. hermes_cli/local_runtime/hardware.py::probe_budget() already budgets Apple Silicon / unified-memory machines from RAM (sysctl hw.memsize) minus a 20% headroom (_UMA_HEADROOM_FRACTION) instead of discrete GPU memo
 - [2026-09-04] #102632 skipped: issue #102632 (Nix sealed venv missing hermes_state_holders / hermes_state_registry in pyproject.toml py-modules) is already fully fixed by open PR #102200 ("fix(nix): include missing hermes state modules", opened by plasma-penguin), which adds both hermes_sta
+- [2026-09-04] #102642 skipped: issue #102642 describes a bug in Hermes Studio's Python "Agent Bridge" component (agent-bridge/python/bridge_server.py, a Node-server -> Python-broker -> Python-worker chain with server.listen(16)/server.listen(64) backlogs). That component does not exist anyw
