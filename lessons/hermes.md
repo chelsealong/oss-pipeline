@@ -170,3 +170,4 @@ still buys nothing.
 - [2026-09-04] issue #102592 blocked by review:  FRONT 0 — NO-OP (fails, decisive): The diff adds `discover_plugins()` inside `web_server.start_server()`, right after `apply_nofile_soft_limit()`. But the ONLY production caller of `start_server()` in the entire repo is `cmd_dashboard()` in hermes_cli/main.py 
 
 - [2026-09-04] #102619 skipped: issue #102619 is already fixed on current main. hermes_cli/local_runtime/hardware.py::probe_budget() already budgets Apple Silicon / unified-memory machines from RAM (sysctl hw.memsize) minus a 20% headroom (_UMA_HEADROOM_FRACTION) instead of discrete GPU memo
+- [2026-09-04] #102632 skipped: issue #102632 (Nix sealed venv missing hermes_state_holders / hermes_state_registry in pyproject.toml py-modules) is already fully fixed by open PR #102200 ("fix(nix): include missing hermes state modules", opened by plasma-penguin), which adds both hermes_sta
