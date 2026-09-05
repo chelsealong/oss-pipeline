@@ -190,6 +190,26 @@ REPOS: dict[str, dict] = {
     },
     "gemini-cli": {
         "upstream": "google-gemini/gemini-cli",
+        # PAUSED 2026-09-05. 13 PRs opened, ZERO landed, and the repository
+        # says why in its own bot messages. Three walls, none about quality:
+        #
+        #  1. gemini-cli[bot] closes any PR "open for 14 days without a
+        #     'help wanted' designation", and nudges at day 8 that they "only
+        #     guarantee review and consideration" of those. Five of ours died
+        #     on exactly that clock: 08-08, 08-12, 08-15, 08-17, 08-18, each
+        #     closed 14-15 days later untouched by a human.
+        #  2. github-actions[bot] refuses a new PR past seven open: "You
+        #     already have 7 pull requests open. Please work on getting
+        #     existing PRs merged before opening more." #29206 was closed the
+        #     same day it opened. We sit at exactly 7.
+        #  3. Supply. 575 open issues, of which 25 carry 'help wanted' -- and
+        #     those are the ones every other contributor is also told to take.
+        #
+        # Two of our three searches (good first issue, kind/bug) can only
+        # produce PRs the 14-day rule will close. Narrowing to 'help wanted'
+        # alone would be defensible, but 25 contested issues behind a 7-PR gate
+        # is not worth a Claude session each. Reopen only with that narrowing.
+        "paused": "0 landed from 13 PRs — the repo auto-closes anything not on a 'help wanted' issue after 14 days, and caps us at 7 open",
         # help wanted is 29/30 self-assigned already — its /assign bot works too
         # well. The untapped supply is kind/bug (99 unassigned) and good first
         # issue; neither can be self-assigned, and neither needs to be.
