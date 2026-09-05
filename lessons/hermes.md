@@ -193,3 +193,5 @@ still buys nothing.
 - [2026-09-05] #103623 skipped: issue #103623 (Cloud agent gateway returns 503 "Auth provider 'nous' unreachable" on every inbound API call for one hosted instance, persisting across 2 restarts and an update_env) traces to a real code path but not a code bug. Verified: hermes_cli/dashboard_a
 - [2026-09-05] #103731 skipped: issue #103731 is already being actively worked in the exact same code paths by other open PRs, and the remaining gap is a design decision, not a mechanical fix.
 - [2026-09-05] #103748 skipped: issue #103748 is a feature request for a brand-new architectural primitive (delivering a message into an already-live, attached Hermes session — distinct from the headless "Bot Chat" twin, a freshly-spawned `chat --resume`, or a gateway-spawned runner). The 
+- [2026-09-05] issue #103777 blocked by review:  SUMMARY: The fix only covers the narrow sub-case where a profile is deleted BEFORE its log router ever wrote to it. In the realistic case the bug report actually describes — a profile that was already being actively routed to (handler cached) and is THEN deleted while the process keeps running �
+
