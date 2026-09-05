@@ -39,6 +39,10 @@ import scan
 
 LEDGER = scan.STATE / "landings.json"
 ME_EMAILS = ["chelsealong@126.com", "jialongli001@gmail.com"]
+# The commits endpoint accepts a login or an email for `author`, and the two do
+# not return the same set: a commit authored with an address GitHub has not
+# linked to the account shows up only under the address.
+ME_IDENTS = ["chelsealong", *ME_EMAILS]
 
 
 def _gh(args: list[str], *, tries: int = 4, **kw) -> str:
@@ -114,34 +118,56 @@ def on_default_branch(repo: str, sha: str) -> bool:
 
 
 def fetch_new(repo: str, since: str | None) -> list[dict]:
-    """Commits of ours in this repo, newer than `since`, verified on main."""
+    """Commits of ours in this repo, newer than `since`, verified on main.
+
+    Reads `repos/{repo}/commits`, NOT `search/commits`. Two reasons, both of
+    which cost us recorded landings:
+
+    1. The search index lags the repository. Three openclaw landings were
+       missed on three separate days -- 09-01, 09-02 and 09-04 -- and were only
+       found by querying this endpoint by hand afterwards. `update()` reported
+       "no new" each time, so the ledger silently undercounted the one figure
+       the whole record rests on.
+    2. A failed search was swallowed. `except Exception: print(); continue`
+       turned a transport error into "this repo has nothing new", and adk and
+       langfuse each hit it once. A repo that could not be checked must not be
+       reported as checked.
+
+    The endpoint is already scoped to one repository and returns only its
+    default branch, so the fork filter the search needed is gone: other
+    people's forks cannot appear here at all. `on_default_branch` still runs,
+    because being reachable from HEAD is the claim the ledger actually makes.
+    """
     found: dict[str, dict] = {}
-    for email in ME_EMAILS:
-        q = f"repo:{repo}+author-email:{email.replace('@', '%40')}"
+    errors: list[str] = []
+    for who in ME_IDENTS:
+        args = ["api", "--paginate", "-X", "GET", f"repos/{repo}/commits",
+                "-f", f"author={who}", "-f", "per_page=100",
+                "--jq", '.[]? | {sha:.sha, at:.commit.committer.date, '
+                        'msg:(.commit.message|split("\\n")[0])}']
         if since:
-            q += f"+committer-date:>{since}"
+            # Before "--jq", not before its value: inserting at [-1:-1] made
+            # --jq consume "-f" as its argument and gh saw three positionals.
+            args[-2:-2] = ["-f", f"since={since}"]
         try:
-            raw = _gh(["api", f"search/commits?q={q}&sort=committer-date&order=desc"
-                              "&per_page=100", "--paginate",
-                       "--jq", '.items[]? | {sha:.sha, at:.commit.committer.date, '
-                               'msg:(.commit.message|split("\\n")[0]), '
-                               'repo:.repository.full_name}'])
+            raw = _gh(args)
         except Exception as e:  # noqa: BLE001
-            print(f"  {repo}: search failed ({str(e)[:70]})", file=sys.stderr)
+            errors.append(f"{who}: {str(e)[:80]}")
             continue
         for line in raw.splitlines():
-            if not line.strip():
-                continue
-            c = json.loads(line)
-            # Other people's forks carry our commits and the search returns them.
-            if c["repo"] != repo:
-                continue
-            found.setdefault(c["sha"], c)
-    out = []
-    for sha, c in found.items():
-        if on_default_branch(repo, sha):
-            out.append(c)
-    return out
+            if line.strip():
+                c = json.loads(line)
+                c["repo"] = repo
+                found.setdefault(c["sha"], c)
+    # If EVERY identity failed we know nothing about this repo, and saying so
+    # is the whole point. Raising lets update() stop instead of recording a
+    # false "nothing new".
+    if errors and not found:
+        raise RuntimeError(f"{repo}: every identity query failed — " + "; ".join(errors))
+    if errors:
+        print(f"  {repo}: {len(errors)} identity query(s) failed, "
+              f"results may be partial — {errors[0]}", file=sys.stderr)
+    return [c for sha, c in found.items() if on_default_branch(repo, sha)]
 
 
 def pr_counts(repo: str) -> dict:

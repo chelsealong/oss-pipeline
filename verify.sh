@@ -1353,10 +1353,24 @@ elif len(d.get("commits") or {}) < 25:
 # Every recount before the ledger went wrong in the same three ways. Each is
 # guarded here so a future edit cannot quietly reintroduce one.
 src = pathlib.Path(sys.argv[1] + "/landings.py").read_text()
-if 'c["repo"] != repo' not in src:
-    print("  FAIL  fork matches are not filtered — search/commits returns other people's forks"); bad += 1
+# The fork filter is gone because the mechanism changed: repos/{repo}/commits is
+# already scoped to one repository and its default branch, so other people's
+# forks cannot appear. What must NOT come back is search/commits, whose index
+# lags the repository -- it silently missed three openclaw landings on three
+# separate days, and update() reported "no new" each time.
+# Match the CALL, not the prose: the docstring explains at length why that
+# endpoint is not used, and an assertion on the bare string flagged its own
+# rationale as the defect.
+if "search/commits?" in src or '"search/commits"' in src:
+    print("  FAIL  landings calls search/commits again; its index lags and undercounts"); bad += 1
+if "repos/{repo}/commits" not in src and 'f"repos/{repo}/commits"' not in src:
+    print("  FAIL  landings no longer reads the commits endpoint"); bad += 1
 if "--paginate" not in src:
-    print("  FAIL  the commit search is unpaginated and will silently truncate"); bad += 1
+    print("  FAIL  the commit query is unpaginated and will silently truncate"); bad += 1
+# A repo that could not be queried must not be reported as having nothing new.
+fn = src.split("def fetch_new(")[1].split("\ndef ")[0]
+if "raise" not in fn:
+    print("  FAIL  fetch_new swallows a failed query — an unreachable repo reads as empty"); bad += 1
 if '"behind"' not in src:
     print("  FAIL  commits are not verified as ancestors of the default branch"); bad += 1
 if "rate limit" not in src.lower():
@@ -1366,7 +1380,9 @@ if "rate limit" not in src.lower():
 if '{"total": None}' not in src:
     print("  FAIL  a failed PR count returns 0 rather than unknown"); bad += 1
 # Incremental, not a rebuild: `since` comes from what is already stored.
-if "committer-date:>" not in src or "since" not in src:
+# Was `committer-date:>`, the search qualifier. The commits endpoint narrows
+# with `since=` instead.
+if "since=" not in src or "since" not in src:
     print("  FAIL  update() does not narrow by date, so every run is a full recount"); bad += 1
 # Landed is a commit on main, which is not the same as a merged PR.
 h = [v for v in d["commits"].values() if "hermes" in v["repo"]]
@@ -1892,7 +1908,16 @@ import pathlib, re, sys
 # ever reaching the spare -- and the spare would have looked unused rather than
 # unreachable. Assert the detector covers both funding models.
 root = pathlib.Path(sys.argv[1])
-MUST = ["session limit", "credit balance", "insufficient", "quota exceeded"]
+# Anchored phrases, not bare words. The pattern once contained "billing" and
+# openclaw has branches called sid/billing-no-card-clarity -- Claude printing
+# one would have been read as an exhausted subscription and the candidate
+# abandoned. Assert both that the real wordings match and that ordinary output
+# does not.
+MUST = ["hit your session limit", "credit balance is too low",
+        "insufficient_quota", "exceeded your current quota"]
+MUST_NOT_MATCH = ["* [new branch] sid/billing-no-card-clarity -> upstream/x",
+                  "editing src/billing/upgrade_your_plan.ts",
+                  "the quota guard greps this stream"]
 bad = 0
 for wf in ("fix-one.yml", "respond-pr.yml"):
     src = (root / ".github" / "workflows" / wf).read_text()
@@ -1904,6 +1929,9 @@ for wf in ("fix-one.yml", "respond-pr.yml"):
         missing = [m for m in MUST if m not in g]
         if missing:
             print(f"  FAIL  {wf} exhaustion pattern misses {missing}"); bad += 1
+        for benign in MUST_NOT_MATCH:
+            if re.search(g, benign, re.I):
+                print(f"  FAIL  {wf} pattern matches ordinary output: {benign[:46]}"); bad += 1
 # And the spare must still be wired, or widening the pattern changes nothing.
 for wf in ("fix-one.yml", "respond-pr.yml"):
     src = (root / ".github" / "workflows" / wf).read_text()
