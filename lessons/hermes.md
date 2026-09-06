@@ -196,3 +196,4 @@ still buys nothing.
 - [2026-09-05] issue #103777 blocked by review:  SUMMARY: The fix only covers the narrow sub-case where a profile is deleted BEFORE its log router ever wrote to it. In the realistic case the bug report actually describes — a profile that was already being actively routed to (handler cached) and is THEN deleted while the process keeps running �
 
 - [2026-09-06] #103974 skipped: issue #103974 is a design proposal, not a minimal bug fix. The author explicitly states "Happy to submit this as a PR with the tests above if maintainers agree with the direction; I did not patch core locally" — this is pending maintainer sign-off on a novel
+- [2026-09-06] #103978 skipped: issue #103978 is entirely about OAuth credential discovery/refresh logic in agent/anthropic_credentials.py (Claude Code credential auto-detection, token refresh, Keychain/file write-back). This falls squarely under the explicit "never touch auth/credential cod
