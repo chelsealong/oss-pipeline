@@ -2047,6 +2047,136 @@ print("  ok     harness writes to temp, production log is clean"
 sys.exit(1 if bad else 0)
 PY3
 
+say "49. a dispatch is a reservation, not a session"
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import inspect, pathlib, sys, types
+sys.path.insert(0, sys.argv[1])
+import scan
+# A 30-day PAT expired on 2026-09-06 and forty runs died at `Re-vet before
+# spending a session`. Every one was charged against the account's five-hour
+# ceiling, which then refused real work 237 times while Claude had not been
+# called once. The count is built from dispatches; only the run can say whether
+# a session happened, and `conclusion` alone cannot -- run 34125529292 concluded
+# SUCCESS with the agent step skipped.
+bad = 0
+if not hasattr(scan, "reconcile_sessions"):
+    print("  FAIL  scan.py has no reconcile_sessions"); bad += 1
+elif "reconcile_sessions" not in inspect.getsource(scan.session_headroom):
+    print("  FAIL  session_headroom refuses work without reconciling first"); bad += 1
+
+STEP = scan.SESSION_SPEND_STEP["fix-one"][1]
+CASES = [
+    (f"Daily cap=success|{STEP}=success",  True),
+    (f"Daily cap=success|{STEP}=failure",  True),   # it ran; the window was touched
+    (f"Daily cap=success|{STEP}=skipped",  False),
+    ("Daily cap=success|Re-vet before spending a session=failure", False),
+]
+real = scan.subprocess.run
+try:
+    for blob, want in CASES:
+        scan.subprocess.run = (lambda b: lambda *a, **k:
+                               types.SimpleNamespace(returncode=0, stdout=b))(blob)
+        got = scan._run_spent_session("1", STEP)
+        if got is not want:
+            print(f"  FAIL  {blob[:46]!r} judged spent={got}, expected {want}"); bad += 1
+    # A transport failure is not evidence and must not release a count.
+    scan.subprocess.run = lambda *a, **k: types.SimpleNamespace(returncode=1, stdout="")
+    if scan._run_spent_session("1", STEP) is not None:
+        print("  FAIL  a failed API call is treated as evidence"); bad += 1
+finally:
+    scan.subprocess.run = real
+print("  ok     dispatch counts are released only on proof the agent never ran"
+      if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
+say "50. every way to start Claude is gated and counted"
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import pathlib, sys
+sys.path.insert(0, sys.argv[1])
+import scan
+root = pathlib.Path(sys.argv[1])
+# The ceiling only ever counted cloud dispatches. On 2026-09-07 watch.py fell
+# back to the local fixer while the PAT was dead and one local run held Claude
+# from 03:41 to 12:44 -- nine hours of the account's five-hour window, invisible
+# to the ledger, so the cloud side went on dispatching against a count of zero.
+src = (root / "run-fix.sh").read_text()
+bad = 0
+if "session_headroom" not in src:
+    print("  FAIL  run-fix.sh starts Claude without checking the five-hour window"); bad += 1
+if "note_session" not in src:
+    print("  FAIL  run-fix.sh starts Claude without recording the session"); bad += 1
+# Order matters twice: gate before claiming a candidate, record before invoking.
+# A gate after the claim takes an issue out of the queue for nothing.
+gate, claim = src.find("session_headroom"), src.find("scan.py --pop")
+note, invoke = src.find("note_session"), src.find('"$CLAUDE_BIN"')
+if not (0 <= gate < claim):
+    print("  FAIL  the window is checked after the candidate is claimed"); bad += 1
+if not (0 <= note < invoke):
+    print("  FAIL  the session is recorded after Claude has already started"); bad += 1
+# A local run has no GitHub run to inspect, so it must never be reconcilable.
+if "local-fix" in scan.SESSION_SPEND_STEP:
+    print("  FAIL  local sessions are releasable, but nothing can prove they didn't happen"); bad += 1
+# The invocation timeout was dead code: neither gtimeout nor timeout exists on
+# this machine, so `if [ -n "$tmo" ]` was always false and the 3600s cap never
+# applied -- which is how one run reached nine hours.
+if "perl" not in src:
+    print("  FAIL  no timeout fallback; the 3600s cap is a no-op without gtimeout"); bad += 1
+print("  ok     local and cloud sessions are gated and counted alike"
+      if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
+say "51. an alarm rings distinctly and stops when the fault clears"
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import json, os, pathlib, re, subprocess, sys
+root = pathlib.Path(sys.argv[1])
+bad = 0
+health, runner = (root / "health.py").read_text(), (root / "run-health.sh").read_text()
+# The PAT died at 17:04 UTC; the once-daily check spoke at 01:06, eight hours
+# and forty failed runs later, as comment 23 on an issue whose title had not
+# changed since August. Detection worked; nothing about the delivery did.
+if "--critical" not in health:
+    print("  FAIL  no down-level subset, so the check cannot run more often than daily"); bad += 1
+for name, pat in (("severity split", "CRITICAL_RE"), ("its own issue", "OUTAGE_PREFIX"),
+                  ("dedupe", "SIG_FILE"), ("auto-close", "clear_outage")):
+    if pat not in runner:
+        print(f"  FAIL  run-health.sh has no {name}"); bad += 1
+# An alert that keeps firing after the fix is the one people learn to ignore,
+# and hourly makes that fatal: check_agent_reachable asked "did auth fail in the
+# last 24h", which stays true all day after a five-minute outage.
+if "newest_ok" not in health or "recovered" not in health:
+    print("  FAIL  the auth check has no recency guard; it alarms for 24h after recovery"); bad += 1
+# stdout is the report. A status line on it made --json unparseable.
+r = subprocess.run([sys.executable, "health.py", "--critical", "--json"],
+                   cwd=root, capture_output=True, text=True, timeout=240)
+try:
+    json.loads(r.stdout)
+except Exception as e:
+    print(f"  FAIL  --critical --json is not parseable ({str(e)[:60]})"); bad += 1
+# Something has to watch the watcher, and `launchctl disable` outlives a reboot:
+# oss-fix was disabled during the credit pause and stayed off silently for weeks.
+m = re.search(r"AGENTS = \[(.*?)\]", health, re.S)
+la = pathlib.Path.home() / "Library/LaunchAgents"
+# launchd is the workstation's scheduler and does not exist on the CI runner,
+# where the absent directory would report every agent as uninstalled. Skipping
+# is honest here: the fact under test is a property of the machine that runs
+# the pipeline, not of the commit.
+if sys.platform == "darwin" and la.is_dir():
+    disabled = subprocess.run(["launchctl", "print-disabled", f"gui/{os.getuid()}"],
+                              capture_output=True, text=True).stdout
+    for a in re.findall(r'"([\w-]+)"', m.group(1) if m else ""):
+        if not (la / f"com.chelsealong.{a}.plist").exists():
+            print(f"  FAIL  health.py requires agent {a} but no plist is installed"); bad += 1
+        elif f'"com.chelsealong.{a}" => disabled' in disabled:
+            print(f"  FAIL  agent {a} is launchctl-disabled; it will not run after a reboot"); bad += 1
+else:
+    print("  note   launchd agent state not checked off-workstation")
+print("  ok     down-level faults get their own issue, and it closes itself"
+      if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

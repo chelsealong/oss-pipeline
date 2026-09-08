@@ -1,4 +1,9 @@
 name: Respond to PR feedback
+# Matchable from the run list: the local session ledger reconciles a
+# dispatch against the run it produced by this title, the same way
+# fix-one.yml is matched. Without it every respond-pr dispatch is
+# counted against the five-hour ceiling and can never be released.
+run-name: "respond ${{ inputs.upstream }}#${{ inputs.pr }}"
 
 # Dispatched by the local watch-prs.py when a reviewer leaves genuinely new
 # feedback on one of our open PRs. Runs here rather than on the Mac because

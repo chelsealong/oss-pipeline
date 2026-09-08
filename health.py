@@ -65,7 +65,13 @@ RETIRED = ["github/spec-kit"]
 REPO_LIST = sorted(
     {c.get("implements_in") or c["upstream"] for c in scan.REPOS.values()} | set(RETIRED)
 )
-AGENTS = ["oss-watch", "oss-scan", "oss-fix", "oss-claim", "oss-prwatch"]
+AGENTS = ["oss-watch", "oss-scan", "oss-fix", "oss-claim", "oss-prwatch",
+          # The hourly down-check watches everything else, so something
+          # has to watch it; an unloaded alarm is the failure it exists
+          # to catch. oss-fix was `launchctl disable`d during the credit
+          # pause and stayed disabled through the restart because
+          # disable, unlike bootout, survives a reboot.
+          "oss-health-critical"]
 
 
 def sh(cmd: list[str], timeout: int = 60) -> str:
@@ -246,6 +252,15 @@ def check_agent_reachable() -> tuple[list[str], dict]:
     # credentials` because the GitHub PAT was regenerated on github.com 26
     # minutes before the new value was written to the repo secret. Diagnosing
     # "auth is broken" without saying WHICH sends the fix to the wrong place.
+    # The newest run that got past authentication. Without this the check
+    # reports an outage for a full 24h after it is fixed, because it asks
+    # "did authentication fail in the window" rather than "is it failing now".
+    # That is tolerable daily and corrosive hourly: an alert that keeps firing
+    # after the fix is the one people learn to ignore.
+    newest_ok = max((r["createdAt"] for r in runs if r["conclusion"] == "success"),
+                    default="")
+    newest_auth_fail = ""
+
     d["which"] = ""
     for r in failed[:3]:
         log = sh(["gh", "run", "view", str(r["databaseId"]),
@@ -253,19 +268,36 @@ def check_agent_reachable() -> tuple[list[str], dict]:
         if re.search(r"Bad credentials", log, re.I):
             d["auth_failures"] += 1
             d["which"] = "GH_PAT (gh: Bad credentials)"
+            newest_auth_fail = max(newest_auth_fail, r["createdAt"])
         elif re.search(r"organization has disabled|subscription access|"
                        r"Invalid bearer token|Failed to authenticate", log, re.I):
             d["auth_failures"] += 1
             d["which"] = d["which"] or "CLAUDE_CODE_OAUTH_TOKEN"
+            newest_auth_fail = max(newest_auth_fail, r["createdAt"])
+
+    d["recovered"] = bool(newest_auth_fail and newest_ok > newest_auth_fail)
+    d["newest_ok"] = newest_ok
+    d["newest_auth_fail"] = newest_auth_fail
 
     problems = []
-    if d["auth_failures"]:
+    if d["auth_failures"] and not d["recovered"]:
         problems.append(f"fix-one cannot authenticate — {d['which']} — the agent step "
                         "is failing for every run and each one still spends a "
                         "dispatch-budget unit")
     elif d["completed_24h"] >= 6 and d["failed_24h"] * 2 > d["completed_24h"]:
-        problems.append(f"{d['failed_24h']} of {d['completed_24h']} fix-one runs failed in 24h — "
-                        "the pipeline is spending budget on runs that cannot succeed")
+        # A 24h ratio is a true statement about the day and a bad test for
+        # "is it broken now": one morning outage keeps it over half until the
+        # window rolls past. So the ratio has to still hold among the runs that
+        # just happened before it counts as a fault. Both numbers are kept —
+        # the day's ratio is real and belongs in the report either way.
+        recent = sorted(runs, key=lambda r: r["createdAt"], reverse=True)[:6]
+        d["recent_failed"] = sum(1 for r in recent if r["conclusion"] == "failure")
+        d["recent_total"] = len(recent)
+        if d["recent_failed"] * 2 > d["recent_total"]:
+            problems.append(
+                f"{d['recent_failed']} of the last {d['recent_total']} fix-one runs failed "
+                f"({d['failed_24h']}/{d['completed_24h']} over 24h) — "
+                "the pipeline is spending budget on runs that cannot succeed")
     return problems, d
 
 
@@ -688,7 +720,42 @@ def check_prs() -> tuple[list[str], dict]:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--critical", action="store_true",
+                    help="only the checks that mean the pipeline cannot work at "
+                         "all, using only cheap local state and one run list, so "
+                         "it can be run hourly instead of daily")
     a = ap.parse_args()
+
+    # The full report answers "is anything wrong". This answers "is it down",
+    # which is a different question with a different useful cadence: the PAT
+    # that expired on 2026-09-06 was caught by the daily run eight hours later,
+    # and forty runs failed in between. Deliberately does NOT write the daily
+    # report file — an hourly subset must not overwrite the full record.
+    if a.critical:
+        crit = {
+            "agents": check_agents(),
+            "watcher": check_watcher_fresh(),
+            "agent_reachable": check_agent_reachable(),
+        }
+        problems = [p for probs, _ in crit.values() for p in probs]
+        if a.json:
+            print(json.dumps({"generated_at": now().isoformat(timespec="seconds"),
+                              "ok": not problems, "problems": problems,
+                              "detail": {k: d for k, (_, d) in crit.items()}}, indent=2))
+        else:
+            print(f"OSS pipeline critical check — {now().isoformat(timespec='seconds')}")
+            for pr in problems:
+                print(f"  {pr}")
+            if not problems:
+                print("  no down-level problems")
+            # run-health.sh matches inside this block, so it belongs to the
+            # human-readable output only; emitting it after the JSON made the
+            # document unparseable.
+            if problems:
+                print("\nPROBLEM(S):")
+                for pr in problems:
+                    print(f"  - {pr}")
+        return 0 if not problems else 1
 
     checks = {
         "agents": check_agents(),
@@ -780,10 +847,14 @@ def update_landings() -> None:
     try:
         import landings
         n, total = landings.update()
-        print(f"  landings   : ledger +{n}, {total} total on upstream default branches")
+        print(f"  landings   : ledger +{n}, {total} total on upstream default branches",
+              file=sys.stderr)
     except Exception as e:  # noqa: BLE001
-        print(f"  landings   : ledger update failed ({str(e)[:90]})")
+        print(f"  landings   : ledger update failed ({str(e)[:90]})", file=sys.stderr)
 
 if __name__ == "__main__":
-    update_landings()
+    # The hourly critical check answers "is it down" and must stay cheap; a
+    # full ledger sweep is a dozen API calls that belong to the daily report.
+    if "--critical" not in sys.argv:
+        update_landings()
     sys.exit(main())

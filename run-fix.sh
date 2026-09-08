@@ -194,6 +194,23 @@ print(c.get('implements_in') or c.get('upstream',''))" 2>/dev/null)
     fi
   fi
 
+  # The five-hour window belongs to the ACCOUNT, so a local session costs
+  # exactly what a cloud one does. This gate was missing entirely: on
+  # 2026-09-07 watch.py fell back here while the PAT was dead and one local run
+  # held Claude from 03:41 to 12:44 without the ledger recording anything, so
+  # the cloud side went on believing the window was free. Checked before
+  # claiming a candidate, not after — a claim we cannot work is a candidate
+  # taken out of the queue for nothing.
+  local hr
+  hr=$(cd "$SCANNER" && python3 -c "
+import scan
+ok, why = scan.session_headroom()
+print('' if ok else why)" 2>/dev/null)
+  if [ -n "${hr:-}" ]; then
+    log "[$key] SKIP - $hr"
+    return 0
+  fi
+
   cand="$(cd "$SCANNER" && python3 scan.py --pop "$key" --claim 2>/dev/null)"
   if [ -z "$cand" ] || printf '%s' "$cand" | grep -q '"error"'; then
     log "[$key] nothing to do - $(printf '%s' "$cand" | tr -d '\n' | head -c 140)"; return 0
@@ -293,7 +310,24 @@ EOF
     return 0
   fi
 
+  # Recorded here and no earlier: this is the first line past which a Claude
+  # session genuinely starts. Kind "local-fix" is outside SESSION_SPEND_STEP on
+  # purpose — reconcile_sessions releases a cloud reservation by inspecting the
+  # run the dispatch produced, and a local run has no such run to inspect, so
+  # this row is never released. That is right: it is not a reservation, it is a
+  # session that happened.
+  (cd "$SCANNER" && python3 -c "
+import scan; scan.note_session('local-fix', '$key', '$num')" 2>/dev/null) || true
+
+  # No gtimeout and no timeout on this machine, so the 3600 below never applied:
+  # the 2026-09-07 hermes run ran 03:41 to 12:44. Fall back to a plain watchdog
+  # so a wedged session cannot hold the account's window for nine hours.
   local tmo; tmo="$(command -v gtimeout || command -v timeout || true)"
+  if [ -z "$tmo" ] && command -v perl >/dev/null 2>&1; then
+    tmo="$SCANNER/.timeout.sh"
+    [ -x "$tmo" ] || { printf '%s\n' '#!/bin/sh' \
+      'exec perl -e "alarm shift; exec @ARGV or exit 127" "$@"' >"$tmo"; chmod +x "$tmo"; }
+  fi
   local attempt=1 started elapsed back
 
   # Roughly one invocation in four dies within seconds with

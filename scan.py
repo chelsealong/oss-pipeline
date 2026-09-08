@@ -21,7 +21,7 @@ import pathlib
 import re
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 ROOT = pathlib.Path(__file__).resolve().parent
 QUEUE = ROOT / "queue"
@@ -712,10 +712,138 @@ def sessions_in_window(hours: float = SESSION_WINDOW_HOURS) -> int:
 def session_headroom() -> tuple[bool, str]:
     """(may dispatch, why not). The five-hour window is the account's, not ours."""
     n = sessions_in_window()
-    if n >= SESSION_CEILING:
-        return False, (f"{n} Claude sessions started in the last "
-                       f"{SESSION_WINDOW_HOURS:g}h, ceiling is {SESSION_CEILING}")
-    return True, ""
+    if n < SESSION_CEILING:
+        return True, ""
+    # About to refuse work. The count is built from dispatches, and a dispatch
+    # that never reached Claude spent nothing — so before turning work away,
+    # check the number is real. This is the only moment the difference matters,
+    # which is why it is the only moment we pay for the API calls; verdicts are
+    # cached per run, so a busy window does not re-fetch what it already knows.
+    if reconcile_sessions():
+        n = sessions_in_window()
+        if n < SESSION_CEILING:
+            return True, ""
+    return False, (f"{n} Claude sessions started in the last "
+                   f"{SESSION_WINDOW_HOURS:g}h, ceiling is {SESSION_CEILING}")
+
+PIPELINE_REPO = "chelsealong/oss-pipeline"
+SESSION_VERDICTS = STATE / "claude-session-verdicts.json"
+
+# The step that actually spends a five-hour-window session, per workflow.
+# Everything before it is cheap: config, caps, a clone, a re-vet, a ripgrep.
+# If that step is `skipped`, no session was spent however the run concluded.
+SESSION_SPEND_STEP = {
+    "fix-one": ("fix-one.yml", "Generate fix and push branch (no PR yet)"),
+    "respond-pr": ("respond-pr.yml", "Address the feedback"),
+}
+_RUN_TITLE = re.compile(r"^(?:fix|respond) (\S+)#(\d+)$")
+
+
+def _runs_of(workflow: str, limit: int = 60) -> list[dict]:
+    try:
+        r = subprocess.run(
+            ["gh", "run", "list", "--repo", PIPELINE_REPO, "--workflow", workflow,
+             "--limit", str(limit), "--json",
+             "databaseId,displayTitle,status,conclusion,createdAt"],
+            capture_output=True, text=True, timeout=90)
+        return json.loads(r.stdout or "[]") if r.returncode == 0 else []
+    except Exception:  # noqa: BLE001
+        return []
+
+
+def _run_spent_session(rid: str, step: str) -> bool | None:
+    """True if the agent step ran, False if it did not, None if unknowable.
+
+    `skipped` is the only conclusion that means no session: a step that FAILED
+    still called Claude first, and the window was touched. That is deliberately
+    a different test from the one health.check_session_waste uses — it counts
+    sessions that finished cleanly, which is a question about productivity, not
+    about whether the account's five-hour allowance was consumed.
+    """
+    try:
+        r = subprocess.run(
+            ["gh", "api", f"repos/{PIPELINE_REPO}/actions/runs/{rid}/jobs",
+             "--jq", '[.jobs[].steps[] | "\\(.name)=\\(.conclusion)"] | join("|")'],
+            capture_output=True, text=True, timeout=60)
+    except Exception:  # noqa: BLE001
+        return None
+    out = (r.stdout or "").strip()
+    if r.returncode != 0 or not out:
+        return None            # transport, not evidence — ask again next pass
+    if f"{step}=" not in out:
+        return False           # the run died before ever reaching the step
+    return f"{step}=skipped" not in out
+
+
+def reconcile_sessions() -> int:
+    """Give back session counts for dispatches that never reached Claude.
+
+    note_session records at dispatch, which is the right moment: it is the only
+    one the local watcher can see, and holding the count stops a retry storm.
+    But a dispatch is not a session. On 2026-09-06 a 30-day PAT expired and
+    forty fix-one runs died at `Re-vet before spending a session` on
+    `gh: Bad credentials`; every one was charged against the account's
+    five-hour ceiling, and the ceiling went on to block real work 237 times.
+    The counter said the window was full while Claude had not been called once.
+
+    So a dispatch record is a reservation, and this releases the ones that
+    provably did not spend — the same shape as reconcile_budget. Each run is
+    judged once and the verdict cached by run id, so a run costs one API call
+    for its entire life. Runs still in flight are left alone: they may yet spend.
+    """
+    try:
+        rows = json.loads(SESSION_LOG.read_text()) if SESSION_LOG.exists() else []
+    except Exception:  # noqa: BLE001
+        return 0
+    if not rows:
+        return 0
+    try:
+        judged = json.loads(SESSION_VERDICTS.read_text()) if SESSION_VERDICTS.exists() else {}
+    except Exception:  # noqa: BLE001
+        judged = {}
+
+    # No point judging runs older than the log keeps rows for: they can no
+    # longer match anything, and their verdicts would be dead weight.
+    horizon = (datetime.now(timezone.utc)
+               - timedelta(hours=SESSION_WINDOW_HOURS * 4)).isoformat(timespec="seconds")
+
+    dropped = 0
+    for kind, (workflow, step) in SESSION_SPEND_STEP.items():
+        for r in _runs_of(workflow):
+            rid = str(r.get("databaseId") or "")
+            if not rid or (r.get("createdAt") or "") < horizon:
+                continue
+            if r.get("status") != "completed" or rid in judged:
+                continue
+            m = _RUN_TITLE.match((r.get("displayTitle") or "").strip())
+            if not m:
+                continue
+            spent = _run_spent_session(rid, step)
+            if spent is None:
+                continue
+            judged[rid] = spent
+            if spent:
+                continue
+            key, number = m.group(1), m.group(2)
+            # One unspent run releases exactly one reservation — retries of the
+            # same issue each added their own row.
+            for i, row in enumerate(rows):
+                if (row.get("kind") == kind and row.get("key") == key
+                        and str(row.get("number")) == number):
+                    rows.pop(i)
+                    dropped += 1
+                    break
+
+    try:
+        STATE.mkdir(parents=True, exist_ok=True)
+        if dropped:
+            SESSION_LOG.write_text(json.dumps(rows, indent=1) + "\n")
+        SESSION_VERDICTS.write_text(
+            json.dumps(dict(list(judged.items())[-500:]), indent=1) + "\n")
+    except Exception:  # noqa: BLE001
+        pass
+    return dropped
+
 
 def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
     # First, and before any API call. A paused repo is one we have established
