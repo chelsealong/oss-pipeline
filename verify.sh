@@ -2211,6 +2211,62 @@ print("  ok     shared-branch pushes autostash and retry"
 sys.exit(1 if bad else 0)
 PY3
 
+say "53. a lookup that failed is not evidence of what it was looking for"
+python3 - "$SCANNER" <<'PY3' || fail=$((fail+1))
+import sys, types
+sys.path.insert(0, sys.argv[1])
+import scan
+bad = 0
+# linked_prs appended its own exception text into the hits list, so "the network
+# was down" and "somebody already fixed this" became the same answer -- and the
+# `if hits: return hits` short-circuit then skipped the search fallback, the one
+# independent path that could still have answered. 240 issues were refused this
+# way, 54 in one week, each logged as "already has PR(s)": a statement about
+# GitHub that was never checked. A sample of 18 found 4 genuinely workable.
+def stub(gql_ok, search_ok, body="[]"):
+    def gh(args, **kw):
+        if any("graphql" in str(a) for a in args):
+            if not gql_ok: raise RuntimeError("error connecting to api.github.com")
+            return ('{"data":{"repository":{"issue":{"createdAt":"2026-01-01T00:00:00Z",'
+                    '"closedByPullRequestsReferences":{"nodes":[]},"timelineItems":{"nodes":[]}}}}}')
+        if not search_ok: raise RuntimeError("search timed out")
+        return body
+    return gh
+
+LIVE = '[{"n":9,"s":"open","m":null,"c":"2026-02-01T00:00:00Z"}]'
+CASES = [
+    # (graphql ok, search ok, search body, expectation)
+    (False, True,  "[]",   "empty"),    # lookup half-failed, the other half says no PR
+    (False, True,  LIVE,   "hits"),     # fallback still finds a real PR
+    (False, False, "[]",   "unknown"),  # neither path could answer
+    (True,  True,  "[]",   "empty"),
+]
+real = scan.gh
+try:
+    for gok, sok, body, want in CASES:
+        scan.gh = stub(gok, sok, body)
+        r = scan.linked_prs("o/r", 123)
+        if want == "empty":
+            got = "empty" if r == [] else f"hits:{r}"
+        elif want == "unknown":
+            got = "unknown" if (r and str(r[0]).startswith("?unknown")) else f"other:{r}"
+        else:
+            got = "hits" if (r and not str(r[0]).startswith("?unknown")) else f"other:{r}"
+        if got != want:
+            print(f"  FAIL  graphql_ok={gok} search_ok={sok}: expected {want}, got {got}"); bad += 1
+finally:
+    scan.gh = real
+# And an unknown answer must not be reported to the user as a PR that was seen.
+import inspect
+vet = inspect.getsource(scan.vet)
+if "?unknown" not in vet:
+    print("  FAIL  vet cannot tell an unreadable lookup from a real PR, and will log the wrong reason")
+    bad += 1
+print("  ok     a failed lookup falls through, and says so when nothing could answer"
+      if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1

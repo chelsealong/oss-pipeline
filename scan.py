@@ -515,7 +515,8 @@ def linked_prs(upstream: str, number: int) -> list[str]:
 
     MERGED still disqualifies. So does OPEN. Only abandonment is reopened.
     """
-    hits: list[str] = []
+    hits: list[str] = []      # real evidence: a live or merged PR
+    errs: list[str] = []      # lookups that could not be performed at all
     owner, name = upstream.split("/")
 
     # (1) structured closing references + cross-referenced PRs
@@ -541,9 +542,16 @@ def linked_prs(upstream: str, number: int) -> list[str]:
             if src.get("number") and src.get("state") != "CLOSED":
                 hits.append(f"xref PR#{src['number']}({src.get('state')})")
     except Exception as e:  # noqa: BLE001
-        hits.append(f"?graphql-failed:{e}"[:80])
+        # A lookup that failed is not evidence of a PR. Appending the error to
+        # `hits` made "the network was down" indistinguishable from "somebody
+        # already fixed this", and the `if hits` below then skipped the search
+        # fallback — the one independent path that could still have answered.
+        # 240 issues were rejected this way, 54 of them in the last week alone,
+        # each logged as "already has PR(s)" which is a statement that was never
+        # checked. Same shape as the closed-PR bug this docstring records.
+        errs.append(f"graphql:{e}"[:90])
 
-    if hits:  # already disqualified; skip the expensive search call
+    if hits:  # genuinely disqualified; skip the expensive search call
         return hits
 
     # (2) PR full-text search by issue number
@@ -568,8 +576,16 @@ def linked_prs(upstream: str, number: int) -> list[str]:
             hits.append(f"search PR#{it['n']}({'merged' if it.get('m') else it['s']})")
     except RateLimited:
         raise
-    except Exception:  # noqa: BLE001
-        pass
+    except Exception as e:  # noqa: BLE001
+        errs.append(f"search:{e}"[:90])
+
+    # Both paths failed and neither found anything: we do not know whether this
+    # issue has a PR. Say so. Callers treat a truthy answer conservatively —
+    # vet refuses the issue this pass, claim expiry leaves the claim standing —
+    # which is right for "unknown", but the reason they log has to be the truth
+    # rather than a PR that was never seen.
+    if not hits and len(errs) == 2:
+        return [f"?unknown: {'; '.join(errs)}"[:150]]
 
     return hits
 
@@ -910,6 +926,8 @@ def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
         return False, f"body has no substance ({len(substance)} chars after template)", {}
 
     prs = linked_prs(upstream, num)
+    if prs and str(prs[0]).startswith("?unknown"):
+        return False, f"linked-PR lookup unavailable, deferring: {prs[0][:110]}", {}
     if prs:
         return False, f"already has PR(s): {prs[:3]}", {}
 
