@@ -1228,8 +1228,21 @@ jobs:
             # still attempted as github-actions[bot] and refused 403. The
             # mechanism that records what we learn has never written one line.
             git config --unset-all "http.https://github.com/.extraheader" 2>/dev/null || true
-            git pull --rebase -q origin main || true
-            if git push -q origin HEAD:main; then
+            # --autostash, and a retry. Without the first, the `git reset
+            # .loop` above leaves that path modified-but-unstaged and the
+            # rebase aborts with "cannot pull with rebase: You have unstaged
+            # changes" — so the pull silently did nothing and the push was
+            # refused as non-fast-forward. Without the second, six runs racing
+            # to append a lesson to the same branch means most of them lose: on
+            # 2026-09-08 five of the last six runs failed here, every one of
+            # them a run that had correctly decided to skip.
+            pushed=0
+            for attempt in 1 2 3; do
+              git pull --rebase --autostash -q origin main || true
+              if git push -q origin HEAD:main; then pushed=1; break; fi
+              sleep $((attempt * 3))
+            done
+            if [ "$pushed" = 1 ]; then
               echo "  lesson pushed"
             else
               # Loudly. A warning is how this stayed broken: the step reported
@@ -1279,8 +1292,21 @@ jobs:
             # still attempted as github-actions[bot] and refused 403. The
             # mechanism that records what we learn has never written one line.
             git config --unset-all "http.https://github.com/.extraheader" 2>/dev/null || true
-            git pull --rebase -q origin main || true
-            if git push -q origin HEAD:main; then
+            # --autostash, and a retry. Without the first, the `git reset
+            # .loop` above leaves that path modified-but-unstaged and the
+            # rebase aborts with "cannot pull with rebase: You have unstaged
+            # changes" — so the pull silently did nothing and the push was
+            # refused as non-fast-forward. Without the second, six runs racing
+            # to append a lesson to the same branch means most of them lose: on
+            # 2026-09-08 five of the last six runs failed here, every one of
+            # them a run that had correctly decided to skip.
+            pushed=0
+            for attempt in 1 2 3; do
+              git pull --rebase --autostash -q origin main || true
+              if git push -q origin HEAD:main; then pushed=1; break; fi
+              sleep $((attempt * 3))
+            done
+            if [ "$pushed" = 1 ]; then
               echo "  lesson pushed"
             else
               # Loudly. A warning is how this stayed broken: the step reported

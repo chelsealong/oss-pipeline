@@ -1789,13 +1789,15 @@ wf = (root / ".github/workflows/fix-one.yml").read_text()
 # OVERRIDES credentials embedded in the remote URL, so `set-url --push` with the
 # PAT achieved nothing. The step then swallowed the failure into a ::warning::
 # and reported success, which is why three weeks passed without anyone noticing.
-pushes = [b for b in wf.split("git push") if b]
-for i, block in enumerate(wf.split("git remote set-url --push")[1:], 1):
-    # 1600, not 900: the first version of this check used a window that ended
-    # one byte before the `::error::` it was looking for, and reported correct
-    # code as broken. Make the window comfortably larger than the block it has
-    # to contain.
-    window = block[:1600]
+# The window is the step, not a byte count. Twice now a fixed slice has cut off
+# the `::error::` it was looking for and called correct code broken — 900 was
+# widened to 1600, and 1600 in turn was overrun by a retry loop. A step boundary
+# cannot drift, so there is nothing left to tune.
+_d = yaml.safe_load(wf)
+_steps = [st.get("run") or "" for job in (_d.get("jobs") or {}).values()
+          for st in job.get("steps", [])]
+sites = [r for r in _steps if "git remote set-url --push" in r]
+for i, window in enumerate(sites, 1):
     if "extraheader" not in window:
         print(f"  FAIL  push site {i} does not clear checkout's auth header — "
               "the PAT in the URL is ignored and the push 403s"); bad += 1
@@ -1803,7 +1805,7 @@ for i, block in enumerate(wf.split("git remote set-url --push")[1:], 1):
         print(f"  FAIL  push site {i} still downgrades a failed push to a warning"); bad += 1
     if "::error::" not in window or "exit 1" not in window:
         print(f"  FAIL  push site {i} does not fail the step when the push fails"); bad += 1
-if wf.count("git remote set-url --push") < 2:
+if len(sites) < 2:
     print("  FAIL  expected both the skip and block recorders to push"); bad += 1
 # And the recorder has to be reachable at all.
 for name in ("Record the skip as a durable lesson", "Record the block as a durable lesson"):
@@ -2173,6 +2175,38 @@ if sys.platform == "darwin" and la.is_dir():
 else:
     print("  note   launchd agent state not checked off-workstation")
 print("  ok     down-level faults get their own issue, and it closes itself"
+      if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
+say "52. a push to the shared branch survives a working tree and a race"
+python3 - <<'PY3' || fail=$((fail+1))
+import pathlib, re, sys, yaml
+bad = 0
+# On 2026-09-08 five of the last six fix-one runs failed at "Record the skip as
+# a durable lesson", and every one of them was a run that had correctly decided
+# to skip. Two causes, both in one line: `git reset .loop` leaves that path
+# modified-but-unstaged so `git pull --rebase` aborts outright, and six runs
+# append to the same branch at once so whoever pulled first wins the push.
+# pipeline.yml had already learned --autostash; fix-one.yml never got it.
+for f in sorted(pathlib.Path(".github/workflows").glob("*.yml")):
+    d = yaml.safe_load(f.read_text()) or {}
+    for jn, job in (d.get("jobs") or {}).items():
+        for st in job.get("steps", []):
+            run = st.get("run") or ""
+            if not re.search(r"git push\b.*\bHEAD:main|git push\b.*\borigin main\b", run):
+                continue
+            name = st.get("name", "?")
+            if "--rebase" in run and "--autostash" not in run:
+                print(f"  FAIL  {f.name} / {name}: rebases without --autostash; "
+                      "an unstaged path aborts the pull and the push is then refused")
+                bad += 1
+            # A single attempt against a branch several runs write to is a
+            # coin toss. Any loop or explicit retry counts.
+            if not re.search(r"for attempt|retry|for i in|while ", run):
+                print(f"  FAIL  {f.name} / {name}: pushes to a shared branch once, with no retry")
+                bad += 1
+print("  ok     shared-branch pushes autostash and retry"
       if not bad else f"  {bad} problem(s)")
 sys.exit(1 if bad else 0)
 PY3

@@ -115,8 +115,15 @@ jobs:
           git add -A queue || true
           git add -A state || true
           git diff --staged --quiet || git commit -m "chore(queue): refresh $(date -u +%Y-%m-%dT%H:%MZ)"
-          git pull --rebase --autostash origin main || true
-          git push origin main || echo "push skipped"
+          # Several jobs write to main at once, so losing a push is normal and
+          # has to be retried rather than shrugged at. `|| echo "push skipped"`
+          # made every loss look like a decision.
+          for attempt in 1 2 3; do
+            git pull --rebase --autostash origin main || true
+            git push origin main && break
+            [ "$attempt" = 3 ] && echo "::warning::queue refresh could not be pushed"
+            sleep $((attempt * 3))
+          done
 
   fix:
     needs: scan
@@ -332,5 +339,14 @@ jobs:
             echo "nothing to record"
           else
             git commit -q -m "chore(state): ${{ matrix.key }} #${{ steps.cand.outputs.number }}"
-            git push origin main || echo "push failed"
+            # The hard reset above is against the origin/main this job fetched;
+            # by the time it pushes, a sibling matrix job has usually moved it.
+            # A single attempt therefore drops the state commit, and
+            # `|| echo "push failed"` kept the step green while it did.
+            for attempt in 1 2 3; do
+              git pull --rebase --autostash -q origin main || true
+              git push -q origin main && break
+              [ "$attempt" = 3 ] && echo "::warning::state for #${{ steps.cand.outputs.number }} could not be pushed"
+              sleep $((attempt * 3))
+            done
           fi
