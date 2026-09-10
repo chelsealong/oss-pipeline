@@ -1,1 +1,2 @@
 - [2026-09-04] #41143 skipped: Maintainer already closed a matching fix. PR #41176 ("fix(agent): memoize and fail-open LOG provider icon enrichment", Fixes #41143) implemented the same memoize+fail-open fix in AgentMessageTransformer with 7 new tests and a clean regression run, but was clos
+- [2026-09-10] #41626 skipped: Issue #41626 is not a fixable minimal bug — it's a chaos-engineering report asking for "explicit timeout and retry budgets" under network degradation. The concrete failure path (traced collaboratively by the reporter and the Dosu bot across 5 comments) is db
