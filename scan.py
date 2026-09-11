@@ -328,6 +328,30 @@ REPOS: dict[str, dict] = {
     # so a first contribution shows red for a reason that has nothing to do with
     # the patch and can only be cleared by someone else. The DCO sign-off work
     # (git commit -s) stays in fix-one.yml for whenever this comes back.
+    #
+    # RE-CHECKED 2026-09-11 and the answer is unchanged. #51474 and #51623 have
+    # sat open since the day they were filed — one month, not one maintainer
+    # comment between them, and #51623 has since gone to merge conflict.
+    # `pre-run-check` still reads `failure` on #51474's head. #52085 was closed
+    # by benchislett for a real reason (the model shipped and unified the
+    # parameter), not for quality. The aggregate "25% of external PRs merge" is
+    # true and misleading: those merges belong to authors who already cleared
+    # the gate. Do not re-propose vllm on that number alone.
+    #
+    # The wider finding from that re-check, recorded so the class is not
+    # rediscovered: every infrastructure-grade repo worth adding is now closed
+    # to this pipeline, and for four different reasons. pytorch/pytorch states
+    # in AI_POLICY.md that it does "not accept contributions created by fully
+    # autonomous agents" and separately requires a maintainer to mark an issue
+    # `actionable` before a newcomer may open a PR at all. huggingface/
+    # transformers asks "autonomous agents not to open any PRs or issues for
+    # the moment". vllm and sglang gate on standing and on GPUs we do not have.
+    # ray-project/ray has no such rule, but 7 of 8 sampled external merges came
+    # from authors with 13-106 prior merges there. These are not coincidences:
+    # the projects whose commits would carry the most weight are precisely the
+    # ones that have built defences against high-volume outside contribution.
+    # The set of repos this pipeline can work is saturated; adding another is
+    # not the lever it looks like.
     # sglang REMOVED 2026-08-15 on Bruce's instruction. Added 2026-08-07 and it
     # never dispatched once in eight days: 19 of the 29 issues vetted already
     # carried a PR, the rest hit the kernel/CUDA/quantization exclusions that
