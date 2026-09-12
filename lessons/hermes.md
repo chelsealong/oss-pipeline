@@ -256,3 +256,4 @@ still buys nothing.
 - [2026-09-11] #108392 skipped: issue #108392 (mid-session Haiku->Sonnet model switch allegedly causes wrong-language output, Korean appearing in a Traditional Chinese session) has no underlying code defect to fix. Investigated agent/conversation_loop.py::_restore_or_build_system_prompt / _s
 - [2026-09-12] issue #108694 blocked by review:  SUMMARY: The fix is a real behaviour change (verified: reverting workspace-group.tsx to HEAD~1 makes the new "does not switch when the label is only the unrecorded-branch fallback" test fail with switchBranchInRepo('/repo','main'), and it passes with the fix restored 
 
+- [2026-09-12] #108711 skipped: issue #108711 asks Hermes to auto-upgrade plugin pip dependencies (a shared lazy_deps helper plus a new plugin.yaml min_version/pip_dependencies field walked by `hermes update` or a new `hermes plugins check-updates` command). This reverses an explicit, previo
