@@ -16,3 +16,4 @@
 - [2026-09-10] #16230 skipped: #16230 is a native-level crash ("Fatal Python error: Aborted", no catchable Python exception) inside the CUDA graph-capture/malloc-graph allocator path used by --enable-comfy-compiler (torch.cuda.CUDAGraph / cudaMallocAsync). The stack trace bottoms out at com
 - [2026-09-11] #16246 skipped: #16246 is a Windows kernel driver crash (BSOD in dxgmms2.sys, a use-after-free race in the NVIDIA/WDDM video memory manager) triggered by the allocation/free timing of comfy-aimdo 0.5.x, a separate closed pip package (comfy-aimdo==0.5.3 in requirements.txt) no
 - [2026-09-12] #16279 skipped: #16279 is a genuine checkpoint-pairing mismatch, not a ComfyUI code bug.
+- [2026-09-12] #16289 skipped: could not pin down a provable root cause for #16289 without live reproduction (real audio/video assets + GPU + model weights).
