@@ -257,3 +257,4 @@ still buys nothing.
 - [2026-09-12] issue #108694 blocked by review:  SUMMARY: The fix is a real behaviour change (verified: reverting workspace-group.tsx to HEAD~1 makes the new "does not switch when the label is only the unrecorded-branch fallback" test fail with switchBranchInRepo('/repo','main'), and it passes with the fix restored 
 
 - [2026-09-12] #108711 skipped: issue #108711 asks Hermes to auto-upgrade plugin pip dependencies (a shared lazy_deps helper plus a new plugin.yaml min_version/pip_dependencies field walked by `hermes update` or a new `hermes plugins check-updates` command). This reverses an explicit, previo
+- [2026-09-12] #108717 skipped: issue #108717 is an explicit policy-clarification question, not a bug report — the reporter states this outright ("This is a policy clarification, not a confirmed vulnerability or bug", "No real credentials were accessed; no local patch is proposed") and ask
