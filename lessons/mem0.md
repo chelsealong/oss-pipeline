@@ -1,0 +1,1 @@
+- [2026-09-14] #6828 skipped: Issue #6828 (plugin version drift between marketplace.json and plugin.json manifests) is already resolved on current main. A commenter on the issue noted PR #6829 fixed it. I independently verified: all plugin manifests (integrations/cursor-plugin/.cursor-plug
