@@ -65,6 +65,19 @@ RETIRED = ["github/spec-kit"]
 REPO_LIST = sorted(
     {c.get("implements_in") or c["upstream"] for c in scan.REPOS.values()} | set(RETIRED)
 )
+# Agents that are off ON PURPOSE, with the reason and the date. An agent
+# missing from launchctl is normally a fault -- oss-fix was `launchctl disable`d
+# during the credit pause and stayed off silently for weeks, which is why the
+# check exists. But "off by accident" and "off by decision" must be
+# distinguishable, or the only way to make the alarm quiet is to delete the
+# check. Entries here are reported, not alerted on.
+AGENTS_OFF_BY_DECISION = {
+    "oss-fix": "2026-09-14: the local fixer authenticates from this Mac's "
+               "keychain, which still holds the Claude subscription being "
+               "retired. Re-enable once `claude` here is logged into the new "
+               "account; until then it would keep spending the old one.",
+}
+
 AGENTS = ["oss-watch", "oss-scan", "oss-fix", "oss-claim", "oss-prwatch",
           # The hourly down-check watches everything else, so something
           # has to watch it; an unloaded alarm is the failure it exists
@@ -112,7 +125,10 @@ def check_agents() -> tuple[list[str], dict]:
         loaded = any(a in ln for ln in listing.splitlines())
         detail[a] = "loaded" if loaded else "MISSING"
         if not loaded:
-            problems.append(f"launchd agent {a} is not loaded")
+            if a in AGENTS_OFF_BY_DECISION:
+                detail[a] = "off by decision"
+            else:
+                problems.append(f"launchd agent {a} is not loaded")
     return problems, detail
 
 

@@ -2167,11 +2167,20 @@ la = pathlib.Path.home() / "Library/LaunchAgents"
 if sys.platform == "darwin" and la.is_dir():
     disabled = subprocess.run(["launchctl", "print-disabled", f"gui/{os.getuid()}"],
                               capture_output=True, text=True).stdout
+    # An agent may be off on purpose, but the reason has to be written down in
+    # AGENTS_OFF_BY_DECISION rather than left for the next reader to infer from
+    # launchctl. Silence with no recorded reason is the original failure.
+    off_ok = set(re.findall(r'^\s*"([\w-]+)":', 
+                 (re.search(r"AGENTS_OFF_BY_DECISION = \{(.*?)\n\}", health, re.S) or
+                  type("x",(),{"group":lambda *a:""})()).group(1), re.M))
     for a in re.findall(r'"([\w-]+)"', m.group(1) if m else ""):
         if not (la / f"com.chelsealong.{a}.plist").exists():
             print(f"  FAIL  health.py requires agent {a} but no plist is installed"); bad += 1
-        elif f'"com.chelsealong.{a}" => disabled' in disabled:
-            print(f"  FAIL  agent {a} is launchctl-disabled; it will not run after a reboot"); bad += 1
+        elif f'"com.chelsealong.{a}" => disabled' in disabled and a not in off_ok:
+            print(f"  FAIL  agent {a} is launchctl-disabled with no recorded reason; "
+                  "add it to AGENTS_OFF_BY_DECISION or re-enable it"); bad += 1
+        elif a in off_ok:
+            print(f"  note   {a} is off by decision, reason recorded")
 else:
     print("  note   launchd agent state not checked off-workstation")
 print("  ok     down-level faults get their own issue, and it closes itself"
