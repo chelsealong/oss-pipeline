@@ -18,3 +18,4 @@
 - [2026-09-12] #16279 skipped: #16279 is a genuine checkpoint-pairing mismatch, not a ComfyUI code bug.
 - [2026-09-12] #16289 skipped: could not pin down a provable root cause for #16289 without live reproduction (real audio/video assets + GPU + model weights).
 - [2026-09-14] #16307 skipped: #16307 is a follow-up bug report against PR #16304 ("feat: add accumulate toggle to SaveImage/PreviewImage nodes"), which introduces the `merge` parameter on emit_cached_output. #16304 is still OPEN/unmerged (commit 1e9e9ca7 is not an ancestor of current maste
+- [2026-09-14] #16230 skipped: #16230 is a native abort (Fatal Python error: Aborted, uncatchable) inside comfy_aimdo's closed-source malloc-graph/CUDA-graph allocator, triggered when MiniMaxH3FunControlPatch.prepare_control_latent() VAE-encodes control frames during the first sampling step
