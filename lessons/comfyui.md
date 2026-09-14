@@ -17,3 +17,4 @@
 - [2026-09-11] #16246 skipped: #16246 is a Windows kernel driver crash (BSOD in dxgmms2.sys, a use-after-free race in the NVIDIA/WDDM video memory manager) triggered by the allocation/free timing of comfy-aimdo 0.5.x, a separate closed pip package (comfy-aimdo==0.5.3 in requirements.txt) no
 - [2026-09-12] #16279 skipped: #16279 is a genuine checkpoint-pairing mismatch, not a ComfyUI code bug.
 - [2026-09-12] #16289 skipped: could not pin down a provable root cause for #16289 without live reproduction (real audio/video assets + GPU + model weights).
+- [2026-09-14] #16307 skipped: #16307 is a follow-up bug report against PR #16304 ("feat: add accumulate toggle to SaveImage/PreviewImage nodes"), which introduces the `merge` parameter on emit_cached_output. #16304 is still OPEN/unmerged (commit 1e9e9ca7 is not an ancestor of current maste
