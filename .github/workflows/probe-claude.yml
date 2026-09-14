@@ -34,8 +34,23 @@ jobs:
           fi
           out=$(claude -p "Reply with exactly: OK" 2>&1) || true
           echo "raw output: $out"
+          # Check for failure FIRST, and match the whole reply rather than a
+          # substring. On 2026-09-14 a token carrying a stray ellipsis was
+          # rejected with "Invalid Authorization header value from
+          # CLAUDE_CODE_OAUTH_TOKEN: ..." — and `*OK*` matched it, because
+          # CLAUDE_CODE_OAUTH_TOKEN contains "OK" inside "TOKEN". The probe
+          # reported SUCCESS for a token that could not authenticate at all,
+          # which is the one thing a probe must never do.
           case "$out" in
-            *OK*)  echo "RESULT: SUCCESS - Claude works on GitHub runners" ;;
-            *403*) echo "RESULT: BLOCKED - runner IP also rejected (403)" ; exit 1 ;;
-            *)     echo "RESULT: OTHER FAILURE - see raw output above" ; exit 1 ;;
+            *"Invalid auth"*|*"Invalid Authorization"*|*"Failed to authenticate"*|*401*)
+              echo "RESULT: AUTH FAILED - the token is not usable"; exit 1 ;;
+            *403*)
+              echo "RESULT: BLOCKED - runner IP rejected (403)"; exit 1 ;;
           esac
+          # Success is an exact reply, not a substring found anywhere.
+          if [ "$(printf '%s' "$out" | tr -d '[:space:]')" = "OK" ]; then
+            echo "RESULT: SUCCESS - Claude authenticated and replied on this runner"
+          else
+            echo "RESULT: OTHER FAILURE - reply was not exactly OK; see raw output above"
+            exit 1
+          fi
