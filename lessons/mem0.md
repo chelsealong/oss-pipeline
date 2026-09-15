@@ -1,1 +1,2 @@
 - [2026-09-14] #6828 skipped: Issue #6828 (plugin version drift between marketplace.json and plugin.json manifests) is already resolved on current main. A commenter on the issue noted PR #6829 fixed it. I independently verified: all plugin manifests (integrations/cursor-plugin/.cursor-plug
+- [2026-09-15] #7342 skipped: Issue #7342 describes mem0 Cursor plugin 0.2.13 spawning visible Git Bash/mintty windows on Windows because hooks were .sh scripts (e.g. on_file_read_cursor.sh) launched via git-bash.exe for a preToolUse/Read hook, and the script's `INPUT=$(cat)` never got EOF
