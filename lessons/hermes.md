@@ -326,3 +326,4 @@ still buys nothing.
 
 - [2026-09-16] #112483 skipped: issue #112483 is a meta/triage report ("[Wave] Orphaned duplicates") auditing 918 open duplicate-labeled issues and recommending close/label actions on OTHER issues (12 close-as-landed, 7 contended, 4 live-request, 38 no-landing-evidence). It contains no code 
 - [2026-09-16] #112486 skipped: issue #112486 is already claimed by its own reporter (gustavosmendes). The issue body states they already have a working fix on a local branch (`fix/kanban-guidance-interactive-leak` on their fork), describes the exact diff, and says they verified it against `
+- [2026-09-16] #112501 skipped: issue #112501 ("Final result of a steered subagent is inserted before the steer message") has no confidently-identifiable minimal fix after deep investigation of both the Python backend and the Desktop (TypeScript) client.
