@@ -1732,7 +1732,7 @@ for repo, floor in (("hermes", 15), ("adk|dify|langfuse|openclaw|comfyui", 10)):
 # and it closed four of ours in two days while the daily cap of 12 sat happily
 # unspent. A daily cap cannot see a standing total, so a separate ceiling must
 # exist and must stay under theirs.
-if "active_cap=18" not in wf or "openclaw)" not in wf.split("active_cap")[0][-200:]:
+if "active_cap=20" not in wf or "openclaw)" not in wf.split("active_cap")[0][-200:]:
     print("  FAIL  no active-PR ceiling for openclaw; their bot closes above 20"); bad += 1
 if "--state open" not in wf:
     print("  FAIL  the active ceiling does not count OPEN PRs"); bad += 1

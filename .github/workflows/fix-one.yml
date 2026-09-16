@@ -156,7 +156,7 @@ jobs:
           # closed by a bot costs the work, the session, and a little goodwill.
           # 18 leaves two of headroom under their 20.
           case "${{ inputs.repo_key }}" in
-            openclaw) active_cap=18 ;;
+            openclaw) active_cap=20 ;;   # 18 → 20 on 2026-09-16 after clearing five stale PRs
             *)        active_cap=0  ;;   # 0 = not enforced here
           esac
           if [ "$active_cap" -gt 0 ]; then

@@ -72,10 +72,11 @@ REPO_LIST = sorted(
 # distinguishable, or the only way to make the alarm quiet is to delete the
 # check. Entries here are reported, not alerted on.
 AGENTS_OFF_BY_DECISION = {
-    "oss-fix": "2026-09-14: the local fixer authenticates from this Mac's "
-               "keychain, which still holds the Claude subscription being "
-               "retired. Re-enable once `claude` here is logged into the new "
-               "account; until then it would keep spending the old one.",
+    # Empty is the normal state. Populate it only when an agent is switched off
+    # on purpose, with the date and the reason — oss-fix sat here from
+    # 2026-09-14 while the Claude subscription behind the pipeline was being
+    # replaced, and was restored the same day once this machine's CLI and the
+    # cloud secret were on the same account.
 }
 
 AGENTS = ["oss-watch", "oss-scan", "oss-fix", "oss-claim", "oss-prwatch",
