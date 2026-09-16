@@ -324,3 +324,4 @@ still buys nothing.
 - [2026-09-16] #112458 skipped: issue #112458 (Desktop model-switch confirmation toast offers no decline path) already has an open PR, #112461 by KoNit-K ('fix(desktop): add cancel action to guarded model switch'), opened 2026-09-16T00:40:13Z with 'Fixes #112458' in its body. That PR adds a 
 - [2026-09-16] issue #112466 blocked by review:  ## Summary of what I checked  Test honesty (front 3) is genuinely satisfied: I reverted only hermes_cli/update_cmd_fleet.py to HEAD~1 and re-ran the new test — it fails 
 
+- [2026-09-16] #112483 skipped: issue #112483 is a meta/triage report ("[Wave] Orphaned duplicates") auditing 918 open duplicate-labeled issues and recommending close/label actions on OTHER issues (12 close-as-landed, 7 contended, 4 live-request, 38 no-landing-evidence). It contains no code 
