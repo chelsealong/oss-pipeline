@@ -322,3 +322,5 @@ still buys nothing.
 - [2026-09-16] #112410 skipped: issue #112410 is a meta-inventory report ("[Wave] Stalled-PR orphan inventory: carrier-cell feed") listing 80 stalled human-authored PRs that a maintainer or bot could cherry-pick into a carrier PR. It contains no code defect and proposes no concrete fix — i
 - [2026-09-16] #112451 skipped: issue #112451 is a large feature request ("Secure host-side Bitwarden authentication for NousPortal-hosted instances"), not a defect with a minimal mechanical fix. The author explicitly proposes three mutually-exclusive architectural alternatives (a NousPortal
 - [2026-09-16] #112458 skipped: issue #112458 (Desktop model-switch confirmation toast offers no decline path) already has an open PR, #112461 by KoNit-K ('fix(desktop): add cancel action to guarded model switch'), opened 2026-09-16T00:40:13Z with 'Fixes #112458' in its body. That PR adds a 
+- [2026-09-16] issue #112466 blocked by review:  ## Summary of what I checked  Test honesty (front 3) is genuinely satisfied: I reverted only hermes_cli/update_cmd_fleet.py to HEAD~1 and re-ran the new test — it fails 
+
