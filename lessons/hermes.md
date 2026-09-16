@@ -337,3 +337,4 @@ still buys nothing.
 
 - [2026-09-16] #112929 skipped: issue #112929 is a user support request ("Payment Credit Missing" - a specific user's paid credits not appearing in their Nous portal account). It requires access to account/payment/billing records and backend systems, not a code fix. No reproducible bug, no t
 - [2026-09-16] #112920 skipped: issue #112920 (Mnemosyne recall loop in Hermes agent's context/loop logic) has already been fully analyzed by repo contributor KeyArgo, who identified the exact coverage gap in agent/tool_guardrails.py (query-variant memory-recall calls with empty-but-successf
+- [2026-09-16] #112892 skipped: issue #112892 has a comment claimant. holny (contributor) commented 'I'd like to take this one' with a detailed implementation plan (CLI 'hermes cron stop', scheduler interrupt_running_job, tests) and stated they will open a PR from holny/hermes-agent once gre
