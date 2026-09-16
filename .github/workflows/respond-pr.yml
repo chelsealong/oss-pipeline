@@ -80,6 +80,30 @@ jobs:
           # room than the maintainer's actual request — and its size is logged,
           # so "the context got huge" is a measurement instead of a suspicion.
           {
+            # Unticked review checkboxes, hoisted above everything else.
+            #
+            # On 2026-09-16 this step gathered a complete ClawSweeper review of
+            # openclaw#148835 carrying two unresolved P1 items, the session ran
+            # to "success", and nothing was changed or pushed. Two causes
+            # compounded: the checklist sits far down a review that also holds
+            # score tables and prose, inside a section capped at its newest 200
+            # lines, and the prompt tells the agent to do nothing when the thread
+            # shows the reviewer already got what they asked for. The last human
+            # comment there was ours, so "nobody is waiting on us" looked true
+            # while two blockers stood open.
+            #
+            # An unticked box is an outstanding ask whatever the thread looks
+            # like, so it is extracted verbatim and placed first.
+            blockers=$( { gh api "repos/$UP/issues/$N/comments" --paginate \
+                            --jq '.[] | .body' || true; } \
+                        | grep -E '^[[:space:]]*- \[ \] ' | tail -20 )
+            if [ -n "$blockers" ]; then
+              echo "### [ctx] OPEN REVIEW BLOCKERS — unticked boxes a reviewer left"
+              echo "These stand regardless of who spoke last. Address them, or say"
+              echo "precisely why one cannot be addressed from this environment."
+              printf '%s\n' "$blockers"
+              echo
+            fi
             echo "### [ctx] PR body"; jq -r '.body // "(empty)"' /tmp/pr.json | head -100
             echo; echo "### [ctx] Labels"; jq -r '[.labels[].name] | join(", ")' /tmp/pr.json
             echo; echo "### [ctx] Issue comments"
