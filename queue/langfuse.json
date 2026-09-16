@@ -3,16 +3,62 @@
   "upstream": "langfuse/langfuse",
   "implements_in": "langfuse/langfuse",
   "needs_assignment": false,
-  "scanned_at": "2026-09-16T01:19:11+00:00",
+  "scanned_at": "2026-09-16T06:15:09+00:00",
   "partial": false,
   "errors": [],
   "candidates": [
+    {
+      "number": 17522,
+      "title": "Batch action job ID can silently deduplicate a distinct later operation with a different query or target",
+      "url": "https://github.com/langfuse/langfuse/issues/17522",
+      "created_at": "2026-09-16T06:07:08Z",
+      "age_hours": 0.1,
+      "reason": "clear",
+      "labels": [
+        "bug",
+        "feat-annotation"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17520,
+      "title": "bug: experiment backfill permanently skips dataset run items whose trace was propagated without experiment attributes",
+      "url": "https://github.com/langfuse/langfuse/issues/17520",
+      "created_at": "2026-09-16T05:27:54Z",
+      "age_hours": 0.8,
+      "reason": "clear",
+      "labels": [
+        "bug",
+        "feat-datasets",
+        "feat-experiments",
+        "langfuse/langfuse"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17517,
+      "title": "v4 backfill (M3): per-part chunking does not bound memory \u2014 full_sorting_merge sorts input/output",
+      "url": "https://github.com/langfuse/langfuse/issues/17517",
+      "created_at": "2026-09-16T05:03:23Z",
+      "age_hours": 1.2,
+      "reason": "clear",
+      "labels": [
+        "[Core] ClickHouse database",
+        "back-end-performance",
+        "bug",
+        "self-hosting"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
     {
       "number": 17506,
       "title": "bug(v4.36.1, events_only): Traces UI list queries legacy traces table",
       "url": "https://github.com/langfuse/langfuse/issues/17506",
       "created_at": "2026-09-15T18:41:11Z",
-      "age_hours": 6.6,
+      "age_hours": 11.6,
       "reason": "clear",
       "labels": [
         "bug",
@@ -29,7 +75,7 @@
       "title": "Dual-write Event Propagation Job cursor stuck for 48+ hours, no errors logged",
       "url": "https://github.com/langfuse/langfuse/issues/17452",
       "created_at": "2026-09-14T19:46:55Z",
-      "age_hours": 29.5,
+      "age_hours": 34.5,
       "reason": "clear",
       "labels": [
         "bug",
@@ -42,11 +88,19 @@
   ],
   "rejected": [
     {
+      "number": 17518,
+      "title": "bug: Unicode escapes are not decoded in truncated session observation I/O previews",
+      "url": "https://github.com/langfuse/langfuse/issues/17518",
+      "created_at": "2026-09-16T05:04:59Z",
+      "age_hours": 1.2,
+      "reason": "already has PR(s): ['closing-ref PR#17519(OPEN)', 'xref PR#17519(OPEN)']"
+    },
+    {
       "number": 17508,
       "title": "feat: ingest provider-reported cost in the LangChain CallbackHandler",
       "url": "https://github.com/langfuse/langfuse/issues/17508",
       "created_at": "2026-09-15T19:09:00Z",
-      "age_hours": 6.2,
+      "age_hours": 11.1,
       "reason": "fix belongs to a different repo"
     },
     {
@@ -54,7 +108,7 @@
       "title": "bug: Python LangChain TTL cache-write keys have no default Claude prices",
       "url": "https://github.com/langfuse/langfuse/issues/17450",
       "created_at": "2026-09-14T18:40:48Z",
-      "age_hours": 30.6,
+      "age_hours": 35.6,
       "reason": "already has PR(s): ['closing-ref PR#17451(OPEN)', 'xref PR#17451(OPEN)']"
     },
     {
@@ -62,7 +116,7 @@
       "title": "bug: reasoning effort should not be hardcoded to 'medium' for openai API in langfuse assistant",
       "url": "https://github.com/langfuse/langfuse/issues/17399",
       "created_at": "2026-09-14T03:50:34Z",
-      "age_hours": 45.5,
+      "age_hours": 50.4,
       "reason": "already has PR(s): ['closing-ref PR#17472(OPEN)', 'xref PR#17472(OPEN)']"
     },
     {
@@ -70,7 +124,7 @@
       "title": "bug: LLM-as-judge evaluation fails with `response_format type is unavailable now` when using deepseek-v4-pro via custom OpenAI-compatible endpoint",
       "url": "https://github.com/langfuse/langfuse/issues/17394",
       "created_at": "2026-09-14T03:25:10Z",
-      "age_hours": 45.9,
+      "age_hours": 50.8,
       "reason": "claimed by hassiebp"
     },
     {
@@ -78,40 +132,8 @@
       "title": "bug: subscription.updated writes the webhook payload into cloudConfig, so a late active event can restore a canceled plan",
       "url": "https://github.com/langfuse/langfuse/issues/17388",
       "created_at": "2026-09-13T20:31:51Z",
-      "age_hours": 52.8,
+      "age_hours": 57.7,
       "reason": "claimed by Steffen911"
-    },
-    {
-      "number": 17346,
-      "title": "Token counting spends ~46% of its time on a unicode pass that never changes anything",
-      "url": "https://github.com/langfuse/langfuse/issues/17346",
-      "created_at": "2026-09-11T12:04:12Z",
-      "age_hours": 109.2,
-      "reason": "already has PR(s): ['closing-ref PR#17347(OPEN)', 'xref PR#17347(OPEN)']"
-    },
-    {
-      "number": 17337,
-      "title": "Token count prices a tool call as `[object Object]`",
-      "url": "https://github.com/langfuse/langfuse/issues/17337",
-      "created_at": "2026-09-11T10:43:45Z",
-      "age_hours": 110.6,
-      "reason": "already has PR(s): ['closing-ref PR#17338(OPEN)', 'xref PR#17338(OPEN)', 'xref PR#17347(OPEN)']"
-    },
-    {
-      "number": 17327,
-      "title": "bug: createEventRecord omits level, so ERROR generations are tokenised on the events path (worker OOM, spans dropped)",
-      "url": "https://github.com/langfuse/langfuse/issues/17327",
-      "created_at": "2026-09-11T09:25:53Z",
-      "age_hours": 111.9,
-      "reason": "already has PR(s): ['closing-ref PR#17336(OPEN)', 'xref PR#17336(OPEN)']"
-    },
-    {
-      "number": 17282,
-      "title": "Scheduled blob export silently truncates a window once the Parquet exceeds 48.8 GiB (lib-storage default partSize)",
-      "url": "https://github.com/langfuse/langfuse/issues/17282",
-      "created_at": "2026-09-10T09:36:24Z",
-      "age_hours": 135.7,
-      "reason": "already has PR(s): ['closing-ref PR#17298(OPEN)', 'xref PR#17298(OPEN)']"
     }
   ]
 }
