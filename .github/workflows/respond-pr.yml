@@ -94,9 +94,16 @@ jobs:
             #
             # An unticked box is an outstanding ask whatever the thread looks
             # like, so it is extracted verbatim and placed first.
+            # `|| true` has to sit on the grep, not only on the gh call. The
+            # step runs under `set -euo pipefail`; grep exits 1 when it matches
+            # nothing, pipefail promotes that to the pipeline's status, and
+            # errexit then kills the step. Most repositories have no `- [ ]`
+            # checkboxes at all — the convention is openclaw's ClawSweeper — so
+            # the common case was the failing one. Four spec-kit responders
+            # died here at 1.5s, before printing a line.
             blockers=$( { gh api "repos/$UP/issues/$N/comments" --paginate \
                             --jq '.[] | .body' || true; } \
-                        | grep -E '^[[:space:]]*- \[ \] ' | tail -20 )
+                        | { grep -E '^[[:space:]]*- \[ \] ' || true; } | tail -20 )
             if [ -n "$blockers" ]; then
               echo "### [ctx] OPEN REVIEW BLOCKERS — unticked boxes a reviewer left"
               echo "These stand regardless of who spoke last. Address them, or say"

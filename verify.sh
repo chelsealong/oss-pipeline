@@ -2276,6 +2276,72 @@ print("  ok     a failed lookup falls through, and says so when nothing could an
 sys.exit(1 if bad else 0)
 PY3
 
+say "54. a grep that finds nothing does not kill the step"
+python3 - <<'PY3' || fail=$((fail+1))
+import pathlib, re, subprocess, sys, tempfile, os, yaml
+bad = 0
+# Four spec-kit responders died 1.5s in, before printing a line, because a
+# `grep` added to hoist review checkboxes exits 1 when it matches nothing. The
+# step runs under `set -euo pipefail`: pipefail promotes that to the pipeline's
+# status and errexit kills the step. Most repositories have no `- [ ]` boxes —
+# that convention is openclaw's ClawSweeper — so the empty case was the common
+# one, and the feature broke every other repo the day it shipped.
+#
+# `grep` and `rg` are the ones that do this by design. Inside a `set -e` block
+# each needs its own `|| true`; putting it only on an earlier command in the
+# pipeline does not help, which is exactly the mistake that was made.
+for f in sorted(pathlib.Path(".github/workflows").glob("*.yml")):
+    d = yaml.safe_load(f.read_text()) or {}
+    for jn, job in (d.get("jobs") or {}).items():
+        for st in job.get("steps", []):
+            run = st.get("run") or ""
+            if not re.search(r"set -[a-z]*e", run):
+                continue
+            # Join continuations first: a `|| echo ...` handler often sits on
+            # the next physical line, and judging one line at a time reported
+            # two safe pipelines as unguarded.
+            joined, buf = [], ""
+            for raw in run.split("\n"):
+                buf += raw
+                if raw.rstrip().endswith("\\"):
+                    buf = buf.rstrip()[:-1] + " "
+                    continue
+                joined.append(buf); buf = ""
+            if buf:
+                joined.append(buf)
+            for line in joined:
+                # A pipeline whose LAST stage is a bare grep, or a substitution
+                # whose pipeline contains one that is not itself guarded.
+                if not re.search(r"\|\s*(grep|rg)\b", line):
+                    continue
+                # Any `||` handler disables errexit for the pipeline, not
+                # just `|| true` — `|| echo "(none)"` is a legitimate and
+                # commoner form here.
+                if re.search(r"\|\|", line):
+                    continue
+                # `if ... | grep -q` and `case` tests read the status on purpose.
+                if re.match(r"\s*(if|while|until|elif)\b", line) or "grep -q" in line:
+                    continue
+                print(f"  FAIL  {f.name} / {st.get('name','?')}: unguarded grep under set -e")
+                print(f"        {line.strip()[:96]}")
+                bad += 1
+
+# And prove the guarded form actually survives an empty match.
+script = ('set -euo pipefail\n'
+          'v=$( printf "%s\\n" "nothing here" | { grep -E "^- \\[ \\] " || true; } | tail -5 )\n'
+          'echo "ok:${#v}"\n')
+with tempfile.NamedTemporaryFile("w", suffix=".sh", delete=False) as fh:
+    fh.write(script); path = fh.name
+r = subprocess.run(["bash", path], capture_output=True, text=True)
+os.unlink(path)
+if r.returncode != 0 or "ok:0" not in r.stdout:
+    print(f"  FAIL  the guarded form still dies on an empty match (rc={r.returncode})")
+    bad += 1
+print("  ok     no grep can kill a set -e step by matching nothing"
+      if not bad else f"  {bad} problem(s)")
+sys.exit(1 if bad else 0)
+PY3
+
 echo
 if [ "$fail" -eq 0 ]; then echo "  PASS — safe to commit"; exit 0; fi
 echo "  $fail FAILURE(S) — do not commit"; exit 1
