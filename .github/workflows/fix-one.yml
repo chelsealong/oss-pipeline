@@ -171,43 +171,15 @@ jobs:
 
           if [ "$n" -ge "$cap" ]; then echo "over=true" >> "$GITHUB_OUTPUT"; else echo "over=false" >> "$GITHUB_OUTPUT"; fi
 
-      - name: Checkout target fork
-        id: fork
-        if: steps.cfg.outputs.ok == 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
-        run: |
-          impl="${{ steps.cfg.outputs.implements_in }}"
-          name="${impl##*/}"
-          git clone --depth 50 "https://x-access-token:${GH_TOKEN}@github.com/chelsealong/${name}.git" work
-          cd work
-          git remote add upstream "https://github.com/${impl}.git"
-          git fetch --depth 200 upstream
-
-          # Start from UPSTREAM's tip, never the fork's main, which drifts.
-          # Two adk PRs were based 358 commits back — before upstream pinned its
-          # third-party actions to commit SHAs (07-16, 07-20) — so the merge ref
-          # that pull_request_target builds still contained the unpinned
-          # workflows, zizmor's `unpinned-uses` rule fired, and the org-level
-          # "GitHub Actions Scan" failed. 10 of 11 recent scans passed; the only
-          # failure was ours. Rebasing onto upstream/main cleared it immediately.
-          DEF=$(git remote show upstream | awk "/HEAD branch/ {print \$NF}")
-          DEF="${DEF:-main}"
-          git checkout -q -B work-base "upstream/${DEF}"
-          echo "based on upstream/${DEF} @ $(git rev-parse --short HEAD)"
-          # Publish it: the review steps must diff against the SAME base. They
-          # used to guess `upstream/HEAD`, which `git remote show` queries from
-          # the remote but never creates as a local ref, so the guess always
-          # failed and they fell back to `upstream/main`. On AutoGPT, whose
-          # default branch is `master`, that stale branch turned a two-file
-          # change into a 339-file, 27k-line "diff" — the reviewer noticed and
-          # worked around it by hand, which is not a thing to rely on.
-          echo "default_branch=${DEF}" >> "$GITHUB_OUTPUT"
-          # The CLA bot matches the COMMIT EMAIL; chelsealong@126.com is the
-          # address registered on it. Using any other address fails the check.
-          git config user.name  "chelsealong"
-          git config user.email "chelsealong@126.com"
-
+      # Re-vet runs BEFORE the checkout, and the order is the point.
+      # It only calls the GitHub API — linked_prs, claimants, a PR search — and
+      # touches nothing in work/. Behind the checkout it ran at T+11 to T+21
+      # minutes, because cloning a repo the size of openclaw took 1,274s in one
+      # measured run against 5s for every other pre-generation step combined.
+      # Four dispatches on 2026-09-16 were vetted clean at dispatch and found
+      # taken by the time they were re-vetted; the competitor had the whole
+      # clone to work in. Ahead of the checkout the window is about a minute,
+      # and a doomed run no longer pays for the clone at all.
       - name: Re-vet before spending a session
         id: pre
         if: steps.cfg.outputs.ok == 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true
@@ -322,6 +294,43 @@ jobs:
           out("taken", "false")
           out("competing", " | ".join(f"#{n} {h['t']}" for n, h in near))
           PY
+
+      - name: Checkout target fork
+        id: fork
+        if: steps.cfg.outputs.ok == 'true' && steps.cap.outputs.over != 'true' && inputs.dry_run != true && steps.pre.outputs.taken != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          impl="${{ steps.cfg.outputs.implements_in }}"
+          name="${impl##*/}"
+          git clone --depth 50 "https://x-access-token:${GH_TOKEN}@github.com/chelsealong/${name}.git" work
+          cd work
+          git remote add upstream "https://github.com/${impl}.git"
+          git fetch --depth 200 upstream
+
+          # Start from UPSTREAM's tip, never the fork's main, which drifts.
+          # Two adk PRs were based 358 commits back — before upstream pinned its
+          # third-party actions to commit SHAs (07-16, 07-20) — so the merge ref
+          # that pull_request_target builds still contained the unpinned
+          # workflows, zizmor's `unpinned-uses` rule fired, and the org-level
+          # "GitHub Actions Scan" failed. 10 of 11 recent scans passed; the only
+          # failure was ours. Rebasing onto upstream/main cleared it immediately.
+          DEF=$(git remote show upstream | awk "/HEAD branch/ {print \$NF}")
+          DEF="${DEF:-main}"
+          git checkout -q -B work-base "upstream/${DEF}"
+          echo "based on upstream/${DEF} @ $(git rev-parse --short HEAD)"
+          # Publish it: the review steps must diff against the SAME base. They
+          # used to guess `upstream/HEAD`, which `git remote show` queries from
+          # the remote but never creates as a local ref, so the guess always
+          # failed and they fell back to `upstream/main`. On AutoGPT, whose
+          # default branch is `master`, that stale branch turned a two-file
+          # change into a 339-file, 27k-line "diff" — the reviewer noticed and
+          # worked around it by hand, which is not a thing to rely on.
+          echo "default_branch=${DEF}" >> "$GITHUB_OUTPUT"
+          # The CLA bot matches the COMMIT EMAIL; chelsealong@126.com is the
+          # address registered on it. Using any other address fails the check.
+          git config user.name  "chelsealong"
+          git config user.email "chelsealong@126.com"
 
       - name: Skip — taken since dispatch
         if: steps.pre.outputs.taken == 'true'
