@@ -2314,10 +2314,15 @@ for f in sorted(pathlib.Path(".github/workflows").glob("*.yml")):
                 # whose pipeline contains one that is not itself guarded.
                 if not re.search(r"\|\s*(grep|rg)\b", line):
                     continue
-                # Any `||` handler disables errexit for the pipeline, not
-                # just `|| true` — `|| echo "(none)"` is a legitimate and
-                # commoner form here.
-                if re.search(r"\|\|", line):
+                # The handler has to guard the grep, not something earlier in
+                # the pipeline. Relaxing this to "the line contains ||" made the
+                # check blind to the exact bug it was written for: the broken
+                # form carried `|| true` on the gh call feeding the grep.
+                # So: take the pipeline from the grep onward, and require a
+                # handler there — either wrapping the grep as `{ grep … || … ; }`
+                # or trailing the whole pipeline.
+                after = line[re.search(r"\|\s*(grep|rg)\b", line).start():]
+                if re.search(r"\|\|", after):
                     continue
                 # `if ... | grep -q` and `case` tests read the status on purpose.
                 if re.match(r"\s*(if|while|until|elif)\b", line) or "grep -q" in line:
