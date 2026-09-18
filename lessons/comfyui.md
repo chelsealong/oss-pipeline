@@ -25,3 +25,5 @@
 - [2026-09-15] #16342 skipped: #16342 reports `RuntimeError: aimdo memory compile error: could not start recording` raised by comfy_aimdo.malloc_graph.record() (comfy/model_prefetch.py:56) on a stock single-GPU MiniMax H3 text-to-video graph, RTX 5090, comfy-aimdo 0.5.3. comfy_aimdo is a se
 - [2026-09-15] #16289 skipped: #16289 has an active outside contributor (L4XB) who has already done the deep-dive investigation (a hand-built reproduction of PackedLayout/pack_audio's reservation-vs-supply arithmetic covering every realistic keyframe/ref combination) and has explicitly offe
 - [2026-09-15] #16357 skipped: #16357 is a native CUDA crash (c10::AcceleratorError "CUDA error: invalid argument" inside CUDAMallocAsyncAllocator::free_impl, ending in "Fatal Python error: Aborted") occurring during MiniMax H3 sampling with dynamic VRAM staging (comfy_aimdo) and Sol-Attn e
+- [2026-09-18] issue #16403 blocked by review:  Front 1 (CORRECTNESS) fails, and front 5 (EVIDENCE) fails on a concrete, reproducible mismatch.  ## The fix targets a code path that self-heals before this patch, in production 
+
