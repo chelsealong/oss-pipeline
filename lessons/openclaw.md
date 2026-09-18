@@ -292,3 +292,4 @@ merge here, and it spends attention we need for the small ones.
 - [2026-09-18] #151620 skipped: Issue #151620 (OAuth login reports "Auth profile saved" but gateway model routes see zero usable openai profiles, custom OPENCLAW_STATE_DIR, multi-agent) does not have an established, reproducible root cause on current main. ClawSweeper's own review (posted 20
 - [2026-09-18] issue #151964 blocked by review:  Front 0 (no-op): PASSES. Verified real behavior change by reverting the three source files to HEAD~1 and re-running the new/changed tests:    - media-generate-background-durable-completion.test.ts fails exactly as 
 
+- [2026-09-18] #151986 skipped: ClawSweeper automatic-implementation is already actively in progress on issue #151986 (comment shows "Automatic implementation progress: State: Planning" with a live workflow run https://github.com/openclaw/clawsweeper/actions/runs/35381222361, updated 2026-09
