@@ -374,3 +374,4 @@ still buys nothing.
 - [2026-09-18] #115066 skipped: issue #115066 has two parts, neither of which has a minimal fix available here.
 - [2026-09-18] #115079 skipped: issue #115079 is a large, multi-part architectural bug/design report, not a minimal mechanical fix. It bundles 5 proposed fixes: (1) gate writes to model.provider on the provider being user-configured — requires inventing a provenance/gating concept that doe
 - [2026-09-18] #115092 skipped: issue #115092 (ws_orphan_reap-continued Desktop session stamped `_delegate_from` and permanently hidden from GET /api/sessions, despite the successor being the user's live primary chat, not a subagent) has no confidently-identifiable minimal fix available in t
+- [2026-09-19] #115482 skipped: issue #115482 is a broad, multi-part complaint bundling five unrelated asks, none of which has a minimal, confidently-verifiable mechanical fix available in this session.
