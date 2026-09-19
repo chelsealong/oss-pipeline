@@ -294,3 +294,4 @@ merge here, and it spends attention we need for the small ones.
 
 - [2026-09-18] #151986 skipped: ClawSweeper automatic-implementation is already actively in progress on issue #151986 (comment shows "Automatic implementation progress: State: Planning" with a live workflow run https://github.com/openclaw/clawsweeper/actions/runs/35381222361, updated 2026-09
 - [2026-09-18] #152070 skipped: Issue #152070 (materialized sandbox-skills directory empty inside Docker sandbox container) has no established root cause or reproduction on current main. ClawSweeper's own review (posted 2026-09-18 against commit 3e04e0acabd5) explicitly states no high-confid
+- [2026-09-19] #152540 skipped: Issue #152540 is a genuine documentation defect (docs/cli/node.md:383 and docs/tools/exec-approvals.md:407 tell operators to run `openclaw approvals --node <id>`, but --node is only registered on the `get`/`set` subcommands, not the parent `approvals` command 
