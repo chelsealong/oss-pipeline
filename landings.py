@@ -199,10 +199,24 @@ def update(rebuild: bool = False) -> tuple[int, int]:
     if rebuild:
         d["commits"] = {}
     added = 0
+    # One repository's transport failure must not discard the others. On
+    # 2026-09-18 fetch_new raised for langfuse (every identity query timed out
+    # on this machine's egress), the exception unwound the whole loop, nothing
+    # was saved, and the ledger sat at a 12-hour-old timestamp while five real
+    # landings existed upstream. The raise in fetch_new is right — a failed
+    # lookup is not "no commits" — but the correct response to it is to skip
+    # that repository this pass and say so, not to lose the pass.
+    skipped: list[str] = []
     for repo in upstreams():
         rows = [v for v in d["commits"].values() if v["repo"] == repo]
         since = max((v["at"] for v in rows), default=None) if rows and not rebuild else None
-        for c in fetch_new(repo, since):
+        try:
+            fresh = list(fetch_new(repo, since))
+        except RuntimeError as e:
+            skipped.append(repo)
+            print(f"  ! {repo}: skipped this pass — {str(e)[:110]}", file=sys.stderr)
+            continue
+        for c in fresh:
             key = f"{repo}@{c['sha'][:10]}"
             if key in d["commits"]:
                 continue
@@ -211,7 +225,13 @@ def update(rebuild: bool = False) -> tuple[int, int]:
             added += 1
             print(f"  + {repo} {c['sha'][:10]} {c['at'][:10]} {c['msg'][:56]}")
         d["prs"][repo] = pr_counts(repo)
+    # Record what this pass could not see, so a reader of the file knows the
+    # count may be low for those repositories rather than assuming it is whole.
+    d["last_pass_skipped"] = skipped
     _save(d)
+    if skipped:
+        print(f"  ! {len(skipped)} repo(s) not refreshed this pass: {', '.join(skipped)}",
+              file=sys.stderr)
     return added, len(d["commits"])
 
 
