@@ -29,3 +29,4 @@
 
 - [2026-09-20] #16420 skipped: #16420 root cause lives inside comfy-kitchen (closed-source pip dependency, comfy-kitchen==0.2.35 in requirements.txt), not in this repo's own source, and cannot be verified or tested here.
 - [2026-09-20] #16431 skipped: #16431 root cause lives inside comfy_kitchen (closed-source pip dependency, comfy-kitchen==0.2.35 in requirements.txt, not vendored in this repo — module isn't even importable here), not in this repo's own source. The reported failure (INT8 ConvRot GEMM fail
+- [2026-09-20] #16433 skipped: #16433 is an MPS-only (Apple Silicon) numerical-corruption bug in the Qwen-Image-2.1 VAE encode path (comfy/ldm/wan/vae2_2.py, sharing comfy/ops.py's Conv3d autopad="causal_zero" fast path). CPU and fp32 controls already rule out a precision issue; the corrupt
