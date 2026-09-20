@@ -27,3 +27,4 @@
 - [2026-09-15] #16357 skipped: #16357 is a native CUDA crash (c10::AcceleratorError "CUDA error: invalid argument" inside CUDAMallocAsyncAllocator::free_impl, ending in "Fatal Python error: Aborted") occurring during MiniMax H3 sampling with dynamic VRAM staging (comfy_aimdo) and Sol-Attn e
 - [2026-09-18] issue #16403 blocked by review:  Front 1 (CORRECTNESS) fails, and front 5 (EVIDENCE) fails on a concrete, reproducible mismatch.  ## The fix targets a code path that self-heals before this patch, in production 
 
+- [2026-09-20] #16420 skipped: #16420 root cause lives inside comfy-kitchen (closed-source pip dependency, comfy-kitchen==0.2.35 in requirements.txt), not in this repo's own source, and cannot be verified or tested here.
