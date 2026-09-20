@@ -28,3 +28,4 @@
 - [2026-09-18] issue #16403 blocked by review:  Front 1 (CORRECTNESS) fails, and front 5 (EVIDENCE) fails on a concrete, reproducible mismatch.  ## The fix targets a code path that self-heals before this patch, in production 
 
 - [2026-09-20] #16420 skipped: #16420 root cause lives inside comfy-kitchen (closed-source pip dependency, comfy-kitchen==0.2.35 in requirements.txt), not in this repo's own source, and cannot be verified or tested here.
+- [2026-09-20] #16431 skipped: #16431 root cause lives inside comfy_kitchen (closed-source pip dependency, comfy-kitchen==0.2.35 in requirements.txt, not vendored in this repo — module isn't even importable here), not in this repo's own source. The reported failure (INT8 ConvRot GEMM fail
