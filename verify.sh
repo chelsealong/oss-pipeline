@@ -1274,15 +1274,43 @@ root = pathlib.Path(sys.argv[2])
 # crawl4ai two days: every dispatch passed vetting, spent a budget unit, booted
 # a runner and died at `Checkout target fork`. The checklist did not mention it
 # and nothing checked, so the repos just looked unproductive.
-missing = []
+missing, unverified = [], []
 for key, cfg in scan.REPOS.items():
     name = cfg["upstream"].split("/")[1]
-    r = subprocess.run(["gh", "api", f"repos/chelsealong/{name}", "--jq", ".parent.full_name"],
-                       capture_output=True, text=True, timeout=30)
-    if r.returncode != 0 or r.stdout.strip() != cfg["upstream"]:
+    # One stalled lookup used to raise TimeoutExpired out of the loop: the
+    # check died with a traceback at whichever repo stalled (langfuse once,
+    # mem0 twice on 2026-09-22) and the remaining repos went unchecked. A
+    # stall is retried once; if it stalls again the repo is reported as
+    # unverifiable — still a failure, since an unchecked fork is not a
+    # checked one — and the loop goes on to the rest.
+    # A transport failure — timeout, reset, DNS stall, secondary rate limit —
+    # says nothing about the fork (#53) and is as transient the second time as
+    # the first, so it gets one more try; a 404 is an answer and does not.
+    # Three attempts with backoff: on 2026-09-22 this machine's GitHub egress
+    # dropped roughly one call in sixteen, a different repo every run, and a
+    # single retry still failed eight runs out of nine.
+    r, why = None, "timed out"
+    for attempt in (1, 2, 3):
+        try:
+            r = subprocess.run(["gh", "api", f"repos/chelsealong/{name}", "--jq", ".parent.full_name"],
+                               capture_output=True, text=True, timeout=30)
+        except subprocess.TimeoutExpired:
+            r = None
+        if r is not None and (r.returncode == 0 or "404" in r.stderr):
+            break
+        if r is not None:
+            why = r.stderr.strip().splitlines()[0][:60] if r.stderr.strip() else f"rc={r.returncode}"
+            r = None
+        if attempt < 3:
+            import time; time.sleep(5 * attempt)
+    if r is None:
+        unverified.append(f"{key} -> chelsealong/{name} ({why})")
+    elif r.returncode != 0 or r.stdout.strip() != cfg["upstream"]:
         missing.append(f"{key} -> chelsealong/{name}")
 if missing:
     print(f"  FAIL  no usable fork for: {', '.join(missing)}"); bad += 1
+if unverified:
+    print(f"  FAIL  fork lookup could not complete for: {', '.join(unverified)} — not checked, not cleared"); bad += 1
 # Lessons paid for on one repo must reach the others. Only hermes and openclaw
 # had files, so fourteen agents ran with "(no prior lessons recorded)".
 common = root / "lessons" / "_common.md"

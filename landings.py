@@ -56,7 +56,13 @@ def _gh(args: list[str], *, tries: int = 4, **kw) -> str:
     import time
     delay = 20.0
     for attempt in range(1, tries + 1):
-        r = subprocess.run(["gh", *args], capture_output=True, text=True, timeout=300, **kw)
+        # 90s, not 300: a pass is ~60 calls, and on a bad-egress day (09-21, every
+        # manual --update died past 500s) a 300s ceiling per call meant the pass
+        # could not finish inside launchd's window and nothing was saved.
+        try:
+            r = subprocess.run(["gh", *args], capture_output=True, text=True, timeout=90, **kw)
+        except subprocess.TimeoutExpired:
+            raise RuntimeError(f"gh timed out after 90s: {' '.join(args[:3])}")
         if r.returncode == 0:
             return r.stdout
         err = r.stderr.strip()
@@ -207,7 +213,12 @@ def update(rebuild: bool = False) -> tuple[int, int]:
     # lookup is not "no commits" — but the correct response to it is to skip
     # that repository this pass and say so, not to lose the pass.
     skipped: list[str] = []
-    for repo in upstreams():
+    # Most-recently-landed first. A pass that dies part-way (bad egress, launchd
+    # window) then leaves the repos that actually move refreshed, and the six
+    # that have never landed anything are the ones left unchecked.
+    def _latest(repo: str) -> str:
+        return max((v["at"] for v in d["commits"].values() if v["repo"] == repo), default="")
+    for repo in sorted(upstreams(), key=_latest, reverse=True):
         rows = [v for v in d["commits"].values() if v["repo"] == repo]
         since = max((v["at"] for v in rows), default=None) if rows and not rebuild else None
         try:
@@ -225,6 +236,11 @@ def update(rebuild: bool = False) -> tuple[int, int]:
             added += 1
             print(f"  + {repo} {c['sha'][:10]} {c['at'][:10]} {c['msg'][:56]}")
         d["prs"][repo] = pr_counts(repo)
+        # Persist per repository. The 09-21 manual passes were killed at 500s
+        # with several repos already fetched and lost all of it; a pass that
+        # ends early must keep what it saw.
+        d["last_pass_skipped"] = skipped
+        _save(d)
     # Record what this pass could not see, so a reader of the file knows the
     # count may be low for those repositories rather than assuming it is whole.
     d["last_pass_skipped"] = skipped

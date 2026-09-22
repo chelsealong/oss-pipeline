@@ -331,6 +331,45 @@ jobs:
           # address registered on it. Using any other address fails the check.
           git config user.name  "chelsealong"
           git config user.email "chelsealong@126.com"
+          # Rule 7 in the prompt forbids a Co-Authored-By trailer; adk-python#6996
+          # shipped one anyway and sat behind the CLA bot. A pre-push hook the
+          # agent cannot skip turns the rule into enforcement: the push fails,
+          # the message names the commit, and no CLA-blocked PR gets opened.
+          # Same script as ~/.local/share/oss-scanner/hooks/pre-push.
+          cat > .git/hooks/pre-push <<'HOOK'
+          #!/bin/sh
+          # Refuse to push any commit whose message carries a Co-Authored-By trailer.
+          #
+          # Every fixer prompt already forbids the trailer, and adk-python#6996
+          # (2026-09-03) shipped with one anyway: the agent ignored the instruction, the
+          # CLA bot counted noreply@anthropic.com as an unsigned second contributor, and
+          # the PR sat behind "Missing CLA" until it was closed as a duplicate. langchain
+          # rejects the same trailer through an org ruleset. A rule the agent can skip is
+          # not a guard; a hook it cannot skip is. Installed into every target checkout
+          # before the agent runs (run-fix.sh locally, fix-one.yml in the cloud).
+          #
+          # stdin: <local ref> <local sha> <remote ref> <remote sha> per ref being pushed.
+          zero=0000000000000000000000000000000000000000
+          status=0
+          while read -r local_ref local_sha remote_ref remote_sha; do
+            [ "$local_sha" = "$zero" ] && continue            # deleting a ref
+            if [ "$remote_sha" = "$zero" ]; then range="$local_sha"; else range="$remote_sha..$local_sha"; fi
+            # --not --remotes: only commits this push would add anywhere, so an inherited
+            # upstream commit with a maintainer's own trailer does not block us.
+            bad=$(git rev-list "$range" --not --remotes 2>/dev/null \
+                  | while read -r c; do
+                      git log -1 --format=%B "$c" | grep -qi '^co-authored-by:' && echo "$c"
+                    done)
+            if [ -n "$bad" ]; then
+              echo "pre-push: refusing $local_ref — Co-Authored-By trailer in:" >&2
+              for c in $bad; do git log -1 --format='  %h %s' "$c" >&2; done
+              echo "pre-push: rewrite the message (git commit --amend / rebase -i) and push again." >&2
+              status=1
+            fi
+          done
+          exit $status
+          HOOK
+          chmod +x .git/hooks/pre-push
 
       - name: Skip — taken since dispatch
         if: steps.pre.outputs.taken == 'true'
