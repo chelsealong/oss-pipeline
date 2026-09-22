@@ -1,0 +1,166 @@
+name: watcher
+
+# The detection half of the pipeline, running where the laptop is not.
+#
+# watch.py is the process that finds a new upstream issue within seconds, vets
+# it, and dispatches fix-one.yml. Until 2026-09-22 it ran only under launchd on
+# Bruce's Mac, so a closed lid stopped every dispatch: fix-one kept working in
+# the cloud, nothing told it to. GitHub's `schedule` is not a replacement —
+# pipeline.yml's */5 cron fired 5 times in 24h — so this is a CHAIN: each link
+# runs watch.py for 5.5 hours (the job cap is 6), then dispatches its
+# successor. The schedule below is a self-heal for a broken chain, not the
+# clock.
+#
+# State (state/, queue/) lives in this repository. A link pulls it at the
+# start of every 10-minute segment and, in live mode, commits it after each.
+# The watcher owns dispatched.json and claude-sessions.json — the dedup and
+# the session ceiling — so on a push conflict its copy wins for state/ and the
+# other writer (pipeline.yml's scan, which only adds to queue/) re-adds next
+# pass.
+#
+# Modes, read from state/watcher.json:
+#   off     — the schedule does nothing; only an explicit dispatch runs a link
+#   shadow  — detect, vet, drain in DRY_RUN: nothing dispatched, nothing
+#             written back. Rehearses the plumbing. Chain stops after
+#             max_links.
+#   live    — the real thing; the Mac's launchd watcher must be OFF, or two
+#             brains share one dedup file they cannot both see.
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: shadow or live (default reads state/watcher.json)
+        type: choice
+        options: [auto, shadow, live]
+        default: auto
+      link:
+        description: chain link number (informational)
+        default: '1'
+      max_links:
+        description: stop the chain after this many links (0 = unbounded; shadow defaults to 2)
+        default: '0'
+  schedule:
+    - cron: '*/30 * * * *'
+
+# One link at a time. A schedule tick or a successor that arrives while a link
+# is running queues behind it instead of running beside it; links serialize
+# and each starts from a fresh pull, so an extra queued link costs runner
+# minutes, never a double dispatch.
+concurrency:
+  group: watcher
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  actions: write
+
+env:
+  SEGMENT_SECONDS: 600      # one watch.py run; state is committed between segments
+  LINK_SECONDS: 19800       # 5.5h; the job cap is 6h and a segment may overrun a little
+
+jobs:
+  link:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Resolve mode
+        id: mode
+        run: |
+          file_mode=$(python3 -c "import json,pathlib; p=pathlib.Path('state/watcher.json'); print(json.loads(p.read_text()).get('mode','off') if p.exists() else 'off')")
+          want="${{ inputs.mode || 'auto' }}"
+          mode="$file_mode"; [ "$want" != auto ] && mode="$want"
+          # A schedule tick may only continue a LIVE chain. It never starts a
+          # shadow rehearsal on its own, and it never runs when the file says
+          # off — that is how the cutover stays in Bruce's hands.
+          if [ "${{ github.event_name }}" = schedule ] && [ "$mode" != live ]; then
+            echo "schedule tick, mode=$mode — nothing to continue"; echo "run=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if [ "$mode" = off ]; then
+            echo "mode is off"; echo "run=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          max="${{ inputs.max_links || '0' }}"
+          [ "$mode" = shadow ] && [ "$max" = 0 ] && max=2
+          link="${{ inputs.link || '1' }}"
+          echo "mode=$mode link=$link max_links=$max"
+          { echo "run=true"; echo "mode=$mode"; echo "link=$link"; echo "max=$max"; } >> "$GITHUB_OUTPUT"
+
+      - name: Configure
+        if: steps.mode.outputs.run == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          gh auth status 2>&1 | head -2
+          git config user.name  "oss-pipeline[bot]"
+          git config user.email "chelsealong@users.noreply.github.com"
+          mkdir -p state queue
+          python3 -c "import scan; print('repos:', len(scan.REPOS), '| session ceiling:', scan.SESSION_CEILING)"
+
+      - name: Watch (chained segments)
+        if: steps.mode.outputs.run == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
+          MODE: ${{ steps.mode.outputs.mode }}
+        run: |
+          set -uo pipefail
+          [ "$MODE" = shadow ] && export DRY_RUN=1
+          start=$(date +%s); seg=0
+          # The files this link owns. Kept aside after every segment so a
+          # conflicting push can be resolved in their favour without a merge.
+          OWNED="state/dispatched.json state/claude-sessions.json state/claude-session-verdicts.json state/seen.json state/dispatch-budget.json state/budget-refunds.json state/quota-pause.json state/quota-refunded.json state/stood-down.json state/pr-seen.json"
+          while [ $(( $(date +%s) - start )) -lt "$LINK_SECONDS" ]; do
+            seg=$((seg + 1))
+            # Fresh state first: pipeline.yml's scan may have queued work, and
+            # in live mode the previous segment's push is the truth.
+            git pull -q --rebase --autostash origin main || { git rebase --abort 2>/dev/null; git reset -q --hard origin/main; }
+            echo "::group::segment $seg ($MODE) — $(date -u +%H:%M:%SZ)"
+            python3 watch.py --interval 5 --max-runtime "$SEGMENT_SECONDS" || echo "::warning::watch.py exited $? in segment $seg"
+            echo "::endgroup::"
+            [ "$MODE" = live ] || continue
+            # Persist. Only what changed; a segment with nothing new commits nothing.
+            git add -A state queue 2>/dev/null || true
+            if ! git diff --staged --quiet; then
+              git commit -q -m "chore(watcher): link ${{ steps.mode.outputs.link }} segment $seg $(date -u +%Y-%m-%dT%H:%MZ)"
+              mkdir -p /tmp/owned; for f in $OWNED; do [ -f "$f" ] && cp "$f" /tmp/owned/; done
+              for attempt in 1 2 3; do
+                git push -q origin HEAD:main && break
+                # Lost the race. Rebase; if the rebase itself conflicts, the
+                # watcher's copy of its own files wins and everything else is
+                # taken from main as-is.
+                if ! git pull -q --rebase --autostash origin main; then
+                  git rebase --abort 2>/dev/null || true
+                  git reset -q --hard origin/main
+                  for f in $OWNED; do [ -f "/tmp/owned/$(basename "$f")" ] && cp "/tmp/owned/$(basename "$f")" "$f"; done
+                  git add -A state && git commit -q -m "chore(watcher): resolve state race in the watcher's favour" || true
+                fi
+                [ "$attempt" = 3 ] && echo "::warning::state push lost three races; next segment retries"
+                sleep $((attempt * 3))
+              done
+            fi
+          done
+          echo "link ended after $seg segment(s), $(( $(date +%s) - start ))s"
+
+      - name: Dispatch the next link
+        if: steps.mode.outputs.run == 'true' && always()
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          MODE: ${{ steps.mode.outputs.mode }}
+          LINK: ${{ steps.mode.outputs.link }}
+          MAX: ${{ steps.mode.outputs.max }}
+        run: |
+          # Re-read the mode file: flipping it to off is how a live chain is
+          # stopped from anywhere, without cancelling a run by hand.
+          git pull -q --rebase --autostash origin main 2>/dev/null || true
+          now=$(python3 -c "import json,pathlib; p=pathlib.Path('state/watcher.json'); print(json.loads(p.read_text()).get('mode','off') if p.exists() else 'off')")
+          if [ "$now" = off ]; then echo "mode is now off — chain ends here"; exit 0; fi
+          next=$((LINK + 1))
+          if [ "$MAX" != 0 ] && [ "$next" -gt "$MAX" ]; then echo "max_links=$MAX reached — chain ends here"; exit 0; fi
+          gh workflow run watcher.yml --repo "${{ github.repository }}" \
+            -f mode="$MODE" -f link="$next" -f max_links="$MAX" \
+            && echo "dispatched link $next ($MODE)"

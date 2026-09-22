@@ -918,6 +918,35 @@ def drain_queues(keys: list[str]) -> int:
     return sent
 
 
+def drain_cycle(keys: list[str]) -> None:
+    """One pass of the slow work: reconcile, refund, check quota, drain, promote.
+
+    Pulled out of main() so a bounded run (--max-runtime, the cloud watcher's
+    5.5-hour links) can run it once on the way out. Without that, a link cut
+    at 600s never reaches sweep 120 and the queue it filled is drained by
+    nobody until the next link happens to hit the modulo.
+    """
+    # Reconcile before draining, so refunded units are available
+    # to the drain that follows rather than a cycle later.
+    reconcile_budget()
+    # Before spending anything, find out whether the last few
+    # runs were turned away by the subscription.
+    # Refund first: a unit handed back by a refused run is
+    # available to the drain that follows, not a cycle later.
+    refund_quota_runs()
+    if not quota_paused():
+        check_quota_runs()
+    n = drain_queues(keys)
+    if n:
+        log(f"drained {n} queued candidate(s)")
+    # The other half of the gated flow: claim.sh asks, this
+    # acts on the answer. Without it an assignment that was
+    # granted produced nothing at all.
+    m = promote_claims(keys)
+    if m:
+        log(f"promoted {m} assigned claim(s)")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--interval", type=float, default=5.0)
@@ -925,6 +954,9 @@ def main() -> int:
                     help="newest N issues to inspect per repo per sweep")
     ap.add_argument("--repo", action="append", help="limit to these keys")
     ap.add_argument("--once", action="store_true")
+    ap.add_argument("--max-runtime", type=float, default=0,
+                    help="seconds; exit cleanly after this long, running one "
+                         "drain cycle first (0 = run forever)")
     a = ap.parse_args()
 
     keys = a.repo or list(scan.REPOS)
@@ -936,6 +968,7 @@ def main() -> int:
 
     log(f"watching {len(keys)} repo(s) every {a.interval}s: {' '.join(keys)}")
     sweeps = 0
+    started = time.monotonic()
     try:
         while True:
             t0 = time.monotonic()
@@ -955,25 +988,7 @@ def main() -> int:
                 # sweep: queued work is by definition not urgent, and one pass
                 # per ~10 minutes is plenty to spend a daily allowance.
                 if not bootstrap and sweeps % 120 == 0:
-                    # Reconcile before draining, so refunded units are available
-                    # to the drain that follows rather than a cycle later.
-                    reconcile_budget()
-                    # Before spending anything, find out whether the last few
-                    # runs were turned away by the subscription.
-                    # Refund first: a unit handed back by a refused run is
-                    # available to the drain that follows, not a cycle later.
-                    refund_quota_runs()
-                    if not quota_paused():
-                        check_quota_runs()
-                    n = drain_queues(keys)
-                    if n:
-                        log(f"drained {n} queued candidate(s)")
-                    # The other half of the gated flow: claim.sh asks, this
-                    # acts on the answer. Without it an assignment that was
-                    # granted produced nothing at all.
-                    m = promote_claims(keys)
-                    if m:
-                        log(f"promoted {m} assigned claim(s)")
+                    drain_cycle(keys)
 
                 # Shadow triage, on a much slower cadence than dispatching:
                 # it decides nothing, so it should never compete for a sweep.
@@ -994,6 +1009,14 @@ def main() -> int:
                 time.sleep(min(60, a.interval * 6))
 
             if a.once:
+                return 0
+            if a.max_runtime and time.monotonic() - started >= a.max_runtime:
+                # A bounded link hands over with its queue drained, not full:
+                # the next link starts from a pull of this one's state.
+                if not bootstrap:
+                    drain_cycle(keys)
+                    save_seen(seen)
+                log(f"max-runtime {a.max_runtime:g}s reached after {sweeps} sweeps — exiting cleanly")
                 return 0
             time.sleep(max(0.0, a.interval - (time.monotonic() - t0)))
     except KeyboardInterrupt:
