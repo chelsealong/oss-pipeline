@@ -40,6 +40,9 @@ on:
       max_links:
         description: stop the chain after this many links (0 = unbounded; shadow defaults to 2)
         default: '0'
+      link_seconds:
+        description: seconds per link (default 19800 = 5.5h; a rehearsal uses ~700 to see one segment and the hand-over)
+        default: '19800'
   schedule:
     - cron: '*/30 * * * *'
 
@@ -57,7 +60,7 @@ permissions:
 
 env:
   SEGMENT_SECONDS: 600      # one watch.py run; state is committed between segments
-  LINK_SECONDS: 19800       # 5.5h; the job cap is 6h and a segment may overrun a little
+  LINK_SECONDS: ${{ inputs.link_seconds || '19800' }}   # 5.5h; the job cap is 6h and a segment may overrun a little
 
 jobs:
   link:
@@ -147,7 +150,9 @@ jobs:
           echo "link ended after $seg segment(s), $(( $(date +%s) - start ))s"
 
       - name: Dispatch the next link
-        if: steps.mode.outputs.run == 'true' && always()
+        # !cancelled(), not always(): a link cancelled by hand must not spawn
+        # its successor, or cancelling becomes a way to start a second chain.
+        if: steps.mode.outputs.run == 'true' && !cancelled()
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
           MODE: ${{ steps.mode.outputs.mode }}
@@ -162,5 +167,5 @@ jobs:
           next=$((LINK + 1))
           if [ "$MAX" != 0 ] && [ "$next" -gt "$MAX" ]; then echo "max_links=$MAX reached — chain ends here"; exit 0; fi
           gh workflow run watcher.yml --repo "${{ github.repository }}" \
-            -f mode="$MODE" -f link="$next" -f max_links="$MAX" \
-            && echo "dispatched link $next ($MODE)"
+            -f mode="$MODE" -f link="$next" -f max_links="$MAX" -f link_seconds="$LINK_SECONDS" \
+            && echo "dispatched link $next ($MODE, ${LINK_SECONDS}s)"
