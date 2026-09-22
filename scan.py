@@ -713,9 +713,17 @@ def _claim_went_cold(upstream: str, number: int, who: str, at: str) -> bool:
 # turned away by the daily cap before reaching Claude) and did not exhaust the
 # subscription. 30 therefore sits just above anything we have actually done, so
 # it never binds on a normal day and stops only a runaway.
+#
+# 2026-09-22: it binds every day. Every 5h peak from 09-15 on was exactly 30,
+# watch.py logged 150-293 "holding until the window rolls" refusals a day, and
+# session-limit hits stayed at 0 throughout — the subscription was never the
+# limit, this constant was. Bruce upgraded the plan the same day. Raised to 45
+# as a first step, not a guess at the new allowance: fix-one fails the run on a
+# real refusal and watch.py pauses and refunds, so overshoot is self-detected.
+# Raise again once two days show hits still at 0.
 SESSION_LOG = STATE / "claude-sessions.json"
 SESSION_WINDOW_HOURS = 5.0
-SESSION_CEILING = 30
+SESSION_CEILING = 45
 
 
 def note_session(kind: str, key: str, number: int | str = "") -> None:

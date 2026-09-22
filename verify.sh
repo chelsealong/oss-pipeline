@@ -1773,8 +1773,17 @@ if not hasattr(sc, "session_headroom"):
 else:
     if sc.SESSION_WINDOW_HOURS != 5.0:
         print(f"  FAIL  session window is {sc.SESSION_WINDOW_HOURS}h, not the subscription's 5h"); bad += 1
-    if not 20 <= sc.SESSION_CEILING <= 40:
-        print(f"  FAIL  session ceiling {sc.SESSION_CEILING} is not near the measured safe max (27)"); bad += 1
+    # The band is evidence, not taste, and moves only with a recorded
+    # measurement. 20-40 was set from a busiest-window peak of 27 on the old
+    # plan. Re-measured 2026-09-22: every 5h peak from 09-15 hit the ceiling of
+    # 30 exactly, watch.py refused 150-293 dispatches a day, and session-limit
+    # hits stayed at 0 — the ceiling, not the subscription, was binding. The
+    # plan was upgraded that day; 45 is a first step above it, guarded by
+    # fix-one failing on a real refusal. The band tops out at 50 until two
+    # clean days at 45 justify the next measurement.
+    if not 30 <= sc.SESSION_CEILING <= 50:
+        print(f"  FAIL  session ceiling {sc.SESSION_CEILING} is outside the measured band 30-50 "
+              "(re-measured 2026-09-22; move the band with a new measurement, not a guess)"); bad += 1
     for mod in ("watch.py", "watch-prs.py"):
         src = pathlib.Path(sys.argv[1] + "/" + mod).read_text()
         if "session_headroom" not in src:
