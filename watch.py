@@ -147,20 +147,37 @@ PIPELINE_REPO = "chelsealong/oss-pipeline"
 #              5 PRs/day by explicit decision; the rolling 30-day duplicate
 #              circuit breaker in run-fix.sh is what keeps that safe, since
 #              repeated duplicates are the actual ban vector there.
-# Runaway guards, not daily allowances. See budget_allows() for why: these were
-# policy until 2026-08-23, when hermes hit its 10 with fourteen vetted
-# candidates waiting and the day produced no landings. What limits dispatch now
-# is supply (an empty queue) and the Claude quota pause, both of which are
-# measured rather than guessed. These numbers exist only to stop a loop, so they
-# sit far above any real day's supply — a run that reaches one is a bug report.
+# Sized at roughly 1.5x fix-one.yml's daily PR cap for the same repo: enough
+# slack for dispatches that fail for a real reason (quota refusal, tests that
+# do not pass, an agent that decides the issue is not fixable), and not enough
+# to spend a whole day's allowance on candidates that cannot produce a PR.
+#
+# They were set far above supply on 2026-08-23, after hermes hit 10/10 with
+# fourteen vetted candidates waiting — correct then, because a doomed dispatch
+# and a live one cost the same. They do not any more. On 2026-09-22 hermes hit
+# 60/60 by 18:16 and kept hitting it; issue #119388 was ACCEPTED 2.6s after it
+# was filed, could not dispatch, sat in the queue until the UTC reset, went out
+# at 00:15 and was refused by the re-vet because a competitor had opened a PR
+# at 18:17. The day's entire hermes allowance went on stale drains while the
+# fresh issues — the winnable ones — queued behind them.
+#
+# What makes a smaller number safe now is that drain_queues re-vets before
+# spending anything (RESCAN_ON_DRAIN), so a taken candidate is dropped without
+# charging the budget. These units are therefore viable dispatches, not
+# attempts. If a repo starts hitting its number with a full queue of genuinely
+# fresh candidates, raise that repo — and say which measurement asked for it.
 DISPATCH_BUDGET = {
-    "hermes": 60,
-    "openclaw": 40, "comfyui": 40, "dify": 40, "adk": 40,
-    "langfuse": 40, "langfuse-python": 30, "spec-kit": 40,
-    "litellm": 30, "llama-index": 30, "crawl4ai": 30, "mem0": 30,
-    "gemini-cli": 30, "langchain": 20, "autogpt": 20, "firecrawl": 20,
+    "hermes": 25,                                    # PR cap 20
+    "openclaw": 18, "comfyui": 18, "dify": 18,       # PR cap 12
+    "adk": 18, "langfuse": 18,
+    "langfuse-python": 12, "gemini-cli": 12,         # PR cap 8
+    "autogpt": 12, "litellm": 12, "llama-index": 12,
+    "crawl4ai": 12, "mem0": 12,
+    "spec-kit": 6,                                   # PR cap 3 — mnriem's, do not raise
+    "firecrawl": 6,                                  # PR cap 4
+    "langchain": 9,                                  # PR cap 6 (default)
 }
-DEFAULT_BUDGET = 20
+DEFAULT_BUDGET = 9                                   # PR cap 6
 BUDGET_FILE = scan.STATE / "dispatch-budget.json"
 
 

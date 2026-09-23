@@ -1797,13 +1797,42 @@ if caps.get("spec-kit") != "3":
     print(f"  FAIL  spec-kit's relationship cap changed to {caps.get('spec-kit')}"); bad += 1
 if "relationship cap" not in wf:
     print("  FAIL  the two kinds of cap are no longer distinguished in the file"); bad += 1
-# The dispatch guard has to sit above any real day's supply, or it is a policy
-# again under a different name.
-for k, v in w.DISPATCH_BUDGET.items():
-    if v < 15:
-        print(f"  FAIL  dispatch guard for {k} is {v} — low enough to bind on a normal day"); bad += 1
-if w.DEFAULT_BUDGET < 15:
-    print(f"  FAIL  DEFAULT_BUDGET={w.DEFAULT_BUDGET} binds before supply does"); bad += 1
+# The dispatch guard must sit above the repo's PR cap, and not far above it.
+#
+# This was an absolute floor of 15, written when a doomed dispatch and a live
+# one cost the same, so the only failure worth guarding was a guard that bound
+# before supply did. drain_queues now re-vets before charging anything, so a
+# dispatch that cannot become a PR is dropped for free — and the opposite
+# failure became the expensive one. On 2026-09-22 hermes' guard of 60 let the
+# whole day's allowance go on stale drains: #119388 was vetted 2.6s after
+# filing, could not dispatch, and went out six hours later into a competitor's
+# open PR. A guard far above the PR cap is not headroom, it is a way to spend
+# the day on dispatches that were never going to produce anything.
+#
+# So the number is checked against fix-one.yml's cap for the same repo: above
+# it, because a dispatch can legitimately fail and the guard must not bind
+# before the cap does; and within 2.5x, because beyond that it stops guarding
+# anything a real day would reach.
+# fix-one.yml writes its cases as `adk|dify|langfuse|openclaw|comfyui) cap=12`,
+# so the parsed keys are alternation strings, not repo names. Expand them
+# before looking anything up, or every repo silently falls back to the default
+# and the check passes while comparing against the wrong number.
+pr_caps = {}
+for group, n in caps.items():
+    for one in group.split("|"):
+        pr_caps[one] = int(n)
+default_cap = pr_caps.get("*", 6)
+for k, v in sorted(w.DISPATCH_BUDGET.items()):
+    pr_cap = pr_caps.get(k, default_cap)
+    if v <= pr_cap:
+        print(f"  FAIL  dispatch guard for {k} is {v}, at or under its PR cap of {pr_cap} — "
+              "it would bind before the cap does"); bad += 1
+    elif v > pr_cap * 2.5:
+        print(f"  FAIL  dispatch guard for {k} is {v} against a PR cap of {pr_cap} — "
+              "far enough above it to be spent on dispatches that cannot become PRs"); bad += 1
+if w.DEFAULT_BUDGET <= default_cap:
+    print(f"  FAIL  DEFAULT_BUDGET={w.DEFAULT_BUDGET} is at or under the default PR cap "
+          f"of {default_cap}"); bad += 1
 # And the thing that actually stops us must still be wired.
 src = pathlib.Path(sys.argv[1] + "/watch.py").read_text()
 if "quota_paused()" not in src.split("def budget_allows")[1][:600]:
