@@ -123,6 +123,14 @@ jobs:
             # in live mode the previous segment's push is the truth.
             git pull -q --rebase --autostash origin main || { git rebase --abort 2>/dev/null; git reset -q --hard origin/main; }
             echo "::group::segment $seg ($MODE) — $(date -u +%H:%M:%SZ)"
+            # One PR-feedback pass first: it is a single sweep that finishes in
+            # seconds, and it is the half of the pipeline that loses REAL
+            # interaction when it stops — a maintainer asks a question on a PR
+            # and nobody answers. adk#6686 sat five days that way. The Mac ran
+            # it every 300s; once per segment is ~600s, close enough, and it
+            # shares this link's state commit rather than racing a second chain
+            # for pr-seen.json and stood-down.json.
+            python3 watch-prs.py || echo "::warning::watch-prs.py exited $? in segment $seg"
             python3 watch.py --interval 5 --max-runtime "$SEGMENT_SECONDS" || echo "::warning::watch.py exited $? in segment $seg"
             echo "::endgroup::"
             [ "$MODE" = live ] || continue
