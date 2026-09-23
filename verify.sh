@@ -1822,8 +1822,17 @@ for group, n in caps.items():
     for one in group.split("|"):
         pr_caps[one] = int(n)
 default_cap = pr_caps.get("*", 6)
+# Explicit decisions override the ratio, the same way spec-kit's relationship
+# cap does. Each entry is a number Bruce chose, with the date he chose it; the
+# check still fails if the value drifts from what was decided.
+DECIDED = {"hermes": (60, "2026-09-23")}
 for k, v in sorted(w.DISPATCH_BUDGET.items()):
     pr_cap = pr_caps.get(k, default_cap)
+    if k in DECIDED:
+        want, when = DECIDED[k]
+        if v != want:
+            print(f"  FAIL  dispatch guard for {k} is {v}, but {want} was decided on {when}"); bad += 1
+        continue
     if v <= pr_cap:
         print(f"  FAIL  dispatch guard for {k} is {v}, at or under its PR cap of {pr_cap} — "
               "it would bind before the cap does"); bad += 1

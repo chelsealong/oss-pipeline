@@ -167,7 +167,13 @@ PIPELINE_REPO = "chelsealong/oss-pipeline"
 # attempts. If a repo starts hitting its number with a full queue of genuinely
 # fresh candidates, raise that repo — and say which measurement asked for it.
 DISPATCH_BUDGET = {
-    "hermes": 25,                                    # PR cap 20
+    # Bruce's decision, 2026-09-23 — do not lower without asking. Set above the
+    # 1.5x rule deliberately: hermes lands by salvage in same-day batches, so
+    # volume is what gets work carried across, and RESCAN_ON_DRAIN now drops a
+    # taken candidate before it is charged, which removes the failure that
+    # drove this down to 25 the day before. Past 20 PRs a day the extra
+    # dispatches stop at fix-one.yml's Daily cap step, before checkout.
+    "hermes": 60,                                    # PR cap 20 — decided, see above
     "openclaw": 18, "comfyui": 18, "dify": 18,       # PR cap 12
     "adk": 18, "langfuse": 18,
     "langfuse-python": 12, "gemini-cli": 12,         # PR cap 8
