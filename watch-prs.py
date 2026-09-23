@@ -465,6 +465,62 @@ def open_prs() -> list[dict]:
     return prs
 
 
+def claimed_issues() -> list[dict]:
+    """Open issues we have commented on, shaped like a PR so one_pass can triage them.
+
+    Feedback does not only arrive on our pull requests. On 2026-09-23 a Google
+    maintainer left three concrete asks for us on adk-python issue #7168 — the
+    issue, not our PR #7170 — and nothing here saw it, because this file only
+    ever iterated open_prs(). The same day #7100 went stale with our landed fix
+    unrecorded. A search for issues we have commented on found 18 open, recently
+    updated ones in the blind spot.
+
+    Only issues we actually engaged with: `commenter:ME` and not authored by us
+    (our own bug reports are not feedback to answer). No reviews, no checks, no
+    head commit — an issue has none — so the keys one_pass reads are present and
+    empty rather than missing.
+    """
+    repo_filter = " ".join(f"repo:{r}" for r in upstreams())
+    q = ('{search(type:ISSUE, first:50, after:%%s, query:"is:issue is:open '
+         'commenter:%s -author:%s %s")'
+         '{pageInfo{hasNextPage endCursor} nodes{'
+         '... on Issue{'
+         ' number title url body createdAt updatedAt author{login}'
+         ' repository{nameWithOwner}'
+         ' labels(first:20){nodes{name}}'
+         ' comments(last:20){nodes{id createdAt updatedAt author{login} body}}'
+         '}}}}' % (ME, ME, repo_filter))
+    nodes: list[dict] = []
+    cursor, pages = "null", 0
+    while pages < MAX_PR_PAGES:
+        try:
+            data = json.loads(scan.gh(["api", "graphql", "-f", f"query={q % cursor}"]))
+        except Exception as e:  # noqa: BLE001
+            log(f"  issue search failed: {str(e)[:160]}")
+            return nodes
+        search = (data.get("data") or {}).get("search") or {}
+        nodes += search.get("nodes") or []
+        pages += 1
+        info = search.get("pageInfo") or {}
+        if not info.get("hasNextPage") or not info.get("endCursor"):
+            break
+        cursor = json.dumps(info["endCursor"])
+    out: list[dict] = []
+    for it in nodes:
+        if not it:
+            continue
+        it["_repo"] = (it.get("repository") or {}).get("nameWithOwner", "?")
+        it["_is_issue"] = True
+        # Shapes one_pass expects from a PR and an issue does not have.
+        it.setdefault("reviews", {"nodes": []})
+        it.setdefault("reviewThreads", {"nodes": []})
+        it.setdefault("commits", {"nodes": []})
+        it.setdefault("isDraft", False)
+        it.setdefault("headRefName", "")
+        out.append(it)
+    return out
+
+
 # Checks that fail on a fork no matter what our code does, and checks that are
 # somebody else's infrastructure. Answering these would spend an agent session
 # per red cross on things we cannot fix and were never asked to.
@@ -818,7 +874,7 @@ def one_pass(seen: dict) -> int:
     today = datetime.now(timezone.utc).date().isoformat()
     dispatched = 0
 
-    for pr in open_prs():
+    for pr in open_prs() + claimed_issues():
         repo, num = pr["_repo"], pr["number"]
         key = f"{repo}#{num}"
 
