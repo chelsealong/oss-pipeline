@@ -854,6 +854,41 @@ def main() -> int:
 
 
 
+def check_pat_expiry() -> None:
+    """Warn before the PAT expires, not after.
+
+    Everything the pipeline does authenticates with one token. When it expired
+    on 2026-09-06 the whole thing stopped and forty runs failed before the
+    daily check noticed. GitHub returns the expiry in a response header, so the
+    warning costs one call and can be given weeks early.
+    """
+    import subprocess
+    try:
+        r = subprocess.run(["gh", "api", "-i", "user"], capture_output=True, text=True, timeout=60)
+        hdr = next((l for l in r.stdout.splitlines()
+                    if l.lower().startswith("github-authentication-token-expiration:")), "")
+        if not hdr:
+            print("  PAT        : no expiry header — classic PAT without an expiry, or a GitHub App",
+                  file=sys.stderr)
+            return
+        from datetime import datetime, timezone
+        raw = hdr.split(":", 1)[1].strip()
+        exp = datetime.strptime(raw[:19], "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc)
+        days = (exp - datetime.now(timezone.utc)).days
+        # `problems` is local to main()'s report builder, not a module global,
+        # so this prints into the same stream the daily report is read from and
+        # uses the word run-health.sh greps for. Appending to a list that does
+        # not exist here would have been a NameError on the one day it mattered.
+        if days <= 7:
+            print(f"  PROBLEM(S) : GH_PAT expires {exp:%Y-%m-%d}, in {days} day(s) — "
+                  "rotate it before the pipeline stops", file=sys.stderr)
+        else:
+            state = "warn" if days <= 21 else "ok"
+            print(f"  PAT        : expires {exp:%Y-%m-%d} ({days}d) — {state}", file=sys.stderr)
+    except Exception as e:  # noqa: BLE001
+        print(f"  PAT        : expiry check failed ({str(e)[:70]})", file=sys.stderr)
+
+
 def update_landings() -> None:
     """Keep the durable landing ledger current, incrementally.
 
@@ -873,5 +908,6 @@ if __name__ == "__main__":
     # The hourly critical check answers "is it down" and must stay cheap; a
     # full ledger sweep is a dozen API calls that belong to the daily report.
     if "--critical" not in sys.argv:
+        check_pat_expiry()
         update_landings()
     sys.exit(main())

@@ -700,6 +700,10 @@ def sweep(keys: list[str], seen: dict[str, list[int]], per_repo: int,
 
 DISPATCHED = scan.STATE / "dispatched.json"
 
+# Re-vet a queued candidate immediately before spending a dispatch on it.
+# Off would mean paying a runner boot to learn what one API call can tell us.
+RESCAN_ON_DRAIN = True
+
 
 def _dispatched() -> dict:
     try:
@@ -894,8 +898,34 @@ def drain_queues(keys: list[str]) -> int:
         # could act on it. Draining gemini-cli oldest-first spent its whole
         # daily budget on "Possible bug", "Where is oauth authentication?" and
         # a report in Spanish, while five well-scoped crashes waited.
+        cfg = scan.REPOS[key]
+        upstream = cfg["upstream"]
         for rec in list(cands):
             num = rec["number"]
+            # A queued candidate is stale by construction: it was vetted when it
+            # was filed and has been sitting here since. On a competitive
+            # tracker that is exactly the issue somebody else has taken —
+            # hermes #119388 was vetted, queued, and had a competitor's PR two
+            # issue numbers later. The workflow's own re-vet catches it, but
+            # only after booting a runner (109s median, 20 of 20 sampled
+            # dispatches on 09-23). Re-vetting here costs one API call and
+            # skips the boot entirely. Freshly detected issues do not come
+            # through this path and are not re-checked.
+            if not RESCAN_ON_DRAIN:
+                pass
+            else:
+                try:
+                    issue = json.loads(scan.gh(
+                        ["api", f"repos/{upstream}/issues/{num}"], timeout=30, kind="other"))
+                    ok, why, _ = scan.vet(cfg, upstream, issue)
+                    if not ok:
+                        log(f"  [{key}] #{num} no longer eligible ({why[:70]}) — dropped, no dispatch")
+                        q["candidates"] = [c for c in q["candidates"] if c["number"] != num]
+                        continue
+                except Exception as e:  # noqa: BLE001
+                    # A failed re-check is not evidence the issue is taken.
+                    # Fall through and let the workflow's re-vet decide.
+                    log(f"  [{key}] #{num} re-check failed ({str(e)[:60]}), dispatching anyway")
             if already_dispatched(key, num):
                 # Drop it from the queue so the next rebuild does not resurrect
                 # it, but spend nothing on it.

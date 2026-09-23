@@ -1888,9 +1888,15 @@ if h and h.get("sample"):
     if h.get("latency_from") != "ours":
         print(f"  FAIL  hermes latency taken from {h.get('latency_from')}; its salvage path "
               "is the only one we are actually in"); bad += 1
-    if h.get("merge_p90_h", 0) < 24:
-        print(f"  FAIL  hermes p90 measured at {h.get('merge_p90_h')}h — that is the repo's "
-              "population, not ours"); bad += 1
+    # The floor was 24h: our salvage path was slower than the repo's own merge
+    # latency, so a low number meant the wrong population had been measured.
+    # 2026-09-22: teknium1 began cherry-picking in same-day batches and our own
+    # p90 fell to 7.8-24.9h, so a correct measurement now trips a check written
+    # to catch an incorrect one. What still distinguishes the two populations
+    # is latency_from, asserted above; the magnitude no longer does.
+    if h.get("latency_n", 0) < 5:
+        print(f"  FAIL  hermes latency computed from {h.get('latency_n')} of our own "
+              "landings — too few to be our population"); bad += 1
 # The fitness signal is the outcome, not the maintainer's explanation: the
 # largest rejection category across 930k agentic PRs is UNKNOWN, at 38.8%.
 if "landed" not in src or "landings" not in src:
