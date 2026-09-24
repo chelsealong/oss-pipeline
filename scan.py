@@ -766,6 +766,15 @@ def sessions_in_window(hours: float = SESSION_WINDOW_HOURS) -> int:
 # hermes the largest consumer and guarantees the others 30 between them. It is
 # a ceiling, not a reservation: an idle repo's share is not held back.
 SESSION_SHARE_PER_REPO = 15
+# Per-repo overrides. Bruce's decision, 2026-09-24 — do not change without
+# asking: hermes lands by same-day salvage batches and is where most of the
+# record comes from, so it gets twice the default. With the account ceiling at
+# 45, a saturated hermes leaves the other repositories 15 between them.
+SESSION_SHARE_OVERRIDE = {"hermes": 30}
+
+
+def session_share(key: str) -> int:
+    return SESSION_SHARE_OVERRIDE.get(key, SESSION_SHARE_PER_REPO)
 
 
 def _sessions_for(key: str, hours: float = SESSION_WINDOW_HOURS) -> int:
@@ -791,9 +800,10 @@ def session_headroom(key: str | None = None) -> tuple[bool, str]:
     """
     if key:
         mine = _sessions_for(key)
-        if mine >= SESSION_SHARE_PER_REPO:
+        share = session_share(key)
+        if mine >= share:
             return False, (f"{key} has started {mine} of the last {SESSION_WINDOW_HOURS:g}h's "
-                           f"sessions, its share is {SESSION_SHARE_PER_REPO}")
+                           f"sessions, its share is {share}")
     n = sessions_in_window()
     if n < SESSION_CEILING:
         return True, ""
