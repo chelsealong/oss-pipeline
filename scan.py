@@ -765,12 +765,14 @@ def sessions_in_window(hours: float = SESSION_WINDOW_HOURS) -> int:
 # converting better that week, queued behind it. A third of the window keeps
 # hermes the largest consumer and guarantees the others 30 between them. It is
 # a ceiling, not a reservation: an idle repo's share is not held back.
-SESSION_SHARE_PER_REPO = 15
-# Per-repo overrides. Bruce's decision, 2026-09-24 — do not change without
-# asking: hermes lands by same-day salvage batches and is where most of the
-# record comes from, so it gets twice the default. With the account ceiling at
-# 45, a saturated hermes leaves the other repositories 15 between them.
-SESSION_SHARE_OVERRIDE = {"hermes": 30}
+SESSION_SHARE_PER_REPO = 5
+# Per-repo shares. Bruce's allocation, 2026-09-24 — do not change without
+# asking. The three repositories that produce nearly all landings get most of
+# the window; everything else gets 5, which is enough to keep a small funnel
+# moving and not enough to crowd the three. The shares sum to more than the
+# account ceiling on purpose: they are ceilings, not reservations, and the 45
+# is still what binds when several repositories are busy at once.
+SESSION_SHARE_OVERRIDE = {"hermes": 30, "openclaw": 15, "adk": 15}
 
 
 def session_share(key: str) -> int:
