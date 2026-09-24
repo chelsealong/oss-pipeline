@@ -845,7 +845,8 @@ def dispatch(repo: str, number: int, note: str) -> bool:
         log(f"  DRY_RUN would dispatch responder for {repo}#{number} ({note})")
         return True
     # respond-pr spends the same account allowance as fix-one, and neither could
-    # see the other's spend before this gate existed.
+    # see the other's spend before this gate existed. Deliberately no repo key:
+    # answering a maintainer must never wait on that repo's fix-one share.
     ok, why = scan.session_headroom()
     if not ok:
         log(f"  [{repo}#{number}] {why} — not responding until the window rolls")

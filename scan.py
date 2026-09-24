@@ -757,8 +757,43 @@ def sessions_in_window(hours: float = SESSION_WINDOW_HOURS) -> int:
     return sum(1 for r in rows if r.get("at", "") >= cut)
 
 
-def session_headroom() -> tuple[bool, str]:
-    """(may dispatch, why not). The five-hour window is the account's, not ours."""
+# No single repository may take more than this many of the shared window's
+# sessions. The ceiling above is the account's; this stops one repo from being
+# the account. On 2026-09-24 hermes, with a dispatch guard of 60 and fresh
+# issues now dispatching immediately, took 42 of 45 sessions in five hours —
+# nine of which reached Claude and produced no PR — while adk and ComfyUI,
+# converting better that week, queued behind it. A third of the window keeps
+# hermes the largest consumer and guarantees the others 30 between them. It is
+# a ceiling, not a reservation: an idle repo's share is not held back.
+SESSION_SHARE_PER_REPO = 15
+
+
+def _sessions_for(key: str, hours: float = SESSION_WINDOW_HOURS) -> int:
+    import datetime as _dt
+    cut = (_dt.datetime.now(_dt.timezone.utc)
+           - _dt.timedelta(hours=hours)).isoformat(timespec="seconds")
+    try:
+        rows = json.loads(SESSION_LOG.read_text()) if SESSION_LOG.exists() else []
+    except Exception:  # noqa: BLE001
+        return 0
+    # fix-one only. A reply to a maintainer is worth more than a new PR, so
+    # responses are never held back by a repo's share, and do not use it up:
+    # watch-prs.py calls session_headroom() without a key and is bounded only
+    # by the account ceiling.
+    return sum(1 for r in rows
+               if r.get("at", "") >= cut and r.get("key") == key and r.get("kind") == "fix-one")
+
+
+def session_headroom(key: str | None = None) -> tuple[bool, str]:
+    """(may dispatch, why not). The five-hour window is the account's, not ours.
+
+    With `key`, the repository's own share of the window is checked as well.
+    """
+    if key:
+        mine = _sessions_for(key)
+        if mine >= SESSION_SHARE_PER_REPO:
+            return False, (f"{key} has started {mine} of the last {SESSION_WINDOW_HOURS:g}h's "
+                           f"sessions, its share is {SESSION_SHARE_PER_REPO}")
     n = sessions_in_window()
     if n < SESSION_CEILING:
         return True, ""

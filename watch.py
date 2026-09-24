@@ -346,7 +346,7 @@ def budget_allows(key: str) -> bool:
 
     # The five-hour subscription window belongs to the ACCOUNT, so this gate is
     # shared with watch-prs.py rather than counted per repo or per workflow.
-    ok, why = scan.session_headroom()
+    ok, why = scan.session_headroom(key)
     if not ok:
         log(f"  [{key}] {why} — holding until the window rolls")
         return False
