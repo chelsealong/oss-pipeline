@@ -1,0 +1,1 @@
+- [2026-09-25] #2288 skipped: reporter (talelboussetta) is mid-conversation with a maintainer (cc @ntohidi) and explicitly offered to send the PR themselves: "If per-URL failures are the direction you want, I can send a PR. cc @ntohidi". This is both a design decision (should batch validat
