@@ -34,7 +34,7 @@ import os
 import pathlib
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import scan  # reuse REPOS, vet(), gh(), QUEUE, STATE
 
@@ -712,6 +712,9 @@ def sweep(keys: list[str], seen: dict[str, list[int]], per_repo: int,
                 log(f"  ACCEPTED [{key}] #{num} after {lag:.1f}s — {issue['title'][:60]}")
                 if not NO_TRIGGER:
                     trigger_fix(key, num)
+            elif MIN_AGE_MARK in why:
+                defer(key, num, node["createdAt"])
+                log(f"  deferred [{key}] #{num} ({lag:.0f}s old) — {why[:70]}")
             else:
                 log(f"  rejected [{key}] #{num} ({lag:.0f}s old) — {why[:70]}")
         seen[key] = sorted(known)
@@ -719,6 +722,83 @@ def sweep(keys: list[str], seen: dict[str, list[int]], per_repo: int,
     return new_count, accepted
 
 
+
+
+# "Too young" is a wait, not a verdict. openclaw holds new issues 40 minutes so
+# ClawSweeper's triage is visible first, but the watcher sees an issue within
+# seconds, so the min-age check rejected every openclaw issue it ever saw — and
+# a rejected issue is in seen.json, never looked at again. The hourly local
+# scan used to pick them up later; once detection moved to the cloud nothing
+# did, and openclaw went from 400 dispatches to none after 2026-09-22 with 12
+# free PR slots. Deferred issues are re-vetted once their wait is over.
+DEFERRED = scan.STATE / "deferred.json"
+MIN_AGE_MARK = "for the repo's own triage"
+DEFER_GIVE_UP_HOURS = 12
+
+
+def _load_deferred() -> dict:
+    try:
+        return json.loads(DEFERRED.read_text()) if DEFERRED.exists() else {}
+    except Exception:  # noqa: BLE001
+        return {}
+
+
+def defer(key: str, num: int, created_at: str) -> None:
+    d = _load_deferred()
+    d.setdefault(key, {})[str(num)] = created_at
+    DEFERRED.write_text(json.dumps(d, indent=1, sort_keys=True) + "\n")
+
+
+def recheck_deferred(keys: list[str]) -> int:
+    """Re-vet deferred issues whose wait is over. Returns how many were accepted."""
+    d = _load_deferred()
+    if not d:
+        return 0
+    now = datetime.now(timezone.utc)
+    accepted, changed = 0, False
+    for key in list(d):
+        if key not in keys or key not in scan.REPOS:
+            continue
+        cfg = scan.REPOS[key]
+        wait = timedelta(minutes=cfg.get("min_age_minutes") or 0)
+        for num_s, created in list(d[key].items()):
+            born = datetime.fromisoformat(created.replace("Z", "+00:00"))
+            if now - born < wait:
+                continue                     # not ready yet
+            del d[key][num_s]
+            changed = True
+            if now - born > timedelta(hours=DEFER_GIVE_UP_HOURS):
+                continue                     # stale: a link was down too long
+            try:
+                issue = json.loads(scan.gh(["api", f"repos/{cfg['upstream']}/issues/{num_s}"],
+                                           timeout=30, kind="other"))
+                if issue.get("state") != "open" or issue.get("pull_request"):
+                    continue
+                ok, why, extra = scan.vet(cfg, cfg["upstream"], issue)
+            except Exception as e:  # noqa: BLE001
+                log(f"  [{key}] #{num_s} deferred re-vet failed: {str(e)[:100]}")
+                continue
+            if not ok:
+                log(f"  rejected [{key}] #{num_s} after its wait — {why[:70]}")
+                continue
+            accepted += 1
+            append_candidate(key, {
+                "number": int(num_s),
+                "title": issue["title"][:160],
+                "url": issue["html_url"],
+                "created_at": created,
+                "age_hours": round((now - born).total_seconds() / 3600, 2),
+                "reason": "clear after triage wait",
+                **extra,
+            })
+            log(f"  ACCEPTED [{key}] #{num_s} after its triage wait — {issue['title'][:60]}")
+            if not NO_TRIGGER:
+                trigger_fix(key, int(num_s))
+        if not d[key]:
+            del d[key]
+    if changed:
+        DEFERRED.write_text(json.dumps(d, indent=1, sort_keys=True) + "\n")
+    return accepted
 
 
 DISPATCHED = scan.STATE / "dispatched.json"
@@ -1036,6 +1116,10 @@ def main() -> int:
                     log(f"sweep {sweeps}: {new} new, {ok} accepted")
                 elif sweeps % 120 == 0:      # ~every 10 min at 5s
                     log(f"sweep {sweeps}: idle")
+
+                # About once a minute: an issue whose triage wait just ended.
+                if not bootstrap and sweeps % 12 == 0:
+                    recheck_deferred(keys)
 
                 # Drain on the same cadence as the idle log rather than every
                 # sweep: queued work is by definition not urgent, and one pass

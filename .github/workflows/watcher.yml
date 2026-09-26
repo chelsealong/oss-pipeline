@@ -116,7 +116,7 @@ jobs:
           start=$(date +%s); seg=0
           # The files this link owns. Kept aside after every segment so a
           # conflicting push can be resolved in their favour without a merge.
-          OWNED="state/dispatched.json state/claude-sessions.json state/claude-session-verdicts.json state/seen.json state/dispatch-budget.json state/budget-refunds.json state/quota-pause.json state/quota-refunded.json state/stood-down.json state/pr-seen.json"
+          OWNED="state/dispatched.json state/deferred.json state/claude-sessions.json state/claude-session-verdicts.json state/seen.json state/dispatch-budget.json state/budget-refunds.json state/quota-pause.json state/quota-refunded.json state/stood-down.json state/pr-seen.json"
           while [ $(( $(date +%s) - start )) -lt "$LINK_SECONDS" ]; do
             seg=$((seg + 1))
             # Fresh state first: pipeline.yml's scan may have queued work, and
