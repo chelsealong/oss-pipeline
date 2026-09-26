@@ -37,7 +37,7 @@ import re
 import subprocess
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import re as _re
 import scan
@@ -349,6 +349,34 @@ def check_stand_downs() -> int:
     return reopened
 
 
+# A maintainer writing on an old PR reopens the window. The window rests on
+# "nothing we say after it closes has ever changed an outcome" — but that was
+# measured on our own replies to silence, not on a maintainer asking for
+# something. hermes#93386: teknium1 wrote on day 16 that the remaining half was
+# "the right fix" and asked for a rebase and trim, "happy to review it". The PR
+# was past its 240h window, so the request sat unanswered for 17 days. Only
+# recent maintainer items reopen it, so turning this on does not replay every
+# old comment on every stale PR at once.
+MAINTAINER_ASSOC = ("OWNER", "MEMBER", "COLLABORATOR")
+MAINTAINER_REOPEN_DAYS = 7
+
+
+def maintainer_reopened(pr: dict, known: set) -> str | None:
+    """Login of a maintainer with a recent, unseen item on this PR, if any."""
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=MAINTAINER_REOPEN_DAYS)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    for item in feedback_items(pr):
+        if item["id"] in known or item.get("assoc") not in MAINTAINER_ASSOC:
+            continue
+        if item["author"] == ME or _norm(item["author"]) in NOISE_AUTHORS:
+            continue
+        # adk-bot holds COLLABORATOR and posts spam alerts; a bot is not a maintainer.
+        if re.search(r"(\[bot\]|[-_]bot)$", item["author"], re.I):
+            continue
+        if (item.get("when") or "") >= cutoff:
+            return item["author"]
+    return None
+
+
 def past_merge_window(pr: dict):
     """(True, why) if this repo has stopped looking at PRs this old."""
     window = MERGE_WINDOW_HOURS.get(pr.get("_repo") or "")
@@ -420,9 +448,9 @@ def open_prs() -> list[dict]:
          ' number title url body createdAt updatedAt author{login} headRefName isDraft'
          ' repository{nameWithOwner}'
          ' labels(first:20){nodes{name}}'
-         ' comments(last:20){nodes{id createdAt updatedAt author{login} body}}'
-         ' reviews(last:10){nodes{id submittedAt state author{login} body}}'
-         ' reviewThreads(last:20){nodes{comments(last:5){nodes{id createdAt updatedAt author{login} body path}}}}'
+         ' comments(last:20){nodes{id createdAt updatedAt author{login} authorAssociation body}}'
+         ' reviews(last:10){nodes{id submittedAt state author{login} authorAssociation body}}'
+         ' reviewThreads(last:20){nodes{comments(last:5){nodes{id createdAt updatedAt author{login} authorAssociation body path}}}}'
          # A red CI run is feedback too, and it is the kind nobody types. It was
          # invisible here: 6 of 15 open PRs were failing checks while this
          # watcher reported nothing to do, because it only ever looked at things
@@ -488,7 +516,7 @@ def claimed_issues() -> list[dict]:
          ' number title url body createdAt updatedAt author{login}'
          ' repository{nameWithOwner}'
          ' labels(first:20){nodes{name}}'
-         ' comments(last:20){nodes{id createdAt updatedAt author{login} body}}'
+         ' comments(last:20){nodes{id createdAt updatedAt author{login} authorAssociation body}}'
          '}}}}' % (ME, ME, repo_filter))
     nodes: list[dict] = []
     cursor, pages = "null", 0
@@ -751,10 +779,12 @@ def feedback_items(pr: dict) -> list[dict]:
         items.append({"id": f"{c['id']}@{c.get('updatedAt') or c.get('createdAt','')}",
                       "author": (c.get("author") or {}).get("login", "?"),
                       "when": c.get("updatedAt") or c.get("createdAt", ""), "kind": "comment",
+                      "assoc": c.get("authorAssociation") or "",
                       "body": c.get("body") or ""})
     for r in ((pr.get("reviews") or {}).get("nodes") or []):
         items.append({"id": r["id"], "author": (r.get("author") or {}).get("login", "?"),
                       "when": r.get("submittedAt") or "", "kind": f"review:{r.get('state')}",
+                      "assoc": r.get("authorAssociation") or "",
                       "body": r.get("body") or ""})
     for t in ((pr.get("reviewThreads") or {}).get("nodes") or []):
         for c in ((t.get("comments") or {}).get("nodes") or []):
@@ -762,6 +792,7 @@ def feedback_items(pr: dict) -> list[dict]:
                           "author": (c.get("author") or {}).get("login", "?"),
                           "when": c.get("updatedAt") or c.get("createdAt", ""),
                           "kind": f"inline:{c.get('path','')}",
+                          "assoc": c.get("authorAssociation") or "",
                           "body": c.get("body") or ""})
     return items
 
@@ -902,11 +933,14 @@ def one_pass(seen: dict) -> int:
 
         # Nothing we say after the window closes has ever changed an outcome.
         stale, why = past_merge_window(pr)
-        if stale:
-            log(f"  [{key}] {why} — not spending a session")
-            continue
         rec = seen.setdefault(key, {"ids": [], "responses": {}})
         known = set(rec["ids"])
+        if stale:
+            if (mt := maintainer_reopened(pr, known)):
+                log(f"  [{key}] {why}, but maintainer {mt} wrote recently — answering")
+            else:
+                log(f"  [{key}] {why} — not spending a session")
+                continue
 
         fresh = []
         for item in feedback_items(pr):
