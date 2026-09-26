@@ -47,3 +47,4 @@
 
 - [2026-09-26] #16585 skipped: issue #16585 (Qwen3-VL vision tower float32 NVFP4 crash) is already addressed by open PR #16277 ("Fix nvfp4 crash in Qwen3-VL generate() with image input"), which changes the exact same line (comfy/text_encoders/qwen3vl.py:66, preprocess_embed) with the identi
 - [2026-09-26] #16586 skipped: #16586 is a Spanish-language user-support request, not a code bug. The user's workflow references a missing third-party custom node package ("comfyui-aspect-ratio-crop-node") and asks where to find it for their ComfyUI version. This is not part of Comfy-Org/Co
+- [2026-09-26] #16591 skipped: #16591 reports a periodic "near-frozen frame every 4 frames" artifact in SeedVR2 video upscaling (native core nodes). The period is exactly 4 pixel frames, which equals exactly 1 latent frame under SeedVR2's causal VAE (temporal_downsample_factor=4, comfy/ldm/
