@@ -45,3 +45,4 @@
 - [2026-09-25] #16562 skipped: #16562 is a frontend-only bug, same root cause class as #16226. Copying a "Text Encode Qwen Image 2.1" node (which uses io.Autogrow for its dynamic "images" input, comfy_extras/nodes_qwen.py + comfy_api/latest/_io.py) with connections via Ctrl+Shift+V and past
 - [2026-09-26] issue #16579 blocked by review:  The fix guards against a state that real ComfyUI code never produces, and the new test only "fails without the fix" because it manufactures that unreachable state directly.  
 
+- [2026-09-26] #16585 skipped: issue #16585 (Qwen3-VL vision tower float32 NVFP4 crash) is already addressed by open PR #16277 ("Fix nvfp4 crash in Qwen3-VL generate() with image input"), which changes the exact same line (comfy/text_encoders/qwen3vl.py:66, preprocess_embed) with the identi
