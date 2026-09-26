@@ -43,3 +43,5 @@
 - [2026-09-25] #16551 skipped: #16551 is a performance regression report (FP8 compute path apparently falling back to bf16-speed under dynamic VRAM/comfy_aimdo staging on RTX 5070 Ti, sm_120 Blackwell), not a pinpointed code defect. The reporter (who did extensive raw-PyTorch and ComfyUI-op
 - [2026-09-25] #16555 skipped: issue #16555 reporter explicitly states 'A PR with proposed fix will follow shortly' - they are actively preparing their own fix; per lessons.md 'someone else's presence outranks our speed', do not race a claimed issue
 - [2026-09-25] #16562 skipped: #16562 is a frontend-only bug, same root cause class as #16226. Copying a "Text Encode Qwen Image 2.1" node (which uses io.Autogrow for its dynamic "images" input, comfy_extras/nodes_qwen.py + comfy_api/latest/_io.py) with connections via Ctrl+Shift+V and past
+- [2026-09-26] issue #16579 blocked by review:  The fix guards against a state that real ComfyUI code never produces, and the new test only "fails without the fix" because it manufactures that unreachable state directly.  
+
