@@ -482,3 +482,4 @@ still buys nothing.
 - [2026-09-27] #124823 skipped: issue #124823 (hermes update fails to install managed uv on Android/Termux, quoting hermes_cli/managed_uv.py::_install_uv downloading a GitHub uv release binary that has no aarch64-linux-android build) is stale against current main.
 - [2026-09-27] #124843 skipped: issue #124843 (Desktop GPU child never initializes on Mesa/Wayland, sub-zygote spins CPU ~350% forever) has no minimal, verifiable code fix available. The reported symptom (a Chromium GPU-init sub-zygote that repeatedly opens /dev/dri/renderD128, allocates/tea
 - [2026-09-27] #124853 skipped: already fixed by open unmerged PRs that don't name this issue
+- [2026-09-27] #124857 skipped: issue #124857 (Desktop: renaming a bot tab toasts success but the tab caption never changes) is already fixed by open PR #123071 ("fix(desktop): label hidden bot chat tabs", mark-snd, opened 2026-09-25, two days before this issue was filed). Verified on curren
