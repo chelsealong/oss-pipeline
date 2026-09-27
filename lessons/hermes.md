@@ -481,3 +481,4 @@ still buys nothing.
 - [2026-09-27] #124593 skipped: issue #124593 is explicitly filed by its own reporter (TAIPANBOX) as NOT ready for a PR. The issue body's own "Why this is an issue and not a PR" section states they built a full reference implementation (branch reference/custom-pool-owner-aware-restore, 53 ta
 - [2026-09-27] #124823 skipped: issue #124823 (hermes update fails to install managed uv on Android/Termux, quoting hermes_cli/managed_uv.py::_install_uv downloading a GitHub uv release binary that has no aarch64-linux-android build) is stale against current main.
 - [2026-09-27] #124843 skipped: issue #124843 (Desktop GPU child never initializes on Mesa/Wayland, sub-zygote spins CPU ~350% forever) has no minimal, verifiable code fix available. The reported symptom (a Chromium GPU-init sub-zygote that repeatedly opens /dev/dri/renderD128, allocates/tea
+- [2026-09-27] #124853 skipped: already fixed by open unmerged PRs that don't name this issue
