@@ -487,3 +487,4 @@ still buys nothing.
 - [2026-09-28] #124881 skipped: issue #124881 (macOS Desktop/backend enters an unbreakable update loop via
 - [2026-09-28] #125873 skipped: issue #125873 (executions.db count-based retention: MAX_TERMINAL_EXECUTIONS=1000 makes ledger coverage rate-dependent, hiding wedged low-frequency jobs) is already fully fixed by open PR #121899 ("fix(cron): bound executions-ledger retention by time, not by ro
 - [2026-09-28] #125932 skipped: issue #125932 bundles three distinct problems, and none has a confidently-identifiable minimal fix in this session.
+- [2026-09-28] #126003 skipped: issue #126003 premise is stale against current main. The requested capability ("a CLI verb that rewrites a card's body through the normal permission/gate path, records an event in the task event chain") already exists: `hermes kanban edit <task_id> --body <tex
