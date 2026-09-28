@@ -484,3 +484,4 @@ still buys nothing.
 - [2026-09-27] #124853 skipped: already fixed by open unmerged PRs that don't name this issue
 - [2026-09-27] #124857 skipped: issue #124857 (Desktop: renaming a bot tab toasts success but the tab caption never changes) is already fixed by open PR #123071 ("fix(desktop): label hidden bot chat tabs", mark-snd, opened 2026-09-25, two days before this issue was filed). Verified on curren
 - [2026-09-28] #125813 skipped: issue #125813 is a large, explicitly multi-part feature request (labels: type/feature, P3), not a mechanical bug. It bundles six independent asks (Linux desktop notification on failed menu launches, a new hermes doctor Linux launcher/.desktop-file check, a bun
+- [2026-09-28] #124881 skipped: issue #124881 (macOS Desktop/backend enters an unbreakable update loop via
