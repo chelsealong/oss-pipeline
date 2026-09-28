@@ -50,3 +50,4 @@
 - [2026-09-26] #16591 skipped: #16591 reports a periodic "near-frozen frame every 4 frames" artifact in SeedVR2 video upscaling (native core nodes). The period is exactly 4 pixel frames, which equals exactly 1 latent frame under SeedVR2's causal VAE (temporal_downsample_factor=4, comfy/ldm/
 - [2026-09-27] #16604 skipped: could not find or reproduce a real defect in this repo's source for #16604.
 - [2026-09-28] #16614 skipped: #16614 (MiniMax Music/llama2 fails with "CUDA driver version is insufficient for CUDA runtime version" when calling comfy_kitchen.flash_attention_decode) is already fixed by open PR #16453 ("Fix Qwen flash attention CUDA gating"), which targets the exact same 
+- [2026-09-28] #16628 skipped: #16628 headline crash (missing stop_tokens on Qwen25_7BVLI_Config) is already fixed by open PR #15033; remaining asks (lm_head, MRoPE generate, image kwargs) are a multi-file feature needing model weights to verify
