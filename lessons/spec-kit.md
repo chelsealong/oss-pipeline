@@ -29,3 +29,4 @@
 - [2026-09-24] #4729 skipped: Issue #4729 is a "[Extension] manual-test v1.0.0" community catalog submission, not a code defect. CONTRIBUTING.md (Community catalog submissions, lines 123-136) explicitly states: "do not edit extensions/catalog.community.json ... directly in a pull request. 
 - [2026-09-25] #4746 skipped: Issue #4746 is explicitly annotated "Maintainer-only" and concerns the repository-owned agentic workflow file .github/workflows/add-community-preset.md and its compiled lock file (add-community-preset.lock.yml). Both are CI/workflow files, which are a hard exc
 - [2026-09-28] #4777 skipped: Issue #4777 ("Register extension commands and skills for the generic integration") is a genuine architectural gap, not a minimal bug fix. Verified against current main:
+- [2026-09-29] #4705 skipped: #4705 is a new-command feature request labeled triage-out-of-scope and needing triage, with no agreed design (output format, scope); not a minimal bug fix
