@@ -81,3 +81,4 @@
 - [2026-09-28] #18002 skipped: issue #18002 ("bug: out-of-range usage value fails") is a self-hosted deployment/infra issue, not a fixable application bug. Despite the title (likely copy-pasted from the linked #17991), the body reports a ClickHouse error "Unknown table expression identifier
 - [2026-09-28] #18014 skipped: #18014 has a real, precisely-located root cause, but no minimal fix is safely available in this session.
 - [2026-09-28] #18021 skipped: issue #18021 is assigned to hassiebp, a Langfuse maintainer (re-verified via gh issue view), so it is already claimed
+- [2026-09-29] #18026 skipped: issue #18026 is assigned to nkabardin (Nikita Kabardin), a Langfuse maintainer (company @langfuse per prior lessons), so it is already claimed. Also overlaps open PR #13908 (relative time-range presets).
