@@ -502,3 +502,4 @@ still buys nothing.
 - [2026-09-29] #127260 skipped: issue mostly fixed on main (#125036 removed arg truncation, #121421 guards marker); remaining symptoms B/C have no identified mechanism and reporter has not confirmed a live repro
 - [2026-09-29] #127417 skipped: issue #127417's root cause is explicitly not isolated (reporter says which teardown reaps the updater 'needs instrumentation'); it depends on live systemd cgroup/process-tree behavior that cannot be reproduced or E2E-tested here, so any fix would be speculativ
 - [2026-09-29] #127422 skipped: issue #127422 is a model-default bump (a maintainer call, target ids unspecified); the hindsight file no longer exists on main; any test would be a change-detector
+- [2026-09-29] #127446 skipped: open PR #120651 already fixes the dashboard /dispatch endpoint ignoring kanban caps (routes all entry points through a shared resolver, with tests); issue #127446 is covered
