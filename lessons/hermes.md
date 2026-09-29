@@ -507,3 +507,4 @@ still buys nothing.
 - [2026-09-29] #127611 skipped: issue #127611 is a large design-open feature (new multi-work-class admission snapshot contract, broad fixture matrix) overlapping open PRs #111197/#110983/#109937; no minimal fix
 - [2026-09-29] issue #127630 blocked by review:  Regression (reproduced): _lifecycle_run_id drops the run fence whenever task.current_run_id is NULL. But _end_run clears current_run_id on EVERY run end (review_requested, blocked, completed), not only on reclaim. So the fence is now dropped in states where the worker's run was legitimately handed 
 
+- [2026-09-29] #127651 skipped: idle-CPU burn already fixed on main by 8682d5791b (JXA system() wrapper, #124253); remaining opt-out config is a feature/maintainer call
