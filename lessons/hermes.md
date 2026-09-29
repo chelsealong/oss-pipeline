@@ -505,3 +505,5 @@ still buys nothing.
 - [2026-09-29] #127446 skipped: open PR #120651 already fixes the dashboard /dispatch endpoint ignoring kanban caps (routes all entry points through a shared resolver, with tests); issue #127446 is covered
 - [2026-09-29] #127497 skipped: #127497 requests a new plugin hook (on_kanban_event_appended) — an API design decision touching write_txn commit/savepoint semantics across 59 call sites, with an origin taxonomy the maintainers have not chosen; adjacent open PR #122906 is reshaping the plug
 - [2026-09-29] #127611 skipped: issue #127611 is a large design-open feature (new multi-work-class admission snapshot contract, broad fixture matrix) overlapping open PRs #111197/#110983/#109937; no minimal fix
+- [2026-09-29] issue #127630 blocked by review:  Regression (reproduced): _lifecycle_run_id drops the run fence whenever task.current_run_id is NULL. But _end_run clears current_run_id on EVERY run end (review_requested, blocked, completed), not only on reclaim. So the fence is now dropped in states where the worker's run was legitimately handed 
+
