@@ -83,3 +83,4 @@
 - [2026-09-28] #18021 skipped: issue #18021 is assigned to hassiebp, a Langfuse maintainer (re-verified via gh issue view), so it is already claimed
 - [2026-09-29] #18026 skipped: issue #18026 is assigned to nkabardin (Nikita Kabardin), a Langfuse maintainer (company @langfuse per prior lessons), so it is already claimed. Also overlaps open PR #13908 (relative time-range presets).
 - [2026-09-29] #18040 skipped: issue #18040 is a cross-region cloud account design question (EU and US are separate deployments and databases, so a same-email account on each is by design). It needs a product decision and has no minimal code fix. The briefing reached the same conclusion.
+- [2026-09-29] #18043 skipped: issue #18043 is assigned to niklassemmler (Langfuse maintainer) and is a feature request whose reporter has offered their own PR; not unclaimed.
