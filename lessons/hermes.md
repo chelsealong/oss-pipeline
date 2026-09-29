@@ -508,3 +508,4 @@ still buys nothing.
 - [2026-09-29] issue #127630 blocked by review:  Regression (reproduced): _lifecycle_run_id drops the run fence whenever task.current_run_id is NULL. But _end_run clears current_run_id on EVERY run end (review_requested, blocked, completed), not only on reclaim. So the fence is now dropped in states where the worker's run was legitimately handed 
 
 - [2026-09-29] #127651 skipped: idle-CPU burn already fixed on main by 8682d5791b (JXA system() wrapper, #124253); remaining opt-out config is a feature/maintainer call
+- [2026-09-29] #127698 skipped: python/osascript heredoc masking is deliberate design (tests test_terminal_heredoc_background_guard.py and test_self_repo_guard.py:269 assert it, to avoid '&' false positives in interpreter bodies); removing it would revert intended behavior and break those te
