@@ -31,3 +31,4 @@
 - [2026-09-28] #4777 skipped: Issue #4777 ("Register extension commands and skills for the generic integration") is a genuine architectural gap, not a minimal bug fix. Verified against current main:
 - [2026-09-29] #4705 skipped: #4705 is a new-command feature request labeled triage-out-of-scope and needing triage, with no agreed design (output format, scope); not a minimal bug fix
 - [2026-09-29] #4786 skipped: #4786 requires adding a CI coverage workflow (.github/workflows) plus policy docs; CI/workflow files are off-limits, and the policy is a maintainer decision
+- [2026-09-29] #4792 skipped: #4792 is a feature request for a new CLI command/API with the surface, nested-step representation and JSON contract explicitly left open for maintainer assessment; no agreed design, so no minimal fix is ours to settle
