@@ -85,3 +85,4 @@
 - [2026-09-29] #18040 skipped: issue #18040 is a cross-region cloud account design question (EU and US are separate deployments and databases, so a same-email account on each is by design). It needs a product decision and has no minimal code fix. The briefing reached the same conclusion.
 - [2026-09-29] #18043 skipped: issue #18043 is assigned to niklassemmler (Langfuse maintainer) and is a feature request whose reporter has offered their own PR; not unclaimed.
 - [2026-09-29] #18046 skipped: issue #18046 is assigned to Langfuse maintainer hassiebp (verified via gh issue view), so it is not unclaimed
+- [2026-09-29] #18053 skipped: issue #18053 concerns the Codex Stop hook in the separate langfuse/codex-observability-plugin repo; no such code exists in langfuse/langfuse, and the fix is a large streaming redesign.
