@@ -355,3 +355,4 @@ merge here, and it spends attention we need for the small ones.
 - [2026-09-30] #161859 skipped: Issue #161859 has no established root cause or reproduction. ClawSweeper review (2026-09-30) says the zero-change retry is intentional when routing estimates from prompt messages and recovery checks the transcript. It calls the right fix unclear: aligning the 
 - [2026-09-30] #161906 skipped: auto-generated update-failure report with redacted diagnostics (failed phase command redacted, exit 1); no reproducible defect or identifiable failing check to fix
 - [2026-09-30] #162044 skipped: issue is an auto-generated update failure report (doctor-failed, exit 1) with no failing doctor check, target, or repro; no identifiable defect to fix minimally
+- [2026-09-30] #162075 skipped: ClawSweeper automatic implementation is queued on #162075 (openclaw/clawsweeper run 36765278020, posted 2026-09-30T19:27Z); existing pipeline owns this fix, per prior lessons.
