@@ -354,3 +354,4 @@ merge here, and it spends attention we need for the small ones.
 - [2026-09-30] #161757 skipped: issue is an auto-generated update failure report (win32, runtime-verification-failed) with redacted diagnostics and no reproducible defect or code path to fix
 - [2026-09-30] #161859 skipped: Issue #161859 has no established root cause or reproduction. ClawSweeper review (2026-09-30) says the zero-change retry is intentional when routing estimates from prompt messages and recovery checks the transcript. It calls the right fix unclear: aligning the 
 - [2026-09-30] #161906 skipped: auto-generated update-failure report with redacted diagnostics (failed phase command redacted, exit 1); no reproducible defect or identifiable failing check to fix
+- [2026-09-30] #162044 skipped: issue is an auto-generated update failure report (doctor-failed, exit 1) with no failing doctor check, target, or repro; no identifiable defect to fix minimally
