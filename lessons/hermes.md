@@ -534,3 +534,4 @@ still buys nothing.
 - [2026-09-30] #129368 skipped: issue gives no mechanism/repro; duplicate (content,timestamp) rows likely intentional compaction-generation copies (display dedupe collapses them by design); cannot verify a defect without live data
 - [2026-09-30] #129593 skipped: already covered by open PRs #129598 (names #129593), #89575, #80822 for null SSE chunks in the stream loop
 - [2026-09-30] #129622 skipped: duplicate of #108335; many open PRs already cover it (ours #108339, plus #128711, #129628, #116268, #108343, #109456)
+- [2026-09-30] #129443 skipped: #129443 is an intermittent (3/12) remote-Windows group-chat reply drop with no identified root cause; the issue itself asks for runtime instrumentation of dispatch/terminal status, so no verifiable minimal fix can be written from the code alone
