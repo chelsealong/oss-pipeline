@@ -525,3 +525,4 @@ still buys nothing.
 
 - [2026-09-30] #129050 skipped: issue #129050 premise unverified — on main, a fresh heartbeat with a live writer pid (or a live multiplexer) already returns True in _builtin_gateway_liveness; the issue names no failing probe, and the only remaining False paths (dead writer pid, legacy bare
 - [2026-09-30] #129065 skipped: #129065 is a report of DB-level history duplication with no reproduction or identified code path; the reporter only lists candidate areas (rehydration, compaction rotation, truncation) inside heavily reworked persistence code (replace_messages / archive_and_co
+- [2026-09-30] #129153 skipped: already fixed by open PR #129157 (fix(compression): treat process transports as hosted)
