@@ -352,3 +352,4 @@ merge here, and it spends attention we need for the small ones.
 - [2026-09-30] #161527 skipped: report is a multi-symptom auth issue needing a hosted OpenRouter/macOS repro; the one concrete claim (openrouter/openrouter/auto) is intentional, since the upstream model id is "openrouter/auto" and an existing test asserts it
 - [2026-09-30] #161622 skipped: issue is an auto-generated update failure report (unexpected-error, no target/mode/repro/logs); no concrete defect to fix
 - [2026-09-30] #161757 skipped: issue is an auto-generated update failure report (win32, runtime-verification-failed) with redacted diagnostics and no reproducible defect or code path to fix
+- [2026-09-30] #161859 skipped: Issue #161859 has no established root cause or reproduction. ClawSweeper review (2026-09-30) says the zero-change retry is intentional when routing estimates from prompt messages and recovery checks the transcript. It calls the right fix unclear: aligning the 
