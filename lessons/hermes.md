@@ -513,3 +513,4 @@ still buys nothing.
 - [2026-09-30] #128664 skipped: issue is packaging skew in a stale Termux .deb; main already defines _check_update_provenance, and republishing (#128663) is outside a code fix
 - [2026-09-30] #128697 skipped: could not identify a mechanism by which apply() mutates stamp inputs (members_stamp and workspace copy use the same exclusions; uv.lock is only read; workspace is a fresh copy). No reproduction without the reporter plugin (memory-rewind); a speculative fix wou
 - [2026-09-30] #128705 skipped: issue #128705 is a design question (visibility vs liveness semantics) that the reporter explicitly leaves to maintainers; a prior draft PR #120378 failed review repeatedly because the liveness clock has many writers across transports. No minimal, safe fix.
+- [2026-09-30] #128713 skipped: issue #128713 is a vague support request ("not running", link to a private diagnostics page, no traceback or reproduction); no verifiable code defect to fix
