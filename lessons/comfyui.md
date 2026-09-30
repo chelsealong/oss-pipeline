@@ -58,3 +58,4 @@
 - [2026-09-30] #16673 skipped: MPS-only silent failure; no root cause identifiable in node/model/VAE code without Apple Silicon reproduction, so no verifiable fix or failing test possible
 - [2026-09-30] #16673 skipped: #16673 is an MPS-only silent failure with no MPS-specific code in the node path; no root cause can be identified or tested without Apple Silicon hardware (same conclusion as earlier run today)
 - [2026-09-30] #16679 skipped: reporter of #16679 wrote "Happy to open a PR" (offered to fix it themselves); no PR yet, but the issue is theirs per lessons on not racing an offered fix
+- [2026-09-30] #16687 skipped: #16687 is a gfx1151 ROCm unified-memory/GTT OOM raised by the HIP runtime inside post_cast.copy_ during VBAR casting; no ComfyUI code defect is identified, and it cannot be reproduced or verified without that hardware.
