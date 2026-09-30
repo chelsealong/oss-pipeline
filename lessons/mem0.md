@@ -7,3 +7,4 @@
 - [2026-09-26] #7467 skipped: Issue #7467 describes a regression exclusively in the managed hosted Mem0 Platform (api.mem0.ai / mcp.mem0.ai) — infer:false writes reach Postgres via the hosted /v1/memories/ endpoint but are not indexed into Turbopuffer via the hosted /v3/memories/ pipelin
 - [2026-09-30] #7467 skipped: #7467 is a regression in the hosted Mem0 Platform backend (api.mem0.ai indexing infer:false writes into Turbopuffer). It is not in this repo, so there is nothing to fix here.
 - [2026-09-30] #7440 skipped: issue #7440 already has PR #7448 (closes it, only gate-closed pending accepted label) and a claimant; not duplicating
+- [2026-09-30] #7432 skipped: #7432 already has our own fix PR #7433 (chelsealong:fix/pinecone-entity-collection-separator), gate-closed pending the accepted label; it reopens automatically, so re-filing would duplicate it
