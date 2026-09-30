@@ -95,3 +95,4 @@
 - [2026-09-30] #18081 skipped: issue #18081 is assigned to hassiebp (Hassieb Pakzad), a Langfuse maintainer, so it is already claimed despite the watcher check.
 - [2026-09-30] #18081 skipped: issue #18081 is assigned to hassiebp, a Langfuse maintainer (confirmed via gh issue view --json assignees), so it is already claimed.
 - [2026-09-30] #18100 skipped: issue #18100 is assigned to sumerman (Langfuse maintainer) and the reporter states "a PR follows"; claimed
+- [2026-09-30] #18103 skipped: issue #18103 is assigned to nkabardin (the maintainer who filed it), so it is taken
