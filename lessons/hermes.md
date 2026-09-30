@@ -517,3 +517,4 @@ still buys nothing.
 - [2026-09-30] #128959 skipped: issue #128959 is an environment problem (ruamel missing after a source-update dependency sync was refused because sudo/root does not own the checkout); no confirmed code defect and no minimal fix
 - [2026-09-30] #128968 skipped: issue #128968 has no reproducible code path — root-owned __pycache__ files under ~/.hermes/hermes-agent are most likely from running hermes/update under sudo or a root service, and the report gives no evidence of which hermes code path spawns root processes.
 - [2026-09-30] #128985 skipped: open PR #89176 (fix(google-chat): stop format_message leaking GC1 placeholders) already fixes this in cards.py + tests
+- [2026-09-30] #128988 skipped: root cause unidentified (Windows packaged-desktop, renderer route/lease hang before prompt.submit, no repro or testable fix on Linux); a speculative change risks a no-op fix
