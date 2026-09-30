@@ -351,3 +351,4 @@ merge here, and it spends attention we need for the small ones.
 
 - [2026-09-30] #161527 skipped: report is a multi-symptom auth issue needing a hosted OpenRouter/macOS repro; the one concrete claim (openrouter/openrouter/auto) is intentional, since the upstream model id is "openrouter/auto" and an existing test asserts it
 - [2026-09-30] #161622 skipped: issue is an auto-generated update failure report (unexpected-error, no target/mode/repro/logs); no concrete defect to fix
+- [2026-09-30] #161757 skipped: issue is an auto-generated update failure report (win32, runtime-verification-failed) with redacted diagnostics and no reproducible defect or code path to fix
