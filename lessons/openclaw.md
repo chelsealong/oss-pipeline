@@ -346,3 +346,4 @@ merge here, and it spends attention we need for the small ones.
 - [2026-09-29] #160875 skipped: ClawSweeper automatic implementation is actively in progress on #160875 (run 36513886937, updated 2026-09-29T02:46Z), and open PR #160805 edits the same restart-intent.ts clear path.
 - [2026-09-29] #160839 skipped: ClawSweeper automatic implementation is actively in progress on #160839 (openclaw/clawsweeper run 36509553797, State: Planning, updated 2026-09-29); an existing pipeline owns this fix, per prior lessons.
 - [2026-09-29] #161016 skipped: Issue #161016 is a bare automated update-failure report (global-install-failed, redacted command, exit 1) with no error text, no reproduction and no established root cause; no minimal fix is identifiable.
+- [2026-09-30] #161349 skipped: issue #161349 is an auto-generated update-failure report with redacted command, unknown exit and no root cause; maintainers still awaiting diagnostics, nothing actionable to fix
