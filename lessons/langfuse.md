@@ -97,3 +97,4 @@
 - [2026-09-30] #18100 skipped: issue #18100 is assigned to sumerman (Langfuse maintainer) and the reporter states "a PR follows"; claimed
 - [2026-09-30] #18103 skipped: issue #18103 is assigned to nkabardin (the maintainer who filed it), so it is taken
 - [2026-09-30] #18103 skipped: issue is assigned to its author (a maintainer) and a bot; no repro details either
+- [2026-09-30] #18040 skipped: issue is a Langfuse Cloud account/support matter (EU and US regions are separate deployments with separate databases); no minimal code fix exists, and cross-region account linking is a product/architecture decision
