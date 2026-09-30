@@ -538,3 +538,4 @@ still buys nothing.
 - [2026-09-30] #129640 skipped: open PR #129641 ("HUD boots on the connection it was opened from", by the issue author) already fixes #129640
 - [2026-09-30] #129666 skipped: open PR #129397 (fix(web): ignore replayed sidebar connection state) already fixes this same redial-on-onState-replay bug in ChatSidebar.tsx
 - [2026-09-30] #129677 skipped: fix requires editing pyproject.toml markers (dependency manifest, and uv.lock must be regenerated via hermes pm lock); hard constraint forbids touching manifests/lockfiles
+- [2026-09-30] #129712 skipped: open PR #129714 (fix(desktop): compact partial clone packs after fetch, branch updater-pack-gc-129712) already fixes issue #129712
