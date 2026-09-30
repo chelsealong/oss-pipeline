@@ -1130,11 +1130,14 @@ intent.LOG = _pl.Path(_tf.mkdtemp()) / "intent-harness.log"
 bad = 0
 if len(intent.MODELS) < 4:
     print("  FAIL  no fallback chain — one outage silences every judgement"); bad += 1
-if intent.MODELS[0] != "qwen3.7-max-preview":
-    print(f"  FAIL  chain does not start at qwen3.7-max-preview (got {intent.MODELS[0]})"); bad += 1
-# qwen3.7-max and qwen3.7-max-2026-05-20 exhausted their free tier on 2026-08-21.
+if intent.MODELS[0] != "qwen3.8-flash":
+    print(f"  FAIL  chain does not start at qwen3.8-flash (got {intent.MODELS[0]})"); bad += 1
+# qwen3.7-max and qwen3.7-max-2026-05-20 exhausted their free tier on 2026-08-21;
+# the seven below followed by 2026-09-23 (HTTP 403 "Free quota exhausted").
 # Free quota does not come back, so they are removed, not demoted.
-for gone in ("qwen3.7-max", "qwen3.7-max-2026-05-20"):
+for gone in ("qwen3.7-max", "qwen3.7-max-2026-05-20", "qwen3.7-max-preview",
+             "qwen3.7-max-2026-05-17", "qwen3.7-plus-2026-05-26", "qwen3.7-max-2026-06-08",
+             "kimi-k2.7-code", "glm-5.2", "qwen3.7-flash"):
     if gone in intent.MODELS:
         print(f"  FAIL  {gone} is exhausted and still on the chain"); bad += 1
 # qwen3.7-plus answered a real comment in 32.9s. At the old 25s timeout it was

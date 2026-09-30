@@ -57,15 +57,22 @@ ENDPOINT = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
 # Order set by Bruce on 2026-08-21 after qwen3.7-max and qwen3.7-max-2026-05-20
 # exhausted their free tier. Those two are removed rather than demoted: there is
 # nothing to wait for.
+#
+# Replaced by Bruce's request on 2026-09-30. Seven of the nine had exhausted
+# their free tier (HTTP 403) by 2026-09-23, leaving qwen3.7-plus answering
+# almost everything at 16s a call. Each model below answered a live probe and
+# scored 10/10 on ten labelled claim/feedback cases through _ask:
+# qwen3.8-flash 2.4s, glm-5.3 1.0s, kimi-k2.6 0.5s, qwen-plus-latest 0.5s,
+# deepseek-v4.1-flash 1.2s, deepseek-v4-flash-0731 1.0s.
+# Left out: qwen3.8-max (9/10, one unparsed), qwen3.8-max-0902 (7/10),
+# qwen3.8-2.4t-a95b (8/10) — reasoning spends the 200-token budget; and
+# qwen3.7-max, which answered today but exhausted its free tier on 2026-08-21.
 MODELS = [
-    "qwen3.7-max-preview",
-    "qwen3.7-max-2026-05-17",
-    "qwen3.7-plus-2026-05-26",
-    "qwen3.7-plus",
-    "qwen3.7-max-2026-06-08",
-    "kimi-k2.7-code",
-    "glm-5.2",
-    "qwen3.7-flash",
+    "qwen3.8-flash",
+    "glm-5.3",
+    "kimi-k2.6",
+    "qwen-plus-latest",
+    "deepseek-v4.1-flash",
     "deepseek-v4-flash-0731",
 ]
 MODEL = MODELS[0]          # kept for logs and for anything that reads a name
