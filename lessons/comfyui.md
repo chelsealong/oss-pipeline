@@ -60,3 +60,4 @@
 - [2026-09-30] #16679 skipped: reporter of #16679 wrote "Happy to open a PR" (offered to fix it themselves); no PR yet, but the issue is theirs per lessons on not racing an offered fix
 - [2026-09-30] #16687 skipped: #16687 is a gfx1151 ROCm unified-memory/GTT OOM raised by the HIP runtime inside post_cast.copy_ during VBAR casting; no ComfyUI code defect is identified, and it cannot be reproduced or verified without that hardware.
 - [2026-09-30] #16690 skipped: #16690 asks for a defensive shape check with a nicer error for a mis-wired workflow (audio-only latent into MiniMaxH3). AGENTS.md says not to add defensive shape checks that merely replace the clear failure from the tensor operation below them, so a maintainer
+- [2026-09-30] #16694 skipped: #16694 is a LoRA error under the third-party Raylight multi-GPU custom node setup (screenshot-only traceback, ComfyUI "0.37.4" is not upstream versioning); no reproducible bug in core ComfyUI code.
