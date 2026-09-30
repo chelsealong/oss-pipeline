@@ -87,3 +87,4 @@
 - [2026-09-29] #18046 skipped: issue #18046 is assigned to Langfuse maintainer hassiebp (verified via gh issue view), so it is not unclaimed
 - [2026-09-29] #18053 skipped: issue #18053 concerns the Codex Stop hook in the separate langfuse/codex-observability-plugin repo; no such code exists in langfuse/langfuse, and the fix is a large streaming redesign.
 - [2026-09-30] #18057 skipped: issue #18057 is now assigned to maintainer hassiebp, and PR #12248 already proposes a partial fix
+- [2026-09-30] #18057 skipped: issue #18057 is assigned to hassiebp (Hassieb Pakzad), a Langfuse maintainer per prior lessons; also overlaps open PRs #12248/#16811/#11373 on the same pydantic-ai usage branch, and the reporter asked maintainers which approach they prefer.
