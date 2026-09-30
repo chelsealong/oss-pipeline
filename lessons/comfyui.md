@@ -54,3 +54,4 @@
 - [2026-09-29] #16644 skipped: #16644 is an MPS-only silent corruption in Wan 2.2 5B DiT output; the reporter already ruled out attention backends, dtypes and the known baddbmm issue. There is no identifiable code defect, and it cannot be reproduced or tested without Apple Silicon hardware 
 - [2026-09-29] #16648 skipped: #16648 is a feature request (widen Start Loop input types); the traceback is a String Concatenate node receiving a Tensor from a mis-wired workflow, not a code defect, and the design is a maintainer decision.
 - [2026-09-29] #16662 skipped: #16662 is frontend behavior. The %Node.widget% substitution in filename_prefix is done client-side by the separate ComfyUI_frontend package, and the backend only sees the resulting string. The remaining ask (converting COMBO outputs to strings) is a feature re
+- [2026-09-30] #16671 skipped: #16671 is a frontend (ComfyUI_frontend workflowService/changeTracker TypeScript) bug; that code is not in this Python repo
