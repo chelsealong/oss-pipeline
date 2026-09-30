@@ -91,3 +91,4 @@
 - [2026-09-30] #18021 skipped: issue #18021 is assigned to hassiebp, a Langfuse maintainer (gh issue view shows the assignment), so it is already claimed
 - [2026-09-30] #17906 skipped: #17906 is a large product/UI feature request (select arbitrary trace metadata as table columns); maintainer said it goes to the roadmap, and another contributor volunteered. Not a minimal fix.
 - [2026-09-30] #18074 skipped: issue #18074 is assigned to maintainer maxdeichmann, and open PR #17679 (fix(web): return not-found for missing score config byId) already covers scoreConfigs.byId 404
+- [2026-09-30] #18074 skipped: issue #18074 is assigned to maintainer maxdeichmann, and open PR #17679 ("return not-found for missing score config byId") already covers the same fix
