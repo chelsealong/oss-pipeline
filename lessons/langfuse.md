@@ -94,3 +94,4 @@
 - [2026-09-30] #18074 skipped: issue #18074 is assigned to maintainer maxdeichmann, and open PR #17679 ("return not-found for missing score config byId") already covers the same fix
 - [2026-09-30] #18081 skipped: issue #18081 is assigned to hassiebp (Hassieb Pakzad), a Langfuse maintainer, so it is already claimed despite the watcher check.
 - [2026-09-30] #18081 skipped: issue #18081 is assigned to hassiebp, a Langfuse maintainer (confirmed via gh issue view --json assignees), so it is already claimed.
+- [2026-09-30] #18100 skipped: issue #18100 is assigned to sumerman (Langfuse maintainer) and the reporter states "a PR follows"; claimed
