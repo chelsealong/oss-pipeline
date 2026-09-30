@@ -51,3 +51,4 @@
 
 - [2026-09-30] #7353 skipped: #7353 needs a client-lifecycle design decision. Every call site uses `async with self._get_api_client()`, and vertexai AsyncClient.__aexit__ calls aclose() on the shared api client. Caching one client would close it after the first call. Fixing that means remo
 - [2026-09-30] #7362 skipped: #7362 (title "Jj") is an entirely unfilled bug-report template with no bug description, so there is nothing to fix. A stray self-authored "picking this up" comment exists with no branch behind it (same dead-claim pattern as earlier runs).
+- [2026-09-30] #7362 skipped: #7362 (title "Jj") is an entirely unfilled bug-report template with no bug description; nothing to fix. Stray self-authored claim comment has no branch behind it.
