@@ -19,3 +19,4 @@
 - [2026-09-27] #4777 skipped: Issue #4777 is a completely blank/unfilled bug report template (title "[Bug]", body is just the raw template placeholders — "Provide a clear and concise description of what the bug is", no repro steps, no logs, no environment info, zero comments). There is n
 - [2026-09-28] #4813 skipped: Issue #4813 reports that POST /v2/scrape/{id}/interact re-loads the scrape URL in a brand-new browser from a fixed US IP pool, discarding the original scrape's `location`/`proxy`. The reporter's own diagnosis matches the code exactly: `scrapeInteractController
 - [2026-09-30] #4777 skipped: Issue #4777 is a blank unfilled bug template (title "[Bug]", no repro, logs or environment, zero comments); there is no defect to fix.
+- [2026-09-30] #4729 skipped: #4729 is website marketing copy (firecrawl.dev tools page) not in this repo; no code defect
