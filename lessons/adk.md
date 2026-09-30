@@ -49,3 +49,4 @@
 - [2026-09-29] #7345 skipped: #7345 is a feature request whose reporter explicitly awaits maintainer decisions on attribute naming (OTel semconv vs adk.experimental) and content gating, and offers to send the PR themselves once agreed. Not ours to settle.
 - [2026-09-30] issue #7353 blocked by review:  Not approved. I could not run the tests here (pytest and vertexai are not installed), so this rests on reading the code.  1. Correctness / event loops (main reason). The PR now caches one AsyncClient per service instance and never closes it. The PR body admits it never tested use across event loops
 
+- [2026-09-30] #7353 skipped: #7353 needs a client-lifecycle design decision. Every call site uses `async with self._get_api_client()`, and vertexai AsyncClient.__aexit__ calls aclose() on the shared api client. Caching one client would close it after the first call. Fixing that means remo
