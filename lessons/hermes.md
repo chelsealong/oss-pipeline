@@ -523,3 +523,4 @@ still buys nothing.
 - [2026-09-30] #129029 skipped: issue #129029 has needs-repro label, no root cause; macOS/iTerm2 focus-loss input hang cannot be reproduced here, and any fix (focus-reporting re-arm) would be speculative and untestable, i.e. a likely no-op.
 - [2026-09-30] issue #129038 blocked by review:  Front 0 (no-op / premise) fails. Nothing in production reads config["model"]["fallback_model"]: get_fallback_chain (hermes_cli/fallback_config.py:114) reads only the root keys fallback_providers and fallback_model. A repo-wide grep of hermes_cli, agent, gateway, cron and tui_gateway finds no read o
 
+- [2026-09-30] #129050 skipped: issue #129050 premise unverified — on main, a fresh heartbeat with a live writer pid (or a live multiplexer) already returns True in _builtin_gateway_liveness; the issue names no failing probe, and the only remaining False paths (dead writer pid, legacy bare
