@@ -528,3 +528,4 @@ still buys nothing.
 - [2026-09-30] #129153 skipped: already fixed by open PR #129157 (fix(compression): treat process transports as hosted)
 - [2026-09-30] #129174 skipped: issue #129174 bundles a Chromium-internal FATAL abort and a Chromium compositor animation bug; the suggested SwiftShader-forcing fix (item 3) is already replaced on main by a witnessed-GPU-death gate (#124255, linux-nvidia-egl-fallback.ts). No small, testable 
 - [2026-09-30] #129190 skipped: issue is a flaky custom proxy (unexpected EOF) already logged and retried by the agent; no concrete defect, labeled needs-repro
+- [2026-09-30] #129196 skipped: issue #129196 is a P3 feature request; native image input (image_input_mode, supports_vision) and reasoning_content empty-response handling already exist on main, and the report shows no specific faulty code path or repro (likely a local llama.cpp capability-d
