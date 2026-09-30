@@ -24,3 +24,4 @@
 - [2026-09-27] #23273 skipped: issue #23273 is already fixed by open PR #23274 (run-llama/llama_index), opened by the issue's own author (yetuge) nine minutes after filing the issue. PR #23274 explicitly says "Fixes #23273", changes the exact same function (default_parse_choice_select_answe
 - [2026-09-28] #23297 skipped: issue #23297 explicitly poses an unresolved API design question to maintainers rather than describing a single correct fix. The author (chrikrah) writes "Either reading is defensible and the choice is yours: 0 means the run stops before the first model call, o
 - [2026-09-30] #23313 skipped: already fixed by open PR #23104 (fix(core): tolerate None and dict tool arguments in token counting), same file/function/fix, does not reference the issue number
+- [2026-09-30] #23236 skipped: issue #23236 is a promotional/design question to maintainers about where to document a third-party paid endpoint (BlockRun); no defect or actionable code change.
