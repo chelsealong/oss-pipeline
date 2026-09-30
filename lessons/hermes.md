@@ -527,3 +527,4 @@ still buys nothing.
 - [2026-09-30] #129065 skipped: #129065 is a report of DB-level history duplication with no reproduction or identified code path; the reporter only lists candidate areas (rehydration, compaction rotation, truncation) inside heavily reworked persistence code (replace_messages / archive_and_co
 - [2026-09-30] #129153 skipped: already fixed by open PR #129157 (fix(compression): treat process transports as hosted)
 - [2026-09-30] #129174 skipped: issue #129174 bundles a Chromium-internal FATAL abort and a Chromium compositor animation bug; the suggested SwiftShader-forcing fix (item 3) is already replaced on main by a witnessed-GPU-death gate (#124255, linux-nvidia-egl-fallback.ts). No small, testable 
+- [2026-09-30] #129190 skipped: issue is a flaky custom proxy (unexpected EOF) already logged and retried by the agent; no concrete defect, labeled needs-repro
