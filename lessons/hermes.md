@@ -539,3 +539,4 @@ still buys nothing.
 - [2026-09-30] #129666 skipped: open PR #129397 (fix(web): ignore replayed sidebar connection state) already fixes this same redial-on-onState-replay bug in ChatSidebar.tsx
 - [2026-09-30] #129677 skipped: fix requires editing pyproject.toml markers (dependency manifest, and uv.lock must be regenerated via hermes pm lock); hard constraint forbids touching manifests/lockfiles
 - [2026-09-30] #129712 skipped: open PR #129714 (fix(desktop): compact partial clone packs after fetch, branch updater-pack-gc-129712) already fixes issue #129712
+- [2026-09-30] #129731 skipped: #129731 is not reproducible (reporter says the store and reader are clean). Its hypothesis about the receipt/settle path is unverified, and open PR #128169 is already changing the same collapse-duplicate-final.ts path.
