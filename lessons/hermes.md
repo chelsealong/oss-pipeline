@@ -519,3 +519,4 @@ still buys nothing.
 - [2026-09-30] #128985 skipped: open PR #89176 (fix(google-chat): stop format_message leaking GC1 placeholders) already fixes this in cards.py + tests
 - [2026-09-30] #128988 skipped: root cause unidentified (Windows packaged-desktop, renderer route/lease hang before prompt.submit, no repro or testable fix on Linux); a speculative change risks a no-op fix
 - [2026-09-30] #129004 skipped: issue #129004 is a feature request for a new cron job field (monitor: {mode: level, repeat_every_s}) needing product/API design across job schema, scheduler state, cron tool, CLI and dashboard; not a minimal bug fix, and the maintainers would need to pick the 
+- [2026-09-30] #129021 skipped: main already force-injects the kanban toolset for dispatcher-owned workers (model_tools.py _select_tool_names); the disabled_toolsets gap is covered by open PR #100846; the remaining CHECK-constraint ask is a schema migration needing a maintainer decision
