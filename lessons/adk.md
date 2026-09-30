@@ -47,3 +47,5 @@
 - [2026-09-29] #7338 skipped: #7338 asks a maintainer contract question (post-append fetch vs local approximate timestamp vs documented reload); reporter explicitly awaits a decision and docs do not establish that server updateTime equals event timestamp. Not ours to settle. Also a stray s
 - [2026-09-29] #7341 skipped: open PR #7327 (install greenlet with the db extra and name it when missing) already fixes #7341; the fix also needs pyproject.toml, a dependency manifest
 - [2026-09-29] #7345 skipped: #7345 is a feature request whose reporter explicitly awaits maintainer decisions on attribute naming (OTel semconv vs adk.experimental) and content gating, and offers to send the PR themselves once agreed. Not ours to settle.
+- [2026-09-30] issue #7353 blocked by review:  Not approved. I could not run the tests here (pytest and vertexai are not installed), so this rests on reading the code.  1. Correctness / event loops (main reason). The PR now caches one AsyncClient per service instance and never closes it. The PR body admits it never tested use across event loops
+
