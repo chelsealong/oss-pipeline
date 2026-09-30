@@ -5,3 +5,4 @@
 - [2026-09-18] #7302 skipped: issue #7302 already has our own fix pushed and PR'd; re-filing would violate "do not re-file the same change under a new pull request when one is closed"
 - [2026-09-21] #7336 skipped: Issue #7336 is already claimed and actively being handled by others. PR #7341 (by Ritiky23) already implements the full fix (Titan results[0].outputText parsing with legacy fallback + unit tests) and was only auto-closed by the pr-gate bot pending the 'accepte
 - [2026-09-26] #7467 skipped: Issue #7467 describes a regression exclusively in the managed hosted Mem0 Platform (api.mem0.ai / mcp.mem0.ai) — infer:false writes reach Postgres via the hosted /v1/memories/ endpoint but are not indexed into Turbopuffer via the hosted /v3/memories/ pipelin
+- [2026-09-30] #7467 skipped: #7467 is a regression in the hosted Mem0 Platform backend (api.mem0.ai indexing infer:false writes into Turbopuffer). It is not in this repo, so there is nothing to fix here.
