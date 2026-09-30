@@ -64,16 +64,26 @@ ENDPOINT = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
 # scored 10/10 on ten labelled claim/feedback cases through _ask:
 # qwen3.8-flash 2.4s, glm-5.3 1.0s, kimi-k2.6 0.5s, qwen-plus-latest 0.5s,
 # deepseek-v4.1-flash 1.2s, deepseek-v4-flash-0731 1.0s.
-# Left out: qwen3.8-max (9/10, one unparsed), qwen3.8-max-0902 (7/10),
-# qwen3.8-2.4t-a95b (8/10) — reasoning spends the 200-token budget; and
+# Left out: qwen3.8-max (9/10, one unparsed), qwen3.8-2.4t-a95b (8/10) — reasoning spends the 200-token budget; and
 # qwen3.7-max, which answered today but exhausted its free tier on 2026-08-21.
+#
+# Ordered by free-tier expiry, soonest first (Bruce, 2026-09-30, from the
+# DashScope console): spend each grant before it lapses rather than after.
+#   deepseek-v4-flash-0731 2026-10-31 | kimi-k3 11-17 | glm-5.3 11-23 |
+#   qwen3.8-flash 11-25 | qwen3.8-max-0902 12-01 | deepseek-v4.1-flash 12-13
+# kimi-k2.6 and qwen-plus-latest were not on that console page, so their
+# expiry is unknown; they go last. kimi-k3 scored 10/10 on the same cases.
+# qwen3.8-max-0902 answers 7/10 and returns nothing on the rest, which only
+# costs a fall-through. qwen3.8-27b is left out: 5/10, no answer on the rest.
 MODELS = [
-    "qwen3.8-flash",
+    "deepseek-v4-flash-0731",
+    "kimi-k3",
     "glm-5.3",
+    "qwen3.8-flash",
+    "qwen3.8-max-0902",
+    "deepseek-v4.1-flash",
     "kimi-k2.6",
     "qwen-plus-latest",
-    "deepseek-v4.1-flash",
-    "deepseek-v4-flash-0731",
 ]
 MODEL = MODELS[0]          # kept for logs and for anything that reads a name
 COOLDOWN = 300.0
