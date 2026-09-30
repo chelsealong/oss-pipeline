@@ -349,3 +349,4 @@ merge here, and it spends attention we need for the small ones.
 - [2026-09-30] #161349 skipped: issue #161349 is an auto-generated update-failure report with redacted command, unknown exit and no root cause; maintainers still awaiting diagnostics, nothing actionable to fix
 - [2026-09-30] issue #161441 blocked by review:  The original objections are not resolved.  1. The test is still not shown to fail without the source change. I ran `node scripts/run-vitest.mjs src/commands/doctor-skill-workshop-collection-backups.test.ts` on the current tree. It fails at setup with "Compiled subprocess build failed with exit code
 
+- [2026-09-30] #161527 skipped: report is a multi-symptom auth issue needing a hosted OpenRouter/macOS repro; the one concrete claim (openrouter/openrouter/auto) is intentional, since the upstream model id is "openrouter/auto" and an existing test asserts it
