@@ -518,3 +518,4 @@ still buys nothing.
 - [2026-09-30] #128968 skipped: issue #128968 has no reproducible code path — root-owned __pycache__ files under ~/.hermes/hermes-agent are most likely from running hermes/update under sudo or a root service, and the report gives no evidence of which hermes code path spawns root processes.
 - [2026-09-30] #128985 skipped: open PR #89176 (fix(google-chat): stop format_message leaking GC1 placeholders) already fixes this in cards.py + tests
 - [2026-09-30] #128988 skipped: root cause unidentified (Windows packaged-desktop, renderer route/lease hang before prompt.submit, no repro or testable fix on Linux); a speculative change risks a no-op fix
+- [2026-09-30] #129004 skipped: issue #129004 is a feature request for a new cron job field (monitor: {mode: level, repeat_every_s}) needing product/API design across job schema, scheduler state, cron tool, CLI and dashboard; not a minimal bug fix, and the maintainers would need to pick the 
