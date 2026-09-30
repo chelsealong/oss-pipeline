@@ -8,3 +8,4 @@
 - [2026-09-30] #7467 skipped: #7467 is a regression in the hosted Mem0 Platform backend (api.mem0.ai indexing infer:false writes into Turbopuffer). It is not in this repo, so there is nothing to fix here.
 - [2026-09-30] #7440 skipped: issue #7440 already has PR #7448 (closes it, only gate-closed pending accepted label) and a claimant; not duplicating
 - [2026-09-30] #7432 skipped: #7432 already has our own fix PR #7433 (chelsealong:fix/pinecone-entity-collection-separator), gate-closed pending the accepted label; it reopens automatically, so re-filing would duplicate it
+- [2026-09-30] #7232 skipped: #7232 is claimed by ktz03, who said they are driving it via PR #7238 (gate-closed, reopens on the accepted label). Earlier draft #7237 is also closed. Not duplicating.
