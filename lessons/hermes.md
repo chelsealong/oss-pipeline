@@ -510,3 +510,4 @@ still buys nothing.
 - [2026-09-29] #127651 skipped: idle-CPU burn already fixed on main by 8682d5791b (JXA system() wrapper, #124253); remaining opt-out config is a feature/maintainer call
 - [2026-09-29] #127698 skipped: python/osascript heredoc masking is deliberate design (tests test_terminal_heredoc_background_guard.py and test_self_repo_guard.py:269 assert it, to avoid '&' false positives in interpreter bodies); removing it would revert intended behavior and break those te
 - [2026-09-30] #128151 skipped: issue #128151 is a large, unagreed feature (adapter-level composite text+TTS delivery with dedup/evidence/12 acceptance tests, no maintainer response); no minimal fix that honors the requested contract
+- [2026-09-30] #128664 skipped: issue is packaging skew in a stale Termux .deb; main already defines _check_update_provenance, and republishing (#128663) is outside a code fix
