@@ -1,2 +1,4 @@
 - [2026-09-25] #2288 skipped: reporter (talelboussetta) is mid-conversation with a maintainer (cc @ntohidi) and explicitly offered to send the PR themselves: "If per-URL failures are the direction you want, I can send a PR. cc @ntohidi". This is both a design decision (should batch validat
 - [2026-09-28] #2308 skipped: issue asks to re-enable deep_crawl_strategy in Docker API, which was deliberately removed in 0.9.0 for SSRF protection; a security/product decision for maintainers, not ours to settle
+- [2026-09-30] issue #2319 blocked by review:  Fix itself looks correct: the old code wrote self.current_page_number from each worker thread and read it later in _process_page, a real race. Passing page_number as an argument removes the shared state. No other users of the attribute remain, and the change touches no security surface. The test is
+
