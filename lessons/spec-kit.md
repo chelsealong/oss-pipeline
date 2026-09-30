@@ -35,3 +35,4 @@
 - [2026-09-30] #4793 skipped: #4793 is a multi-PR architectural refactor (new shared primitive across four installers) that builds on the still-open #4769 (step installer); no minimal fix, scope still to be agreed with maintainers
 - [2026-09-30] #4705 skipped: #4705 is a new-command feature request labeled triage-out-of-scope; a maintainer comment says the workflow is operator-directed and the proposal is out of scope. No minimal bug fix.
 - [2026-09-30] #4799 skipped: #4799 is a feature request (new hook events) and the author wrote 'I'm happy to send the PR', so they are claiming it; no maintainer has agreed the design
+- [2026-09-30] #4803 skipped: #4803 is a community extension catalog submission (Conformidad), not a code defect; CONTRIBUTING forbids editing extensions/catalog.community.json directly in a PR (same as #4729)
