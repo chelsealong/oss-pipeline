@@ -532,3 +532,4 @@ still buys nothing.
 - [2026-09-30] #129211 skipped: #129211 has no reproduced root cause; the reporter says DOM count and event stream are still missing. The proposed clamped-index mechanism is unverified and the fix would need desktop runtime data. A test that fails without the fix cannot be written.
 - [2026-09-30] #129235 skipped: mechanism already fixed on main (f57d235748, 9ec6b94eca, 744f05e220; worker pins committed site-packages, failures logged as errors); remaining asks (notify on state=error, autostash receipt) are separate design features
 - [2026-09-30] #129368 skipped: issue gives no mechanism/repro; duplicate (content,timestamp) rows likely intentional compaction-generation copies (display dedupe collapses them by design); cannot verify a defect without live data
+- [2026-09-30] #129593 skipped: already covered by open PRs #129598 (names #129593), #89575, #80822 for null SSE chunks in the stream loop
