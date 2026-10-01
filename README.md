@@ -1,3 +1,46 @@
+# OSS pipeline — local Codex runtime
+
+The user authorized restoration on 2026-10-01 after stopping the Claude pipeline.
+Execution now uses the local Codex CLI and existing ChatGPT login. GitHub Actions
+Claude workflows stay disabled. This runtime requires the Mac to be awake and
+logged in; it resumes via launchd after login. Credentials never leave this Mac.
+
+Three launchd services run from `~/.local/share/oss-scanner`:
+
+- `oss-watch`: new issue detection plus rotating backlog scans; retains repository
+  exclusions, duplicate checks and dispatch caps from `scan.py` / `watch.py`.
+- `oss-prwatch`: actionable feedback and failing-check detection, every five minutes.
+- `oss-fix`: one serial worker with durable SQLite jobs under `.runtime/`.
+
+Every coding job has an isolated checkout, bounded generation and independent
+review. The controller checks scope, caps, current ownership/eligibility, and
+exact reviewed patch before committing and pushing. No force pushes or merges.
+Codex-generated work is disclosed; automated review is never described as human.
+Conversational replies, coordination requests and proposed PR closures are kept
+for human follow-up, not automatically posted.
+
+The existing Qwen/DashScope judge retains cached semantic claim/feedback checks.
+Actual HTTP requests (including fallbacks) are capped at 120/hour. The existing
+45 coding sessions/5h limit includes both generation and review. Judge calls pause
+when the worker is unhealthy, stale, rate-capped or disabled. A task failure opens
+a 30-minute circuit; failed/interrupted tasks are preserved and not replayed.
+
+`state/runtime.json` is local deployment configuration (ignored by git).
+`python3 runtime.py` prints queue, heartbeat, model-call counts and recent results.
+`./verify.sh` runs the offline commit gate (syntax, workflow YAML and runtime
+regression checks). Legacy Claude checks remain archived below the active route.
+`python3 codex_worker.py --probe` performs one real, read-only Codex auth probe.
+`run-fix.sh` drains at most one already-queued task; it no longer invokes Claude.
+
+Pause: set `enabled` to false in the deployed config and unload oss-watch,
+oss-prwatch and oss-fix. Keep `.runtime/jobs/` for recovery; interrupted work may
+already have reached a fork. Do not blindly reset failed tasks to queued.
+
+The older workflow YAML and scripts are retained for provenance, not active
+execution. The archived pre-Codex README follows and is not current configuration.
+
+---
+
 # oss-pipeline
 
 Automated OSS contribution pipeline: scan upstream trackers for genuinely

@@ -36,6 +36,7 @@ import sys
 import time
 from datetime import datetime, timedelta, timezone
 
+import runtime as rt
 import scan  # reuse REPOS, vet(), gh(), QUEUE, STATE
 
 ROOT = pathlib.Path(__file__).resolve().parent
@@ -340,7 +341,7 @@ def refund_quota_runs() -> int:
 
 def budget_allows(key: str) -> bool:
     """Consume one unit of today's dispatch budget for `key`, if any is left."""
-    if quota_paused():
+    if not rt.local() and quota_paused():
         log(f"  [{key}] Claude quota exhausted — not dispatching")
         return False
 
@@ -414,6 +415,15 @@ def dispatch_fix(key: str, number: int) -> bool:
     short-circuits every GATED repo into claim.sh, which is right for a
     freshly vetted issue and wrong for one we have already been assigned.
     """
+    if rt.local():
+        if os.environ.get("DRY_RUN") == "1":
+            return False
+        accepted = rt.enqueue("fix", key, number)
+        if accepted:
+            record_dispatch(key, number)
+            log(f"  -> queued local Codex fix {key}#{number}")
+        return accepted
+
     import subprocess
 
     if os.environ.get("DRY_RUN") == "1":
@@ -469,6 +479,18 @@ def trigger_fix(key: str, number: int) -> bool:
         dispatched there. Dispatching is a GitHub API call, so the VPN is fine,
         and it sidesteps `schedule`, measured at twice in six hours for */5.
     """
+    if rt.local():
+        if not budget_allows(key):
+            return False
+        if key in GATED:
+            state = _assignment(scan.REPOS[key]["upstream"], number)
+            if not state or "chelsealong" not in state[1]:
+                return False
+        if dispatch_fix(key, number):
+            budget_charge(key)
+            return True
+        return False  # Never fall back to the retired Claude runner.
+
     import subprocess
 
     if key in GATED:

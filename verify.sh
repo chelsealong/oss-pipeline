@@ -5,6 +5,13 @@
 # production instead. Add a check for each new failure class; fixing only the
 # instance leaves the next one free to happen.
 set -uo pipefail
+# The active backend has a separate offline gate. The historical checks below
+# exercise retired Claude workflows, live quotas and alarms, and even perform
+# real issue vetting. Keep them for legacy provenance rather than invoking that
+# chain from a Codex commit hook. This does not disable the commit gate.
+if [ -f "$(dirname "$0")/codex_worker.py" ]; then
+  exec python3 "$(dirname "$0")/verify_codex.py"
+fi
 # Target dir is overridable so the harness can be pointed at a fixture and
 # proven to actually catch the failures it claims to. An evaluator nobody can
 # test is just another untested change.

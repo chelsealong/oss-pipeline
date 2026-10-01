@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Pre-scan tracked OSS repos for genuinely unclaimed, well-scoped issues.
 
-Runs cheap and often (API only, no clones, no LLM) so the expensive fix job can
+Runs often (GitHub API plus cached semantic claim checks; no clones) so the expensive fix job can
 skip triage entirely and just pop a vetted candidate.
 
     ./scan.py                 # scan all repos, write queue/
@@ -16,6 +16,7 @@ no linked PR by three independent signals, not swarmed, no excluded labels.
 from __future__ import annotations
 
 import argparse
+import runtime as rt
 import json
 import pathlib
 import re
@@ -621,12 +622,12 @@ def claimants(upstream: str, number: int) -> list[str]:
     # this issue" for every issue, silently, forever — claim detection had never
     # once fired. Any future failure is now logged rather than swallowed.
     try:
-        out = gh(["api", "-X", "GET", f"repos/{upstream}/issues/{number}/comments",
+        out = gh(["api", "-X", "GET", "--paginate", "--slurp", f"repos/{upstream}/issues/{number}/comments",
                   "-f", "per_page=60",
-                  "--jq", "[.[] | {u:.user.login, b:.body, at:.created_at}]"])
+                  "--jq", "[.[][] | {u:.user.login, b:.body, at:.created_at}]"])
     except Exception as e:  # noqa: BLE001
         print(f"    claimants({upstream}#{number}) failed: {str(e)[:120]}", file=sys.stderr)
-        return []
+        raise RuntimeError(f"claim lookup unavailable for {upstream}#{number}") from e
     who, judged = [], 0
     for c in json.loads(out or "[]"):
         u = c["u"]
@@ -800,6 +801,8 @@ def session_headroom(key: str | None = None) -> tuple[bool, str]:
 
     With `key`, the repository's own share of the window is checked as well.
     """
+    if rt.local():
+        return rt.room()
     if key:
         mine = _sessions_for(key)
         share = session_share(key)

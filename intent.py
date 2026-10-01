@@ -31,6 +31,7 @@ Design notes that matter more than the code:
 from __future__ import annotations
 
 import hashlib
+import runtime as rt
 import datetime as _dt
 import json
 import os
@@ -390,6 +391,8 @@ def _window(t: str, head: int = 6000, tail: int = 6000) -> str:
 
 def _ask(system: str, user: str, *, author: str = "?") -> dict | None:
     """One judgement call, down the model list. None means none of them answered."""
+    if rt.local() and not rt.ready()[0]:
+        raise rt.Paused(rt.ready()[1])
     api = _load_key()
     if not api:
         _log(f"NOKEY author={author} :: {user[:80]!r}")
@@ -439,6 +442,8 @@ def _ask(system: str, user: str, *, author: str = "?") -> dict | None:
 
 
 def _ask_one(model: str, system: str, user: str, api: str, *, author: str) -> dict | None:
+    if rt.local():
+        rt.require_judge()
     payload = json.dumps({
         "model": model,
         "messages": [{"role": "system", "content": system},

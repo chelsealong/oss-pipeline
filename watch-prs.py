@@ -29,6 +29,7 @@ machine's VPN exit and `claude -p` cannot run here at all.
 from __future__ import annotations
 
 import argparse
+import runtime as rt
 import json
 import traceback
 import os
@@ -220,6 +221,9 @@ def stand_down(pr: dict, who: str, issue: int) -> bool:
     """Close our PR because someone else claimed the issue. Keeps the promise."""
     import subprocess
     repo, num = pr["_repo"], pr["number"]
+    if rt.local():
+        log(f"  [{repo}#{num}] competing claim by {who}; recorded for human review, no automatic closure")
+        return False
     note = (f"Closing this — @{who} said on #{issue} that they want to work on it, "
             "and the note I left there promised to drop mine if someone was already "
             "on it. If any of this diff is useful, take it freely.")
@@ -875,6 +879,8 @@ def dispatch(repo: str, number: int, note: str) -> bool:
     if DRY_RUN:
         log(f"  DRY_RUN would dispatch responder for {repo}#{number} ({note})")
         return True
+    if rt.local():
+        return rt.enqueue("respond", repo, number, note)
     # respond-pr spends the same account allowance as fix-one, and neither could
     # see the other's spend before this gate existed. Deliberately no repo key:
     # answering a maintainer must never wait on that repo's fix-one share.
@@ -907,6 +913,8 @@ def one_pass(seen: dict) -> int:
     dispatched = 0
 
     for pr in open_prs() + claimed_issues():
+        if rt.local() and not rt.room()[0]:
+            break
         repo, num = pr["_repo"], pr["number"]
         key = f"{repo}#{num}"
 
@@ -988,7 +996,8 @@ def one_pass(seen: dict) -> int:
         labels = [l["name"] for l in ((pr.get("labels") or {}).get("nodes") or [])]
         log(f"  [{key}] {len(fresh)} new item(s) from {who} [{budget} budget]; "
             f"labels: {', '.join(labels) or '-'}")
-        if dispatch(repo, num, who):
+        note = json.dumps({"authors": who, "events": sorted(i["id"] for i in fresh), "is_issue": bool(pr.get("_is_issue"))}) if rt.local() else who
+        if dispatch(repo, num, note):
             # A dry run must not consume the day's budget; dispatch() returns
             # True in DRY_RUN so the flow can be exercised, which had already
             # pushed AutoGPT#13752 to its cap without ever contacting anything.
@@ -1005,7 +1014,7 @@ def one_pass(seen: dict) -> int:
     # A PR we closed ourselves is invisible to open_prs(), so a correction can
     # only reach us here. Cheap: only unhandled entries from the last week.
     try:
-        if (n := check_stand_downs()):
+        if not rt.local() and (n := check_stand_downs()):
             log(f"reopened {n} PR(s) we had closed in error")
     except Exception as e:  # noqa: BLE001
         log(f"stand-down recheck failed: {str(e)[:120]}")
