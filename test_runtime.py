@@ -5,7 +5,8 @@ from pathlib import Path
 import tempfile
 import time
 import unittest
-from unittest.mock import patch
+import subprocess
+from unittest.mock import patch, Mock
 import runtime as rt
 import codex_worker as worker
 import intent
@@ -86,5 +87,17 @@ class RuntimeTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):worker.validate_result(review,worker.REVIEW_SCHEMA)
         valid={'verdict':'APPROVE','reason':'tests ran','tests_verified':True}
         self.assertEqual(worker.validate_result(valid,worker.REVIEW_SCHEMA),valid)
+    def test_assistant_approval_without_turn_completion_is_not_success(self):
+        output=self.root/'review.json'
+        fake=Mock(pid=123456789,returncode=-15)
+        fake.communicate.side_effect=subprocess.TimeoutExpired('fake-codex',0)
+        def spawn(*args,**kwargs):
+            kwargs['stdout'].write(json.dumps({'type':'item.completed','item':{'type':'agent_message','text':json.dumps({'verdict':'APPROVE','reason':'ok','tests_verified':True})}})+'\n')
+            kwargs['stdout'].flush()
+            return fake
+        with patch.object(worker,'binary',return_value='/bin/true'),patch.object(worker.subprocess,'Popen',side_effect=spawn),patch.object(worker.os,'killpg'):
+            with self.assertRaises(subprocess.TimeoutExpired):
+                worker.agent('test',self.root,output,worker.REVIEW_SCHEMA,timeout=0)
+        self.assertFalse(output.exists())
 
 if __name__=='__main__':unittest.main()

@@ -110,8 +110,38 @@ def agent(prompt, work, output, schema=None, timeout=1800, probe=False):
     with events.open('w') as out, errors.open('w') as err:
         p = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=out, stderr=err,
                              text=True, env=env, start_new_session=True)
+        cleanup_after_completion = False
         try:
-            p.communicate(prompt, timeout=timeout)
+            deadline = time.monotonic()+timeout
+            first_input = prompt
+            completed_at = None
+            while True:
+                try:
+                    p.communicate(first_input, timeout=min(5, max(0.1, deadline-time.monotonic())))
+                    break
+                except subprocess.TimeoutExpired:
+                    first_input = None
+                    # Some CLI builds keep background catalog requests alive
+                    # after turn.completed. Bound only that shutdown tail;
+                    # an assistant message alone is NEVER completion evidence.
+                    completed = False
+                    for line in events.read_text(errors='replace').splitlines():
+                        try:
+                            completed |= json.loads(line).get('type') == 'turn.completed'
+                        except ValueError:
+                            pass
+                    if completed:
+                        completed_at = completed_at or time.monotonic()
+                    if completed_at and time.monotonic()-completed_at >= 10:
+                        cleanup_after_completion = True
+                        os.killpg(p.pid, signal.SIGTERM)
+                        try:p.wait(timeout=10)
+                        except subprocess.TimeoutExpired:
+                            os.killpg(p.pid, signal.SIGKILL);p.wait()
+                        log('Bounded CLI shutdown after verified turn.completed')
+                        break
+                    if time.monotonic() >= deadline:
+                        raise
         except BaseException:
             os.killpg(p.pid, signal.SIGTERM)
             try:
@@ -126,7 +156,11 @@ def agent(prompt, work, output, schema=None, timeout=1800, probe=False):
         try: records.append(json.loads(line))
         except ValueError: pass
     complete = any(x.get('type') == 'turn.completed' for x in records)
-    if p.returncode or not complete or not output.exists():
+    if complete and not output.exists():
+        messages = [x['item']['text'] for x in records if x.get('type')=='item.completed'
+                    and x.get('item',{}).get('type')=='agent_message']
+        if messages:output.write_text(messages[-1])
+    if (p.returncode and not cleanup_after_completion) or not complete or not output.exists():
         messages = [x.get('message') or (x.get('error') or {}).get('message','')
                     for x in records if x.get('type') in ('error','turn.failed')]
         reason = ('; '.join(messages) or f'exit={p.returncode}; completed={complete}')[:400]
