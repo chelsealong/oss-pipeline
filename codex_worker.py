@@ -43,7 +43,14 @@ def log(msg):
     print(time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), msg, flush=True)
 
 def run(args, cwd=None, timeout=120):
-    p = subprocess.run(args, cwd=cwd, capture_output=True, text=True, timeout=timeout)
+    # Retry only known read operations. A failed push/create may already have
+    # reached GitHub and must never be blindly replayed.
+    readonly = (args[:2]==['gh','api'] and not any(x in args for x in ['-X','--method','-f','-F','--field','--raw-field'])) or args[:3]==['gh','pr','list']
+    for attempt in range(3 if readonly else 1):
+        p = subprocess.run(args, cwd=cwd, capture_output=True, text=True, timeout=timeout)
+        if not p.returncode or not readonly or not re.search(r'TLS handshake timeout|connection reset|unexpected EOF|i/o timeout|HTTP 50[234]',p.stderr,re.I):
+            break
+        if attempt<2:time.sleep(2*(attempt+1))
     if p.returncode:
         # Never dump env/auth. GitHub CLI errors contain operation diagnostics.
         raise RuntimeError(f'{args[0]} failed ({p.returncode}): {p.stderr[-600:]}')

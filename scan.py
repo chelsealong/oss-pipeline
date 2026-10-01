@@ -473,6 +473,9 @@ def gh(args: list[str], timeout: int = 60, kind: str = "other", retries: int = 3
         if r.returncode == 0:
             return r.stdout
         err = r.stderr.strip()
+        if re.search(r'TLS handshake timeout|connection reset|unexpected EOF|i/o timeout|HTTP 50[234]', err, re.I) and attempt < retries:
+            time.sleep(2 * (attempt + 1))
+            continue
         if "secondary rate limit" in err.lower() or "rate limit" in err.lower():
             if attempt == retries:
                 raise RateLimited(err[:200])

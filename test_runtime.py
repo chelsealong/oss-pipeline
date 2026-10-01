@@ -107,5 +107,14 @@ class RuntimeTests(unittest.TestCase):
             with self.assertRaises(subprocess.TimeoutExpired):
                 worker.agent('test',self.root,output,worker.REVIEW_SCHEMA,timeout=0)
         self.assertFalse(output.exists())
+    def test_transient_read_retries_but_publish_does_not(self):
+        fail=Mock(returncode=1,stderr='TLS handshake timeout',stdout='')
+        ok=Mock(returncode=0,stderr='',stdout='{}')
+        with patch.object(worker.subprocess,'run',side_effect=[fail,ok]) as call,patch.object(worker.time,'sleep'):
+            self.assertEqual(worker.run(['gh','api','repos/o/r']),'{}')
+            self.assertEqual(call.call_count,2)
+        with patch.object(worker.subprocess,'run',return_value=fail) as call:
+            with self.assertRaises(RuntimeError):worker.run(['gh','pr','create','--repo','o/r'])
+            self.assertEqual(call.call_count,1)
 
 if __name__=='__main__':unittest.main()
