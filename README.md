@@ -6,6 +6,8 @@ The deployment pins `gpt-6-astra`, matching the user's configured model.
 The CLI is installed under the deployed `.runtime/toolchain/`, independent of IDE updates. GitHub Actions
 Claude workflows stay disabled. This runtime requires the Mac to be awake and
 logged in; it resumes via launchd after login. Credentials never leave this Mac.
+Active jobs prevent idle sleep while running; closing the lid can still suspend
+the machine. Idle watchers do not keep it awake.
 
 Three launchd services run from `~/.local/share/oss-scanner`:
 

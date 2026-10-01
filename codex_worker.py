@@ -286,7 +286,11 @@ def process(task):
     fork=api(f'repos/{ME}/{impl.split("/")[1]}')
     if (fork.get('parent') or {}).get('full_name','').lower()!=impl.lower():
         raise RuntimeError('fork parent mismatch')
-    run(['git','clone','--depth=1','--filter=blob:none','--no-checkout',fork['clone_url'],str(work)],timeout=600)
+    # Fetch actual blobs now. A partial clone may later try to lazily fetch an
+    # upstream-only object from the fork's promisor remote during checkout.
+    if shutil.disk_usage(folder).free < 5*1024**3:
+        raise rt.Paused('Less than 5 GiB free; refusing a new checkout')
+    run(['git','clone','--depth=1','--no-checkout',fork['clone_url'],str(work)],timeout=600)
     git(work,'remote','add','upstream','https://github.com/'+impl+'.git')
     default=api('repos/'+impl)['default_branch']
     git(work,'fetch','--depth=1','upstream',default)
@@ -441,10 +445,18 @@ def main():
                     task=dict(row) if row else None
                     if task:c.execute("UPDATE tasks SET status='running',attempts=attempts+1,updated=? WHERE id=?",(time.time(),task['id']))
                 if task:
+                    awake=None
+                    if sys.platform=='darwin' and Path('/usr/bin/caffeinate').exists():
+                        # Keep only an active job from idle-sleeping mid-network
+                        # request; no global energy-setting changes or idle hold.
+                        awake=subprocess.Popen(['/usr/bin/caffeinate','-i','-w',str(os.getpid())],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
                     try:process(task)
                     except rt.Paused as e:finish(task,'blocked',str(e))
                     except Exception as e:
                         finish(task,'error',str(e));rt.pause('Task failed; preserving work: '+str(e)[:250],1800)
+                    finally:
+                        if awake:
+                            awake.terminate();awake.wait(timeout=5)
                 if a.once:return
                 time.sleep(10)
             except Exception as e:
