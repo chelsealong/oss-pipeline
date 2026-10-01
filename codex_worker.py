@@ -195,7 +195,7 @@ def agent(prompt, work, output, schema=None, timeout=1800, probe=False):
 def healthcheck():
     result = agent('Do not use tools. Reply exactly OSS_CODEX_READY.', rt.DATA,
                    rt.DATA/'health.txt', timeout=120, probe=True)
-    if result != 'OSS_CODEX_READY':
+    if result.removesuffix('.') != 'OSS_CODEX_READY':
         raise RuntimeError('unexpected Codex probe response')
     rt.setmeta('health', {'ok':True,'at':time.time(),'source':'authenticated probe'})
     rt.setmeta('pause', {})

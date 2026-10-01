@@ -139,6 +139,11 @@ class RuntimeTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):worker.validate_result(review,worker.REVIEW_SCHEMA)
         valid={'verdict':'APPROVE','reason':'tests ran','tests_verified':True}
         self.assertEqual(worker.validate_result(valid,worker.REVIEW_SCHEMA),valid)
+    def test_health_probe_tolerates_sol_punctuation_but_not_other_text(self):
+        for value in ['OSS_CODEX_READY','OSS_CODEX_READY.']:
+            with patch.object(worker,'agent',return_value=value):worker.healthcheck()
+        with patch.object(worker,'agent',return_value='NOT OSS_CODEX_READY'):
+            with self.assertRaises(RuntimeError):worker.healthcheck()
     def test_assistant_approval_without_turn_completion_is_not_success(self):
         output=self.root/'review.json'
         fake=Mock(pid=123456789,returncode=-15)
