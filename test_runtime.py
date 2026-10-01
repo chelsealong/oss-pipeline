@@ -144,10 +144,13 @@ class RuntimeTests(unittest.TestCase):
         fake=Mock(pid=123456789,returncode=-15)
         fake.communicate.side_effect=subprocess.TimeoutExpired('fake-codex',0)
         def spawn(*args,**kwargs):
+            self.assertEqual(kwargs['env'].get('GH_TOKEN'),'fake-read-only-token')
+            self.assertNotIn('QWEN_API_KEY',kwargs['env'])
+            self.assertNotIn('OPENAI_API_KEY',kwargs['env'])
             kwargs['stdout'].write(json.dumps({'type':'item.completed','item':{'type':'agent_message','text':json.dumps({'verdict':'APPROVE','reason':'ok','tests_verified':True})}})+'\n')
             kwargs['stdout'].flush()
             return fake
-        with patch.object(worker,'binary',return_value='/bin/true'),patch.object(worker.subprocess,'Popen',side_effect=spawn),patch.object(worker.os,'killpg'):
+        with patch.dict('os.environ',{'GH_TOKEN':'fake-controller-token','OSS_READONLY_GH_TOKEN':'fake-read-only-token','QWEN_API_KEY':'fake','OPENAI_API_KEY':'fake'}),patch.object(worker,'binary',return_value='/bin/true'),patch.object(worker.subprocess,'Popen',side_effect=spawn),patch.object(worker.os,'killpg'):
             with self.assertRaises(subprocess.TimeoutExpired):
                 worker.agent('test',self.root,output,worker.REVIEW_SCHEMA,timeout=0)
         self.assertFalse(output.exists())

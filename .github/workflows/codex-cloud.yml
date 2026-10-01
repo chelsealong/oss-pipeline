@@ -65,6 +65,7 @@ jobs:
         id: runtime
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
+          OSS_READONLY_GH_TOKEN: ${{ github.token }}
           QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
           MODE: ${{ inputs.mode || 'live' }}
           RUN_SECONDS: ${{ inputs.run_seconds || '14400' }}

@@ -119,6 +119,11 @@ def agent(prompt, work, output, schema=None, timeout=1800, probe=False):
     for name in ('OPENAI_API_KEY','CODEX_API_KEY','ANTHROPIC_API_KEY','CLAUDE_CODE_OAUTH_TOKEN',
                  'GH_TOKEN','GITHUB_TOKEN','GH_PAT','QWEN_API_KEY','DASHSCOPE_API_KEY','CODEX_AUTH_JSON'):
         env.pop(name, None)
+    readonly_github = env.pop('OSS_READONLY_GH_TOKEN', '')
+    if readonly_github:
+        # GitHub's job token has contents:read only. Agents can inspect public
+        # upstreams without inheriting the controller's publishing PAT.
+        env['GH_TOKEN'] = readonly_github
     events = output.with_suffix('.events.jsonl')
     errors = output.with_suffix('.stderr.log')
     with events.open('w') as out, errors.open('w') as err:
