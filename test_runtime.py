@@ -76,6 +76,14 @@ class RuntimeTests(unittest.TestCase):
     def test_failed_claim_query_does_not_mean_unclaimed(self):
         with patch.object(scan,'gh',side_effect=RuntimeError('API unavailable')):
             with self.assertRaises(RuntimeError):scan.claimants('owner/repo',1)
+    def test_claimants_reads_all_pages_without_incompatible_gh_flags(self):
+        pages=[[{'user':{'login':'reader'},'body':'I see the issue','created_at':'2026-10-01T00:00:00Z'}],
+               [{'user':{'login':'fixer'},'body':'I am fixing this','created_at':'2026-10-01T00:00:00Z'}]]
+        def fake_gh(args):
+            self.assertIn('--paginate',args);self.assertIn('--slurp',args);self.assertNotIn('--jq',args)
+            return json.dumps(pages)
+        with patch.object(scan,'gh',side_effect=fake_gh),patch.object(intent,'is_claim',side_effect=[(False,'reader'),(True,'claimed')]),patch.object(scan,'_claim_went_cold',return_value=False):
+            self.assertEqual(scan.claimants('owner/repo',1),['fixer'])
     def test_scope_blocks_auth_and_manifests(self):
         for filename in ['src/auth/token.py','package.json','.github/workflows/test.yml']:
             with patch.object(worker,'git',side_effect=[filename,'']):

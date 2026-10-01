@@ -623,13 +623,14 @@ def claimants(upstream: str, number: int) -> list[str]:
     # once fired. Any future failure is now logged rather than swallowed.
     try:
         out = gh(["api", "-X", "GET", "--paginate", "--slurp", f"repos/{upstream}/issues/{number}/comments",
-                  "-f", "per_page=60",
-                  "--jq", "[.[][] | {u:.user.login, b:.body, at:.created_at}]"])
+                  "-f", "per_page=60"])
+        comments = [{"u": c["user"]["login"], "b": c.get("body"), "at": c.get("created_at")}
+                    for page in json.loads(out or "[]") for c in page]
     except Exception as e:  # noqa: BLE001
         print(f"    claimants({upstream}#{number}) failed: {str(e)[:120]}", file=sys.stderr)
         raise RuntimeError(f"claim lookup unavailable for {upstream}#{number}") from e
     who, judged = [], 0
-    for c in json.loads(out or "[]"):
+    for c in comments:
         u = c["u"]
         if "[bot]" in u or u in who:
             continue
