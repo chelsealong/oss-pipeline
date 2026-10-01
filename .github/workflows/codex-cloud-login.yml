@@ -1,0 +1,39 @@
+name: Codex cloud subscription login
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: codex-cloud-pipeline
+  cancel-in-progress: false
+jobs:
+  login:
+    if: vars.CODEX_CLOUD_ENABLED != 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      CODEX_HOME: /home/runner/codex-cloud-login
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install official Codex CLI
+        run: npm install --global @openai/codex@0.159.3
+      - name: Sign in with subscription
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          CODEX_LOGIN_PUBLIC_KEY: ${{ vars.CODEX_LOGIN_PUBLIC_KEY }}
+        run: python -u cloud_login.py
+      - name: Remove transient credentials and private login log
+        if: always()
+        run: |
+          python - <<'PY'
+          import os,shutil
+          shutil.rmtree(os.environ['CODEX_HOME'],ignore_errors=True)
+          PY

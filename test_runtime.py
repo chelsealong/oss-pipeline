@@ -15,6 +15,8 @@ import scan
 import cloud_state
 import cloud_runtime
 import cloud_store
+import cloud_login
+import base64
 
 class RuntimeTests(unittest.TestCase):
     def setUp(self):
@@ -108,6 +110,19 @@ class RuntimeTests(unittest.TestCase):
                       {'auth_mode':'chatgpt','OPENAI_API_KEY':'fake','tokens':{'refresh_token':'fake'}}]:
             with self.assertRaises(RuntimeError):cloud_runtime.validate_auth(json.dumps(value))
         cloud_runtime.validate_auth(json.dumps({'auth_mode':'chatgpt','tokens':{'refresh_token':'fake'}}))
+    def test_cloud_login_only_publishes_encrypted_device_code(self):
+        private=self.root/'private.pem';public=self.root/'public.pem'
+        subprocess.run(['openssl','genpkey','-algorithm','RSA','-pkeyopt','rsa_keygen_bits:2048','-out',str(private)],capture_output=True,check=True)
+        key=subprocess.run(['openssl','pkey','-in',str(private),'-pubout'],capture_output=True,check=True).stdout.decode()
+        with patch.dict('os.environ',{'CODEX_LOGIN_PUBLIC_KEY':key}),patch.object(cloud_runtime,'gh') as call:
+            self.assertFalse(cloud_login.publish_challenge('Starting...',public,'123'))
+            call.assert_not_called()
+            self.assertTrue(cloud_login.publish_challenge('\x1b[94m8ABC-DE123\x1b[0m',public,'123'))
+            sent=call.call_args.args[0][-1]
+            self.assertNotIn('8ABC-DE123',sent)
+            encrypted=base64.b64decode(json.loads(sent)['encrypted_code'])
+            value=subprocess.run(['openssl','pkeyutl','-decrypt','-inkey',str(private),'-pkeyopt','rsa_padding_mode:oaep','-pkeyopt','rsa_oaep_md:sha256'],input=encrypted,capture_output=True,check=True).stdout
+            self.assertEqual(value,b'8ABC-DE123')
     def test_cloud_reservation_must_persist_before_model_request(self):
         self.cfg['backend']='codex-cloud';self.save()
         with patch('cloud_store.save',side_effect=RuntimeError('checkpoint unavailable')):
