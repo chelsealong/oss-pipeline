@@ -1,0 +1,87 @@
+name: Codex cloud pipeline
+run-name: "Codex cloud ${{ inputs.mode || 'live' }}"
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [probe, canary, live]
+        default: probe
+      run_seconds:
+        description: Detection window before draining active work (60–14400 seconds)
+        default: '14400'
+  schedule:
+    - cron: '17,47 * * * *'
+
+# Single owner of credentials, durable state and task execution. No concurrent
+# runners may refresh the same subscription login or spend the same budget.
+concurrency:
+  group: codex-cloud-pipeline
+  cancel-in-progress: false
+permissions:
+  contents: read
+
+jobs:
+  runtime:
+    if: ${{ (github.event_name == 'workflow_dispatch' && inputs.mode != 'live') || vars.CODEX_CLOUD_ENABLED == 'true' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    env:
+      CODEX_HOME: /home/runner/codex-cloud-auth
+      OSS_CLOUD_STATE_DIR: /home/runner/codex-cloud-state
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install runtime
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install --no-install-recommends -y ripgrep
+          npm install --global @openai/codex@0.159.3
+          python -m pip install PyYAML==6.0.3
+          ./verify.sh
+      - name: Install dedicated subscription login
+        env:
+          CODEX_AUTH_JSON: ${{ secrets.CODEX_AUTH_JSON }}
+        run: python cloud_runtime.py install-auth
+      - name: Configure GitHub controller
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          MODE: ${{ inputs.mode || 'live' }}
+        run: |
+          git config --global user.name oss-pipeline
+          git config --global user.email chelsealong@126.com
+          gh auth setup-git
+          if [ "$MODE" = live ]; then
+            git clone --single-branch --branch codex-state --depth=1 https://github.com/chelsealong/oss-pipeline.git "$OSS_CLOUD_STATE_DIR"
+          fi
+      - name: Run managed Codex services
+        id: runtime
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
+          MODE: ${{ inputs.mode || 'live' }}
+          RUN_SECONDS: ${{ inputs.run_seconds || '14400' }}
+        run: python -u cloud_runtime.py "$MODE" --seconds "$RUN_SECONDS"
+      - name: Continue cloud chain
+        if: steps.runtime.outputs.continue == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          enabled=$(gh api repos/chelsealong/oss-pipeline/actions/variables/CODEX_CLOUD_ENABLED --jq .value)
+          if [ "$enabled" = true ]; then
+            gh workflow run codex-cloud.yml --repo chelsealong/oss-pipeline --ref main -f mode=live
+          fi
+      - name: Remove subscription cache
+        if: always()
+        run: |
+          python - <<'PY'
+          import os,shutil
+          shutil.rmtree(os.environ['CODEX_HOME'],ignore_errors=True)
+          PY

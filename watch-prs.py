@@ -913,7 +913,7 @@ def one_pass(seen: dict) -> int:
     dispatched = 0
 
     for pr in open_prs() + claimed_issues():
-        if rt.local() and not rt.room()[0]:
+        if rt.local() and not rt.room('respond')[0]:
             break
         repo, num = pr["_repo"], pr["number"]
         key = f"{repo}#{num}"

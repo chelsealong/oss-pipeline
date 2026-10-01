@@ -966,6 +966,11 @@ def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
         return False, f"repo paused: {why}", {}
     labels = {l["name"] for l in issue.get("labels", [])}
     num, title = issue["number"], issue.get("title", "")
+    assignees = {a.get('login','').lower() for a in issue.get('assignees',[]) if isinstance(a,dict)}
+    if not cfg.get('ignore_assignees') and assignees-{'chelsealong'}:
+        return False, 'assigned to another contributor', {}
+    if rt.local() and cfg.get('announce_before_work') and 'chelsealong' not in assignees and not labels & {'help wanted','good first issue'}:
+        return False, 'upstream coordination required', {}
 
     if labels & cfg.get("exclude_labels", set()):
         return False, f"excluded label {sorted(labels & cfg['exclude_labels'])}", {}
@@ -1026,6 +1031,13 @@ def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
         return False, f"linked-PR lookup unavailable, deferring: {prs[0][:110]}", {}
     if prs:
         return False, f"already has PR(s): {prs[:3]}", {}
+
+    # The author can claim work in the original issue, not just comments.
+    author = (issue.get('user') or {}).get('login','')
+    if author and author.lower() != 'chelsealong' and '[bot]' not in author:
+        authored_claim, _ = intent.is_claim(body, author=author, default=True)
+        if authored_claim:
+            return False, f'issue author {author} offers to implement', {}
 
     who = claimants(upstream, num)
     # Our own claim is the pipeline's own comment, not a rival. Counting it as

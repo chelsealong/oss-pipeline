@@ -21,7 +21,8 @@ def config():
         return {'enabled': False, 'backend': 'codex-local'}
 
 def local():
-    return config().get('backend') == 'codex-local'
+    # Historical name: both managed backends use this queue, never Claude.
+    return config().get('backend') in ('codex-local', 'codex-cloud')
 
 @contextlib.contextmanager
 def db():
@@ -51,9 +52,14 @@ def setmeta(key, value):
     with db() as c:
         c.execute('INSERT OR REPLACE INTO meta VALUES (?,?)', (key, json.dumps(value)))
 
+def checkpoint():
+    if config().get('backend')=='codex-cloud':
+        from cloud_store import save
+        save()
+
 def ready(*, require_worker=True):
     cfg = config()
-    if not cfg.get('enabled') or cfg.get('backend') != 'codex-local':
+    if not cfg.get('enabled') or not local():
         return False, 'runtime disabled'
     pause = getmeta('pause', {})
     if pause.get('until', 0) > time.time():
@@ -69,16 +75,21 @@ def ready(*, require_worker=True):
         return False, 'Codex session budget reached; judge paused too'
     return True, ''
 
-def room():
+def room(kind='fix'):
     ok, why = ready()
     if not ok:
         return ok, why
     with db() as c:
         n = c.execute("SELECT count(*) FROM tasks WHERE status IN ('queued','running')").fetchone()[0]
-    return (n < config().get('max_pending', 8), 'queue full' if n >= config().get('max_pending', 8) else '')
+    limit = config().get('max_pending', 8)
+    # Reserve one admission slot for feedback; priority alone cannot help a
+    # maintainer response if a queue full of new issues prevents admission.
+    if kind == 'fix':
+        limit = max(1, limit - config().get('response_slots', 1))
+    return (n < limit, 'queue full' if n >= limit else '')
 
-def enqueue(kind, repo, number, note=''):
-    ok, _ = room()
+def enqueue(kind, repo, number, note='', *, only_new=False):
+    ok, _ = ready()
     if not ok:
         return False
     # Fixes are unique forever; responses are unique per feedback event set.
@@ -88,9 +99,12 @@ def enqueue(kind, repo, number, note=''):
         c.execute('BEGIN IMMEDIATE')
         existing = c.execute('SELECT status FROM tasks WHERE identity=?', (identity,)).fetchone()
         if existing:
+            if only_new:return False
             return existing[0] in ('queued', 'running', 'done', 'skipped', 'blocked')
         n = c.execute("SELECT count(*) FROM tasks WHERE status IN ('queued','running')").fetchone()[0]
-        if n >= config().get('max_pending', 8):
+        limit = config().get('max_pending', 8)
+        if kind == 'fix':limit = max(1, limit-config().get('response_slots', 1))
+        if n >= limit:
             return False
         now = time.time()
         c.execute('INSERT INTO tasks(identity,kind,repo,number,note,status,created,updated) VALUES (?,?,?,?,?,?,?,?)',
@@ -110,6 +124,7 @@ def reserve_call(kind):
             return False, f'{kind} call budget reached ({limit})'
         c.execute('INSERT INTO calls VALUES (?,?)', (time.time(), kind))
         c.execute('DELETE FROM calls WHERE at<?', (time.time()-86400*7,))
+    checkpoint()  # Persist spending BEFORE a cloud model request.
     return True, ''
 
 class Paused(RuntimeError):

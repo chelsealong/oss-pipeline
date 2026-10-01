@@ -13,6 +13,8 @@ import intent
 import watch
 import scan
 import cloud_state
+import cloud_runtime
+import cloud_store
 
 class RuntimeTests(unittest.TestCase):
     def setUp(self):
@@ -43,13 +45,34 @@ class RuntimeTests(unittest.TestCase):
         with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
             list(pool.map(put,[1]*12+list(range(2,22))))
         with rt.db() as c:
-            self.assertEqual(c.execute('SELECT count(*) FROM tasks').fetchone()[0],8)
+            self.assertEqual(c.execute('SELECT count(*) FROM tasks').fetchone()[0],7)
             self.assertEqual(c.execute('SELECT count(*) FROM tasks WHERE number=1').fetchone()[0],1)
     def test_response_event_dedup_and_new_feedback(self):
         self.assertTrue(rt.enqueue('respond','NousResearch/hermes-agent',1,'event1'))
         self.assertTrue(rt.enqueue('respond','NousResearch/hermes-agent',1,'event1'))
         self.assertTrue(rt.enqueue('respond','NousResearch/hermes-agent',1,'event2'))
         with rt.db() as c:self.assertEqual(c.execute('SELECT count(*) FROM tasks').fetchone()[0],2)
+    def test_full_fix_queue_still_admits_feedback(self):
+        for n in range(7):self.assertTrue(rt.enqueue('fix','hermes',n))
+        self.assertFalse(rt.room()[0])
+        self.assertFalse(rt.enqueue('fix','adk',99))
+        self.assertTrue(rt.room('respond')[0])
+        self.assertTrue(rt.enqueue('respond','NousResearch/hermes-agent',77,'review-event'))
+        self.assertFalse(rt.room('respond')[0])
+        self.assertTrue(rt.enqueue('respond','NousResearch/hermes-agent',77,'review-event'))
+    def test_issue_author_claim_and_coordination_rejected_before_coding(self):
+        issue={'number':9,'title':'A real bug','body':'A detailed reproducible report. '*6,
+               'labels':[],'assignees':[],'user':{'login':'reporter'}}
+        with patch.object(scan,'linked_prs',return_value=[]),patch.object(intent,'is_claim',return_value=(True,'offered fix')),patch.object(scan,'claimants',side_effect=AssertionError('unnecessary API')):
+            self.assertIn('issue author',scan.vet({},'o/r',issue)[1])
+        with patch.object(scan,'linked_prs',side_effect=AssertionError('unnecessary API')):
+            self.assertIn('coordination',scan.vet({'announce_before_work':True},'o/r',issue)[1])
+    def test_langfuse_triage_assignment_is_not_a_claim(self):
+        issue={'number':9,'title':'A real bug','body':'A detailed reproducible report. '*6,
+               'labels':[],'assignees':[{'login':'maintainer'}]}
+        with patch.object(scan,'linked_prs',return_value=[]),patch.object(scan,'claimants',return_value=[]):
+            self.assertTrue(scan.vet({'ignore_assignees':True},'o/r',issue)[0])
+            self.assertFalse(scan.vet({},'o/r',issue)[0])
     def test_circuit_stops_dispatch_without_cloud_fallback(self):
         rt.pause('auth revoked')
         with patch.object(watch.subprocess,'Popen',side_effect=AssertionError('fallback started')):
@@ -61,6 +84,11 @@ class RuntimeTests(unittest.TestCase):
             self.assertTrue(watch.dispatch_fix('hermes',123))
             record.assert_called_once_with('hermes',123)
         with rt.db() as c:self.assertEqual(c.execute('SELECT number FROM tasks').fetchone()[0],123)
+    def test_repeated_fix_detection_does_not_charge_dispatch_twice(self):
+        with patch.object(watch,'record_dispatch'),patch.object(watch,'budget_allows',return_value=True),patch.object(watch,'budget_charge') as charge:
+            self.assertTrue(watch.trigger_fix('hermes',123))
+            self.assertFalse(watch.trigger_fix('hermes',123))
+            charge.assert_called_once_with('hermes')
     def test_failure_is_not_replayed(self):
         rt.enqueue('fix','hermes',1)
         with rt.db() as c:c.execute("UPDATE tasks SET status='error'")
@@ -74,6 +102,21 @@ class RuntimeTests(unittest.TestCase):
         for _ in range(4):self.assertTrue(rt.reserve_call('codex')[0])
         self.assertFalse(rt.ready()[0])
         self.assertFalse(rt.reserve_call('judge')[0])
+    def test_cloud_auth_rejects_api_billing(self):
+        for value in [{'auth_mode':'apikey','OPENAI_API_KEY':'fake'},
+                      {'auth_mode':'chatgpt','tokens':{}},
+                      {'auth_mode':'chatgpt','OPENAI_API_KEY':'fake','tokens':{'refresh_token':'fake'}}]:
+            with self.assertRaises(RuntimeError):cloud_runtime.validate_auth(json.dumps(value))
+        cloud_runtime.validate_auth(json.dumps({'auth_mode':'chatgpt','tokens':{'refresh_token':'fake'}}))
+    def test_cloud_reservation_must_persist_before_model_request(self):
+        self.cfg['backend']='codex-cloud';self.save()
+        with patch('cloud_store.save',side_effect=RuntimeError('checkpoint unavailable')):
+            with self.assertRaises(RuntimeError):rt.reserve_call('judge')
+        with rt.db() as db:self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],1)
+    def test_network_error_does_not_pause_all_repos_for_half_hour(self):
+        self.assertEqual(worker.failure_cooldown('Recv failure: Connection reset by peer'),60)
+        self.assertEqual(worker.failure_cooldown('403 auth unavailable'),1800)
+        self.assertEqual(worker.failure_cooldown('quota exceeded'),1800)
     def test_failed_claim_query_does_not_mean_unclaimed(self):
         with patch.object(scan,'gh',side_effect=RuntimeError('API unavailable')):
             with self.assertRaises(RuntimeError):scan.claimants('owner/repo',1)
@@ -139,5 +182,22 @@ class RuntimeTests(unittest.TestCase):
             self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],1)
         self.assertFalse(rt.ready()[0])
         self.assertIsNone(rt.getmeta('worker_heartbeat'))
+    def test_cloud_store_pushes_state_without_deployment_credentials(self):
+        store=self.root/'store';remote=self.root/'remote.git';store.mkdir()
+        def git(*args,cwd=None):
+            return subprocess.run(['git',*args],cwd=cwd,capture_output=True,text=True,check=True).stdout
+        git('init','--bare',str(remote));git('init','-b','codex-state',cwd=store)
+        git('config','user.name','Test',cwd=store);git('config','user.email','test@example.invalid',cwd=store)
+        git('remote','add','origin',str(remote),cwd=store)
+        (self.root/'state').mkdir();(self.root/'queue').mkdir()
+        (self.root/'state/runtime.json').write_text('{"credential":"DO_NOT_EXPORT"}')
+        (self.root/'state/seen.json').write_text('{"hermes":[1]}')
+        self.cfg['backend']='codex-cloud';self.save()
+        with patch.object(rt,'ROOT',self.root),patch.dict('os.environ',{'OSS_CLOUD_STATE_DIR':str(store)}):
+            cloud_store.save()
+        files=git('--git-dir',str(remote),'ls-tree','-r','--name-only','codex-state')
+        self.assertIn('checkpoint.json',files);self.assertIn('state/seen.json',files)
+        self.assertNotIn('runtime.json',files)
+        self.assertNotIn('DO_NOT_EXPORT',(store/'checkpoint.json').read_text())
 
 if __name__=='__main__':unittest.main()

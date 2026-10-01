@@ -12,7 +12,19 @@ SQLite tasks, separate generation/review phases and controller-only publication.
 `local_service.py watch` owns issue detection and periodic reconciliation;
 `local_service.py prwatch` handles PR feedback. The legacy Claude GitHub Actions
 workflows remain disabled and cloud `state/watcher.json` stays off. Never start
-them alongside the local worker. Do not upload local Codex credentials to GitHub.
+them alongside the local worker. Do not upload the existing desktop Codex
+credentials to GitHub.
+
+The user subsequently requested cloud restoration and explicitly selected
+ChatGPT/Codex subscription usage. `codex-cloud.yml` is the new cloud backend,
+with production gated by the `CODEX_CLOUD_ENABLED` repository variable. Cloud
+authentication uses a NEW, independent device login, stored only in the
+`CODEX_AUTH_JSON` encrypted Secret; never copy the existing desktop auth cache.
+Keep production off until the cloud canary passes and the local services have
+stopped. Seed `codex-state` from the final local snapshot before enabling it.
+The cloud runner checkpoints task transitions and call reservations before
+model requests/publication, rotates refreshed login credentials, drains work
+before handover, and chains its successor. Never run both backends live.
 
 Qwen/DashScope is used only for the existing cached claim/feedback judge. Every
 actual request is capped (including fallback requests) and requires a healthy

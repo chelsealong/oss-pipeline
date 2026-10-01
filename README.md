@@ -1,20 +1,42 @@
-# OSS pipeline — local Codex runtime
+# OSS pipeline — managed Codex runtime
 
 Cloud migration requested on 2026-10-01: the former Claude deployment used
 GitHub-hosted Ubuntu runners, a 5.5-hour self-chaining watcher and dispatched
 fix/review jobs authenticated with `CLAUDE_CODE_OAUTH_TOKEN`. Production remains
-local pending a cloud Codex authentication choice. `codex-cloud-preflight.yml`
+local pending cloud authentication and cutover. The user selected ChatGPT/Codex
+subscription usage, not paid API-key access. `codex-cloud-preflight.yml`
 is manual-only, runs offline checks on Ubuntu, and makes no model calls.
 `cloud_state.py` exports/imports a portable queue checkpoint: it preserves call
 budgets and deduplication, invalidates stale health, and holds interrupted tasks
 for inspection. It never copies credentials. No Claude workflow was re-enabled.
+
+The production workflow is `codex-cloud.yml`. It uses a dedicated device login
+in encrypted Secret `CODEX_AUTH_JSON` plus the existing `GH_PAT` and
+`QWEN_API_KEY`. Set repository variable `CODEX_CLOUD_ENABLED=true` only after a
+successful `mode=canary` run, stopping local services, and seeding the dedicated
+`codex-state` branch. Missing/false means scheduled production cannot start.
+One GitHub concurrency group owns all cloud modes and subscription refreshes.
+Each live runner detects work for four hours, then drains the active task for
+up to 90 minutes before handing over; a twice-hourly schedule recovers the chain.
+Runtime state is committed on the separate state branch, including before model
+spending and publication. An interrupted task is held for inspection, never replayed.
+Refreshed subscription credentials are written back to the encrypted Secret, not
+state, logs or artifacts. `CODEX_CLOUD_ENABLED=false` stops new detection on the
+next control check and drains active work; cancel the workflow for an immediate stop.
+
+Queue admission reserves one of eight slots for PR feedback. Fixes rejected for
+author ownership or required coordination are filtered before cloning; Langfuse's
+triage assignment exception remains intact. Repeated detection does not charge
+the dispatch budget again. Transient GitHub connection failures cool down for one
+minute; auth/quota failures retain the 30-minute circuit. No failed task is replayed.
 
 The user authorized restoration on 2026-10-01 after stopping the Claude pipeline.
 Execution now uses standalone Codex CLI 0.159.3 and the existing ChatGPT login.
 The deployment pins `gpt-6-astra`, matching the user's configured model.
 The CLI is installed under the deployed `.runtime/toolchain/`, independent of IDE updates. GitHub Actions
 Claude workflows stay disabled. This runtime requires the Mac to be awake and
-logged in; it resumes via launchd after login. Credentials never leave this Mac.
+logged in; it resumes via launchd after login. The existing desktop login stays
+on this Mac; the cloud backend uses its own independent login.
 Active jobs prevent idle sleep while running; closing the lid can still suspend
 the machine. Idle watchers do not keep it awake.
 

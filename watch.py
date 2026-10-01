@@ -66,8 +66,8 @@ def build_query(keys: list[str], per_repo: int) -> str:
             f'r{i}: repository(owner:"{owner}", name:"{name}") {{'
             f"  issues(first:{per_repo}, states:OPEN,"
             f"         orderBy:{{field:CREATED_AT, direction:DESC}}) {{"
-            f"    nodes {{ number title url createdAt body"
-            f"             assignees(first:1){{ totalCount }}"
+            f"    nodes {{ number title url createdAt body author{{login}}"
+            f"             assignees(first:20){{ totalCount nodes{{login}} }}"
             f"             comments {{ totalCount }}"
             f"             labels(first:20){{ nodes {{ name }} }} }}"
             f"  }}"
@@ -108,7 +108,8 @@ def to_rest_shape(node: dict) -> dict:
         "created_at": node["createdAt"],
         "comments": (node.get("comments") or {}).get("totalCount", 0),
         "labels": [{"name": l["name"]} for l in (node.get("labels") or {}).get("nodes", [])],
-        "assignees": [1] * (node.get("assignees") or {}).get("totalCount", 0),
+        "user": node.get('author') or {},
+        "assignees": (node.get("assignees") or {}).get("nodes", []),
     }
 
 
@@ -418,7 +419,7 @@ def dispatch_fix(key: str, number: int) -> bool:
     if rt.local():
         if os.environ.get("DRY_RUN") == "1":
             return False
-        accepted = rt.enqueue("fix", key, number)
+        accepted = rt.enqueue("fix", key, number, only_new=True)
         if accepted:
             record_dispatch(key, number)
             log(f"  -> queued local Codex fix {key}#{number}")

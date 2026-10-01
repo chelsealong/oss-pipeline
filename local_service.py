@@ -25,7 +25,7 @@ def main():
             rt.setmeta(args.role+'_heartbeat',time.time())
             if args.role=='watch':rt.setmeta('detector_heartbeat',time.time())
             try:
-                if rt.room()[0]:
+                if rt.room('respond' if args.role=='prwatch' else 'fix')[0]:
                     if args.role=='watch':
                         new,accepted=watch.sweep(keys,seen,5,bootstrap)
                         watch.save_seen(seen);bootstrap=False
