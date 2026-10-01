@@ -110,6 +110,13 @@ class RuntimeTests(unittest.TestCase):
                       {'auth_mode':'chatgpt','OPENAI_API_KEY':'fake','tokens':{'refresh_token':'fake'}}]:
             with self.assertRaises(RuntimeError):cloud_runtime.validate_auth(json.dumps(value))
         cloud_runtime.validate_auth(json.dumps({'auth_mode':'chatgpt','tokens':{'refresh_token':'fake'}}))
+    def test_failed_restore_never_overwrites_cloud_checkpoint(self):
+        auth=self.root/'auth.json';auth.write_text('{}')
+        with patch.object(cloud_runtime,'auth_file',return_value=auth),patch.object(cloud_runtime,'cloud_enabled',return_value=True),patch.object(cloud_store,'restore',side_effect=RuntimeError('restore failed')),patch.object(cloud_store,'save') as save,patch.object(cloud_runtime,'rotate_auth') as rotate:
+            with self.assertRaisesRegex(RuntimeError,'restore failed'):
+                cloud_runtime.run('live',60)
+            save.assert_not_called()
+            rotate.assert_called_once()
     def test_cloud_login_only_publishes_encrypted_device_code(self):
         private=self.root/'private.pem';public=self.root/'public.pem'
         subprocess.run(['openssl','genpkey','-algorithm','RSA','-pkeyopt','rsa_keygen_bits:2048','-out',str(private)],capture_output=True,check=True)

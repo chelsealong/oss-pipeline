@@ -65,7 +65,7 @@ def stop(process, timeout=30):
 def run(mode,seconds):
     configure(mode)
     previous=hashlib.sha256(auth_file().read_bytes()).hexdigest()
-    children=[];logs=[]
+    children=[];logs=[];restored=False
     def start(name,args):
         log=(rt.DATA/(name+'.log')).open('a');logs.append(log)
         child=subprocess.Popen([sys.executable,'-u',*args],stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
@@ -74,6 +74,7 @@ def run(mode,seconds):
         if mode=='live':
             if not cloud_enabled():raise RuntimeError('Cloud production switch is off')
             cloud_store.restore()
+            restored=True
         else:
             # No production state or upstream tasks are imported into canary.
             import codex_worker
@@ -112,7 +113,7 @@ def run(mode,seconds):
         for child in reversed(children):stop(child)
         for log in logs:log.close()
         try:
-            if mode=='live':
+            if mode=='live' and restored:
                 # Record task status and retained budgets even on a service failure.
                 cloud_store.save()
         finally:
