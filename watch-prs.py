@@ -420,9 +420,9 @@ def upstreams() -> list[str]:
     return out
 
 
-# 50 per page, so this caps the watcher at 400 open PRs. Well above the 99 we
-# hold today, and a bound rather than an unbounded loop against a live API.
-MAX_PR_PAGES = 8
+# Feedback-rich GraphQL pages are expensive. Smaller pages avoid timeouts
+# while retaining the existing 400-PR coverage bound.
+MAX_PR_PAGES = 20
 
 
 def _tag(nodes: list[dict]) -> list[dict]:
@@ -446,7 +446,7 @@ def open_prs() -> list[dict]:
     # ~440 PRs/day, so ours never appear in a "first: 20" window and were being
     # missed entirely. One search covers every repo at once.
     repo_filter = " ".join(f"repo:{r}" for r in upstreams())
-    q = ('{search(type:ISSUE, first:50, after:%%s, query:"is:pr is:open author:%s %s")'
+    q = ('{search(type:ISSUE, first:20, after:%%s, query:"is:pr is:open author:%s %s")'
          '{pageInfo{hasNextPage endCursor} nodes{'
          '... on PullRequest{'
          ' number title url body createdAt updatedAt author{login} headRefName isDraft'

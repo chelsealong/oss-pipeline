@@ -469,7 +469,17 @@ def gh(args: list[str], timeout: int = 60, kind: str = "other", retries: int = 3
 
     for attempt in range(retries + 1):
         _pace(kind)
-        r = subprocess.run(["gh", *args], capture_output=True, text=True, timeout=timeout)
+        try:
+            r = subprocess.run(["gh", *args], capture_output=True, text=True, timeout=timeout)
+        except subprocess.TimeoutExpired:
+            # Only retry a known read: GraphQL uses POST even for queries.
+            query = next((x[6:].lstrip() for x in args if x.startswith('query=')), '')
+            method = next((args[i+1] for i,x in enumerate(args[:-1]) if x in ('-X','--method')), '')
+            read = method == 'GET' or (args[:2] == ['api','graphql'] and query.startswith(('{','query ')))
+            if not read or attempt == retries:
+                raise
+            time.sleep(2 * (attempt + 1))
+            continue
         if r.returncode == 0:
             return r.stdout
         err = r.stderr.strip()

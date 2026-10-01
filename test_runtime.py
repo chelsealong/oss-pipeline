@@ -116,5 +116,13 @@ class RuntimeTests(unittest.TestCase):
         with patch.object(worker.subprocess,'run',return_value=fail) as call:
             with self.assertRaises(RuntimeError):worker.run(['gh','pr','create','--repo','o/r'])
             self.assertEqual(call.call_count,1)
+    def test_graphql_timeout_retries_query_not_mutation(self):
+        ok=Mock(returncode=0,stdout='{}')
+        with patch.object(scan,'_pace'),patch.object(scan.subprocess,'run',side_effect=[subprocess.TimeoutExpired('gh',60),ok]) as call,patch('time.sleep'):
+            self.assertEqual(scan.gh(['api','graphql','-f','query={viewer{login}}']),'{}')
+            self.assertEqual(call.call_count,2)
+        with patch.object(scan,'_pace'),patch.object(scan.subprocess,'run',side_effect=subprocess.TimeoutExpired('gh',60)) as call:
+            with self.assertRaises(subprocess.TimeoutExpired):scan.gh(['api','graphql','-f','query=mutation { write }'])
+            self.assertEqual(call.call_count,1)
 
 if __name__=='__main__':unittest.main()
