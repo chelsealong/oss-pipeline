@@ -1,0 +1,56 @@
+name: Codex cloud preflight
+
+# Read-only deployment rehearsal. Never calls a model or publishes upstream work.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codex-cloud-preflight
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned Codex CLI and test dependency
+        run: |
+          npm install --global @openai/codex@0.159.3
+          python -m pip install PyYAML==6.0.3
+      - name: Check portable runtime and offline regressions
+        run: |
+          codex --version
+          gh --version
+          command -v rg
+          ./verify.sh
+      - name: Confirm credential readiness without exposing values
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
+          CODEX_AUTH_JSON: ${{ secrets.CODEX_AUTH_JSON }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          rows = ['## Codex cloud preflight', '',
+                  'Offline validation only. Production remains disabled.', '']
+          for name in ['GH_TOKEN','QWEN_API_KEY','CODEX_AUTH_JSON','OPENAI_API_KEY']:
+              rows.append(f'- {name}: '+('configured' if os.environ.get(name) else 'not configured'))
+          Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(rows)+'\n')
+          if not os.environ.get('GH_TOKEN'):
+              raise SystemExit('Missing GH_PAT')
+          PY
+          gh api user --jq '"GitHub authentication verified for: " + .login'

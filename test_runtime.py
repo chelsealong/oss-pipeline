@@ -12,6 +12,7 @@ import codex_worker as worker
 import intent
 import watch
 import scan
+import cloud_state
 
 class RuntimeTests(unittest.TestCase):
     def setUp(self):
@@ -124,5 +125,19 @@ class RuntimeTests(unittest.TestCase):
         with patch.object(scan,'_pace'),patch.object(scan.subprocess,'run',side_effect=subprocess.TimeoutExpired('gh',60)) as call:
             with self.assertRaises(subprocess.TimeoutExpired):scan.gh(['api','graphql','-f','query=mutation { write }'])
             self.assertEqual(call.call_count,1)
+    def test_cloud_checkpoint_preserves_limits_and_never_replays_running_job(self):
+        self.assertTrue(rt.enqueue('fix','hermes',42))
+        self.assertTrue(rt.reserve_call('judge')[0])
+        with rt.db() as db:db.execute("UPDATE tasks SET status='running'")
+        target=self.root/'cloud.json'
+        cloud_state.export_state(target)
+        with self.assertRaises(RuntimeError):cloud_state.import_state(target)
+        (rt.DATA/'queue.sqlite3').unlink()
+        cloud_state.import_state(target)
+        with rt.db() as db:
+            self.assertEqual(db.execute('SELECT status FROM tasks').fetchone()[0],'interrupted')
+            self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],1)
+        self.assertFalse(rt.ready()[0])
+        self.assertIsNone(rt.getmeta('worker_heartbeat'))
 
 if __name__=='__main__':unittest.main()
