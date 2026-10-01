@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import time
 import cloud_state
 import runtime as rt
 
@@ -38,7 +39,13 @@ def save():
             command(['git','commit','-m','Checkpoint Codex runtime'],store)
         # Retry an ambiguous push by sending the SAME commit, never by
         # rewriting history or rerunning a task. Fast-forward only.
-        command(['git','push','origin','HEAD:refs/heads/codex-state'],store)
+        for attempt in range(3):
+            try:
+                command(['git','push','origin','HEAD:refs/heads/codex-state'],store)
+                break
+            except RuntimeError:
+                if attempt==2:raise
+                time.sleep(2*(attempt+1))
 
 def restore():
     store=Path(os.environ['OSS_CLOUD_STATE_DIR'])

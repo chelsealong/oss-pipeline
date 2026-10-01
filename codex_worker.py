@@ -470,6 +470,10 @@ def main():
                         awake=subprocess.Popen(['/usr/bin/caffeinate','-i','-w',str(os.getpid())],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
                     try:process(task)
                     except rt.Paused as e:finish(task,'blocked',str(e))
+                    except rt.PersistenceError:
+                        # finish() may already have recorded a published PR.
+                        # Keep that result; a failed checkpoint is not a failed patch.
+                        raise
                     except Exception as e:
                         finish(task,'error',str(e));rt.pause('Task failed; preserving work: '+str(e)[:250],failure_cooldown(e))
                     finally:

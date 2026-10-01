@@ -55,7 +55,9 @@ def setmeta(key, value):
 def checkpoint():
     if config().get('backend')=='codex-cloud':
         from cloud_store import save
-        save()
+        try:save()
+        except Exception as error:
+            raise PersistenceError('Cloud checkpoint unavailable; keep task state for recovery') from error
 
 def ready(*, require_worker=True):
     cfg = config()
@@ -128,6 +130,9 @@ def reserve_call(kind):
     return True, ''
 
 class Paused(RuntimeError):
+    pass
+
+class PersistenceError(RuntimeError):
     pass
 
 def require_judge():
