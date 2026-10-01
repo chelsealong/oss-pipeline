@@ -32,7 +32,8 @@ minute; auth/quota failures retain the 30-minute circuit. No failed task is repl
 
 The user authorized restoration on 2026-10-01 after stopping the Claude pipeline.
 Execution now uses standalone Codex CLI 0.159.3 and the existing ChatGPT login.
-The deployment pins `gpt-6-astra`, matching the user's configured model.
+The user selected `gpt-6-sol` for generation, independent review and health
+probes in both local and cloud deployments. There is no automatic Astra fallback.
 The CLI is installed under the deployed `.runtime/toolchain/`, independent of IDE updates. GitHub Actions
 Claude workflows stay disabled. This runtime requires the Mac to be awake and
 logged in; it resumes via launchd after login. The existing desktop login stays

@@ -51,7 +51,7 @@ def cloud_enabled():
 def configure(mode):
     rt.CONFIG.parent.mkdir(exist_ok=True)
     rt.CONFIG.write_text(json.dumps({'backend':'codex-cloud' if mode=='live' else 'codex-local',
-        'enabled':True,'model':'gpt-6-astra','max_pending':8,'response_slots':1,
+        'enabled':True,'model':'gpt-6-sol','max_pending':8,'response_slots':1,
         'codex_sessions_per_5h':45,'judge_requests_per_hour':120})+'\n')
     rt.DATA.mkdir(exist_ok=True)
 

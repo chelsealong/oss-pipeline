@@ -26,6 +26,10 @@ The cloud runner checkpoints task transitions and call reservations before
 model requests/publication, rotates refreshed login credentials, drains work
 before handover, and chains its successor. Never run both backends live.
 
+The user selected `gpt-6-sol` for pipeline coding and review on 2026-10-01.
+Use it for both backends and probes; do not fall back to Astra or inherit the
+interactive IDE's model. Continue using the ChatGPT subscription, not API billing.
+
 Qwen/DashScope is used only for the existing cached claim/feedback judge. Every
 actual request is capped (including fallback requests) and requires a healthy
 worker. Authentication failures, task errors and unavailable worker heartbeat

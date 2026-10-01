@@ -96,7 +96,8 @@ def agent(prompt, work, output, schema=None, timeout=1800, probe=False):
     # hooks or permission settings. The CLI's compiled default may differ.
     user_config = Path.home()/'.codex/config.toml'
     selection = tomllib.loads(user_config.read_text()) if user_config.exists() else {}
-    model = rt.config().get('model') or selection.get('model')
+    # Pipeline preference is independent of the interactive IDE model.
+    model = rt.config().get('model') or 'gpt-6-sol'
     if model:
         cmd[2:2] = ['--model', model]
     effort = selection.get('model_reasoning_effort')
