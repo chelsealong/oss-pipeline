@@ -79,5 +79,12 @@ class RuntimeTests(unittest.TestCase):
         for filename in ['src/auth/token.py','package.json','.github/workflows/test.yml']:
             with patch.object(worker,'git',side_effect=[filename,'']):
                 with self.assertRaises(RuntimeError):worker.scope_check(self.root,'hermes')
+    def test_review_requires_typed_explicit_verdict(self):
+        for review in [{'verdict':'APPROVE','reason':'ok','tests_verified':'false'},
+                       {'verdict':'APPROVE','reason':'ok'},
+                       {'verdict':'maybe','reason':'ok','tests_verified':True}]:
+            with self.assertRaises(RuntimeError):worker.validate_result(review,worker.REVIEW_SCHEMA)
+        valid={'verdict':'APPROVE','reason':'tests ran','tests_verified':True}
+        self.assertEqual(worker.validate_result(valid,worker.REVIEW_SCHEMA),valid)
 
 if __name__=='__main__':unittest.main()
