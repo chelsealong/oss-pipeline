@@ -1,5 +1,14 @@
 # OSS pipeline — local Codex runtime
 
+Cloud migration requested on 2026-10-01: the former Claude deployment used
+GitHub-hosted Ubuntu runners, a 5.5-hour self-chaining watcher and dispatched
+fix/review jobs authenticated with `CLAUDE_CODE_OAUTH_TOKEN`. Production remains
+local pending a cloud Codex authentication choice. `codex-cloud-preflight.yml`
+is manual-only, runs offline checks on Ubuntu, and makes no model calls.
+`cloud_state.py` exports/imports a portable queue checkpoint: it preserves call
+budgets and deduplication, invalidates stale health, and holds interrupted tasks
+for inspection. It never copies credentials. No Claude workflow was re-enabled.
+
 The user authorized restoration on 2026-10-01 after stopping the Claude pipeline.
 Execution now uses standalone Codex CLI 0.159.3 and the existing ChatGPT login.
 The deployment pins `gpt-6-astra`, matching the user's configured model.
