@@ -1,7 +1,9 @@
 # OSS pipeline — local Codex runtime
 
 The user authorized restoration on 2026-10-01 after stopping the Claude pipeline.
-Execution now uses the local Codex CLI and existing ChatGPT login. GitHub Actions
+Execution now uses standalone Codex CLI 0.159.3 and the existing ChatGPT login.
+The deployment pins `gpt-6-astra`, matching the user's configured model.
+The CLI is installed under the deployed `.runtime/toolchain/`, independent of IDE updates. GitHub Actions
 Claude workflows stay disabled. This runtime requires the Mac to be awake and
 logged in; it resumes via launchd after login. Credentials never leave this Mac.
 
@@ -30,6 +32,8 @@ a 30-minute circuit; failed/interrupted tasks are preserved and not replayed.
 `./verify.sh` runs the offline commit gate (syntax, workflow YAML and runtime
 regression checks). Legacy Claude checks remain archived below the active route.
 `python3 codex_worker.py --probe` performs one real, read-only Codex auth probe.
+The launchd canary passed on 2026-10-01: failing baseline, generated fix,
+independent review, controller test rerun and local commit, with no public PR.
 `run-fix.sh` drains at most one already-queued task; it no longer invokes Claude.
 
 Pause: set `enabled` to false in the deployed config and unload oss-watch,
