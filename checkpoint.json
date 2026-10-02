@@ -1,0 +1,886 @@
+{
+  "version": 1,
+  "saved_at": 1790910717.5788631,
+  "tables": {
+    "tasks": [
+      {
+        "id": 1,
+        "identity": "canary:runtime:1:",
+        "kind": "canary",
+        "repo": "runtime",
+        "number": 1,
+        "note": "launchd end-to-end validation",
+        "status": "error",
+        "created": 1790840093.2662551,
+        "updated": 1790840174.638041,
+        "result": "Codex: Selected model is at capacity. Please try a different model.; Selected model is at capacity. Please try a different model.",
+        "attempts": 1
+      },
+      {
+        "id": 2,
+        "identity": "canary:runtime:2:",
+        "kind": "canary",
+        "repo": "runtime",
+        "number": 2,
+        "note": "explicit configured model validation",
+        "status": "error",
+        "created": 1790840236.772375,
+        "updated": 1790840505.0322099,
+        "result": "Command '['/Users/jialong/.vscode/extensions/openai.chatgpt-26.917.62051-darwin-x64/bin/macos-x86_64/codex', 'exec', '--output-schema', '/Users/jialong/.local/share/oss-scanner/.runtime/jobs/2/review.schema.json', '-c', 'model_reasoning_effort=\"high\"', '--model', 'gpt-6-astra', '--ignore-user-config', '--ephemeral', '--json', '--skip-git-repo-check', '-s', 'workspace-write', '-c', 'approval_policy=\"never\"', '-c', 'sandbox_workspace_write.network_access=true', '--disable', 'plugins', '--disable', 'remote_plugin', '--disable', 'apps', '--disable', 'multi_agent', '--disable', 'hooks', '-C', '/Users/jialong/.local/share/oss-scanner/.runtime/jobs/2/work', '-o', '/Users/jialong/.local/share/oss-scanner/.runtime/jobs/2/review.json', '-']' timed out after 179.99950472800265 seconds",
+        "attempts": 1
+      },
+      {
+        "id": 3,
+        "identity": "canary:runtime:3:",
+        "kind": "canary",
+        "repo": "runtime",
+        "number": 3,
+        "note": "standalone stable CLI validation",
+        "status": "done",
+        "created": 1790841189.75892,
+        "updated": 1790841315.062283,
+        "result": "Local canary passed: baseline failed, Codex fixed it, independent review and controller tests passed; nothing published",
+        "attempts": 1
+      },
+      {
+        "id": 4,
+        "identity": "fix:spec-kit:4804:",
+        "kind": "fix",
+        "repo": "spec-kit",
+        "number": 4804,
+        "note": "",
+        "status": "skipped",
+        "created": 1790841500.494519,
+        "updated": 1790862371.6949818,
+        "result": "#4804 requests a new evidence.md convention, and author alexcpn explicitly offers to implement it: “I'm happy to send the PR.” Your ownership rule requires skipping claimed work. Live checks confirm the issue remains open, labeled triage-can-wait, with no comments. No open PR matched #4804; open PR #4281 touches both affected files.",
+        "attempts": 2
+      },
+      {
+        "id": 5,
+        "identity": "fix:adk:7369:",
+        "kind": "fix",
+        "repo": "adk",
+        "number": 7369,
+        "note": "",
+        "status": "skipped",
+        "created": 1790862034.853916,
+        "updated": 1790862384.414923,
+        "result": "upstream coordination required",
+        "attempts": 1
+      },
+      {
+        "id": 6,
+        "identity": "fix:langfuse:18133:",
+        "kind": "fix",
+        "repo": "langfuse",
+        "number": 18133,
+        "note": "",
+        "status": "error",
+        "created": 1790862069.009252,
+        "updated": 1790862596.352459,
+        "result": "git failed (128): Cloning into '/Users/jialong/.local/share/oss-scanner/.runtime/jobs/6/work'...\nfatal: unable to access 'https://github.com/chelsealong/langfuse.git/': Recv failure: Connection reset by peer\n",
+        "attempts": 1
+      },
+      {
+        "id": 7,
+        "identity": "fix:langfuse:18129:",
+        "kind": "fix",
+        "repo": "langfuse",
+        "number": 18129,
+        "note": "",
+        "status": "skipped",
+        "created": 1790862131.34874,
+        "updated": 1790865157.0394502,
+        "result": "Issue #18129 is already claimed: live GitHub data shows dergeraetbot assigned itself on 2026-10-01 at 10:08:57 UTC. The task requires skipping taken issues.",
+        "attempts": 1
+      },
+      {
+        "id": 8,
+        "identity": "fix:langfuse-python:18131:",
+        "kind": "fix",
+        "repo": "langfuse-python",
+        "number": 18131,
+        "note": "",
+        "status": "skipped",
+        "created": 1790862400.2818072,
+        "updated": 1790867726.838111,
+        "result": "The issue reporter says they already have a fix with regression tests ready, and the issue is assigned. The bug is still present in this checkout, but the task’s ownership rule says to leave claimed work to its contributor. See https://github.com/langfuse/langfuse/issues/18131.",
+        "attempts": 1
+      },
+      {
+        "id": 9,
+        "identity": "fix:spec-kit:4808:",
+        "kind": "fix",
+        "repo": "spec-kit",
+        "number": 4808,
+        "note": "",
+        "status": "skipped",
+        "created": 1790862434.697557,
+        "updated": 1790868115.768151,
+        "result": "github/spec-kit#4808 is a broad feature request, not a small bug fix. It requires coordinated changes to workflow validation, CLI options, project defaults, persisted run state, resume, output, tests, and documentation. The supplied issue snapshot is labeled needs-triage, and CONTRIBUTING.md requires maintainer discussion and agreement before major CLI changes. No files were changed. Live GitHub status could not be verified because the API request timed out.",
+        "attempts": 1
+      },
+      {
+        "id": 10,
+        "identity": "fix:hermes:130484:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 130484,
+        "note": "",
+        "status": "error",
+        "created": 1790862522.352179,
+        "updated": 1790868349.3153012,
+        "result": "'utf-8' codec can't decode bytes in position 22446-22447: invalid continuation byte",
+        "attempts": 1
+      },
+      {
+        "id": 11,
+        "identity": "fix:hermes:130535:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 130535,
+        "note": "",
+        "status": "skipped",
+        "created": 1790864420.346966,
+        "updated": 1790876197.728172,
+        "result": "excluded label ['duplicate']",
+        "attempts": 1
+      },
+      {
+        "id": 12,
+        "identity": "fix:hermes:130533:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 130533,
+        "note": "",
+        "status": "error",
+        "created": 1790864541.7155461,
+        "updated": 1790878232.6456919,
+        "result": "'utf-8' codec can't decode bytes in position 22446-22447: invalid continuation byte",
+        "attempts": 1
+      },
+      {
+        "id": 13,
+        "identity": "fix:hermes:130532:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 130532,
+        "note": "",
+        "status": "skipped",
+        "created": 1790864546.028085,
+        "updated": 1790880065.1570601,
+        "result": "claimed by kokhlo",
+        "attempts": 1
+      },
+      {
+        "id": 14,
+        "identity": "respond:NousResearch/hermes-agent:125871:17958c21f79254e2f7c2",
+        "kind": "respond",
+        "repo": "NousResearch/hermes-agent",
+        "number": 125871,
+        "note": "{\"authors\": \"Enough1122\", \"events\": [\"IC_kwDOPRF1G88AAAABYSctlQ@2026-10-01T04:46:02Z\"], \"is_issue\": false}",
+        "status": "error",
+        "created": 1790864969.359603,
+        "updated": 1790865372.258249,
+        "result": "git failed (128): fatal: unable to access 'https://github.com/NousResearch/hermes-agent.git/': Recv failure: Connection reset by peer\n",
+        "attempts": 1
+      },
+      {
+        "id": 15,
+        "identity": "fix:hermes:130574:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 130574,
+        "note": "",
+        "status": "error",
+        "created": 1790867272.2101278,
+        "updated": 1790880136.3685188,
+        "result": "'utf-8' codec can't decode bytes in position 22446-22447: invalid continuation byte",
+        "attempts": 1
+      },
+      {
+        "id": 16,
+        "identity": "fix:hermes:130581:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 130581,
+        "note": "",
+        "status": "error",
+        "created": 1790867413.878409,
+        "updated": 1790882983.68736,
+        "result": "git failed (128): Cloning into '/Users/jialong/.local/share/oss-scanner/.runtime/jobs/16/work'...\nerror: RPC failed; curl 56 Recv failure: Operation timed out\nerror: 22828 bytes of body are still expected\nfetch-pack: unexpected disconnect while reading sideband packet\nfatal: early EOF\nfatal: fetch-pack: invalid index-pack output\n",
+        "attempts": 1
+      },
+      {
+        "id": 17,
+        "identity": "fix:autogpt:15119:",
+        "kind": "fix",
+        "repo": "autogpt",
+        "number": 15119,
+        "note": "",
+        "status": "blocked",
+        "created": 1790867880.5829551,
+        "updated": 1790885236.28717,
+        "result": "The one-line fix and regression test are in the checkout, but I could not prove the test fails before the fix and passes after it. `poetry run pytest backend/copilot/tools/run_agent_version_test.py -q` stops while importing conftest because `autogpt_libs` is not installed. `poetry run test` cannot start without `autogpt_platform/.env`, and the Docker daemon is unavailable. The required full lint also stops because Prisma is not installed.",
+        "attempts": 1
+      },
+      {
+        "id": 18,
+        "identity": "fix:llama-index:23325:",
+        "kind": "fix",
+        "repo": "llama-index",
+        "number": 23325,
+        "note": "",
+        "status": "skipped",
+        "created": 1790876229.552437,
+        "updated": 1790885249.316837,
+        "result": "issue closed",
+        "attempts": 1
+      },
+      {
+        "id": 19,
+        "identity": "fix:hermes:130722:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 130722,
+        "note": "",
+        "status": "skipped",
+        "created": 1790876347.647048,
+        "updated": 1790885262.314671,
+        "result": "excluded label ['needs-decision']",
+        "attempts": 1
+      },
+      {
+        "id": 20,
+        "identity": "fix:comfyui:16711:",
+        "kind": "fix",
+        "repo": "comfyui",
+        "number": 16711,
+        "note": "",
+        "status": "skipped",
+        "created": 1790876371.144727,
+        "updated": 1790885406.137973,
+        "result": "No CPU-verifiable ComfyUI defect was identified. The report isolates corruption to Comfy Kitchen INT8 attention on AMD gfx1100, and an [open PR](https://github.com/Comfy-Org/ComfyUI/pull/15525) already proposes disabling that backend on ROCm. Verifying the reported corruption requires the affected GPU and model weights. The checkout is unchanged.",
+        "attempts": 1
+      },
+      {
+        "id": 21,
+        "identity": "fix:llama-index:23326:",
+        "kind": "fix",
+        "repo": "llama-index",
+        "number": 23326,
+        "note": "",
+        "status": "error",
+        "created": 1790880066.914947,
+        "updated": 1790885569.979012,
+        "result": "git failed (128): error: RPC failed; curl 56 Recv failure: Connection reset by peer\nerror: 24509 bytes of body are still expected\nfetch-pack: unexpected disconnect while reading sideband packet\nfatal: early EOF\nfatal: fetch-pack: invalid index-pack output\n",
+        "attempts": 1
+      },
+      {
+        "id": 22,
+        "identity": "fix:openclaw:162773:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 162773,
+        "note": "",
+        "status": "skipped",
+        "created": 1790880090.8844318,
+        "updated": 1790889455.671011,
+        "result": "No reproducible defect is established on current source. The reported absence of terminal.input in ordinary Gateway logs is inconclusive because successful requests are normally suppressed. Existing browser tests exercise focused terminal typing through to terminal.input, while the report lacks the installed OpenClaw version, served UI build identity, and WebSocket frames needed to locate a failing boundary. A source change would be speculative.",
+        "attempts": 1
+      },
+      {
+        "id": 23,
+        "identity": "fix:hermes:130831:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 130831,
+        "note": "",
+        "status": "skipped",
+        "created": 1790881949.316173,
+        "updated": 1790889469.7345548,
+        "result": "already has PR(s): ['closing-ref PR#130834(OPEN)', 'xref PR#130834(OPEN)']",
+        "attempts": 1
+      },
+      {
+        "id": 24,
+        "identity": "fix:hermes:130870:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 130870,
+        "note": "",
+        "status": "skipped",
+        "created": 1790884793.939444,
+        "updated": 1790889483.784391,
+        "result": "already has PR(s): ['closing-ref PR#130871(OPEN)', 'xref PR#130871(OPEN)']",
+        "attempts": 1
+      },
+      {
+        "id": 25,
+        "identity": "fix:openclaw:162907:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 162907,
+        "note": "",
+        "status": "error",
+        "created": 1790885253.0884988,
+        "updated": 1790890607.0084171,
+        "result": "git failed (128): error: RPC failed; curl 56 Recv failure: Operation timed out\nerror: 1887 bytes of body are still expected\nfetch-pack: unexpected disconnect while reading sideband packet\nfatal: early EOF\nfatal: fetch-pack: invalid index-pack output\n",
+        "attempts": 1
+      },
+      {
+        "id": 26,
+        "identity": "fix:openclaw:162908:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 162908,
+        "note": "",
+        "status": "skipped",
+        "created": 1790885258.265888,
+        "updated": 1790892438.952,
+        "result": "already has PR(s): ['closing-ref PR#162985(OPEN)', 'xref PR#162985(OPEN)']",
+        "attempts": 1
+      },
+      {
+        "id": 27,
+        "identity": "fix:openclaw:162914:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 162914,
+        "note": "",
+        "status": "skipped",
+        "created": 1790885263.248085,
+        "updated": 1790892685.1537879,
+        "result": "The failure is still reported, but its cause is unconfirmed. Native Podman probes have five-second deadlines, and the command wrapper turns a timed-out probe into “Aborted”; the available logs do not identify which operation failed. Raising a deadline or adding a retry would be speculative. This checkout has no Podman executable for a runtime reproduction, and no source change was made.",
+        "attempts": 1
+      },
+      {
+        "id": 28,
+        "identity": "fix:hermes:130881:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 130881,
+        "note": "",
+        "status": "skipped",
+        "created": 1790885498.53249,
+        "updated": 1790892700.09973,
+        "result": "already has PR(s): ['closing-ref PR#130884(OPEN)', 'xref PR#130884(OPEN)']",
+        "attempts": 1
+      },
+      {
+        "id": 29,
+        "identity": "fix:hermes:130897:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 130897,
+        "note": "",
+        "status": "skipped",
+        "created": 1790887506.441086,
+        "updated": 1790892714.6520882,
+        "result": "already has PR(s): ['closing-ref PR#130903(OPEN)', 'closing-ref PR#130906(OPEN)', 'xref PR#130903(OPEN)']",
+        "attempts": 1
+      },
+      {
+        "id": 30,
+        "identity": "fix:langfuse:18120:",
+        "kind": "fix",
+        "repo": "langfuse",
+        "number": 18120,
+        "note": "",
+        "status": "skipped",
+        "created": 1790889474.25055,
+        "updated": 1790892791.431274,
+        "result": "Issue #18120 is already assigned to bezbac, whose GitHub profile lists @langfuse. It is claimed by a maintainer, so I made no changes.",
+        "attempts": 1
+      },
+      {
+        "id": 31,
+        "identity": "fix:langfuse:18119:",
+        "kind": "fix",
+        "repo": "langfuse",
+        "number": 18119,
+        "note": "",
+        "status": "skipped",
+        "created": 1790889479.231609,
+        "updated": 1790892896.897961,
+        "result": "Issue #18119 is already assigned to bezbac, a confirmed Langfuse org member (GitHub membership API returned 204). The live issue has no comments, and searches found no open PR referencing the issue or affected component. The assignment is enough to treat this work as claimed, so I made no changes.",
+        "attempts": 1
+      },
+      {
+        "id": 32,
+        "identity": "fix:langfuse:18030:",
+        "kind": "fix",
+        "repo": "langfuse",
+        "number": 18030,
+        "note": "",
+        "status": "skipped",
+        "created": 1790889501.579243,
+        "updated": 1790893005.4537432,
+        "result": "Issue #18030 is assigned to LysanderKie, a Langfuse contributor with recent merged PRs. The reporter is awaiting a maintainer decision on implementation ownership and design. Codex made no changes.",
+        "attempts": 1
+      },
+      {
+        "id": 33,
+        "identity": "fix:openclaw:162784:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 162784,
+        "note": "",
+        "status": "error",
+        "created": 1790892418.900351,
+        "updated": 1790896370.662524,
+        "result": "git failed (128): error: RPC failed; curl 56 Recv failure: Connection reset by peer\nfatal: protocol error: bad pack header\n",
+        "attempts": 1
+      },
+      {
+        "id": 34,
+        "identity": "fix:hermes:130970:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 130970,
+        "note": "",
+        "status": "skipped",
+        "created": 1790892450.115874,
+        "updated": 1790898203.4900732,
+        "result": "excluded label ['needs-decision']",
+        "attempts": 1
+      },
+      {
+        "id": 35,
+        "identity": "fix:hermes:130974:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 130974,
+        "note": "",
+        "status": "skipped",
+        "created": 1790892693.102596,
+        "updated": 1790898218.57861,
+        "result": "already has PR(s): ['closing-ref PR#130976(OPEN)', 'closing-ref PR#130997(OPEN)', 'xref PR#130976(OPEN)']",
+        "attempts": 1
+      },
+      {
+        "id": 36,
+        "identity": "respond:NousResearch/hermes-agent:128676:cab2a20b3961c9baf421",
+        "kind": "respond",
+        "repo": "NousResearch/hermes-agent",
+        "number": 128676,
+        "note": "{\"authors\": \"preyevates\", \"events\": [\"IC_kwDOPRF1G88AAAABYhXeXw@2026-10-01T21:06:40Z\"], \"is_issue\": false}",
+        "status": "error",
+        "created": 1790893012.96608,
+        "updated": 1790893259.775671,
+        "result": "git failed (128): error: RPC failed; curl 56 Recv failure: Connection reset by peer\nerror: 4730 bytes of body are still expected\nfetch-pack: unexpected disconnect while reading sideband packet\nfatal: early EOF\nfatal: fetch-pack: invalid index-pack output\n",
+        "attempts": 1
+      },
+      {
+        "id": 37,
+        "identity": "fix:firecrawl:4902:",
+        "kind": "fix",
+        "repo": "firecrawl",
+        "number": 4902,
+        "note": "",
+        "status": "skipped",
+        "created": 1790893084.763901,
+        "updated": 1790898346.989444,
+        "result": "Issue #4902 gives no reproducible request or specific bypass. Current code already blocks private scrape and webhook destinations by default, while ALLOW_LOCAL_WEBHOOKS is an explicit opt-in. Open PRs #4781 and #3731 overlap the affected security code. A concrete fix would require changes to security paths, which this task excludes.",
+        "attempts": 1
+      },
+      {
+        "id": 38,
+        "identity": "fix:hermes:130980:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 130980,
+        "note": "",
+        "status": "error",
+        "created": 1790895274.780993,
+        "updated": 1790898506.07547,
+        "result": "'utf-8' codec can't decode bytes in position 22446-22447: invalid continuation byte",
+        "attempts": 1
+      },
+      {
+        "id": 39,
+        "identity": "fix:openclaw:163026:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 163026,
+        "note": "",
+        "status": "blocked",
+        "created": 1790895287.436332,
+        "updated": 1790901164.842436,
+        "result": "The required Codex sibling source is missing: ../codex does not exist. Repository AGENTS.md requires inspecting that exact source before implementing this Codex catalog fix. The task permits edits only inside this checkout, so I could not satisfy that prerequisite. CLAUDE.md and node_modules are also absent. No files were changed.",
+        "attempts": 1
+      },
+      {
+        "id": 40,
+        "identity": "fix:openclaw:163068:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 163068,
+        "note": "",
+        "status": "error",
+        "created": 1790898181.883258,
+        "updated": 1790908609.172105,
+        "result": "Command '['/Users/jialong/.local/share/oss-scanner/.runtime/toolchain/node_modules/.bin/codex', 'exec', '--output-schema', '/Users/jialong/.local/share/oss-scanner/.runtime/jobs/40/generation.schema.json', '-c', 'model_reasoning_effort=\"high\"', '--model', 'gpt-6-sol', '--ignore-user-config', '--ephemeral', '--json', '--skip-git-repo-check', '-s', 'workspace-write', '-c', 'approval_policy=\"never\"', '-c', 'sandbox_workspace_write.network_access=true', '--disable', 'plugins', '--disable', 'remote_plugin', '--disable', 'apps', '--disable', 'multi_agent', '--disable', 'hooks', '-C', '/Users/jialong/.local/share/oss-scanner/.runtime/jobs/40/work', '-o', '/Users/jialong/.local/share/oss-scanner/.runtime/jobs/40/generation.json', '-']' timed out after 2.1027429420064436 seconds",
+        "attempts": 1
+      },
+      {
+        "id": 41,
+        "identity": "fix:openclaw:163058:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 163058,
+        "note": "",
+        "status": "error",
+        "created": 1790898201.78531,
+        "updated": 1790910717.1520581,
+        "result": "Stopped read-only clone during cloud cutover; no generation started; retained for manual inspection. git failed (-15): Cloning into '/Users/jialong/.local/share/oss-scanner/.runtime/jobs/41/work'...\n",
+        "attempts": 1
+      },
+      {
+        "id": 42,
+        "identity": "fix:spec-kit:4786:",
+        "kind": "fix",
+        "repo": "spec-kit",
+        "number": 4786,
+        "note": "",
+        "status": "queued",
+        "created": 1790900337.0297332,
+        "updated": 1790900337.0297332,
+        "result": "",
+        "attempts": 0
+      },
+      {
+        "id": 43,
+        "identity": "fix:hermes:131038:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 131038,
+        "note": "",
+        "status": "queued",
+        "created": 1790900406.966079,
+        "updated": 1790900406.966079,
+        "result": "",
+        "attempts": 0
+      },
+      {
+        "id": 44,
+        "identity": "respond:openclaw/openclaw:162134:cb94b246baf8b4d9b287",
+        "kind": "respond",
+        "repo": "openclaw/openclaw",
+        "number": 162134,
+        "note": "{\"authors\": \"ci\", \"events\": [\"check:e2a7973863ec:PR context and evidence:2026-10-02\", \"check:e2a7973863ec:checks-node-changed-compact-large-38:2026-10-02\", \"check:e2a7973863ec:checks-node-changed-compact-large-39-1:2026-10-02\", \"check:e2a7973863ec:checks-node-changed-compact-large-5-2:2026-10-02\", \"standing:needs proof:2026-10-02\"], \"is_issue\": false}",
+        "status": "error",
+        "created": 1790900414.8160691,
+        "updated": 1790901627.0786822,
+        "result": "Command '['git', 'fetch', 'origin', 'fix/update-snapshot-unparseable-plugin']' timed out after 300 seconds",
+        "attempts": 1
+      },
+      {
+        "id": 45,
+        "identity": "respond:openclaw/openclaw:162095:dda67a7fddb11efed0a5",
+        "kind": "respond",
+        "repo": "openclaw/openclaw",
+        "number": 162095,
+        "note": "{\"authors\": \"ci\", \"events\": [\"check:7ef53bc9bc9e:PR context and evidence:2026-10-02\", \"check:7ef53bc9bc9e:checks-node-changed-compact-large-2:2026-10-02\", \"check:7ef53bc9bc9e:checks-node-changed-compact-large-43-3:2026-10-02\", \"standing:needs proof:2026-10-02\"], \"is_issue\": false}",
+        "status": "error",
+        "created": 1790900446.268814,
+        "updated": 1790903876.094486,
+        "result": "Command '['git', 'fetch', 'origin', 'fix/native-reference-namespace-walk']' timed out after 300 seconds",
+        "attempts": 1
+      },
+      {
+        "id": 46,
+        "identity": "respond:Comfy-Org/ComfyUI:16688:9e2e6c864c7dd2912d0c",
+        "kind": "respond",
+        "repo": "Comfy-Org/ComfyUI",
+        "number": 16688,
+        "note": "{\"authors\": \"ci\", \"events\": [\"check:5bd2b74ea4f8:test (macos-latest):2026-10-02\"], \"is_issue\": false}",
+        "status": "blocked",
+        "created": 1790900448.7224178,
+        "updated": 1790905903.893641,
+        "result": "Draft reply: The macOS execution check failed during startup of its first test server: 15 async tests could not connect before that server started. Later server fixtures passed, as did the PR’s unit tests and lint checks. This appears unrelated to the INT8 weight change. Please rerun the macOS execution check. Codex inspected the CI log; this is not a claim of human review.",
+        "attempts": 1
+      },
+      {
+        "id": 47,
+        "identity": "fix:openclaw:163067:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 163067,
+        "note": "",
+        "status": "queued",
+        "created": 1790901183.841824,
+        "updated": 1790901183.841824,
+        "result": "",
+        "attempts": 0
+      },
+      {
+        "id": 48,
+        "identity": "fix:openclaw:163107:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 163107,
+        "note": "",
+        "status": "queued",
+        "created": 1790903445.025106,
+        "updated": 1790903445.025106,
+        "result": "",
+        "attempts": 0
+      },
+      {
+        "id": 49,
+        "identity": "fix:hermes:131070:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 131070,
+        "note": "",
+        "status": "queued",
+        "created": 1790905704.465504,
+        "updated": 1790905704.465504,
+        "result": "",
+        "attempts": 0
+      },
+      {
+        "id": 50,
+        "identity": "fix:openclaw:163125:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 163125,
+        "note": "",
+        "status": "queued",
+        "created": 1790905917.141876,
+        "updated": 1790905917.141876,
+        "result": "",
+        "attempts": 0
+      }
+    ],
+    "meta": [
+      {
+        "key": "watch_error",
+        "value": "{\"at\": 1790876045.256054, \"error\": \"error connecting to api.github.com\\ncheck your internet connection or https://githubstatus.com\"}"
+      },
+      {
+        "key": "prwatch_heartbeat",
+        "value": "1790910354.757424"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1790910452.2980428, \"source\": \"authenticated probe\"}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1790910453.047455"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1790910453.048863"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1790910707.5508008"
+      },
+      {
+        "key": "pause",
+        "value": "{}"
+      },
+      {
+        "key": "cloud_cutover",
+        "value": "{\"at\": 1790910771.431732, \"canary_run\": 36958589558, \"stopped_readonly_clone_task\": 41, \"pause_cleared\": \"Operator-ended local clone; independent cloud canary passed\"}"
+      }
+    ],
+    "calls": [
+      {
+        "at": 1790840103.048075,
+        "kind": "codex"
+      },
+      {
+        "at": 1790840160.694517,
+        "kind": "codex"
+      },
+      {
+        "at": 1790840246.8459451,
+        "kind": "codex"
+      },
+      {
+        "at": 1790840324.849986,
+        "kind": "codex"
+      },
+      {
+        "at": 1790840956.157932,
+        "kind": "judge"
+      },
+      {
+        "at": 1790841196.242356,
+        "kind": "codex"
+      },
+      {
+        "at": 1790841263.121063,
+        "kind": "codex"
+      },
+      {
+        "at": 1790862249.965866,
+        "kind": "codex"
+      },
+      {
+        "at": 1790862481.7943318,
+        "kind": "judge"
+      },
+      {
+        "at": 1790862519.734901,
+        "kind": "judge"
+      },
+      {
+        "at": 1790862568.757665,
+        "kind": "judge"
+      },
+      {
+        "at": 1790862571.228807,
+        "kind": "judge"
+      },
+      {
+        "at": 1790862575.3209422,
+        "kind": "judge"
+      },
+      {
+        "at": 1790862578.238726,
+        "kind": "judge"
+      },
+      {
+        "at": 1790862578.4892328,
+        "kind": "judge"
+      },
+      {
+        "at": 1790862581.358596,
+        "kind": "judge"
+      },
+      {
+        "at": 1790864682.3634691,
+        "kind": "codex"
+      },
+      {
+        "at": 1790864947.9977548,
+        "kind": "judge"
+      },
+      {
+        "at": 1790864967.331816,
+        "kind": "judge"
+      },
+      {
+        "at": 1790867289.7412622,
+        "kind": "codex"
+      },
+      {
+        "at": 1790867989.076979,
+        "kind": "codex"
+      },
+      {
+        "at": 1790880062.9814332,
+        "kind": "judge"
+      },
+      {
+        "at": 1790880070.683786,
+        "kind": "judge"
+      },
+      {
+        "at": 1790884881.9514,
+        "kind": "codex"
+      },
+      {
+        "at": 1790885296.54268,
+        "kind": "codex"
+      },
+      {
+        "at": 1790887734.3373911,
+        "kind": "codex"
+      },
+      {
+        "at": 1790892456.393704,
+        "kind": "judge"
+      },
+      {
+        "at": 1790892589.3679721,
+        "kind": "codex"
+      },
+      {
+        "at": 1790892751.854065,
+        "kind": "codex"
+      },
+      {
+        "at": 1790892831.019607,
+        "kind": "codex"
+      },
+      {
+        "at": 1790892935.660766,
+        "kind": "codex"
+      },
+      {
+        "at": 1790892985.408503,
+        "kind": "judge"
+      },
+      {
+        "at": 1790893010.329163,
+        "kind": "judge"
+      },
+      {
+        "at": 1790893014.348394,
+        "kind": "judge"
+      },
+      {
+        "at": 1790893090.0021172,
+        "kind": "judge"
+      },
+      {
+        "at": 1790895271.6441119,
+        "kind": "judge"
+      },
+      {
+        "at": 1790898232.698139,
+        "kind": "judge"
+      },
+      {
+        "at": 1790898236.570325,
+        "kind": "judge"
+      },
+      {
+        "at": 1790898239.3200488,
+        "kind": "judge"
+      },
+      {
+        "at": 1790898241.903162,
+        "kind": "judge"
+      },
+      {
+        "at": 1790898268.2452989,
+        "kind": "codex"
+      },
+      {
+        "at": 1790900519.1900349,
+        "kind": "codex"
+      },
+      {
+        "at": 1790905742.951694,
+        "kind": "codex"
+      },
+      {
+        "at": 1790906207.752783,
+        "kind": "codex"
+      },
+      {
+        "at": 1790910717.500834,
+        "kind": "codex"
+      },
+      {
+        "at": 1790910717.500834,
+        "kind": "codex"
+      },
+      {
+        "at": 1790910717.500834,
+        "kind": "codex"
+      },
+      {
+        "at": 1790910717.500834,
+        "kind": "codex"
+      }
+    ]
+  }
+}
