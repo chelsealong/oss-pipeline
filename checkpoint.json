@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1790950092.8910303,
+  "saved_at": 1790950118.6059723,
   "tables": {
     "tasks": [
       {
@@ -1674,10 +1674,10 @@
         "repo": "spec-kit",
         "number": 4815,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1790949907.8457074,
-        "updated": 1790950040.2229645,
-        "result": "",
+        "updated": 1790950118.6037395,
+        "result": "#4815 depends on the shared step lock from PR #4769, which is still open. This checkout has no step lock, and step add/remove remain unlocked. Fixing bundle refresh here would require bringing in that broader, unmerged change, so a small fix cannot make the rollback transactional relative to other step operations.",
         "attempts": 1
       }
     ],
@@ -1699,20 +1699,20 @@
         "value": "1790949930.0527122"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1790950028.735502, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "worker_heartbeat",
-        "value": "1790950080.3084917"
+        "value": "1790950110.3181942"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1790950089.093646"
+        "value": "1790950111.7284067"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1790950089.095832"
+        "value": "1790950111.7303689"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1790950118.6018107, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
