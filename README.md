@@ -1,21 +1,25 @@
 # OSS pipeline — managed Codex runtime
 
-Cloud migration requested on 2026-10-01: the former Claude deployment used
-GitHub-hosted Ubuntu runners, a 5.5-hour self-chaining watcher and dispatched
-fix/review jobs authenticated with `CLAUDE_CODE_OAUTH_TOKEN`. Production remains
-local pending cloud authentication and cutover. The user selected ChatGPT/Codex
-subscription usage, not paid API-key access. `codex-cloud-preflight.yml`
+Production runs on GitHub-hosted Ubuntu runners after the 2026-10-02 cloud
+cutover. The Mac can be shut down; its three launchd services are unloaded and
+its runtime config is disabled. Cloud canary [36958589558](https://github.com/chelsealong/oss-pipeline/actions/runs/36958589558)
+passed real generation, independent review and controller tests before cutover.
+The user selected ChatGPT/Codex subscription usage, not paid API-key access. `codex-cloud-preflight.yml`
 is manual-only, runs offline checks on Ubuntu, and makes no model calls.
 `cloud_state.py` exports/imports a portable queue checkpoint: it preserves call
 budgets and deduplication, invalidates stale health, and holds interrupted tasks
 for inspection. It never copies credentials. No Claude workflow was re-enabled.
 
-The production workflow is `codex-cloud.yml`. It uses a dedicated device login
+The production workflow is `codex-cloud.yml`. It uses a dedicated ChatGPT login
 in encrypted Secret `CODEX_AUTH_JSON` plus the existing `GH_PAT` and
 `QWEN_API_KEY`. Set repository variable `CODEX_CLOUD_ENABLED=true` only after a
 successful `mode=canary` run, stopping local services, and seeding the dedicated
 `codex-state` branch. Missing/false means scheduled production cannot start.
 One GitHub concurrency group owns all cloud modes and subscription refreshes.
+An isolated local browser login supplied the initial credentials after device
+authorization failed. The existing desktop login was not exported. Ubuntu 24.04
+installs Bubblewrap and loads its AppArmor user-namespace profile before running
+Codex; a namespace smoke test runs before any model call.
 Each live runner detects work for four hours, then drains the active task for
 up to 90 minutes before handing over; a twice-hourly schedule recovers the chain.
 Runtime state is committed on the separate state branch, including before model
@@ -31,17 +35,14 @@ the dispatch budget again. Transient GitHub connection failures cool down for on
 minute; auth/quota failures retain the 30-minute circuit. No failed task is replayed.
 
 The user authorized restoration on 2026-10-01 after stopping the Claude pipeline.
-Execution now uses standalone Codex CLI 0.159.3 and the existing ChatGPT login.
+Execution uses standalone Codex CLI 0.159.3 and the dedicated subscription login.
 The user selected `gpt-6-sol` for generation, independent review and health
 probes in both local and cloud deployments. There is no automatic Astra fallback.
-The CLI is installed under the deployed `.runtime/toolchain/`, independent of IDE updates. GitHub Actions
-Claude workflows stay disabled. This runtime requires the Mac to be awake and
-logged in; it resumes via launchd after login. The existing desktop login stays
-on this Mac; the cloud backend uses its own independent login.
-Active jobs prevent idle sleep while running; closing the lid can still suspend
-the machine. Idle watchers do not keep it awake.
+The cloud CLI version is pinned independently of IDE updates. All seven legacy
+Claude workflows remain disabled. The former local deployment remains under
+`~/.local/share/oss-scanner` for recovery; do not start it alongside cloud production.
 
-Three launchd services run from `~/.local/share/oss-scanner`:
+The cloud supervisor runs three services formerly managed by launchd:
 
 - `oss-watch`: new issue detection plus rotating backlog scans; retains repository
   exclusions, duplicate checks and dispatch caps from `scan.py` / `watch.py`.
@@ -58,8 +59,9 @@ for human follow-up, not automatically posted.
 The existing Qwen/DashScope judge retains cached semantic claim/feedback checks.
 Actual HTTP requests (including fallbacks) are capped at 120/hour. The existing
 45 coding sessions/5h limit includes both generation and review. Judge calls pause
-when the worker is unhealthy, stale, rate-capped or disabled. A task failure opens
-a 30-minute circuit; failed/interrupted tasks are preserved and not replayed.
+when the worker is unhealthy, stale, rate-capped or disabled. Network failures
+open a one-minute circuit; other task failures retain a 30-minute circuit.
+Failed/interrupted tasks are preserved and not replayed.
 
 `state/runtime.json` is local deployment configuration (ignored by git).
 `python3 runtime.py` prints queue, heartbeat, model-call counts and recent results.
@@ -70,9 +72,15 @@ The launchd canary passed on 2026-10-01: failing baseline, generated fix,
 independent review, controller test rerun and local commit, with no public PR.
 `run-fix.sh` drains at most one already-queued task; it no longer invokes Claude.
 
-Pause: set `enabled` to false in the deployed config and unload oss-watch,
-oss-prwatch and oss-fix. Keep `.runtime/jobs/` for recovery; interrupted work may
-already have reached a fork. Do not blindly reset failed tasks to queued.
+Pause cloud admission with `CODEX_CLOUD_ENABLED=false` and let the active task
+drain; cancel the Actions run for an immediate stop. The authoritative queue and
+budgets are in branch `codex-state`, not the stopped local database.
+The cutover seed retained 50 historical tasks and 6 queued tasks. Task 41's
+read-only clone was stopped before generation and held for inspection. Four
+cloud canary coding calls were included in the retained budget. Local backup:
+`~/.local/share/oss-scanner/takeover/cloud-20261002T031157Z`.
+Keep local `.runtime/jobs/` for recovery; interrupted work may already have
+reached a fork. Do not blindly reset failed tasks to queued.
 
 The older workflow YAML and scripts are retained for provenance, not active
 execution. The archived pre-Codex README follows and is not current configuration.

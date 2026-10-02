@@ -3,8 +3,10 @@
 ## Current operating state
 
 On 2026-10-01 the user explicitly authorized restoring the OSS pipeline with
-Codex after the earlier full stop. The current backend is local Codex, using
-the existing ChatGPT login. `state/runtime.json` is deployment-only; missing,
+Codex after the earlier full stop. Production moved to GitHub-hosted Codex on
+2026-10-02 after cloud canary run 36958589558 passed. All three local launchd
+services are unloaded and the local config is disabled. `state/runtime.json`
+is deployment-only; missing,
 invalid or disabled configuration fails closed.
 
 `codex_worker.py` is the single executor, with isolated checkouts, durable
@@ -18,8 +20,10 @@ credentials to GitHub.
 The user subsequently requested cloud restoration and explicitly selected
 ChatGPT/Codex subscription usage. `codex-cloud.yml` is the new cloud backend,
 with production gated by the `CODEX_CLOUD_ENABLED` repository variable. Cloud
-authentication uses a NEW, independent device login, stored only in the
+authentication uses a NEW, independent ChatGPT login, stored in the
 `CODEX_AUTH_JSON` encrypted Secret; never copy the existing desktop auth cache.
+Device authorization failed; an isolated local browser login succeeded instead.
+Its initial local cache is not the current token source after cloud refreshes.
 Keep production off until the cloud canary passes and the local services have
 stopped. Seed `codex-state` from the final local snapshot before enabling it.
 The cloud runner checkpoints task transitions and call reservations before
@@ -37,13 +41,20 @@ pause model calls. No automatic claim/reply comments or PR closures: record thes
 for human follow-up. Code fixes may create/update PRs after independent review,
 within upstream policy and the existing repository caps.
 
-Stop by setting deployed `state/runtime.json` enabled=false and unloading the
-three local oss-watch/oss-prwatch/oss-fix jobs; stopping a detector alone is not a
-full shutdown. Never replay interrupted jobs without inspecting local and remote
+Stop cloud admission by setting `CODEX_CLOUD_ENABLED=false`; the runner drains
+active work before exiting. Cancel its workflow for an immediate stop. Do not
+restart local services until the cloud runner has stopped and its latest state
+has been reconciled. Never replay interrupted jobs without inspecting local and remote
 work: a process may have pushed before its last database update.
 
 Original stop backup: `/Users/jialong/.local/share/oss-scanner/takeover/20261001T045103Z`.
 Restart backup: `/Users/jialong/.local/share/oss-scanner/takeover/restart-20261001T071556Z`.
+Cloud cutover backup: `/Users/jialong/.local/share/oss-scanner/takeover/cloud-20261002T031157Z`.
+The seed retained 50 historical tasks and 6 queued tasks. Task 41 was stopped
+during a read-only clone, before generation, and remains held as an error.
+Four cloud canary coding sessions were added to the retained spending ledger.
+The live queue and budgets are now in GitHub branch `codex-state`; the local DB
+is a historical snapshot and must not be used as the current queue.
 
 ## Locations and sources of truth
 
