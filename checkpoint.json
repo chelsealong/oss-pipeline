@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1790948111.680834,
+  "saved_at": 1790948152.7664046,
   "tables": {
     "tasks": [
       {
@@ -1505,10 +1505,10 @@
         "repo": "hermes",
         "number": 131518,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1790947948.4107952,
-        "updated": 1790947951.7852259,
-        "result": "",
+        "updated": 1790948152.7638083,
+        "result": "The audio loss is present, but there is no small, confidently verifiable fix for #131518 in this checkout. Desktop stops the client PCM stream on `wake.detected`, while voice capture later starts a separate MediaRecorder stream. Recovering speech across that handoff requires a reliable detection boundary and a way to combine 16 kHz PCM with MediaRecorder audio while preserving speech detection. The issue proposes a configurable design and asks whether that approach is acceptable. No competing PR for #131518 was found. I made no changes.",
         "attempts": 1
       },
       {
@@ -1556,10 +1556,6 @@
         "value": "1790947937.6692164"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1790947951.7815242, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -1569,7 +1565,11 @@
       },
       {
         "key": "worker_heartbeat",
-        "value": "1790948099.4943585"
+        "value": "1790948144.5018752"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1790948152.7617114, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
