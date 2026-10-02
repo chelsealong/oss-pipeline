@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1790931931.8476324,
+  "saved_at": 1790931939.49707,
   "tables": {
     "tasks": [
       {
@@ -1094,6 +1094,19 @@
         "updated": 1790931748.120904,
         "result": "The reported two-turn reproduction is not established on this checkout: message_agent returns a queued handoff instead of waiting for the recipient’s reply. The relay delivery does hold a profile lock while its child runs, but the evidence does not identify a minimal change that would break a cross-profile wait cycle without changing delivery semantics. Open PR #117786 already addresses part of the lock-lifetime problem, so a lock-only patch here would overlap it without resolving the claimed cycle.",
         "attempts": 1
+      },
+      {
+        "id": 85,
+        "identity": "fix:hermes:131372:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 131372,
+        "note": "",
+        "status": "running",
+        "created": 1790931935.3632748,
+        "updated": 1790931939.4952154,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -1118,16 +1131,16 @@
         "value": "{\"ok\": true, \"at\": 1790931748.0781481, \"source\": \"completed task phase\"}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1790931922.0669725"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1790931928.4307806"
       },
       {
         "key": "detector_heartbeat",
         "value": "1790931928.4322832"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1790931937.0962868"
       }
     ],
     "calls": [
