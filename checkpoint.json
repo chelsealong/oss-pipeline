@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1790939664.363765,
+  "saved_at": 1790939714.01515,
   "tables": {
     "tasks": [
       {
@@ -1310,10 +1310,10 @@
         "repo": "llama-index",
         "number": 23334,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1790939224.4266214,
-        "updated": 1790939227.9001696,
-        "result": "",
+        "updated": 1790939714.013339,
+        "result": "review: The patch fixes the reported single-node cases, but it produces duplicate IDs for documents that split into multiple Markdown, JSON, or HTML nodes. Each child parser calls id_func with index 0 for every node, so a callback returning source ID plus index assigns the same ID repeatedly. The new tests cover only one-node inputs and miss this regression.",
         "attempts": 1
       }
     ],
@@ -1335,20 +1335,20 @@
         "value": "1790939548.6014671"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1790939590.6706011, \"source\": \"completed task phase\"}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1790939653.5506027"
-      },
-      {
         "key": "watch_heartbeat",
-        "value": "1790939660.2976532"
+        "value": "1790939709.8323815"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1790939660.3829408"
+        "value": "1790939709.8507323"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1790939713.5574083"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1790939713.983587, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
