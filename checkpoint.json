@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791005004.676123,
+  "saved_at": 1791005019.6210198,
   "tables": {
     "tasks": [
       {
@@ -2402,10 +2402,10 @@
         "repo": "hermes",
         "number": 132033,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791004589.8130996,
-        "updated": 1791004873.9824233,
-        "result": "",
+        "updated": 1791005019.618588,
+        "result": "The reported cause is not established. `gateway.platform_connect_timeout` bounds a connect attempt and Discord’s ready wait; it does not control an already-connected WebSocket. The reported `socket_closed` and `discord_websocket_health_stale` events come from the separate liveness probe. The issue provides no `discord_connect_timeout` log tying those events to the 30-second limit. Raising the global default would therefore be an unverified behavior change, with no meaningful regression test for the reported disconnects.",
         "attempts": 1
       },
       {
@@ -2440,20 +2440,20 @@
         "value": "1791004613.0905354"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791004862.8256369, \"source\": \"completed task phase\"}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791004993.7238925"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791005000.7216194"
       },
       {
         "key": "detector_heartbeat",
         "value": "1791005000.723223"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791005008.725861"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791005019.6166382, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
