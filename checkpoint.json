@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791009721.5627038,
+  "saved_at": 1791009751.7599347,
   "tables": {
     "tasks": [
       {
@@ -2558,10 +2558,10 @@
         "repo": "hermes",
         "number": 132048,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1791009027.7423584,
-        "updated": 1791009036.3077784,
-        "result": "",
+        "updated": 1791009751.7571192,
+        "result": "review: The regression test is timing-dependent: it arms SIGALRM for 0.5 seconds before Relay startup, then assumes the provider has entered its blocked read when the signal fires (tests/agent/test_relay_llm.py:36-51). On a slower runner it can fail before exercising the race, contrary to the contributor instructions requiring event-based synchronization and timing bounds of at least 2 seconds. The original method failed with the reported ValueError and the current patch passed all 50 Relay tests, but this test needs to be made reliable before approval.",
         "attempts": 1
       }
     ],
@@ -2579,24 +2579,24 @@
         "value": "{}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791009495.4528542, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791009611.5802658"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1791009743.1458304"
+      },
+      {
         "key": "watch_heartbeat",
-        "value": "1791009702.9642432"
+        "value": "1791009746.2133374"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791009702.9664485"
+        "value": "1791009746.2175045"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791009713.1423478"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791009751.7554662, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
