@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791005175.0217257,
+  "saved_at": 1791005180.241698,
   "tables": {
     "tasks": [
       {
@@ -2415,10 +2415,10 @@
         "repo": "hermes",
         "number": 132034,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791004769.5260959,
-        "updated": 1791005030.742837,
-        "result": "",
+        "updated": 1791005180.239128,
+        "result": "Open PR #89452 already proposes an SSH lock watchdog for detached serves, covering the server-side fix requested in #132034. The reported client timeout path does not reproduce on this checkout: an indeterminate SSH liveness probe raises a transient error before cleanup or replacement spawn. I made no changes to avoid a competing fix.",
         "attempts": 1
       }
     ],
@@ -2436,10 +2436,6 @@
         "value": "{}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791005019.6166382, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791005046.6689017"
       },
@@ -2454,6 +2450,10 @@
       {
         "key": "worker_heartbeat",
         "value": "1791005173.7520006"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791005180.2373521, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
