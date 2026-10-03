@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791004255.014509,
+  "saved_at": 1791004257.0338888,
   "tables": {
     "tasks": [
       {
@@ -2207,10 +2207,10 @@
         "repo": "hermes",
         "number": 131765,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1790990539.3760948,
-        "updated": 1791004179.4407275,
-        "result": "",
+        "updated": 1791004257.031435,
+        "result": "Issue #131765 reports intermittent SSH probe failures, but the cause of `socket hang up` while the forward answers HTTP 200 is not isolated. Existing open PRs #100700 and #100040 already work on the same pooled dispatch-probe retirement path in `apps/desktop/electron/main.ts` and `remote-liveness.ts`. A separate speculative fix would overlap that work without a reproducible failing behavior.",
         "attempts": 1
       },
       {
@@ -2358,10 +2358,6 @@
         "value": "{}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791004155.0369694, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791004177.5811174"
       },
@@ -2376,6 +2372,10 @@
       {
         "key": "detector_heartbeat",
         "value": "1791004251.6013272"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791004257.0297446, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
