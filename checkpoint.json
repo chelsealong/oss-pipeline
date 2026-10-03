@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791006649.4024532,
+  "saved_at": 1791006667.179578,
   "tables": {
     "tasks": [
       {
@@ -2519,11 +2519,24 @@
         "repo": "hermes",
         "number": 131961,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791005949.412038,
-        "updated": 1791006557.777749,
-        "result": "",
+        "updated": 1791006667.1760178,
+        "result": "The failure is reported only on Windows, and its cause is not isolated. The reporter says the same wheel installs and standalone `uv sync` succeeds with the same Python, uv binary, and workspace. Hermes’ update path adds options such as `--all-packages` and `--compile-bytecode`, but the evidence does not identify which difference causes the error. I found no issue-specific competing PR and cannot reproduce the failure or prove a small source fix in this Linux checkout. Changing the dependency or adding a retry would be speculative.",
         "attempts": 1
+      },
+      {
+        "id": 195,
+        "identity": "fix:hermes:131859:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 131859,
+        "note": "",
+        "status": "queued",
+        "created": 1791006651.833281,
+        "updated": 1791006651.833281,
+        "result": "",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -2544,10 +2557,6 @@
         "value": "1791006337.3804321"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791006546.7302656, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791006611.6262877"
       },
@@ -2557,7 +2566,11 @@
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791006643.9475071"
+        "value": "1791006658.9493082"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791006667.1743417, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
