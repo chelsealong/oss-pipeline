@@ -3,17 +3,247 @@
   "upstream": "NousResearch/hermes-agent",
   "implements_in": "NousResearch/hermes-agent",
   "needs_assignment": false,
-  "scanned_at": "2026-10-03T07:12:38+00:00",
+  "scanned_at": "2026-10-03T07:17:55+00:00",
   "partial": false,
   "errors": [],
-  "candidates": [],
+  "candidates": [
+    {
+      "number": 132060,
+      "title": "Feature: a remembered core-only install (no `all` extra, no JS workspace packages)",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/132060",
+      "created_at": "2026-10-03T07:08:11Z",
+      "age_hours": 0.2,
+      "reason": "clear",
+      "labels": [
+        "P3",
+        "area/install-update",
+        "comp/cli",
+        "sweeper:risk-compatibility",
+        "type/feature"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 132037,
+      "title": "Desktop: ordinary chats hidden from sidebar \u2014 title pipeline mints reserved 'Bot Chat' title, Bot Mode sweep hides the row before dedupe drops it",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/132037",
+      "created_at": "2026-10-03T05:33:39Z",
+      "age_hours": 1.7,
+      "reason": "clear",
+      "labels": [
+        "P2",
+        "area/sessions",
+        "comp/desktop",
+        "comp/plugins",
+        "sweeper:risk-session-state",
+        "type/bug"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 132034,
+      "title": "[Bug]: Desktop SSH reconnect storm leaks detached serve backends until the remote OOMs",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/132034",
+      "created_at": "2026-10-03T05:19:19Z",
+      "age_hours": 2.0,
+      "reason": "clear",
+      "labels": [
+        "P1",
+        "area/sessions",
+        "backend/ssh",
+        "comp/cli",
+        "comp/desktop",
+        "sweeper:risk-session-state",
+        "type/bug"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 132032,
+      "title": "Desktop: last chat not reopened on launch \u2014 cold start falls back to fresh chat despite stored session (404 Session not found)",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/132032",
+      "created_at": "2026-10-03T05:14:56Z",
+      "age_hours": 2.0,
+      "reason": "clear",
+      "labels": [
+        "P2",
+        "area/sessions",
+        "comp/desktop",
+        "sweeper:risk-session-state",
+        "type/bug"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 132030,
+      "title": "Plugin-declared pip_dependencies never reach uv.lock: sanctioned memory-provider install is undone by the next lock-driven launch (selection re-flip)",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/132030",
+      "created_at": "2026-10-03T04:52:22Z",
+      "age_hours": 2.4,
+      "reason": "clear",
+      "labels": [
+        "P3",
+        "area/memory",
+        "comp/cli",
+        "comp/plugins",
+        "python:uv",
+        "tool/memory",
+        "type/bug"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 131998,
+      "title": "[Bug]: Desktop window completely dead for 55s \u2014 5,474 \"ResizeObserver loop\" notifications at a constant 100/s on a long session (reproduces after #100215)",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/131998",
+      "created_at": "2026-10-03T03:57:30Z",
+      "age_hours": 3.3,
+      "reason": "clear",
+      "labels": [
+        "P2",
+        "comp/desktop",
+        "platform/windows",
+        "sweeper:risk-platform-windows",
+        "type/perf"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 131991,
+      "title": "[Bug]: Desktop (Windows) \u2014 tray hide/restore leaves the window painted but dead to input; every tray action throws \"Object has been destroyed\" in shouldFocusToT",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/131991",
+      "created_at": "2026-10-03T03:49:15Z",
+      "age_hours": 3.5,
+      "reason": "clear",
+      "labels": [
+        "P2",
+        "comp/desktop",
+        "platform/windows",
+        "sweeper:risk-platform-windows",
+        "type/bug"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 131990,
+      "title": "[Bug]: auto-TTS synthesises and plays each reply twice on desktop \u2014 identical temp clip saved twice within 2 ms (possible regression of #90297/#99717)",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/131990",
+      "created_at": "2026-10-03T03:48:39Z",
+      "age_hours": 3.5,
+      "reason": "clear",
+      "labels": [
+        "P3",
+        "comp/desktop",
+        "tool/tts",
+        "type/bug"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 131982,
+      "title": "[Feature] Vision fallback \"main agent model\" default can be a guaranteed 404 (wrong API mode)",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/131982",
+      "created_at": "2026-10-03T03:31:54Z",
+      "age_hours": 3.8,
+      "reason": "clear",
+      "labels": [
+        "P2",
+        "area/config",
+        "area/local-models",
+        "comp/agent",
+        "tool/vision",
+        "type/bug"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 131981,
+      "title": "[Feature] Cross-request cap on auxiliary fallback escalations (economic-DoS guard)",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/131981",
+      "created_at": "2026-10-03T03:31:51Z",
+      "age_hours": 3.8,
+      "reason": "clear",
+      "labels": [
+        "P3",
+        "area/config",
+        "area/usage-cost",
+        "comp/agent",
+        "type/feature"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 131975,
+      "title": "Bots tab doesn't show the default agent when no profiles exist",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/131975",
+      "created_at": "2026-10-03T03:20:50Z",
+      "age_hours": 3.9,
+      "reason": "clear",
+      "labels": [
+        "P3",
+        "area/profiles",
+        "comp/desktop",
+        "comp/gateway",
+        "type/feature"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 131961,
+      "title": "hermes update fails on Windows/Python 3.14 \u2014 uv sync cannot install firecrawl-anydoc (\"Missing .dist-info directory\")",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/131961",
+      "created_at": "2026-10-03T03:00:33Z",
+      "age_hours": 4.3,
+      "reason": "clear",
+      "labels": [
+        "P2",
+        "area/install-update",
+        "comp/cli",
+        "comp/desktop",
+        "platform/windows",
+        "python:uv",
+        "sweeper:risk-compatibility",
+        "sweeper:risk-platform-windows",
+        "type/bug"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    }
+  ],
   "rejected": [
+    {
+      "number": 132061,
+      "title": "Feature: Session/Agent handover \u2014 migrate running subagents to a remote Hermes server",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/132061",
+      "created_at": "2026-10-03T07:10:02Z",
+      "age_hours": 0.1,
+      "reason": "excluded label ['needs-decision']"
+    },
+    {
+      "number": 132048,
+      "title": "[Bug]: Relay-managed plain-generator stream close races blocked iterator after interrupt",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/132048",
+      "created_at": "2026-10-03T06:30:22Z",
+      "age_hours": 0.8,
+      "reason": "already has PR(s): ['closing-ref PR#132059(OPEN)', 'xref PR#132059(OPEN)']"
+    },
     {
       "number": 132042,
       "title": "MCP trust gate: readOnlyHint never detected with mcp 2.0.0 (read_only_hint), so read-only tools on untrusted servers are always blocked",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132042",
       "created_at": "2026-10-03T05:51:07Z",
-      "age_hours": 0.8,
+      "age_hours": 1.4,
       "reason": "excluded label ['duplicate']"
     },
     {
@@ -21,7 +251,7 @@
       "title": "[Bug]: Discord adapter WebSocket timeouts \u2014 platform_connect_timeout: 30 too tight",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132033",
       "created_at": "2026-10-03T05:16:24Z",
-      "age_hours": 1.4,
+      "age_hours": 2.0,
       "reason": "already has PR(s): ['closing-ref PR#132038(OPEN)', 'xref PR#132038(OPEN)']"
     },
     {
@@ -29,7 +259,7 @@
       "title": "[Bug]: /queue subcommands (list/clear/rm/move/edit) are queued as messages on the TUI and desktop instead of executing",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132026",
       "created_at": "2026-10-03T04:45:24Z",
-      "age_hours": 1.9,
+      "age_hours": 2.5,
       "reason": "already has PR(s): ['closing-ref PR#132049(OPEN)', 'xref PR#132049(OPEN)']"
     },
     {
@@ -37,7 +267,7 @@
       "title": "[Bug]: Deeply nested Slack Block Kit message crashes inbound normalization with RecursionError (no depth budget on Block Kit walkers)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132023",
       "created_at": "2026-10-03T04:36:46Z",
-      "age_hours": 2.0,
+      "age_hours": 2.7,
       "reason": "already has PR(s): ['closing-ref PR#132027(OPEN)', 'xref PR#132027(OPEN)']"
     },
     {
@@ -45,7 +275,7 @@
       "title": "[Bug]: Deeply nested tool-call arguments crash tool-argument coercion with RecursionError (no depth budget)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132016",
       "created_at": "2026-10-03T04:22:04Z",
-      "age_hours": 2.3,
+      "age_hours": 2.9,
       "reason": "already has PR(s): ['closing-ref PR#132051(OPEN)', 'xref PR#132051(OPEN)']"
     },
     {
@@ -53,7 +283,7 @@
       "title": "[Bug]: A 14-byte legal YAML alias cycle crashes locale flattening with RecursionError (`flatten` / `non_text_leaves` have no cycle guard)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132006",
       "created_at": "2026-10-03T04:08:51Z",
-      "age_hours": 2.5,
+      "age_hours": 3.1,
       "reason": "already has PR(s): ['closing-ref PR#132021(OPEN)', 'xref PR#132021(OPEN)']"
     },
     {
@@ -61,7 +291,7 @@
       "title": "[Bug]: Deeply nested external tool schema crashes provider schema normalization with RecursionError (no depth budget)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132005",
       "created_at": "2026-10-03T04:06:54Z",
-      "age_hours": 2.5,
+      "age_hours": 3.2,
       "reason": "already has PR(s): ['closing-ref PR#132031(OPEN)', 'xref PR#132031(OPEN)']"
     },
     {
@@ -69,7 +299,7 @@
       "title": "[Bug]: Deeply nested Feishu interactive-message content crashes inbound normalization with RecursionError (no depth budget on `_walk_nodes`)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132003",
       "created_at": "2026-10-03T04:05:20Z",
-      "age_hours": 2.6,
+      "age_hours": 3.2,
       "reason": "already has PR(s): ['closing-ref PR#132041(OPEN)', 'xref PR#132041(OPEN)']"
     },
     {
@@ -77,7 +307,7 @@
       "title": "[Bug]: Anthropic listed only in fallback_providers is skipped as \"credential pool exhausted\" (borrowed claude_code row never filled in)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/131993",
       "created_at": "2026-10-03T03:51:20Z",
-      "age_hours": 2.8,
+      "age_hours": 3.4,
       "reason": "already has PR(s): ['closing-ref PR#132014(OPEN)', 'closing-ref PR#132045(OPEN)', 'xref PR#132014(OPEN)']"
     },
     {
@@ -85,7 +315,7 @@
       "title": "[Bug] Plugin in both disabled+enabled lists loads nowhere \u2014 silently, at DEBUG level",
       "url": "https://github.com/NousResearch/hermes-agent/issues/131980",
       "created_at": "2026-10-03T03:31:49Z",
-      "age_hours": 3.1,
+      "age_hours": 3.8,
       "reason": "already has PR(s): ['closing-ref PR#131985(OPEN)', 'xref PR#131985(OPEN)']"
     },
     {
@@ -93,7 +323,7 @@
       "title": "Evidence addendum to #78712: hallucinated completion is model-agnostic (GLM 5.3 case) + operator-side mitigations that worked",
       "url": "https://github.com/NousResearch/hermes-agent/issues/131979",
       "created_at": "2026-10-03T03:31:36Z",
-      "age_hours": 3.1,
+      "age_hours": 3.8,
       "reason": "excluded label ['needs-repro']"
     },
     {
@@ -101,15 +331,15 @@
       "title": "[Bug]: Desktop Artifacts list shows percent-encoded CJK filenames (artifactLabel)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/131978",
       "created_at": "2026-10-03T03:23:07Z",
-      "age_hours": 3.3,
-      "reason": "claimed by kokhlo"
+      "age_hours": 3.9,
+      "reason": "already has PR(s): ['closing-ref PR#132052(OPEN)', 'xref PR#132052(OPEN)']"
     },
     {
       "number": 131974,
       "title": "[Bug]: Saving the interactive `hermes plugins` screen puts every unchecked bundled platform on plugins.disabled, disabling a configured platform at the next gat",
       "url": "https://github.com/NousResearch/hermes-agent/issues/131974",
       "created_at": "2026-10-03T03:18:33Z",
-      "age_hours": 3.4,
+      "age_hours": 4.0,
       "reason": "already has PR(s): ['closing-ref PR#131984(OPEN)', 'xref PR#131984(OPEN)']"
     },
     {
@@ -117,7 +347,7 @@
       "title": "[Bug]: Review Diff file not showing on Hermes Desktop",
       "url": "https://github.com/NousResearch/hermes-agent/issues/131972",
       "created_at": "2026-10-03T03:16:39Z",
-      "age_hours": 3.4,
+      "age_hours": 4.0,
       "reason": "excluded label ['needs-repro']"
     },
     {
@@ -125,7 +355,7 @@
       "title": "API Server: `POST /v1/runs/{run_id}/approval` drops the deny reason that the gateway already supports",
       "url": "https://github.com/NousResearch/hermes-agent/issues/131962",
       "created_at": "2026-10-03T03:01:07Z",
-      "age_hours": 3.6,
+      "age_hours": 4.3,
       "reason": "already has PR(s): ['closing-ref PR#131965(OPEN)', 'xref PR#131965(OPEN)']"
     },
     {
@@ -133,7 +363,7 @@
       "title": "apps/shared test fails in bare Node: ReferenceError: CloseEvent is not defined",
       "url": "https://github.com/NousResearch/hermes-agent/issues/131956",
       "created_at": "2026-10-03T02:46:50Z",
-      "age_hours": 3.9,
+      "age_hours": 4.5,
       "reason": "claimed by 686f6c61"
     },
     {
@@ -141,56 +371,16 @@
       "title": "[Bug]: Desktop: \u0434\u043e\u043b\u0433\u0438\u0435 \u00abSummarizing thread\u00bb, \u0446\u0438\u043a\u043b\u044b \u0431\u0435\u0437 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u0430 \u0438 \u0442\u0430\u0439\u043c\u0430\u0443\u0442 \u0441\u043c\u0435\u043d\u044b reasoning",
       "url": "https://github.com/NousResearch/hermes-agent/issues/131947",
       "created_at": "2026-10-03T02:12:26Z",
-      "age_hours": 4.5,
+      "age_hours": 5.1,
       "reason": "excluded label ['needs-repro']"
-    },
-    {
-      "number": 131945,
-      "title": "Desktop SDK: host-rendered transcript density and disclosure preferences",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/131945",
-      "created_at": "2026-10-03T02:09:37Z",
-      "age_hours": 4.5,
-      "reason": "excluded label ['needs-decision']"
     },
     {
       "number": 131924,
       "title": "[Bug]: hermes send / standalone Telegram sends ignore display.platforms.telegram.notifications",
       "url": "https://github.com/NousResearch/hermes-agent/issues/131924",
       "created_at": "2026-10-03T01:26:11Z",
-      "age_hours": 5.2,
+      "age_hours": 5.9,
       "reason": "already has PR(s): ['closing-ref PR#131933(OPEN)', 'xref PR#131933(OPEN)']"
-    },
-    {
-      "number": 131884,
-      "title": "[Bug]: Windows `hermes update` fails installing ffmpeg/agent-browser with [WinError 5] \u2014 flatten_single_dir renames a freshly extracted tree without retry",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/131884",
-      "created_at": "2026-10-03T00:54:31Z",
-      "age_hours": 5.8,
-      "reason": "already has PR(s): ['closing-ref PR#131886(OPEN)', 'xref PR#131886(OPEN)']"
-    },
-    {
-      "number": 131876,
-      "title": "Two classic-CLI approval prompts fire no `pre_approval_request` / `post_approval_response` hooks",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/131876",
-      "created_at": "2026-10-03T00:42:44Z",
-      "age_hours": 5.9,
-      "reason": "already has PR(s): ['closing-ref PR#131928(OPEN)', 'xref PR#131928(OPEN)']"
-    },
-    {
-      "number": 131875,
-      "title": "`hermes gateway restart` on macOS launchd can leave the gateway down (Signal lock race, exit 78 mapped to 0)",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/131875",
-      "created_at": "2026-10-03T00:42:43Z",
-      "age_hours": 5.9,
-      "reason": "already has PR(s): ['closing-ref PR#131938(OPEN)', 'xref PR#131938(OPEN)']"
-    },
-    {
-      "number": 131869,
-      "title": "[Bug]: pm llamacpp-cuda win32-x64 still pins CUDA 13.3 assets (404 upstream) and the pin loop crash discards every pin from the run",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/131869",
-      "created_at": "2026-10-03T00:36:36Z",
-      "age_hours": 6.1,
-      "reason": "already has PR(s): ['xref PR#131882(OPEN)']"
     }
   ]
 }
