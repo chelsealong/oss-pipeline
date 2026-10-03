@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791033307.5283153,
+  "saved_at": 1791033336.3412342,
   "tables": {
     "tasks": [
       {
@@ -3052,10 +3052,10 @@
         "repo": "hermes",
         "number": 132167,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1791029456.0745792,
-        "updated": 1791032596.510532,
-        "result": "",
+        "updated": 1791033336.3383415,
+        "result": "review: The fix addresses a reproduced guard refusal, and the focused suites pass (30 guard tests and 197 web-server tests). However, the new regression test sets `_RUNNING_EXECUTABLE_PATHS`, a symbol absent before the patch. On the base version it fails at that monkeypatch instead of exercising the reported refusal, so it does not provide the required behavioral failing-before evidence. The test needs to reproduce the guard failure on the base version.",
         "attempts": 1
       },
       {
@@ -3155,24 +3155,24 @@
         "value": "{}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791033025.0656433, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791033035.7374268"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791033292.9675238"
+        "value": "1791033322.9713097"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791033306.9154577"
+        "value": "1791033331.9411626"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791033306.919711"
+        "value": "1791033331.942625"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791033336.336669, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
