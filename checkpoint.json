@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791106834.1013122,
+  "saved_at": 1791106843.0859354,
   "tables": {
     "tasks": [
       {
@@ -3182,10 +3182,10 @@
         "repo": "NousResearch/hermes-agent",
         "number": 125854,
         "note": "{\"authors\": \"Enough1122\", \"events\": [\"IC_kwDOPRF1G88AAAABY9Dlpg@2026-10-03T13:25:29Z\"], \"is_issue\": false}",
-        "status": "running",
+        "status": "blocked",
         "created": 1791036136.5265214,
-        "updated": 1791106332.8042164,
-        "result": "The one-line fix and regression test are in the checkout, but required validation cannot complete: scripts/run_tests.sh fails before running tests because /var/tmp/hermes-pytest-1001 is on a read-only filesystem. The change needs a canonical test run before it is ready.",
+        "updated": 1791106843.0809624,
+        "result": "review: The patch fixes a real race: the new test fails with KeyError against the committed function and passes with the patch. However, earlier open PR #123936 already proposes the same `pop(name, None)` fix, along with the related `plugin_dev.py` race fix. This is a duplicate contribution.",
         "attempts": 2
       },
       {
@@ -4238,10 +4238,6 @@
         "value": "[244, 245, 266, 267, 268, 271, 273, 316]"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791106676.3042727, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791106779.983481"
       },
@@ -4251,11 +4247,15 @@
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791106831.6608596"
+        "value": "1791106841.6687574"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791106831.662207"
+        "value": "1791106841.6700346"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791106843.0791547, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
