@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791125082.4403656,
+  "saved_at": 1791125113.6092772,
   "tables": {
     "tasks": [
       {
@@ -4599,10 +4599,10 @@
         "repo": "hermes",
         "number": 132780,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791122967.5215642,
-        "updated": 1791124973.0433109,
-        "result": "",
+        "updated": 1791125113.605498,
+        "result": "#132780 requests a new operator-controlled context ceiling, not a fix to the existing growth override. The grow-only behavior is intentional: `context_policy.py:139` restores a requested window only when it exceeds the automatic choice, and the module explicitly describes its policy as “constants, not knobs.” A genuine ceiling would also need a decision on the 64K floor and on in-session growth, which can raise the window after launch (`growth.py:123-130`). Those product semantics are unresolved, so an autonomous small patch would risk changing the wrong contract. No competing PR or claimant was found; the checkout is unchanged.",
         "attempts": 1
       },
       {
@@ -4710,20 +4710,20 @@
         "value": "1791124774.0606484"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791124961.8210084, \"source\": \"completed task phase\"}"
+        "key": "worker_heartbeat",
+        "value": "1791125108.6829748"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791124975.3433497"
+        "value": "1791125109.2921376"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791124975.3449876"
+        "value": "1791125109.2938"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791125078.678317"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791125113.603752, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
