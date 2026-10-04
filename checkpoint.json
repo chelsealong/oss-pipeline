@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791120571.748648,
+  "saved_at": 1791120579.846086,
   "tables": {
     "tasks": [
       {
@@ -2675,9 +2675,9 @@
         "repo": "hermes",
         "number": 132076,
         "note": "",
-        "status": "blocked",
+        "status": "queued",
         "created": 1791014051.3049407,
-        "updated": 1791014849.3027253,
+        "updated": 1791120579.8420968,
         "result": "The fix and regression test are in the checkout, but required validation could not complete. `scripts/run_tests.sh` stops before collecting tests because the sandbox cannot write `/var/tmp/hermes-pytest-1001`. No PR was created. The requested repository `CLAUDE.md` is absent.",
         "attempts": 1
       },
@@ -2948,9 +2948,9 @@
         "repo": "hermes",
         "number": 132150,
         "note": "",
-        "status": "blocked",
+        "status": "queued",
         "created": 1791026862.6592886,
-        "updated": 1791029180.8453152,
+        "updated": 1791120579.8422017,
         "result": "The focused fix is in the checkout, but required validation could not complete. scripts/run_tests.sh stops before test collection because its runner hardcodes /var/tmp/hermes-pytest-1001, and /var/tmp is read only in this sandbox. A passing canonical test run is still needed.",
         "attempts": 1
       },
@@ -3130,9 +3130,9 @@
         "repo": "hermes",
         "number": 132187,
         "note": "",
-        "status": "blocked",
+        "status": "queued",
         "created": 1791032599.5541434,
-        "updated": 1791037357.2271938,
+        "updated": 1791120579.84222,
         "result": "The fix and regression test are in the checkout, but required validation cannot start. `scripts/run_tests.sh tests/gateway/test_destructive_slash_confirm.py -k routed_always -q` exits before pytest because the runner hardcodes `/var/tmp/hermes-pytest-1001`, which is read-only in this sandbox. I could not establish the required failing-before and passing-after test results. `CLAUDE.md` is absent from this checkout.",
         "attempts": 1
       },
@@ -4383,6 +4383,45 @@
         "updated": 1791120571.7441146,
         "result": "",
         "attempts": 1
+      },
+      {
+        "id": 338,
+        "identity": "fix:hermes:132762:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 132762,
+        "note": "",
+        "status": "queued",
+        "created": 1791120572.429886,
+        "updated": 1791120572.429886,
+        "result": "",
+        "attempts": 0
+      },
+      {
+        "id": 339,
+        "identity": "fix:hermes:132759:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 132759,
+        "note": "",
+        "status": "queued",
+        "created": 1791120574.932507,
+        "updated": 1791120574.932507,
+        "result": "",
+        "attempts": 0
+      },
+      {
+        "id": 340,
+        "identity": "fix:hermes:132738:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 132738,
+        "note": "",
+        "status": "queued",
+        "created": 1791120577.4650757,
+        "updated": 1791120577.4650757,
+        "result": "",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -4397,10 +4436,6 @@
       {
         "key": "publishing",
         "value": "{\"task\": 305, \"branch\": \"fix/codex-langfuse-18108\", \"head\": \"4a2e770a596ea348d75e98e63eb4b178bb0dd003\"}"
-      },
-      {
-        "key": "cloud_validation_retry_20261004",
-        "value": "[244, 245, 256, 266, 267, 268, 271, 273, 274, 275, 295, 316]"
       },
       {
         "key": "prwatch_heartbeat",
@@ -4424,7 +4459,11 @@
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791120563.001974"
+        "value": "1791120578.0041237"
+      },
+      {
+        "key": "cloud_validation_retry_20261004",
+        "value": "[206, 227, 241, 244, 245, 256, 266, 267, 268, 271, 273, 274, 275, 295, 316]"
       }
     ],
     "calls": [
