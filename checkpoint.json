@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791108130.2327597,
+  "saved_at": 1791108148.0032294,
   "tables": {
     "tasks": [
       {
@@ -3546,10 +3546,10 @@
         "repo": "openclaw/openclaw",
         "number": 161462,
         "note": "{\"authors\": \"ci\", \"events\": [\"check:40bcbe0ad9b2:PR context and evidence:2026-10-04\", \"standing:needs proof:2026-10-04\"], \"is_issue\": false}",
-        "status": "running",
+        "status": "blocked",
         "created": 1791072072.2567315,
-        "updated": 1791107990.0452797,
-        "result": "Command '['git', 'fetch', 'origin', 'fix/foundry-mai-image-2-6-edits']' timed out after 300 seconds",
+        "updated": 1791108147.9996312,
+        "result": "PR #161462 has no remaining actionable code finding. Its failing PR-context check can be addressed by updating the PR description, but ClawSweeper also requires a successful edit through a deployed MAI-Image-2.6 model. This checkout has no Foundry deployment or credential, so I cannot supply that proof. Draft PR description:\n\nFixes #161376\n\n## What Problem This Solves\nOpenClaw rejects MAI-Image-2.6 reference-image edits before sending them to Microsoft Foundry.\n\n## User Impact\nUsers can route MAI-Image-2.6 edits to the Foundry edit endpoint. Whether the deployed model accepts the request remains unverified.\n\n## Why This Change Was Made\nThe Foundry plugin now recognizes MAI-Image-2.6 as an edit-capable image model, offers it during setup, and names it in the custom-deployment guidance.\n\n## Evidence\nThe existing mocked provider test reports 16 passing tests; the new routing test reportedly fails when the source change is removed. The PR's checks for the changed extension pass. No live Foundry request or returned image has been captured; someone with a MAI-Image-2.6 deployment must provide a redacted trace.\n\nCodex generated and reviewed this draft. It is not a claim of human validation.",
         "attempts": 2
       },
       {
@@ -4238,24 +4238,24 @@
         "value": "[244, 245, 256, 266, 267, 268, 271, 273, 274, 275, 295, 316]"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791107978.7900703, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791108085.4284782"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791108118.6841073"
+        "value": "1791108133.6857762"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791108125.2051156"
+        "value": "1791108145.591015"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791108125.2067053"
+        "value": "1791108145.5926015"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791108147.997982, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
