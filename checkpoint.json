@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791101146.9795418,
+  "saved_at": 1791101194.5291293,
   "tables": {
     "tasks": [
       {
@@ -3988,10 +3988,10 @@
         "repo": "hermes",
         "number": 132631,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791096671.5813775,
-        "updated": 1791101061.254224,
-        "result": "",
+        "updated": 1791101194.5256634,
+        "result": "The reported SIGSEGV occurs inside NeMo Relay’s native `llm_stream_call_execute` on musl/aarch64. Hermes calls `relay.llm.stream_execute` in `agent/relay_llm.py`; its Python exception fallback cannot catch a process segfault. Disabling Relay would also remove the telemetry the issue asks to preserve. A verified fix needs an upstream native repair and testing on musl/aarch64, which this Linux x86_64 checkout cannot provide. Dependency manifests and lockfiles are excluded from this task. No files were changed.",
         "attempts": 1
       },
       {
@@ -4108,20 +4108,20 @@
         "value": "1791100937.0273695"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791101049.9908226, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "watch_heartbeat",
-        "value": "1791101144.7266548"
+        "value": "1791101189.7706819"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791101144.7283628"
+        "value": "1791101189.772393"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791101146.5374918"
+        "value": "1791101191.542738"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791101194.5239377, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
