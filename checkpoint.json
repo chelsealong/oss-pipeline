@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791126932.766217,
+  "saved_at": 1791126986.983604,
   "tables": {
     "tasks": [
       {
@@ -4729,10 +4729,10 @@
         "repo": "hermes",
         "number": 132797,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791126803.0827768,
-        "updated": 1791126810.371337,
-        "result": "",
+        "updated": 1791126986.979336,
+        "result": "Issue #132797 reports a Windows-only screenshot timeout, but its root cause is unisolated and the failing installation has no raw exception or clean reproduction. Hermes’s [browser_exec wrapper](/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/364/work/tools/browser_use_cli.py:627) delegates capture to Browser Harness and cannot distinguish a stalled screenshot from other harness failures. This Linux checkout cannot reproduce the minimized Windows Chrome behavior, so a source change would be speculative and cannot meet the required regression proof. [Issue report](https://github.com/NousResearch/hermes-agent/issues/132797).",
         "attempts": 1
       }
     ],
@@ -4759,23 +4759,23 @@
       },
       {
         "key": "prwatch_heartbeat",
-        "value": "1791126535.6612637"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791126669.0017111, \"source\": \"completed task phase\"}"
+        "value": "1791126971.5341258"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791126925.0200253"
+        "value": "1791126985.0281672"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791126928.7803407"
+        "value": "1791126985.6959677"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791126928.782408"
+        "value": "1791126985.6976843"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791126986.9774506, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
