@@ -117,6 +117,15 @@ class RuntimeTests(unittest.TestCase):
                 cloud_runtime.run('live',60)
             save.assert_not_called()
             rotate.assert_called_once()
+    def test_cloud_control_retries_reads_without_replaying_secret_writes(self):
+        failed=Mock(returncode=1,stderr='TLS handshake timeout',stdout='')
+        succeeded=Mock(returncode=0,stderr='',stdout='true')
+        with patch.object(cloud_runtime.subprocess,'run',side_effect=[failed,succeeded]) as call,patch.object(cloud_runtime.time,'sleep'):
+            self.assertTrue(cloud_runtime.cloud_enabled())
+            self.assertEqual(call.call_count,2)
+        with patch.object(cloud_runtime.subprocess,'run',return_value=failed) as call:
+            with self.assertRaises(RuntimeError):cloud_runtime.gh(['secret','set','CODEX_AUTH_JSON','--repo',cloud_runtime.REPOSITORY],input='not-a-secret')
+            call.assert_called_once()
     def test_cloud_login_only_publishes_encrypted_device_code(self):
         private=self.root/'private.pem';public=self.root/'public.pem'
         subprocess.run(['openssl','genpkey','-algorithm','RSA','-pkeyopt','rsa_keygen_bits:2048','-out',str(private)],capture_output=True,check=True)
@@ -181,6 +190,21 @@ class RuntimeTests(unittest.TestCase):
             with self.assertRaises(subprocess.TimeoutExpired):
                 worker.agent('test',self.root,output,worker.REVIEW_SCHEMA,timeout=0)
         self.assertFalse(output.exists())
+    def test_cloud_agent_keeps_tool_caches_outside_checkout(self):
+        self.cfg['backend']='codex-cloud';self.save()
+        output=self.root/'job'/'generation.json'
+        with patch.object(rt,'reserve_call',return_value=(True,'')),patch.object(worker,'binary',return_value='/bin/true'),patch.object(worker.subprocess,'Popen',side_effect=RuntimeError('captured')) as spawn:
+            with self.assertRaisesRegex(RuntimeError,'captured'):
+                worker.agent('test',self.root/'job'/'work',output,repo_key='langfuse')
+        args=spawn.call_args.args[0]
+        cache=output.parent/'tool-cache'
+        self.assertIn(str(cache),args)
+        self.assertNotIn('danger-full-access',args)
+        env=spawn.call_args.kwargs['env']
+        self.assertEqual(env['OSS_TASK_CACHE'],str(cache))
+        self.assertEqual(env['COREPACK_HOME'],str(cache/'corepack'))
+        self.assertEqual(env['CARGO_HOME'],str(cache/'cargo'))
+        self.assertNotIn('CODEX_AUTH_JSON',env)
     def test_transient_read_retries_but_publish_does_not(self):
         fail=Mock(returncode=1,stderr='TLS handshake timeout',stdout='')
         ok=Mock(returncode=0,stderr='',stdout='{}')

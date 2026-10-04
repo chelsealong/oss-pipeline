@@ -24,16 +24,20 @@ jobs:
           python-version: '3.12'
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24.21.0'
       - name: Install pinned Codex CLI and test dependency
         run: |
           sudo apt-get update -qq
           sudo apt-get install --no-install-recommends -y ripgrep
+          corepack enable
           npm install --global @openai/codex@0.159.3
           python -m pip install PyYAML==6.0.3
       - name: Check portable runtime and offline regressions
         run: |
           codex --version
+          node --version
+          corepack --version
+          command -v pnpm
           gh --version
           command -v rg
           ./verify.sh

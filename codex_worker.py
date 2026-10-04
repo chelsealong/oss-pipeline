@@ -80,7 +80,7 @@ def binary():
         raise RuntimeError('Codex CLI not found')
     return str(candidates[-1])
 
-def agent(prompt, work, output, schema=None, timeout=1800, probe=False):
+def agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_key=None):
     if not probe:
         ok, why = rt.reserve_call('codex')
         if not ok:
@@ -92,6 +92,18 @@ def agent(prompt, work, output, schema=None, timeout=1800, probe=False):
            '--disable', 'plugins', '--disable', 'remote_plugin', '--disable', 'apps',
            '--disable', 'multi_agent', '--disable', 'hooks',
            '-C', str(work), '-o', str(output), '-']
+    cache = None
+    if not probe and rt.config().get('backend') == 'codex-cloud':
+        # Tool caches must stay writable without entering the source checkout
+        # (and therefore without being staged into an upstream PR).
+        cache = output.parent/'tool-cache'
+        cache.mkdir(parents=True, exist_ok=True)
+        cmd[2:2] = ['--add-dir', str(cache)]
+        if repo_key == 'hermes':
+            # Hermes' canonical runner uses this fixed disk-backed scratch root.
+            scratch = Path('/var/tmp')/f'hermes-pytest-{os.getuid()}'
+            scratch.mkdir(parents=True, exist_ok=True)
+            cmd[2:2] = ['--add-dir', str(scratch)]
     # Preserve the user's chosen model without inheriting interactive plugins,
     # hooks or permission settings. The CLI's compiled default may differ.
     user_config = Path.home()/'.codex/config.toml'
@@ -117,6 +129,14 @@ def agent(prompt, work, output, schema=None, timeout=1800, probe=False):
     if bundled_rg:
         tool_dirs.append(str(bundled_rg[-1].parent))
     env['PATH'] = ':'.join(tool_dirs+[env.get('PATH','/usr/bin:/bin')])
+    if cache is not None:
+        env.update({'OSS_TASK_CACHE':str(cache),
+                    'COREPACK_HOME':str(cache/'corepack'),
+                    'XDG_CACHE_HOME':str(cache/'xdg-cache'),
+                    'XDG_DATA_HOME':str(cache/'xdg-data'),
+                    'npm_config_cache':str(cache/'npm'),
+                    'npm_config_store_dir':str(cache/'pnpm-store'),
+                    'CARGO_HOME':str(cache/'cargo')})
     for name in ('OPENAI_API_KEY','CODEX_API_KEY','ANTHROPIC_API_KEY','CLAUDE_CODE_OAUTH_TOKEN',
                  'GH_TOKEN','GITHUB_TOKEN','GH_PAT','QWEN_API_KEY','DASHSCOPE_API_KEY','CODEX_AUTH_JSON'):
         env.pop(name, None)
@@ -315,7 +335,15 @@ def process(task):
         git(work,'checkout','-b',branch,'FETCH_HEAD')
     else:
         branch=pr['head']['ref']
-        git(work,'fetch','origin',branch)
+        # The initial clone is shallow. Keep feedback fetches shallow too;
+        # otherwise Git may transfer the PR branch's entire history.
+        for attempt in range(2):
+            try:
+                git(work,'fetch','--depth=1','origin',branch)
+                break
+            except subprocess.TimeoutExpired:
+                if attempt: raise
+                time.sleep(3)
         git(work,'checkout','-b',branch,'FETCH_HEAD')
         if git(work,'rev-parse','HEAD')!=pr['head']['sha']:
             raise rt.Paused('PR head moved before checkout')
@@ -348,8 +376,12 @@ autonomous contributions. For responses, address only still-unresolved actionabl
 if only a conversational reply is needed, return BLOCKED with a draft in reason. Never claim human review.
 Follow repository policy and use the correct test harness. No unrelated refactors, CI, generated files,
 auth/credentials/security paths, release files, dependency manifests or lockfiles. Only small, testable fixes.
+When cloud dependencies are missing, use an isolated environment in $OSS_TASK_CACHE, not inside the
+source checkout; never include downloaded packages or caches in a PR.
 Openclaw excludes src/cron/stagger.ts, src/security, src/secrets and auth under src/gateway/src/agents;
-use its scoped test/check commands. Hermes excludes optional-mcps and hermes_cli/mcp_catalog.py;
+use its scoped test/check commands. For uncommitted changes run check:changed with --base HEAD;
+the default origin/main in this shallow fork checkout can select an unrelated repository-wide diff.
+Hermes excludes optional-mcps and hermes_cli/mcp_catalog.py;
 use scripts/run_tests.sh if required by current docs. ComfyUI: CPU-verifiable issues only, no model weights.
 
 Add a meaningful regression test. Prove the observable behavior fails WITHOUT the source fix, then passes WITH
@@ -364,7 +396,7 @@ Return the requested JSON: READY only for complete tested changes, SKIP for no w
 body must follow the upstream PR template, link the issue when this is a fix, state actual validation, and explicitly
 disclose that Codex generated/reviewed the change. Do not assert personal human validation.
 '''
-    result=agent(prompt,work,folder/'generation.json',GEN_SCHEMA,timeout=2400)
+    result=agent(prompt,work,folder/'generation.json',GEN_SCHEMA,timeout=2400,repo_key=key)
     if result['outcome']!='READY':
         finish(task,'skipped' if result['outcome']=='SKIP' else 'blocked',result['reason']);return
     if git(work,'rev-parse','HEAD')!=base: raise RuntimeError('generator unexpectedly committed')
@@ -377,7 +409,7 @@ Verify meaningful failing-before/passing-after evidence by running checks as app
 not a verdict. Never approve merely because generation claimed tests passed. Return BLOCK if required tests cannot run.
 Do not edit source/test files, commit, push, post comments or PRs, or call other agents. Foreground checks only.
 Return APPROVE only when the current exact patch is justified, minimal, permitted, and test evidence verified.
-''',work,folder/'review.json',REVIEW_SCHEMA,timeout=1200)
+''',work,folder/'review.json',REVIEW_SCHEMA,timeout=1200,repo_key=key)
     if review['verdict']!='APPROVE' or not review['tests_verified']:
         finish(task,'blocked','review: '+review['reason']);return
     if before!=fingerprint(work) or git(work,'rev-parse','HEAD')!=base:

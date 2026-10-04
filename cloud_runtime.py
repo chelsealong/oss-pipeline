@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import signal
 import subprocess
 import sys
@@ -15,9 +16,19 @@ import runtime as rt
 REPOSITORY='chelsealong/oss-pipeline'
 
 def gh(args, **kwargs):
-    p=subprocess.run(['gh',*args],capture_output=True,text=True,timeout=90,**kwargs)
-    if p.returncode:raise RuntimeError('GitHub control operation failed (exit '+str(p.returncode)+')')
-    return p.stdout.strip()
+    # A failed variable read is safe to repeat; secret updates and workflow
+    # dispatches are mutations and must never be replayed blindly.
+    readonly=args[:2]==['api',f'repos/{REPOSITORY}/actions/variables/CODEX_CLOUD_ENABLED']
+    for attempt in range(3 if readonly else 1):
+        try:
+            p=subprocess.run(['gh',*args],capture_output=True,text=True,timeout=90,**kwargs)
+        except subprocess.TimeoutExpired:
+            if not readonly or attempt==2:raise
+        else:
+            if not p.returncode:return p.stdout.strip()
+            if not readonly or not re.search(r'TLS|timeout|connection|HTTP 50[234]|unexpected EOF',p.stderr,re.I) or attempt==2:
+                raise RuntimeError('GitHub control operation failed (exit '+str(p.returncode)+')')
+        time.sleep(2*(attempt+1))
 
 def auth_file():
     return Path(os.environ['CODEX_HOME'])/'auth.json'
