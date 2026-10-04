@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791107265.8162594,
+  "saved_at": 1791107302.3163319,
   "tables": {
     "tasks": [
       {
@@ -3455,10 +3455,10 @@
         "repo": "NousResearch/hermes-agent",
         "number": 126029,
         "note": "{\"authors\": \"Enough1122\", \"events\": [\"IC_kwDOPRF1G88AAAABZBw9bQ@2026-10-03T23:19:55Z\"], \"is_issue\": false}",
-        "status": "running",
+        "status": "blocked",
         "created": 1791069900.0340984,
-        "updated": 1791106854.3268626,
-        "result": "The review feedback is addressed in the checkout, but required validation could not run. `scripts/run_tests.sh` stops before test collection because it creates `/var/tmp/hermes-pytest-1001`, and `/var/tmp` is read-only in this sandbox. No test or red/green result is claimed.",
+        "updated": 1791107302.3129475,
+        "result": "review: The lock wait can exceed the tool deadline. `browser.command_timeout` has no upper bound; setting it to 300 seconds makes `_real_profile_lock_timeout()` return 660 seconds, while sequential and concurrent tool calls default to 420 seconds. A wedged resolve can therefore still leave later calls waiting until the outer timeout, the symptom this patch aims to fix. The new wait-budget test mocks the lock and does not cover this supported configuration.",
         "attempts": 2
       },
       {
@@ -4238,24 +4238,24 @@
         "value": "[244, 245, 266, 267, 268, 271, 273, 274, 316]"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791107178.622959, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791107213.911049"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1791107293.5547934"
+      },
+      {
         "key": "watch_heartbeat",
-        "value": "1791107263.5375865"
+        "value": "1791107298.568502"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791107263.539202"
+        "value": "1791107298.5700042"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791107263.5499048"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791107302.3113852, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
