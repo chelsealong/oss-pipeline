@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791120765.9103668,
+  "saved_at": 1791120785.4121263,
   "tables": {
     "tasks": [
       {
@@ -4378,10 +4378,10 @@
         "repo": "hermes",
         "number": 132770,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791120569.9628885,
-        "updated": 1791120571.7441146,
-        "result": "",
+        "updated": 1791120785.4081125,
+        "result": "The reported reconcile gap is not present in this checkout: gateway/run_profile_reconcile.py retains each profile in `primed` and reconciles it on every later tick; its log line appears only when servers are added or removed, so an absent log line does not show that ticks were skipped. The parked MCP retry path already rereads `enabled` and skips unattended retries for disabled servers. Open PR #114752 also targets that retry behavior. The proposed last-gate change is in an OAuth path excluded by this assignment.",
         "attempts": 1
       },
       {
@@ -4442,10 +4442,6 @@
         "value": "1791120518.0359764"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791120521.724025, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -4455,15 +4451,19 @@
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791120758.0306585"
+        "value": "1791120773.0323272"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791120765.8384166"
+        "value": "1791120780.851496"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791120765.840117"
+        "value": "1791120780.8546581"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791120785.4062817, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
