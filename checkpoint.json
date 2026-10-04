@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791122308.1142955,
+  "saved_at": 1791122343.4263136,
   "tables": {
     "tasks": [
       {
@@ -4469,10 +4469,10 @@
         "repo": "hermes",
         "number": 132706,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791121231.596783,
-        "updated": 1791122239.6581836,
-        "result": "",
+        "updated": 1791122343.4219837,
+        "result": "Issue #132706 records a Windows updater cancellation after 600 seconds of silence, but the report does not identify whether the backup was progressing or blocked. The current watchdog cancels only after stdout/stderr and update.log both remain quiet; full-backup progress is logged only after every 500 files, so a single large file can be silent, but the partial ZIP does not establish that this caused the reported stall. Open PR #119452 also changes the large SQLite backup path. A small, demonstrably correct fix cannot be established from this evidence, and no files were changed.",
         "attempts": 1
       },
       {
@@ -4580,20 +4580,20 @@
         "value": "1791122146.5571444"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791122228.219903, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "worker_heartbeat",
-        "value": "1791122303.274431"
+        "value": "1791122333.2776563"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791122305.9442916"
+        "value": "1791122340.9790773"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791122305.9459617"
+        "value": "1791122340.9806933"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791122343.4201477, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
