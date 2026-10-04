@@ -14,6 +14,16 @@ import cloud_store
 import runtime as rt
 
 REPOSITORY='chelsealong/oss-pipeline'
+VALIDATION_RETRY = (
+    (316,'ERR_PNPM_STORE_DIR_OPEN_OPERATION_LOCK'),
+    (295,'Rust cache is read-only'),
+    (256,'aiohttp is missing'),
+    (206,'/var/tmp/hermes-pytest'),
+    (227,'/var/tmp/hermes-pytest'),
+    (241,'/var/tmp/hermes-pytest'),
+    (300,'/var/tmp/hermes-pytest'),
+)
+RETRY_MARKER='cloud_validation_retry_20261004'
 
 def gh(args, **kwargs):
     # A failed variable read is safe to repeat; secret updates and workflow
@@ -66,6 +76,33 @@ def configure(mode):
         'codex_sessions_per_5h':45,'judge_requests_per_hour':120})+'\n')
     rt.DATA.mkdir(exist_ok=True)
 
+def requeue_validation_repair():
+    """Retry only audited, unpublished infrastructure blocks, once per task."""
+    if rt.config().get('backend')!='codex-cloud':return []
+    held=rt.publication_holds()
+    chosen=[]
+    with rt.db() as db:
+        db.execute('BEGIN IMMEDIATE')
+        row=db.execute('SELECT value FROM meta WHERE key=?',(RETRY_MARKER,)).fetchone()
+        attempted=set(json.loads(row['value'])) if row else set()
+        pending=db.execute("SELECT count(*) FROM tasks WHERE status IN ('queued','running')").fetchone()[0]
+        slots=max(0,rt.config().get('max_pending',8)-rt.config().get('response_slots',1)-pending)
+        for task_id,evidence in VALIDATION_RETRY:
+            if not slots:break
+            if task_id in attempted:continue
+            task=db.execute('SELECT kind,repo,status,result FROM tasks WHERE id=?',(task_id,)).fetchone()
+            if not task or task['status']!='blocked' or evidence not in (task['result'] or ''):
+                continue
+            if task['kind']=='fix' and held.get(task['repo'],0)>time.time():
+                continue
+            db.execute("UPDATE tasks SET status='queued',updated=? WHERE id=?",(time.time(),task_id))
+            attempted.add(task_id);chosen.append(task_id);slots-=1
+        if chosen:
+            db.execute('INSERT OR REPLACE INTO meta(key,value) VALUES (?,?)',
+                       (RETRY_MARKER,json.dumps(sorted(attempted))))
+    if chosen:rt.checkpoint()
+    return chosen
+
 def stop(process, timeout=30):
     if process.poll() is None:
         process.terminate()
@@ -86,6 +123,7 @@ def run(mode,seconds):
             if not cloud_enabled():raise RuntimeError('Cloud production switch is off')
             cloud_store.restore()
             restored=True
+            requeue_validation_repair()
         else:
             # No production state or upstream tasks are imported into canary.
             import codex_worker
@@ -104,6 +142,7 @@ def run(mode,seconds):
         deadline=time.monotonic()+seconds
         while time.monotonic()<deadline and cloud_enabled():
             if any(p.poll() is not None for p in children):raise RuntimeError('A cloud service exited unexpectedly')
+            requeue_validation_repair()
             cloud_store.save()
             previous=rotate_auth(previous)
             s=rt.status()

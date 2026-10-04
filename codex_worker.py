@@ -48,6 +48,10 @@ def failure_cooldown(error):
     if re.search(r'TLS|SSL|connection reset|Recv failure|connection timeout|HTTP 50[234]',message,re.I):return 60
     return 1800
 
+def repo_pr_permission_denied(task, error):
+    return task['kind']=='fix' and bool(re.search(
+        r'correct permissions to execute.*CreatePullRequest',str(error),re.I))
+
 def run(args, cwd=None, timeout=120):
     # Retry only known read operations. A failed push/create may already have
     # reached GitHub and must never be blindly replayed.
@@ -475,6 +479,13 @@ def heartbeat(stop):
         rt.setmeta('worker_heartbeat',time.time())
         stop.wait(15)
 
+def next_queued(db, holds):
+    for row in db.execute("SELECT * FROM tasks WHERE status='queued' ORDER BY CASE kind WHEN 'respond' THEN 0 ELSE 1 END,id"):
+        if row['kind']=='fix' and holds.get(row['repo'],0)>time.time():
+            continue
+        return dict(row)
+    return None
+
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--probe',action='store_true');ap.add_argument('--once',action='store_true');a=ap.parse_args()
     rt.DATA.mkdir(parents=True,exist_ok=True)
@@ -496,10 +507,10 @@ def main():
                 if not rt.ready()[0]:
                     if a.once:return
                     time.sleep(15);continue
+                holds=rt.publication_holds()
                 with rt.db() as c:
                     c.execute('BEGIN IMMEDIATE')
-                    row=c.execute("SELECT * FROM tasks WHERE status='queued' ORDER BY CASE kind WHEN 'respond' THEN 0 ELSE 1 END,id LIMIT 1").fetchone()
-                    task=dict(row) if row else None
+                    task=next_queued(c,holds)
                     if task:c.execute("UPDATE tasks SET status='running',attempts=attempts+1,updated=? WHERE id=?",(time.time(),task['id']))
                 if task:
                     rt.checkpoint()  # Persist running state before any side effect.
@@ -515,7 +526,11 @@ def main():
                         # Keep that result; a failed checkpoint is not a failed patch.
                         raise
                     except Exception as e:
-                        finish(task,'error',str(e));rt.pause('Task failed; preserving work: '+str(e)[:250],failure_cooldown(e))
+                        finish(task,'error',str(e))
+                        # A repo-specific PR permission denial is handled by
+                        # publication_holds; other repositories can continue.
+                        if not repo_pr_permission_denied(task,e):
+                            rt.pause('Task failed; preserving work: '+str(e)[:250],failure_cooldown(e))
                     finally:
                         if awake:
                             awake.terminate();awake.wait(timeout=5)

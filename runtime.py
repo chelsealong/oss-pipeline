@@ -90,9 +90,20 @@ def room(kind='fix'):
         limit = max(1, limit - config().get('response_slots', 1))
     return (n < limit, 'queue full' if n >= limit else '')
 
+def publication_holds():
+    """Temporarily stop new fixes where GitHub explicitly denied PR creation."""
+    with db() as c:
+        rows=c.execute("""SELECT repo, MAX(updated) AS denied_at FROM tasks
+            WHERE kind='fix' AND status='error' AND updated>?
+            AND result LIKE '%correct permissions to execute%CreatePullRequest%'
+            GROUP BY repo""",(time.time()-86400,)).fetchall()
+    return {row['repo']:row['denied_at']+86400 for row in rows}
+
 def enqueue(kind, repo, number, note='', *, only_new=False):
     ok, _ = ready()
     if not ok:
+        return False
+    if kind=='fix' and publication_holds().get(repo,0)>time.time():
         return False
     # Fixes are unique forever; responses are unique per feedback event set.
     digest = hashlib.sha256(note.encode()).hexdigest()[:20] if kind == 'respond' else ''

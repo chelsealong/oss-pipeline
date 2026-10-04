@@ -95,6 +95,22 @@ class RuntimeTests(unittest.TestCase):
         rt.enqueue('fix','hermes',1)
         with rt.db() as c:c.execute("UPDATE tasks SET status='error'")
         self.assertFalse(rt.enqueue('fix','hermes',1))
+    def test_pr_permission_denial_holds_only_that_repo_without_losing_queue(self):
+        denial='GraphQL: chelsealong does not have the correct permissions to execute `CreatePullRequest`'
+        self.assertTrue(worker.repo_pr_permission_denied({'kind':'fix'},denial))
+        self.assertFalse(worker.repo_pr_permission_denied({'kind':'respond'},denial))
+        self.assertFalse(worker.repo_pr_permission_denied({'kind':'fix'},'HTTP 403 from another endpoint'))
+        self.assertTrue(rt.enqueue('fix','hermes',1))
+        with rt.db() as c:
+            c.execute("UPDATE tasks SET status='error', result=?, updated=? WHERE repo='hermes'",
+                      (denial,time.time()))
+        self.assertFalse(rt.enqueue('fix','hermes',2))
+        self.assertTrue(rt.enqueue('fix','openclaw',3))
+        with rt.db() as c:
+            task=worker.next_queued(c,rt.publication_holds())
+        self.assertEqual((task['repo'],task['number']),('openclaw',3))
+        with rt.db() as c:c.execute("UPDATE tasks SET updated=? WHERE repo='hermes'",(time.time()-86401,))
+        self.assertTrue(rt.enqueue('fix','hermes',2))
     def test_bad_config_fails_closed(self):
         rt.CONFIG.write_text('{')
         self.assertFalse(rt.ready()[0])
@@ -126,6 +142,26 @@ class RuntimeTests(unittest.TestCase):
         with patch.object(cloud_runtime.subprocess,'run',return_value=failed) as call:
             with self.assertRaises(RuntimeError):cloud_runtime.gh(['secret','set','CODEX_AUTH_JSON','--repo',cloud_runtime.REPOSITORY],input='not-a-secret')
             call.assert_called_once()
+    def test_recovery_requeues_only_audited_blocks_once_and_defers_held_repo(self):
+        self.cfg['backend']='codex-cloud';self.save()
+        cases=[(316,'respond','langfuse/langfuse','ERR_PNPM_STORE_DIR_OPEN_OPERATION_LOCK','blocked'),
+               (295,'fix','langfuse','Rust cache is read-only','blocked'),
+               (206,'fix','hermes','/var/tmp/hermes-pytest-1001','blocked'),
+               (237,'fix','hermes','correct permissions to execute `CreatePullRequest`','error'),
+               (256,'fix','comfyui','aiohttp is missing','done')]
+        with rt.db() as c:
+            for task_id,kind,repo,result,status in cases:
+                c.execute('INSERT INTO tasks(id,identity,kind,repo,number,status,created,updated,result,attempts) VALUES (?,?,?,?,?,?,?,?,?,?)',
+                          (task_id,f'test:{task_id}',kind,repo,task_id,status,time.time(),time.time(),result,1))
+        with patch.object(rt,'checkpoint'):
+            self.assertEqual(cloud_runtime.requeue_validation_repair(),[316,295])
+            with rt.db() as c:c.execute("UPDATE tasks SET status='blocked' WHERE id=316")
+            self.assertEqual(cloud_runtime.requeue_validation_repair(),[])
+            with rt.db() as c:c.execute('UPDATE tasks SET updated=? WHERE id=237',(time.time()-86401,))
+            self.assertEqual(cloud_runtime.requeue_validation_repair(),[206])
+        with rt.db() as c:
+            self.assertEqual(c.execute('SELECT status FROM tasks WHERE id=256').fetchone()[0],'done')
+        self.assertEqual(rt.getmeta(cloud_runtime.RETRY_MARKER),[206,295,316])
     def test_cloud_login_only_publishes_encrypted_device_code(self):
         private=self.root/'private.pem';public=self.root/'public.pem'
         subprocess.run(['openssl','genpkey','-algorithm','RSA','-pkeyopt','rsa_keygen_bits:2048','-out',str(private)],capture_output=True,check=True)

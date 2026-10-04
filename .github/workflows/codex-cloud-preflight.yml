@@ -31,13 +31,14 @@ jobs:
           sudo apt-get install --no-install-recommends -y ripgrep
           corepack enable
           npm install --global @openai/codex@0.159.3
-          python -m pip install PyYAML==6.0.3
+          python -m pip install PyYAML==6.0.3 'aiohttp>=3.11.8,<4' 'pytest-aiohttp>=1,<2' 'pytest-asyncio>=1,<2' 'websocket-client>=1,<2'
       - name: Check portable runtime and offline regressions
         run: |
           codex --version
           node --version
           corepack --version
           command -v pnpm
+          python -c 'import aiohttp, pytest_aiohttp, pytest_asyncio, websocket'
           gh --version
           command -v rg
           ./verify.sh
