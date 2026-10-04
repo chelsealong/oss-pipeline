@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791143169.7635589,
+  "saved_at": 1791143216.2434897,
   "tables": {
     "tasks": [
       {
@@ -4807,10 +4807,10 @@
         "repo": "langfuse",
         "number": 18201,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791143119.7623262,
-        "updated": 1791143128.3018963,
-        "result": "",
+        "updated": 1791143216.2396033,
+        "result": "An open competing PR, #18183, already changes the evaluator creation preflight that produces the reported 500. The code caps that model call at 95 seconds, matching the reported failure duration. The PR changes how transient failures are reported, but it does not make failed creates return 201; resolving that remaining behavior requires evidence about the Cloud model call and a decision on preflight behavior. No checkout files were changed.",
         "attempts": 1
       }
     ],
@@ -4832,10 +4832,6 @@
         "value": "[206, 227, 241, 244, 245, 256, 266, 267, 268, 271, 273, 274, 275, 295, 300, 316]"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791142248.0986965, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -4845,15 +4841,19 @@
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791143157.4699311"
+        "value": "1791143202.481779"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791143165.8745167"
+        "value": "1791143209.2490878"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791143165.876008"
+        "value": "1791143209.2506313"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791143216.2379892, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
