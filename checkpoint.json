@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791078598.752958,
+  "saved_at": 1791078658.0987062,
   "tables": {
     "tasks": [
       {
@@ -3533,10 +3533,10 @@
         "repo": "Comfy-Org/ComfyUI",
         "number": 16688,
         "note": "{\"authors\": \"ci\", \"events\": [\"check:5bd2b74ea4f8:test (macos-latest):2026-10-04\"], \"is_issue\": false}",
-        "status": "running",
+        "status": "blocked",
         "created": 1791072068.7583885,
-        "updated": 1791078567.3415368,
-        "result": "",
+        "updated": 1791078658.0954258,
+        "result": "The macOS failure is an execution-test startup race, not a failure in this PR’s INT8 code. The shared test client exhausts its connection retries just before the server starts; 15 tests then fail because the client has no websocket. Another macOS job and the other checks passed. No code was changed. Draft reply: “The failing macOS job appears to hit a server startup race in the execution tests: the shared client retries before the server is ready, then subsequent tests fail with `ComfyClient` missing `ws`. The other macOS job passed on this commit. Codex reviewed the logs; I have not verified a macOS rerun.”",
         "attempts": 1
       },
       {
@@ -3610,24 +3610,24 @@
         "value": "1791078497.0520444"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791078567.2448108, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791078592.8383"
+        "value": "1791078652.8944187"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791078594.4794636"
+        "value": "1791078654.8667266"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791078594.4816082"
+        "value": "1791078654.8744173"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791078658.0893672, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
