@@ -3,7 +3,7 @@
   "upstream": "NousResearch/hermes-agent",
   "implements_in": "NousResearch/hermes-agent",
   "needs_assignment": false,
-  "scanned_at": "2026-10-04T22:23:20+00:00",
+  "scanned_at": "2026-10-04T22:37:55+00:00",
   "partial": false,
   "errors": [],
   "candidates": [
@@ -12,10 +12,17 @@
       "title": "terminal tool: timeout leaves the command process tree running on Windows",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132958",
       "created_at": "2026-10-04T22:23:15Z",
-      "age_hours": 0.0,
+      "age_hours": 0.2,
       "reason": "clear",
-      "detected_after_s": 4.8,
-      "labels": [],
+      "labels": [
+        "P2",
+        "backend/local",
+        "comp/tools",
+        "platform/windows",
+        "sweeper:risk-platform-windows",
+        "tool/terminal",
+        "type/bug"
+      ],
       "comments": 0,
       "self_claimed": false
     },
@@ -24,22 +31,15 @@
       "title": "[Bug]: Email on a multiplexed secondary profile never reports `connected` (stuck at `fatal` after a reconnect)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132953",
       "created_at": "2026-10-04T22:11:06Z",
-      "age_hours": 0.0,
+      "age_hours": 0.4,
       "reason": "clear",
-      "detected_after_s": 7.7,
-      "labels": [],
-      "comments": 0,
-      "self_claimed": false
-    },
-    {
-      "number": 132951,
-      "title": "[Bug]: Command STT provider reports a silent capture as \"Transcription failed\" (and names a wrong cause) \u2014 built-in paths re-listen instead",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/132951",
-      "created_at": "2026-10-04T22:04:13Z",
-      "age_hours": 0.01,
-      "reason": "clear",
-      "detected_after_s": 31.7,
-      "labels": [],
+      "labels": [
+        "P2",
+        "area/profiles",
+        "comp/gateway",
+        "platform/email",
+        "type/bug"
+      ],
       "comments": 0,
       "self_claimed": false
     },
@@ -48,38 +48,12 @@
       "title": "Ordinary instruction answered with only the \"[response interrupted]\" placeholder",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132949",
       "created_at": "2026-10-04T22:02:05Z",
-      "age_hours": 0.0,
-      "reason": "clear",
-      "detected_after_s": 6.8,
-      "labels": [],
-      "comments": 0,
-      "self_claimed": false
-    },
-    {
-      "number": 132943,
-      "title": "disk-cleanup: parallel tool calls race on tracked.json \u2014 shared .tmp name plus unlocked read-modify-write silently drops tracked entries",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/132943",
-      "created_at": "2026-10-04T21:46:30Z",
-      "age_hours": 0.2,
+      "age_hours": 0.6,
       "reason": "clear",
       "labels": [
-        "P3",
-        "comp/plugins",
-        "type/bug"
-      ],
-      "comments": 0,
-      "self_claimed": false
-    },
-    {
-      "number": 132942,
-      "title": "todo_list: coerce_tool_args wraps an unparseable todos string as [raw]; TodoStore silently replaces the whole list with a \"(invalid item)\" placeholder",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/132942",
-      "created_at": "2026-10-04T21:46:28Z",
-      "age_hours": 0.2,
-      "reason": "clear",
-      "labels": [
-        "P2",
-        "comp/tools",
+        "P1",
+        "area/sessions",
+        "comp/agent",
         "sweeper:risk-session-state",
         "type/bug"
       ],
@@ -91,7 +65,7 @@
       "title": "[Bug]: Display history shows compacted tail copies twice when tool-result payloads are pruned (dedupe key includes content)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132939",
       "created_at": "2026-10-04T21:36:13Z",
-      "age_hours": 0.4,
+      "age_hours": 1.0,
       "reason": "clear",
       "labels": [
         "P2",
@@ -111,7 +85,7 @@
       "title": "Compaction handoff republished as an assistant reply, with a paraphrased opener that defeats summary classification",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132934",
       "created_at": "2026-10-04T21:27:20Z",
-      "age_hours": 0.5,
+      "age_hours": 1.2,
       "reason": "clear",
       "labels": [
         "P1",
@@ -120,7 +94,7 @@
         "sweeper:risk-session-state",
         "type/bug"
       ],
-      "comments": 0,
+      "comments": 1,
       "self_claimed": false
     },
     {
@@ -128,7 +102,7 @@
       "title": "npm vulnerabilities in hermes-agent monorepo (7 remaining after npm audit fix)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132924",
       "created_at": "2026-10-04T20:36:54Z",
-      "age_hours": 1.4,
+      "age_hours": 2.0,
       "reason": "clear",
       "labels": [
         "P3",
@@ -148,7 +122,7 @@
       "title": "Gateway inbound webhooks silently dead on macOS 27: app-firewall per-app block + aiohttp tcp_keepalive unhandled EINVAL",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132896",
       "created_at": "2026-10-04T19:18:34Z",
-      "age_hours": 2.7,
+      "age_hours": 3.3,
       "reason": "clear",
       "labels": [
         "P2",
@@ -165,7 +139,7 @@
       "title": "computer_use sends unsupported element_index to strict token-only CUA action schemas",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132876",
       "created_at": "2026-10-04T18:43:02Z",
-      "age_hours": 3.3,
+      "age_hours": 3.9,
       "reason": "clear",
       "labels": [
         "P2",
@@ -180,7 +154,7 @@
       "title": "[Bug]: Explicit /reload-mcp keeps a stale tool description when the name does not change",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132857",
       "created_at": "2026-10-04T17:49:28Z",
-      "age_hours": 4.2,
+      "age_hours": 4.8,
       "reason": "clear",
       "labels": [
         "P2",
@@ -192,32 +166,39 @@
       ],
       "comments": 1,
       "self_claimed": false
-    },
-    {
-      "number": 132829,
-      "title": "Telegram adapter rebuild strands held inbound messages on the retired adapter",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/132829",
-      "created_at": "2026-10-04T16:45:07Z",
-      "age_hours": 5.2,
-      "reason": "clear",
-      "labels": [
-        "P1",
-        "comp/plugins",
-        "platform/telegram",
-        "sweeper:risk-message-delivery",
-        "type/bug"
-      ],
-      "comments": 1,
-      "self_claimed": false
     }
   ],
   "rejected": [
+    {
+      "number": 132951,
+      "title": "[Bug]: Command STT provider reports a silent capture as \"Transcription failed\" (and names a wrong cause) \u2014 built-in paths re-listen instead",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/132951",
+      "created_at": "2026-10-04T22:04:13Z",
+      "age_hours": 0.6,
+      "reason": "already has PR(s): ['closing-ref PR#132959(OPEN)', 'xref PR#132959(OPEN)']"
+    },
+    {
+      "number": 132943,
+      "title": "disk-cleanup: parallel tool calls race on tracked.json \u2014 shared .tmp name plus unlocked read-modify-write silently drops tracked entries",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/132943",
+      "created_at": "2026-10-04T21:46:30Z",
+      "age_hours": 0.9,
+      "reason": "claimed by kokhlo"
+    },
+    {
+      "number": 132942,
+      "title": "todo_list: coerce_tool_args wraps an unparseable todos string as [raw]; TodoStore silently replaces the whole list with a \"(invalid item)\" placeholder",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/132942",
+      "created_at": "2026-10-04T21:46:28Z",
+      "age_hours": 0.9,
+      "reason": "already has PR(s): ['closing-ref PR#132950(OPEN)', 'xref PR#132950(OPEN)']"
+    },
     {
       "number": 132937,
       "title": "ACP session restore fails for named custom providers (bare \"custom\" persisted, 401 on first prompt)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132937",
       "created_at": "2026-10-04T21:34:59Z",
-      "age_hours": 0.4,
+      "age_hours": 1.0,
       "reason": "excluded label ['duplicate']"
     },
     {
@@ -225,7 +206,7 @@
       "title": "/model --provider openai-codex mid-session switch reports success but silently fails to rebind the live client (403 on next message)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132935",
       "created_at": "2026-10-04T21:28:00Z",
-      "age_hours": 0.5,
+      "age_hours": 1.2,
       "reason": "excluded label ['needs-repro']"
     },
     {
@@ -233,7 +214,7 @@
       "title": "[Bug]: a cron store that cannot be written stops every job on the profile (due scan aborts)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132932",
       "created_at": "2026-10-04T21:18:21Z",
-      "age_hours": 0.7,
+      "age_hours": 1.3,
       "reason": "already has PR(s): ['closing-ref PR#132933(OPEN)', 'xref PR#132933(OPEN)']"
     },
     {
@@ -241,7 +222,7 @@
       "title": "[Bug]  `hermes cron list`  doesn't report ALL cron jobs, only current profile, confusing user and profiles agents",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132920",
       "created_at": "2026-10-04T20:25:48Z",
-      "age_hours": 1.6,
+      "age_hours": 2.2,
       "reason": "already has PR(s): ['closing-ref PR#132941(OPEN)', 'xref PR#132941(OPEN)']"
     },
     {
@@ -249,7 +230,7 @@
       "title": "[BUG] Underscore-prefixed skill dirs are discovered; only .archive is excluded",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132917",
       "created_at": "2026-10-04T20:22:29Z",
-      "age_hours": 1.6,
+      "age_hours": 2.3,
       "reason": "already has PR(s): ['closing-ref PR#132925(OPEN)', 'xref PR#132925(OPEN)', 'xref PR#5626(OPEN)']"
     },
     {
@@ -257,7 +238,7 @@
       "title": "[Bug]: Spurious urllib3 InsecureRequestWarning for bedrock-runtime during concurrent requests (truststore CERT_NONE window races shared botocore SSLContext)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132905",
       "created_at": "2026-10-04T19:53:36Z",
-      "age_hours": 2.1,
+      "age_hours": 2.7,
       "reason": "excluded label ['needs-repro']"
     },
     {
@@ -265,7 +246,7 @@
       "title": "[Bug]: Unable to type @ in Hermes Dashboard on Chrome/macOS",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132897",
       "created_at": "2026-10-04T19:23:47Z",
-      "age_hours": 2.6,
+      "age_hours": 3.2,
       "reason": "excluded label ['duplicate']"
     },
     {
@@ -273,7 +254,7 @@
       "title": "[Feature]: skill_linter: enforce Anthropic's updated skill authoring rules (TOC for >100-line reference files, one-level-deep references)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132893",
       "created_at": "2026-10-04T19:15:05Z",
-      "age_hours": 2.7,
+      "age_hours": 3.4,
       "reason": "claimed by kokhlo"
     },
     {
@@ -281,7 +262,7 @@
       "title": "Multiplexed gateway cannot resolve served profile's runtime for host.llm.complete (reads launch-profile OPENROUTER_BASE_URL)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132887",
       "created_at": "2026-10-04T19:04:28Z",
-      "age_hours": 2.9,
+      "age_hours": 3.6,
       "reason": "already has PR(s): ['closing-ref PR#132898(OPEN)', 'xref PR#132898(OPEN)']"
     },
     {
@@ -289,7 +270,7 @@
       "title": "RuntimeError: dictionary changed size during iteration during plugin discovery",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132886",
       "created_at": "2026-10-04T19:04:27Z",
-      "age_hours": 2.9,
+      "age_hours": 3.6,
       "reason": "already has PR(s): ['closing-ref PR#132888(OPEN)', 'xref PR#132888(OPEN)']"
     },
     {
@@ -297,7 +278,7 @@
       "title": "[Bug]: Blank Slate setup leaves all installer-seeded bundled skills on disk",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132883",
       "created_at": "2026-10-04T19:02:25Z",
-      "age_hours": 2.9,
+      "age_hours": 3.6,
       "reason": "already has PR(s): ['closing-ref PR#98027(OPEN)', 'xref PR#98027(OPEN)']"
     },
     {
@@ -305,7 +286,7 @@
       "title": "Python 3.14.7 store runtime hits illegal instruction crashes on some CPUs (gateway flash-crash); plus interrupted-update marker deadlock with silent rc=0 refusa",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132879",
       "created_at": "2026-10-04T18:52:45Z",
-      "age_hours": 3.1,
+      "age_hours": 3.8,
       "reason": "excluded label ['needs-repro']"
     },
     {
@@ -313,7 +294,7 @@
       "title": "computer_use native desktop cache identity misses session-bus changes when DISPLAY stays the same",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132877",
       "created_at": "2026-10-04T18:43:35Z",
-      "age_hours": 3.3,
+      "age_hours": 3.9,
       "reason": "already has PR(s): ['closing-ref PR#132880(OPEN)', 'xref PR#132880(OPEN)']"
     },
     {
@@ -321,7 +302,7 @@
       "title": "[Feature]: Contribute production-hardened xlsx & docx skill upgrades + new word-com-automation skill (Windows)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132875",
       "created_at": "2026-10-04T18:42:45Z",
-      "age_hours": 3.3,
+      "age_hours": 3.9,
       "reason": "excluded label ['needs-decision']"
     },
     {
@@ -329,7 +310,7 @@
       "title": "[Feature]: tell the operator on their channels when a provider route walls (quota / balance / auth)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132871",
       "created_at": "2026-10-04T18:33:43Z",
-      "age_hours": 3.4,
+      "age_hours": 4.1,
       "reason": "already has PR(s): ['closing-ref PR#132878(OPEN)', 'xref PR#132878(OPEN)']"
     },
     {
@@ -337,7 +318,7 @@
       "title": "Desktop dead-session-prune unpins (and server-wipes) sessions that live on the active non-default profile \u2014 probe drops the profile scope",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132868",
       "created_at": "2026-10-04T18:23:04Z",
-      "age_hours": 3.6,
+      "age_hours": 4.2,
       "reason": "already has PR(s): ['closing-ref PR#132873(OPEN)', 'xref PR#132873(OPEN)']"
     },
     {
@@ -345,7 +326,7 @@
       "title": "[Bug]: cronjob tool can persist `skills` as the Python repr of a list \u2014 no read path heals it, so the skills silently never load",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132867",
       "created_at": "2026-10-04T18:19:50Z",
-      "age_hours": 3.7,
+      "age_hours": 4.3,
       "reason": "already has PR(s): ['closing-ref PR#132674(OPEN)', 'xref PR#132674(OPEN)']"
     },
     {
@@ -353,7 +334,7 @@
       "title": "[Bug]: LSP language server outlives its Hermes parent on every os._exit path (pyright orphans)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132862",
       "created_at": "2026-10-04T18:10:16Z",
-      "age_hours": 3.8,
+      "age_hours": 4.5,
       "reason": "already has PR(s): ['closing-ref PR#132863(OPEN)', 'xref PR#132863(OPEN)']"
     },
     {
@@ -361,7 +342,7 @@
       "title": "[Bug]: Cron metadata shows a model for script-only (no_agent) jobs",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132850",
       "created_at": "2026-10-04T17:36:12Z",
-      "age_hours": 4.4,
+      "age_hours": 5.0,
       "reason": "already has PR(s): ['closing-ref PR#132859(OPEN)', 'xref PR#132859(OPEN)']"
     },
     {
@@ -369,23 +350,15 @@
       "title": "[Bug]: hermes update's automatic gateway migrate --multiplex strands every standalone profile's chat history (repair exists but isn't run)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132848",
       "created_at": "2026-10-04T17:32:23Z",
-      "age_hours": 4.5,
+      "age_hours": 5.1,
       "reason": "already has PR(s): ['closing-ref PR#132855(OPEN)', 'xref PR#132855(OPEN)']"
-    },
-    {
-      "number": 132846,
-      "title": "Benchmark-aware automatic model routing using a decision/classifier model",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/132846",
-      "created_at": "2026-10-04T17:30:38Z",
-      "age_hours": 4.5,
-      "reason": "excluded label ['needs-decision']"
     },
     {
       "number": 132840,
       "title": "Journey/Starmap graph visualization stuck at old date despite current RPC data",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132840",
       "created_at": "2026-10-04T17:24:59Z",
-      "age_hours": 4.6,
+      "age_hours": 5.2,
       "reason": "already has PR(s): ['closing-ref PR#132853(OPEN)', 'xref PR#132853(OPEN)']"
     },
     {
@@ -393,7 +366,7 @@
       "title": "opencode-go: supports_vision_tool_messages=False veto is stale on responses/codex transport \u2014 native tool-result vision works live",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132837",
       "created_at": "2026-10-04T17:01:17Z",
-      "age_hours": 5.0,
+      "age_hours": 5.6,
       "reason": "already has PR(s): ['closing-ref PR#132844(OPEN)', 'xref PR#132844(OPEN)']"
     },
     {
@@ -401,32 +374,8 @@
       "title": "Desktop chat: assistant messages occasionally render duplicated (no stable repro)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132836",
       "created_at": "2026-10-04T17:00:48Z",
-      "age_hours": 5.0,
-      "reason": "excluded label ['needs-repro']"
-    },
-    {
-      "number": 132832,
-      "title": "[Bug]: native provider validation accepts a foreign model family",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/132832",
-      "created_at": "2026-10-04T16:53:24Z",
-      "age_hours": 5.1,
-      "reason": "already has PR(s): ['closing-ref PR#132833(OPEN)', 'xref PR#132833(OPEN)']"
-    },
-    {
-      "number": 132825,
-      "title": "`hermes profile delete` fails to purge a profile's own `state.db` after marking the name deleted (no gateway running)",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/132825",
-      "created_at": "2026-10-04T16:31:39Z",
-      "age_hours": 5.5,
-      "reason": "already has PR(s): ['closing-ref PR#132904(OPEN)', 'xref PR#132904(OPEN)']"
-    },
-    {
-      "number": 132823,
-      "title": "[Bug]: Dashboard/Desktop session search shows the session's creation time for FTS hits instead of the matched message's time",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/132823",
-      "created_at": "2026-10-04T16:25:59Z",
       "age_hours": 5.6,
-      "reason": "already has PR(s): ['xref PR#50916(OPEN)']"
+      "reason": "excluded label ['needs-repro']"
     }
   ]
 }
