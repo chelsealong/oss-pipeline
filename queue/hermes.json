@@ -3,7 +3,7 @@
   "upstream": "NousResearch/hermes-agent",
   "implements_in": "NousResearch/hermes-agent",
   "needs_assignment": false,
-  "scanned_at": "2026-10-04T18:33:58+00:00",
+  "scanned_at": "2026-10-04T18:36:42+00:00",
   "partial": false,
   "errors": [],
   "candidates": [
@@ -14,7 +14,6 @@
       "created_at": "2026-10-04T18:33:43Z",
       "age_hours": 0.0,
       "reason": "clear",
-      "detected_after_s": 7.7,
       "labels": [],
       "comments": 0,
       "self_claimed": false
@@ -24,22 +23,16 @@
       "title": "Desktop dead-session-prune unpins (and server-wipes) sessions that live on the active non-default profile \u2014 probe drops the profile scope",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132868",
       "created_at": "2026-10-04T18:23:04Z",
-      "age_hours": 0.02,
+      "age_hours": 0.2,
       "reason": "clear",
-      "detected_after_s": 67.3,
-      "labels": [],
-      "comments": 0,
-      "self_claimed": false
-    },
-    {
-      "number": 132867,
-      "title": "[Bug]: cronjob tool can persist `skills` as the Python repr of a list \u2014 no read path heals it, so the skills silently never load",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/132867",
-      "created_at": "2026-10-04T18:19:50Z",
-      "age_hours": 0.0,
-      "reason": "clear",
-      "detected_after_s": 10.3,
-      "labels": [],
+      "labels": [
+        "P2",
+        "area/profiles",
+        "area/sessions",
+        "comp/desktop",
+        "sweeper:risk-session-state",
+        "type/bug"
+      ],
       "comments": 0,
       "self_claimed": false
     },
@@ -48,7 +41,7 @@
       "title": "[Bug]: Explicit /reload-mcp keeps a stale tool description when the name does not change",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132857",
       "created_at": "2026-10-04T17:49:28Z",
-      "age_hours": 0.1,
+      "age_hours": 0.8,
       "reason": "clear",
       "labels": [
         "P2",
@@ -66,7 +59,7 @@
       "title": "[Feature]: Telegram inline-keyboard model picker with 3-layer navigation (provider family \u2192 provider \u2192 model) + frequency-ordered listing",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132838",
       "created_at": "2026-10-04T17:10:17Z",
-      "age_hours": 0.8,
+      "age_hours": 1.4,
       "reason": "clear",
       "labels": [
         "P3",
@@ -83,7 +76,7 @@
       "title": "Telegram adapter rebuild strands held inbound messages on the retired adapter",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132829",
       "created_at": "2026-10-04T16:45:07Z",
-      "age_hours": 1.2,
+      "age_hours": 1.9,
       "reason": "clear",
       "labels": [
         "P1",
@@ -100,7 +93,7 @@
       "title": "`hermes profile delete` fails to purge a profile's own `state.db` after marking the name deleted (no gateway running)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132825",
       "created_at": "2026-10-04T16:31:39Z",
-      "age_hours": 1.4,
+      "age_hours": 2.1,
       "reason": "clear",
       "labels": [
         "P2",
@@ -118,7 +111,7 @@
       "title": "Pain cluster: the `matrix` extra's native E2EE build (python-olm/libolm) aborts the whole `hermes update` on Linux and cannot be opted out; macOS drops mautrix ",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132820",
       "created_at": "2026-10-04T16:16:36Z",
-      "age_hours": 1.7,
+      "age_hours": 2.3,
       "reason": "clear",
       "labels": [
         "P1",
@@ -138,7 +131,7 @@
       "title": "Pain cluster: one transient 429 / entitlement cooldown benches a credential for days \u2014 no reset-time probe, no visibility, no pointer to `hermes auth reset` (13",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132817",
       "created_at": "2026-10-04T16:11:23Z",
-      "age_hours": 1.8,
+      "age_hours": 2.4,
       "reason": "clear",
       "labels": [
         "P2",
@@ -157,7 +150,7 @@
       "title": "[Bug]: Windows hermes update - restart phase aborts with a bare OSError(WinError 87) recorded as gateway_restart.phase_error; no gateway ends up serving",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132812",
       "created_at": "2026-10-04T15:57:51Z",
-      "age_hours": 2.0,
+      "age_hours": 2.6,
       "reason": "clear",
       "labels": [
         "P2",
@@ -176,7 +169,7 @@
       "title": "[Bug]: hermes-lcm opens one SQLite connection per engine, corrupting lcm_lifecycle_state under concurrent compaction",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132803",
       "created_at": "2026-10-04T15:31:48Z",
-      "age_hours": 2.4,
+      "age_hours": 3.1,
       "reason": "clear",
       "labels": [
         "P3",
@@ -194,7 +187,7 @@
       "title": "[Feature]: Enable a unified package's desktop half when its agent half is enabled",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132802",
       "created_at": "2026-10-04T15:28:22Z",
-      "age_hours": 2.5,
+      "age_hours": 3.1,
       "reason": "clear",
       "labels": [
         "P3",
@@ -207,28 +200,11 @@
       "self_claimed": false
     },
     {
-      "number": 132792,
-      "title": "How to repair a corrupted state.db? Does hermes auto-rebuild it?",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/132792",
-      "created_at": "2026-10-04T14:56:37Z",
-      "age_hours": 3.0,
-      "reason": "clear",
-      "labels": [
-        "P3",
-        "area/sessions",
-        "comp/cli",
-        "question",
-        "type/feature"
-      ],
-      "comments": 1,
-      "self_claimed": false
-    },
-    {
       "number": 132778,
       "title": "Managed worker: Compute error on a poisoned Metal backend is retried forever instead of recycling the worker",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132778",
       "created_at": "2026-10-04T14:08:41Z",
-      "age_hours": 3.8,
+      "age_hours": 4.5,
       "reason": "clear",
       "labels": [
         "P2",
@@ -239,52 +215,31 @@
       ],
       "comments": 0,
       "self_claimed": false
-    },
-    {
-      "number": 132776,
-      "title": "[P1][Bug] Desktop: the viewport is moved against the reader \u2014 80 days, 7 open issues, no fix",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/132776",
-      "created_at": "2026-10-04T13:59:07Z",
-      "age_hours": 4.0,
-      "reason": "clear",
-      "labels": [
-        "P2",
-        "area/sessions",
-        "area/streaming",
-        "comp/desktop",
-        "sweeper:risk-session-state",
-        "type/bug"
-      ],
-      "comments": 0,
-      "self_claimed": false
-    },
-    {
-      "number": 132770,
-      "title": "fix(mcp): live enabled check right before OAuth browser-open; reconcile chore can silently skip a disabled server on multiplexed profiles",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/132770",
-      "created_at": "2026-10-04T13:26:37Z",
-      "age_hours": 4.5,
-      "reason": "clear",
-      "labels": [
-        "P2",
-        "area/auth",
-        "area/config",
-        "comp/gateway",
-        "comp/tools",
-        "tool/mcp",
-        "type/bug"
-      ],
-      "comments": 1,
-      "self_claimed": false
     }
   ],
   "rejected": [
+    {
+      "number": 132867,
+      "title": "[Bug]: cronjob tool can persist `skills` as the Python repr of a list \u2014 no read path heals it, so the skills silently never load",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/132867",
+      "created_at": "2026-10-04T18:19:50Z",
+      "age_hours": 0.3,
+      "reason": "already has PR(s): ['closing-ref PR#132674(OPEN)', 'xref PR#132674(OPEN)']"
+    },
+    {
+      "number": 132862,
+      "title": "LSP language server outlives its Hermes parent on every os._exit path (pyright orphans)",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/132862",
+      "created_at": "2026-10-04T18:10:16Z",
+      "age_hours": 0.4,
+      "reason": "already has PR(s): ['closing-ref PR#132863(OPEN)', 'xref PR#132863(OPEN)']"
+    },
     {
       "number": 132850,
       "title": "[Bug]: Cron metadata shows a model for script-only (no_agent) jobs",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132850",
       "created_at": "2026-10-04T17:36:12Z",
-      "age_hours": 0.3,
+      "age_hours": 1.0,
       "reason": "already has PR(s): ['closing-ref PR#132859(OPEN)', 'xref PR#132859(OPEN)']"
     },
     {
@@ -292,7 +247,7 @@
       "title": "[Bug]: hermes update's automatic gateway migrate --multiplex strands every standalone profile's chat history (repair exists but isn't run)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132848",
       "created_at": "2026-10-04T17:32:23Z",
-      "age_hours": 0.4,
+      "age_hours": 1.1,
       "reason": "already has PR(s): ['closing-ref PR#132855(OPEN)', 'xref PR#132855(OPEN)']"
     },
     {
@@ -300,7 +255,7 @@
       "title": "Benchmark-aware automatic model routing using a decision/classifier model",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132846",
       "created_at": "2026-10-04T17:30:38Z",
-      "age_hours": 0.4,
+      "age_hours": 1.1,
       "reason": "excluded label ['needs-decision']"
     },
     {
@@ -308,7 +263,7 @@
       "title": "Journey/Starmap graph visualization stuck at old date despite current RPC data",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132840",
       "created_at": "2026-10-04T17:24:59Z",
-      "age_hours": 0.5,
+      "age_hours": 1.2,
       "reason": "already has PR(s): ['closing-ref PR#132853(OPEN)', 'xref PR#132853(OPEN)']"
     },
     {
@@ -316,7 +271,7 @@
       "title": "opencode-go: supports_vision_tool_messages=False veto is stale on responses/codex transport \u2014 native tool-result vision works live",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132837",
       "created_at": "2026-10-04T17:01:17Z",
-      "age_hours": 0.9,
+      "age_hours": 1.6,
       "reason": "already has PR(s): ['closing-ref PR#132844(OPEN)', 'xref PR#132844(OPEN)']"
     },
     {
@@ -324,7 +279,7 @@
       "title": "Desktop chat: assistant messages occasionally render duplicated (no stable repro)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132836",
       "created_at": "2026-10-04T17:00:48Z",
-      "age_hours": 0.9,
+      "age_hours": 1.6,
       "reason": "excluded label ['needs-repro']"
     },
     {
@@ -332,7 +287,7 @@
       "title": "[Bug]: native provider validation accepts a foreign model family",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132832",
       "created_at": "2026-10-04T16:53:24Z",
-      "age_hours": 1.1,
+      "age_hours": 1.7,
       "reason": "already has PR(s): ['closing-ref PR#132833(OPEN)', 'xref PR#132833(OPEN)']"
     },
     {
@@ -340,7 +295,7 @@
       "title": "[Bug]: Dashboard/Desktop session search shows the session's creation time for FTS hits instead of the matched message's time",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132823",
       "created_at": "2026-10-04T16:25:59Z",
-      "age_hours": 1.5,
+      "age_hours": 2.2,
       "reason": "already has PR(s): ['xref PR#50916(OPEN)']"
     },
     {
@@ -348,7 +303,7 @@
       "title": "Approved skill patches can resolve through non-exact fuzzy anchors without surfacing the match strategy",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132822",
       "created_at": "2026-10-04T16:22:30Z",
-      "age_hours": 1.6,
+      "age_hours": 2.2,
       "reason": "excluded label ['needs-decision']"
     },
     {
@@ -356,7 +311,7 @@
       "title": "Pain cluster: `hermes security audit` reports CRITICALs the user cannot act on (self-dist 0.0.0, Hermes-pinned deps) with no annotation or accepted-risk path (7",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132819",
       "created_at": "2026-10-04T16:16:34Z",
-      "age_hours": 1.7,
+      "age_hours": 2.3,
       "reason": "excluded label ['needs-decision']"
     },
     {
@@ -364,15 +319,15 @@
       "title": "skill_manage patch: an explicit empty file_path silently patches SKILL.md instead of failing",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132818",
       "created_at": "2026-10-04T16:12:24Z",
-      "age_hours": 1.7,
-      "reason": "already has PR(s): ['closing-ref PR#132826(OPEN)', 'xref PR#132826(OPEN)']"
+      "age_hours": 2.4,
+      "reason": "already has PR(s): ['closing-ref PR#132826(OPEN)', 'closing-ref PR#132865(OPEN)', 'xref PR#132826(OPEN)']"
     },
     {
       "number": 132814,
       "title": "[Bug]: Home Assistant migration installs the plugin into profiles that never used Home Assistant (the example config's platform_toolsets row counts as use)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132814",
       "created_at": "2026-10-04T16:03:18Z",
-      "age_hours": 1.9,
+      "age_hours": 2.6,
       "reason": "already has PR(s): ['closing-ref PR#132815(OPEN)', 'xref PR#132815(OPEN)']"
     },
     {
@@ -380,7 +335,7 @@
       "title": "[Feature]: Make the password page intuitive and self-contained",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132810",
       "created_at": "2026-10-04T15:47:54Z",
-      "age_hours": 2.1,
+      "age_hours": 2.8,
       "reason": "issue author benczb offers to implement"
     },
     {
@@ -388,7 +343,7 @@
       "title": "[Bug]: state.db write-lock holder is never named on btrfs (/proc/locks device != stat() device)",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132807",
       "created_at": "2026-10-04T15:46:17Z",
-      "age_hours": 2.2,
+      "age_hours": 2.8,
       "reason": "already has PR(s): ['closing-ref PR#132808(OPEN)', 'xref PR#132808(OPEN)']"
     },
     {
@@ -396,7 +351,7 @@
       "title": "tui_gateway: profiles.list sends bare Infinity (invalid JSON) when a profile.yaml ui_meta value is an unquoted id that YAML 1.1 reads as a float",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132800",
       "created_at": "2026-10-04T15:26:47Z",
-      "age_hours": 2.5,
+      "age_hours": 3.2,
       "reason": "already has PR(s): ['xref PR#125316(OPEN)']"
     },
     {
@@ -404,7 +359,7 @@
       "title": "[Bug]: Hermes uses Authorization: Bearer for llama.cpp 0.4.x which requires X-Api-Key",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132799",
       "created_at": "2026-10-04T15:25:49Z",
-      "age_hours": 2.5,
+      "age_hours": 3.2,
       "reason": "already has PR(s): ['closing-ref PR#132811(OPEN)', 'xref PR#132811(OPEN)']"
     },
     {
@@ -412,7 +367,7 @@
       "title": "[Bug]: browser_exec screenshot times out when attached Chrome window is minimized on Windows",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132797",
       "created_at": "2026-10-04T15:13:16Z",
-      "age_hours": 2.7,
+      "age_hours": 3.4,
       "reason": "excluded label ['needs-repro']"
     },
     {
@@ -420,7 +375,7 @@
       "title": "fix: isolated Windows Kanban worker cannot import hermes_cli",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132796",
       "created_at": "2026-10-04T15:09:37Z",
-      "age_hours": 2.8,
+      "age_hours": 3.5,
       "reason": "issue author otonielribeiro offers to implement"
     },
     {
@@ -428,7 +383,7 @@
       "title": "[Bug]: Linux desktop SIGTRAP (int3) from GPU launch failure error_code=1002 \u2014 flaky per launch, hits --version probes; NVIDIA 615.71.09 Wayland",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132793",
       "created_at": "2026-10-04T15:02:23Z",
-      "age_hours": 2.9,
+      "age_hours": 3.6,
       "reason": "excluded label ['needs-repro']"
     },
     {
@@ -436,7 +391,7 @@
       "title": "[Bug]: Fallback chain stops after first hop: rebuilt-message restart limit uses api_max_retries",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132791",
       "created_at": "2026-10-04T14:44:28Z",
-      "age_hours": 3.2,
+      "age_hours": 3.9,
       "reason": "already has PR(s): ['xref PR#129895(OPEN)']"
     },
     {
@@ -444,7 +399,7 @@
       "title": "Sandbox per-file bind mounts pin a deleted inode: container reads stale config.yaml / MEMORY.md after an atomic rewrite",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132790",
       "created_at": "2026-10-04T14:38:49Z",
-      "age_hours": 3.3,
+      "age_hours": 4.0,
       "reason": "claimed by kokhlo"
     },
     {
@@ -452,16 +407,8 @@
       "title": "Split GGUF priced by shard 1 only: residency probe sees a 175 GB model as 6.7 GiB, admits 3 giants on a 256 GB box",
       "url": "https://github.com/NousResearch/hermes-agent/issues/132779",
       "created_at": "2026-10-04T14:08:51Z",
-      "age_hours": 3.8,
+      "age_hours": 4.5,
       "reason": "already has PR(s): ['closing-ref PR#132794(OPEN)', 'xref PR#132794(OPEN)']"
-    },
-    {
-      "number": 132775,
-      "title": "Bundled mem0 probe raises UnscopedSecretError at boot under multiplex; no user-side disable for bundled providers",
-      "url": "https://github.com/NousResearch/hermes-agent/issues/132775",
-      "created_at": "2026-10-04T13:53:43Z",
-      "age_hours": 4.1,
-      "reason": "already has PR(s): ['closing-ref PR#132789(OPEN)', 'xref PR#132789(OPEN)']"
     }
   ]
 }
