@@ -14,14 +14,27 @@ import cloud_store
 import runtime as rt
 
 REPOSITORY='chelsealong/oss-pipeline'
+# Audited tasks whose previous attempt stopped before publication. Recreate
+# the patch in a fresh checkout; never replay an interrupted/pushed task.
 VALIDATION_RETRY = (
-    (316,'ERR_PNPM_STORE_DIR_OPEN_OPERATION_LOCK'),
-    (295,'Rust cache is read-only'),
-    (256,'aiohttp is missing'),
-    (206,'/var/tmp/hermes-pytest'),
-    (227,'/var/tmp/hermes-pytest'),
-    (241,'/var/tmp/hermes-pytest'),
-    (300,'/var/tmp/hermes-pytest'),
+    (316,'blocked','ERR_PNPM_STORE_DIR_OPEN_OPERATION_LOCK'),
+    (244,'blocked','/var/tmp/hermes-pytest'),
+    (245,'blocked','/var/tmp/hermes-pytest'),
+    (266,'blocked','/var/tmp/hermes-pytest'),
+    # These fetches timed out before any generation, review, or push. For
+    # openclaw#164200, only retry its latest task (267), not 219 and 222.
+    (267,'error',"'git', 'fetch', 'origin'"),
+    (268,'error',"'git', 'fetch', 'origin'"),
+    (271,'error',"'git', 'fetch', 'origin'"),
+    (273,'error',"'git', 'fetch', 'origin'"),
+    (274,'error',"'git', 'fetch', 'origin'"),
+    (275,'error',"'git', 'fetch', 'origin'"),
+    (295,'blocked','Rust cache is read-only'),
+    (256,'blocked','aiohttp is missing'),
+    (206,'blocked','/var/tmp/hermes-pytest'),
+    (227,'blocked','/var/tmp/hermes-pytest'),
+    (241,'blocked','/var/tmp/hermes-pytest'),
+    (300,'blocked','/var/tmp/hermes-pytest'),
 )
 RETRY_MARKER='cloud_validation_retry_20261004'
 
@@ -87,11 +100,11 @@ def requeue_validation_repair():
         attempted=set(json.loads(row['value'])) if row else set()
         pending=db.execute("SELECT count(*) FROM tasks WHERE status IN ('queued','running')").fetchone()[0]
         slots=max(0,rt.config().get('max_pending',8)-rt.config().get('response_slots',1)-pending)
-        for task_id,evidence in VALIDATION_RETRY:
+        for task_id,status,evidence in VALIDATION_RETRY:
             if not slots:break
             if task_id in attempted:continue
             task=db.execute('SELECT kind,repo,status,result FROM tasks WHERE id=?',(task_id,)).fetchone()
-            if not task or task['status']!='blocked' or evidence not in (task['result'] or ''):
+            if not task or task['status']!=status or evidence not in (task['result'] or ''):
                 continue
             if task['kind']=='fix' and held.get(task['repo'],0)>time.time():
                 continue
