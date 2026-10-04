@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791105959.3476837,
+  "saved_at": 1791105968.5267034,
   "tables": {
     "tasks": [
       {
@@ -4209,10 +4209,10 @@
         "repo": "hermes",
         "number": 132675,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791105756.087577,
-        "updated": 1791105756.979654,
-        "result": "",
+        "updated": 1791105968.5232203,
+        "result": "The failing `_restore_gateway_command_identity()` re-exec is in the Home Assistant add-on’s bundled launcher at `/usr/local/lib/hermes-cli/hermes`, which is absent from this checkout. Hermes’ own `relaunch_command()` preserves the repository import path; the reported failure occurs when the add-on launcher discards that bootstrap. A change here would not fix the reported launcher. The issue also asks the maintainer to choose the add-on’s handoff behavior, and the reporter offered to test a patch on their device.",
         "attempts": 1
       }
     ],
@@ -4234,10 +4234,6 @@
         "value": "{\"task\": 305, \"branch\": \"fix/codex-langfuse-18108\", \"head\": \"4a2e770a596ea348d75e98e63eb4b178bb0dd003\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791105125.461855, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791105425.169467"
       },
@@ -4251,7 +4247,11 @@
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791105947.8106098"
+        "value": "1791105962.8126023"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791105968.5216267, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
