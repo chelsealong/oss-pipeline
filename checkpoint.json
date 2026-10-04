@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791104909.577544,
+  "saved_at": 1791104944.466849,
   "tables": {
     "tasks": [
       {
@@ -4183,10 +4183,10 @@
         "repo": "hermes",
         "number": 132670,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791104065.9046426,
-        "updated": 1791104744.1178298,
-        "result": "",
+        "updated": 1791104944.4630861,
+        "result": "The reported SIGTRAP has an existing, directly competing fix in open PR #119010. Current code already builds the desktop app in staging; immediately before promoting it, hermes_cli/main_desktop.py terminates every matching Electron process. PR #119010 reproduces a Linux SIGTRAP from that shutdown path and changes how those processes are stopped. The issue’s proposed in-place rewrite cause is therefore unverified, and a second fix would duplicate or conflict with the open work.",
         "attempts": 1
       },
       {
@@ -4225,10 +4225,6 @@
         "value": "1791104549.969413"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791104732.7975624, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791104868.0466983"
       },
@@ -4238,7 +4234,11 @@
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791104897.6673777"
+        "value": "1791104942.6765497"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791104944.4613264, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
