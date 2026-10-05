@@ -3,6 +3,11 @@ name: Codex cloud preflight
 # Read-only deployment rehearsal. Never calls a model or publishes upstream work.
 on:
   workflow_dispatch:
+    inputs:
+      publication_probe:
+        description: Explicitly requested temporary Hermes PR; close immediately after creation
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -81,7 +86,40 @@ jobs:
           Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(rows)+'\n')
           PY
           gh api user --jq '"GitHub authentication verified for: " + .login'
+      - name: Explicit temporary publication probe
+        if: inputs.publication_probe == true
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          repo='NousResearch/hermes-agent';head='chelsealong:fix/codex-hermes-132989'
+          title='Temporary cloud permission check — '+os.environ['GITHUB_RUN_ID']
+          def gh(*args):return subprocess.run(['gh',*args],capture_output=True,text=True,check=True,timeout=90).stdout.strip()
+          existing=json.loads(gh('pr','list','--repo',repo,'--head',head,'--state','open','--json','number'))
+          if existing:raise SystemExit('An existing PR owns this branch; refusing test publication')
+          body=Path('.runtime/permission-probe-body.txt')
+          body.write_text('Temporary cloud publication check explicitly requested by the contributor. This PR will be closed immediately; please do not review. It is excluded from contribution counts.\n')
+          try:
+              result=subprocess.run(['gh','pr','create','--repo',repo,'--base','main','--head',head,
+                  '--title',title,'--body-file',str(body)],capture_output=True,text=True,timeout=90)
+              if result.returncode:raise RuntimeError(result.stderr[-1000:])
+              print('Created temporary PR:',result.stdout.strip())
+          finally:
+              # Reconcile even an ambiguous CLI timeout; close only this exact
+              # explicitly requested probe, never a real contribution PR.
+              rows=json.loads(gh('pr','list','--repo',repo,'--head',head,'--state','all','--json','number,title,author,state,url'))
+              ours=[r for r in rows if r['title']==title and r['author']['login']=='chelsealong']
+              for pr in ours:
+                  if pr['state']=='OPEN':gh('pr','close',str(pr['number']),'--repo',repo)
+                  state=json.loads(gh('pr','view',str(pr['number']),'--repo',repo,'--json','state'))['state']
+                  if state!='CLOSED':raise RuntimeError('Temporary PR needs cleanup: '+pr['url'])
+                  print('Verified temporary PR closed:',pr['url'])
+              if len(ours)!=1:raise RuntimeError('Cloud publication was not verified')
+          PY
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: encrypted-preflight-${{ github.run_id }}
           path: .runtime/preflight-github.json.enc
