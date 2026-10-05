@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791184038.0516489,
+  "saved_at": 1791184046.4793284,
   "tables": {
     "tasks": [
       {
@@ -2753,11 +2753,11 @@
         "repo": "openclaw",
         "number": 164143,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791016031.0029063,
-        "updated": 1791184035.795308,
+        "updated": 1791184046.4748738,
         "result": "The documentation correction is in the checkout, but this task requires a new meaningful regression test that fails without the source edit and passes with it. The existing gateway test already proves the runtime behavior; a new test that merely searches for the corrected prose would not provide meaningful behavioral proof. The test-audit guide rejects “exact source, import, or string greps” and duplicate coverage ([SKILL.md](/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/212/work/.agents/skills/test-audit/SKILL.md)). No commit or PR was made.",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 213,
@@ -5117,10 +5117,6 @@
         "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"started\": 1791162724.0119352, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/389/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"d707c97a7d557b147cabf5831f2ed9e404da2afb\", \"generation_started\": 1791162731.297778, \"phase_started\": 1791162732.526798, \"finished\": 1791162822.8530498}"
       },
       {
-        "key": "pause",
-        "value": "{}"
-      },
-      {
         "key": "task:383",
         "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"publication_wait\", \"publication_hold_until\": 1791247380.388767}"
       },
@@ -5217,14 +5213,6 @@
         "value": "{\"started\": 1791167012.9244902, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/316/attempt-3\", \"attempt\": 3, \"phase\": \"done\", \"base\": \"4a2e770a596ea348d75e98e63eb4b178bb0dd003\", \"phase_started\": 1791167944.2907982, \"publication_started\": true, \"branch\": \"fix/codex-langfuse-18108\", \"head\": \"8da8c63f8f3f65ea55f3400ef8d74db1b11c7e82\", \"finished\": 1791168266.924767}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791168304.1328337, \"tasks\": {\"fix\": {\"blocked\": 6, \"done\": 1, \"error\": 3, \"publication_wait\": 4, \"queued\": 2, \"retry_wait\": 1, \"running\": 1, \"skipped\": 90}, \"respond\": {\"blocked\": 18, \"done\": 1, \"skipped\": 4}}}"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791168318.6670845, \"comfyui\": 1791168182.6053214, \"hermes\": 1791166995.1719565, \"langfuse\": 1791167012.9243207}}"
-      },
-      {
         "key": "task:384",
         "value": "{\"started\": 1791168318.6672647, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/384/attempt-2\", \"attempt\": 2, \"phase\": \"retry_wait\", \"base\": \"a2affcf76e937a769550b576c67cb6934642766c\", \"generation_started\": 1791162762.832979, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791162764.4181688, \"finished\": 1791165167.1235957}"
       },
@@ -5237,16 +5225,36 @@
         "value": "1791184037.7427535"
       },
       {
+        "key": "prwatch_heartbeat",
+        "value": "1791184037.7796535"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791184039.4028993, \"tasks\": {\"fix\": {\"blocked\": 5, \"done\": 1, \"error\": 2, \"interrupted\": 2, \"publication_wait\": 4, \"queued\": 3, \"skipped\": 70}, \"respond\": {\"blocked\": 17, \"done\": 1, \"skipped\": 2}}}"
+      },
+      {
         "key": "watch_heartbeat",
-        "value": "1791184037.7531528"
+        "value": "1791184042.7561512"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791184037.7542865"
+        "value": "1791184042.7582347"
       },
       {
-        "key": "prwatch_heartbeat",
-        "value": "1791184037.7796535"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791184046.453613, \"source\": \"authenticated probe\"}"
+      },
+      {
+        "key": "pause",
+        "value": "{}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791184046.4747465, \"comfyui\": 1791168182.6053214, \"hermes\": 1791166995.1719565, \"langfuse\": 1791167012.9243207}}"
+      },
+      {
+        "key": "task:212",
+        "value": "{\"started\": 1791184046.4749062, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0}"
       }
     ],
     "calls": [
