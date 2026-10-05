@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791220713.2010078,
+  "saved_at": 1791220715.3244169,
   "tables": {
     "tasks": [
       {
@@ -5382,14 +5382,6 @@
         "value": "{\"started\": 1791219755.008744, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/398/attempt-1\", \"attempt\": 1, \"phase\": \"done\", \"base\": \"ce8ed1233035ed0c50390728745b01d862d672b4\", \"generation_started\": 1791219768.1613922, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791220298.9352124, \"publication_started\": true, \"branch\": \"fix/codex-firecrawl-4950\", \"head\": \"2a29d49627fdf0cf86002391e26e88bf274f81b5\", \"finished\": 1791220509.8477077}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"langfuse\", \"task\": 395, \"at\": 1791218206.1403959}, {\"repo\": \"comfyui\", \"task\": 396, \"at\": 1791218761.5625272}, {\"repo\": \"langfuse\", \"task\": 397, \"at\": 1791219104.67738}, {\"repo\": \"firecrawl\", \"task\": 398, \"at\": 1791219768.1613905}, {\"repo\": \"mem0\", \"task\": 399, \"at\": 1791220525.592306}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-10-05\", \"used\": {\"hermes\": 6, \"openclaw\": 3, \"comfyui\": 3, \"langfuse\": 3, \"firecrawl\": 1, \"mem0\": 1}}"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1791220583.8520904, \"source\": \"completed task phase\"}"
       },
@@ -5410,10 +5402,6 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791216325.4343388, \"comfyui\": 1791218746.1587384, \"hermes\": 1791166995.1719565, \"langfuse\": 1791220702.5013924, \"firecrawl\": 1791219755.0084903, \"mem0\": 1791220511.7877688}}"
       },
       {
-        "key": "task:400",
-        "value": "{\"started\": 1791220702.5015364, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/400/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\"}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791220710.4085567"
       },
@@ -5424,6 +5412,18 @@
       {
         "key": "worker_heartbeat",
         "value": "1791220711.1759582"
+      },
+      {
+        "key": "task:400",
+        "value": "{\"started\": 1791220702.5015364, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/400/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"1cfcf5af37ffd1ba9706433308f5b9631d41273e\", \"generation_started\": 1791220714.8581848, \"dispatch_paid_date\": \"2026-10-05\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"langfuse\", \"task\": 395, \"at\": 1791218206.1403959}, {\"repo\": \"comfyui\", \"task\": 396, \"at\": 1791218761.5625272}, {\"repo\": \"langfuse\", \"task\": 397, \"at\": 1791219104.67738}, {\"repo\": \"firecrawl\", \"task\": 398, \"at\": 1791219768.1613905}, {\"repo\": \"mem0\", \"task\": 399, \"at\": 1791220525.592306}, {\"repo\": \"langfuse\", \"task\": 400, \"at\": 1791220714.8581839}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-10-05\", \"used\": {\"hermes\": 6, \"openclaw\": 3, \"comfyui\": 3, \"langfuse\": 4, \"firecrawl\": 1, \"mem0\": 1}}"
       }
     ],
     "calls": [
@@ -10174,6 +10174,10 @@
       {
         "at": 1791220713.1862552,
         "kind": "judge"
+      },
+      {
+        "at": 1791220714.858291,
+        "kind": "codex"
       }
     ]
   }
