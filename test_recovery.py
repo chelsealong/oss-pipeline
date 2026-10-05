@@ -108,6 +108,22 @@ class RecoveryTests(unittest.TestCase):
         with rt.db() as db:
             self.assertEqual(db.execute('SELECT status FROM tasks').fetchone()[0],'error')
             self.assertIsNone(worker.next_queued(db,{}))
+    def test_publication_hold_frees_other_repo_queue_and_keeps_feedback_eligible(self):
+        fix=self.task('hermes',1)
+        reply=self.task('NousResearch/hermes-agent',2,'respond','feedback')
+        with rt.db() as db:
+            db.execute('BEGIN IMMEDIATE')
+            chosen=worker.next_queued(db,{'hermes':time.time()+3600})
+            self.assertEqual(chosen['id'],reply['id'])
+            self.assertEqual(db.execute('SELECT status FROM tasks WHERE id=?',(fix['id'],)).fetchone()[0],'publication_wait')
+            self.assertTrue(rt._room(db,'fix','hermes')[0])
+        # When the hold expires, restoration is capped by the same queue limits.
+        self.cfg['max_pending_per_repo']=1;self.save()
+        with rt.db() as db:
+            db.execute('BEGIN IMMEDIATE');worker.next_queued(db,{})
+            self.assertEqual(db.execute('SELECT status FROM tasks WHERE id=?',(fix['id'],)).fetchone()[0],'publication_wait')
+            db.execute("UPDATE tasks SET status='done' WHERE id=?",(reply['id'],))
+            self.assertEqual(worker.next_queued(db,{})['id'],fix['id'])
     def test_ordinary_retries_are_bounded_and_account_failure_pauses(self):
         task=self.task();task['attempts']=3
         worker.handle_task_error(task,subprocess.TimeoutExpired(['git','fetch'],300))

@@ -43,6 +43,13 @@ actual request is capped (including fallback requests) and requires a healthy
 worker. Authentication/quota failures and unavailable worker heartbeat pause
 model calls. Ordinary read-network failures retry only the affected task, at
 most three attempts; publication ambiguity is never automatically replayed.
+Repository-level PR creation denials place queued fixes in `publication_wait`
+without consuming other repositories' queue space. Existing-PR responses remain
+eligible. Expired holds restore tasks only when queue capacity permits. A draft
+PR test does not prove ordinary PR creation permission: GitHub's concurrent
+open-PR limits exclude drafts. Never bypass upstream limits or close production
+PRs merely to free capacity. The preflight's optional temporary PR probe is off
+by default and requires an explicit user request, including its immediate cleanup.
 No automatic claim/reply comments or PR closures: record these
 for human follow-up. Code fixes may create/update PRs after independent review,
 within upstream policy and the existing repository caps.

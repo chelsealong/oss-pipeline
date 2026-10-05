@@ -232,12 +232,15 @@ def status():
         recent = [dict(r) for r in c.execute('SELECT id,kind,repo,number,status,result,updated FROM tasks ORDER BY id DESC LIMIT 8')]
         calls = dict(c.execute('SELECT kind,count(*) FROM calls WHERE at>? GROUP BY kind', (time.time()-3600,)).fetchall())
         budget=_dispatch_budget(c)
-        active=[dict(r) for r in c.execute("SELECT id,repo,number,kind,status FROM tasks WHERE status IN ('running','queued','retry_wait')")]
+        active=[dict(r) for r in c.execute("SELECT id,repo,number,kind,status FROM tasks WHERE status IN ('running','queued','retry_wait','publication_wait')")]
         for task in active:task['execution']=_meta(c,f"task:{task['id']}",{})
         throughput={kind:dict(c.execute('SELECT status,count(*) FROM tasks WHERE kind=? AND updated>? GROUP BY status',
                     (kind,time.time()-86400)).fetchall()) for kind in ('fix','respond')}
         followups=[{'key':r['key'],**json.loads(r['value'])} for r in c.execute(
             "SELECT key,value FROM meta WHERE key LIKE 'coordination:%' OR key LIKE 'followup:%'")]
+    followups.extend({'key':'publication:'+repo,'status':'needs_human','repo':repo,'resume_after':until,
+        'reason':'Upstream rejected ordinary PR creation; inspect permissions/concurrent PR cap. Draft creation is not proof of ordinary PR permission.'}
+        for repo,until in publication_holds().items())
     return {'config': config(), 'ready': ready(), 'health': getmeta('health'),
             'pause': getmeta('pause'), 'tasks': counts, 'recent': recent, 'calls_last_hour': calls,
             'active':active,'dispatch_budget':budget,'throughput_24h':throughput,'human_followups':followups,

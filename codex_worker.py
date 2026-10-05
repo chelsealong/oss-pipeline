@@ -556,6 +556,19 @@ def heartbeat(stop):
         stop.wait(15)
 
 def next_queued(db, holds):
+    # A repository-level publication denial must not occupy the entire shared
+    # admission queue. Keep its work durable and resume only within queue caps.
+    for row in db.execute("SELECT id,repo,status FROM tasks WHERE kind='fix' AND status IN ('queued','retry_wait','publication_wait')").fetchall():
+        held=holds.get(row['repo'],0)>time.time()
+        if held and row['status']!='publication_wait':
+            db.execute("UPDATE tasks SET status='publication_wait',updated=? WHERE id=?",(time.time(),row['id']))
+            state=rt._meta(db,f"task:{row['id']}",{})
+            state.update(phase='publication_wait',publication_hold_until=holds[row['repo']])
+            rt._putmeta(db,f"task:{row['id']}",state)
+        elif not held and row['status']=='publication_wait' and rt._room(db,'fix',row['repo'])[0]:
+            db.execute("UPDATE tasks SET status='queued',updated=? WHERE id=?",(time.time(),row['id']))
+            state=rt._meta(db,f"task:{row['id']}",{});state.update(phase='queued',publication_hold_until=0)
+            rt._putmeta(db,f"task:{row['id']}",state)
     active={rt.repo_key(r[0]) for r in db.execute("SELECT repo FROM tasks WHERE status='running'")}
     schedule=rt._meta(db,'scheduler',{'prefer':'respond','repos':{}})
     candidates=[]

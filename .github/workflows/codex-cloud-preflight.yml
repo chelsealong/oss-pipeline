@@ -1,6 +1,7 @@
 name: Codex cloud preflight
 
-# Read-only deployment rehearsal. Never calls a model or publishes upstream work.
+# Read-only by default; the optional temporary PR probe requires explicit user
+# authorization. Neither mode calls a model or changes the production switch.
 on:
   workflow_dispatch:
     inputs:
@@ -59,7 +60,7 @@ jobs:
           import os
           from pathlib import Path
           rows = ['## Codex cloud preflight', '',
-                  'Read-only validation; this workflow does not change production.', '']
+                  'Runtime/credential validation; this workflow does not change the production switch.', '']
           for name in ['GH_TOKEN','QWEN_API_KEY','CODEX_AUTH_JSON','OPENAI_API_KEY']:
               rows.append(f'- {name}: '+('configured' if os.environ.get(name) else 'not configured'))
           Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(rows)+'\n')
