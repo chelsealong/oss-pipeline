@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791168117.554793,
+  "saved_at": 1791168165.954497,
   "tables": {
     "tasks": [
       {
@@ -3455,10 +3455,10 @@
         "repo": "NousResearch/hermes-agent",
         "number": 126029,
         "note": "{\"authors\": \"Enough1122\", \"events\": [\"IC_kwDOPRF1G88AAAABZBw9bQ@2026-10-03T23:19:55Z\"], \"is_issue\": false}",
-        "status": "running",
+        "status": "blocked",
         "created": 1791069900.0340984,
-        "updated": 1791166995.1721184,
-        "result": "review: The lock wait can exceed the tool deadline. `browser.command_timeout` has no upper bound; setting it to 300 seconds makes `_real_profile_lock_timeout()` return 660 seconds, while sequential and concurrent tool calls default to 420 seconds. A wedged resolve can therefore still leave later calls waiting until the outer timeout, the symptom this patch aims to fix. The new wait-budget test mocks the lock and does not cover this supported configuration.",
+        "updated": 1791168165.9452906,
+        "result": "review: The original fixed-wait and stale-error objections are addressed, and the focused suite passes (69 tests). But the patch takes the minimum of the concurrent and sequential deadlines even during a sequential call. With supported settings of 30s for concurrent batches and 420s for sequential calls, an independently run config probe gives a 20s lock wait and rejects a healthy 50s resolve. The new tests use equal deadlines and miss this regression.",
         "attempts": 3
       },
       {
@@ -5225,28 +5225,28 @@
         "value": "{\"started\": 1791167012.9244902, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/316/attempt-3\", \"attempt\": 3, \"phase\": \"review\", \"base\": \"4a2e770a596ea348d75e98e63eb4b178bb0dd003\", \"phase_started\": 1791167944.2907982}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791168020.5724225, \"source\": \"completed task phase\"}"
-      },
-      {
-        "key": "task:266",
-        "value": "{\"started\": 1791166995.1721666, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/266/attempt-3\", \"attempt\": 3, \"phase\": \"rereview\", \"base\": \"d0d89cc1b5b9388683f0f90eeb3a1be5af12e193\", \"phase_started\": 1791168022.1217544}"
-      },
-      {
         "key": "throughput_24h",
-        "value": "{\"at\": 1791168057.2175884, \"tasks\": {\"fix\": {\"blocked\": 6, \"done\": 1, \"error\": 3, \"publication_wait\": 4, \"queued\": 3, \"retry_wait\": 1, \"skipped\": 90}, \"respond\": {\"blocked\": 17, \"running\": 2, \"skipped\": 4}}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791168105.5753927"
+        "value": "{\"at\": 1791168119.511383, \"tasks\": {\"fix\": {\"blocked\": 6, \"done\": 1, \"error\": 3, \"publication_wait\": 4, \"queued\": 3, \"retry_wait\": 1, \"skipped\": 90}, \"respond\": {\"blocked\": 17, \"running\": 2, \"skipped\": 4}}}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791168111.899368"
+        "value": "1791168161.7543702"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791168111.9025648"
+        "value": "1791168161.7571204"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791168165.5890236"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791168165.7008128, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:266",
+        "value": "{\"started\": 1791166995.1721666, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/266/attempt-3\", \"attempt\": 3, \"phase\": \"blocked\", \"base\": \"d0d89cc1b5b9388683f0f90eeb3a1be5af12e193\", \"phase_started\": 1791168022.1217544, \"finished\": 1791168165.7986894}"
       }
     ],
     "calls": [
