@@ -62,7 +62,28 @@ jobs:
               raise SystemExit('Missing GH_PAT')
           import work_evidence
           assert work_evidence.decrypt(work_evidence.encrypt(b'preflight'))==b'preflight'
+          # Keep credential identity comparisons encrypted, even for a public repo.
+          # This makes cloud/local permission discrepancies diagnosable without
+          # exporting a token or assuming the desktop login equals GH_PAT.
+          import hashlib, json, urllib.request
+          token=os.environ['GH_TOKEN']
+          diagnostic={'fingerprint':hashlib.sha256(token.encode()).hexdigest(),'repositories':{}}
+          for endpoint in ['user','repos/NousResearch/hermes-agent','repos/chelsealong/hermes-agent']:
+              request=urllib.request.Request('https://api.github.com/'+endpoint,
+                  headers={'Authorization':'Bearer '+token,'User-Agent':'oss-pipeline-preflight'})
+              with urllib.request.urlopen(request,timeout=30) as response:
+                  value=json.load(response)
+                  diagnostic['oauth_scopes']=response.headers.get('X-OAuth-Scopes')
+              if endpoint=='user':diagnostic['actor']={'login':value['login'],'id':value['id']}
+              else:diagnostic['repositories'][endpoint]={k:value.get(k) for k in ('full_name','archived','disabled','permissions')}
+          work_evidence.atomic(Path('.runtime/preflight-github.json.enc'),work_evidence.encrypt(json.dumps(diagnostic).encode()))
           rows.append('- Encrypted recovery key: verified')
           Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(rows)+'\n')
           PY
           gh api user --jq '"GitHub authentication verified for: " + .login'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: encrypted-preflight-${{ github.run_id }}
+          path: .runtime/preflight-github.json.enc
+          include-hidden-files: true
+          retention-days: 14
