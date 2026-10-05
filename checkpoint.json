@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791240219.5336902,
+  "saved_at": 1791240221.1889312,
   "tables": {
     "tasks": [
       {
@@ -5288,10 +5288,10 @@
         "repo": "comfyui",
         "number": 16804,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791240116.0700283,
-        "updated": 1791240149.339351,
-        "result": "",
+        "updated": 1791240220.8650324,
+        "result": "Issue #16804 is still present, but the proposed XPU change cannot be verified within this task’s CPU-only scope. Enabling the path also reaches CUDA-only unregister calls in model_patcher.py, so changing the two reported lines would leave cleanup broken. The required Intel XPU runtime and hardware are unavailable here.",
         "attempts": 1
       }
     ],
@@ -5489,10 +5489,6 @@
         "value": "{\"date\": \"2026-10-05\", \"used\": {\"hermes\": 6, \"openclaw\": 4, \"comfyui\": 5, \"langfuse\": 6, \"firecrawl\": 1, \"mem0\": 1}}"
       },
       {
-        "key": "task:407",
-        "value": "{\"started\": 1791240149.3394146, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/407/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"b0b743566f65daafc423b4fea8a2fbda94b3384a\", \"generation_started\": 1791240159.3564317, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791240162.1594262}"
-      },
-      {
         "key": "coordination:google/adk-python#7415",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7415\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
@@ -5515,10 +5511,6 @@
       {
         "key": "coordination:google/adk-python#7397",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7397\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791240203.2999392, \"source\": \"completed task phase\"}"
       },
       {
         "key": "task:393",
@@ -5547,6 +5539,14 @@
       {
         "key": "task:394",
         "value": "{\"started\": 1791240219.52835, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791240220.6901035, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:407",
+        "value": "{\"started\": 1791240149.3394146, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/407/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"b0b743566f65daafc423b4fea8a2fbda94b3384a\", \"generation_started\": 1791240159.3564317, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791240162.1594262, \"finished\": 1791240220.6917167}"
       }
     ],
     "calls": [
