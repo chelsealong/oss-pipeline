@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791218194.9212105,
+  "saved_at": 1791218206.1451957,
   "tables": {
     "tasks": [
       {
@@ -5217,14 +5217,6 @@
         "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"started\": 1791184052.7850251, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791184056.2495337}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"comfyui\", \"task\": 391, \"at\": 1791168187.9516888}, {\"repo\": \"langfuse\", \"task\": 392, \"at\": 1791184078.6017365}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-10-05\", \"used\": {\"hermes\": 6, \"openclaw\": 3, \"comfyui\": 2, \"langfuse\": 1}}"
-      },
-      {
         "key": "coordination:google/adk-python#7395",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7395\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
@@ -5329,16 +5321,24 @@
         "value": "{\"at\": 1791218176.7907224, \"tasks\": {\"fix\": {\"blocked\": 1, \"error\": 2, \"interrupted\": 3, \"publication_wait\": 4, \"queued\": 2, \"running\": 1, \"skipped\": 8}, \"respond\": {\"blocked\": 8, \"done\": 1, \"skipped\": 2}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791218185.6747823"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791216325.4343388, \"comfyui\": 1791168182.6053214, \"hermes\": 1791166995.1719565, \"langfuse\": 1791218194.9163625}}"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1791218200.6778495"
+      },
+      {
         "key": "task:395",
-        "value": "{\"started\": 1791218194.9165049, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0}"
+        "value": "{\"started\": 1791218194.9165049, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/395/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"b1fc56a8fe1118ba64eb1127c9d8a9489ebceb85\", \"generation_started\": 1791218206.1403966, \"dispatch_paid_date\": \"2026-10-05\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"langfuse\", \"task\": 395, \"at\": 1791218206.1403959}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-10-05\", \"used\": {\"hermes\": 6, \"openclaw\": 3, \"comfyui\": 2, \"langfuse\": 2}}"
       }
     ],
     "calls": [
@@ -9865,6 +9865,10 @@
       {
         "at": 1791218186.8240445,
         "kind": "judge"
+      },
+      {
+        "at": 1791218206.1405056,
+        "kind": "codex"
       }
     ]
   }
