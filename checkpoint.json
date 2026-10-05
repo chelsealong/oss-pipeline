@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791216317.9435961,
+  "saved_at": 1791216331.196177,
   "tables": {
     "tasks": [
       {
@@ -3910,11 +3910,11 @@
         "repo": "openclaw",
         "number": 164784,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791094276.5225453,
-        "updated": 1791216307.506789,
+        "updated": 1791216325.4344401,
         "result": "review: The patch fixes the reported leading cases, but it moves images after text that follows them. For `Before ![chart](...) after`, the converter emits `Before after` before the image block, changing the message order. The new tests cover only images at the end of content. Image extraction needs to preserve verse order.",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 302,
@@ -5093,10 +5093,10 @@
         "repo": "langfuse",
         "number": 18203,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1791184061.9491181,
-        "updated": 1791216317.937617,
-        "result": "Codex: {'message': 'Selected model is at capacity. Please try a different model.', 'codexErrorInfo': 'serverOverloaded', 'additionalDetails': None, 'misalignment': None}",
+        "updated": 1791216331.1832266,
+        "result": "Cloud checkpoint unavailable; keep task state for recovery",
         "attempts": 2
       },
       {
@@ -5272,36 +5272,56 @@
         "value": "1791216310.2010095"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791216310.22416"
-      },
-      {
         "key": "throughput_24h",
         "value": "{\"at\": 1791216312.5699978, \"tasks\": {\"fix\": {\"error\": 2, \"interrupted\": 3, \"publication_wait\": 4, \"queued\": 3, \"retry_wait\": 1, \"skipped\": 8}, \"respond\": {\"blocked\": 8, \"done\": 1, \"skipped\": 2}}}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791216315.1947436"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791216315.197261"
       },
       {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1791216317.9104812, \"source\": \"authenticated probe\"}"
       },
       {
-        "key": "pause",
-        "value": "{}"
+        "key": "watch_heartbeat",
+        "value": "1791216320.1993413"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791216320.201544"
+      },
+      {
+        "key": "coordination:google/adk-python#7415",
+        "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7415\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
+      },
+      {
+        "key": "coordination:google/adk-python#7414",
+        "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7414\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
+      },
+      {
+        "key": "coordination:google/adk-python#7411",
+        "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7411\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
+      },
+      {
+        "key": "coordination:google/adk-python#7409",
+        "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7409\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791216325.2274652"
       },
       {
         "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791185926.315126, \"comfyui\": 1791168182.6053214, \"hermes\": 1791166995.1719565, \"langfuse\": 1791216317.9375098}}"
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791216325.4343388, \"comfyui\": 1791168182.6053214, \"hermes\": 1791166995.1719565, \"langfuse\": 1791216317.9375098}}"
+      },
+      {
+        "key": "task:301",
+        "value": "{\"started\": 1791216325.4344711, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0}"
+      },
+      {
+        "key": "pause",
+        "value": "{\"until\": 1791218125.4553952, \"reason\": \"Cloud checkpoint unavailable; keep task state for recovery\"}"
       },
       {
         "key": "task:392",
-        "value": "{\"started\": 1791216317.93766, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/392/attempt-1\", \"attempt\": 1, \"phase\": \"retry_wait\", \"base\": \"74512fcf585e662035b9f7fac99330b23b5cadd6\", \"generation_started\": 1791184078.601737, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791184080.243308, \"finished\": 1791184084.1284306}"
+        "value": "{\"started\": 1791216317.93766, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/392/attempt-2\", \"attempt\": 2, \"phase\": \"blocked\", \"base\": \"b73431dd246ba668d5ac84163e0c7630aedb5b6c\", \"generation_started\": 1791184078.601737, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791184080.243308, \"finished\": 1791216330.9723032}"
       }
     ],
     "calls": [
@@ -9771,6 +9791,10 @@
       },
       {
         "at": 1791185927.1584475,
+        "kind": "judge"
+      },
+      {
+        "at": 1791216324.7024224,
         "kind": "judge"
       }
     ]
