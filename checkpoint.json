@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791166928.3386621,
+  "saved_at": 1791166985.6936796,
   "tables": {
     "tasks": [
       {
@@ -4222,11 +4222,11 @@
         "repo": "openclaw",
         "number": 164847,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791108646.3367279,
-        "updated": 1791165268.1550856,
+        "updated": 1791166985.6888602,
         "result": "The fix and regression test are in the checkout, but required validation is incomplete. `pnpm check:changed --base HEAD` passed formatting and repository guards, then stopped because its TypeScript graph check requires compiler files inside the checkout, while this task requires dependencies in the external cache.",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 326,
@@ -4976,9 +4976,9 @@
         "repo": "hermes",
         "number": 132993,
         "note": "",
-        "status": "queued",
+        "status": "publication_wait",
         "created": 1791159996.205507,
-        "updated": 1791159996.205507,
+        "updated": 1791166985.6665866,
         "result": "",
         "attempts": 0
       },
@@ -5002,9 +5002,9 @@
         "repo": "hermes",
         "number": 132999,
         "note": "",
-        "status": "queued",
+        "status": "publication_wait",
         "created": 1791160354.2215579,
-        "updated": 1791160354.2215579,
+        "updated": 1791166985.6667461,
         "result": "",
         "attempts": 0
       },
@@ -5015,9 +5015,9 @@
         "repo": "hermes",
         "number": 132998,
         "note": "",
-        "status": "queued",
+        "status": "publication_wait",
         "created": 1791160357.8882773,
-        "updated": 1791160357.8882773,
+        "updated": 1791166985.6667778,
         "result": "",
         "attempts": 0
       },
@@ -5028,9 +5028,9 @@
         "repo": "hermes",
         "number": 133000,
         "note": "",
-        "status": "queued",
+        "status": "publication_wait",
         "created": 1791160423.972709,
-        "updated": 1791160423.972709,
+        "updated": 1791166985.666799,
         "result": "",
         "attempts": 0
       },
@@ -5079,32 +5079,12 @@
         "value": "{\"task\": 382, \"branch\": \"fix/codex-hermes-132989\", \"head\": \"7c6eb24c3987f224b8984fd833579b959e627d93\"}"
       },
       {
-        "key": "task:383",
-        "value": "{\"dispatch_paid_date\": \"2026-10-05\"}"
-      },
-      {
-        "key": "task:385",
-        "value": "{\"dispatch_paid_date\": \"2026-10-05\"}"
-      },
-      {
-        "key": "task:386",
-        "value": "{\"dispatch_paid_date\": \"2026-10-05\"}"
-      },
-      {
-        "key": "task:387",
-        "value": "{\"dispatch_paid_date\": \"2026-10-05\"}"
-      },
-      {
         "key": "task:388",
         "value": "{\"dispatch_paid_date\": \"2026-10-05\"}"
       },
       {
         "key": "accounting_v2",
         "value": "1791162707.1603844"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791162711.5922341, \"comfyui\": 1791162724.0117865}}"
       },
       {
         "key": "coordination:google/adk-python#7405",
@@ -5175,10 +5155,6 @@
         "value": "{\"started\": 1791162711.5923889, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791165467.120711, \"folder\": \"jobs/384/attempt-2\", \"attempt\": 2, \"phase\": \"retry_wait\", \"base\": \"a2affcf76e937a769550b576c67cb6934642766c\", \"generation_started\": 1791162762.832979, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791162764.4181688, \"finished\": 1791165167.1235957}"
       },
       {
-        "key": "pause",
-        "value": "{\"until\": 1791166973.7444007, \"reason\": \"[Errno 2] No such file or directory: '/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/384/attempt-2/work/.aws'\"}"
-      },
-      {
         "key": "cloud_validation_retry_20261005",
         "value": "[325, 384]"
       },
@@ -5188,19 +5164,51 @@
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1791166868.1425245, \"tasks\": {\"fix\": {\"blocked\": 7, \"done\": 1, \"error\": 3, \"queued\": 6, \"retry_wait\": 1, \"skipped\": 88}, \"respond\": {\"blocked\": 19, \"skipped\": 4}}}"
+        "value": "{\"at\": 1791166929.480592, \"tasks\": {\"fix\": {\"blocked\": 7, \"done\": 1, \"error\": 3, \"queued\": 6, \"retry_wait\": 1, \"skipped\": 88}, \"respond\": {\"blocked\": 19, \"skipped\": 4}}}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791166920.1277857"
+        "value": "1791166980.1383562"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791166926.0812051"
+        "value": "1791166981.1230104"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791166926.0831923"
+        "value": "1791166981.1248262"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791166985.661741, \"source\": \"authenticated probe\"}"
+      },
+      {
+        "key": "pause",
+        "value": "{}"
+      },
+      {
+        "key": "task:383",
+        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"publication_wait\", \"publication_hold_until\": 1791247380.388767}"
+      },
+      {
+        "key": "task:385",
+        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"publication_wait\", \"publication_hold_until\": 1791247380.388767}"
+      },
+      {
+        "key": "task:386",
+        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"publication_wait\", \"publication_hold_until\": 1791247380.388767}"
+      },
+      {
+        "key": "task:387",
+        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"publication_wait\", \"publication_hold_until\": 1791247380.388767}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791166985.6888273, \"comfyui\": 1791162724.0117865}}"
+      },
+      {
+        "key": "task:325",
+        "value": "{\"started\": 1791166985.6889193, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0}"
       }
     ],
     "calls": [
