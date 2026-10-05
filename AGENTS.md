@@ -50,6 +50,13 @@ PR test does not prove ordinary PR creation permission: GitHub's concurrent
 open-PR limits exclude drafts. Never bypass upstream limits or close production
 PRs merely to free capacity. The preflight's optional temporary PR probe is off
 by default and requires an explicit user request, including its immediate cleanup.
+On 2026-10-05 the cloud GitHub PAT was synchronized with the local GitHub
+credential (not the desktop Codex login). The encrypted preflight comparison
+confirmed equality, but ordinary Hermes PR creation still failed both locally
+and in cloud probe 37251066168. The earlier successful PR #132982 was a draft.
+There were 137 open non-draft Hermes PRs; a concurrent PR cap is a supported
+explanation, not a confirmed exact limit (only repository admins can read it).
+Retain the repository hold; a new token or successful draft is not clearance.
 No automatic claim/reply comments or PR closures: record these
 for human follow-up. Code fixes may create/update PRs after independent review,
 within upstream policy and the existing repository caps.
