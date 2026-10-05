@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791162802.0159411,
+  "saved_at": 1791162825.1412969,
   "tables": {
     "tasks": [
       {
@@ -5054,10 +5054,10 @@
         "repo": "comfyui",
         "number": 16786,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791161037.0458136,
-        "updated": 1791162724.011902,
-        "result": "",
+        "updated": 1791162825.0686407,
+        "result": "Open PR #16069 already changes RemeshMesh to run its mesh postprocessing on CPU when the active device is MPS. That route avoids the int64 scatter_reduce_ failure reported in #16786, so a separate fix would duplicate active work.",
         "attempts": 1
       }
     ],
@@ -5115,20 +5115,12 @@
         "value": "{\"at\": 1791162710.419811, \"tasks\": {\"fix\": {\"blocked\": 8, \"done\": 1, \"error\": 3, \"queued\": 7, \"skipped\": 87}, \"respond\": {\"blocked\": 20, \"skipped\": 4}}}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791162711.5723362, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791162711.5922341, \"comfyui\": 1791162724.0117865}}"
-      },
-      {
-        "key": "task:389",
-        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"started\": 1791162724.0119352, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/389/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"d707c97a7d557b147cabf5831f2ed9e404da2afb\", \"generation_started\": 1791162731.297778, \"phase_started\": 1791162732.526798}"
       },
       {
         "key": "coordination:google/adk-python#7405",
@@ -5204,7 +5196,15 @@
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791162799.0312517"
+        "value": "1791162814.0323286"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791162822.8329744, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:389",
+        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"started\": 1791162724.0119352, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/389/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"d707c97a7d557b147cabf5831f2ed9e404da2afb\", \"generation_started\": 1791162731.297778, \"phase_started\": 1791162732.526798, \"finished\": 1791162822.8530498}"
       }
     ],
     "calls": [
