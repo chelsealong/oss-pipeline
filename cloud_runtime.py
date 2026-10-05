@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""GitHub-hosted supervisor; serial execution, durable state, bounded handover."""
+"""One cloud state/auth owner, bounded workers, durable evidence and handover."""
 import argparse
 import hashlib
 import json
@@ -12,6 +12,7 @@ import sys
 import time
 import cloud_store
 import runtime as rt
+import work_evidence
 
 REPOSITORY='chelsealong/oss-pipeline'
 # Audited tasks whose previous attempt stopped before publication. Recreate
@@ -36,7 +37,19 @@ VALIDATION_RETRY = (
     (241,'blocked','/var/tmp/hermes-pytest'),
     (300,'blocked','/var/tmp/hermes-pytest'),
 )
-RETRY_MARKER='cloud_validation_retry_20261004'
+REPAIR_RETRY = (
+    (325,'blocked','requires compiler files inside the checkout'),
+    (359,'blocked','requires dependencies physically inside the checkout'),
+    (316,'blocked','rustup tried to write to a read-only home'),
+    (212,'blocked','documentation correction'),
+    (197,'blocked','review: The regression test is timing-dependent'),
+    (235,'blocked','review: The fix addresses a reproduced guard refusal'),
+    (266,'blocked','review: The lock wait can exceed the tool deadline'),
+    (301,'blocked','review: The patch fixes the reported leading cases'),
+    (349,'blocked','review: Recovery is wired only in createWindow()'),
+)
+VALIDATION_RETRY=REPAIR_RETRY+VALIDATION_RETRY
+RETRY_MARKER='cloud_validation_retry_20261005'
 
 def gh(args, **kwargs):
     # A failed variable read is safe to repeat; secret updates and workflow
@@ -85,9 +98,24 @@ def cloud_enabled():
 def configure(mode):
     rt.CONFIG.parent.mkdir(exist_ok=True)
     rt.CONFIG.write_text(json.dumps({'backend':'codex-cloud' if mode=='live' else 'codex-local',
-        'enabled':True,'model':'gpt-6-sol','max_pending':8,'response_slots':1,
+        'enabled':True,'cloud_environment':True,'model':'gpt-6-sol','max_pending':8,
+        'response_slots':1,'fix_slots':1,'max_pending_per_repo':3,'workers':2,
+        'codex_socket':str(rt.DATA/'codex-host.sock'),
         'codex_sessions_per_5h':45,'judge_requests_per_hour':120})+'\n')
     rt.DATA.mkdir(exist_ok=True)
+
+def migrate_accounting():
+    with rt.db() as db:
+        db.execute('BEGIN IMMEDIATE')
+        if rt._meta(db,'accounting_v2'):return
+        budget=rt._dispatch_budget(db)
+        rt._putmeta(db,'dispatch_budget',budget)
+        for task in db.execute("SELECT id,created FROM tasks WHERE kind='fix' AND status IN ('queued','running')"):
+            day=time.strftime('%Y-%m-%d',time.gmtime(task['created']))
+            state=rt._meta(db,f"task:{task['id']}",{})
+            state['dispatch_paid_date']=day
+            rt._putmeta(db,f"task:{task['id']}",state)
+        rt._putmeta(db,'accounting_v2',time.time())
 
 def requeue_validation_repair():
     """Retry only audited, unpublished infrastructure blocks, once per task."""
@@ -98,7 +126,7 @@ def requeue_validation_repair():
         db.execute('BEGIN IMMEDIATE')
         row=db.execute('SELECT value FROM meta WHERE key=?',(RETRY_MARKER,)).fetchone()
         attempted=set(json.loads(row['value'])) if row else set()
-        pending=db.execute("SELECT count(*) FROM tasks WHERE status IN ('queued','running')").fetchone()[0]
+        pending=db.execute("SELECT count(*) FROM tasks WHERE status IN ('queued','running','retry_wait')").fetchone()[0]
         slots=max(0,rt.config().get('max_pending',8)-rt.config().get('response_slots',1)-pending)
         for task_id,status,evidence in VALIDATION_RETRY:
             if not slots:break
@@ -106,6 +134,7 @@ def requeue_validation_repair():
             task=db.execute('SELECT kind,repo,status,result FROM tasks WHERE id=?',(task_id,)).fetchone()
             if not task or task['status']!=status or evidence not in (task['result'] or ''):
                 continue
+            if not rt._room(db,task['kind'],task['repo'])[0]:continue
             if task['kind']=='fix' and held.get(task['repo'],0)>time.time():
                 continue
             db.execute("UPDATE tasks SET status='queued',updated=? WHERE id=?",(time.time(),task_id))
@@ -134,23 +163,35 @@ def run(mode,seconds):
     try:
         if mode=='live':
             if not cloud_enabled():raise RuntimeError('Cloud production switch is off')
+            work_evidence.key()  # Never run production without encrypted recovery.
             cloud_store.restore()
             restored=True
+            migrate_accounting()
             requeue_validation_repair()
-        else:
+        import codex_worker
+        host=start('codex-host',['codex_host.py','--binary',codex_worker.binary()])
+        for _ in range(120):
+            if Path(rt.config()['codex_socket']).exists():break
+            if host.poll() is not None:raise RuntimeError('Codex host startup failed')
+            time.sleep(.5)
+        else:raise RuntimeError('Codex host startup timed out')
+        if mode!='live':
             # No production state or upstream tasks are imported into canary.
             import codex_worker
             codex_worker.healthcheck()
             if mode=='canary':
                 rt.setmeta('worker_heartbeat',time.time())
-                if not rt.enqueue('canary','runtime',1):raise RuntimeError('Canary enqueue failed')
-                subprocess.run([sys.executable,'codex_worker.py','--once'],check=True,timeout=600)
+                for slot in range(2):
+                    if not rt.enqueue('canary',f'runtime-{slot}',slot+1):raise RuntimeError('Canary enqueue failed')
+                workers=[start(f'canary-{slot}',['codex_worker.py','--managed','--slot',str(slot),'--once']) for slot in range(2)]
+                for worker in workers:
+                    if worker.wait(timeout=660):raise RuntimeError('Canary worker failed')
                 with rt.db() as db:
-                    row=db.execute('SELECT status FROM tasks WHERE kind="canary"').fetchone()
-                if not row or row[0]!='done':raise RuntimeError('Cloud canary failed')
+                    rows=db.execute('SELECT status FROM tasks WHERE kind="canary"').fetchall()
+                if len(rows)!=2 or any(r[0]!='done' for r in rows):raise RuntimeError('Cloud canary failed; inspect encrypted evidence')
             print('Cloud '+mode+' passed; no upstream publication.',flush=True)
             return
-        worker=start('worker',['codex_worker.py'])
+        workers=[start(f'worker-{slot}',['codex_worker.py','--managed','--slot',str(slot)]) for slot in range(rt.config()['workers'])]
         detectors=[start('watch',['local_service.py','watch']),start('prwatch',['local_service.py','prwatch'])]
         deadline=time.monotonic()+seconds
         while time.monotonic()<deadline and cloud_enabled():
@@ -159,16 +200,19 @@ def run(mode,seconds):
             cloud_store.save()
             previous=rotate_auth(previous)
             s=rt.status()
-            print(json.dumps({'at':time.time(),'ready':s['ready'],'tasks':s['tasks'],'calls':s['calls_last_hour']}),flush=True)
+            rt.setmeta('throughput_24h',{'at':time.time(),'tasks':s['throughput_24h']})
+            print(json.dumps({'at':time.time(),'ready':s['ready'],'tasks':s['tasks'],'calls':s['calls_last_hour'],
+                'active':s['active'],'dispatch_budget':s['dispatch_budget'],
+                'throughput_24h':s['throughput_24h']}),flush=True)
             time.sleep(60)
         # Stop admitting work, allow the active task to complete, then hand over.
         (rt.DATA/'drain').touch()
         for child in detectors:stop(child)
-        drain_deadline=time.monotonic()+5400
-        while worker.poll() is None and time.monotonic()<drain_deadline:
+        drain_deadline=time.monotonic()+6600
+        while any(w.poll() is None for w in workers) and time.monotonic()<drain_deadline:
             cloud_store.save();previous=rotate_auth(previous);time.sleep(30)
-        if worker.poll() is None:raise RuntimeError('Handover deadline reached; inspect interrupted task')
-        if worker.returncode:raise RuntimeError('Worker failed during handover')
+        if any(w.poll() is None for w in workers):raise RuntimeError('Handover deadline reached; inspect interrupted task')
+        if any(w.returncode for w in workers):raise RuntimeError('Worker failed during handover')
         cloud_store.save()
         if cloud_enabled():
             with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('continue=true\n')

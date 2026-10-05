@@ -59,7 +59,7 @@ def checkpoint():
         except Exception as error:
             raise PersistenceError('Cloud checkpoint unavailable; keep task state for recovery') from error
 
-def ready(*, require_worker=True):
+def ready(*, require_worker=True, check_budget=True):
     cfg = config()
     if not cfg.get('enabled') or not local():
         return False, 'runtime disabled'
@@ -73,22 +73,68 @@ def ready(*, require_worker=True):
         return False, 'worker heartbeat stale'
     with db() as c:
         spent = c.execute("SELECT count(*) FROM calls WHERE kind='codex' AND at>?", (time.time()-18000,)).fetchone()[0]
-    if spent >= cfg.get('codex_sessions_per_5h', 45):
+    if check_budget and spent >= cfg.get('codex_sessions_per_5h', 45):
         return False, 'Codex session budget reached; judge paused too'
     return True, ''
 
-def room(kind='fix'):
+def _meta(c, key, default=None):
+    row=c.execute('SELECT value FROM meta WHERE key=?',(key,)).fetchone()
+    return json.loads(row[0]) if row else default
+
+def _putmeta(c, key, value):
+    c.execute('INSERT OR REPLACE INTO meta VALUES (?,?)',(key,json.dumps(value)))
+
+def task_state(task_id, **changes):
+    with db() as c:
+        c.execute('BEGIN IMMEDIATE')
+        state=_meta(c,f'task:{task_id}',{})
+        if changes:
+            state.update(changes)
+            _putmeta(c,f'task:{task_id}',state)
+    return state
+
+def repo_key(repo):
+    import scan
+    return next((k for k,v in scan.REPOS.items()
+                 if repo in (k,v.get('implements_in') or v['upstream'])),repo)
+
+def _room(c, kind, repo=None):
+    rows=c.execute("SELECT kind,repo FROM tasks WHERE status IN ('queued','running','retry_wait')").fetchall()
+    cfg=config();limit=cfg.get('max_pending',8)
+    reserve=cfg.get('response_slots',1) if kind=='fix' else cfg.get('fix_slots',1)
+    if len(rows)>=limit or sum(r['kind']==kind for r in rows)>=max(1,limit-reserve):
+        return False,'queue full'
+    if repo and sum(repo_key(r['repo'])==repo_key(repo) for r in rows)>=cfg.get('max_pending_per_repo',limit):
+        return False,'repository pending share reached'
+    return True,''
+
+def room(kind='fix', repo=None):
     ok, why = ready()
     if not ok:
         return ok, why
     with db() as c:
-        n = c.execute("SELECT count(*) FROM tasks WHERE status IN ('queued','running')").fetchone()[0]
-    limit = config().get('max_pending', 8)
-    # Reserve one admission slot for feedback; priority alone cannot help a
-    # maintainer response if a queue full of new issues prevents admission.
-    if kind == 'fix':
-        limit = max(1, limit - config().get('response_slots', 1))
-    return (n < limit, 'queue full' if n >= limit else '')
+        return _room(c,kind,repo)
+
+def _dispatch_budget(c):
+    today=time.strftime('%Y-%m-%d',time.gmtime())
+    budget=_meta(c,'dispatch_budget')
+    if budget is None:
+        # Preserve spending made by the old admission-time accounting at cutover.
+        try:budget=json.loads((ROOT/'state/dispatch-budget.json').read_text())
+        except (OSError,ValueError):budget={}
+    if budget.get('date')!=today:budget={'date':today,'used':{}}
+    return budget
+
+def dispatch_headroom(key):
+    import watch,scan
+    with db() as c:
+        budget=_dispatch_budget(c)
+        if budget['used'].get(key,0)>=watch.DISPATCH_BUDGET.get(key,watch.DEFAULT_BUDGET):
+            return False,'daily viable-task budget reached'
+        starts=_meta(c,'fix_sessions',[])
+    if sum(s['repo']==key and s['at']>time.time()-18000 for s in starts)>=scan.session_share(key):
+        return False,'repository five-hour session share reached'
+    return True,''
 
 def publication_holds():
     """Temporarily stop new fixes where GitHub explicitly denied PR creation."""
@@ -105,6 +151,7 @@ def enqueue(kind, repo, number, note='', *, only_new=False):
         return False
     if kind=='fix' and publication_holds().get(repo,0)>time.time():
         return False
+    if kind=='fix' and not dispatch_headroom(repo)[0]:return False
     # Fixes are unique forever; responses are unique per feedback event set.
     digest = hashlib.sha256(note.encode()).hexdigest()[:20] if kind == 'respond' else ''
     identity = f'{kind}:{repo}:{int(number)}:{digest}'
@@ -114,17 +161,14 @@ def enqueue(kind, repo, number, note='', *, only_new=False):
         if existing:
             if only_new:return False
             return existing[0] in ('queued', 'running', 'done', 'skipped', 'blocked')
-        n = c.execute("SELECT count(*) FROM tasks WHERE status IN ('queued','running')").fetchone()[0]
-        limit = config().get('max_pending', 8)
-        if kind == 'fix':limit = max(1, limit-config().get('response_slots', 1))
-        if n >= limit:
+        if not _room(c,kind,repo)[0]:
             return False
         now = time.time()
         c.execute('INSERT INTO tasks(identity,kind,repo,number,note,status,created,updated) VALUES (?,?,?,?,?,?,?,?)',
                   (identity, kind, repo, int(number), note, 'queued', now, now))
     return True
 
-def reserve_call(kind):
+def reserve_call(kind, *, task=None, phase=None):
     ok, why = ready()
     if not ok:
         return False, why
@@ -135,6 +179,23 @@ def reserve_call(kind):
         n = c.execute('SELECT count(*) FROM calls WHERE kind=? AND at>?', (kind, time.time()-seconds)).fetchone()[0]
         if n >= limit:
             return False, f'{kind} call budget reached ({limit})'
+        if task and task['kind']=='fix' and phase=='generation':
+            import watch,scan
+            key=task['repo'];state=_meta(c,f"task:{task['id']}",{})
+            budget=_dispatch_budget(c)
+            starts=[s for s in _meta(c,'fix_sessions',[]) if s['at']>time.time()-18000]
+            if not state.get('generation_started'):
+                if sum(s['repo']==key for s in starts)>=scan.session_share(key):
+                    return False,'repository five-hour session share reached'
+                if state.get('dispatch_paid_date')!=budget['date']:
+                    cap=watch.DISPATCH_BUDGET.get(key,watch.DEFAULT_BUDGET)
+                    if budget['used'].get(key,0)>=cap:return False,'daily viable-task budget reached'
+                    budget['used'][key]=budget['used'].get(key,0)+1
+                starts.append({'repo':key,'task':task['id'],'at':time.time()})
+                state.update(generation_started=time.time(),dispatch_paid_date=budget['date'])
+                _putmeta(c,f"task:{task['id']}",state)
+                _putmeta(c,'fix_sessions',starts)
+                _putmeta(c,'dispatch_budget',budget)
         c.execute('INSERT INTO calls VALUES (?,?)', (time.time(), kind))
         c.execute('DELETE FROM calls WHERE at<?', (time.time()-86400*7,))
     checkpoint()  # Persist spending BEFORE a cloud model request.
@@ -170,8 +231,16 @@ def status():
         counts = dict(c.execute('SELECT status,count(*) FROM tasks GROUP BY status').fetchall())
         recent = [dict(r) for r in c.execute('SELECT id,kind,repo,number,status,result,updated FROM tasks ORDER BY id DESC LIMIT 8')]
         calls = dict(c.execute('SELECT kind,count(*) FROM calls WHERE at>? GROUP BY kind', (time.time()-3600,)).fetchall())
+        budget=_dispatch_budget(c)
+        active=[dict(r) for r in c.execute("SELECT id,repo,number,kind,status FROM tasks WHERE status IN ('running','queued','retry_wait')")]
+        for task in active:task['execution']=_meta(c,f"task:{task['id']}",{})
+        throughput={kind:dict(c.execute('SELECT status,count(*) FROM tasks WHERE kind=? AND updated>? GROUP BY status',
+                    (kind,time.time()-86400)).fetchall()) for kind in ('fix','respond')}
+        followups=[{'key':r['key'],**json.loads(r['value'])} for r in c.execute(
+            "SELECT key,value FROM meta WHERE key LIKE 'coordination:%' OR key LIKE 'followup:%'")]
     return {'config': config(), 'ready': ready(), 'health': getmeta('health'),
             'pause': getmeta('pause'), 'tasks': counts, 'recent': recent, 'calls_last_hour': calls,
+            'active':active,'dispatch_budget':budget,'throughput_24h':throughput,'human_followups':followups,
             'worker_heartbeat': getmeta('worker_heartbeat'), 'detector_heartbeat': getmeta('detector_heartbeat')}
 
 if __name__ == '__main__':

@@ -17,12 +17,14 @@ import cloud_runtime
 import cloud_store
 import cloud_login
 import base64
+import work_evidence
 
 class RuntimeTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory()
         self.root=Path(self.temp.name)
-        self.patches=[patch.object(rt,'DATA',self.root/'data'),patch.object(rt,'CONFIG',self.root/'runtime.json')]
+        self.patches=[patch.object(rt,'ROOT',self.root),patch.object(rt,'DATA',self.root/'data'),patch.object(rt,'CONFIG',self.root/'runtime.json'),
+                      patch.dict('os.environ',{'OSS_ARTIFACT_KEY':base64.b64encode(b'x'*32).decode()})]
         for p in self.patches:p.start()
         self.cfg={'backend':'codex-local','enabled':True,'max_pending':8,'judge_requests_per_hour':3,'codex_sessions_per_5h':4}
         self.save()
@@ -185,7 +187,8 @@ class RuntimeTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):rt.reserve_call('judge')
         with rt.db() as db:self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],1)
     def test_network_error_does_not_pause_all_repos_for_half_hour(self):
-        self.assertEqual(worker.failure_cooldown('Recv failure: Connection reset by peer'),60)
+        self.assertEqual(worker.failure_cooldown('Recv failure: Connection reset by peer'),0)
+        self.assertEqual(worker.failure_cooldown(subprocess.TimeoutExpired(['git','fetch'],300)),0)
         self.assertEqual(worker.failure_cooldown('403 auth unavailable'),1800)
         self.assertEqual(worker.failure_cooldown('quota exceeded'),1800)
     def test_failed_claim_query_does_not_mean_unclaimed(self):
@@ -208,7 +211,7 @@ class RuntimeTests(unittest.TestCase):
                        {'verdict':'APPROVE','reason':'ok'},
                        {'verdict':'maybe','reason':'ok','tests_verified':True}]:
             with self.assertRaises(RuntimeError):worker.validate_result(review,worker.REVIEW_SCHEMA)
-        valid={'verdict':'APPROVE','reason':'tests ran','tests_verified':True}
+        valid={'verdict':'APPROVE','reason':'tests ran','tests_verified':True,'repairable':False}
         self.assertEqual(worker.validate_result(valid,worker.REVIEW_SCHEMA),valid)
     def test_health_probe_tolerates_sol_punctuation_but_not_other_text(self):
         for value in ['OSS_CODEX_READY','OSS_CODEX_READY.']:
@@ -244,7 +247,9 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(env['OSS_TASK_CACHE'],str(cache))
         self.assertEqual(env['COREPACK_HOME'],str(cache/'corepack'))
         self.assertEqual(env['CARGO_HOME'],str(cache/'cargo'))
+        self.assertEqual(env['RUSTUP_HOME'],str(cache/'rustup'))
         self.assertNotIn('CODEX_AUTH_JSON',env)
+        self.assertNotIn('OSS_ARTIFACT_KEY',env)
     def test_transient_read_retries_but_publish_does_not(self):
         fail=Mock(returncode=1,stderr='TLS handshake timeout',stdout='')
         ok=Mock(returncode=0,stderr='',stdout='{}')

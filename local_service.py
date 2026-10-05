@@ -25,7 +25,9 @@ def main():
             rt.setmeta(args.role+'_heartbeat',time.time())
             if args.role=='watch':rt.setmeta('detector_heartbeat',time.time())
             try:
-                if rt.room('respond' if args.role=='prwatch' else 'fix')[0]:
+                # Discovery must continue while workers are busy. Admission
+                # remains separately bounded by room()/enqueue().
+                if rt.ready()[0]:
                     if args.role=='watch':
                         new,accepted=watch.sweep(keys,seen,5,bootstrap)
                         watch.save_seen(seen);bootstrap=False
@@ -37,7 +39,7 @@ def main():
                             last_drain=time.time()
                         # One repo at a time, every ~120s: reconciliation covers
                         # all active repos without a second queue-file writer.
-                        if time.time()-last_scan>120 and rt.room()[0]:
+                        if time.time()-last_scan>120:
                             key=keys[scan_index%len(keys)];scan_index+=1
                             res=scan.scan_repo(key,30,15)
                             if not res.get('partial'):

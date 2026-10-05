@@ -25,7 +25,7 @@ jobs:
   runtime:
     if: ${{ (github.event_name == 'workflow_dispatch' && inputs.mode != 'live') || vars.CODEX_CLOUD_ENABLED == 'true' }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 355
+    timeout-minutes: 360
     env:
       CODEX_HOME: /home/runner/codex-cloud-auth
       OSS_CLOUD_STATE_DIR: /home/runner/codex-cloud-state
@@ -48,7 +48,7 @@ jobs:
           bwrap --unshare-user --uid 0 --gid 0 --ro-bind / / -- /usr/bin/true
           corepack enable
           npm install --global @openai/codex@0.159.3
-          python -m pip install PyYAML==6.0.3 'aiohttp>=3.11.8,<4' 'pytest-aiohttp>=1,<2' 'pytest-asyncio>=1,<2' 'websocket-client>=1,<2'
+          python -m pip install PyYAML==6.0.3 cryptography==48.0.1 'aiohttp>=3.11.8,<4' 'pytest-aiohttp>=1,<2' 'pytest-asyncio>=1,<2' 'websocket-client>=1,<2'
           ./verify.sh
       - name: Install dedicated subscription login
         env:
@@ -71,9 +71,39 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT }}
           OSS_READONLY_GH_TOKEN: ${{ github.token }}
           QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
+          OSS_ARTIFACT_KEY: ${{ secrets.OSS_ARTIFACT_KEY }}
           MODE: ${{ inputs.mode || 'live' }}
           RUN_SECONDS: ${{ inputs.run_seconds || '14400' }}
         run: python -u cloud_runtime.py "$MODE" --seconds "$RUN_SECONDS"
+      - name: Preserve encrypted recovery evidence
+        if: always()
+        env:
+          OSS_ARTIFACT_KEY: ${{ secrets.OSS_ARTIFACT_KEY }}
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import runtime as rt
+          import work_evidence as evidence
+          dest=Path('.runtime/encrypted-artifacts');dest.mkdir(parents=True,exist_ok=True)
+          with rt.db() as db:
+              ids=[r[0] for r in db.execute('SELECT id FROM tasks')]
+          for task_id in ids:
+              if rt.task_state(task_id).get('folder'):
+                  rt.task_state(task_id,terminal=True)
+                  evidence.capture(task_id)
+          for path in (rt.DATA/'evidence').glob('*.json'):
+              if not (rt.DATA/'jobs'/path.stem.split('-')[0]).exists():continue
+              evidence.atomic(dest/(path.name+'.enc'),evidence.encrypt(path.read_bytes()))
+          for path in rt.DATA.glob('*.log'):
+              evidence.atomic(dest/(path.name+'.enc'),evidence.encrypt(path.read_bytes()))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codex-recovery-${{ github.run_id }}
+          path: .runtime/encrypted-artifacts/*.enc
+          include-hidden-files: true
+          retention-days: 14
       - name: Continue cloud chain
         if: steps.runtime.outputs.continue == 'true'
         env:

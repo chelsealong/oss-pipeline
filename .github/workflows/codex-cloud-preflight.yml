@@ -31,7 +31,7 @@ jobs:
           sudo apt-get install --no-install-recommends -y ripgrep
           corepack enable
           npm install --global @openai/codex@0.159.3
-          python -m pip install PyYAML==6.0.3 'aiohttp>=3.11.8,<4' 'pytest-aiohttp>=1,<2' 'pytest-asyncio>=1,<2' 'websocket-client>=1,<2'
+          python -m pip install PyYAML==6.0.3 cryptography==48.0.1 'aiohttp>=3.11.8,<4' 'pytest-aiohttp>=1,<2' 'pytest-asyncio>=1,<2' 'websocket-client>=1,<2'
       - name: Check portable runtime and offline regressions
         run: |
           codex --version
@@ -48,16 +48,21 @@ jobs:
           QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
           CODEX_AUTH_JSON: ${{ secrets.CODEX_AUTH_JSON }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OSS_ARTIFACT_KEY: ${{ secrets.OSS_ARTIFACT_KEY }}
         run: |
           python - <<'PY'
           import os
           from pathlib import Path
           rows = ['## Codex cloud preflight', '',
-                  'Offline validation only. Production remains disabled.', '']
+                  'Read-only validation; this workflow does not change production.', '']
           for name in ['GH_TOKEN','QWEN_API_KEY','CODEX_AUTH_JSON','OPENAI_API_KEY']:
               rows.append(f'- {name}: '+('configured' if os.environ.get(name) else 'not configured'))
           Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(rows)+'\n')
           if not os.environ.get('GH_TOKEN'):
               raise SystemExit('Missing GH_PAT')
+          import work_evidence
+          assert work_evidence.decrypt(work_evidence.encrypt(b'preflight'))==b'preflight'
+          rows.append('- Encrypted recovery key: verified')
+          Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(rows)+'\n')
           PY
           gh api user --jq '"GitHub authentication verified for: " + .login'

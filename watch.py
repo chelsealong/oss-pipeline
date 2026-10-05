@@ -342,7 +342,9 @@ def refund_quota_runs() -> int:
 
 def budget_allows(key: str) -> bool:
     """Consume one unit of today's dispatch budget for `key`, if any is left."""
-    if not rt.local() and quota_paused():
+    if rt.local():
+        return scan.session_headroom(key)[0]
+    if quota_paused():
         log(f"  [{key}] Claude quota exhausted — not dispatching")
         return False
 
@@ -394,6 +396,7 @@ def budget_charge(key: str) -> None:
     trigger_fix called it — so every drained candidate was charged twice, and
     a failed `gh workflow run` was charged anyway.
     """
+    if rt.local():return  # The controller charges atomically before generation.
     from datetime import datetime, timezone
     today = datetime.now(timezone.utc).date().isoformat()
     try:

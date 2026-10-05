@@ -9,8 +9,12 @@ services are unloaded and the local config is disabled. `state/runtime.json`
 is deployment-only; missing,
 invalid or disabled configuration fails closed.
 
-`codex_worker.py` is the single executor, with isolated checkouts, durable
-SQLite tasks, separate generation/review phases and controller-only publication.
+`codex_host.py` owns one authenticated Codex app-server process. Two bounded
+`codex_worker.py` controllers use separate ephemeral threads and isolated
+checkouts, durable SQLite tasks, separate generation/review phases and
+controller-only publication. Never run two independent CLI authentication
+owners on the same refreshable login. Task claims and budgets are atomic;
+at most one task per upstream repository runs at a time.
 `local_service.py watch` owns issue detection and periodic reconciliation;
 `local_service.py prwatch` handles PR feedback. The legacy Claude GitHub Actions
 workflows remain disabled and cloud `state/watcher.json` stays off. Never start
@@ -36,8 +40,10 @@ interactive IDE's model. Continue using the ChatGPT subscription, not API billin
 
 Qwen/DashScope is used only for the existing cached claim/feedback judge. Every
 actual request is capped (including fallback requests) and requires a healthy
-worker. Authentication failures, task errors and unavailable worker heartbeat
-pause model calls. No automatic claim/reply comments or PR closures: record these
+worker. Authentication/quota failures and unavailable worker heartbeat pause
+model calls. Ordinary read-network failures retry only the affected task, at
+most three attempts; publication ambiguity is never automatically replayed.
+No automatic claim/reply comments or PR closures: record these
 for human follow-up. Code fixes may create/update PRs after independent review,
 within upstream policy and the existing repository caps.
 
@@ -55,6 +61,33 @@ during a read-only clone, before generation, and remains held as an error.
 Four cloud canary coding sessions were added to the retained spending ledger.
 The live queue and budgets are now in GitHub branch `codex-state`; the local DB
 is a historical snapshot and must not be used as the current queue.
+
+## Recovery and validation
+
+The 2026-10-05 repair charges repository dispatch budgets only when an eligible
+task starts generation, not for precheck skips. Existing daily PR caps and
+repository shares remain in force. Feedback event identity includes the PR
+head SHA, so unchanged feedback is not regenerated daily. Fix and response
+queues reserve space for each other and rotate across repositories.
+
+Validation can install ignored dependencies inside the checkout and use the
+task's writable Cargo/Rustup, Node and Python caches. Dependency manifests and
+lockfiles cannot be published as incidental changes. Documentation fixes use
+appropriate documentation checks. Baseline failure evidence cannot waive
+mandatory upstream checks. A repairable review rejection permits one correction
+followed by a fresh independent review; publication still requires approval.
+
+Per-attempt patches, untracked source files and bounded logs are encrypted with
+`OSS_ARTIFACT_KEY` before entering the public `codex-state` branch or Actions
+artifacts. Preserve this key; rotating it without re-encrypting history destroys
+recovery. Never upload plaintext agent logs, auth caches or tool caches.
+Actions recovery artifacts expire after 14 days; state-branch evidence persists.
+
+Explicit maintainer permission can satisfy ADK coordination. Otherwise record
+the issue URL and proposed request for human follow-up; never post automatically.
+Check `runtime.status()` for active phases, 24-hour outcomes and human follow-ups.
+Run `verify_codex.py` with PyYAML and cryptography, then the cloud preflight and
+two concurrent canaries before restoring production after runtime changes.
 
 ## Locations and sources of truth
 

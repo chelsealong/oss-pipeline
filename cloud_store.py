@@ -8,6 +8,7 @@ import subprocess
 import time
 import cloud_state
 import runtime as rt
+import work_evidence
 
 def command(args, cwd):
     p=subprocess.run(args,cwd=cwd,capture_output=True,text=True,timeout=90)
@@ -26,6 +27,7 @@ def save():
     with (rt.DATA/'cloud-checkpoint.lock').open('w') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX)
         cloud_state.export_state(store/'checkpoint.json')
+        work_evidence.save_to(store)
         for directory in ('state','queue'):
             (store/directory).mkdir(exist_ok=True)
             for path in (rt.ROOT/directory).glob('*.json'):
@@ -34,7 +36,7 @@ def save():
                     raw=path.read_text();json.loads(raw)
                 except (OSError,ValueError):continue  # another process is writing
                 (store/directory/path.name).write_text(raw)
-        command(['git','add','checkpoint.json','state','queue'],store)
+        command(['git','add','checkpoint.json','state','queue','evidence'],store)
         if command(['git','diff','--cached','--name-only'],store):
             command(['git','commit','-m','Checkpoint Codex runtime'],store)
         # Retry an ambiguous push by sending the SAME commit, never by
@@ -50,6 +52,7 @@ def save():
 def restore():
     store=Path(os.environ['OSS_CLOUD_STATE_DIR'])
     cloud_state.import_state(store/'checkpoint.json')
+    work_evidence.restore_from(store)
     for directory in ('state','queue'):
         (rt.ROOT/directory).mkdir(exist_ok=True)
         for path in (store/directory).glob('*.json'):

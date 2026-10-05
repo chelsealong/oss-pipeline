@@ -770,7 +770,8 @@ def feedback_items(pr: dict) -> list[dict]:
         # AutoGPT#13752's CodeQL alerts and openclaw#116260's check-lint were
         # both retired that way — dispatched once, unfixed, never looked at
         # again. One retry per day, still bounded by the check budget.
-        items.append({"id": f"check:{chk['sha']}:{chk['name']}:{_utc_day()}",
+        suffix='' if rt.local() else ':'+_utc_day()
+        items.append({"id": f"check:{chk['sha']}:{chk['name']}"+suffix,
                       "author": "ci", "when": "", "kind": "check",
                       "body": f"Check `{chk['name']}` is failing on commit {chk['sha']}.",
                       "ours": chk["ours"]})
@@ -813,7 +814,9 @@ def standing_item(pr: dict) -> dict | None:
     hit = next((s for s in STANDING_OBLIGATION if any(s in l for l in labels)), None)
     if not hit:
         return None
-    return {"id": f"standing:{hit}:{_utc_day()}",
+    commit=((pr.get('commits') or {}).get('nodes') or [{}])[0].get('commit',{})
+    identity=(commit.get('oid') or 'unknown')[:12] if rt.local() else _utc_day()
+    return {"id": f"standing:{hit}:{identity}",
             "author": "ci", "when": "", "kind": "check", "ours": True,
             "body": f"This PR carries a label meaning it is waiting on us: {hit!r}. "
                     "No new comment has arrived — the request is the standing one. "
@@ -917,6 +920,9 @@ def one_pass(seen: dict) -> int:
             break
         repo, num = pr["_repo"], pr["number"]
         key = f"{repo}#{num}"
+        if rt.local():
+            cfg=scan.REPOS.get(rt.repo_key(repo),{})
+            if cfg.get('paused') or not rt.room('respond',repo)[0]:continue
 
         # If someone else pushed the newest commit, they have taken the branch
         # over — and that is the single best sign a PR is about to land, which
@@ -943,6 +949,9 @@ def one_pass(seen: dict) -> int:
         stale, why = past_merge_window(pr)
         rec = seen.setdefault(key, {"ids": [], "responses": {}})
         known = set(rec["ids"])
+        if rt.local():
+            # Existing daily keys must not trigger a fresh repair at migration.
+            known.update(re.sub(r':\d{4}-\d{2}-\d{2}$','',item) for item in rec['ids'] if item.startswith('check:'))
         if stale:
             if (mt := maintainer_reopened(pr, known)):
                 log(f"  [{key}] {why}, but maintainer {mt} wrote recently — answering")
@@ -972,6 +981,11 @@ def one_pass(seen: dict) -> int:
         rec["ids"] = sorted(known)
 
         if not fresh:
+            continue
+        if rt.local() and pr.get('_is_issue'):
+            rt.setmeta('followup:'+key,{'status':'needs_human','url':f'https://github.com/{repo}/issues/{num}',
+                'events':fresh,'reason':'Issue coordination requires a human response; no message sent.'})
+            rec['ids']=sorted(known|{i['id'] for i in fresh})
             continue
 
         # A failing check of ours gets its own small budget rather than

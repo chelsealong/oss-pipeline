@@ -816,7 +816,10 @@ def session_headroom(key: str | None = None) -> tuple[bool, str]:
     With `key`, the repository's own share of the window is checked as well.
     """
     if rt.local():
-        return rt.room()
+        if key:
+            ok,why=rt.dispatch_headroom(key)
+            if not ok:return ok,why
+        return rt.room(repo=key)
     if key:
         mine = _sessions_for(key)
         share = session_share(key)
@@ -957,6 +960,31 @@ def reconcile_sessions() -> int:
     return dropped
 
 
+def coordination_allowed(upstream, issue):
+    """Accept explicit invitations; retain a concrete draft when coordination is needed."""
+    labels={x['name'] for x in issue.get('labels',[])}
+    assigned={x.get('login','').lower() for x in issue.get('assignees',[])}
+    name=f"coordination:{upstream}#{issue['number']}"
+    if 'chelsealong' in assigned or labels & {'help wanted','good first issue'}:
+        rt.setmeta(name,{'status':'approved','source':'current assignment/invitation label'})
+        return True
+    # A bare acknowledgement, arbitrary user's claim, or old local announcement
+    # is not maintainer permission. Re-read current comments on every eligibility check.
+    if issue.get('comments',0):
+        pages=json.loads(gh(['api','--paginate','--slurp',f"repos/{upstream}/issues/{issue['number']}/comments"]))
+        decision=None
+        for comment in (c for page in pages for c in page):
+            body=comment.get('body','')
+            if comment.get('author_association') not in ('MEMBER','OWNER','COLLABORATOR') or not re.search(r'@chelsealong\b',body,re.I):continue
+            if re.search(r"do not|don't|please wait|hold off|not approved|someone else|already working",body,re.I):decision=False
+            elif re.search(r'go ahead|please proceed|feel free to (?:work|take)|you (?:can|may) (?:work|take)|assigned (?:this )?to you',body,re.I):decision=comment
+        if isinstance(decision,dict):
+            rt.setmeta(name,{'status':'approved','source':decision.get('html_url'),'comment_id':decision['id']})
+            return True
+    rt.setmeta(name,{'status':'needs_human','url':f"https://github.com/{upstream}/issues/{issue['number']}",
+        'draft':'May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.'})
+    return False
+
 def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
     # First, and before any API call. A paused repo is one we have established
     # cannot accept our work — spending a scan on it, let alone a session, is
@@ -969,7 +997,7 @@ def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
     assignees = {a.get('login','').lower() for a in issue.get('assignees',[]) if isinstance(a,dict)}
     if not cfg.get('ignore_assignees') and assignees-{'chelsealong'}:
         return False, 'assigned to another contributor', {}
-    if rt.local() and cfg.get('announce_before_work') and 'chelsealong' not in assignees and not labels & {'help wanted','good first issue'}:
+    if rt.local() and cfg.get('announce_before_work') and not coordination_allowed(upstream,issue):
         return False, 'upstream coordination required', {}
 
     if labels & cfg.get("exclude_labels", set()):
