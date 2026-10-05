@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791167053.355086,
+  "saved_at": 1791167115.5622602,
   "tables": {
     "tasks": [
       {
@@ -5072,6 +5072,19 @@
         "updated": 1791167012.6058629,
         "result": "",
         "attempts": 0
+      },
+      {
+        "id": 391,
+        "identity": "fix:comfyui:16787:",
+        "kind": "fix",
+        "repo": "comfyui",
+        "number": 16787,
+        "note": "",
+        "status": "queued",
+        "created": 1791167067.060218,
+        "updated": 1791167067.060218,
+        "result": "",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -5098,6 +5111,78 @@
       {
         "key": "accounting_v2",
         "value": "1791162707.1603844"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"comfyui\", \"task\": 389, \"at\": 1791162731.2977772}, {\"repo\": \"openclaw\", \"task\": 384, \"at\": 1791162762.8329782}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-10-05\", \"used\": {\"hermes\": 6, \"openclaw\": 3, \"comfyui\": 1}}"
+      },
+      {
+        "key": "task:389",
+        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"started\": 1791162724.0119352, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/389/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"d707c97a7d557b147cabf5831f2ed9e404da2afb\", \"generation_started\": 1791162731.297778, \"phase_started\": 1791162732.526798, \"finished\": 1791162822.8530498}"
+      },
+      {
+        "key": "task:384",
+        "value": "{\"started\": 1791162711.5923889, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791165467.120711, \"folder\": \"jobs/384/attempt-2\", \"attempt\": 2, \"phase\": \"retry_wait\", \"base\": \"a2affcf76e937a769550b576c67cb6934642766c\", \"generation_started\": 1791162762.832979, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791162764.4181688, \"finished\": 1791165167.1235957}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791166985.661741, \"source\": \"authenticated probe\"}"
+      },
+      {
+        "key": "pause",
+        "value": "{}"
+      },
+      {
+        "key": "task:383",
+        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"publication_wait\", \"publication_hold_until\": 1791247380.388767}"
+      },
+      {
+        "key": "task:385",
+        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"publication_wait\", \"publication_hold_until\": 1791247380.388767}"
+      },
+      {
+        "key": "task:386",
+        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"publication_wait\", \"publication_hold_until\": 1791247380.388767}"
+      },
+      {
+        "key": "task:387",
+        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"publication_wait\", \"publication_hold_until\": 1791247380.388767}"
+      },
+      {
+        "key": "task:325",
+        "value": "{\"started\": 1791166985.6889193, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791166988.3492832}"
+      },
+      {
+        "key": "cloud_validation_retry_20261005",
+        "value": "[266, 316, 325, 359, 384]"
+      },
+      {
+        "key": "task:359",
+        "value": "{\"started\": 1791166999.5245473, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791167001.7508438}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791166999.524378, \"comfyui\": 1791162724.0117865, \"hermes\": 1791166995.1719565, \"langfuse\": 1791167012.9243207}}"
+      },
+      {
+        "key": "task:266",
+        "value": "{\"started\": 1791166995.1721666, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/266/attempt-3\", \"attempt\": 3, \"phase\": \"generation\", \"base\": \"d0d89cc1b5b9388683f0f90eeb3a1be5af12e193\", \"phase_started\": 1791167016.3880084}"
+      },
+      {
+        "key": "task:316",
+        "value": "{\"started\": 1791167012.9244902, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/316/attempt-3\", \"attempt\": 3, \"phase\": \"generation\", \"base\": \"4a2e770a596ea348d75e98e63eb4b178bb0dd003\", \"phase_started\": 1791167023.8437712}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791167055.3892434, \"tasks\": {\"fix\": {\"blocked\": 6, \"done\": 1, \"error\": 3, \"publication_wait\": 4, \"queued\": 2, \"retry_wait\": 1, \"skipped\": 90}, \"respond\": {\"blocked\": 17, \"running\": 2, \"skipped\": 4}}}"
+      },
+      {
+        "key": "prwatch_heartbeat",
+        "value": "1791167069.9633543"
       },
       {
         "key": "coordination:google/adk-python#7405",
@@ -5152,88 +5237,16 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7369\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"comfyui\", \"task\": 389, \"at\": 1791162731.2977772}, {\"repo\": \"openclaw\", \"task\": 384, \"at\": 1791162762.8329782}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-10-05\", \"used\": {\"hermes\": 6, \"openclaw\": 3, \"comfyui\": 1}}"
-      },
-      {
-        "key": "task:389",
-        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"started\": 1791162724.0119352, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/389/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"d707c97a7d557b147cabf5831f2ed9e404da2afb\", \"generation_started\": 1791162731.297778, \"phase_started\": 1791162732.526798, \"finished\": 1791162822.8530498}"
-      },
-      {
-        "key": "task:384",
-        "value": "{\"started\": 1791162711.5923889, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791165467.120711, \"folder\": \"jobs/384/attempt-2\", \"attempt\": 2, \"phase\": \"retry_wait\", \"base\": \"a2affcf76e937a769550b576c67cb6934642766c\", \"generation_started\": 1791162762.832979, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791162764.4181688, \"finished\": 1791165167.1235957}"
-      },
-      {
-        "key": "prwatch_heartbeat",
-        "value": "1791166769.9612355"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791166985.661741, \"source\": \"authenticated probe\"}"
-      },
-      {
-        "key": "pause",
-        "value": "{}"
-      },
-      {
-        "key": "task:383",
-        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"publication_wait\", \"publication_hold_until\": 1791247380.388767}"
-      },
-      {
-        "key": "task:385",
-        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"publication_wait\", \"publication_hold_until\": 1791247380.388767}"
-      },
-      {
-        "key": "task:386",
-        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"publication_wait\", \"publication_hold_until\": 1791247380.388767}"
-      },
-      {
-        "key": "task:387",
-        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"publication_wait\", \"publication_hold_until\": 1791247380.388767}"
-      },
-      {
         "key": "watch_heartbeat",
-        "value": "1791166986.1268444"
+        "value": "1791167110.5594935"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791166986.128617"
-      },
-      {
-        "key": "task:325",
-        "value": "{\"started\": 1791166985.6889193, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791166988.3492832}"
-      },
-      {
-        "key": "cloud_validation_retry_20261005",
-        "value": "[266, 316, 325, 359, 384]"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791166993.087899, \"tasks\": {\"fix\": {\"blocked\": 6, \"done\": 1, \"error\": 3, \"publication_wait\": 4, \"queued\": 2, \"retry_wait\": 1, \"skipped\": 89}, \"respond\": {\"blocked\": 17, \"queued\": 2, \"skipped\": 4}}}"
-      },
-      {
-        "key": "task:359",
-        "value": "{\"started\": 1791166999.5245473, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791167001.7508438}"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791166999.524378, \"comfyui\": 1791162724.0117865, \"hermes\": 1791166995.1719565, \"langfuse\": 1791167012.9243207}}"
-      },
-      {
-        "key": "task:266",
-        "value": "{\"started\": 1791166995.1721666, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/266/attempt-3\", \"attempt\": 3, \"phase\": \"generation\", \"base\": \"d0d89cc1b5b9388683f0f90eeb3a1be5af12e193\", \"phase_started\": 1791167016.3880084}"
-      },
-      {
-        "key": "task:316",
-        "value": "{\"started\": 1791167012.9244902, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/316/attempt-3\", \"attempt\": 3, \"phase\": \"generation\", \"base\": \"4a2e770a596ea348d75e98e63eb4b178bb0dd003\", \"phase_started\": 1791167023.8437712}"
+        "value": "1791167110.561168"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791167040.1504576"
+        "value": "1791167115.166615"
       }
     ],
     "calls": [
