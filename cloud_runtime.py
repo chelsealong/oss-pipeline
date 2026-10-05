@@ -38,6 +38,7 @@ VALIDATION_RETRY = (
     (300,'blocked','/var/tmp/hermes-pytest'),
 )
 REPAIR_RETRY = (
+    (384,'blocked','check:changed rejects TypeScript outside the checkout'),
     (325,'blocked','requires compiler files inside the checkout'),
     (359,'blocked','requires dependencies physically inside the checkout'),
     (316,'blocked','rustup tried to write to a read-only home'),
