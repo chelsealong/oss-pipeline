@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791241662.0317876,
+  "saved_at": 1791241677.5841866,
   "tables": {
     "tasks": [
       {
@@ -5594,28 +5594,12 @@
         "value": "{\"started\": 1791240690.441757, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/409/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"7ef53bc9bc9efca8a7333cca01599039a827db93\", \"phase_started\": 1791240770.1716888, \"finished\": 1791240891.79566}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"langfuse\", \"task\": 404, \"at\": 1791240099.1267076}, {\"repo\": \"openclaw\", \"task\": 393, \"at\": 1791240132.699852}, {\"repo\": \"comfyui\", \"task\": 407, \"at\": 1791240159.3564308}, {\"repo\": \"langfuse\", \"task\": 405, \"at\": 1791240243.8806286}, {\"repo\": \"openclaw\", \"task\": 411, \"at\": 1791240952.5662124}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-10-05\", \"used\": {\"hermes\": 6, \"openclaw\": 5, \"comfyui\": 5, \"langfuse\": 7, \"firecrawl\": 1, \"mem0\": 1}}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791241274.458156"
       },
       {
         "key": "task:411",
         "value": "{\"started\": 1791240894.9131815, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/411/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"9cb1660d94a1c194c23b2099dc14413bf9569e85\", \"generation_started\": 1791240952.566213, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791240955.6185808, \"finished\": 1791241382.9062986}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791241469.2881184"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791241469.2898164"
       },
       {
         "key": "health",
@@ -5630,16 +5614,32 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791241621.0572946, \"comfyui\": 1791240149.3392277, \"hermes\": 1791166995.1719565, \"langfuse\": 1791240232.8154657, \"firecrawl\": 1791221276.1031163, \"mem0\": 1791220511.7877688}}"
       },
       {
-        "key": "task:412",
-        "value": "{\"started\": 1791241621.05749, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/412/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\"}"
-      },
-      {
         "key": "throughput_24h",
         "value": "{\"at\": 1791241645.796508, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"error\": 1, \"interrupted\": 5, \"publication_wait\": 4, \"running\": 1, \"skipped\": 16}, \"respond\": {\"blocked\": 12, \"done\": 1, \"skipped\": 2}}}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791241648.39935"
+        "value": "1791241663.4014916"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791241672.1376812"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791241672.1439373"
+      },
+      {
+        "key": "task:412",
+        "value": "{\"started\": 1791241621.05749, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/412/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"ac3830b776a3d361848c9b9a70aa1755e91dc6e2\", \"generation_started\": 1791241677.5764024, \"dispatch_paid_date\": \"2026-10-05\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"langfuse\", \"task\": 404, \"at\": 1791240099.1267076}, {\"repo\": \"openclaw\", \"task\": 393, \"at\": 1791240132.699852}, {\"repo\": \"comfyui\", \"task\": 407, \"at\": 1791240159.3564308}, {\"repo\": \"langfuse\", \"task\": 405, \"at\": 1791240243.8806286}, {\"repo\": \"openclaw\", \"task\": 411, \"at\": 1791240952.5662124}, {\"repo\": \"openclaw\", \"task\": 412, \"at\": 1791241677.5764015}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-10-05\", \"used\": {\"hermes\": 6, \"openclaw\": 6, \"comfyui\": 5, \"langfuse\": 7, \"firecrawl\": 1, \"mem0\": 1}}"
       }
     ],
     "calls": [
@@ -10534,6 +10534,10 @@
       {
         "at": 1791241662.027153,
         "kind": "judge"
+      },
+      {
+        "at": 1791241677.5765767,
+        "kind": "codex"
       }
     ]
   }
