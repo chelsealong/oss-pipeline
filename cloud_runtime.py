@@ -209,7 +209,10 @@ def run(mode,seconds):
         # Stop admitting work, allow the active task to complete, then hand over.
         (rt.DATA/'drain').touch()
         for child in detectors:stop(child)
-        drain_deadline=time.monotonic()+6600
+        # Generation + review + one correction + re-review may take 100
+        # minutes, before checkout/network overhead. Leave that work time to
+        # finish inside GitHub's six-hour job limit.
+        drain_deadline=time.monotonic()+9000
         while any(w.poll() is None for w in workers) and time.monotonic()<drain_deadline:
             cloud_store.save();previous=rotate_auth(previous);time.sleep(30)
         if any(w.poll() is None for w in workers):raise RuntimeError('Handover deadline reached; inspect interrupted task')
@@ -230,9 +233,9 @@ def run(mode,seconds):
 
 if __name__=='__main__':
     ap=argparse.ArgumentParser();ap.add_argument('mode',choices=['install-auth','probe','canary','live'])
-    ap.add_argument('--seconds',type=int,default=14400);args=ap.parse_args()
+    ap.add_argument('--seconds',type=int,default=10800);args=ap.parse_args()
     if args.mode=='install-auth':install_auth()
     else:
-        if not 60<=args.seconds<=14400:raise SystemExit('seconds must be between 60 and 14400')
+        if not 60<=args.seconds<=10800:raise SystemExit('seconds must be between 60 and 10800')
         signal.signal(signal.SIGTERM,lambda s,f:sys.exit(1))
         run(args.mode,args.seconds)

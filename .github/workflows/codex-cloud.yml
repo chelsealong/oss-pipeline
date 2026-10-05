@@ -8,8 +8,8 @@ on:
         options: [probe, canary, live]
         default: probe
       run_seconds:
-        description: Detection window before draining active work (60–14400 seconds)
-        default: '14400'
+        description: Detection window before draining active work (60–10800 seconds)
+        default: '10800'
   schedule:
     - cron: '17,47 * * * *'
 
@@ -73,7 +73,7 @@ jobs:
           QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
           OSS_ARTIFACT_KEY: ${{ secrets.OSS_ARTIFACT_KEY }}
           MODE: ${{ inputs.mode || 'live' }}
-          RUN_SECONDS: ${{ inputs.run_seconds || '14400' }}
+          RUN_SECONDS: ${{ inputs.run_seconds || '10800' }}
         run: python -u cloud_runtime.py "$MODE" --seconds "$RUN_SECONDS"
       - name: Preserve encrypted recovery evidence
         if: always()
