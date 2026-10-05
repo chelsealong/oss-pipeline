@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791220988.1182292,
+  "saved_at": 1791220993.565881,
   "tables": {
     "tasks": [
       {
@@ -5210,11 +5210,11 @@
         "repo": "langfuse",
         "number": 18256,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791220988.020469,
-        "updated": 1791220988.020469,
+        "updated": 1791220993.5607405,
         "result": "",
-        "attempts": 0
+        "attempts": 1
       }
     ],
     "meta": [
@@ -5379,10 +5379,6 @@
         "value": "1791220668.6003835"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791216325.4343388, \"comfyui\": 1791218746.1587384, \"hermes\": 1791166995.1719565, \"langfuse\": 1791220702.5013924, \"firecrawl\": 1791219755.0084903, \"mem0\": 1791220511.7877688}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"langfuse\", \"task\": 395, \"at\": 1791218206.1403959}, {\"repo\": \"comfyui\", \"task\": 396, \"at\": 1791218761.5625272}, {\"repo\": \"langfuse\", \"task\": 397, \"at\": 1791219104.67738}, {\"repo\": \"firecrawl\", \"task\": 398, \"at\": 1791219768.1613905}, {\"repo\": \"mem0\", \"task\": 399, \"at\": 1791220525.592306}, {\"repo\": \"langfuse\", \"task\": 400, \"at\": 1791220714.8581839}]"
       },
@@ -5401,10 +5397,6 @@
       {
         "key": "followup:google/adk-python#7255",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7255\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABZZhMYA@2026-10-05T17:17:09Z\", \"author\": \"virktapvir\", \"when\": \"2026-10-05T17:17:09Z\", \"kind\": \"comment\", \"assoc\": \"NONE\", \"body\": \"Update: #7230 (the `make_stream_normalizer` snapshot-merge fix) was merged into main on Oct 4 as 71c4fd7, and #6680 is closed. I checked `a2a/_compat.py` on main and the normalizer now carries over artifacts the snapshot lacks. It is not in a release yet (latest is v2.11.0, from before the merge).\\n\\nThat leaves #7256 as the only piece we still carry outside of main. On v2.11.0, and on main as of today, a delegated stream through stock `RemoteA2aAgent` still produces only `partial=True` events and no aggregated non-partial event (see my comment above for the code paths). This is from reading the source; I have not re-run the deployed repro on main.\\n\\nOnce a release with #7230 ships, we plan to drop it from our fork and carry only #7256. Happy to re-test #7256 against the new release or main and post the results here, or to adjust the PR if the reviewers want a different approach.\\n\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791220927.771652, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 2, \"error\": 1, \"interrupted\": 3, \"publication_wait\": 4, \"queued\": 2, \"running\": 1, \"skipped\": 11}, \"respond\": {\"blocked\": 8, \"done\": 1, \"skipped\": 2}}}"
       },
       {
         "key": "coordination:google/adk-python#7415",
@@ -5435,12 +5427,24 @@
         "value": "1791220981.2088072"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791220989.671416, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 2, \"error\": 1, \"interrupted\": 3, \"publication_wait\": 4, \"queued\": 3, \"running\": 1, \"skipped\": 11}, \"respond\": {\"blocked\": 8, \"done\": 1, \"skipped\": 2}}}"
+      },
+      {
         "key": "watch_heartbeat",
-        "value": "1791220984.1785676"
+        "value": "1791220993.0297706"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791220984.1805675"
+        "value": "1791220993.0320566"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791216325.4343388, \"comfyui\": 1791218746.1587384, \"hermes\": 1791166995.1719565, \"langfuse\": 1791220993.5606165, \"firecrawl\": 1791219755.0084903, \"mem0\": 1791220511.7877688}}"
+      },
+      {
+        "key": "task:401",
+        "value": "{\"started\": 1791220993.5607672, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0}"
       }
     ],
     "calls": [
