@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791166989.517708,
+  "saved_at": 1791166990.7759109,
   "tables": {
     "tasks": [
       {
@@ -3455,9 +3455,9 @@
         "repo": "NousResearch/hermes-agent",
         "number": 126029,
         "note": "{\"authors\": \"Enough1122\", \"events\": [\"IC_kwDOPRF1G88AAAABZBw9bQ@2026-10-03T23:19:55Z\"], \"is_issue\": false}",
-        "status": "blocked",
+        "status": "queued",
         "created": 1791069900.0340984,
-        "updated": 1791107302.3129475,
+        "updated": 1791166989.7351794,
         "result": "review: The lock wait can exceed the tool deadline. `browser.command_timeout` has no upper bound; setting it to 300 seconds makes `_real_profile_lock_timeout()` return 660 seconds, while sequential and concurrent tool calls default to 420 seconds. A wedged resolve can therefore still leave later calls waiting until the outer timeout, the symptom this patch aims to fix. The new wait-budget test mocks the lock and does not cover this supported configuration.",
         "attempts": 2
       },
@@ -4105,9 +4105,9 @@
         "repo": "langfuse/langfuse",
         "number": 18186,
         "note": "{\"authors\": \"greptile-apps\", \"events\": [\"PRRC_kwDOJku7Qs748xgI@2026-10-04T08:04:56Z\"], \"is_issue\": false}",
-        "status": "blocked",
+        "status": "queued",
         "created": 1791101511.6165624,
-        "updated": 1791109236.2635841,
+        "updated": 1791166989.734661,
         "result": "Greptile’s feedback is still unresolved on PR #18186. The checkout has a focused fix, and the regression test failed before the source change and passed afterward. Required repository-wide lint could not complete: rustup tried to write to a read-only home. Forced web lint passed, but the full required gate remains unverified.",
         "attempts": 2
       },
@@ -4664,9 +4664,9 @@
         "repo": "openclaw",
         "number": 164937,
         "note": "",
-        "status": "blocked",
+        "status": "queued",
         "created": 1791124978.5946417,
-        "updated": 1791126195.1646593,
+        "updated": 1791166989.7344093,
         "result": "The fix and regression test are in the checkout, but required validation is incomplete. `pnpm check:changed --base HEAD` stopped at the core TypeScript graph boundary because it requires dependencies physically inside the checkout; this task requires an isolated dependency install in $OSS_TASK_CACHE. An independent reviewer must also approve before publication.",
         "attempts": 1
       },
@@ -5155,10 +5155,6 @@
         "value": "{\"started\": 1791162711.5923889, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791165467.120711, \"folder\": \"jobs/384/attempt-2\", \"attempt\": 2, \"phase\": \"retry_wait\", \"base\": \"a2affcf76e937a769550b576c67cb6934642766c\", \"generation_started\": 1791162762.832979, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791162764.4181688, \"finished\": 1791165167.1235957}"
       },
       {
-        "key": "cloud_validation_retry_20261005",
-        "value": "[325, 384]"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791166769.9612355"
       },
@@ -5209,6 +5205,10 @@
       {
         "key": "task:325",
         "value": "{\"started\": 1791166985.6889193, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791166988.3492832}"
+      },
+      {
+        "key": "cloud_validation_retry_20261005",
+        "value": "[266, 316, 325, 359, 384]"
       }
     ],
     "calls": [
