@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791254502.0528798,
+  "saved_at": 1791254531.6197193,
   "tables": {
     "tasks": [
       {
@@ -4534,10 +4534,10 @@
         "repo": "hermes",
         "number": 132683,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1791122009.656118,
-        "updated": 1791253970.5837266,
-        "result": "review: Recovery is wired only in createWindow() for the primary window. WSLg minimize controls also target secondary and instance windows, which can encounter the same stuck-hidden state but receive no recovery listener. The test exercises the helper, not those runtime paths.",
+        "updated": 1791254531.6164336,
+        "result": "The fix is in the checkout and local checks pass, but this runner cannot perform the WSLg minimize/restore validation required before submission. No PR was created.",
         "attempts": 2
       },
       {
@@ -5650,10 +5650,6 @@
         "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"queued\", \"publication_hold_until\": 0}"
       },
       {
-        "key": "task:349",
-        "value": "{\"started\": 1791253970.583755, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/349/attempt-2\", \"attempt\": 2, \"phase\": \"generation\", \"base\": \"4787e4d56fc8d9265d4c7d3c0fe5accee86b4078\", \"generation_started\": 1791253992.8306434, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791253994.344668}"
-      },
-      {
         "key": "coordination:google/adk-python#7415",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7415\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
@@ -5694,10 +5690,6 @@
         "value": "{\"date\": \"2026-10-06\", \"used\": {\"hermes\": 1, \"openclaw\": 2}}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791254197.4095454, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:416",
         "value": "{\"started\": 1791254089.501242, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/416/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"9627e8a5d5ce3bde8d58e791108eff0df9cd3c49\", \"generation_started\": 1791254139.9317927, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791254142.1504447, \"finished\": 1791254197.4112008}"
       },
@@ -5707,19 +5699,27 @@
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1791254441.7904754, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"interrupted\": 6, \"queued\": 2, \"running\": 1, \"skipped\": 18}, \"respond\": {\"blocked\": 5, \"done\": 1}}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791254501.1776655"
+        "value": "{\"at\": 1791254503.4738057, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"interrupted\": 6, \"queued\": 2, \"running\": 1, \"skipped\": 18}, \"respond\": {\"blocked\": 5, \"done\": 1}}}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791254501.371402"
+        "value": "1791254530.002708"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791254501.3731284"
+        "value": "1791254530.0041564"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791254531.181284"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791254531.5688896, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:349",
+        "value": "{\"started\": 1791253970.583755, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/349/attempt-2\", \"attempt\": 2, \"phase\": \"blocked\", \"base\": \"4787e4d56fc8d9265d4c7d3c0fe5accee86b4078\", \"generation_started\": 1791253992.8306434, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791253994.344668, \"finished\": 1791254531.570403}"
       }
     ],
     "calls": [
