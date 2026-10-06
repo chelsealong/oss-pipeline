@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791302866.2533827,
+  "saved_at": 1791302898.1788666,
   "tables": {
     "tasks": [
       {
@@ -5795,10 +5795,10 @@
         "repo": "openclaw",
         "number": 166170,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791302801.4420145,
-        "updated": 1791302807.324618,
-        "result": "",
+        "updated": 1791302898.1745343,
+        "result": "ClawSweeper is already building a fix for openclaw/openclaw#166170. Its implementation run 37488050758 is in progress, so this issue is taken. No files were changed.",
         "attempts": 1
       },
       {
@@ -6226,10 +6226,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7243\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABZrTgEw@2026-10-06T14:09:39Z\", \"author\": \"surajksharma07\", \"when\": \"2026-10-06T14:09:39Z\", \"kind\": \"comment\", \"assoc\": \"COLLABORATOR\", \"body\": \"Tried those two cases on #7244 (93ce431) merged onto current main @gaurav-gandhi-2411. With no model_version both spans leave the attribute off. When streaming both spans get it if every chunk carries model_version but if only the earlier chunks do generate_content gets it and call_llm doesn't.\\n\\nAlso need to correct myself: dropping gen_ai.response.model from _FACTS_MISSING_FROM_SPANS makes test_semconv_conformance fail. The golden scenarios have no model_version and the metric falls back to the requested model (_metrics.py:552) so the span and the metric still disagree there.\\n\\n@chelsealong the PR is 235 commits behind but merges cleanly and adds no new telemetry test failures compared with main. Could you rebase, keep that entry for now and add a streaming test? Whether spans should also fall back to the requested model like the metric does (and regenerate the goldens) is probably @jawoszek's call.\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791302551.148846, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -6250,10 +6246,6 @@
         "value": "1791302790.4215937"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791302801.8147109, \"tasks\": {\"fix\": {\"blocked\": 5, \"done\": 2, \"error\": 1, \"interrupted\": 3, \"publication_wait\": 2, \"queued\": 1, \"skipped\": 44}, \"respond\": {\"blocked\": 4}}}"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791302807.3244817, \"comfyui\": 1791300674.6572607, \"hermes\": 1791258869.1039314, \"langfuse\": 1791300641.1839814, \"firecrawl\": 1791221276.1031163, \"mem0\": 1791273201.9365122, \"llama-index\": 1791278987.6478505}}"
       },
@@ -6266,12 +6258,20 @@
         "value": "{\"date\": \"2026-10-06\", \"used\": {\"hermes\": 15, \"openclaw\": 9, \"langfuse\": 3, \"mem0\": 1, \"llama-index\": 1, \"comfyui\": 1}}"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791302866.2526088, \"tasks\": {\"fix\": {\"blocked\": 5, \"done\": 2, \"error\": 1, \"interrupted\": 3, \"publication_wait\": 2, \"queued\": 2, \"running\": 1, \"skipped\": 44}, \"respond\": {\"blocked\": 4}}}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1791302862.1647224"
+        "value": "1791302892.1969345"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791302897.3299928, \"source\": \"completed task phase\"}"
       },
       {
         "key": "task:446",
-        "value": "{\"started\": 1791302807.3246412, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/446/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"785548984b28147f15cc792174ba7a6e32802ca9\", \"generation_started\": 1791302861.57065, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791302863.352053}"
+        "value": "{\"started\": 1791302807.3246412, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/446/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"785548984b28147f15cc792174ba7a6e32802ca9\", \"generation_started\": 1791302861.57065, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791302863.352053, \"finished\": 1791302897.332919}"
       }
     ],
     "calls": [
