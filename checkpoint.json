@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791253959.3744965,
+  "saved_at": 1791253960.5800323,
   "tables": {
     "tasks": [
       {
@@ -3052,11 +3052,11 @@
         "repo": "hermes",
         "number": 132167,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791029456.0745792,
-        "updated": 1791253943.54641,
+        "updated": 1791253960.486765,
         "result": "review: The fix addresses a reproduced guard refusal, and the focused suites pass (30 guard tests and 197 web-server tests). However, the new regression test sets `_RUNNING_EXECUTABLE_PATHS`, a symbol absent before the patch. On the base version it fails at that monkeypatch instead of exercising the reported refusal, so it does not provide the required behavioral failing-before evidence. The test needs to reproduce the guard failure on the base version.",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 236,
@@ -4976,9 +4976,9 @@
         "repo": "hermes",
         "number": 132993,
         "note": "",
-        "status": "publication_wait",
+        "status": "queued",
         "created": 1791159996.205507,
-        "updated": 1791166985.6665866,
+        "updated": 1791253960.4851801,
         "result": "",
         "attempts": 0
       },
@@ -5412,10 +5412,6 @@
         "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"started\": 1791162724.0119352, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/389/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"d707c97a7d557b147cabf5831f2ed9e404da2afb\", \"generation_started\": 1791162731.297778, \"phase_started\": 1791162732.526798, \"finished\": 1791162822.8530498}"
       },
       {
-        "key": "task:383",
-        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"publication_wait\", \"publication_hold_until\": 1791247380.388767}"
-      },
-      {
         "key": "task:385",
         "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"publication_wait\", \"publication_hold_until\": 1791247380.388767}"
       },
@@ -5644,24 +5640,12 @@
         "value": "[197, 212, 235, 266, 301, 316, 325, 349, 359, 384]"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791253945.4640956"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791253945.4704099"
       },
       {
         "key": "throughput_24h",
         "value": "{\"at\": 1791253946.9459803, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"interrupted\": 6, \"queued\": 3, \"skipped\": 14}, \"respond\": {\"blocked\": 5, \"done\": 1}}}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791253955.5049005"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791253955.506682"
       },
       {
         "key": "health",
@@ -5672,12 +5656,32 @@
         "value": "{}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791242382.0767744, \"comfyui\": 1791240149.3392277, \"hermes\": 1791253956.6545322, \"langfuse\": 1791240232.8154657, \"firecrawl\": 1791221276.1031163, \"mem0\": 1791220511.7877688}}"
-      },
-      {
         "key": "task:197",
         "value": "{\"started\": 1791253956.6546662, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791253959.3683767}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791253960.4671915"
+      },
+      {
+        "key": "task:383",
+        "value": "{\"dispatch_paid_date\": \"2026-10-05\", \"phase\": \"queued\", \"publication_hold_until\": 0}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791242382.0767744, \"comfyui\": 1791240149.3392277, \"hermes\": 1791253960.486743, \"langfuse\": 1791240232.8154657, \"firecrawl\": 1791221276.1031163, \"mem0\": 1791220511.7877688}}"
+      },
+      {
+        "key": "task:235",
+        "value": "{\"started\": 1791253960.4867957, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791253960.508239"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791253960.5097525"
       }
     ],
     "calls": [
