@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791255487.841274,
+  "saved_at": 1791255493.8833373,
   "tables": {
     "tasks": [
       {
@@ -5470,10 +5470,10 @@
         "repo": "hermes",
         "number": 133623,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791255423.6919625,
-        "updated": 1791255425.165454,
-        "result": "",
+        "updated": 1791255493.8799486,
+        "result": "Issue #133623 asks for a maintainer decision on idle profile shutdown and database cleanup, rather than reporting a reproducible defect. Current main already provides sessions.auto_prune, sessions.retention_days, conditional VACUUM, and sessions prune/optimize-storage commands. Idle shutdown and wake-on-request would require a new policy and behavior contract, so there is no small, independently verifiable fix to make here. CLAUDE.md is absent from this checkout.",
         "attempts": 1
       },
       {
@@ -5789,20 +5789,12 @@
         "value": "{\"started\": 1791254768.7290406, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/419/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"4787e4d56fc8d9265d4c7d3c0fe5accee86b4078\", \"generation_started\": 1791254783.9945977, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791254785.472551, \"finished\": 1791254821.0739005}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791254891.8939934, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:420",
         "value": "{\"started\": 1791254823.1285248, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/420/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"4787e4d56fc8d9265d4c7d3c0fe5accee86b4078\", \"generation_started\": 1791254838.0256796, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791254839.4997194, \"finished\": 1791254891.8954926}"
       },
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791254089.5010762, \"comfyui\": 1791240149.3392277, \"hermes\": 1791255425.165328, \"langfuse\": 1791254618.0884988, \"firecrawl\": 1791221276.1031163, \"mem0\": 1791220511.7877688}}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791255427.6086242, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 2, \"interrupted\": 6, \"queued\": 1, \"running\": 1, \"skipped\": 26}, \"respond\": {\"blocked\": 4}}}"
       },
       {
         "key": "fix_sessions",
@@ -5813,24 +5805,32 @@
         "value": "{\"date\": \"2026-10-06\", \"used\": {\"hermes\": 5, \"openclaw\": 2, \"langfuse\": 1}}"
       },
       {
-        "key": "task:421",
-        "value": "{\"started\": 1791255425.1654775, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/421/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"4787e4d56fc8d9265d4c7d3c0fe5accee86b4078\", \"generation_started\": 1791255440.174495, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791255441.707815}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791255476.3225808"
+        "key": "prwatch_heartbeat",
+        "value": "1791255482.9201655"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791255481.6315362"
+        "value": "1791255488.5202222"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791255481.6329336"
+        "value": "1791255488.5223463"
       },
       {
-        "key": "prwatch_heartbeat",
-        "value": "1791255482.9201655"
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791255489.2110014, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 2, \"interrupted\": 6, \"queued\": 2, \"running\": 1, \"skipped\": 26}, \"respond\": {\"blocked\": 4}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791255491.3240595"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791255493.6797647, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:421",
+        "value": "{\"started\": 1791255425.1654775, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/421/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"4787e4d56fc8d9265d4c7d3c0fe5accee86b4078\", \"generation_started\": 1791255440.174495, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791255441.707815, \"finished\": 1791255493.6812003}"
       }
     ],
     "calls": [
