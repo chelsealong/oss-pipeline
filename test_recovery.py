@@ -93,6 +93,23 @@ class RecoveryTests(unittest.TestCase):
         with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:tasks=list(pool.map(lambda _:claim(),range(2)))
         self.assertEqual({rt.repo_key(t['repo'])for t in tasks},{'hermes','adk'})
         self.assertEqual({t['kind']for t in tasks},{'respond','fix'})
+    def test_failed_claim_checkpoint_releases_running_repo_without_executing(self):
+        task=self.task();task['attempts']=1
+        with rt.db() as db:db.execute("UPDATE tasks SET status='running' WHERE id=?",(task['id'],))
+        with patch.object(rt,'checkpoint',side_effect=rt.PersistenceError('unavailable')):
+            with self.assertRaises(rt.PersistenceError):worker.checkpoint_claim(task)
+        with rt.db() as db:
+            self.assertEqual(db.execute('SELECT status FROM tasks').fetchone()[0],'retry_wait')
+            self.assertIsNone(worker.next_queued(db,{}))
+        rt.task_state(task['id'],retry_after=0)
+        with rt.db() as db:self.assertEqual(worker.next_queued(db,{})['id'],task['id'])
+        # A historical ambiguous publication must never be made retryable.
+        with rt.db() as db:db.execute("UPDATE tasks SET status='running' WHERE id=?",(task['id'],))
+        rt.task_state(task['id'],publication_started=True)
+        with patch.object(rt,'checkpoint',side_effect=rt.PersistenceError('unavailable')):
+            with self.assertRaises(rt.PersistenceError):worker.checkpoint_claim(task)
+        with rt.db() as db:self.assertEqual(db.execute('SELECT status FROM tasks').fetchone()[0],'interrupted')
+
     def test_git_timeout_retries_only_task_and_preserves_model_service(self):
         task=self.task();task['attempts']=1
         worker.handle_task_error(task,subprocess.TimeoutExpired(['git','fetch'],300))
@@ -180,6 +197,37 @@ class RecoveryTests(unittest.TestCase):
         self.assertEqual((rt.DATA/'evidence'/'1-1.json').read_bytes(),raw)
         evidence.save_to(store);self.assertEqual((store/'evidence'/'1-1.json.enc').read_bytes(),sealed)
         with self.assertRaises(Exception):evidence.decrypt(sealed[:-1]+bytes([sealed[-1]^1]))
+    def test_failed_retry_clone_does_not_reuse_old_base_during_finish(self):
+        task=self.task();folder,work,base=self.checkout(task)
+        task['attempts']=2
+        with patch.object(worker,'cap_ok',return_value=(True,'')),patch.object(worker,'fix_eligible',return_value=(True,'')),patch.object(worker,'api',return_value={'parent':{'full_name':'NousResearch/hermes-agent'},'clone_url':'https://example.invalid/fork'}):
+            def incomplete_clone(*args,**kwargs):
+                dest=Path(args[0][-1]);dest.mkdir(parents=True)
+                self.git(dest,'init')
+                raise subprocess.TimeoutExpired(['git','clone'],600)
+            with patch.object(worker,'run',side_effect=incomplete_clone):
+                with self.assertRaises(subprocess.TimeoutExpired):worker.process(task)
+        self.assertIsNone(rt.task_state(task['id'])['base'])
+        worker.handle_task_error(task,subprocess.TimeoutExpired(['git','clone'],600))
+        with rt.db() as db:self.assertEqual(db.execute('SELECT status FROM tasks').fetchone()[0],'retry_wait')
+
+    def test_checkpoint_during_retry_checkout_does_not_diff_previous_base(self):
+        task=self.task();folder,work,base=self.checkout(task)
+        # A retry moves to a new shallow checkout; the previous base is absent.
+        retry=folder.parent/'attempt-2';new_work=retry/'work';new_work.mkdir(parents=True)
+        self.git(new_work,'init')
+        rt.task_state(task['id'],folder=str(retry.relative_to(rt.DATA)),attempt=2,
+                      phase='checkout',terminal=False)
+        with rt.db() as db:db.execute("UPDATE tasks SET status='running' WHERE id=?",(task['id'],))
+        store=self.root/'store';store.mkdir()
+        evidence.save_to(store)
+        payload=json.loads(evidence.decrypt((store/'evidence'/'1-2.json.enc').read_bytes()))
+        self.assertNotIn('diff',payload)
+        self.assertNotIn('head',payload)
+        # Once checkout completes, a bad base is a real error and must surface.
+        rt.task_state(task['id'],phase='generation')
+        with self.assertRaises(subprocess.CalledProcessError):evidence.capture(task['id'])
+
     def test_committed_but_unpublished_changes_are_in_evidence(self):
         task=self.task();folder,work,base=self.checkout(task)
         (work/'value.py').write_text('value = 9\n');self.git(work,'commit','-am','not yet pushed')

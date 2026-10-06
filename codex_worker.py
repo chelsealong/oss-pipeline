@@ -375,7 +375,7 @@ def process(task):
         pr=response_context(impl,num)
     attempt=task.get('attempts',1)
     folder=rt.DATA/'jobs'/str(task['id'])/f'attempt-{attempt}';folder.mkdir(parents=True,exist_ok=True)
-    rt.task_state(task['id'],folder=str(folder.relative_to(rt.DATA)),attempt=attempt,phase='checkout',terminal=False)
+    rt.task_state(task['id'],folder=str(folder.relative_to(rt.DATA)),attempt=attempt,phase='checkout',terminal=False,base=None)
     work=folder/'work'
     if work.exists(): raise RuntimeError('existing checkout needs manual recovery; refusing overwrite')
     fork=api(f'repos/{ME}/{impl.split("/")[1]}')
@@ -599,6 +599,24 @@ def handle_task_error(task,error):
         finish(task,'retry_wait',str(error));return
     finish(task,'blocked' if isinstance(error,rt.Paused) else 'error',str(error))
 
+def checkpoint_claim(task):
+    """A failed pre-execution checkpoint must not orphan a running task."""
+    try:
+        rt.checkpoint()
+    except rt.PersistenceError:
+        # No process(task), model request or publication has happened for this
+        # claim. Keep it retryable; the next claim must checkpoint successfully.
+        # Historical publication ambiguity remains held for manual inspection.
+        with rt.db() as c:
+            c.execute('BEGIN IMMEDIATE')
+            state=rt._meta(c,f"task:{task['id']}",{})
+            status='interrupted' if state.get('publication_started') else 'retry_wait'
+            state.update(phase=status,retry_after=time.time()+300)
+            rt._putmeta(c,f"task:{task['id']}",state)
+            c.execute("UPDATE tasks SET status=?,result=?,updated=? WHERE id=? AND status='running'",
+                (status,'Claim checkpoint failed before execution; durable checkpoint required before retry',time.time(),task['id']))
+        raise
+
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--probe',action='store_true');ap.add_argument('--once',action='store_true')
     ap.add_argument('--slot',type=int,default=0);ap.add_argument('--managed',action='store_true');a=ap.parse_args()
@@ -633,7 +651,7 @@ def main():
                         state.update(started=time.time(),worker_slot=a.slot,terminal=False,retry_after=0)
                         rt._putmeta(c,f"task:{task['id']}",state)
                 if task:
-                    rt.checkpoint()  # Persist running state before any side effect.
+                    checkpoint_claim(task)  # Persist running state before any side effect.
                     awake=None
                     if sys.platform=='darwin' and Path('/usr/bin/caffeinate').exists():
                         # Keep only an active job from idle-sleeping mid-network

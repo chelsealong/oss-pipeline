@@ -67,7 +67,10 @@ def _capture(task_id):
         if total>16*1024**2:
             payload['omitted'].append(path.name+': evidence size limit');continue
         payload['files'][path.name]=base64.b64encode(raw).decode()
-    if state.get('base') and (work/'.git').exists():
+    # A retry can retain the previous attempt's base while clone/fetch is
+    # still assembling a new shallow checkout. This snapshot must not run
+    # Git against that incomplete checkout and crash the shared state owner.
+    if state.get('phase') != 'checkout' and state.get('base') and (work/'.git').exists():
         def git(*args):
             return subprocess.run(['git',*args],cwd=work,capture_output=True,check=True,timeout=30).stdout
         payload['head']=git('rev-parse','HEAD').decode().strip()
