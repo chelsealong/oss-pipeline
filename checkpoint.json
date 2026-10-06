@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791301185.5255547,
+  "saved_at": 1791301243.5776112,
   "tables": {
     "tasks": [
       {
@@ -6207,24 +6207,24 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7286\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABZq8t9w@2026-10-06T13:50:31Z\", \"author\": \"surajksharma07\", \"when\": \"2026-10-06T13:50:31Z\", \"kind\": \"comment\", \"assoc\": \"COLLABORATOR\", \"body\": \"Confirmed on current main @jabrailkhalil. Your 40-event reverse-id test still reloads out of order through DatabaseSessionService (aiosqlite) from a fresh instance while SqliteSessionService now keeps append order. Note that f33343f landed just after the v2.11.0 tag so no release has the SQLite fix yet. @rishwanth-th's append_event override is still the workaround on 2.11.0 for both services.\\n\\nThe stale-writer point holds too. The revision marker is session update_time which is set from event.timestamp so two writers loaded from the same snapshot both get through if they append at the same timestamp (a later timestamp is rejected as expected). That fits in your scope and deserves its own regression test.\\n\\nThe direction sounds right but the schema change and primary order vs tie-break only are the maintainers' call. @DeanChensj could you weigh in? Primary order gives the replay correctness you're after but it changes how deliberately out-of-order timestamps load and tie-break only leaves the clock-skew case open.\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791301125.2846038, \"tasks\": {\"fix\": {\"blocked\": 6, \"done\": 2, \"error\": 1, \"interrupted\": 4, \"publication_wait\": 2, \"skipped\": 44}, \"respond\": {\"blocked\": 4}}}"
-      },
-      {
         "key": "followup:google/adk-python#7243",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7243\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABZrTgEw@2026-10-06T14:09:39Z\", \"author\": \"surajksharma07\", \"when\": \"2026-10-06T14:09:39Z\", \"kind\": \"comment\", \"assoc\": \"COLLABORATOR\", \"body\": \"Tried those two cases on #7244 (93ce431) merged onto current main @gaurav-gandhi-2411. With no model_version both spans leave the attribute off. When streaming both spans get it if every chunk carries model_version but if only the earlier chunks do generate_content gets it and call_llm doesn't.\\n\\nAlso need to correct myself: dropping gen_ai.response.model from _FACTS_MISSING_FROM_SPANS makes test_semconv_conformance fail. The golden scenarios have no model_version and the metric falls back to the requested model (_metrics.py:552) so the span and the metric still disagree there.\\n\\n@chelsealong the PR is 235 commits behind but merges cleanly and adds no new telemetry test failures compared with main. Could you rebase, keep that entry for now and add a streaming test? Whether spans should also fall back to the requested model like the metric does (and regenerate the goldens) is probably @jawoszek's call.\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791301181.8242455"
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791301188.2174187, \"tasks\": {\"fix\": {\"blocked\": 6, \"done\": 2, \"error\": 1, \"interrupted\": 4, \"publication_wait\": 2, \"skipped\": 44}, \"respond\": {\"blocked\": 4}}}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791301182.5244055"
+        "value": "1791301240.4064271"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791301182.5276287"
+        "value": "1791301240.4103546"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791301241.8362663"
       }
     ],
     "calls": [
@@ -11806,6 +11806,10 @@
       },
       {
         "at": 1791301122.1526895,
+        "kind": "judge"
+      },
+      {
+        "at": 1791301243.5720727,
         "kind": "judge"
       }
     ]
