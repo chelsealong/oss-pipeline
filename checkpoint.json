@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791307607.924242,
+  "saved_at": 1791307631.0201068,
   "tables": {
     "tasks": [
       {
@@ -6252,10 +6252,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7243\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABZrTgEw@2026-10-06T14:09:39Z\", \"author\": \"surajksharma07\", \"when\": \"2026-10-06T14:09:39Z\", \"kind\": \"comment\", \"assoc\": \"COLLABORATOR\", \"body\": \"Tried those two cases on #7244 (93ce431) merged onto current main @gaurav-gandhi-2411. With no model_version both spans leave the attribute off. When streaming both spans get it if every chunk carries model_version but if only the earlier chunks do generate_content gets it and call_llm doesn't.\\n\\nAlso need to correct myself: dropping gen_ai.response.model from _FACTS_MISSING_FROM_SPANS makes test_semconv_conformance fail. The golden scenarios have no model_version and the metric falls back to the requested model (_metrics.py:552) so the span and the metric still disagree there.\\n\\n@chelsealong the PR is 235 commits behind but merges cleanly and adds no new telemetry test failures compared with main. Could you rebase, keep that entry for now and add a streaming test? Whether spans should also fall back to the requested model like the metric does (and regenerate the goldens) is probably @jawoszek's call.\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
       {
-        "key": "pause",
-        "value": "{}"
-      },
-      {
         "key": "task:446",
         "value": "{\"started\": 1791302807.3246412, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/446/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"785548984b28147f15cc792174ba7a6e32802ca9\", \"generation_started\": 1791302861.57065, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791302863.352053, \"finished\": 1791302897.332919}"
       },
@@ -6288,10 +6284,6 @@
         "value": "{\"date\": \"2026-10-06\", \"used\": {\"hermes\": 15, \"openclaw\": 13, \"langfuse\": 3, \"mem0\": 1, \"llama-index\": 1, \"comfyui\": 1}}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791305804.87415, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:450",
         "value": "{\"started\": 1791305702.4571881, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/450/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"3102a85a440722f18765abebcbb1420a54cc2677\", \"generation_started\": 1791305758.8646924, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791305760.3451147, \"finished\": 1791305804.8763504}"
       },
@@ -6304,16 +6296,24 @@
         "value": "{\"at\": 1791307580.491554, \"tasks\": {\"fix\": {\"blocked\": 4, \"error\": 1, \"interrupted\": 3, \"publication_wait\": 2, \"skipped\": 46}, \"respond\": {\"blocked\": 4}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791307604.0287437"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791307604.738417"
       },
       {
         "key": "detector_heartbeat",
         "value": "1791307604.7421787"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791307613.5959063, \"source\": \"authenticated probe\"}"
+      },
+      {
+        "key": "pause",
+        "value": "{}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791307619.0316377"
       }
     ],
     "calls": [
@@ -12051,6 +12051,10 @@
       },
       {
         "at": 1791307607.9194255,
+        "kind": "judge"
+      },
+      {
+        "at": 1791307631.014469,
         "kind": "judge"
       }
     ]
