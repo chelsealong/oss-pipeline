@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791254747.9674103,
+  "saved_at": 1791254759.298643,
   "tables": {
     "tasks": [
       {
@@ -5431,10 +5431,10 @@
         "repo": "hermes",
         "number": 133628,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791254663.1991417,
-        "updated": 1791254672.9824374,
-        "result": "",
+        "updated": 1791254759.2951994,
+        "result": "Issue #133628 reports a Windows-only, multi-part failure, but the cause of the dead backend is not isolated. Current main already has bounded primary-backend exit recovery and bounded profile-refresh retries. Open PRs #128400, #128420, and #131733 address overlapping backend lifecycle paths. A small change to the profile retry cadence would not establish that the dead backend recovers or that the host-wide ENOBUFS storm stops. No files were changed.",
         "attempts": 1
       },
       {
@@ -5742,20 +5742,12 @@
         "value": "1791254650.573628"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791254665.941628, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:417",
         "value": "{\"started\": 1791254618.08872, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/417/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"eadfff4d8d7b38e11c995b729977b8509fec74b3\", \"generation_started\": 1791254627.0584154, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791254628.5418642, \"finished\": 1791254665.9429932}"
       },
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791254089.5010762, \"comfyui\": 1791240149.3392277, \"hermes\": 1791254672.9823058, \"langfuse\": 1791254618.0884988, \"firecrawl\": 1791221276.1031163, \"mem0\": 1791220511.7877688}}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791254687.7202108, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 2, \"interrupted\": 6, \"queued\": 2, \"running\": 1, \"skipped\": 23}, \"respond\": {\"blocked\": 4}}}"
       },
       {
         "key": "fix_sessions",
@@ -5766,10 +5758,6 @@
         "value": "{\"date\": \"2026-10-06\", \"used\": {\"hermes\": 2, \"openclaw\": 2, \"langfuse\": 1}}"
       },
       {
-        "key": "task:418",
-        "value": "{\"started\": 1791254672.982461, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/418/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"4787e4d56fc8d9265d4c7d3c0fe5accee86b4078\", \"generation_started\": 1791254702.031057, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791254703.6832523}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791254711.5804965"
       },
@@ -5778,8 +5766,20 @@
         "value": "1791254711.581895"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791254749.4990404, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 2, \"interrupted\": 6, \"queued\": 2, \"running\": 1, \"skipped\": 23}, \"respond\": {\"blocked\": 4}}}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1791254741.2072651"
+        "value": "1791254756.208687"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791254759.0361795, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:418",
+        "value": "{\"started\": 1791254672.982461, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/418/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"4787e4d56fc8d9265d4c7d3c0fe5accee86b4078\", \"generation_started\": 1791254702.031057, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791254703.6832523, \"finished\": 1791254759.037895}"
       }
     ],
     "calls": [
