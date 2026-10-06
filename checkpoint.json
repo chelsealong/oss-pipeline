@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791253945.6938958,
+  "saved_at": 1791253956.6591244,
   "tables": {
     "tasks": [
       {
@@ -2558,11 +2558,11 @@
         "repo": "hermes",
         "number": 132048,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791009027.7423584,
-        "updated": 1791253943.532712,
+        "updated": 1791253956.65464,
         "result": "review: The regression test is timing-dependent: it arms SIGALRM for 0.5 seconds before Relay startup, then assumes the provider has entered its blocked read when the signal fires (tests/agent/test_relay_llm.py:36-51). On a slower runner it can fail before exercising the race, contrary to the contributor instructions requiring event-based synchronization and timing bounds of at least 2 seconds. The original method failed with the reported ValueError and the current patch passed all 50 Relay tests, but this test needs to be made reliable before approval.",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 198,
@@ -5604,10 +5604,6 @@
         "value": "{\"started\": 1791242267.6204336, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/413/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"b53d7a3cb55c77605c25ba22d7df41377c4b5d34\", \"generation_started\": 1791242325.089564, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791242327.2151155, \"finished\": 1791242381.5256517}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791242382.0767744, \"comfyui\": 1791240149.3392277, \"hermes\": 1791166995.1719565, \"langfuse\": 1791240232.8154657, \"firecrawl\": 1791221276.1031163, \"mem0\": 1791220511.7877688}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"langfuse\", \"task\": 404, \"at\": 1791240099.1267076}, {\"repo\": \"openclaw\", \"task\": 393, \"at\": 1791240132.699852}, {\"repo\": \"comfyui\", \"task\": 407, \"at\": 1791240159.3564308}, {\"repo\": \"langfuse\", \"task\": 405, \"at\": 1791240243.8806286}, {\"repo\": \"openclaw\", \"task\": 411, \"at\": 1791240952.5662124}, {\"repo\": \"openclaw\", \"task\": 412, \"at\": 1791241677.5764015}, {\"repo\": \"openclaw\", \"task\": 413, \"at\": 1791242325.0895634}, {\"repo\": \"openclaw\", \"task\": 414, \"at\": 1791242439.1752481}]"
       },
@@ -5644,14 +5640,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7397\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "pause",
-        "value": "{}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791244569.3510108, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"error\": 1, \"interrupted\": 5, \"publication_wait\": 4, \"running\": 1, \"skipped\": 18}, \"respond\": {\"blocked\": 12, \"done\": 1, \"skipped\": 2}}}"
-      },
-      {
         "key": "cloud_validation_retry_20261005",
         "value": "[197, 212, 235, 266, 301, 316, 325, 349, 359, 384]"
       },
@@ -5664,12 +5652,32 @@
         "value": "1791253945.4704099"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791253946.9459803, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"interrupted\": 6, \"queued\": 3, \"skipped\": 14}, \"respond\": {\"blocked\": 5, \"done\": 1}}}"
+      },
+      {
         "key": "watch_heartbeat",
-        "value": "1791253945.4963663"
+        "value": "1791253955.5049005"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791253945.498421"
+        "value": "1791253955.506682"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791253956.6359, \"source\": \"authenticated probe\"}"
+      },
+      {
+        "key": "pause",
+        "value": "{}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791242382.0767744, \"comfyui\": 1791240149.3392277, \"hermes\": 1791253956.6545322, \"langfuse\": 1791240232.8154657, \"firecrawl\": 1791221276.1031163, \"mem0\": 1791220511.7877688}}"
+      },
+      {
+        "key": "task:197",
+        "value": "{\"started\": 1791253956.6546662, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0}"
       }
     ],
     "calls": [
