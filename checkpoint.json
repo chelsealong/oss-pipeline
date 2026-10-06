@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791253956.6591244,
+  "saved_at": 1791253959.3744965,
   "tables": {
     "tasks": [
       {
@@ -2558,10 +2558,10 @@
         "repo": "hermes",
         "number": 132048,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791009027.7423584,
-        "updated": 1791253956.65464,
-        "result": "review: The regression test is timing-dependent: it arms SIGALRM for 0.5 seconds before Relay startup, then assumes the provider has entered its blocked read when the signal fires (tests/agent/test_relay_llm.py:36-51). On a slower runner it can fail before exercising the race, contrary to the contributor instructions requiring event-based synchronization and timing bounds of at least 2 seconds. The original method failed with the reported ValueError and the current patch passed all 50 Relay tests, but this test needs to be made reliable before approval.",
+        "updated": 1791253959.3708174,
+        "result": "already has PR(s): ['closing-ref PR#132059(OPEN)', 'closing-ref PR#132064(OPEN)', 'closing-ref PR#132080(OPEN)']",
         "attempts": 2
       },
       {
@@ -5677,7 +5677,7 @@
       },
       {
         "key": "task:197",
-        "value": "{\"started\": 1791253956.6546662, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0}"
+        "value": "{\"started\": 1791253956.6546662, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791253959.3683767}"
       }
     ],
     "calls": [
