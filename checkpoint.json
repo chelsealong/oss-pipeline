@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791258209.7476509,
+  "saved_at": 1791258219.224383,
   "tables": {
     "tasks": [
       {
@@ -5561,10 +5561,10 @@
         "repo": "hermes",
         "number": 133602,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1791257578.5289378,
-        "updated": 1791257654.6298,
-        "result": "",
+        "updated": 1791258219.2207413,
+        "result": "review: The regression fails on the base implementation and passes with this patch; focused tests and all 11 repository checks pass. The full LSP test run has three failures, so the required Python test gate is not verified green. The failures appear unrelated to this patch, but the mandatory gate cannot be waived.",
         "attempts": 1
       },
       {
@@ -5915,18 +5915,6 @@
         "value": "1791257933.1155932"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791258027.2863417, \"source\": \"completed task phase\"}"
-      },
-      {
-        "key": "task:428",
-        "value": "{\"started\": 1791257654.6298223, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/428/attempt-1\", \"attempt\": 1, \"phase\": \"review\", \"base\": \"4787e4d56fc8d9265d4c7d3c0fe5accee86b4078\", \"generation_started\": 1791257672.876777, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791258028.5634604}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791258149.5631893, \"tasks\": {\"fix\": {\"blocked\": 5, \"done\": 2, \"interrupted\": 6, \"queued\": 1, \"running\": 1, \"skipped\": 32}, \"respond\": {\"blocked\": 4}}}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791258195.8228068"
       },
@@ -5937,6 +5925,18 @@
       {
         "key": "worker_heartbeat",
         "value": "1791258207.8057718"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791258210.9894857, \"tasks\": {\"fix\": {\"blocked\": 5, \"done\": 2, \"interrupted\": 6, \"queued\": 1, \"running\": 1, \"skipped\": 32}, \"respond\": {\"blocked\": 4}}}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791258219.133548, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:428",
+        "value": "{\"started\": 1791257654.6298223, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/428/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"4787e4d56fc8d9265d4c7d3c0fe5accee86b4078\", \"generation_started\": 1791257672.876777, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791258028.5634604, \"finished\": 1791258219.1755493}"
       }
     ],
     "calls": [
