@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791301118.3564181,
+  "saved_at": 1791301122.1563587,
   "tables": {
     "tasks": [
       {
@@ -6207,16 +6207,20 @@
         "value": "{\"at\": 1791301062.1998568, \"tasks\": {\"fix\": {\"blocked\": 6, \"done\": 2, \"error\": 1, \"interrupted\": 4, \"publication_wait\": 2, \"skipped\": 44}, \"respond\": {\"blocked\": 4}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791301106.8090432"
-      },
-      {
         "key": "watch_heartbeat",
-        "value": "1791301110.911275"
+        "value": "1791301118.6158361"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791301110.9152896"
+        "value": "1791301118.6177576"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791301121.811133"
+      },
+      {
+        "key": "followup:google/adk-python#7286",
+        "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7286\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABZq8t9w@2026-10-06T13:50:31Z\", \"author\": \"surajksharma07\", \"when\": \"2026-10-06T13:50:31Z\", \"kind\": \"comment\", \"assoc\": \"COLLABORATOR\", \"body\": \"Confirmed on current main @jabrailkhalil. Your 40-event reverse-id test still reloads out of order through DatabaseSessionService (aiosqlite) from a fresh instance while SqliteSessionService now keeps append order. Note that f33343f landed just after the v2.11.0 tag so no release has the SQLite fix yet. @rishwanth-th's append_event override is still the workaround on 2.11.0 for both services.\\n\\nThe stale-writer point holds too. The revision marker is session update_time which is set from event.timestamp so two writers loaded from the same snapshot both get through if they append at the same timestamp (a later timestamp is rejected as expected). That fits in your scope and deserves its own regression test.\\n\\nThe direction sounds right but the schema change and primary order vs tie-break only are the maintainers' call. @DeanChensj could you weigh in? Primary order gives the replay correctness you're after but it changes how deliberately out-of-order timestamps load and tie-break only leaves the clock-skew case open.\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       }
     ],
     "calls": [
@@ -11794,6 +11798,10 @@
       },
       {
         "at": 1791301118.350118,
+        "kind": "judge"
+      },
+      {
+        "at": 1791301122.1526895,
         "kind": "judge"
       }
     ]
