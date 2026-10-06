@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791255591.423739,
+  "saved_at": 1791255593.9429567,
   "tables": {
     "tasks": [
       {
@@ -5483,10 +5483,10 @@
         "repo": "hermes",
         "number": 133575,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791255426.1607869,
-        "updated": 1791255495.9268713,
-        "result": "",
+        "updated": 1791255593.939563,
+        "result": "The reported cache behavior belongs to the standalone claude-subscription-directsdk plugin. Its admission.py::pin_message_breakpoint controls the native request’s cache marker, while Hermes core uses the plugin’s create_client transport. The log pattern alone does not identify a reproducible defect in this checkout, so changing the core cache policy would be speculative. No files were changed.",
         "attempts": 1
       },
       {
@@ -5797,10 +5797,6 @@
         "value": "1791255482.9201655"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791255493.6797647, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:421",
         "value": "{\"started\": 1791255425.1654775, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/421/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"4787e4d56fc8d9265d4c7d3c0fe5accee86b4078\", \"generation_started\": 1791255440.174495, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791255441.707815, \"finished\": 1791255493.6812003}"
       },
@@ -5817,10 +5813,6 @@
         "value": "{\"date\": \"2026-10-06\", \"used\": {\"hermes\": 6, \"openclaw\": 2, \"langfuse\": 1}}"
       },
       {
-        "key": "task:422",
-        "value": "{\"started\": 1791255495.9268947, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/422/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"4787e4d56fc8d9265d4c7d3c0fe5accee86b4078\", \"generation_started\": 1791255517.585724, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791255518.7853382}"
-      },
-      {
         "key": "throughput_24h",
         "value": "{\"at\": 1791255550.7265482, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 2, \"interrupted\": 6, \"queued\": 1, \"running\": 1, \"skipped\": 27}, \"respond\": {\"blocked\": 4}}}"
       },
@@ -5835,6 +5827,14 @@
       {
         "key": "worker_heartbeat",
         "value": "1791255581.3328435"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791255593.8968968, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:422",
+        "value": "{\"started\": 1791255495.9268947, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/422/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"4787e4d56fc8d9265d4c7d3c0fe5accee86b4078\", \"generation_started\": 1791255517.585724, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791255518.7853382, \"finished\": 1791255593.89881}"
       }
     ],
     "calls": [
