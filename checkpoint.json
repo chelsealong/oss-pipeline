@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791304235.6028986,
+  "saved_at": 1791304244.365771,
   "tables": {
     "tasks": [
       {
@@ -5826,6 +5826,19 @@
         "updated": 1791303179.5335066,
         "result": "The bug is still present, but a safe fix exceeds this task’s small-fix scope. Inbound admission can persist a user message before session-lane execution, while an active cron run’s unadmitted context read rejects that transcript change. Moving the write requires coordinated pending-input, recovery, and cancellation handling. [ClawSweeper’s current review](https://github.com/openclaw/openclaw/issues/166136#issuecomment-6018519819) likewise identifies that integration as unsuitable for strict small-bug intake. No files were changed.",
         "attempts": 1
+      },
+      {
+        "id": 449,
+        "identity": "fix:openclaw:166178:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 166178,
+        "note": "",
+        "status": "running",
+        "created": 1791304240.2853076,
+        "updated": 1791304244.3417716,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -6238,10 +6251,6 @@
         "value": "{\"started\": 1791302901.2284024, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/447/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"3e932a5937b529ae45b89c57a1b5db2078aa1407\", \"generation_started\": 1791302961.3669114, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791302962.8618515, \"finished\": 1791303046.0726476}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791303055.2493484, \"comfyui\": 1791300674.6572607, \"hermes\": 1791258869.1039314, \"langfuse\": 1791300641.1839814, \"firecrawl\": 1791221276.1031163, \"mem0\": 1791273201.9365122, \"llama-index\": 1791278987.6478505}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"openclaw\", \"task\": 442, \"at\": 1791285853.5835407}, {\"repo\": \"openclaw\", \"task\": 443, \"at\": 1791286813.0357075}, {\"repo\": \"langfuse\", \"task\": 444, \"at\": 1791300652.935115}, {\"repo\": \"comfyui\", \"task\": 445, \"at\": 1791300682.5345256}, {\"repo\": \"openclaw\", \"task\": 446, \"at\": 1791302861.5706491}, {\"repo\": \"openclaw\", \"task\": 447, \"at\": 1791302961.3669102}, {\"repo\": \"openclaw\", \"task\": 448, \"at\": 1791303110.1407673}]"
       },
@@ -6266,10 +6275,6 @@
         "value": "1791304108.1565578"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791304227.4707007"
-      },
-      {
         "key": "throughput_24h",
         "value": "{\"at\": 1791304231.3136008, \"tasks\": {\"fix\": {\"blocked\": 5, \"done\": 2, \"error\": 1, \"interrupted\": 3, \"publication_wait\": 2, \"skipped\": 47}, \"respond\": {\"blocked\": 4}}}"
       },
@@ -6280,6 +6285,18 @@
       {
         "key": "detector_heartbeat",
         "value": "1791304232.573552"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791304242.4724956"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791304244.3415754, \"comfyui\": 1791300674.6572607, \"hermes\": 1791258869.1039314, \"langfuse\": 1791300641.1839814, \"firecrawl\": 1791221276.1031163, \"mem0\": 1791273201.9365122, \"llama-index\": 1791278987.6478505}}"
+      },
+      {
+        "key": "task:449",
+        "value": "{\"started\": 1791304244.3418155, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0}"
       }
     ],
     "calls": [
