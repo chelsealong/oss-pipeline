@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791257283.5061007,
+  "saved_at": 1791257305.6526124,
   "tables": {
     "tasks": [
       {
@@ -5509,10 +5509,10 @@
         "repo": "hermes",
         "number": 133643,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1791256003.2755563,
-        "updated": 1791256005.7713897,
-        "result": "",
+        "updated": 1791257305.6311047,
+        "result": "review: The remediation fixes the stale goal-line case, but a stale continuation with the same goal and a longer contract field still suppresses the current snapshot. I reproduced `_fold_goal_snapshot` leaving the stale constraint in place with zero current goal blocks. All 112 focused tests and 11 repository checks passed, but they do not cover this case.",
         "attempts": 1
       },
       {
@@ -5856,32 +5856,32 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7397\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791257137.742494, \"source\": \"completed task phase\"}"
-      },
-      {
-        "key": "task:424",
-        "value": "{\"started\": 1791256005.7714136, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/424/attempt-1\", \"attempt\": 1, \"phase\": \"rereview\", \"base\": \"4787e4d56fc8d9265d4c7d3c0fe5accee86b4078\", \"generation_started\": 1791256022.4847121, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791257140.3478055}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791257150.3642917"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1791257223.2659278, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 2, \"interrupted\": 6, \"queued\": 2, \"running\": 1, \"skipped\": 29}, \"respond\": {\"blocked\": 4}}}"
+        "value": "{\"at\": 1791257285.1968648, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 2, \"interrupted\": 6, \"queued\": 2, \"running\": 1, \"skipped\": 29}, \"respond\": {\"blocked\": 4}}}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791257277.2338302"
+        "value": "1791257292.2356339"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791257279.956904"
+        "value": "1791257301.115127"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791257279.958563"
+        "value": "1791257301.1168754"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791257304.7834566, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:424",
+        "value": "{\"started\": 1791256005.7714136, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/424/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"4787e4d56fc8d9265d4c7d3c0fe5accee86b4078\", \"generation_started\": 1791256022.4847121, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791257140.3478055, \"finished\": 1791257305.2007794}"
       }
     ],
     "calls": [
