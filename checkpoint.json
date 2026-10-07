@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791354317.4381561,
+  "saved_at": 1791354386.0207734,
   "tables": {
     "tasks": [
       {
@@ -5886,11 +5886,11 @@
         "repo": "langfuse",
         "number": 18359,
         "note": "",
-        "status": "validation_wait",
+        "status": "running",
         "created": 1791308623.6508105,
-        "updated": 1791309435.626366,
+        "updated": 1791354386.0149145,
         "result": "The fix is implemented, but required browser signoff remains unavailable. `seed doctor` found Postgres and ClickHouse unreachable and the web app down; the seed CLI also has no scenario for cyclic parent IDs. No PR was created.",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 454,
@@ -5964,9 +5964,9 @@
         "repo": "langfuse",
         "number": 18361,
         "note": "",
-        "status": "validation_wait",
+        "status": "queued",
         "created": 1791313354.1881466,
-        "updated": 1791314060.1959445,
+        "updated": 1791354384.7594833,
         "result": "The four missing titles are fixed in the checkout, but browser signoff is required and unavailable: no web app is running at localhost:3000, and this checkout has no environment file. No PR was created.",
         "attempts": 1
       },
@@ -6744,30 +6744,6 @@
         "value": "{\"recovery_checked_at\": 1791353322.8475723, \"phase\": \"capacity_wait\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791353345.6670847, \"worker_slot\": 1, \"last_execution_phase\": \"queued\", \"finished\": 1791353351.7952566}"
       },
       {
-        "key": "task:177",
-        "value": "{\"recovery_checked_at\": 1791353406.3389914}"
-      },
-      {
-        "key": "recovery_audit:177",
-        "value": "{\"at\": 1791353408.7526014, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:219",
-        "value": "{\"recovery_checked_at\": 1791353408.7587976}"
-      },
-      {
-        "key": "recovery_audit:219",
-        "value": "{\"at\": 1791353409.9664056, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:222",
-        "value": "{\"recovery_checked_at\": 1791353409.9701273}"
-      },
-      {
-        "key": "recovery_audit:222",
-        "value": "{\"at\": 1791353410.908475, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
         "key": "followup:task:295",
         "value": "{\"status\": \"resumed\", \"task\": 295}"
       },
@@ -6816,34 +6792,6 @@
         "value": "{\"status\": \"needs_human\", \"task\": 452, \"repo\": \"llama-index\", \"number\": 23404, \"reason\": \"review: The remediation resolves both original code objections: GPT-6.1 Sol requests omit the unsupported parameters, and `max` reasoning effort is accepted. The current package suite passed (123 passed, 14 skipped), and changed-file lint checks passed. However, the remediation states that human verification has not occurred. [Current upstream contributor policy](https://github.com/run-llama/llama_index/blob/main/CONTRIBUTING.md#how-to-use-ai-when-contributing) requires human oversight for every AI-assisted contribution, so this patch cannot be approved yet.\", \"base\": \"81f0e06f6e61a5659bd409cac4a199e28c2fd85e\", \"patch_digest\": \"617ececb8fd83268adf1dd1e0c89e97b56aa0b0634389623b38532f8be51548d\", \"evidence_bundle\": \"452-1.json.enc\"}"
       },
       {
-        "key": "followup:task:453",
-        "value": "{\"status\": \"needs_human\", \"task\": 453, \"repo\": \"langfuse\", \"number\": 18359, \"reason\": \"The fix is implemented, but required browser signoff remains unavailable. `seed doctor` found Postgres and ClickHouse unreachable and the web app down; the seed CLI also has no scenario for cyclic parent IDs. No PR was created.\", \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"patch_digest\": \"dd22b8ee554014154a2aadad6b2435c69f8fef605800bb78c94522ec5453cbe1\", \"evidence_bundle\": \"453-1.json.enc\"}"
-      },
-      {
-        "key": "task:453",
-        "value": "{\"started\": 1791308623.8021653, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/453/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"generation_started\": 1791308634.9164395, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791308637.4092875, \"finished\": 1791309435.3340557, \"patch_digest\": \"dd22b8ee554014154a2aadad6b2435c69f8fef605800bb78c94522ec5453cbe1\", \"recovery_checked_at\": 1791353477.5948226}"
-      },
-      {
-        "key": "task:457",
-        "value": "{\"started\": 1791312120.5541098, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791312124.9027648, \"recovery_checked_at\": 1791353477.59783}"
-      },
-      {
-        "key": "followup:task:459",
-        "value": "{\"status\": \"needs_human\", \"task\": 459, \"repo\": \"langfuse\", \"number\": 18361, \"reason\": \"The four missing titles are fixed in the checkout, but browser signoff is required and unavailable: no web app is running at localhost:3000, and this checkout has no environment file. No PR was created.\", \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"patch_digest\": \"fbb370bbe3e3fcc0e6c7e40977ca6571021cc91b0aadd8d37d89c0532e0243e5\", \"evidence_bundle\": \"459-1.json.enc\"}"
-      },
-      {
-        "key": "task:459",
-        "value": "{\"started\": 1791313356.9445481, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/459/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"generation_started\": 1791313367.7816803, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791313369.2252498, \"finished\": 1791314060.0239305, \"patch_digest\": \"fbb370bbe3e3fcc0e6c7e40977ca6571021cc91b0aadd8d37d89c0532e0243e5\", \"recovery_checked_at\": 1791353478.6608603}"
-      },
-      {
-        "key": "task:460",
-        "value": "{\"started\": 1791314342.978062, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791314346.4031382, \"recovery_checked_at\": 1791353478.6632903}"
-      },
-      {
-        "key": "task:462",
-        "value": "{\"started\": 1791320139.6864524, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791320143.249456, \"recovery_checked_at\": 1791353479.648251}"
-      },
-      {
         "key": "task:463",
         "value": "{\"started\": 1791323847.1829019, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791323850.0074556, \"recovery_checked_at\": 1791353480.7701833}"
       },
@@ -6886,10 +6834,6 @@
       {
         "key": "task:478",
         "value": "{\"started\": 1791353365.6335442, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791353368.4952097, \"recovery_checked_at\": 1791353552.1988626}"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791353511.0949435, \"comfyui\": 1791353481.631745, \"hermes\": 1791347031.341856, \"langfuse\": 1791354013.411722, \"firecrawl\": 1791337269.7482638, \"mem0\": 1791353440.3686833, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791353380.0609572, \"crawl4ai\": 1791353431.2624507}}"
       },
       {
         "key": "fix_sessions",
@@ -6980,14 +6924,6 @@
         "value": "{\"at\": 1791354244.826968, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791354246.3329728, \"tasks\": {\"fix\": {\"capacity_wait\": 11, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"publication_wait\": 2, \"skipped\": 34, \"validation_wait\": 2}, \"respond\": {\"blocked\": 1}}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791354306.1808226"
-      },
-      {
         "key": "task:61",
         "value": "{\"recovery_checked_at\": 1791354306.621181}"
       },
@@ -7014,14 +6950,6 @@
       {
         "key": "task:171",
         "value": "{\"recovery_checked_at\": 1791354310.0542986}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791354311.6365328"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791354311.6382263"
       },
       {
         "key": "recovery_audit:171",
@@ -7058,6 +6986,78 @@
       {
         "key": "recovery_audit:176",
         "value": "{\"at\": 1791354317.433354, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791354318.914989, \"tasks\": {\"fix\": {\"capacity_wait\": 11, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"publication_wait\": 2, \"skipped\": 34, \"validation_wait\": 2}, \"respond\": {\"blocked\": 1}}}"
+      },
+      {
+        "key": "task:177",
+        "value": "{\"recovery_checked_at\": 1791354379.2171319}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791354381.1895986"
+      },
+      {
+        "key": "recovery_audit:177",
+        "value": "{\"at\": 1791354381.2580357, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:219",
+        "value": "{\"recovery_checked_at\": 1791354381.2642026}"
+      },
+      {
+        "key": "recovery_audit:219",
+        "value": "{\"at\": 1791354382.4427478, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:222",
+        "value": "{\"recovery_checked_at\": 1791354382.4444437}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791354382.7831964"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791354382.7848856"
+      },
+      {
+        "key": "recovery_audit:222",
+        "value": "{\"at\": 1791354383.5672512, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "followup:task:453",
+        "value": "{\"status\": \"resumed\", \"task\": 453}"
+      },
+      {
+        "key": "task:457",
+        "value": "{\"started\": 1791312120.5541098, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791312124.9027648, \"recovery_checked_at\": 1791354383.59834}"
+      },
+      {
+        "key": "task:459",
+        "value": "{\"started\": 1791313356.9445481, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/459/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"generation_started\": 1791313367.7816803, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791313369.2252498, \"finished\": 1791314060.0239305, \"patch_digest\": \"fbb370bbe3e3fcc0e6c7e40977ca6571021cc91b0aadd8d37d89c0532e0243e5\", \"recovery_checked_at\": 1791354384.7576432}"
+      },
+      {
+        "key": "followup:task:459",
+        "value": "{\"status\": \"resumed\", \"task\": 459}"
+      },
+      {
+        "key": "task:460",
+        "value": "{\"started\": 1791314342.978062, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791314346.4031382, \"recovery_checked_at\": 1791354384.7604542}"
+      },
+      {
+        "key": "task:462",
+        "value": "{\"started\": 1791320139.6864524, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791320143.249456, \"recovery_checked_at\": 1791354385.827256}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791353511.0949435, \"comfyui\": 1791353481.631745, \"hermes\": 1791347031.341856, \"langfuse\": 1791354386.0147583, \"firecrawl\": 1791337269.7482638, \"mem0\": 1791353440.3686833, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791353380.0609572, \"crawl4ai\": 1791353431.2624507}}"
+      },
+      {
+        "key": "task:453",
+        "value": "{\"started\": 1791354386.0149467, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/453/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"generation_started\": 1791308634.9164395, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791308637.4092875, \"finished\": 1791309435.3340557, \"patch_digest\": \"dd22b8ee554014154a2aadad6b2435c69f8fef605800bb78c94522ec5453cbe1\", \"recovery_checked_at\": 1791354383.59505}"
       }
     ],
     "calls": [
