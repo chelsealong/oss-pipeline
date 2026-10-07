@@ -200,5 +200,8 @@ class ResumptionTests(unittest.TestCase):
             self.assertTrue(all(port.startswith('127.0.0.1:') for port in service['ports']))
             self.assertTrue(all(not mount.startswith('/') for mount in service.get('volumes',[])))
         self.assertTrue(all(not volume for volume in spec['volumes'].values()))
+        cmd=validation.sandbox(self.root/'work',self.root/'cache',['node','--version'])
+        self.assertIn(['--tmpfs','/run'],[cmd[i:i+2] for i in range(len(cmd)-1)])
+        self.assertNotIn('/var/run/docker.sock',cmd)
 
 if __name__=='__main__':unittest.main()

@@ -43,9 +43,10 @@ def safe_env(cache):
 def sandbox(work,cache,args):
     cmd=['bwrap','--unshare-user','--uid','0','--gid','0','--unshare-pid',
          '--unshare-ipc','--die-with-parent','--new-session','--ro-bind','/','/',
-         '--proc','/proc','--dev','/dev','--tmpfs','/tmp']
-    hidden=[rt.DATA,Path.home()/'.codex',Path.home()/'.config',Path.home()/'.gitconfig',
-            Path('/var/run/docker.sock')]
+         '--proc','/proc','--dev','/dev','--tmpfs','/tmp','--tmpfs','/run']
+    # /var/run is a symlink to /run on Ubuntu. Mask the directory rather than
+    # attempting a regular-file bind over an existing Unix socket.
+    hidden=[rt.DATA,Path.home()/'.codex',Path.home()/'.config',Path.home()/'.gitconfig']
     for name in ('CODEX_HOME','OSS_CLOUD_STATE_DIR'):
         if os.environ.get(name):hidden.append(Path(os.environ[name]))
     for path in hidden:
