@@ -159,7 +159,8 @@ class ResumptionTests(unittest.TestCase):
         dead=SimpleNamespace(poll=lambda:1)
         with patch.object(cloud_runtime,'auth_file',return_value=auth),patch.object(cloud_runtime,'cloud_enabled',return_value=True),\
                 patch.object(cloud_store,'restore'),patch.object(cloud_runtime,'requeue_validation_repair'),\
-                patch.object(recovery,'reconcile'),patch.object(cloud_runtime.subprocess,'Popen',return_value=dead),\
+                patch.object(recovery,'reconcile'),patch.object(worker,'binary',return_value='/bin/fake-codex'),\
+                patch.object(cloud_runtime.subprocess,'Popen',return_value=dead),\
                 patch.object(cloud_runtime,'stop',side_effect=lambda child:order.append('stopped')),\
                 patch.object(cloud_store,'save',side_effect=lambda:order.append('state')),\
                 patch.object(cloud_runtime,'rotate_auth',side_effect=lambda previous:order.append('auth')),\
@@ -172,7 +173,8 @@ class ResumptionTests(unittest.TestCase):
         auth=self.root/'auth.json';auth.write_text('{}');output=self.root/'output'
         with patch.object(cloud_runtime,'auth_file',return_value=auth),patch.object(cloud_runtime,'cloud_enabled',return_value=True),\
                 patch.object(cloud_store,'restore'),patch.object(cloud_runtime,'requeue_validation_repair'),\
-                patch.object(recovery,'reconcile'),patch.object(cloud_runtime.subprocess,'Popen',return_value=SimpleNamespace(poll=lambda:1)),\
+                patch.object(recovery,'reconcile'),patch.object(worker,'binary',return_value='/bin/fake-codex'),\
+                patch.object(cloud_runtime.subprocess,'Popen',return_value=SimpleNamespace(poll=lambda:1)),\
                 patch.object(cloud_store,'save',side_effect=RuntimeError('checkpoint unavailable')),\
                 patch.object(cloud_runtime,'rotate_auth') as rotate,\
                 patch.dict(os.environ,{'GITHUB_OUTPUT':str(output)}):

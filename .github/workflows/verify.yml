@@ -21,7 +21,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install --quiet pyyaml
+      - run: pip install --quiet PyYAML==6.0.3 cryptography==48.0.1
 
       - name: bash --version
         run: bash --version | head -1
@@ -60,24 +60,7 @@ jobs:
           sys.exit(1 if bad else 0)
           PY
 
-      - name: Static harness
-        env:
-          # Three checks (the claim-expiry probe, the linked-PR blocker, and the
-          # fork existence check) call `gh`. Without a token they failed with
-          # "To use GitHub CLI in a GitHub Actions workflow, set the GH_TOKEN
-          # environment variable" and were reported as real defects — the fork
-          # check listed all sixteen repos as missing a fork. The default
-          # GITHUB_TOKEN is read-only on a public repo, which is all they need.
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Two checks need this and for different reasons. Check 31 mocks
-          # urlopen and never reaches a network, but intent._ask returns None
-          # before trying any model when no key is present, so all three of its
-          # assertions failed here for want of a string. Check 25 exercises the
-          # claim judge for real and needs a working key, so a placeholder is
-          # not enough — it would make a doomed request and fall back to the
-          # caller's default, which is what the check is testing.
-          QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
+      - name: Offline Codex regression gate
         run: |
-          # The scanner lives outside this repo on the workstation; point the
-          # harness at the copies tracked here so the sync check is meaningful.
-          SCANNER="$PWD" ./verify.sh
+          # No account credentials or model calls belong in this commit gate.
+          ./verify.sh
