@@ -162,6 +162,26 @@ class ResumptionTests(unittest.TestCase):
     def test_human_control_cannot_record_unattested_approval(self):
         with self.assertRaisesRegex(ValueError,'explicitly attest'):
             human_review.approve(1,'a'*40,'b'*64,'human','false')
+    def test_canary_imports_only_spending_and_accounts_once_without_overwriting_tasks(self):
+        store=self.root/'store';store.mkdir()
+        snapshot={'version':1,'tables':{'tasks':[{'id':999,'status':'queued'}],
+            'calls':[{'at':time.time()-30,'kind':'codex'}],
+            'meta':[{'key':'dispatch_budget','value':'{"used":{"hermes":15}}'}]}}
+        path=store/'checkpoint.json';path.write_text(json.dumps(snapshot))
+        with patch.dict(os.environ,{'OSS_CLOUD_STATE_DIR':str(store),'GITHUB_RUN_ID':'123'}):
+            cloud_store.seed_canary_budget()
+            with rt.db() as db:
+                self.assertEqual(db.execute('SELECT count(*) FROM tasks').fetchone()[0],0)
+                self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],1)
+            started=time.time();self.assertTrue(rt.reserve_call('codex')[0])
+            with patch.object(cloud_store,'command') as command:
+                cloud_store.account_canary(started);raw=path.read_bytes()
+                cloud_store.account_canary(started)
+                self.assertEqual(command.call_count,3);self.assertEqual(path.read_bytes(),raw)
+        saved=json.loads(raw)
+        self.assertEqual(saved['tables']['tasks'],snapshot['tables']['tasks'])
+        self.assertEqual(saved['tables']['meta'][0],snapshot['tables']['meta'][0])
+        self.assertEqual(len(saved['tables']['calls']),2)
     def test_service_cleanup_runs_after_failures_in_reverse_order(self):
         cleaned=[]
         with self.assertRaisesRegex(RuntimeError,'failed'):

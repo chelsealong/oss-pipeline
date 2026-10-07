@@ -129,6 +129,9 @@ Cloud successors may follow service failures only after every auth owner stops
 and state plus refreshed tokens are persisted. Three automatic failure restarts
 per hour open a cooldown; scheduled runs retain this ledger. A failed final
 checkpoint cannot dispatch an immediate successor. Preserve all spending.
+Cloud canaries import only the live call ledger, never production tasks, and
+append their actual reservations back to that ledger after stopping the auth
+owner. Failed canaries retain spending too; repeated accounting is idempotent.
 
 ## Locations and sources of truth
 

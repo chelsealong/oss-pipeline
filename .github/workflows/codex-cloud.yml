@@ -62,7 +62,7 @@ jobs:
           git config --global user.name oss-pipeline
           git config --global user.email chelsealong@126.com
           gh auth setup-git
-          if [ "$MODE" = live ]; then
+          if [ "$MODE" = live ] || [ "$MODE" = canary ]; then
             git clone --single-branch --branch codex-state --depth=1 https://github.com/chelsealong/oss-pipeline.git "$OSS_CLOUD_STATE_DIR"
           fi
       - name: Run managed Codex services

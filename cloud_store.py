@@ -62,6 +62,35 @@ def restore():
         for path in (store/directory).glob('*.json'):
             if path.name!='runtime.json':shutil.copy2(path,rt.ROOT/directory/path.name)
 
+def seed_canary_budget():
+    """Canaries share the call ceiling but never import production tasks."""
+    store=Path(os.environ['OSS_CLOUD_STATE_DIR'])
+    snapshot=json.loads((store/'checkpoint.json').read_text())
+    with rt.db() as db:
+        if db.execute('SELECT count(*) FROM calls').fetchone()[0]:
+            raise RuntimeError('Canary spending ledger is not empty')
+        db.executemany('INSERT INTO calls(at,kind) VALUES (?,?)',
+            [(row['at'],row['kind']) for row in snapshot['tables']['calls']])
+
+def account_canary(started):
+    """Persist only new canary calls into the otherwise unchanged live state."""
+    store=Path(os.environ['OSS_CLOUD_STATE_DIR']);path=store/'checkpoint.json'
+    snapshot=json.loads(path.read_text());marker='canary_accounted:'+os.environ['GITHUB_RUN_ID']
+    if any(row['key']==marker for row in snapshot['tables']['meta']):return
+    with rt.db() as db:
+        calls=[dict(row) for row in db.execute('SELECT at,kind FROM calls WHERE at>=?',(started,))]
+    snapshot['tables']['calls'].extend(calls)
+    snapshot['tables']['meta'].append({'key':marker,'value':json.dumps({'at':time.time(),'calls':len(calls)})})
+    work_evidence.atomic(path,json.dumps(snapshot,sort_keys=True).encode())
+    command(['git','add','checkpoint.json'],store)
+    command(['git','commit','-m','Retain bounded Codex canary call spending'],store)
+    for attempt in range(3):
+        try:
+            command(['git','push','origin','HEAD:refs/heads/codex-state'],store);break
+        except (RuntimeError,subprocess.TimeoutExpired):
+            if attempt==2:raise
+            time.sleep(2*(attempt+1))
+
 if __name__=='__main__':
     import sys
     if sys.argv[1]=='save':save()

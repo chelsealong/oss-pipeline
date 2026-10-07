@@ -174,12 +174,14 @@ def successor(failed):
 def run(mode,seconds):
     configure(mode)
     previous=hashlib.sha256(auth_file().read_bytes()).hexdigest()
-    children=[];logs=[];restored=False;failed=False
+    children=[];logs=[];restored=False;failed=False;canary_budget=False;started=time.time()
     def start(name,args):
         log=(rt.DATA/(name+'.log')).open('a');logs.append(log)
         child=subprocess.Popen([sys.executable,'-u',*args],stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
         children.append(child);return child
     try:
+        if mode=='canary':
+            cloud_store.seed_canary_budget();canary_budget=True
         if mode=='live':
             if not cloud_enabled():raise RuntimeError('Cloud production switch is off')
             work_evidence.key()  # Never run production without encrypted recovery.
@@ -257,7 +259,9 @@ def run(mode,seconds):
                 cloud_store.save()
         finally:
             # A checkpoint failure must not lose a refreshed subscription token.
-            rotate_auth(previous)
+            try:rotate_auth(previous)
+            finally:
+                if canary_budget:cloud_store.account_canary(started)
         if mode=='live' and restored and rt.getmeta('runner_restart_after',0)<=time.time():
             if successor(failed):
                 cloud_store.save()  # Restart spending must survive before dispatch.
