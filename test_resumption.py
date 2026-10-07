@@ -88,6 +88,11 @@ class ResumptionTests(unittest.TestCase):
         task=self.task('error','Cloning into work: connection reset',attempts=3)
         with patch.object(recovery,'audited_unpublished') as audit:
             self.assertEqual(recovery.reconcile(),[]);audit.assert_not_called()
+    def test_unknown_network_reset_is_not_proof_of_a_failed_read(self):
+        task=self.task('error','git failed: Recv failure: Connection reset')
+        with patch.object(recovery,'optional_api') as api:
+            self.assertFalse(recovery.audited_unpublished(task)[0]);api.assert_not_called()
+        self.assertTrue(recovery.failed_read("Command '['git', 'fetch', 'origin']' timed out"))
     def test_404_is_absence_but_permission_errors_fail_closed(self):
         with patch.object(worker,'api',side_effect=RuntimeError('HTTP 404 Not Found')):
             self.assertIsNone(recovery.optional_api('ref'))

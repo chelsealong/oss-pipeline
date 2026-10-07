@@ -12,6 +12,11 @@ import runtime as rt
 
 WAIT_STATES=('capacity_wait','human_wait','validation_wait')
 
+def failed_read(reason):
+    # A connection reset alone could have happened during an old push whose
+    # publication marker was lost. Require positive clone/fetch evidence.
+    return bool(re.search(r'Cloning into|\[.*git.*(?:fetch|clone).*timed out',reason,re.I))
+
 def wait_kind(reason):
     if re.search(r'HUMAN_REVIEW_REQUIRED:|human (?:oversight|verification|review|signoff|sign-off)|maintainer (?:approval|permission)|coordination required',reason,re.I):
         return 'human_wait'
@@ -103,7 +108,7 @@ def audited_unpublished(task):
     paths=list((rt.DATA/'evidence').glob(f"{task['id']}-*.json"))
     if any(json.loads(p.read_text())['execution'].get('publication_started') for p in paths):
         return False,'A prior attempt may already have published'
-    read_failure=bool(re.search(r'Cloning into|\[.*git.*(?:fetch|clone).*timed out|Recv failure: Connection reset',task.get('result',''),re.I))
+    read_failure=failed_read(task.get('result',''))
     phase=state.get('last_execution_phase',state.get('phase'))
     known_phase=phase in ('checkout','generation','review','remediation','rereview','validation')
     if not read_failure and not (task['status']=='interrupted' and known_phase):
@@ -165,7 +170,7 @@ def reconcile(limit=8):
         if status in ('error','interrupted'):
             if task['attempts']>=3 or state.get('publication_started'):continue
             phase=state.get('last_execution_phase',state.get('phase'))
-            if status=='error' and not re.search(r'Cloning into|\[.*git.*(?:fetch|clone).*timed out|Recv failure: Connection reset',reason,re.I):continue
+            if status=='error' and not failed_read(reason):continue
             if status=='interrupted' and phase not in ('checkout','generation','review','remediation','rereview','validation'):continue
         elif status not in WAIT_STATES:continue
         if checked>=limit:break
