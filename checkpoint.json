@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791354112.0285628,
+  "saved_at": 1791354136.1196613,
   "tables": {
     "tasks": [
       {
@@ -5080,10 +5080,10 @@
         "repo": "comfyui",
         "number": 16787,
         "note": "",
-        "status": "running",
+        "status": "human_wait",
         "created": 1791167067.060218,
-        "updated": 1791353481.631902,
-        "result": "Previous runner ended during task; inspect remote before retry",
+        "updated": 1791354136.096604,
+        "result": "review: HUMAN_REVIEW_REQUIRED: context.json has no human attestation for this exact patch and base. Technical checks passed: the regression test failed on the original loader and passed with the patch; the full unit suite, Ruff, and git diff --check passed. Upstream master still matches the checkout base.",
         "attempts": 2
       },
       {
@@ -6900,10 +6900,6 @@
         "value": "{\"at\": 1791353411.813792, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
       },
       {
-        "key": "followup:task:391",
-        "value": "{\"status\": \"resumed\", \"task\": 391}"
-      },
-      {
         "key": "followup:task:395",
         "value": "{\"status\": \"resumed\", \"task\": 395}"
       },
@@ -7016,10 +7012,6 @@
         "value": "{\"started\": 1791353365.6335442, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791353368.4952097, \"recovery_checked_at\": 1791353552.1988626}"
       },
       {
-        "key": "task:391",
-        "value": "{\"started\": 1791353481.631955, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/391/attempt-2\", \"attempt\": 2, \"phase\": \"review\", \"base\": \"c9d8a6e69c4b5ab7fa0f789e7b988c172cd31fc9\", \"generation_started\": 1791168187.9516895, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791353893.455012, \"recovery_checked_at\": 1791353410.9372227}"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791353511.0949435, \"comfyui\": 1791353481.631745, \"hermes\": 1791347031.341856, \"langfuse\": 1791354013.411722, \"firecrawl\": 1791337269.7482638, \"mem0\": 1791353440.3686833, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791353380.0609572, \"crawl4ai\": 1791353431.2624507}}"
       },
@@ -7030,14 +7022,6 @@
       {
         "key": "dispatch_budget",
         "value": "{\"date\": \"2026-10-07\", \"used\": {\"firecrawl\": 2, \"hermes\": 5, \"llama-index\": 1, \"langfuse\": 2, \"spec-kit\": 1, \"crawl4ai\": 1, \"mem0\": 1}}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791354051.6924472, \"tasks\": {\"fix\": {\"capacity_wait\": 11, \"done\": 2, \"error\": 2, \"human_wait\": 1, \"publication_wait\": 2, \"running\": 2, \"skipped\": 33, \"validation_wait\": 2}, \"respond\": {\"blocked\": 1}}}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791354068.6583672, \"source\": \"completed task phase\"}"
       },
       {
         "key": "task:218",
@@ -7056,8 +7040,24 @@
         "value": "1791354102.4501712"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791354113.5233314, \"tasks\": {\"fix\": {\"capacity_wait\": 11, \"done\": 2, \"error\": 2, \"human_wait\": 1, \"publication_wait\": 2, \"running\": 1, \"skipped\": 34, \"validation_wait\": 2}, \"respond\": {\"blocked\": 1}}}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1791354111.150313"
+        "value": "1791354126.1559672"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791354135.7882037, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:task:391",
+        "value": "{\"status\": \"needs_human\", \"task\": 391, \"repo\": \"comfyui\", \"number\": 16787, \"reason\": \"review: HUMAN_REVIEW_REQUIRED: context.json has no human attestation for this exact patch and base. Technical checks passed: the regression test failed on the original loader and passed with the patch; the full unit suite, Ruff, and git diff --check passed. Upstream master still matches the checkout base.\", \"base\": \"c9d8a6e69c4b5ab7fa0f789e7b988c172cd31fc9\", \"patch_digest\": \"77674cf2ff6c5103491ab435e1653438cdc9a5dfa29767ade280570547cff5e9\", \"evidence_bundle\": \"391-2.json.enc\"}"
+      },
+      {
+        "key": "task:391",
+        "value": "{\"started\": 1791353481.631955, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/391/attempt-2\", \"attempt\": 2, \"phase\": \"human_wait\", \"base\": \"c9d8a6e69c4b5ab7fa0f789e7b988c172cd31fc9\", \"generation_started\": 1791168187.9516895, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791353893.455012, \"recovery_checked_at\": 1791353410.9372227, \"patch_digest\": \"77674cf2ff6c5103491ab435e1653438cdc9a5dfa29767ade280570547cff5e9\", \"last_execution_phase\": \"review\", \"finished\": 1791354135.98452}"
       }
     ],
     "calls": [
