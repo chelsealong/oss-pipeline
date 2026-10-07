@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791353344.7162538,
+  "saved_at": 1791353346.041418,
   "tables": {
     "tasks": [
       {
@@ -530,11 +530,11 @@
         "repo": "openclaw",
         "number": 163058,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1790898201.78531,
-        "updated": 1791353323.6012008,
+        "updated": 1791353345.6670532,
         "result": "Stopped read-only clone during cloud cutover; no generation started; retained for manual inspection. git failed (-15): Cloning into '/Users/jialong/.local/share/oss-scanner/.runtime/jobs/41/work'...\n",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 42,
@@ -6795,10 +6795,6 @@
         "value": "{\"at\": 1791353323.5913334, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
       },
       {
-        "key": "task:41",
-        "value": "{\"recovery_checked_at\": 1791353322.8475723, \"phase\": \"queued\", \"terminal\": false, \"retry_after\": 0}"
-      },
-      {
         "key": "followup:task:41",
         "value": "{\"status\": \"resumed\", \"task\": 41}"
       },
@@ -6831,10 +6827,6 @@
         "value": "{\"at\": 1791353328.4317648, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791353330.6399295"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791353330.66691"
       },
@@ -6865,10 +6857,6 @@
       {
         "key": "pause",
         "value": "{}"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791350082.5290499, \"comfyui\": 1791316471.6497233, \"hermes\": 1791347031.341856, \"langfuse\": 1791353334.0725398, \"firecrawl\": 1791337269.7482638, \"mem0\": 1791273201.9365122, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197}}"
       },
       {
         "key": "recovery_audit:61",
@@ -6937,6 +6925,18 @@
       {
         "key": "dispatch_budget",
         "value": "{\"date\": \"2026-10-07\", \"used\": {\"firecrawl\": 2, \"hermes\": 5, \"llama-index\": 1, \"langfuse\": 1}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791353345.643368"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791353345.6669283, \"comfyui\": 1791316471.6497233, \"hermes\": 1791347031.341856, \"langfuse\": 1791353334.0725398, \"firecrawl\": 1791337269.7482638, \"mem0\": 1791273201.9365122, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197}}"
+      },
+      {
+        "key": "task:41",
+        "value": "{\"recovery_checked_at\": 1791353322.8475723, \"phase\": \"queued\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791353345.6670847, \"worker_slot\": 1}"
       }
     ],
     "calls": [
@@ -13391,6 +13391,10 @@
       {
         "at": 1791353344.712577,
         "kind": "codex"
+      },
+      {
+        "at": 1791353345.1068075,
+        "kind": "judge"
       }
     ]
   }
