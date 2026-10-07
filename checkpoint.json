@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791364316.367675,
+  "saved_at": 1791364345.619505,
   "tables": {
     "tasks": [
       {
@@ -6276,10 +6276,10 @@
         "repo": "comfyui",
         "number": 16838,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791364270.6952658,
-        "updated": 1791364270.8794162,
-        "result": "",
+        "updated": 1791364345.6105828,
+        "result": "Issue #16838’s recorded failure begins with a Windows access violation inside comfy_aimdo’s malloc-graph operation; the later “aimdo memory compile error” occurs during cleanup. The report includes many custom nodes and no workflow that reproduces the failure with them disabled. I could not establish a specific ComfyUI source defect or a CPU-verifiable fix. The checkout was left unchanged.",
         "attempts": 1
       },
       {
@@ -7082,14 +7082,6 @@
         "value": "1791364245.8826678"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791364247.5045826, \"tasks\": {\"fix\": {\"capacity_wait\": 13, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"publication_wait\": 2, \"retry_wait\": 1, \"skipped\": 40}, \"respond\": {\"blocked\": 1}}}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791364249.4593737, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -7112,14 +7104,6 @@
       {
         "key": "dispatch_budget",
         "value": "{\"date\": \"2026-10-07\", \"used\": {\"firecrawl\": 5, \"hermes\": 5, \"llama-index\": 1, \"langfuse\": 4, \"spec-kit\": 4, \"crawl4ai\": 1, \"mem0\": 1, \"dify\": 1, \"comfyui\": 1}}"
-      },
-      {
-        "key": "task:483",
-        "value": "{\"started\": 1791364270.8794672, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/483/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"c9d8a6e69c4b5ab7fa0f789e7b988c172cd31fc9\", \"generation_started\": 1791364276.4091372, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791364278.5084107}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791364305.8453562"
       },
       {
         "key": "task:61",
@@ -7158,14 +7142,6 @@
         "value": "{\"recovery_checked_at\": 1791364312.215785}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1791364312.2604892"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791364312.262727"
-      },
-      {
         "key": "recovery_audit:172",
         "value": "{\"at\": 1791364313.0278883, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -7192,6 +7168,30 @@
       {
         "key": "recovery_audit:176",
         "value": "{\"at\": 1791364316.28303, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791364318.0161626, \"tasks\": {\"fix\": {\"capacity_wait\": 14, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"publication_wait\": 2, \"running\": 1, \"skipped\": 41}, \"respond\": {\"blocked\": 1}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791364335.8502328"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791364342.2858605"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791364342.2875412"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791364345.4503179, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:483",
+        "value": "{\"started\": 1791364270.8794672, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/483/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"c9d8a6e69c4b5ab7fa0f789e7b988c172cd31fc9\", \"generation_started\": 1791364276.4091372, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791364278.5084107, \"last_execution_phase\": \"generation\", \"finished\": 1791364345.4524035}"
       }
     ],
     "calls": [
