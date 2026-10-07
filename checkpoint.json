@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791355550.6018782,
+  "saved_at": 1791355552.9299915,
   "tables": {
     "tasks": [
       {
@@ -478,10 +478,10 @@
         "repo": "firecrawl",
         "number": 4902,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1790893084.763901,
-        "updated": 1791355511.7614298,
-        "result": "Issue #4902 gives no reproducible request or specific bypass. Current code already blocks private scrape and webhook destinations by default, while ALLOW_LOCAL_WEBHOOKS is an explicit opt-in. Open PRs #4781 and #3731 overlap the affected security code. A concrete fix would require changes to security paths, which this task excludes.",
+        "updated": 1791355552.9179916,
+        "result": "Issue #4902 gives no reproducible URL or request that bypasses the current SSRF checks. The current scrape dispatcher blocks private destinations by default, and webhook delivery uses that dispatcher. ALLOW_LOCAL_WEBHOOKS is an explicit opt-in. Open PRs #4781 and #3731 also overlap the relevant security code. A further fix would require a concrete failing case and edits to security paths, which this task excludes.",
         "attempts": 2
       },
       {
@@ -6853,10 +6853,6 @@
         "value": "{\"phase\": \"skipped\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791354860.3042593, \"worker_slot\": 1, \"folder\": \"jobs/42/attempt-2\", \"attempt\": 2, \"base\": \"62b6fcf49933525162981c5b1ddf075a2b781ded\", \"generation_started\": 1791354871.1013908, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791354872.8422062, \"last_execution_phase\": \"generation\", \"finished\": 1791354893.188048}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791354956.0172946, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:226",
         "value": "{\"phase\": \"skipped\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791354900.9989476, \"worker_slot\": 0, \"folder\": \"jobs/226/attempt-2\", \"attempt\": 2, \"base\": \"62b6fcf49933525162981c5b1ddf075a2b781ded\", \"generation_started\": 1791354910.7434998, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791354912.1224697, \"last_execution_phase\": \"generation\", \"finished\": 1791354956.0189278}"
       },
@@ -7069,10 +7065,6 @@
         "value": "{\"started\": 1791355457.8389697, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791355460.332375, \"recovery_checked_at\": 1791355487.536567}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791355490.2337437, \"tasks\": {\"fix\": {\"capacity_wait\": 12, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"publication_wait\": 2, \"skipped\": 39}, \"respond\": {\"blocked\": 1}}}"
-      },
-      {
         "key": "task:232",
         "value": "{\"phase\": \"queued\", \"terminal\": false, \"retry_after\": 0}"
       },
@@ -7093,16 +7085,24 @@
         "value": "{\"date\": \"2026-10-07\", \"used\": {\"firecrawl\": 3, \"hermes\": 5, \"llama-index\": 1, \"langfuse\": 2, \"spec-kit\": 4, \"crawl4ai\": 1, \"mem0\": 1}}"
       },
       {
-        "key": "task:37",
-        "value": "{\"phase\": \"generation\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791355511.7614582, \"worker_slot\": 0, \"folder\": \"jobs/37/attempt-2\", \"attempt\": 2, \"base\": \"0b25e17057e140236b2081cfaa5baecd1154d090\", \"generation_started\": 1791355520.6363606, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791355522.5505168}"
+        "key": "task:262",
+        "value": "{\"phase\": \"queued\", \"terminal\": false, \"retry_after\": 0}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791355536.3185444"
+        "value": "1791355551.3204513"
       },
       {
-        "key": "task:262",
-        "value": "{\"phase\": \"queued\", \"terminal\": false, \"retry_after\": 0}"
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791355552.3827991, \"tasks\": {\"fix\": {\"capacity_wait\": 12, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"publication_wait\": 2, \"queued\": 3, \"running\": 1, \"skipped\": 39}, \"respond\": {\"blocked\": 1}}}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791355552.6465442, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:37",
+        "value": "{\"phase\": \"skipped\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791355511.7614582, \"worker_slot\": 0, \"folder\": \"jobs/37/attempt-2\", \"attempt\": 2, \"base\": \"0b25e17057e140236b2081cfaa5baecd1154d090\", \"generation_started\": 1791355520.6363606, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791355522.5505168, \"last_execution_phase\": \"generation\", \"finished\": 1791355552.6483715}"
       }
     ],
     "calls": [
