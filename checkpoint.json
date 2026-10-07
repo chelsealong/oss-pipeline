@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791380975.9877894,
+  "saved_at": 1791381001.5429618,
   "tables": {
     "tasks": [
       {
@@ -6406,10 +6406,10 @@
         "repo": "comfyui",
         "number": 16848,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791380910.5882926,
-        "updated": 1791380916.1747286,
-        "result": "",
+        "updated": 1791381001.53751,
+        "result": "The reported layout change occurs when the frontend imports a PNG. The attached JSON uses the built-in SaveImage node, whose backend path writes workflow metadata. No generated PNG was supplied to show whether that metadata was altered, and custom nodes were not disabled during reproduction. There is no identifiable, CPU-verifiable bug in this checkout to fix.",
         "attempts": 1
       }
     ],
@@ -7127,10 +7127,6 @@
         "value": "{\"started\": 1791377265.771425, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791377268.6850145, \"recovery_checked_at\": 1791380126.243348}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791380145.9258862, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -7275,10 +7271,6 @@
         "value": "1791380902.0929093"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791380903.4525306, \"tasks\": {\"fix\": {\"capacity_wait\": 16, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"publication_wait\": 2, \"skipped\": 44}, \"respond\": {\"blocked\": 3}}}"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791377265.771225, \"comfyui\": 1791380916.1745574, \"hermes\": 1791347031.341856, \"langfuse\": 1791378280.7594628, \"firecrawl\": 1791355617.7745435, \"mem0\": 1791376873.1927829, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791354900.9987667, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791371043.7510295}}"
       },
@@ -7295,10 +7287,6 @@
         "value": "{\"date\": \"2026-10-07\", \"used\": {\"firecrawl\": 5, \"hermes\": 5, \"llama-index\": 1, \"langfuse\": 4, \"spec-kit\": 4, \"crawl4ai\": 1, \"mem0\": 3, \"dify\": 2, \"comfyui\": 4}}"
       },
       {
-        "key": "task:493",
-        "value": "{\"started\": 1791380916.1747649, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/493/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"b00c6e95279053474955540ba4f551646722b9aa\", \"generation_started\": 1791380923.3110278, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791380925.0419648}"
-      },
-      {
         "key": "task:61",
         "value": "{\"recovery_checked_at\": 1791380963.6838152}"
       },
@@ -7309,10 +7297,6 @@
       {
         "key": "task:166",
         "value": "{\"recovery_checked_at\": 1791380964.9626985}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791380965.7967124"
       },
       {
         "key": "recovery_audit:166",
@@ -7365,6 +7349,22 @@
       {
         "key": "recovery_audit:176",
         "value": "{\"at\": 1791380975.9017153, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791380978.3209445, \"tasks\": {\"fix\": {\"capacity_wait\": 16, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"publication_wait\": 2, \"running\": 1, \"skipped\": 44}, \"respond\": {\"blocked\": 3}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791380995.800156"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791381001.345045, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:493",
+        "value": "{\"started\": 1791380916.1747649, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/493/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"b00c6e95279053474955540ba4f551646722b9aa\", \"generation_started\": 1791380923.3110278, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791380925.0419648, \"last_execution_phase\": \"generation\", \"finished\": 1791381001.3488262}"
       }
     ],
     "calls": [
