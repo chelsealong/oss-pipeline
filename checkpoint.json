@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791353469.755111,
+  "saved_at": 1791353481.6360083,
   "tables": {
     "tasks": [
       {
@@ -5080,11 +5080,11 @@
         "repo": "comfyui",
         "number": 16787,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791167067.060218,
-        "updated": 1791353411.8156798,
+        "updated": 1791353481.631902,
         "result": "Previous runner ended during task; inspect remote before retry",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 392,
@@ -5210,9 +5210,9 @@
         "repo": "langfuse",
         "number": 18256,
         "note": "",
-        "status": "interrupted",
+        "status": "queued",
         "created": 1791220988.020469,
-        "updated": 1791240072.152293,
+        "updated": 1791353476.8002975,
         "result": "Previous runner ended during task; inspect remote before retry",
         "attempts": 1
       },
@@ -5379,9 +5379,9 @@
         "repo": "openclaw",
         "number": 165786,
         "note": "",
-        "status": "interrupted",
+        "status": "queued",
         "created": 1791242265.7583547,
-        "updated": 1791253943.3271475,
+        "updated": 1791353477.5574396,
         "result": "Previous runner ended during task; inspect remote before retry",
         "attempts": 1
       },
@@ -5873,7 +5873,7 @@
         "repo": "llama-index",
         "number": 23404,
         "note": "",
-        "status": "blocked",
+        "status": "human_wait",
         "created": 1791308165.4475198,
         "updated": 1791308864.751112,
         "result": "review: The remediation resolves both original code objections: GPT-6.1 Sol requests omit the unsupported parameters, and `max` reasoning effort is accepted. The current package suite passed (123 passed, 14 skipped), and changed-file lint checks passed. However, the remediation states that human verification has not occurred. [Current upstream contributor policy](https://github.com/run-llama/llama_index/blob/main/CONTRIBUTING.md#how-to-use-ai-when-contributing) requires human oversight for every AI-assisted contribution, so this patch cannot be approved yet.",
@@ -5886,7 +5886,7 @@
         "repo": "langfuse",
         "number": 18359,
         "note": "",
-        "status": "blocked",
+        "status": "validation_wait",
         "created": 1791308623.6508105,
         "updated": 1791309435.626366,
         "result": "The fix is implemented, but required browser signoff remains unavailable. `seed doctor` found Postgres and ClickHouse unreachable and the web app down; the seed CLI also has no scenario for cyclic parent IDs. No PR was created.",
@@ -5938,7 +5938,7 @@
         "repo": "openclaw",
         "number": 166216,
         "note": "",
-        "status": "skipped",
+        "status": "capacity_wait",
         "created": 1791310367.589265,
         "updated": 1791312124.9058468,
         "result": "openclaw open PR cap (20)",
@@ -5964,7 +5964,7 @@
         "repo": "langfuse",
         "number": 18361,
         "note": "",
-        "status": "blocked",
+        "status": "validation_wait",
         "created": 1791313354.1881466,
         "updated": 1791314060.1959445,
         "result": "The four missing titles are fixed in the checkout, but browser signoff is required and unavailable: no web app is running at localhost:3000, and this checkout has no environment file. No PR was created.",
@@ -5977,7 +5977,7 @@
         "repo": "openclaw",
         "number": 166242,
         "note": "",
-        "status": "skipped",
+        "status": "capacity_wait",
         "created": 1791314337.8397918,
         "updated": 1791314346.405952,
         "result": "openclaw open PR cap (20)",
@@ -6003,7 +6003,7 @@
         "repo": "openclaw",
         "number": 166271,
         "note": "",
-        "status": "skipped",
+        "status": "capacity_wait",
         "created": 1791320131.7207747,
         "updated": 1791320143.2516065,
         "result": "openclaw open PR cap (20)",
@@ -6016,7 +6016,7 @@
         "repo": "openclaw",
         "number": 166295,
         "note": "",
-        "status": "skipped",
+        "status": "capacity_wait",
         "created": 1791323840.482556,
         "updated": 1791323850.0098386,
         "result": "openclaw open PR cap (20)",
@@ -6348,10 +6348,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7255\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABZZhMYA@2026-10-05T17:17:09Z\", \"author\": \"virktapvir\", \"when\": \"2026-10-05T17:17:09Z\", \"kind\": \"comment\", \"assoc\": \"NONE\", \"body\": \"Update: #7230 (the `make_stream_normalizer` snapshot-merge fix) was merged into main on Oct 4 as 71c4fd7, and #6680 is closed. I checked `a2a/_compat.py` on main and the normalizer now carries over artifacts the snapshot lacks. It is not in a release yet (latest is v2.11.0, from before the merge).\\n\\nThat leaves #7256 as the only piece we still carry outside of main. On v2.11.0, and on main as of today, a delegated stream through stock `RemoteA2aAgent` still produces only `partial=True` events and no aggregated non-partial event (see my comment above for the code paths). This is from reading the source; I have not re-run the deployed repro on main.\\n\\nOnce a release with #7230 ships, we plan to drop it from our fork and carry only #7256. Happy to re-test #7256 against the new release or main and post the results here, or to adjust the PR if the reviewers want a different approach.\\n\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
       {
-        "key": "task:401",
-        "value": "{\"started\": 1791220993.5607672, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/401/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"1cfcf5af37ffd1ba9706433308f5b9631d41273e\", \"generation_started\": 1791221004.3835506, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791221006.0802107}"
-      },
-      {
         "key": "task:402",
         "value": "{\"started\": 1791221276.1033044, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/402/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"2a29d49627fdf0cf86002391e26e88bf274f81b5\", \"phase_started\": 1791221291.0734224, \"finished\": 1791221440.128704}"
       },
@@ -6406,10 +6402,6 @@
       {
         "key": "task:413",
         "value": "{\"started\": 1791242267.6204336, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/413/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"b53d7a3cb55c77605c25ba22d7df41377c4b5d34\", \"generation_started\": 1791242325.089564, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791242327.2151155, \"finished\": 1791242381.5256517}"
-      },
-      {
-        "key": "task:414",
-        "value": "{\"started\": 1791242382.0769336, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/414/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"efac8b70db25b77c21eb97f8c33c94be67f1ef3b\", \"generation_started\": 1791242439.1752489, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791242441.120452}"
       },
       {
         "key": "cloud_validation_retry_20261005",
@@ -6620,14 +6612,6 @@
         "value": "{\"started\": 1791308017.411113, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/451/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"9f9d8881d2bd132e13d8f372692697402e256961\", \"generation_started\": 1791308079.1426146, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791308081.2292407, \"finished\": 1791308119.7685246}"
       },
       {
-        "key": "task:452",
-        "value": "{\"started\": 1791308166.009954, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/452/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"81f0e06f6e61a5659bd409cac4a199e28c2fd85e\", \"generation_started\": 1791308191.2768261, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791308751.5601306, \"finished\": 1791308863.7423992}"
-      },
-      {
-        "key": "task:453",
-        "value": "{\"started\": 1791308623.8021653, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/453/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"generation_started\": 1791308634.9164395, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791308637.4092875, \"finished\": 1791309435.3340557}"
-      },
-      {
         "key": "task:455",
         "value": "{\"started\": 1791309564.2375576, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/455/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"f6b704032006a3193d038e1ad9f08c18a66f84e0\", \"generation_started\": 1791309570.6945522, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791309572.0363443, \"finished\": 1791309609.659087}"
       },
@@ -6640,32 +6624,12 @@
         "value": "{\"started\": 1791309568.581788, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/456/attempt-1\", \"attempt\": 1, \"phase\": \"done\", \"base\": \"10334ec913d7b18f32e6e1d16e9ac10bdc760534\", \"generation_started\": 1791309622.729153, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791311399.010543, \"publication_started\": true, \"branch\": \"fix/codex-openclaw-166210\", \"head\": \"46c53615a19cb7c366171b1d496f35a4c5046b78\", \"finished\": 1791311958.99583}"
       },
       {
-        "key": "task:457",
-        "value": "{\"started\": 1791312120.5541098, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791312124.9027648}"
-      },
-      {
         "key": "task:458",
         "value": "{\"started\": 1791312482.4913554, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/458/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"46c53615a19cb7c366171b1d496f35a4c5046b78\", \"phase_started\": 1791312540.0523007, \"finished\": 1791312605.064351}"
       },
       {
-        "key": "task:459",
-        "value": "{\"started\": 1791313356.9445481, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/459/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"generation_started\": 1791313367.7816803, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791313369.2252498, \"finished\": 1791314060.0239305}"
-      },
-      {
-        "key": "task:460",
-        "value": "{\"started\": 1791314342.978062, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791314346.4031382}"
-      },
-      {
         "key": "task:461",
         "value": "{\"started\": 1791316471.6505444, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/461/attempt-1\", \"attempt\": 1, \"phase\": \"done\", \"base\": \"6a8dcf514bc02a29d1b20257cb0fc9bfed3223e1\", \"generation_started\": 1791316481.0928202, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791316788.0393493, \"publication_started\": true, \"branch\": \"fix/codex-comfyui-16827\", \"head\": \"c32e0a36923c2056346037ef9a17e981349944e3\", \"finished\": 1791316924.4495308}"
-      },
-      {
-        "key": "task:462",
-        "value": "{\"started\": 1791320139.6864524, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791320143.249456}"
-      },
-      {
-        "key": "task:463",
-        "value": "{\"started\": 1791323847.1829019, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791323850.0074556}"
       },
       {
         "key": "task:464",
@@ -6964,10 +6928,6 @@
         "value": "{\"at\": 1791353411.813792, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
       },
       {
-        "key": "task:391",
-        "value": "{\"started\": 1791168182.605812, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/391/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"5c460d8172fe30761ff67c0df3d5643bb74e0d70\", \"generation_started\": 1791168187.9516895, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791168189.309978, \"recovery_checked_at\": 1791353410.9372227}"
-      },
-      {
         "key": "followup:task:391",
         "value": "{\"status\": \"resumed\", \"task\": 391}"
       },
@@ -6992,10 +6952,6 @@
         "value": "{\"recovery_checked_at\": 1791353318.9131644, \"phase\": \"skipped\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791353334.072681, \"worker_slot\": 0, \"folder\": \"jobs/6/attempt-2\", \"attempt\": 2, \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"generation_started\": 1791353344.7124655, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791353346.038751, \"last_execution_phase\": \"generation\", \"finished\": 1791353427.6705053}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791353365.6333914, \"comfyui\": 1791316471.6497233, \"hermes\": 1791347031.341856, \"langfuse\": 1791353334.0725398, \"firecrawl\": 1791337269.7482638, \"mem0\": 1791353440.3686833, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791353380.0609572, \"crawl4ai\": 1791353431.2624507}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"firecrawl\", \"task\": 466, \"at\": 1791337230.3217967}, {\"repo\": \"firecrawl\", \"task\": 467, \"at\": 1791337278.7116098}, {\"repo\": \"hermes\", \"task\": 468, \"at\": 1791346218.1991782}, {\"repo\": \"hermes\", \"task\": 469, \"at\": 1791346399.2053735}, {\"repo\": \"hermes\", \"task\": 470, \"at\": 1791346450.1826293}, {\"repo\": \"hermes\", \"task\": 471, \"at\": 1791346497.9923105}, {\"repo\": \"hermes\", \"task\": 472, \"at\": 1791347049.279021}, {\"repo\": \"llama-index\", \"task\": 476, \"at\": 1791348724.981807}, {\"repo\": \"langfuse\", \"task\": 6, \"at\": 1791353344.7124648}, {\"repo\": \"spec-kit\", \"task\": 4, \"at\": 1791353387.9868042}, {\"repo\": \"crawl4ai\", \"task\": 258, \"at\": 1791353439.1712284}, {\"repo\": \"mem0\", \"task\": 178, \"at\": 1791353451.250726}]"
       },
@@ -7008,24 +6964,96 @@
         "value": "{\"phase\": \"generation\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791353440.3688235, \"worker_slot\": 0, \"folder\": \"jobs/178/attempt-2\", \"attempt\": 2, \"base\": \"c93420c49a6b14c3d446bdb156d96811908fd90a\", \"generation_started\": 1791353451.2507265, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791353452.7768254}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791353465.6607761"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791353469.0171146"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791353469.0187185"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1791353469.665418, \"source\": \"completed task phase\"}"
       },
       {
         "key": "task:258",
         "value": "{\"phase\": \"skipped\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791353431.2626064, \"worker_slot\": 1, \"folder\": \"jobs/258/attempt-2\", \"attempt\": 2, \"base\": \"8afd0a68064ff7049303c9f9d037ab6228aac43c\", \"generation_started\": 1791353439.171229, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791353440.6150053, \"last_execution_phase\": \"generation\", \"finished\": 1791353469.6675544}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791353476.0954556"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791353476.0968034"
+      },
+      {
+        "key": "recovery_audit:401",
+        "value": "{\"at\": 1791353476.7984173, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
+      },
+      {
+        "key": "task:401",
+        "value": "{\"started\": 1791220993.5607672, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/401/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"1cfcf5af37ffd1ba9706433308f5b9631d41273e\", \"generation_started\": 1791221004.3835506, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791221006.0802107, \"recovery_checked_at\": 1791353475.9772563}"
+      },
+      {
+        "key": "followup:task:401",
+        "value": "{\"status\": \"resumed\", \"task\": 401}"
+      },
+      {
+        "key": "recovery_audit:414",
+        "value": "{\"at\": 1791353477.5556486, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
+      },
+      {
+        "key": "task:414",
+        "value": "{\"started\": 1791242382.0769336, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/414/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"efac8b70db25b77c21eb97f8c33c94be67f1ef3b\", \"generation_started\": 1791242439.1752489, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791242441.120452, \"recovery_checked_at\": 1791353476.802987}"
+      },
+      {
+        "key": "followup:task:414",
+        "value": "{\"status\": \"resumed\", \"task\": 414}"
+      },
+      {
+        "key": "task:452",
+        "value": "{\"started\": 1791308166.009954, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/452/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"81f0e06f6e61a5659bd409cac4a199e28c2fd85e\", \"generation_started\": 1791308191.2768261, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791308751.5601306, \"finished\": 1791308863.7423992, \"patch_digest\": \"617ececb8fd83268adf1dd1e0c89e97b56aa0b0634389623b38532f8be51548d\"}"
+      },
+      {
+        "key": "followup:task:452",
+        "value": "{\"status\": \"needs_human\", \"task\": 452, \"repo\": \"llama-index\", \"number\": 23404, \"reason\": \"review: The remediation resolves both original code objections: GPT-6.1 Sol requests omit the unsupported parameters, and `max` reasoning effort is accepted. The current package suite passed (123 passed, 14 skipped), and changed-file lint checks passed. However, the remediation states that human verification has not occurred. [Current upstream contributor policy](https://github.com/run-llama/llama_index/blob/main/CONTRIBUTING.md#how-to-use-ai-when-contributing) requires human oversight for every AI-assisted contribution, so this patch cannot be approved yet.\", \"base\": \"81f0e06f6e61a5659bd409cac4a199e28c2fd85e\", \"patch_digest\": \"617ececb8fd83268adf1dd1e0c89e97b56aa0b0634389623b38532f8be51548d\", \"evidence_bundle\": \"452-1.json.enc\"}"
+      },
+      {
+        "key": "followup:task:453",
+        "value": "{\"status\": \"needs_human\", \"task\": 453, \"repo\": \"langfuse\", \"number\": 18359, \"reason\": \"The fix is implemented, but required browser signoff remains unavailable. `seed doctor` found Postgres and ClickHouse unreachable and the web app down; the seed CLI also has no scenario for cyclic parent IDs. No PR was created.\", \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"patch_digest\": \"dd22b8ee554014154a2aadad6b2435c69f8fef605800bb78c94522ec5453cbe1\", \"evidence_bundle\": \"453-1.json.enc\"}"
+      },
+      {
+        "key": "task:453",
+        "value": "{\"started\": 1791308623.8021653, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/453/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"generation_started\": 1791308634.9164395, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791308637.4092875, \"finished\": 1791309435.3340557, \"patch_digest\": \"dd22b8ee554014154a2aadad6b2435c69f8fef605800bb78c94522ec5453cbe1\", \"recovery_checked_at\": 1791353477.5948226}"
+      },
+      {
+        "key": "task:457",
+        "value": "{\"started\": 1791312120.5541098, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791312124.9027648, \"recovery_checked_at\": 1791353477.59783}"
+      },
+      {
+        "key": "followup:task:459",
+        "value": "{\"status\": \"needs_human\", \"task\": 459, \"repo\": \"langfuse\", \"number\": 18361, \"reason\": \"The four missing titles are fixed in the checkout, but browser signoff is required and unavailable: no web app is running at localhost:3000, and this checkout has no environment file. No PR was created.\", \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"patch_digest\": \"fbb370bbe3e3fcc0e6c7e40977ca6571021cc91b0aadd8d37d89c0532e0243e5\", \"evidence_bundle\": \"459-1.json.enc\"}"
+      },
+      {
+        "key": "task:459",
+        "value": "{\"started\": 1791313356.9445481, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/459/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"generation_started\": 1791313367.7816803, \"dispatch_paid_date\": \"2026-10-06\", \"phase_started\": 1791313369.2252498, \"finished\": 1791314060.0239305, \"patch_digest\": \"fbb370bbe3e3fcc0e6c7e40977ca6571021cc91b0aadd8d37d89c0532e0243e5\", \"recovery_checked_at\": 1791353478.6608603}"
+      },
+      {
+        "key": "task:460",
+        "value": "{\"started\": 1791314342.978062, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791314346.4031382, \"recovery_checked_at\": 1791353478.6632903}"
+      },
+      {
+        "key": "task:462",
+        "value": "{\"started\": 1791320139.6864524, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791320143.249456, \"recovery_checked_at\": 1791353479.648251}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791353480.661908"
+      },
+      {
+        "key": "task:463",
+        "value": "{\"started\": 1791323847.1829019, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791323850.0074556, \"recovery_checked_at\": 1791353480.7701833}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791353365.6333914, \"comfyui\": 1791353481.631745, \"hermes\": 1791347031.341856, \"langfuse\": 1791353334.0725398, \"firecrawl\": 1791337269.7482638, \"mem0\": 1791353440.3686833, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791353380.0609572, \"crawl4ai\": 1791353431.2624507}}"
+      },
+      {
+        "key": "task:391",
+        "value": "{\"started\": 1791353481.631955, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/391/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"5c460d8172fe30761ff67c0df3d5643bb74e0d70\", \"generation_started\": 1791168187.9516895, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791168189.309978, \"recovery_checked_at\": 1791353410.9372227}"
       }
     ],
     "calls": [
