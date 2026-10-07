@@ -13,6 +13,16 @@ import runtime as rt
 
 AAD=b'oss-pipeline-evidence-v1'
 
+def patch_digest(diff,files,modes=None):
+    """Frame fields so names/bytes cannot collide across file boundaries."""
+    digest=hashlib.sha256();modes=modes or {}
+    def field(raw):
+        digest.update(len(raw).to_bytes(8,'big'));digest.update(raw)
+    field(diff.strip())
+    for name,raw in sorted(files.items()):
+        field(name.encode());field(str(modes.get(name,0o644)).encode());field(raw)
+    return digest.hexdigest()
+
 def key():
     try:value=base64.b64decode(os.environ['OSS_ARTIFACT_KEY'],validate=True)
     except (KeyError,ValueError) as exc:raise RuntimeError('Artifact encryption key unavailable') from exc
@@ -78,6 +88,7 @@ def _capture(task_id):
         if len(diff)<=8*1024**2:payload['diff']=base64.b64encode(diff).decode()
         else:payload['omitted'].append('diff exceeds 8 MiB')
         payload['untracked']={}
+        payload['untracked_modes']={}
         for name in git('ls-files','--others','--exclude-standard','-z').decode().split('\0'):
             if not name:continue
             path=work/name
@@ -91,6 +102,7 @@ def _capture(task_id):
                 payload['omitted'].append(name+': removed during snapshot');continue
             total+=len(raw)
             payload['untracked'][name]=base64.b64encode(raw).decode()
+            payload['untracked_modes'][name]=0o755 if path.stat().st_mode & 0o100 else 0o644
     raw=json.dumps(payload,sort_keys=True).encode()
     if not dest.exists() or dest.read_bytes()!=raw:atomic(dest,raw)
 

@@ -115,6 +115,18 @@ class ResumptionTests(unittest.TestCase):
         recovery.record_approval(task['id'],base,digest,'human')
         path=recovery.latest_bundle(task['id']);path.write_text(path.read_text()+' ')
         with self.assertRaisesRegex(ValueError,'changed'):recovery.restore_approved(task,work,base)
+    def test_review_digest_distinguishes_file_boundaries_and_executable_modes(self):
+        self.assertNotEqual(work_evidence.patch_digest(b'',{'ab':b'c'}),
+            work_evidence.patch_digest(b'',{'a':b'bc'}))
+        task=self.task('human_wait');work,base,digest=self.retained(task)
+        (work/'new_test.py').chmod(0o755)
+        changed=worker.fingerprint(work);self.assertNotEqual(digest,changed)
+        rt.task_state(task['id'],patch_digest=changed);work_evidence.capture(task['id'])
+        recovery.record_approval(task['id'],base,changed,'human')
+        self.git(work,'restore','value.py');(work/'new_test.py').unlink()
+        recovery.restore_approved(task,work,base)
+        self.assertTrue((work/'new_test.py').stat().st_mode & 0o100)
+        self.assertEqual(worker.fingerprint(work),changed)
     def test_approval_cannot_waive_publication_or_missing_evidence(self):
         task=self.task('error');work,base,digest=self.retained(task)
         with self.assertRaisesRegex(ValueError,'awaiting'):recovery.record_approval(task['id'],base,digest,'human')

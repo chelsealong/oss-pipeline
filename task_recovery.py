@@ -44,11 +44,16 @@ def handoff(task):
     if path and not state.get('patch_digest'):
         payload=json.loads(path.read_text())
         if payload.get('diff') or payload.get('untracked'):
-            digest=hashlib.sha256(base64.b64decode(payload.get('diff','')).strip())
-            for name,raw in sorted(payload.get('untracked',{}).items()):
-                digest.update(name.encode());digest.update(base64.b64decode(raw))
-            state=rt.task_state(task['id'],patch_digest=digest.hexdigest())
-            payload['execution']['patch_digest']=digest.hexdigest()
+            import work_evidence
+            files={name:base64.b64decode(raw) for name,raw in payload.get('untracked',{}).items()}
+            if files and not payload.get('untracked_modes'):
+                # Older evidence never captured mode. The reviewable reconstruction
+                # explicitly uses non-executable files and requires fresh checks.
+                payload['untracked_modes']={name:0o644 for name in files}
+                payload['legacy_mode_note']='Original modes unavailable; review reconstructed non-executable files and re-run checks.'
+            digest=work_evidence.patch_digest(base64.b64decode(payload.get('diff','')),files,payload.get('untracked_modes'))
+            state=rt.task_state(task['id'],patch_digest=digest)
+            payload['execution']['patch_digest']=digest
             import work_evidence
             work_evidence.atomic(path,json.dumps(payload,sort_keys=True).encode())
     rt.setmeta(f"followup:task:{task['id']}",{'status':'needs_human','task':task['id'],
@@ -95,7 +100,9 @@ def restore_approved(task,work,base):
         patch=work.parent/'human-reviewed.patch';patch.write_bytes(diff)
         worker.git(work,'apply','--check',str(patch));worker.git(work,'apply',str(patch))
     for name,raw in payload.get('untracked',{}).items():
-        target=work/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(base64.b64decode(raw))
+        mode=payload.get('untracked_modes',{}).get(name,0o644)
+        if mode not in (0o644,0o755):raise ValueError('Unsafe retained file mode')
+        target=work/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(base64.b64decode(raw));target.chmod(mode)
     if worker.fingerprint(work)!=approval['patch_digest']:
         raise ValueError('Restored patch differs from human-reviewed patch')
     return approval
