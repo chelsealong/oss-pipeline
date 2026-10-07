@@ -75,7 +75,8 @@ def seed_canary_budget():
 def account_canary(started):
     """Persist only new canary calls into the otherwise unchanged live state."""
     store=Path(os.environ['OSS_CLOUD_STATE_DIR']);path=store/'checkpoint.json'
-    snapshot=json.loads(path.read_text());marker='canary_accounted:'+os.environ['GITHUB_RUN_ID']
+    snapshot=json.loads(path.read_text())
+    marker='canary_accounted:'+os.environ['GITHUB_RUN_ID']+':'+os.environ.get('GITHUB_RUN_ATTEMPT','1')
     if any(row['key']==marker for row in snapshot['tables']['meta']):return
     with rt.db() as db:
         calls=[dict(row) for row in db.execute('SELECT at,kind FROM calls WHERE at>=?',(started,))]

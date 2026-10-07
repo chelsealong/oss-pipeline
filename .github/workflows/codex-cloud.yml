@@ -84,6 +84,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import runtime as rt
+          import cloud_state
           import work_evidence as evidence
           dest=Path('.runtime/encrypted-artifacts');dest.mkdir(parents=True,exist_ok=True)
           with rt.db() as db:
@@ -97,6 +98,12 @@ jobs:
               evidence.atomic(dest/(path.name+'.enc'),evidence.encrypt(path.read_bytes()))
           for path in rt.DATA.glob('*.log'):
               evidence.atomic(dest/(path.name+'.enc'),evidence.encrypt(path.read_bytes()))
+          # Retain reservations and publication markers even when final state
+          # pushing fails. This checkpoint is encrypted, never a plaintext upload.
+          checkpoint=rt.DATA/'recovery-checkpoint.json'
+          cloud_state.export_state(checkpoint)
+          evidence.atomic(dest/'runtime-checkpoint.json.enc',evidence.encrypt(checkpoint.read_bytes()))
+          checkpoint.unlink()
           PY
       - uses: actions/upload-artifact@v4
         if: always()

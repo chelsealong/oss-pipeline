@@ -202,6 +202,12 @@ class ResumptionTests(unittest.TestCase):
         self.assertEqual(saved['tables']['tasks'],snapshot['tables']['tasks'])
         self.assertEqual(saved['tables']['meta'][0],snapshot['tables']['meta'][0])
         self.assertEqual(len(saved['tables']['calls']),2)
+        with patch.dict(os.environ,{'OSS_CLOUD_STATE_DIR':str(store),'GITHUB_RUN_ID':'123','GITHUB_RUN_ATTEMPT':'2'}),\
+                patch.object(cloud_store,'command') as command:
+            second=time.time();self.assertTrue(rt.reserve_call('codex')[0])
+            cloud_store.account_canary(second);cloud_store.account_canary(second)
+            self.assertEqual(command.call_count,3)
+        self.assertEqual(len(json.loads(path.read_text())['tables']['calls']),3)
     def test_service_cleanup_runs_after_failures_in_reverse_order(self):
         cleaned=[]
         with self.assertRaisesRegex(RuntimeError,'failed'):
