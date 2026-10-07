@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791355488.748708,
+  "saved_at": 1791355511.7656727,
   "tables": {
     "tasks": [
       {
@@ -478,11 +478,11 @@
         "repo": "firecrawl",
         "number": 4902,
         "note": "",
-        "status": "skipped",
+        "status": "running",
         "created": 1790893084.763901,
-        "updated": 1790898346.989444,
+        "updated": 1791355511.7614298,
         "result": "Issue #4902 gives no reproducible request or specific bypass. Current code already blocks private scrape and webhook destinations by default, while ALLOW_LOCAL_WEBHOOKS is an explicit opt-in. Open PRs #4781 and #3731 overlap the affected security code. A concrete fix would require changes to security paths, which this task excludes.",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 38,
@@ -3013,9 +3013,9 @@
         "repo": "firecrawl",
         "number": 4777,
         "note": "",
-        "status": "skipped",
+        "status": "queued",
         "created": 1791028911.220558,
-        "updated": 1791032144.397301,
+        "updated": 1791355509.0375981,
         "result": "firecrawl/firecrawl#4777 is still an unfilled bug template. The live issue has no reproduction steps, expected behavior, logs, or comments, so there is no identifiable defect to fix.",
         "attempts": 1
       },
@@ -3026,9 +3026,9 @@
         "repo": "firecrawl",
         "number": 4774,
         "note": "",
-        "status": "skipped",
+        "status": "queued",
         "created": 1791028913.687987,
-        "updated": 1791032217.6686661,
+        "updated": 1791355511.6430411,
         "result": "#4774 is an open feature proposal for a new webhook delivery history and manual redelivery API, not a still-present bug with a small fix. It requires product decisions about retention, access, storage, and retry policy. Current webhook logs do not retain replayable payloads. No PR claiming #4774 was found; related open PRs address automatic delivery. The checkout is unchanged.",
         "attempts": 1
       },
@@ -7061,10 +7061,6 @@
         "value": "{\"started\": 1791353511.0950818, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/414/attempt-1\", \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": \"efac8b70db25b77c21eb97f8c33c94be67f1ef3b\", \"generation_started\": 1791242439.1752489, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791242441.120452, \"recovery_checked_at\": 1791355362.9039655, \"last_execution_phase\": \"queued\", \"finished\": 1791353513.5857582}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791355427.1304233, \"tasks\": {\"fix\": {\"capacity_wait\": 11, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"publication_wait\": 2, \"skipped\": 39}, \"respond\": {\"blocked\": 1}}}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791355445.1206114"
       },
@@ -7077,16 +7073,32 @@
         "value": "1791355452.295169"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791355457.8387766, \"comfyui\": 1791353481.631745, \"hermes\": 1791347031.341856, \"langfuse\": 1791354391.7073188, \"firecrawl\": 1791337269.7482638, \"mem0\": 1791353440.3686833, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791354900.9987667, \"crawl4ai\": 1791353431.2624507}}"
+        "key": "task:479",
+        "value": "{\"started\": 1791355457.8389697, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791355460.332375, \"recovery_checked_at\": 1791355487.536567}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791355490.2337437, \"tasks\": {\"fix\": {\"capacity_wait\": 12, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"publication_wait\": 2, \"skipped\": 39}, \"respond\": {\"blocked\": 1}}}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791355476.3107002"
+        "value": "1791355506.3139975"
       },
       {
-        "key": "task:479",
-        "value": "{\"started\": 1791355457.8389697, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791355460.332375, \"recovery_checked_at\": 1791355487.536567}"
+        "key": "task:232",
+        "value": "{\"phase\": \"queued\", \"terminal\": false, \"retry_after\": 0}"
+      },
+      {
+        "key": "task:233",
+        "value": "{\"phase\": \"queued\", \"terminal\": false, \"retry_after\": 0}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791355457.8387766, \"comfyui\": 1791353481.631745, \"hermes\": 1791347031.341856, \"langfuse\": 1791354391.7073188, \"firecrawl\": 1791355511.761296, \"mem0\": 1791353440.3686833, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791354900.9987667, \"crawl4ai\": 1791353431.2624507}}"
+      },
+      {
+        "key": "task:37",
+        "value": "{\"phase\": \"queued\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791355511.7614582, \"worker_slot\": 0}"
       }
     ],
     "calls": [
