@@ -44,6 +44,11 @@ def sandbox(work,cache,args):
     cmd=['bwrap','--unshare-user','--uid','0','--gid','0','--unshare-pid',
          '--unshare-ipc','--die-with-parent','--new-session','--ro-bind','/','/',
          '--proc','/proc','--dev','/dev','--tmpfs','/tmp','--tmpfs','/run']
+    # Ubuntu resolv.conf points into /run/systemd/resolve. Keep only its resolved
+    # regular file readable after masking /run; no runtime socket is exposed.
+    resolver=Path('/etc/resolv.conf').resolve()
+    if resolver.is_relative_to(Path('/run')) and resolver.is_file():
+        cmd+=['--dir',str(resolver.parent),'--ro-bind',str(resolver),str(resolver)]
     # /var/run is a symlink to /run on Ubuntu. Mask the directory rather than
     # attempting a regular-file bind over an existing Unix socket.
     hidden=[rt.DATA,Path.home()/'.codex',Path.home()/'.config',Path.home()/'.gitconfig']
