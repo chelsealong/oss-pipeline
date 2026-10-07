@@ -322,13 +322,16 @@ def response_context(repo,number):
 def fingerprint(work):
     # Git's patch plus untracked file bytes: a reviewer may run tests but cannot
     # silently change the patch which is being approved.
+    def raw(*args):
+        return subprocess.run(['git',*args],cwd=work,capture_output=True,check=True,timeout=300).stdout
     files={};modes={}
-    for name in git(work,'ls-files','--others','--exclude-standard').splitlines():
+    for name in raw('ls-files','--others','--exclude-standard','-z').decode().split('\0'):
+        if not name:continue
         f=work/name
         if f.is_symlink():files[name]=os.readlink(f).encode();modes[name]='symlink'
         elif f.is_file():
             files[name]=f.read_bytes();modes[name]=0o755 if f.stat().st_mode & 0o100 else 0o644
-    return work_evidence.patch_digest(git(work,'diff','HEAD','--binary').encode(),files,modes)
+    return work_evidence.patch_digest(raw('diff','HEAD','--binary'),files,modes)
 
 def scope_check(work,key):
     files=set(git(work,'diff','--name-only','HEAD').splitlines())

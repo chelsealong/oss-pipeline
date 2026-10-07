@@ -18,7 +18,7 @@ def patch_digest(diff,files,modes=None):
     digest=hashlib.sha256();modes=modes or {}
     def field(raw):
         digest.update(len(raw).to_bytes(8,'big'));digest.update(raw)
-    field(diff.strip())
+    field(diff)
     for name,raw in sorted(files.items()):
         field(name.encode());field(str(modes.get(name,0o644)).encode());field(raw)
     return digest.hexdigest()
@@ -95,14 +95,15 @@ def _capture(task_id):
             if path.is_symlink() or not path.is_file() or not path.resolve().is_relative_to(work.resolve()):continue
             if any(part in ('node_modules','.venv','venv','tool-cache','target') for part in path.parts):continue
             try:
-                if path.stat().st_size>2*1024**2 or total>24*1024**2:
+                stat=path.stat()
+                if stat.st_size>2*1024**2 or total>24*1024**2:
                     payload['omitted'].append(name+': evidence size limit');continue
                 raw=path.read_bytes()
             except FileNotFoundError:
                 payload['omitted'].append(name+': removed during snapshot');continue
             total+=len(raw)
             payload['untracked'][name]=base64.b64encode(raw).decode()
-            payload['untracked_modes'][name]=0o755 if path.stat().st_mode & 0o100 else 0o644
+            payload['untracked_modes'][name]=0o755 if stat.st_mode & 0o100 else 0o644
     raw=json.dumps(payload,sort_keys=True).encode()
     if not dest.exists() or dest.read_bytes()!=raw:atomic(dest,raw)
 

@@ -118,6 +118,8 @@ class ResumptionTests(unittest.TestCase):
     def test_review_digest_distinguishes_file_boundaries_and_executable_modes(self):
         self.assertNotEqual(work_evidence.patch_digest(b'',{'ab':b'c'}),
             work_evidence.patch_digest(b'',{'a':b'bc'}))
+        self.assertNotEqual(work_evidence.patch_digest(b'+value  \n',{}),
+            work_evidence.patch_digest(b'+value\n',{}))
         task=self.task('human_wait');work,base,digest=self.retained(task)
         (work/'new_test.py').chmod(0o755)
         changed=worker.fingerprint(work);self.assertNotEqual(digest,changed)

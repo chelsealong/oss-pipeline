@@ -77,6 +77,10 @@ def record_approval(task_id,base,digest,reviewer):
         raise ValueError('Invalid base or patch digest')
     if not payload.get('diff') and not payload.get('untracked'):raise ValueError('No patch to review')
     if payload.get('omitted'):raise ValueError('Incomplete patch evidence cannot be approved')
+    import work_evidence
+    retained=work_evidence.patch_digest(base64.b64decode(payload.get('diff','')),
+        {name:base64.b64decode(raw) for name,raw in payload.get('untracked',{}).items()},payload.get('untracked_modes'))
+    if retained!=digest:raise ValueError('Retained evidence does not reproduce the reviewed exact patch')
     rt.setmeta(f'human_approval:{task_id}',{'base':base,'patch_digest':digest,
         'bundle':path.name,'bundle_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),
         'reviewer':reviewer,'reviewed_at':time.time()})
