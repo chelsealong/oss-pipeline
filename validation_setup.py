@@ -82,6 +82,18 @@ def compose_spec():
           'ports':['127.0.0.1:9090:9000'],'volumes':['minio:/data']}},
       'volumes':{'postgres':{},'clickhouse':{},'minio':{}}}
 
+def check_browser(work,cache,log):
+    script="""const {chromium}=require('@playwright/test');
+    (async()=>{const b=await chromium.launch({headless:true});try{
+      const p=await b.newPage();
+      const r=await p.goto('http://localhost:3000',{waitUntil:'domcontentloaded',timeout:120000});
+      if(!r||r.status()>=400||!(await p.content()).includes('Langfuse'))
+        throw Error('Synthetic Langfuse browser navigation failed');
+      console.log('Synthetic Chromium verified:',r.status(),await p.title());
+    }finally{await b.close();}})().catch(e=>{console.error(e);process.exit(1)});"""
+    subprocess.run(sandbox(work,cache,['pnpm','--filter=web','exec','node','-e',script]),
+        env=safe_env(cache),stdout=log,stderr=subprocess.STDOUT,check=True,timeout=180)
+
 def prepare_langfuse(work,folder):
     if not _sessions:raise ValidationUnavailable('Validation requires a cleanup session')
     if not shutil.which('docker') or not shutil.which('bwrap'):
@@ -122,13 +134,14 @@ def prepare_langfuse(work,folder):
         execute(['pnpm','--filter=shared','run','build'])
         execute(['pnpm','--filter=shared','run','db:seed'])
         execute(['pnpm','run','playwright:install'])
-        web=execute(['pnpm','--filter=web','run','dev'],background=True)
+        web=execute(['pnpm','--filter=web','run','dev','--port','3000'],background=True)
         for _ in range(180):
             if web.poll() is not None:raise ValidationUnavailable('Synthetic web server exited; see setup log')
             try:
                 with urllib.request.urlopen('http://localhost:3000',timeout=5) as response:
                     if response.status==200:
-                        log.write('\nSynthetic DB/web services ready at http://localhost:3000. Browser checks still required.\n');log.flush()
+                        check_browser(work,cache,log)
+                        log.write('\nSynthetic DB/web/Chromium ready at http://localhost:3000. Exact-patch browser checks still required.\n');log.flush()
                         return
             except Exception:pass
             time.sleep(2)
