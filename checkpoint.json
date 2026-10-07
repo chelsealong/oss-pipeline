@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791353452.7812085,
+  "saved_at": 1791353469.755111,
   "tables": {
     "tasks": [
       {
@@ -3351,10 +3351,10 @@
         "repo": "crawl4ai",
         "number": 2288,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791045195.9110653,
-        "updated": 1791353431.262578,
-        "result": "Issue #2288 is still open, but it asks for a change to the Docker API’s SSRF validation behavior. The reporter offered to submit a PR if maintainers agree with per-URL failures; no maintainer decision is recorded. This is a security and API design decision outside the authorized scope. The current handler still validates every seed before crawling. No files were changed.",
+        "updated": 1791353469.7435336,
+        "result": "Issue #2288 remains open and the batch failure is still present, but changing per-seed SSRF failures into results is an unresolved security and API design decision. The issue is marked Needs Triage, has no maintainer response, and the reporter offered to submit a PR if maintainers choose that direction. No files were changed.",
         "attempts": 2
       },
       {
@@ -6988,32 +6988,12 @@
         "value": "{\"phase\": \"skipped\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791353380.0610995, \"worker_slot\": 1, \"folder\": \"jobs/4/attempt-3\", \"attempt\": 3, \"base\": \"62b6fcf49933525162981c5b1ddf075a2b781ded\", \"generation_started\": 1791353387.9868047, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791353389.5671012, \"last_execution_phase\": \"generation\", \"finished\": 1791353419.3214695}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791353427.668653, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:6",
         "value": "{\"recovery_checked_at\": 1791353318.9131644, \"phase\": \"skipped\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791353334.072681, \"worker_slot\": 0, \"folder\": \"jobs/6/attempt-2\", \"attempt\": 2, \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"generation_started\": 1791353344.7124655, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791353346.038751, \"last_execution_phase\": \"generation\", \"finished\": 1791353427.6705053}"
       },
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791353365.6333914, \"comfyui\": 1791316471.6497233, \"hermes\": 1791347031.341856, \"langfuse\": 1791353334.0725398, \"firecrawl\": 1791337269.7482638, \"mem0\": 1791353440.3686833, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791353380.0609572, \"crawl4ai\": 1791353431.2624507}}"
-      },
-      {
-        "key": "task:258",
-        "value": "{\"phase\": \"generation\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791353431.2626064, \"worker_slot\": 1, \"folder\": \"jobs/258/attempt-2\", \"attempt\": 2, \"base\": \"8afd0a68064ff7049303c9f9d037ab6228aac43c\", \"generation_started\": 1791353439.171229, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791353440.6150053}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791353447.631503"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791353447.6328547"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791353450.659346"
       },
       {
         "key": "fix_sessions",
@@ -7026,6 +7006,26 @@
       {
         "key": "task:178",
         "value": "{\"phase\": \"generation\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791353440.3688235, \"worker_slot\": 0, \"folder\": \"jobs/178/attempt-2\", \"attempt\": 2, \"base\": \"c93420c49a6b14c3d446bdb156d96811908fd90a\", \"generation_started\": 1791353451.2507265, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791353452.7768254}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791353465.6607761"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791353469.0171146"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791353469.0187185"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791353469.665418, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:258",
+        "value": "{\"phase\": \"skipped\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791353431.2626064, \"worker_slot\": 1, \"folder\": \"jobs/258/attempt-2\", \"attempt\": 2, \"base\": \"8afd0a68064ff7049303c9f9d037ab6228aac43c\", \"generation_started\": 1791353439.171229, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791353440.6150053, \"last_execution_phase\": \"generation\", \"finished\": 1791353469.6675544}"
       }
     ],
     "calls": [
