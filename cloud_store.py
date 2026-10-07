@@ -14,7 +14,11 @@ def command(args, cwd):
     p=subprocess.run(args,cwd=cwd,capture_output=True,text=True,timeout=90)
     if p.returncode:
         # Do not log credential-helper output or signed network redirect URLs.
-        raise RuntimeError('Cloud state command failed: '+args[0]+' (exit '+str(p.returncode)+')')
+        import re
+        category=('non-fast-forward' if re.search(r'non-fast-forward|fetch first|rejected',p.stderr,re.I)
+            else 'transport' if re.search(r'TLS|SSL|timeout|connection|HTTP 50[234]',p.stderr,re.I)
+            else 'disk' if re.search(r'No space left|disk full',p.stderr,re.I) else 'unclassified')
+        raise RuntimeError('Cloud state command failed: '+args[0]+' '+args[1]+' (exit '+str(p.returncode)+', '+category+')')
     return p.stdout.strip()
 
 def save():
@@ -45,7 +49,7 @@ def save():
             try:
                 command(['git','push','origin','HEAD:refs/heads/codex-state'],store)
                 break
-            except RuntimeError:
+            except (RuntimeError,subprocess.TimeoutExpired):
                 if attempt==2:raise
                 time.sleep(2*(attempt+1))
 

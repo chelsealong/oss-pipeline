@@ -16,6 +16,7 @@ import time
 import tomllib
 import runtime as rt
 import work_evidence
+import task_recovery
 
 ME = 'chelsealong'
 EMAIL = 'chelsealong@126.com'
@@ -248,7 +249,8 @@ def healthcheck():
     log('Codex authenticated probe passed')
 
 def finish(task, status, result):
-    rt.task_state(task['id'],phase=status,terminal=True,finished=time.time())
+    previous=rt.task_state(task['id'])
+    rt.task_state(task['id'],last_execution_phase=previous.get('phase'),phase=status,terminal=True,finished=time.time())
     work_evidence.capture(task['id'])
     with rt.db() as c:
         c.execute('UPDATE tasks SET status=?, result=?, updated=? WHERE id=?',
@@ -263,6 +265,18 @@ def finish(task, status, result):
             with work_evidence.task_lock(task['id']):
                 for name in ('work','tool-cache'):
                     if (folder/name).is_dir():shutil.rmtree(folder/name)
+
+def hold_result(task,reason,work=None):
+    status=task_recovery.wait_kind(reason)
+    if work is not None:
+        rt.task_state(task['id'],patch_digest=fingerprint(work))
+    if status in task_recovery.WAIT_STATES:
+        state=rt.task_state(task['id'])
+        rt.setmeta(f"followup:task:{task['id']}",{'status':'needs_human','task':task['id'],
+            'repo':task['repo'],'number':task['number'],'reason':reason,
+            'base':state.get('base'),'patch_digest':state.get('patch_digest'),
+            'evidence_bundle':f"{task['id']}-{state.get('attempt',1)}.json.enc"})
+    finish(task,status,reason)
 
 def configs(task):
     import scan
@@ -360,6 +374,11 @@ actual test evidence in the requested JSON. Never claim human verification. Fore
     raise AssertionError('review loop did not return')
 
 def process(task):
+    import validation_setup
+    with validation_setup.session(task):
+        return process_one(task)
+
+def process_one(task):
     if task['kind']=='canary':
         canary(task);return
     if task['kind']=='respond' and json.loads(task['note'] or '{}').get('is_issue'):
@@ -369,7 +388,12 @@ def process(task):
     pr=None
     if kind=='fix':
         ok,why=cap_ok(key,impl)
-        if ok: ok,why=fix_eligible(key,cfg,num)
+        if not ok:
+            # Temporary capacity is not an abandoned contribution. Refund the
+            # pre-check-only claim; no checkout/model/publication occurred.
+            with rt.db() as db:db.execute('UPDATE tasks SET attempts=MAX(0,attempts-1) WHERE id=?',(task['id'],))
+            finish(task,'capacity_wait',why);return
+        ok,why=fix_eligible(key,cfg,num)
         if not ok: finish(task,'skipped',why);return
     else:
         pr=response_context(impl,num)
@@ -410,8 +434,10 @@ def process(task):
             raise rt.Paused('PR head moved before checkout')
     base=git(work,'rev-parse','HEAD')
     rt.task_state(task['id'],base=base)
+    human_review=task_recovery.restore_approved(task,work,base)
     git(work,'config','user.name',ME);git(work,'config','user.email',EMAIL)
-    context={'task':dict(task),'config':{k:list(v) if isinstance(v,set) else v for k,v in cfg.items()},'pr':pr}
+    context={'task':dict(task),'config':{k:list(v) if isinstance(v,set) else v for k,v in cfg.items()},'pr':pr,
+             'human_review':human_review}
     issue_repo=impl if pr else cfg['upstream']
     context['issue']=api(f'repos/{issue_repo}/issues/{num}')
     for label,path in [('comments',f'issues/{num}/comments'),('reviews',f'pulls/{num}/reviews'),('inline',f'pulls/{num}/comments')]:
@@ -469,13 +495,34 @@ Do NOT commit, push, create/edit/close/merge PRs, post comments, request assignm
 Only edit the checkout and the explicitly supplied writable tool/scratch caches. Do not edit pipeline state,
 credentials or other tasks. No other agents.
 An independent subsequent reviewer must approve before a controller commits and publishes.
+If context.json contains a human_review attestation, it covers ONLY the restored exact patch on
+the recorded base. Re-run checks. Do not change that patch without another human review. Never
+invent a human reviewer. If actual human oversight is required and missing, return BLOCKED with
+reason starting HUMAN_REVIEW_REQUIRED:. If browser/service validation is unavailable, use
+VALIDATION_ENVIRONMENT: and preserve the completed source/test patch and test commands.
 Return the requested JSON: READY only for complete tested changes, SKIP for no work, BLOCKED for unresolved obstacles.
 body must follow the upstream PR template, link the issue when this is a fix, state actual validation, and explicitly
 disclose that Codex generated/reviewed the change. Do not assert personal human validation.
 '''
     result=agent(prompt,work,folder/'generation.json',GEN_SCHEMA,timeout=2400,repo_key=key,task=task)
+    if (key=='langfuse' and result['outcome']=='BLOCKED'
+            and task_recovery.wait_kind(result['reason'])=='validation_wait'):
+        import validation_setup
+        rt.task_state(task['id'],validation_bootstrap_version='1',phase='validation_setup')
+        try:
+            validation_setup.prepare_langfuse(work,folder)
+            result=agent(prompt+'\nThe controller prepared the synthetic local browser/database stack. '
+                'Read validation-setup.log next to context.json. Finish required checks and browser '
+                'verification against this exact patch; do not replace the work or publish.\n',
+                work,folder/'validation.json',GEN_SCHEMA,timeout=2400,repo_key=key,task=task)
+        except validation_setup.ValidationUnavailable as error:
+            hold_result(task,'VALIDATION_ENVIRONMENT: '+str(error),work);return
+    if human_review and fingerprint(work)!=human_review['patch_digest']:
+        hold_result(task,'HUMAN_REVIEW_REQUIRED: The patch changed after human review; a new exact-patch review is required.',work);return
     if result['outcome']!='READY':
-        finish(task,'skipped' if result['outcome']=='SKIP' else 'blocked',result['reason']);return
+        if result['outcome']=='SKIP':finish(task,'skipped',result['reason'])
+        else:hold_result(task,result['reason'],work)
+        return
     if git(work,'rev-parse','HEAD')!=base: raise RuntimeError('generator unexpectedly committed')
     scope_check(work,key)
     result,review=review_patch(task,work,folder,key,base,result,f'''Independently review the uncommitted patch in this checkout for {issue_repo}#{num}.
@@ -485,13 +532,19 @@ Verify meaningful failing-before/passing-after evidence by running checks as app
 not a verdict. Never approve merely because generation claimed tests passed. Return BLOCK if required tests cannot run.
 Documentation-only changes need appropriate documentation validation, not a fabricated behavioral regression.
 Independently check any baseline-failure evidence against current upstream policy; do not waive mandatory gates.
+The human_review field in the controller context is a named human's attestation ONLY for the restored
+exact patch and base. Independently verify its checks; it is never a substitute for technical review.
+If actual human signoff is missing use HUMAN_REVIEW_REQUIRED: in reason. Use VALIDATION_ENVIRONMENT:
+for unavailable required browser/service verification. Read validation.json when present.
 repairable=true only for concrete code/test defects this executor can fix now. Use false for duplicates,
 out-of-scope work, missing maintainer approval, unavailable external hardware/credentials, or no actual bug.
 Do not edit source/test files, commit, push, post comments or PRs, or call other agents. Foreground checks only.
 Return APPROVE only when the current exact patch is justified, minimal, permitted, and test evidence verified.
 ''')
     if review['verdict']!='APPROVE' or not review['tests_verified']:
-        finish(task,'blocked','review: '+review['reason']);return
+        hold_result(task,'review: '+review['reason'],work);return
+    if human_review and fingerprint(work)!=human_review['patch_digest']:
+        hold_result(task,'HUMAN_REVIEW_REQUIRED: Remediation changed the human-reviewed patch.',work);return
     scope_check(work,key)
     # Stage only after both phases. Enforce sizes including newly added tests.
     git(work,'add','--all')
@@ -501,6 +554,7 @@ Return APPROVE only when the current exact patch is justified, minimal, permitte
     if not rt.ready(check_budget=False)[0]: raise rt.Paused(rt.ready(check_budget=False)[1])
     if kind=='fix':
         ok,why=cap_ok(key,impl)
+        if not ok:finish(task,'capacity_wait','final eligibility: '+why);return
         if ok:ok,why=fix_eligible(key,cfg,num)
         if not ok:finish(task,'blocked','final eligibility: '+why);return
     else:
@@ -520,12 +574,16 @@ Return APPROVE only when the current exact patch is justified, minimal, permitte
     rt.checkpoint()
     git(work,'push','origin',f'HEAD:refs/heads/{branch}')
     if kind=='respond':
+        rt.task_state(task['id'],published_at=time.time(),publication_outcome='updated')
         finish(task,'done','Updated '+pr['html_url']+' commit '+git(work,'rev-parse','HEAD'));return
     if key=='transformers':
         finish(task,'done','prepare-only branch '+branch);return
     existing=json.loads(run(['gh','pr','list','--repo',impl,'--head',ME+':'+branch,'--state','all','--json','url']))
-    if existing:finish(task,'done',existing[0]['url']);return
+    if existing:
+        rt.task_state(task['id'],published_at=time.time(),publication_outcome='reconciled')
+        finish(task,'done',existing[0]['url']);return
     url=run(['gh','pr','create','--repo',impl,'--base',default,'--head',ME+':'+branch,'--title',title,'--body-file',str(bodypath)])
+    rt.task_state(task['id'],published_at=time.time(),publication_outcome='created')
     finish(task,'done',url)
 
 def canary(task):

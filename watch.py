@@ -885,6 +885,15 @@ def record_dispatch(key: str, number: int) -> None:
 
 def already_dispatched(key: str, number: int) -> bool:
     """True while this issue should not be sent again."""
+    import runtime as rt
+    if rt.local():
+        # SQLite owns retries in managed mode. The historical Claude dispatch
+        # tombstone must not override a safely expired pre-publication skip.
+        with rt.db() as db:
+            task=db.execute("SELECT * FROM tasks WHERE identity=?",(f'fix:{key}:{number}:',)).fetchone()
+        if (task and task['status']=='skipped' and task['updated']<time.time()-3*86400
+                and task['attempts']<3 and not rt.task_state(task['id']).get('publication_started')):
+            return False
     rec = _dispatched().get(key) or {}
     if isinstance(rec, list):                 # pre-migration file
         return number in rec

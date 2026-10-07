@@ -42,7 +42,7 @@ jobs:
       - name: Install runtime
         run: |
           sudo apt-get update -qq
-          sudo apt-get install --no-install-recommends -y ripgrep bubblewrap apparmor-profiles apparmor-utils
+          sudo apt-get install --no-install-recommends -y ripgrep bubblewrap apparmor-profiles apparmor-utils libnss3 libnspr4 libatk1.0-0t64 libatk-bridge2.0-0t64 libcups2t64 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libcairo2 libpango-1.0-0 libasound2t64
           sudo install -m 0644 /usr/share/apparmor/extra-profiles/bwrap-userns-restrict /etc/apparmor.d/bwrap-userns-restrict
           sudo apparmor_parser -r /etc/apparmor.d/bwrap-userns-restrict
           bwrap --unshare-user --uid 0 --gid 0 --ro-bind / / -- /usr/bin/true
@@ -105,7 +105,7 @@ jobs:
           include-hidden-files: true
           retention-days: 14
       - name: Continue cloud chain
-        if: steps.runtime.outputs.continue == 'true'
+        if: always() && steps.runtime.outputs.continue == 'true'
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |

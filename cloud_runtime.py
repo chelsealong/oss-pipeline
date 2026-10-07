@@ -13,6 +13,7 @@ import time
 import cloud_store
 import runtime as rt
 import work_evidence
+import task_recovery
 
 REPOSITORY='chelsealong/oss-pipeline'
 # Audited tasks whose previous attempt stopped before publication. Recreate
@@ -153,10 +154,27 @@ def stop(process, timeout=30):
         except subprocess.TimeoutExpired:
             os.killpg(process.pid,signal.SIGKILL);process.wait()
 
+def successor(failed):
+    """Only after every auth owner stopped and state/token persistence succeeded."""
+    if not cloud_enabled():return False
+    with rt.db() as db:
+        db.execute('BEGIN IMMEDIATE')
+        now=time.time()
+        events=[at for at in rt._meta(db,'runner_restarts',[]) if at>now-3600]
+        if failed:
+            if len(events)>=3:
+                rt._putmeta(db,'runner_restart_after',events[0]+3600)
+                rt._putmeta(db,'followup:runner',{'status':'needs_human',
+                    'reason':'Three service failures in one hour; automatic restart is cooling down.'})
+                return False
+            events.append(now)
+        rt._putmeta(db,'runner_restarts',events)
+    return True
+
 def run(mode,seconds):
     configure(mode)
     previous=hashlib.sha256(auth_file().read_bytes()).hexdigest()
-    children=[];logs=[];restored=False
+    children=[];logs=[];restored=False;failed=False
     def start(name,args):
         log=(rt.DATA/(name+'.log')).open('a');logs.append(log)
         child=subprocess.Popen([sys.executable,'-u',*args],stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
@@ -169,6 +187,10 @@ def run(mode,seconds):
             restored=True
             migrate_accounting()
             requeue_validation_repair()
+            if rt.getmeta('runner_restart_after',0)>time.time():
+                print('Cloud restart circuit is cooling down; no work admitted.',flush=True)
+                return
+            task_recovery.reconcile()
         import codex_worker
         host=start('codex-host',['codex_host.py','--binary',codex_worker.binary()])
         for _ in range(120):
@@ -198,13 +220,15 @@ def run(mode,seconds):
         while time.monotonic()<deadline and cloud_enabled():
             if any(p.poll() is not None for p in children):raise RuntimeError('A cloud service exited unexpectedly')
             requeue_validation_repair()
+            task_recovery.reconcile()
             cloud_store.save()
             previous=rotate_auth(previous)
             s=rt.status()
             rt.setmeta('throughput_24h',{'at':time.time(),'tasks':s['throughput_24h']})
             print(json.dumps({'at':time.time(),'ready':s['ready'],'tasks':s['tasks'],'calls':s['calls_last_hour'],
                 'active':s['active'],'dispatch_budget':s['dispatch_budget'],
-                'throughput_24h':s['throughput_24h']}),flush=True)
+                'throughput_24h':s['throughput_24h'],
+                'publication_outcomes_24h':s['publication_outcomes_24h']}),flush=True)
             time.sleep(60)
         # Stop admitting work, allow the active task to complete, then hand over.
         (rt.DATA/'drain').touch()
@@ -218,8 +242,12 @@ def run(mode,seconds):
         if any(w.poll() is None for w in workers):raise RuntimeError('Handover deadline reached; inspect interrupted task')
         if any(w.returncode for w in workers):raise RuntimeError('Worker failed during handover')
         cloud_store.save()
-        if cloud_enabled():
-            with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('continue=true\n')
+    except BaseException as error:
+        failed=True
+        if mode=='live' and restored:
+            rt.setmeta('runner_failure',{'at':time.time(),'type':type(error).__name__,
+                'reason':str(error)[:350]})
+        raise
     finally:
         for child in reversed(children):stop(child)
         for log in logs:log.close()
@@ -230,6 +258,10 @@ def run(mode,seconds):
         finally:
             # A checkpoint failure must not lose a refreshed subscription token.
             rotate_auth(previous)
+        if mode=='live' and restored and rt.getmeta('runner_restart_after',0)<=time.time():
+            if successor(failed):
+                cloud_store.save()  # Restart spending must survive before dispatch.
+                with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('continue=true\n')
 
 if __name__=='__main__':
     ap=argparse.ArgumentParser();ap.add_argument('mode',choices=['install-auth','probe','canary','live'])

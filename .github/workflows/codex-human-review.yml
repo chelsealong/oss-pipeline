@@ -1,0 +1,51 @@
+name: Record exact-patch human review
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: Task ID from the human handoff
+        required: true
+      base:
+        description: Full 40-character reviewed base SHA
+        required: true
+      patch_digest:
+        description: Full 64-character reviewed patch digest
+        required: true
+      reviewed:
+        description: I personally reviewed the retained exact patch and its recorded tests
+        type: boolean
+        required: true
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: codex-cloud-pipeline
+  cancel-in-progress: false
+jobs:
+  record:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      OSS_CLOUD_STATE_DIR: /home/runner/codex-cloud-state
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install cryptography==48.0.1
+      - name: Persist named human review without model calls or publication
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          OSS_ARTIFACT_KEY: ${{ secrets.OSS_ARTIFACT_KEY }}
+          TASK_ID: ${{ inputs.task }}
+          REVIEW_BASE: ${{ inputs.base }}
+          REVIEW_DIGEST: ${{ inputs.patch_digest }}
+          HUMAN_ATTESTATION: ${{ inputs.reviewed }}
+        run: |
+          git config --global user.name oss-pipeline
+          git config --global user.email chelsealong@126.com
+          gh auth setup-git
+          git clone --single-branch --branch codex-state --depth=1 https://github.com/chelsealong/oss-pipeline.git "$OSS_CLOUD_STATE_DIR"
+          python human_review.py --task "$TASK_ID"

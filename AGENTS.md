@@ -103,6 +103,33 @@ Check `runtime.status()` for active phases, 24-hour outcomes and human follow-up
 Run `verify_codex.py` with PyYAML and cryptography, then the cloud preflight and
 two concurrent canaries before restoring production after runtime changes.
 
+The 2026-10-07 repair distinguishes `capacity_wait`, `human_wait` and
+`validation_wait`. Waits do not occupy active queue slots or call budgets.
+`task_recovery.py` rechecks capacity and verifies remote branches/PRs before
+resuming positively identified pre-publication interruptions, at most three
+attempts. Preserve ambiguous/published tasks for manual reconciliation.
+Expired skips may reuse their durable task after three days, bounded by three
+attempts; the historical watcher ledger must not permanently suppress these.
+
+Human handoffs retain encrypted patches, tests, base SHAs and patch digests.
+The human review workflow requires a named human's explicit exact-patch
+attestation. Never dispatch it as an agent, fabricate approval, or use this
+task's general repair authorization as patch-specific human review. A changed
+base or patch invalidates that review and publication still needs independent
+technical review and normal upstream eligibility. No automatic public messages.
+
+Langfuse validation uses disposable synthetic Docker services and a secretless
+bubblewrap process. No host socket, production data or external volume mounts
+enter upstream scripts. Stop the web process and remove only the owned project
+and its synthetic volumes when the task ends. Browser checks must actually run.
+The preflight's `validation_canary` exercises database/web/Chromium setup without
+model calls or publication. Never report unavailable validation as passing.
+
+Cloud successors may follow service failures only after every auth owner stops
+and state plus refreshed tokens are persisted. Three automatic failure restarts
+per hour open a cooldown; scheduled runs retain this ledger. A failed final
+checkpoint cannot dispatch an immediate successor. Preserve all spending.
+
 ## Locations and sources of truth
 
 - Versioned pipeline: `/Users/jialong/.local/share/oss-pipeline`.

@@ -9,6 +9,10 @@ on:
         description: Explicitly requested temporary Hermes PR; close immediately after creation
         type: boolean
         default: false
+      validation_canary:
+        description: Rehearse synthetic Langfuse database, web and Chromium setup (no model or PR)
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -19,8 +23,8 @@ concurrency:
 
 jobs:
   verify:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,7 +38,9 @@ jobs:
       - name: Install pinned Codex CLI and test dependency
         run: |
           sudo apt-get update -qq
-          sudo apt-get install --no-install-recommends -y ripgrep
+          sudo apt-get install --no-install-recommends -y ripgrep bubblewrap apparmor-profiles apparmor-utils libnss3 libnspr4 libatk1.0-0t64 libatk-bridge2.0-0t64 libcups2t64 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libcairo2 libpango-1.0-0 libasound2t64
+          sudo install -m 0644 /usr/share/apparmor/extra-profiles/bwrap-userns-restrict /etc/apparmor.d/bwrap-userns-restrict
+          sudo apparmor_parser -r /etc/apparmor.d/bwrap-userns-restrict
           corepack enable
           npm install --global @openai/codex@0.159.3
           python -m pip install PyYAML==6.0.3 cryptography==48.0.1 'aiohttp>=3.11.8,<4' 'pytest-aiohttp>=1,<2' 'pytest-asyncio>=1,<2' 'websocket-client>=1,<2'
@@ -114,6 +120,26 @@ jobs:
                       assert restored['task']>0
                   print('Real cloud restore verified:',len(snapshot['tables']['tasks']),'tasks,',len(encrypted),'authenticated evidence bundles; no production writes.')
           PY
+      - name: Rehearse synthetic browser and database validation
+        if: inputs.validation_canary == true
+        run: |
+          python -u - <<'PY'
+          import subprocess
+          import validation_setup as validation
+          import runtime as rt
+          folder=rt.DATA/'validation-canary';folder.mkdir(parents=True,exist_ok=True)
+          work=folder/'work'
+          subprocess.run(['git','clone','--depth=1','https://github.com/langfuse/langfuse.git',str(work)],check=True,timeout=600)
+          with validation.session({'id':'canary'}):
+              validation.prepare_langfuse(work,folder)
+              script="const {chromium}=require('playwright'); (async()=>{const b=await chromium.launch({headless:true});try{const p=await b.newPage();const r=await p.goto('http://localhost:3000',{waitUntil:'domcontentloaded',timeout:120000});if(!r||r.status()>=400)throw Error('Browser navigation failed');console.log('Synthetic Chromium verified:',r.status(),await p.title());}finally{await b.close();}})().catch(e=>{console.error(e);process.exit(1)});"
+              cache=folder/'tool-cache'
+              subprocess.run(validation.sandbox(work,cache,['pnpm','--filter=web','exec','node','-e',script]),env=validation.safe_env(cache),check=True,timeout=180)
+          print('Synthetic validation canary passed; no model calls, upstream changes or production writes.')
+          PY
+      - name: Show synthetic setup diagnostics
+        if: failure() && inputs.validation_canary == true
+        run: tail -100 .runtime/validation-canary/validation-setup.log
       - name: Explicit temporary publication probe
         if: inputs.publication_probe == true
         env:
