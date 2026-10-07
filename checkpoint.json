@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791353342.1779976,
+  "saved_at": 1791353344.7162538,
   "tables": {
     "tasks": [
       {
@@ -6731,24 +6731,12 @@
         "value": "{\"phase\": \"publication_wait\", \"publication_hold_until\": 1791434336.1261988}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"firecrawl\", \"task\": 466, \"at\": 1791337230.3217967}, {\"repo\": \"firecrawl\", \"task\": 467, \"at\": 1791337278.7116098}, {\"repo\": \"hermes\", \"task\": 468, \"at\": 1791346218.1991782}, {\"repo\": \"hermes\", \"task\": 469, \"at\": 1791346399.2053735}, {\"repo\": \"hermes\", \"task\": 470, \"at\": 1791346450.1826293}, {\"repo\": \"hermes\", \"task\": 471, \"at\": 1791346497.9923105}, {\"repo\": \"hermes\", \"task\": 472, \"at\": 1791347049.279021}, {\"repo\": \"llama-index\", \"task\": 476, \"at\": 1791348724.981807}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-10-07\", \"used\": {\"firecrawl\": 2, \"hermes\": 5, \"llama-index\": 1}}"
-      },
-      {
         "key": "task:476",
         "value": "{\"started\": 1791348701.1371489, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/476/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"cb4c917ffe8ca575075b4869cf0e8bb42a20edb6\", \"generation_started\": 1791348724.9818077, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791348726.3424993, \"finished\": 1791348769.0989695}"
       },
       {
         "key": "task:477",
         "value": "{\"started\": 1791350082.5292275, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791350084.7688665}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791350335.1991098, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"error\": 2, \"publication_wait\": 2, \"skipped\": 35}, \"respond\": {\"blocked\": 1}}}"
       },
       {
         "key": "canary_accounted:37576753599",
@@ -6915,10 +6903,6 @@
         "value": "{\"recovery_checked_at\": 1791353337.0198088}"
       },
       {
-        "key": "task:6",
-        "value": "{\"recovery_checked_at\": 1791353318.9131644, \"phase\": \"checkout\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791353334.072681, \"worker_slot\": 0, \"folder\": \"jobs/6/attempt-2\", \"attempt\": 2, \"base\": null}"
-      },
-      {
         "key": "recovery_audit:171",
         "value": "{\"at\": 1791353339.0335407, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -6937,6 +6921,22 @@
       {
         "key": "recovery_audit:173",
         "value": "{\"at\": 1791353342.1732063, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791353343.5207295, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"error\": 2, \"publication_wait\": 2, \"queued\": 1, \"running\": 1, \"skipped\": 34}, \"respond\": {\"blocked\": 1}}}"
+      },
+      {
+        "key": "task:6",
+        "value": "{\"recovery_checked_at\": 1791353318.9131644, \"phase\": \"checkout\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791353334.072681, \"worker_slot\": 0, \"folder\": \"jobs/6/attempt-2\", \"attempt\": 2, \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"generation_started\": 1791353344.7124655, \"dispatch_paid_date\": \"2026-10-07\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"firecrawl\", \"task\": 466, \"at\": 1791337230.3217967}, {\"repo\": \"firecrawl\", \"task\": 467, \"at\": 1791337278.7116098}, {\"repo\": \"hermes\", \"task\": 468, \"at\": 1791346218.1991782}, {\"repo\": \"hermes\", \"task\": 469, \"at\": 1791346399.2053735}, {\"repo\": \"hermes\", \"task\": 470, \"at\": 1791346450.1826293}, {\"repo\": \"hermes\", \"task\": 471, \"at\": 1791346497.9923105}, {\"repo\": \"hermes\", \"task\": 472, \"at\": 1791347049.279021}, {\"repo\": \"llama-index\", \"task\": 476, \"at\": 1791348724.981807}, {\"repo\": \"langfuse\", \"task\": 6, \"at\": 1791353344.7124648}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-10-07\", \"used\": {\"firecrawl\": 2, \"hermes\": 5, \"llama-index\": 1, \"langfuse\": 1}}"
       }
     ],
     "calls": [
@@ -13387,6 +13387,10 @@
       {
         "at": 1791353338.5479412,
         "kind": "judge"
+      },
+      {
+        "at": 1791353344.712577,
+        "kind": "codex"
       }
     ]
   }
