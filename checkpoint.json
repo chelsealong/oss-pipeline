@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791355674.549842,
+  "saved_at": 1791355684.207997,
   "tables": {
     "tasks": [
       {
@@ -3026,10 +3026,10 @@
         "repo": "firecrawl",
         "number": 4774,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791028913.687987,
-        "updated": 1791355617.7746837,
-        "result": "#4774 is an open feature proposal for a new webhook delivery history and manual redelivery API, not a still-present bug with a small fix. It requires product decisions about retention, access, storage, and retry policy. Current webhook logs do not retain replayable payloads. No PR claiming #4774 was found; related open PRs address automatic delivery. The checkout is unchanged.",
+        "updated": 1791355684.2035456,
+        "result": "[Issue #4774](https://github.com/firecrawl/firecrawl/issues/4774) proposes a new webhook delivery history and manual redelivery API, rather than a still-present bug with a small fix. The current webhook logs do not retain a replayable payload. Implementing the proposal requires decisions about retention, storage, access, and retry policy, plus security-sensitive changes outside this task’s allowed scope. The issue has no maintainer resolution or comments. No open PR claims #4774; related open PRs address automatic delivery reliability.",
         "attempts": 2
       },
       {
@@ -7065,16 +7065,8 @@
         "value": "{\"phase\": \"skipped\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791355565.169686, \"worker_slot\": 0, \"folder\": \"jobs/232/attempt-2\", \"attempt\": 2, \"base\": \"0b25e17057e140236b2081cfaa5baecd1154d090\", \"generation_started\": 1791355574.1082613, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791355575.8691587, \"last_execution_phase\": \"generation\", \"finished\": 1791355605.387582}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791355607.3450894, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:262",
         "value": "{\"phase\": \"skipped\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791355554.9785454, \"worker_slot\": 1, \"folder\": \"jobs/262/attempt-2\", \"attempt\": 2, \"base\": \"e7d9c8897a4ddf104396e4efc8c321e0f8075bac\", \"generation_started\": 1791355570.435367, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791355571.941381, \"last_execution_phase\": \"generation\", \"finished\": 1791355607.3471212}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791355614.1783, \"tasks\": {\"fix\": {\"capacity_wait\": 12, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"publication_wait\": 2, \"queued\": 1, \"skipped\": 42}, \"respond\": {\"blocked\": 1}}}"
       },
       {
         "key": "scheduler",
@@ -7089,20 +7081,28 @@
         "value": "{\"date\": \"2026-10-07\", \"used\": {\"firecrawl\": 5, \"hermes\": 5, \"llama-index\": 1, \"langfuse\": 2, \"spec-kit\": 4, \"crawl4ai\": 1, \"mem0\": 1, \"dify\": 1}}"
       },
       {
-        "key": "task:233",
-        "value": "{\"phase\": \"generation\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791355617.7747123, \"worker_slot\": 0, \"folder\": \"jobs/233/attempt-2\", \"attempt\": 2, \"base\": \"0b25e17057e140236b2081cfaa5baecd1154d090\", \"generation_started\": 1791355626.6147254, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791355628.379996}"
+        "key": "worker_heartbeat",
+        "value": "1791355671.3362374"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791355676.311708, \"tasks\": {\"fix\": {\"capacity_wait\": 12, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"publication_wait\": 2, \"running\": 1, \"skipped\": 42}, \"respond\": {\"blocked\": 1}}}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791355670.3282483"
+        "value": "1791355677.2930627"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791355670.3300354"
+        "value": "1791355677.298111"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791355671.3362374"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791355683.930338, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:233",
+        "value": "{\"phase\": \"skipped\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791355617.7747123, \"worker_slot\": 0, \"folder\": \"jobs/233/attempt-2\", \"attempt\": 2, \"base\": \"0b25e17057e140236b2081cfaa5baecd1154d090\", \"generation_started\": 1791355626.6147254, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791355628.379996, \"last_execution_phase\": \"generation\", \"finished\": 1791355683.9323711}"
       }
     ],
     "calls": [
