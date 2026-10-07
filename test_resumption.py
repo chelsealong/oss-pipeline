@@ -1,6 +1,7 @@
 """Resumption must preserve limits, exact human review and publication safety."""
 import base64
 import json
+import io
 import os
 from pathlib import Path
 import subprocess
@@ -195,6 +196,18 @@ class ResumptionTests(unittest.TestCase):
                 validation._sessions[-1].append(lambda:cleaned.append('web'))
                 raise RuntimeError('failed')
         self.assertEqual(cleaned,['web','docker']);self.assertEqual(validation._sessions,[])
+    def test_browser_failure_is_not_swallowed_or_retried_as_web_startup(self):
+        response=SimpleNamespace(status=200)
+        class Ready:
+            def __enter__(self):return response
+            def __exit__(self,*args):return False
+        web=SimpleNamespace(poll=lambda:None)
+        with patch.object(validation.urllib.request,'urlopen',return_value=Ready()),\
+                patch.object(validation,'check_browser',side_effect=RuntimeError('browser failed')) as browser,\
+                patch.object(validation.time,'sleep') as sleep:
+            with self.assertRaisesRegex(RuntimeError,'browser failed'):
+                validation.wait_for_web(web,self.root,self.root,io.StringIO())
+            browser.assert_called_once();sleep.assert_not_called()
     def test_synthetic_setup_cannot_inherit_any_controller_secrets(self):
         with patch.dict(os.environ,{'GH_TOKEN':'secret','CODEX_AUTH_JSON':'secret','CUSTOM_SECRET':'secret'}):
             env=validation.safe_env(self.root/'cache')

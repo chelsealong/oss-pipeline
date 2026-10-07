@@ -94,6 +94,24 @@ def check_browser(work,cache,log):
     subprocess.run(sandbox(work,cache,['pnpm','--filter=web','exec','node','-e',script]),
         env=safe_env(cache),stdout=log,stderr=subprocess.STDOUT,check=True,timeout=180)
 
+def wait_for_web(web,work,cache,log):
+    deadline=time.monotonic()+360
+    while time.monotonic()<deadline:
+        if web.poll() is not None:raise ValidationUnavailable('Synthetic web server exited; see setup log')
+        ready=False
+        try:
+            with urllib.request.urlopen('http://localhost:3000',timeout=5) as response:
+                ready=response.status==200
+        except (OSError,urllib.error.URLError):pass
+        if ready:
+            # Browser failures must surface, not be mistaken for an HTTP startup
+            # delay and repeated indefinitely while consuming the runner window.
+            check_browser(work,cache,log)
+            log.write('\nSynthetic DB/web/Chromium ready at http://localhost:3000. Exact-patch browser checks still required.\n');log.flush()
+            return
+        time.sleep(2)
+    raise ValidationUnavailable('Synthetic web server did not become ready')
+
 def prepare_langfuse(work,folder):
     if not _sessions:raise ValidationUnavailable('Validation requires a cleanup session')
     if not shutil.which('docker') or not shutil.which('bwrap'):
@@ -135,16 +153,6 @@ def prepare_langfuse(work,folder):
         execute(['pnpm','--filter=shared','run','db:seed'])
         execute(['pnpm','run','playwright:install'])
         web=execute(['pnpm','--filter=web','run','dev','--port','3000'],background=True)
-        for _ in range(180):
-            if web.poll() is not None:raise ValidationUnavailable('Synthetic web server exited; see setup log')
-            try:
-                with urllib.request.urlopen('http://localhost:3000',timeout=5) as response:
-                    if response.status==200:
-                        check_browser(work,cache,log)
-                        log.write('\nSynthetic DB/web/Chromium ready at http://localhost:3000. Exact-patch browser checks still required.\n');log.flush()
-                        return
-            except Exception:pass
-            time.sleep(2)
-        raise ValidationUnavailable('Synthetic web server did not become ready')
+        wait_for_web(web,work,cache,log)
     except (subprocess.SubprocessError,OSError) as error:
         raise ValidationUnavailable('Synthetic setup failed: '+type(error).__name__+'; see validation-setup.log') from error
