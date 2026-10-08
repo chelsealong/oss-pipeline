@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791435765.456864,
+  "saved_at": 1791435774.1677659,
   "tables": {
     "tasks": [
       {
@@ -205,9 +205,9 @@
         "repo": "hermes",
         "number": 130581,
         "note": "",
-        "status": "error",
+        "status": "queued",
         "created": 1790867413.878409,
-        "updated": 1790882983.68736,
+        "updated": 1791435771.4939601,
         "result": "git failed (128): Cloning into '/Users/jialong/.local/share/oss-scanner/.runtime/jobs/16/work'...\nerror: RPC failed; curl 56 Recv failure: Operation timed out\nerror: 22828 bytes of body are still expected\nfetch-pack: unexpected disconnect while reading sideband packet\nfatal: early EOF\nfatal: fetch-pack: invalid index-pack output\n",
         "attempts": 1
       },
@@ -7418,38 +7418,6 @@
         "value": "{\"phase\": \"skipped\", \"publication_hold_until\": 0, \"started\": 1791434339.1254153, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/473/attempt-1\", \"attempt\": 1, \"base\": \"2966cb68da0817451093d14544d6da37296de608\", \"generation_started\": 1791434355.410873, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791434356.681598, \"last_execution_phase\": \"generation\", \"finished\": 1791434399.4129128}"
       },
       {
-        "key": "task:16",
-        "value": "{\"recovery_checked_at\": 1791434857.9415522}"
-      },
-      {
-        "key": "recovery_audit:16",
-        "value": "{\"at\": 1791434858.4041543, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
-      },
-      {
-        "key": "task:44",
-        "value": "{\"recovery_checked_at\": 1791434858.4780636}"
-      },
-      {
-        "key": "recovery_audit:44",
-        "value": "{\"at\": 1791434859.2559829, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:45",
-        "value": "{\"recovery_checked_at\": 1791434859.2689147}"
-      },
-      {
-        "key": "recovery_audit:45",
-        "value": "{\"at\": 1791434859.9803817, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:54",
-        "value": "{\"recovery_checked_at\": 1791434859.9839191}"
-      },
-      {
-        "key": "recovery_audit:54",
-        "value": "{\"at\": 1791434861.276181, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
         "key": "followup:task:474",
         "value": "{\"status\": \"needs_human\", \"task\": 474, \"repo\": \"hermes\", \"number\": 134285, \"reason\": \"review: HUMAN_REVIEW_REQUIRED: context.json has no named human attestation for this exact patch and base. The source supports the reported menu bug, and the patch appears focused; no exact duplicate was found. The focused test passed (11/11), Desktop typecheck and lint passed (0 errors), and all 11 repository checks passed. These checks do not replace the missing human signoff.\", \"base\": \"2966cb68da0817451093d14544d6da37296de608\", \"patch_digest\": \"49f79de4a9601b56215f3d9140f25f59af301c852446509f7bcf789edc44332d\", \"evidence_bundle\": \"474-1.json.enc\"}"
       },
@@ -7722,14 +7690,6 @@
         "value": "1791435752.9758513"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1791435761.2518551"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791435761.2539759"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"langfuse\", \"task\": 31, \"at\": 1791418476.098258}, {\"repo\": \"comfyui\", \"task\": 503, \"at\": 1791418502.030006}, {\"repo\": \"firecrawl\", \"task\": 360, \"at\": 1791420733.6189237}, {\"repo\": \"hermes\", \"task\": 473, \"at\": 1791434355.410872}, {\"repo\": \"hermes\", \"task\": 474, \"at\": 1791434418.9590907}, {\"repo\": \"hermes\", \"task\": 509, \"at\": 1791434932.6336908}, {\"repo\": \"hermes\", \"task\": 510, \"at\": 1791435341.917265}, {\"repo\": \"hermes\", \"task\": 511, \"at\": 1791435704.4497795}, {\"repo\": \"hermes\", \"task\": 512, \"at\": 1791435764.1337936}]"
       },
@@ -7744,6 +7704,50 @@
       {
         "key": "task:512",
         "value": "{\"started\": 1791435726.7789774, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/512/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791435764.133794, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791435765.440803}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791435767.901276"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791435767.9870682"
+      },
+      {
+        "key": "recovery_audit:16",
+        "value": "{\"at\": 1791435771.4921424, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
+      },
+      {
+        "key": "task:16",
+        "value": "{\"recovery_checked_at\": 1791435771.1008782, \"phase\": \"queued\", \"terminal\": false, \"retry_after\": 0}"
+      },
+      {
+        "key": "followup:task:16",
+        "value": "{\"status\": \"resumed\", \"task\": 16}"
+      },
+      {
+        "key": "task:44",
+        "value": "{\"recovery_checked_at\": 1791435771.498797}"
+      },
+      {
+        "key": "recovery_audit:44",
+        "value": "{\"at\": 1791435772.416354, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:45",
+        "value": "{\"recovery_checked_at\": 1791435772.4180498}"
+      },
+      {
+        "key": "recovery_audit:45",
+        "value": "{\"at\": 1791435773.2315164, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:54",
+        "value": "{\"recovery_checked_at\": 1791435773.234433}"
+      },
+      {
+        "key": "recovery_audit:54",
+        "value": "{\"at\": 1791435774.0699356, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       }
     ],
     "calls": [
