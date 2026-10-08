@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791483835.4524093,
+  "saved_at": 1791483837.7761908,
   "tables": {
     "tasks": [
       {
@@ -6211,9 +6211,9 @@
         "repo": "openclaw",
         "number": 166455,
         "note": "",
-        "status": "capacity_wait",
+        "status": "queued",
         "created": 1791353364.1569967,
-        "updated": 1791353368.4965377,
+        "updated": 1791483836.530912,
         "result": "openclaw open PR cap (20)",
         "attempts": 0
       },
@@ -9345,10 +9345,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7455\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "task:478",
-        "value": "{\"started\": 1791353365.6335442, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791353368.4952097, \"recovery_checked_at\": 1791482904.102418}"
-      },
-      {
         "key": "followup:task:568",
         "value": "{\"status\": \"needs_human\", \"task\": 568, \"repo\": \"openclaw/openclaw\", \"number\": 152746, \"reason\": \"VALIDATION_ENVIRONMENT: ClawSweeper still requires native macOS launch, relaunch, upgrade, and before/after screenshot proof. This Linux runner has no macOS host. The PR also has merge conflicts. Focused macOS CI passes, but neither blocker is resolved.\", \"base\": \"8eb132a2a50c8da6959e8a97adb759a41b7d5654\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"568-8.json.enc\"}"
       },
@@ -9525,10 +9521,6 @@
         "value": "1791483699.0120583"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791483718.3218076, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "followup:reply:589",
         "value": "{\"status\": \"needs_human\", \"reason\": \"The proposed reply largely repeats the October 8 comment. The proposed PR body also presents the historical regression run as proof, but this job has no test output verifying it, and the original body's listed suite counts total 83 rather than the claimed 89. The source and current red checks support the unresolved-findings and validation-gap statements, but the reply and body are not safe to send as written.\"}"
       },
@@ -9613,10 +9605,6 @@
         "value": "{\"at\": 1791483767.1692421, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 2, \"human_wait\": 5, \"queued\": 1, \"skipped\": 65}, \"respond\": {\"blocked\": 10, \"done\": 5, \"error\": 5, \"human_wait\": 7, \"running\": 2, \"skipped\": 8, \"validation_wait\": 7}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791483822.7389498"
-      },
-      {
         "key": "task:172",
         "value": "{\"recovery_checked_at\": 1791483827.5009942}"
       },
@@ -9683,6 +9671,22 @@
       {
         "key": "recovery_audit:222",
         "value": "{\"at\": 1791483835.4382024, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791483836.3500633, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:478",
+        "value": "{\"started\": 1791353365.6335442, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"queued\", \"finished\": 1791353368.4952097, \"recovery_checked_at\": 1791483835.5267956}"
+      },
+      {
+        "key": "followup:task:478",
+        "value": "{\"status\": \"resumed\", \"task\": 478}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791483837.7400284"
       }
     ],
     "calls": [
@@ -17916,6 +17920,10 @@
       },
       {
         "at": 1791483833.5963967,
+        "kind": "codex"
+      },
+      {
+        "at": 1791483836.541873,
         "kind": "codex"
       }
     ]
