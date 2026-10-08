@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791502256.0011814,
+  "saved_at": 1791502289.9755354,
   "tables": {
     "tasks": [
       {
@@ -8148,10 +8148,10 @@
         "repo": "NousResearch/hermes-agent",
         "number": 87350,
         "note": "{\"authors\": \"alt-glitch, wjorgensen\", \"events\": [\"IC_kwDOPRF1G88AAAABVt-X4A@2026-09-20T20:30:00Z\", \"IC_kwDOPRF1G88AAAABWIjIfg@2026-09-22T16:41:16Z\"], \"followup_policy\": \"2026-10-08-replies-v1\", \"head\": \"f202bd9b8a4fd406230b2a22dd453e3313c60a96\", \"is_issue\": false, \"previous_task\": 625}",
-        "status": "running",
+        "status": "blocked",
         "created": 1791502124.9538696,
-        "updated": 1791502165.0474105,
-        "result": "",
+        "updated": 1791502289.96258,
+        "result": "The review feedback has already been answered. The PR description still describes code removed during conflict resolution and overstates OAuth support; a metadata correction is useful. The current head conflicts with main and has no reported checks.",
         "attempts": 1
       },
       {
@@ -10368,32 +10368,36 @@
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791501438.4044576, \"comfyui\": 1791482790.8489242, \"hermes\": 1791502165.0472283, \"langfuse\": 1791491182.2146845, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453768.3244345, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879}}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791502193.5069993, \"tasks\": {\"fix\": {\"blocked\": 2, \"error\": 2, \"human_wait\": 6, \"running\": 1, \"skipped\": 85}, \"respond\": {\"blocked\": 20, \"done\": 5, \"error\": 5, \"human_wait\": 9, \"running\": 1, \"skipped\": 9, \"validation_wait\": 8}}}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791502250.1164289"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1791502250.4215896"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791502250.423079"
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791502256.0023193, \"tasks\": {\"fix\": {\"blocked\": 2, \"error\": 2, \"human_wait\": 6, \"queued\": 3, \"running\": 1, \"skipped\": 85}, \"respond\": {\"blocked\": 20, \"done\": 5, \"error\": 5, \"human_wait\": 9, \"running\": 1, \"skipped\": 9, \"validation_wait\": 8}}}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791502250.5623608"
+        "value": "1791502280.5647833"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791502284.942243"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791502284.9463043"
       },
       {
         "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791502252.5027173, \"source\": \"completed task phase\"}"
+        "value": "{\"ok\": true, \"at\": 1791502289.6756208, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:reply:627",
+        "value": "{\"status\": \"needs_human\", \"reason\": \"The review feedback was already answered, and the draft reply adds only status information. The proposed PR body also drops the original tested-platform disclosure and the specific AI provenance. No current-head test result is available to verify.\"}"
       },
       {
         "key": "task:627",
-        "value": "{\"started\": 1791502165.047455, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/627/attempt-1\", \"attempt\": 1, \"phase\": \"reply-review\", \"base\": \"f202bd9b8a4fd406230b2a22dd453e3313c60a96\", \"phase_started\": 1791502254.4097314}"
+        "value": "{\"started\": 1791502165.047455, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/627/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"f202bd9b8a4fd406230b2a22dd453e3313c60a96\", \"phase_started\": 1791502254.4097314, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1791502289.8505323}"
       }
     ],
     "calls": [
