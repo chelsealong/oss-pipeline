@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791483435.1038852,
+  "saved_at": 1791483467.8332913,
   "tables": {
     "tasks": [
       {
@@ -7641,10 +7641,10 @@
         "repo": "openclaw/openclaw",
         "number": 152746,
         "note": "{\"authors\": \"ci, clawsweeper\", \"events\": [\"IC_kwDOQb6kR88AAAABViyYpw@2026-10-07T17:54:17Z\", \"standing:needs proof:8eb132a2a50c\"], \"followup_policy\": \"2026-10-08-replies-v1\", \"head\": \"8eb132a2a50c8da6959e8a97adb759a41b7d5654\", \"is_issue\": false, \"previous_task\": 568}",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1791483239.8642662,
-        "updated": 1791483254.76003,
-        "result": "",
+        "updated": 1791483467.8265672,
+        "result": "VALIDATION_ENVIRONMENT: Native macOS launch, relaunch, upgrade, and screenshot proof is required, but this Linux checkout has no macOS or Parallels host. GitHub also reports merge conflicts at the reviewed head.",
         "attempts": 1
       },
       {
@@ -7696,6 +7696,19 @@
         "status": "queued",
         "created": 1791483382.7536874,
         "updated": 1791483382.7536874,
+        "result": "",
+        "attempts": 0
+      },
+      {
+        "id": 593,
+        "identity": "fix:hermes:134989:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 134989,
+        "note": "",
+        "status": "queued",
+        "created": 1791483467.4262931,
+        "updated": 1791483467.4262931,
         "result": "",
         "attempts": 0
       }
@@ -9578,40 +9591,48 @@
         "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 3, \"comfyui\": 2, \"firecrawl\": 1, \"hermes\": 31, \"openclaw\": 5, \"spec-kit\": 1}}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791483372.649692, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 3, \"human_wait\": 5, \"running\": 1, \"skipped\": 62}, \"respond\": {\"blocked\": 9, \"done\": 5, \"error\": 5, \"human_wait\": 7, \"queued\": 3, \"running\": 1, \"skipped\": 7, \"validation_wait\": 6}}}"
-      },
-      {
-        "key": "task:588",
-        "value": "{\"started\": 1791483254.7600627, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/588/attempt-1\", \"attempt\": 1, \"phase\": \"reply-review\", \"base\": \"8eb132a2a50c8da6959e8a97adb759a41b7d5654\", \"phase_started\": 1791483393.8598535}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791483419.634947, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:585",
         "value": "{\"started\": 1791483309.5909364, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/585/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"517b5e10febd619ce30bb22580e29b160266eb43\", \"generation_started\": 1791483331.8095102, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791483333.8090088, \"last_execution_phase\": \"generation\", \"finished\": 1791483419.637281}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791483430.6731086"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791483430.6768835"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791483432.6661248"
       },
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791483254.7598693, \"comfyui\": 1791482790.8489242, \"hermes\": 1791483433.6358495, \"langfuse\": 1791470397.360302, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453768.3244345, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791470830.5865817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879}}"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791483435.1039603, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 3, \"human_wait\": 5, \"skipped\": 63}, \"respond\": {\"blocked\": 9, \"done\": 5, \"error\": 5, \"human_wait\": 7, \"queued\": 3, \"running\": 2, \"skipped\": 7, \"validation_wait\": 6}}}"
+      },
+      {
         "key": "task:591",
-        "value": "{\"started\": 1791483433.6360483, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0}"
+        "value": "{\"started\": 1791483433.6360483, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/591/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": null}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791483451.4512167"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791483451.4527776"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791483462.668556"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791483467.449422, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:reply:588",
+        "value": "{\"status\": \"needs_human\", \"reason\": \"The CI results and merge-conflict status are supported by the job evidence, but the reply is a status update that repeats the already-posted native-proof gap. It does not answer the unresolved request for launch, relaunch, upgrade, and screenshot evidence.\"}"
+      },
+      {
+        "key": "followup:task:588",
+        "value": "{\"status\": \"needs_human\", \"task\": 588, \"repo\": \"openclaw/openclaw\", \"number\": 152746, \"reason\": \"VALIDATION_ENVIRONMENT: Native macOS launch, relaunch, upgrade, and screenshot proof is required, but this Linux checkout has no macOS or Parallels host. GitHub also reports merge conflicts at the reviewed head.\", \"base\": \"8eb132a2a50c8da6959e8a97adb759a41b7d5654\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"588-1.json.enc\"}"
+      },
+      {
+        "key": "task:588",
+        "value": "{\"started\": 1791483254.7600627, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/588/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"8eb132a2a50c8da6959e8a97adb759a41b7d5654\", \"phase_started\": 1791483393.8598535, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1791483467.6997442}"
       }
     ],
     "calls": [
