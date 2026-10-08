@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791434403.313841,
+  "saved_at": 1791434419.1203113,
   "tables": {
     "tasks": [
       {
@@ -7614,14 +7614,6 @@
         "value": "{\"started\": 1791404093.9744883, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791404099.788691, \"recovery_checked_at\": 1791434292.9332306}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"langfuse\", \"task\": 31, \"at\": 1791418476.098258}, {\"repo\": \"comfyui\", \"task\": 503, \"at\": 1791418502.030006}, {\"repo\": \"firecrawl\", \"task\": 360, \"at\": 1791420733.6189237}, {\"repo\": \"hermes\", \"task\": 473, \"at\": 1791434355.410872}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 1, \"comfyui\": 1, \"firecrawl\": 1, \"hermes\": 1}}"
-      },
-      {
         "key": "task:502",
         "value": "{\"started\": 1791418478.0687816, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791418482.0423975, \"recovery_checked_at\": 1791434355.4399269}"
       },
@@ -7634,10 +7626,6 @@
         "value": "{\"at\": 1791434359.7692516, \"tasks\": {\"fix\": {\"capacity_wait\": 20, \"human_wait\": 1, \"queued\": 1, \"running\": 1, \"skipped\": 33}, \"respond\": {\"blocked\": 2}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791434397.571243"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1791434399.411171, \"source\": \"completed task phase\"}"
       },
@@ -7646,20 +7634,32 @@
         "value": "{\"phase\": \"skipped\", \"publication_hold_until\": 0, \"started\": 1791434339.1254153, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/473/attempt-1\", \"attempt\": 1, \"base\": \"2966cb68da0817451093d14544d6da37296de608\", \"generation_started\": 1791434355.410873, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791434356.681598, \"last_execution_phase\": \"generation\", \"finished\": 1791434399.4129128}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1791434403.1163645"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791434403.1286857"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791426445.1799762, \"comfyui\": 1791418494.4007776, \"hermes\": 1791434403.2281747, \"langfuse\": 1791418848.0356576, \"firecrawl\": 1791420725.9632778, \"mem0\": 1791376873.1927829, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791403286.339092, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791371043.7510295}}"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1791434412.6079388"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791434417.4419198"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791434417.5486944"
+      },
+      {
         "key": "task:474",
-        "value": "{\"phase\": \"queued\", \"publication_hold_until\": 0, \"started\": 1791434403.2283516, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0}"
+        "value": "{\"phase\": \"checkout\", \"publication_hold_until\": 0, \"started\": 1791434403.2283516, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/474/attempt-1\", \"attempt\": 1, \"base\": \"2966cb68da0817451093d14544d6da37296de608\", \"generation_started\": 1791434418.9590914, \"dispatch_paid_date\": \"2026-10-08\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"langfuse\", \"task\": 31, \"at\": 1791418476.098258}, {\"repo\": \"comfyui\", \"task\": 503, \"at\": 1791418502.030006}, {\"repo\": \"firecrawl\", \"task\": 360, \"at\": 1791420733.6189237}, {\"repo\": \"hermes\", \"task\": 473, \"at\": 1791434355.410872}, {\"repo\": \"hermes\", \"task\": 474, \"at\": 1791434418.9590907}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 1, \"comfyui\": 1, \"firecrawl\": 1, \"hermes\": 2}}"
       }
     ],
     "calls": [
@@ -14953,6 +14953,10 @@
       },
       {
         "at": 1791434355.411006,
+        "kind": "codex"
+      },
+      {
+        "at": 1791434418.9592128,
         "kind": "codex"
       }
     ]
