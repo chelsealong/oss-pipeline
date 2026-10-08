@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791475401.7469938,
+  "saved_at": 1791475416.5631135,
   "tables": {
     "tasks": [
       {
@@ -7383,9 +7383,9 @@
         "note": "{\"authors\": \"ci, clawsweeper\", \"events\": [\"IC_kwDOQb6kR88AAAABViyYpw@2026-10-07T17:54:17Z\", \"standing:needs proof:8eb132a2a50c\"], \"is_issue\": false, \"head\": \"8eb132a2a50c8da6959e8a97adb759a41b7d5654\"}",
         "status": "retry_wait",
         "created": 1791457635.5633972,
-        "updated": 1791473597.870709,
+        "updated": 1791475405.1381454,
         "result": "Claim checkpoint failed before execution; durable checkpoint required before retry",
-        "attempts": 3
+        "attempts": 4
       },
       {
         "id": 569,
@@ -9105,14 +9105,6 @@
         "value": "{\"started\": 1791473292.74793, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/567/attempt-4\", \"attempt\": 4, \"phase\": \"validation_wait\", \"base\": \"545552b20a92f06f5d3e90bf14a1cd043def551b\", \"phase_started\": 1791473491.8912394, \"last_execution_phase\": \"reply-review\", \"finished\": 1791473577.4883215, \"replied_at\": 1791473572.9593856, \"reply_url\": \"https://github.com/openclaw/openclaw/pull/154033#issuecomment-6063388194\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\"}"
       },
       {
-        "key": "task:568",
-        "value": "{\"started\": 1791473597.004352, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 1791473897.8705733, \"folder\": \"jobs/568/attempt-2\", \"attempt\": 2, \"phase\": \"retry_wait\", \"base\": \"8eb132a2a50c8da6959e8a97adb759a41b7d5654\", \"last_execution_phase\": \"checkout\", \"finished\": 1791471340.9500139}"
-      },
-      {
-        "key": "pause",
-        "value": "{\"until\": 1791475397.8719096, \"reason\": \"Cloud checkpoint unavailable; keep task state for recovery\"}"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1791473635.1275592, \"source\": \"completed task phase\"}"
       },
@@ -9127,30 +9119,6 @@
       {
         "key": "followup:task:477",
         "value": "{\"status\": \"resumed\", \"task\": 477}"
-      },
-      {
-        "key": "task:44",
-        "value": "{\"recovery_checked_at\": 1791474505.5821247}"
-      },
-      {
-        "key": "recovery_audit:44",
-        "value": "{\"at\": 1791474506.7731261, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:45",
-        "value": "{\"recovery_checked_at\": 1791474506.7769513}"
-      },
-      {
-        "key": "recovery_audit:45",
-        "value": "{\"at\": 1791474507.9365606, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:54",
-        "value": "{\"recovery_checked_at\": 1791474507.938888}"
-      },
-      {
-        "key": "recovery_audit:54",
-        "value": "{\"at\": 1791474509.2443054, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
         "key": "task:55",
@@ -9305,10 +9273,6 @@
         "value": "{\"started\": 1791404093.9744883, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791404099.788691, \"recovery_checked_at\": 1791474910.9142456}"
       },
       {
-        "key": "prwatch_heartbeat",
-        "value": "1791475102.4386885"
-      },
-      {
         "key": "task:508",
         "value": "{\"started\": 1791426445.1801422, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791426447.6238666, \"recovery_checked_at\": 1791475349.2445488}"
       },
@@ -9317,24 +9281,60 @@
         "value": "{\"at\": 1791475352.5910323, \"tasks\": {\"fix\": {\"capacity_wait\": 3, \"human_wait\": 5, \"queued\": 2, \"skipped\": 54}, \"respond\": {\"blocked\": 6, \"done\": 4, \"error\": 5, \"human_wait\": 7, \"queued\": 2, \"retry_wait\": 1, \"skipped\": 7, \"validation_wait\": 5}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791475390.7989383"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791475397.1001904"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791475397.1012468"
+        "key": "prwatch_heartbeat",
+        "value": "1791475402.440173"
       },
       {
         "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791473597.0042038, \"comfyui\": 1791456823.3390005, \"hermes\": 1791475397.9572291, \"langfuse\": 1791470397.360302, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453768.3244345, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791470830.5865817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879}}"
+        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791475405.1203713, \"comfyui\": 1791456823.3390005, \"hermes\": 1791475397.9572291, \"langfuse\": 1791470397.360302, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453768.3244345, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791470830.5865817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879}}"
+      },
+      {
+        "key": "task:568",
+        "value": "{\"started\": 1791475405.1205442, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 1791475705.138054, \"folder\": \"jobs/568/attempt-2\", \"attempt\": 2, \"phase\": \"retry_wait\", \"base\": \"8eb132a2a50c8da6959e8a97adb759a41b7d5654\", \"last_execution_phase\": \"checkout\", \"finished\": 1791471340.9500139}"
+      },
+      {
+        "key": "pause",
+        "value": "{\"until\": 1791477205.138942, \"reason\": \"Cloud checkpoint unavailable; keep task state for recovery\"}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791475405.8000543"
       },
       {
         "key": "task:578",
-        "value": "{\"started\": 1791475397.9573476, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0}"
+        "value": "{\"started\": 1791475397.9573476, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/578/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": null}"
+      },
+      {
+        "key": "task:44",
+        "value": "{\"recovery_checked_at\": 1791475412.893843}"
+      },
+      {
+        "key": "recovery_audit:44",
+        "value": "{\"at\": 1791475413.9971054, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:45",
+        "value": "{\"recovery_checked_at\": 1791475413.998567}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791475414.5939937"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791475414.5961208"
+      },
+      {
+        "key": "recovery_audit:45",
+        "value": "{\"at\": 1791475415.1967087, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:54",
+        "value": "{\"recovery_checked_at\": 1791475415.1989188}"
+      },
+      {
+        "key": "recovery_audit:54",
+        "value": "{\"at\": 1791475416.5014467, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       }
     ],
     "calls": [
