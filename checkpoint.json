@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791436208.70775,
+  "saved_at": 1791436238.1490545,
   "tables": {
     "tasks": [
       {
@@ -6666,10 +6666,10 @@
         "repo": "hermes",
         "number": 134876,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791436190.6234105,
-        "updated": 1791436190.9075658,
-        "result": "",
+        "updated": 1791436238.1443005,
+        "result": "Open PR #117122 already addresses this issue’s cold-resume model leak. Its patch prevents a selected stored session without a runtime slice from displaying the global sticky model, and includes a regression test. The checkout was left unchanged.",
         "attempts": 1
       },
       {
@@ -7569,10 +7569,6 @@
         "value": "{\"at\": 1791435841.5918446, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791435893.348163, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:16",
         "value": "{\"recovery_checked_at\": 1791435771.1008782, \"phase\": \"skipped\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791435824.7821763, \"worker_slot\": 1, \"folder\": \"jobs/16/attempt-2\", \"attempt\": 2, \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791435850.3317244, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791435851.945146, \"last_execution_phase\": \"generation\", \"finished\": 1791435893.405837}"
       },
@@ -7777,10 +7773,6 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791426445.1799762, \"comfyui\": 1791418494.4007776, \"hermes\": 1791436190.907425, \"langfuse\": 1791418848.0356576, \"firecrawl\": 1791420725.9632778, \"mem0\": 1791376873.1927829, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791403286.339092, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791371043.7510295}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791436201.2357008"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"langfuse\", \"task\": 31, \"at\": 1791418476.098258}, {\"repo\": \"comfyui\", \"task\": 503, \"at\": 1791418502.030006}, {\"repo\": \"firecrawl\", \"task\": 360, \"at\": 1791420733.6189237}, {\"repo\": \"hermes\", \"task\": 473, \"at\": 1791434355.410872}, {\"repo\": \"hermes\", \"task\": 474, \"at\": 1791434418.9590907}, {\"repo\": \"hermes\", \"task\": 509, \"at\": 1791434932.6336908}, {\"repo\": \"hermes\", \"task\": 510, \"at\": 1791435341.917265}, {\"repo\": \"hermes\", \"task\": 511, \"at\": 1791435704.4497795}, {\"repo\": \"hermes\", \"task\": 512, \"at\": 1791435764.1337936}, {\"repo\": \"hermes\", \"task\": 16, \"at\": 1791435850.3317237}, {\"repo\": \"hermes\", \"task\": 513, \"at\": 1791436207.1000006}]"
       },
@@ -7789,8 +7781,16 @@
         "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 1, \"comfyui\": 1, \"firecrawl\": 1, \"hermes\": 8}}"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1791436231.2396064"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791436237.7785387, \"source\": \"completed task phase\"}"
+      },
+      {
         "key": "task:513",
-        "value": "{\"started\": 1791436190.907593, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/513/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791436207.100001, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791436208.7024343}"
+        "value": "{\"started\": 1791436190.907593, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/513/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791436207.100001, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791436208.7024343, \"last_execution_phase\": \"generation\", \"finished\": 1791436237.7952042}"
       }
     ],
     "calls": [
