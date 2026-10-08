@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791436271.7107337,
+  "saved_at": 1791436300.4770696,
   "tables": {
     "tasks": [
       {
@@ -6679,10 +6679,10 @@
         "repo": "hermes",
         "number": 134858,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791436193.1741862,
-        "updated": 1791436247.8113105,
-        "result": "",
+        "updated": 1791436300.454502,
+        "result": "Issue #134858 reports missing cron fires, but the execution-row and log details needed to identify the scheduler path are still unavailable. Several paths can skip a due job, so there is no verified minimal fix to test. A contributor is actively investigating and has offered to reproduce the failure once those details arrive.",
         "attempts": 1
       },
       {
@@ -7761,10 +7761,6 @@
         "value": "1791436185.3589847"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791436237.7785387, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:513",
         "value": "{\"started\": 1791436190.907593, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/513/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791436207.100001, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791436208.7024343, \"last_execution_phase\": \"generation\", \"finished\": 1791436237.7952042}"
       },
@@ -7781,10 +7777,6 @@
         "value": "{\"at\": 1791436248.3600502, \"tasks\": {\"fix\": {\"capacity_wait\": 20, \"human_wait\": 4, \"queued\": 1, \"running\": 1, \"skipped\": 37}, \"respond\": {\"blocked\": 2}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791436261.2504117"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"langfuse\", \"task\": 31, \"at\": 1791418476.098258}, {\"repo\": \"comfyui\", \"task\": 503, \"at\": 1791418502.030006}, {\"repo\": \"firecrawl\", \"task\": 360, \"at\": 1791420733.6189237}, {\"repo\": \"hermes\", \"task\": 473, \"at\": 1791434355.410872}, {\"repo\": \"hermes\", \"task\": 474, \"at\": 1791434418.9590907}, {\"repo\": \"hermes\", \"task\": 509, \"at\": 1791434932.6336908}, {\"repo\": \"hermes\", \"task\": 510, \"at\": 1791435341.917265}, {\"repo\": \"hermes\", \"task\": 511, \"at\": 1791435704.4497795}, {\"repo\": \"hermes\", \"task\": 512, \"at\": 1791435764.1337936}, {\"repo\": \"hermes\", \"task\": 16, \"at\": 1791435850.3317237}, {\"repo\": \"hermes\", \"task\": 513, \"at\": 1791436207.1000006}, {\"repo\": \"hermes\", \"task\": 514, \"at\": 1791436269.7471972}]"
       },
@@ -7793,8 +7785,16 @@
         "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 1, \"comfyui\": 1, \"firecrawl\": 1, \"hermes\": 9}}"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1791436291.3798018"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791436300.2858593, \"source\": \"completed task phase\"}"
+      },
+      {
         "key": "task:514",
-        "value": "{\"started\": 1791436247.8113377, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/514/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791436269.7471974, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791436271.705424}"
+        "value": "{\"started\": 1791436247.8113377, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/514/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791436269.7471974, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791436271.705424, \"last_execution_phase\": \"generation\", \"finished\": 1791436300.3154671}"
       }
     ],
     "calls": [
