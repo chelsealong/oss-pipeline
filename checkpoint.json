@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791453713.7023902,
+  "saved_at": 1791453717.64816,
   "tables": {
     "tasks": [
       {
@@ -7087,6 +7087,19 @@
         "updated": 1791453512.1336775,
         "result": "The issue bundles two defects, and I could not establish a safe, minimal fix for both. Current agent tests deliberately keep streamed reasoning out of interrupted-turn replay state because replaying it has caused provider failures. The reported Desktop row sequence lacks the tool-call IDs needed to reproduce the claimed hydration fold. A persistence change here would be speculative and could alter session replay.",
         "attempts": 1
+      },
+      {
+        "id": 546,
+        "identity": "fix:hermes:135041:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 135041,
+        "note": "",
+        "status": "queued",
+        "created": 1791453716.9006305,
+        "updated": 1791453716.9006305,
+        "result": "",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -8527,10 +8540,6 @@
         "value": "{\"started\": 1791404093.9744883, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791404099.788691, \"recovery_checked_at\": 1791453699.4575086}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791453702.4811947"
-      },
-      {
         "key": "throughput_24h",
         "value": "{\"at\": 1791453702.5192666, \"tasks\": {\"fix\": {\"capacity_wait\": 12, \"human_wait\": 4, \"queued\": 1, \"skipped\": 30}, \"respond\": {\"blocked\": 4, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"queued\": 3, \"retry_wait\": 3, \"skipped\": 3, \"validation_wait\": 2}}}"
       },
@@ -8552,7 +8561,11 @@
       },
       {
         "key": "task:541",
-        "value": "{\"started\": 1791453712.4982033, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0}"
+        "value": "{\"started\": 1791453712.4982033, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/541/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": null}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791453717.4824188"
       }
     ],
     "calls": [
@@ -16106,6 +16119,10 @@
       },
       {
         "at": 1791453711.976257,
+        "kind": "judge"
+      },
+      {
+        "at": 1791453717.6420424,
         "kind": "judge"
       }
     ]
