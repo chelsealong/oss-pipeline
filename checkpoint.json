@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791454785.7137198,
+  "saved_at": 1791454798.6257286,
   "tables": {
     "tasks": [
       {
@@ -6952,10 +6952,10 @@
         "repo": "NousResearch/hermes-agent",
         "number": 127444,
         "note": "{\"authors\": \"Enough1122\", \"events\": [\"IC_kwDOPRF1G88AAAABY9DScw@2026-10-03T13:24:57Z\"], \"followup_policy\": \"2026-10-08-replies-v1\", \"head\": \"68f597a368a918af2a3bd9d37b9fbc5c8e505998\", \"is_issue\": false, \"previous_task\": 244}",
-        "status": "running",
+        "status": "human_wait",
         "created": 1791438336.9983532,
-        "updated": 1791454270.2336469,
-        "result": "Codex session budget reached; judge paused too",
+        "updated": 1791454798.6050992,
+        "result": "review: HUMAN_REVIEW_REQUIRED: context.json has no human review attestation for this exact patch and base. The guest-message fix is supported: real PTB 22.8 updates match the old filter, while the focused patched tests pass 4/4. Nearby tests still have one failing admission case, reproduced on the unmodified checkout commit; a baseline failure does not waive a mandatory gate. The proposed reply’s 104-pass claim was not independently verified.",
         "attempts": 2
       },
       {
@@ -8578,20 +8578,12 @@
         "value": "{\"started\": 1791361274.6888843, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791361277.4473708, \"recovery_checked_at\": 1791454575.5038283}"
       },
       {
-        "key": "task:535",
-        "value": "{\"started\": 1791454270.2336996, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/535/attempt-2\", \"attempt\": 2, \"phase\": \"review\", \"base\": \"68f597a368a918af2a3bd9d37b9fbc5c8e505998\", \"phase_started\": 1791454600.1103315, \"last_execution_phase\": \"generation\", \"finished\": 1791439752.0150113}"
-      },
-      {
         "key": "task:484",
         "value": "{\"started\": 1791364273.360593, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791364275.7329543, \"recovery_checked_at\": 1791454642.1821985}"
       },
       {
         "key": "task:487",
         "value": "{\"started\": 1791368639.1645067, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791368641.5031555, \"recovery_checked_at\": 1791454643.9084237}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791454644.317138, \"source\": \"completed task phase\"}"
       },
       {
         "key": "task:491",
@@ -8635,19 +8627,31 @@
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1791454725.073311, \"tasks\": {\"fix\": {\"capacity_wait\": 10, \"human_wait\": 4, \"queued\": 1, \"skipped\": 32}, \"respond\": {\"blocked\": 4, \"done\": 2, \"error\": 2, \"human_wait\": 5, \"queued\": 3, \"retry_wait\": 1, \"running\": 1, \"skipped\": 3, \"validation_wait\": 2}}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791454782.757609"
+        "value": "{\"at\": 1791454788.3310997, \"tasks\": {\"fix\": {\"capacity_wait\": 10, \"human_wait\": 4, \"queued\": 1, \"skipped\": 32}, \"respond\": {\"blocked\": 4, \"done\": 2, \"error\": 2, \"human_wait\": 5, \"queued\": 3, \"retry_wait\": 1, \"running\": 1, \"skipped\": 3, \"validation_wait\": 2}}}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791454784.3059177"
+        "value": "1791454794.3338916"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791454784.3196971"
+        "value": "1791454794.3369555"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791454797.7602608"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791454798.035254, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:task:535",
+        "value": "{\"status\": \"needs_human\", \"task\": 535, \"repo\": \"NousResearch/hermes-agent\", \"number\": 127444, \"reason\": \"review: HUMAN_REVIEW_REQUIRED: context.json has no human review attestation for this exact patch and base. The guest-message fix is supported: real PTB 22.8 updates match the old filter, while the focused patched tests pass 4/4. Nearby tests still have one failing admission case, reproduced on the unmodified checkout commit; a baseline failure does not waive a mandatory gate. The proposed reply\\u2019s 104-pass claim was not independently verified.\", \"base\": \"68f597a368a918af2a3bd9d37b9fbc5c8e505998\", \"patch_digest\": \"05d09fcc2985ee81cc5ffa830974a50299e5483d890e44cc7737dde58eed08d3\", \"evidence_bundle\": \"535-2.json.enc\"}"
+      },
+      {
+        "key": "task:535",
+        "value": "{\"started\": 1791454270.2336996, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/535/attempt-2\", \"attempt\": 2, \"phase\": \"human_wait\", \"base\": \"68f597a368a918af2a3bd9d37b9fbc5c8e505998\", \"phase_started\": 1791454600.1103315, \"last_execution_phase\": \"review\", \"finished\": 1791454798.3786485, \"patch_digest\": \"05d09fcc2985ee81cc5ffa830974a50299e5483d890e44cc7737dde58eed08d3\"}"
       }
     ],
     "calls": [
