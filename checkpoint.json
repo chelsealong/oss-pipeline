@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791482827.9824567,
+  "saved_at": 1791482845.179251,
   "tables": {
     "tasks": [
       {
@@ -7563,10 +7563,10 @@
         "repo": "comfyui",
         "number": 16878,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791482786.9062645,
-        "updated": 1791482790.8490767,
-        "result": "",
+        "updated": 1791482845.1727252,
+        "result": "Issue #16878 reports a DynamicVRAM freeze on an AMD RX 6700 XT, but the logs stop after text encoder staging without identifying a failing operation. The reported behavior requires ROCm hardware and model weights to reproduce; this task permits only CPU-verifiable ComfyUI fixes. I found no narrow source change whose observable effect could be tested here. No files were changed.",
         "attempts": 1
       },
       {
@@ -9336,14 +9336,6 @@
         "value": "{\"at\": 1791482750.3990915, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791482753.2694945, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 3, \"human_wait\": 5, \"queued\": 1, \"skipped\": 56}, \"respond\": {\"blocked\": 7, \"done\": 4, \"error\": 5, \"human_wait\": 7, \"queued\": 1, \"retry_wait\": 1, \"skipped\": 7, \"validation_wait\": 5}}}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791482774.603683, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -9380,10 +9372,6 @@
         "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 3, \"comfyui\": 2, \"firecrawl\": 1, \"hermes\": 29, \"openclaw\": 5, \"spec-kit\": 1}}"
       },
       {
-        "key": "task:582",
-        "value": "{\"started\": 1791482790.8491118, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/582/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"46493d824fd7eac25a741e505159e4c9e0ef0ebd\", \"generation_started\": 1791482799.1485631, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791482801.9620423}"
-      },
-      {
         "key": "task:55",
         "value": "{\"recovery_checked_at\": 1791482813.516304}"
       },
@@ -9410,10 +9398,6 @@
       {
         "key": "task:60",
         "value": "{\"recovery_checked_at\": 1791482817.4056304}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791482817.5752592"
       },
       {
         "key": "recovery_audit:60",
@@ -9458,6 +9442,22 @@
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#101759",
         "value": "{\"at\": 1791482825.8781693, \"previous_task\": 579, \"head\": \"648222649a6385ca92553e9a69054d76a8914fa8\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791482829.90882, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 3, \"human_wait\": 5, \"queued\": 3, \"running\": 1, \"skipped\": 57}, \"respond\": {\"blocked\": 7, \"done\": 4, \"error\": 5, \"human_wait\": 7, \"queued\": 2, \"running\": 1, \"skipped\": 7, \"validation_wait\": 5}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791482832.5765328"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791482844.9822485, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:582",
+        "value": "{\"started\": 1791482790.8491118, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/582/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"46493d824fd7eac25a741e505159e4c9e0ef0ebd\", \"generation_started\": 1791482799.1485631, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791482801.9620423, \"last_execution_phase\": \"generation\", \"finished\": 1791482844.984448}"
       }
     ],
     "calls": [
