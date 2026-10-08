@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791435647.1904662,
+  "saved_at": 1791435685.3278303,
   "tables": {
     "tasks": [
       {
@@ -6627,10 +6627,10 @@
         "repo": "hermes",
         "number": 134910,
         "note": "",
-        "status": "running",
+        "status": "human_wait",
         "created": 1791434652.312515,
-        "updated": 1791435324.842556,
-        "result": "",
+        "updated": 1791435685.3215382,
+        "result": "review: HUMAN_REVIEW_REQUIRED: context.json has no human attestation for this patch. The published Minecraft skill documentation also still contains the failing backup script, so the fix leaves a path that can report success and prune a good backup after tar fails. I reproduced the failure on the base and verified the patched tests and all 11 repository checks pass.",
         "attempts": 1
       },
       {
@@ -7702,36 +7702,40 @@
         "value": "{\"started\": 1791420703.1293685, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791420706.1955814, \"recovery_checked_at\": 1791435396.4871387}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791435565.335479, \"source\": \"completed task phase\"}"
-      },
-      {
-        "key": "task:510",
-        "value": "{\"started\": 1791435324.8425841, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/510/attempt-1\", \"attempt\": 1, \"phase\": \"review\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791435341.9172654, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791435567.0591125}"
-      },
-      {
         "key": "task:507",
         "value": "{\"started\": 1791426439.6317172, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791426442.2873793, \"recovery_checked_at\": 1791435583.6100368}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791435585.8003228, \"tasks\": {\"fix\": {\"capacity_wait\": 20, \"human_wait\": 3, \"queued\": 2, \"running\": 1, \"skipped\": 33}, \"respond\": {\"blocked\": 2}}}"
+        "key": "task:508",
+        "value": "{\"started\": 1791426445.1801422, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791426447.6238666, \"recovery_checked_at\": 1791435646.1078515}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791435644.491376"
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791435648.8314648, \"tasks\": {\"fix\": {\"capacity_wait\": 20, \"human_wait\": 3, \"queued\": 2, \"running\": 1, \"skipped\": 33}, \"respond\": {\"blocked\": 2}}}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791435645.9654045"
+        "value": "1791435674.3654706"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791435645.9947233"
+        "value": "1791435674.3668437"
       },
       {
-        "key": "task:508",
-        "value": "{\"started\": 1791426445.1801422, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791426447.6238666, \"recovery_checked_at\": 1791435646.1078515}"
+        "key": "worker_heartbeat",
+        "value": "1791435674.5215456"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791435684.8480816, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:task:510",
+        "value": "{\"status\": \"needs_human\", \"task\": 510, \"repo\": \"hermes\", \"number\": 134910, \"reason\": \"review: HUMAN_REVIEW_REQUIRED: context.json has no human attestation for this patch. The published Minecraft skill documentation also still contains the failing backup script, so the fix leaves a path that can report success and prune a good backup after tar fails. I reproduced the failure on the base and verified the patched tests and all 11 repository checks pass.\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"patch_digest\": \"4e814a7cf438fd13d7a30b71c7b5ea619b43cc5b7f067f9eaa76312aa1145669\", \"evidence_bundle\": \"510-1.json.enc\"}"
+      },
+      {
+        "key": "task:510",
+        "value": "{\"started\": 1791435324.8425841, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/510/attempt-1\", \"attempt\": 1, \"phase\": \"human_wait\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791435341.9172654, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791435567.0591125, \"patch_digest\": \"4e814a7cf438fd13d7a30b71c7b5ea619b43cc5b7f067f9eaa76312aa1145669\", \"last_execution_phase\": \"review\", \"finished\": 1791435685.1621902}"
       }
     ],
     "calls": [
