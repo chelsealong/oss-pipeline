@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791495961.1217797,
+  "saved_at": 1791496016.5607753,
   "tables": {
     "tasks": [
       {
@@ -7992,10 +7992,10 @@
         "repo": "openclaw/openclaw",
         "number": 148112,
         "note": "{\"authors\": \"clawsweeper, obviyus\", \"events\": [\"IC_kwDOQb6kR88AAAABUXicEg@2026-10-02T14:14:14Z\", \"IC_kwDOQb6kR88AAAABYtZn-w@2026-10-02T13:13:43Z\"], \"followup_policy\": \"2026-10-08-replies-v1\", \"head\": \"13cff260d05ce73896fc97f67eb2e8814d4445fa\", \"is_issue\": false, \"previous_task\": 614}",
-        "status": "running",
+        "status": "human_wait",
         "created": 1791495678.3533285,
-        "updated": 1791495774.9543376,
-        "result": "",
+        "updated": 1791496016.541248,
+        "result": "HUMAN_REVIEW_REQUIRED: The lifecycle owner must decide whether plugin embedded runs without a live parent should reject immediately during reversible suspension or wait for admission to reopen. The current PR changes that behavior. The current head also has a failing Node test shard; its independence from this patch has not been established.",
         "attempts": 1
       },
       {
@@ -10150,20 +10150,8 @@
         "value": "{\"at\": 1791495885.1504574, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791495890.2660782, \"tasks\": {\"fix\": {\"blocked\": 2, \"error\": 2, \"human_wait\": 5, \"queued\": 3, \"running\": 1, \"skipped\": 81}, \"respond\": {\"blocked\": 17, \"done\": 5, \"error\": 5, \"human_wait\": 8, \"running\": 1, \"skipped\": 8, \"validation_wait\": 8}}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791495949.1077404"
-      },
-      {
         "key": "task:219",
         "value": "{\"recovery_checked_at\": 1791495950.5277436}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791495951.4689288, \"source\": \"completed task phase\"}"
       },
       {
         "key": "recovery_audit:219",
@@ -10178,16 +10166,36 @@
         "value": "{\"at\": 1791495952.5098035, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "task:615",
-        "value": "{\"started\": 1791495774.9543767, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/615/attempt-1\", \"attempt\": 1, \"phase\": \"reply-review\", \"base\": \"13cff260d05ce73896fc97f67eb2e8814d4445fa\", \"phase_started\": 1791495956.1041052}"
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791495961.1226666, \"tasks\": {\"fix\": {\"blocked\": 2, \"error\": 2, \"human_wait\": 5, \"queued\": 3, \"running\": 1, \"skipped\": 81}, \"respond\": {\"blocked\": 17, \"done\": 5, \"error\": 5, \"human_wait\": 8, \"running\": 1, \"skipped\": 8, \"validation_wait\": 8}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791496009.144981"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791496011.3828738, \"source\": \"completed task phase\"}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791495957.3352456"
+        "value": "1791496012.4873536"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791495957.3443358"
+        "value": "1791496012.50614"
+      },
+      {
+        "key": "followup:reply:615",
+        "value": "{\"status\": \"needs_human\", \"reason\": \"The reply repeats the lifecycle decision and released-parent reproduction already posted in the PR discussion, so it adds no useful answer to unresolved feedback. The admission behavior and failing exact-head CI check are supported by source and check status, but the reproduction relies on reported evidence rather than independently verified test output.\"}"
+      },
+      {
+        "key": "followup:task:615",
+        "value": "{\"status\": \"needs_human\", \"task\": 615, \"repo\": \"openclaw/openclaw\", \"number\": 148112, \"reason\": \"HUMAN_REVIEW_REQUIRED: The lifecycle owner must decide whether plugin embedded runs without a live parent should reject immediately during reversible suspension or wait for admission to reopen. The current PR changes that behavior. The current head also has a failing Node test shard; its independence from this patch has not been established.\", \"base\": \"13cff260d05ce73896fc97f67eb2e8814d4445fa\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"615-1.json.enc\"}"
+      },
+      {
+        "key": "task:615",
+        "value": "{\"started\": 1791495774.9543767, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/615/attempt-1\", \"attempt\": 1, \"phase\": \"human_wait\", \"base\": \"13cff260d05ce73896fc97f67eb2e8814d4445fa\", \"phase_started\": 1791495956.1041052, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1791496014.9915369}"
       }
     ],
     "calls": [
