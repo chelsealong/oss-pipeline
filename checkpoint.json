@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791454973.0811336,
+  "saved_at": 1791454999.6155648,
   "tables": {
     "tasks": [
       {
@@ -7134,10 +7134,10 @@
         "repo": "hermes",
         "number": 135051,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791454941.2604418,
-        "updated": 1791454942.4657576,
-        "result": "",
+        "updated": 1791454999.605837,
+        "result": "Issue #135051 is an explicit design request for scheduled gateway restarts, announcements, cancellation, and message handling. The reporter asks for agreement on the CLI and config surface before implementation. The live issue has no comments or maintainer decision, and current code still starts draining as soon as a restart is requested. There is no agreed small fix to submit for this task.",
         "attempts": 1
       }
     ],
@@ -8619,10 +8619,6 @@
         "value": "{\"started\": 1791404093.9744883, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791404099.788691, \"recovery_checked_at\": 1791454653.2990184}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791454798.035254, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "followup:task:535",
         "value": "{\"status\": \"needs_human\", \"task\": 535, \"repo\": \"NousResearch/hermes-agent\", \"number\": 127444, \"reason\": \"review: HUMAN_REVIEW_REQUIRED: context.json has no human review attestation for this exact patch and base. The guest-message fix is supported: real PTB 22.8 updates match the old filter, while the focused patched tests pass 4/4. Nearby tests still have one failing admission case, reproduced on the unmodified checkout commit; a baseline failure does not waive a mandatory gate. The proposed reply\\u2019s 104-pass claim was not independently verified.\", \"base\": \"68f597a368a918af2a3bd9d37b9fbc5c8e505998\", \"patch_digest\": \"05d09fcc2985ee81cc5ffa830974a50299e5483d890e44cc7737dde58eed08d3\", \"evidence_bundle\": \"535-2.json.enc\"}"
       },
@@ -8633,10 +8629,6 @@
       {
         "key": "prwatch_heartbeat",
         "value": "1791454895.820849"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791454912.6858737, \"tasks\": {\"fix\": {\"capacity_wait\": 10, \"human_wait\": 4, \"queued\": 1, \"skipped\": 32}, \"respond\": {\"blocked\": 4, \"done\": 2, \"error\": 3, \"human_wait\": 5, \"queued\": 3, \"retry_wait\": 1, \"skipped\": 3, \"validation_wait\": 2}}}"
       },
       {
         "key": "watch_heartbeat",
@@ -8663,12 +8655,20 @@
         "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 2, \"comfyui\": 1, \"firecrawl\": 1, \"hermes\": 20}}"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791454975.7812655, \"tasks\": {\"fix\": {\"capacity_wait\": 10, \"human_wait\": 4, \"queued\": 1, \"running\": 1, \"skipped\": 32}, \"respond\": {\"blocked\": 4, \"done\": 2, \"error\": 3, \"human_wait\": 5, \"queued\": 3, \"running\": 1, \"skipped\": 3, \"validation_wait\": 2}}}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1791454962.786553"
+        "value": "1791454992.7898114"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791454999.3896499, \"source\": \"completed task phase\"}"
       },
       {
         "key": "task:549",
-        "value": "{\"started\": 1791454942.4657948, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/549/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"3e572c5d45d98a2d34596d60daf965b72bcfd1e6\", \"generation_started\": 1791454961.852288, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791454963.7738292}"
+        "value": "{\"started\": 1791454942.4657948, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/549/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"3e572c5d45d98a2d34596d60daf965b72bcfd1e6\", \"generation_started\": 1791454961.852288, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791454963.7738292, \"last_execution_phase\": \"generation\", \"finished\": 1791454999.4010084}"
       }
     ],
     "calls": [
