@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791457189.322794,
+  "saved_at": 1791457227.1103792,
   "tables": {
     "tasks": [
       {
@@ -7303,10 +7303,10 @@
         "repo": "openclaw/openclaw",
         "number": 159297,
         "note": "{\"authors\": \"ci\", \"events\": [\"standing:needs proof:e69db156d119\"], \"is_issue\": false, \"head\": \"e69db156d1196037ee997ae9da86c5f00b31c4ad\"}",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1791456807.6191332,
-        "updated": 1791456986.8878534,
-        "result": "",
+        "updated": 1791457227.0988607,
+        "result": "VALIDATION_ENVIRONMENT: The current-head review requires after-fault installer rollback and revoked-authority final-effect proof. This Linux checkout has no Windows Task Scheduler. The existing tests mock the lease read and native termination, so they do not supply that proof.",
         "attempts": 1
       },
       {
@@ -8935,14 +8935,6 @@
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791456986.887713, \"comfyui\": 1791456823.3390005, \"hermes\": 1791457010.5376582, \"langfuse\": 1791438563.9593794, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453768.3244345, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791403286.339092, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879}}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1791457030.089022"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791457030.0906386"
-      },
-      {
         "key": "task:558",
         "value": "{\"started\": 1791457010.5378304, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/558/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"719e1e90a73c02d0ae9dfb0407e784a2d99d12b3\", \"phase_started\": 1791457037.4925048}"
       },
@@ -8983,28 +8975,12 @@
         "value": "{\"at\": 1791457120.8436337, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791457123.9890363, \"tasks\": {\"fix\": {\"capacity_wait\": 6, \"human_wait\": 5, \"queued\": 2, \"skipped\": 43}, \"respond\": {\"blocked\": 4, \"done\": 4, \"error\": 5, \"human_wait\": 7, \"queued\": 1, \"running\": 2, \"skipped\": 6, \"validation_wait\": 3}}}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791457148.4777756"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791457164.3633122, \"source\": \"completed task phase\"}"
-      },
-      {
-        "key": "task:562",
-        "value": "{\"started\": 1791456986.8878903, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/562/attempt-1\", \"attempt\": 1, \"phase\": \"reply-review\", \"base\": \"e69db156d1196037ee997ae9da86c5f00b31c4ad\", \"phase_started\": 1791457168.2669747}"
-      },
-      {
         "key": "task:55",
         "value": "{\"recovery_checked_at\": 1791457184.387808}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791457184.4032743"
       },
       {
         "key": "recovery_audit:55",
@@ -9033,6 +9009,38 @@
       {
         "key": "recovery_audit:60",
         "value": "{\"at\": 1791457189.0932448, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791457192.2490857, \"tasks\": {\"fix\": {\"capacity_wait\": 6, \"human_wait\": 5, \"queued\": 3, \"skipped\": 42}, \"respond\": {\"blocked\": 4, \"done\": 4, \"error\": 5, \"human_wait\": 7, \"queued\": 1, \"running\": 2, \"skipped\": 6, \"validation_wait\": 3}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791457214.4115887"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791457221.2915218"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791457221.3013725"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791457223.918441, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:reply:562",
+        "value": "{\"status\": \"needs_human\", \"reason\": \"The reply repeats the already posted proof gap without adding a useful answer to the unresolved request. The proposed PR body also removes relevant evidence from the original, including measured test results and costs, the test typecheck gap, and reviewer attribution for the earlier Windows run. The current CI gate and source claims were verified, but this text is not ready to send.\"}"
+      },
+      {
+        "key": "followup:task:562",
+        "value": "{\"status\": \"needs_human\", \"task\": 562, \"repo\": \"openclaw/openclaw\", \"number\": 159297, \"reason\": \"VALIDATION_ENVIRONMENT: The current-head review requires after-fault installer rollback and revoked-authority final-effect proof. This Linux checkout has no Windows Task Scheduler. The existing tests mock the lease read and native termination, so they do not supply that proof.\", \"base\": \"e69db156d1196037ee997ae9da86c5f00b31c4ad\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"562-1.json.enc\"}"
+      },
+      {
+        "key": "task:562",
+        "value": "{\"started\": 1791456986.8878903, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/562/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"e69db156d1196037ee997ae9da86c5f00b31c4ad\", \"phase_started\": 1791457168.2669747, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1791457226.0113852}"
       }
     ],
     "calls": [
