@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791501546.6148582,
+  "saved_at": 1791501570.9785929,
   "tables": {
     "tasks": [
       {
@@ -8070,10 +8070,10 @@
         "repo": "NousResearch/hermes-agent",
         "number": 92666,
         "note": "{\"authors\": \"ctaylor86\", \"events\": [\"IC_kwDOPRF1G88AAAABVRmXPA@2026-09-17T23:39:33Z\"], \"is_issue\": false, \"head\": \"a37d3c56bdf79f0c98f9914f539fb5293e38cfe5\"}",
-        "status": "running",
+        "status": "blocked",
         "created": 1791501426.0760756,
-        "updated": 1791501495.6387706,
-        "result": "",
+        "updated": 1791501570.9710686,
+        "result": "PR #92666 is still open but conflicts with current main. Main has substantially changed the affected Desktop settings and locale files, so the existing head needs integration and conflict resolution before this fix can be validated. The earlier review points and failing CI check have already been answered; another public reply would duplicate those comments. No files changed.",
         "attempts": 1
       },
       {
@@ -8088,6 +8088,19 @@
         "updated": 1791501438.4046156,
         "result": "",
         "attempts": 1
+      },
+      {
+        "id": 623,
+        "identity": "fix:hermes:135347:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 135347,
+        "note": "",
+        "status": "queued",
+        "created": 1791501562.109883,
+        "updated": 1791501562.109883,
+        "result": "",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -10136,14 +10149,6 @@
         "value": "{\"at\": 1791501471.3604782, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791501474.2359798, \"tasks\": {\"fix\": {\"blocked\": 2, \"error\": 2, \"human_wait\": 6, \"queued\": 1, \"running\": 2, \"skipped\": 82}, \"respond\": {\"blocked\": 17, \"done\": 5, \"error\": 5, \"human_wait\": 9, \"queued\": 1, \"skipped\": 8, \"validation_wait\": 8}}}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791501480.6721318, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:619",
         "value": "{\"started\": 1791501423.5299668, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/619/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"8ac5c74432d1f217033993c8370e911b2c91b04a\", \"generation_started\": 1791501441.0087752, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791501442.4730349, \"last_execution_phase\": \"generation\", \"finished\": 1791501480.6745605}"
       },
@@ -10162,10 +10167,6 @@
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791501438.4044576, \"comfyui\": 1791482790.8489242, \"hermes\": 1791501495.6385984, \"langfuse\": 1791491182.2146845, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453768.3244345, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879}}"
-      },
-      {
-        "key": "task:621",
-        "value": "{\"started\": 1791501495.6388135, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/621/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"a37d3c56bdf79f0c98f9914f539fb5293e38cfe5\", \"phase_started\": 1791501520.2025132}"
       },
       {
         "key": "task:166",
@@ -10232,16 +10233,28 @@
         "value": "{\"at\": 1791501545.177581, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791501545.370663"
-      },
-      {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:checked",
         "value": "1791501545.7617335"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
         "value": "{\"at\": 1791501546.5215302, \"reason\": \"PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791501550.538509, \"tasks\": {\"fix\": {\"blocked\": 2, \"error\": 2, \"human_wait\": 6, \"queued\": 1, \"running\": 1, \"skipped\": 83}, \"respond\": {\"blocked\": 17, \"done\": 5, \"error\": 5, \"human_wait\": 9, \"running\": 1, \"skipped\": 8, \"validation_wait\": 8}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791501560.3787837"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791501570.1918836, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:621",
+        "value": "{\"started\": 1791501495.6388135, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/621/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"a37d3c56bdf79f0c98f9914f539fb5293e38cfe5\", \"phase_started\": 1791501520.2025132, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1791501570.6089582}"
       }
     ],
     "calls": [
