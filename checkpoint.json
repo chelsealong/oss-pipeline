@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791454400.7338636,
+  "saved_at": 1791454403.0620794,
   "tables": {
     "tasks": [
       {
@@ -7030,10 +7030,10 @@
         "repo": "google/adk-python",
         "number": 7251,
         "note": "{\"authors\": \"lamberttraccard\", \"events\": [\"IC_kwDOOSaYQ88AAAABY1GCBg@2026-10-02T20:49:24Z\"], \"followup_policy\": \"2026-10-08-replies-v1\", \"head\": \"620e981bb88ecf62c6bb729203a46fe0e90c0941\", \"is_issue\": false, \"previous_task\": 152}",
-        "status": "running",
+        "status": "human_wait",
         "created": 1791439017.7476609,
-        "updated": 1791454217.6597216,
-        "result": "Codex session budget reached; judge paused too",
+        "updated": 1791454403.055448,
+        "result": "HUMAN_REVIEW_REQUIRED: The current PR closes delegation on every COMPLETED task, but the legacy ADK executor also emits COMPLETED after a task agent asks a question. A maintainer must decide which completion contract to use before this behavior can be changed safely. Reply: https://github.com/google/adk-python/pull/7251#issuecomment-6057629864",
         "attempts": 2
       },
       {
@@ -8630,8 +8630,12 @@
         "value": "{\"status\": \"sent\", \"task\": 541, \"at\": 1791454400.724067, \"url\": \"https://github.com/google/adk-python/pull/7251#issuecomment-6057629864\"}"
       },
       {
+        "key": "followup:task:541",
+        "value": "{\"status\": \"needs_human\", \"task\": 541, \"repo\": \"google/adk-python\", \"number\": 7251, \"reason\": \"HUMAN_REVIEW_REQUIRED: The current PR closes delegation on every COMPLETED task, but the legacy ADK executor also emits COMPLETED after a task agent asks a question. A maintainer must decide which completion contract to use before this behavior can be changed safely. Reply: https://github.com/google/adk-python/pull/7251#issuecomment-6057629864\", \"base\": \"620e981bb88ecf62c6bb729203a46fe0e90c0941\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"541-2.json.enc\"}"
+      },
+      {
         "key": "task:541",
-        "value": "{\"started\": 1791454217.6597724, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/541/attempt-2\", \"attempt\": 2, \"phase\": \"reply-review\", \"base\": \"620e981bb88ecf62c6bb729203a46fe0e90c0941\", \"phase_started\": 1791454340.1688225, \"last_execution_phase\": \"generation\", \"finished\": 1791453836.983083, \"replied_at\": 1791454400.7272618, \"reply_url\": \"https://github.com/google/adk-python/pull/7251#issuecomment-6057629864\"}"
+        "value": "{\"started\": 1791454217.6597724, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/541/attempt-2\", \"attempt\": 2, \"phase\": \"human_wait\", \"base\": \"620e981bb88ecf62c6bb729203a46fe0e90c0941\", \"phase_started\": 1791454340.1688225, \"last_execution_phase\": \"reply-review\", \"finished\": 1791454402.8909707, \"replied_at\": 1791454400.7272618, \"reply_url\": \"https://github.com/google/adk-python/pull/7251#issuecomment-6057629864\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\"}"
       }
     ],
     "calls": [
