@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791501402.163796,
+  "saved_at": 1791501414.2104592,
   "tables": {
     "tasks": [
       {
@@ -8031,10 +8031,10 @@
         "repo": "hermes",
         "number": 135311,
         "note": "",
-        "status": "running",
+        "status": "human_wait",
         "created": 1791495714.0425127,
-        "updated": 1791500801.7992496,
-        "result": "Codex session budget reached; judge paused too",
+        "updated": 1791501414.2019463,
+        "result": "review: HUMAN_REVIEW_REQUIRED: context.json has no named human signoff for this exact patch and base. The patch appears to address the stale Desktop label, and the focused tests, Desktop Vitest, TypeScript typecheck, and repository check passed. The claimed failing-before run was not independently reproduced.",
         "attempts": 2
       },
       {
@@ -10158,10 +10158,6 @@
         "value": "{\"at\": 1791500706.2674668, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "task:618",
-        "value": "{\"started\": 1791500801.7993166, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/618/attempt-2\", \"attempt\": 2, \"phase\": \"review\", \"base\": \"8ac5c74432d1f217033993c8370e911b2c91b04a\", \"generation_started\": 1791495751.3784513, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791501168.16225, \"last_execution_phase\": \"generation\", \"finished\": 1791496211.4895606}"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791501172.34958, \"comfyui\": 1791482790.8489242, \"hermes\": 1791500801.7990448, \"langfuse\": 1791491182.2146845, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453768.3244345, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879}}"
       },
@@ -10174,10 +10170,6 @@
         "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 4, \"comfyui\": 2, \"firecrawl\": 1, \"hermes\": 41, \"openclaw\": 9, \"spec-kit\": 2}}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791501265.1029425, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:617",
         "value": "{\"started\": 1791501172.3497796, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/617/attempt-2\", \"attempt\": 2, \"phase\": \"skipped\", \"base\": \"98292f1cfa3acf6e9e155f88fd10accb74fcfd79\", \"last_execution_phase\": \"generation\", \"finished\": 1791501265.1054144, \"generation_started\": 1791501229.360808, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791501232.0413013}"
       },
@@ -10187,19 +10179,31 @@
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1791501341.7565515, \"tasks\": {\"fix\": {\"blocked\": 2, \"error\": 2, \"human_wait\": 5, \"queued\": 2, \"running\": 1, \"skipped\": 82}, \"respond\": {\"blocked\": 17, \"done\": 5, \"error\": 5, \"human_wait\": 9, \"skipped\": 8, \"validation_wait\": 8}}}"
+        "value": "{\"at\": 1791501403.9980524, \"tasks\": {\"fix\": {\"blocked\": 2, \"error\": 2, \"human_wait\": 5, \"queued\": 2, \"running\": 1, \"skipped\": 82}, \"respond\": {\"blocked\": 17, \"done\": 5, \"error\": 5, \"human_wait\": 9, \"skipped\": 8, \"validation_wait\": 8}}}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791501395.3470383"
+        "value": "1791501410.351041"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791501399.0946834"
+        "value": "1791501412.3311992"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791501399.097755"
+        "value": "1791501412.3328807"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791501412.9130697, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:task:618",
+        "value": "{\"status\": \"needs_human\", \"task\": 618, \"repo\": \"hermes\", \"number\": 135311, \"reason\": \"review: HUMAN_REVIEW_REQUIRED: context.json has no named human signoff for this exact patch and base. The patch appears to address the stale Desktop label, and the focused tests, Desktop Vitest, TypeScript typecheck, and repository check passed. The claimed failing-before run was not independently reproduced.\", \"base\": \"8ac5c74432d1f217033993c8370e911b2c91b04a\", \"patch_digest\": \"bb56d7b1165afaf52029259d5204222e67d43342a863e0dabb224b365e4d42fc\", \"evidence_bundle\": \"618-2.json.enc\"}"
+      },
+      {
+        "key": "task:618",
+        "value": "{\"started\": 1791500801.7993166, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/618/attempt-2\", \"attempt\": 2, \"phase\": \"human_wait\", \"base\": \"8ac5c74432d1f217033993c8370e911b2c91b04a\", \"generation_started\": 1791495751.3784513, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791501168.16225, \"last_execution_phase\": \"review\", \"finished\": 1791501413.753806, \"patch_digest\": \"bb56d7b1165afaf52029259d5204222e67d43342a863e0dabb224b365e4d42fc\"}"
       }
     ],
     "calls": [
