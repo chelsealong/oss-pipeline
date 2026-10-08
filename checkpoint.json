@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791436957.2976766,
+  "saved_at": 1791436980.4520266,
   "tables": {
     "tasks": [
       {
@@ -6744,10 +6744,10 @@
         "repo": "hermes",
         "number": 134837,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791436909.133818,
-        "updated": 1791436910.6091633,
-        "result": "",
+        "updated": 1791436980.3613963,
+        "result": "The reported offset has no identified Hermes code path to fix. On current code, gateway and agent log files use the same standard-library timestamp formatter, which matched the OS zone in a Pacific-zone probe. The session header uses a separate configured timezone. The reporter’s gateway runtime timezone and HERMES_TIMEZONE setting remain unverified, so a source change would be speculative. No competing PR for #134837 was found.",
         "attempts": 1
       },
       {
@@ -7651,10 +7651,6 @@
         "value": "{\"started\": 1791436440.9956222, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/517/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791436457.1060364, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791436458.7403097, \"last_execution_phase\": \"generation\", \"finished\": 1791436502.9101627}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791436556.119369, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:518",
         "value": "{\"started\": 1791436504.2054896, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/518/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791436522.1890972, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791436523.8999383, \"last_execution_phase\": \"generation\", \"finished\": 1791436556.1398983}"
       },
@@ -7831,10 +7827,6 @@
         "value": "{\"started\": 1791329040.8119605, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791329043.326337, \"recovery_checked_at\": 1791436888.170868}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791436890.28937, \"tasks\": {\"fix\": {\"capacity_wait\": 19, \"human_wait\": 4, \"skipped\": 42}, \"respond\": {\"blocked\": 2}}}"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791426445.1799762, \"comfyui\": 1791418494.4007776, \"hermes\": 1791436910.609029, \"langfuse\": 1791436344.4650214, \"firecrawl\": 1791420725.9632778, \"mem0\": 1791376873.1927829, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791403286.339092, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791371043.7510295}}"
       },
@@ -7847,10 +7839,6 @@
         "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 2, \"comfyui\": 1, \"firecrawl\": 1, \"hermes\": 13}}"
       },
       {
-        "key": "task:519",
-        "value": "{\"started\": 1791436910.609191, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/519/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791436929.2314582, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791436930.7258043}"
-      },
-      {
         "key": "task:465",
         "value": "{\"started\": 1791331302.1076553, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791331304.6626606, \"recovery_checked_at\": 1791436950.5373926}"
       },
@@ -7859,24 +7847,12 @@
         "value": "{\"started\": 1791347755.9810889, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791347758.8763802, \"recovery_checked_at\": 1791436951.385369}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791436951.9605193"
-      },
-      {
         "key": "task:477",
         "value": "{\"started\": 1791350082.5292275, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791350084.7688665, \"recovery_checked_at\": 1791436952.2495947}"
       },
       {
         "key": "task:41",
         "value": "{\"recovery_checked_at\": 1791436952.9708428, \"phase\": \"capacity_wait\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791353345.6670847, \"worker_slot\": 1, \"last_execution_phase\": \"queued\", \"finished\": 1791353351.7952566}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791436953.1384394"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791436953.140188"
       },
       {
         "key": "task:478",
@@ -7893,6 +7869,30 @@
       {
         "key": "task:480",
         "value": "{\"started\": 1791361274.6888843, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791361277.4473708, \"recovery_checked_at\": 1791436956.4239576}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791436959.10497, \"tasks\": {\"fix\": {\"capacity_wait\": 19, \"human_wait\": 4, \"queued\": 2, \"running\": 1, \"skipped\": 42}, \"respond\": {\"blocked\": 2}}}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791436978.886558"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791436978.8882356"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791436979.9103687, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:519",
+        "value": "{\"started\": 1791436910.609191, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/519/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791436929.2314582, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791436930.7258043, \"last_execution_phase\": \"generation\", \"finished\": 1791436979.9120963}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791436980.0751686"
       }
     ],
     "calls": [
