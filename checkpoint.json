@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791438258.0929677,
+  "saved_at": 1791438261.4310741,
   "tables": {
     "tasks": [
       {
@@ -8163,10 +8163,6 @@
         "value": "{\"at\": 1791438211.1351516, \"tasks\": {\"fix\": {\"capacity_wait\": 19, \"human_wait\": 4, \"running\": 1, \"skipped\": 45}, \"respond\": {\"blocked\": 3, \"error\": 1, \"queued\": 6, \"running\": 1, \"skipped\": 2}}}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791438234.6823409, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "followup:task:522",
         "value": "{\"status\": \"needs_human\", \"task\": 522, \"repo\": \"hermes\", \"number\": 134933, \"reason\": \"review: HUMAN_REVIEW_REQUIRED: context.json has no human signoff. The patch also leaves a recovery gap: if the initial SDK probe marks `_MCP_AVAILABLE` false, or the base SDK import fails once, later HTTP connections remain latched and produce the reported error. The new test covers only a failed HTTP symbol import, so the PR body\\u2019s recovery claim is too broad. I verified the regression fails against HEAD and passes with the patch; 107 focused tests and all 11 lint checks passed.\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"patch_digest\": \"5efb3c97550f5beb9100d9715c847a8487dd24b23be4f3d6521d5899ec6e8cf6\", \"evidence_bundle\": \"522-1.json.enc\"}"
       },
@@ -8175,24 +8171,28 @@
         "value": "{\"started\": 1791437593.496649, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/522/attempt-1\", \"attempt\": 1, \"phase\": \"human_wait\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791437638.0307567, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791438048.6478956, \"patch_digest\": \"5efb3c97550f5beb9100d9715c847a8487dd24b23be4f3d6521d5899ec6e8cf6\", \"last_execution_phase\": \"review\", \"finished\": 1791438234.8011773}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791438245.7731051"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791438251.421752"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791438251.4233696"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791437645.6755223, \"comfyui\": 1791438252.843542, \"hermes\": 1791437593.4964669, \"langfuse\": 1791437994.898969, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791403286.339092, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986}}"
       },
       {
         "key": "task:533",
         "value": "{\"started\": 1791438252.843756, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/533/attempt-1\", \"attempt\": 1, \"phase\": \"error\", \"base\": null, \"last_execution_phase\": \"checkout\", \"finished\": 1791438258.0851924}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791438258.187095"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791438258.1885657"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791438260.7743616"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791438261.350684, \"source\": \"completed task phase\"}"
       }
     ],
     "calls": [
@@ -15638,6 +15638,10 @@
       },
       {
         "at": 1791438164.49132,
+        "kind": "codex"
+      },
+      {
+        "at": 1791438261.4250646,
         "kind": "codex"
       }
     ]
