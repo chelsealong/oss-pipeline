@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791477370.6945896,
+  "saved_at": 1791477442.7727702,
   "tables": {
     "tasks": [
       {
@@ -530,9 +530,9 @@
         "repo": "openclaw",
         "number": 163058,
         "note": "",
-        "status": "capacity_wait",
+        "status": "queued",
         "created": 1790898201.78531,
-        "updated": 1791353351.796494,
+        "updated": 1791477439.0991483,
         "result": "openclaw open PR cap (20)",
         "attempts": 1
       },
@@ -8059,10 +8059,6 @@
         "value": "{\"at\": 1791353323.5913334, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
       },
       {
-        "key": "followup:task:41",
-        "value": "{\"status\": \"resumed\", \"task\": 41}"
-      },
-      {
         "key": "followup:task:56",
         "value": "{\"status\": \"needs_human\", \"task\": 56, \"repo\": \"run-llama/llama_index\", \"number\": 23279, \"reason\": \"No checkout edit addresses the failing checks. Draft reply for a human to consider: \\u201cThe Python 3.10\\u20133.12 matrix failures are in integration packages (entity extractor, Gel, PostgreSQL KV store, and packages that cannot be installed on those Python versions). This PR changes only MediaResource in core; the core test job, lint, and type checking passed. Could a maintainer confirm whether the integration failures should block this PR?\\u201d No reply was posted, and no human review is claimed.\", \"base\": null, \"patch_digest\": null, \"evidence_bundle\": null}"
       },
@@ -9135,46 +9131,6 @@
         "value": "{\"started\": 1791475397.9573476, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/578/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"38880bd2f1e90dbc9a1aeec03af62539ee64719a\", \"last_execution_phase\": \"checkout\", \"finished\": 1791475423.5207224}"
       },
       {
-        "key": "task:177",
-        "value": "{\"recovery_checked_at\": 1791476526.6700659}"
-      },
-      {
-        "key": "recovery_audit:177",
-        "value": "{\"at\": 1791476528.7721524, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:219",
-        "value": "{\"recovery_checked_at\": 1791476528.7780209}"
-      },
-      {
-        "key": "recovery_audit:219",
-        "value": "{\"at\": 1791476529.9716074, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:222",
-        "value": "{\"recovery_checked_at\": 1791476529.9732645}"
-      },
-      {
-        "key": "recovery_audit:222",
-        "value": "{\"at\": 1791476532.0638409, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:41",
-        "value": "{\"recovery_checked_at\": 1791476532.0928845, \"phase\": \"capacity_wait\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791353345.6670847, \"worker_slot\": 1, \"last_execution_phase\": \"queued\", \"finished\": 1791353351.7952566}"
-      },
-      {
-        "key": "task:478",
-        "value": "{\"started\": 1791353365.6335442, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791353368.4952097, \"recovery_checked_at\": 1791476533.2900243}"
-      },
-      {
-        "key": "task:414",
-        "value": "{\"started\": 1791353511.0950818, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/414/attempt-1\", \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": \"efac8b70db25b77c21eb97f8c33c94be67f1ef3b\", \"generation_started\": 1791242439.1752489, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791242441.120452, \"recovery_checked_at\": 1791476534.57812, \"last_execution_phase\": \"queued\", \"finished\": 1791353513.5857582}"
-      },
-      {
-        "key": "task:479",
-        "value": "{\"started\": 1791355457.8389697, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791355460.332375, \"recovery_checked_at\": 1791476535.7770147}"
-      },
-      {
         "key": "task:480",
         "value": "{\"started\": 1791361274.6888843, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791361277.4473708, \"recovery_checked_at\": 1791476599.3730044}"
       },
@@ -9193,14 +9149,6 @@
       {
         "key": "task:508",
         "value": "{\"started\": 1791426445.1801422, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791426447.6238666, \"recovery_checked_at\": 1791477162.8397794}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791477205.602458"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791477205.6038792"
       },
       {
         "key": "coordination:google/adk-python#7462",
@@ -9275,10 +9223,6 @@
         "value": "{\"at\": 1791477297.006722, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791477299.4651759, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 3, \"human_wait\": 5, \"queued\": 2, \"running\": 1, \"skipped\": 54}, \"respond\": {\"blocked\": 6, \"done\": 4, \"error\": 5, \"human_wait\": 7, \"queued\": 1, \"retry_wait\": 1, \"running\": 1, \"skipped\": 7, \"validation_wait\": 5}}}"
-      },
-      {
         "key": "task:477",
         "value": "{\"started\": 1791477206.767012, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791477321.264872, \"recovery_checked_at\": 1791473806.8126395, \"folder\": \"jobs/477/attempt-2\", \"attempt\": 2, \"base\": \"1fe2aa03fe4fb4f53ac11290562f9b60acc45e91\", \"generation_started\": 1791477261.8669102, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791477264.2593553, \"last_execution_phase\": \"generation\"}"
       },
@@ -9293,10 +9237,6 @@
       {
         "key": "pause",
         "value": "{\"until\": 1791479140.5834107, \"reason\": \"Cloud checkpoint unavailable; keep task state for recovery\"}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791477356.5627232"
       },
       {
         "key": "task:61",
@@ -9369,6 +9309,66 @@
       {
         "key": "recovery_audit:176",
         "value": "{\"at\": 1791477370.6396103, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791477372.2199588, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 3, \"human_wait\": 5, \"queued\": 2, \"skipped\": 55}, \"respond\": {\"blocked\": 7, \"done\": 4, \"error\": 5, \"human_wait\": 7, \"queued\": 1, \"retry_wait\": 1, \"skipped\": 7, \"validation_wait\": 5}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791477431.5689445"
+      },
+      {
+        "key": "task:177",
+        "value": "{\"recovery_checked_at\": 1791477432.522156}"
+      },
+      {
+        "key": "recovery_audit:177",
+        "value": "{\"at\": 1791477434.530476, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:219",
+        "value": "{\"recovery_checked_at\": 1791477434.536472}"
+      },
+      {
+        "key": "recovery_audit:219",
+        "value": "{\"at\": 1791477435.7419517, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:222",
+        "value": "{\"recovery_checked_at\": 1791477435.743937}"
+      },
+      {
+        "key": "recovery_audit:222",
+        "value": "{\"at\": 1791477437.6329832, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:41",
+        "value": "{\"recovery_checked_at\": 1791477437.6599867, \"phase\": \"queued\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791353345.6670847, \"worker_slot\": 1, \"last_execution_phase\": \"queued\", \"finished\": 1791353351.7952566}"
+      },
+      {
+        "key": "followup:task:41",
+        "value": "{\"status\": \"resumed\", \"task\": 41}"
+      },
+      {
+        "key": "task:478",
+        "value": "{\"started\": 1791353365.6335442, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791353368.4952097, \"recovery_checked_at\": 1791477439.100348}"
+      },
+      {
+        "key": "task:414",
+        "value": "{\"started\": 1791353511.0950818, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/414/attempt-1\", \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": \"efac8b70db25b77c21eb97f8c33c94be67f1ef3b\", \"generation_started\": 1791242439.1752489, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791242441.120452, \"recovery_checked_at\": 1791477440.3029025, \"last_execution_phase\": \"queued\", \"finished\": 1791353513.5857582}"
+      },
+      {
+        "key": "task:479",
+        "value": "{\"started\": 1791355457.8389697, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791355460.332375, \"recovery_checked_at\": 1791477441.446095}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791477441.899375"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791477441.900611"
       }
     ],
     "calls": [
