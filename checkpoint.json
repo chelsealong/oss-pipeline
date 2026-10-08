@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791453952.5201402,
+  "saved_at": 1791453984.5115638,
   "tables": {
     "tasks": [
       {
@@ -7056,10 +7056,10 @@
         "repo": "run-llama/llama_index",
         "number": 23279,
         "note": "{\"authors\": \"ci\", \"events\": [\"check:c9616e702d83:test (3.10):2026-10-02\", \"check:c9616e702d83:test (3.11):2026-10-02\", \"check:c9616e702d83:test (3.12):2026-10-02\"], \"followup_policy\": \"2026-10-08-replies-v1\", \"head\": \"c9616e702d83c95ab61ff320993f6f98bbc37a2c\", \"is_issue\": false, \"previous_task\": 56}",
-        "status": "running",
+        "status": "human_wait",
         "created": 1791452752.5194845,
-        "updated": 1791453768.3245986,
-        "result": "Codex session budget reached; judge paused too",
+        "updated": 1791453984.5050442,
+        "result": "HUMAN_REVIEW_REQUIRED: The PR discloses AI-assisted code, but the supplied context has no human-review attestation. The required Python 3.10–3.12 CI jobs are also red. Their failures have not been reproduced on the base commit, so they cannot be classified as pre-existing.",
         "attempts": 2
       },
       {
@@ -8552,18 +8552,6 @@
         "value": "1791453862.6391983"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791453878.9635968, \"source\": \"completed task phase\"}"
-      },
-      {
-        "key": "task:543",
-        "value": "{\"started\": 1791453768.3246508, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/543/attempt-2\", \"attempt\": 2, \"phase\": \"reply-review\", \"base\": \"c9616e702d83c95ab61ff320993f6f98bbc37a2c\", \"phase_started\": 1791453883.0802445, \"last_execution_phase\": \"generation\", \"finished\": 1791453324.419134}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791453892.169032, \"tasks\": {\"fix\": {\"capacity_wait\": 12, \"human_wait\": 4, \"retry_wait\": 1, \"skipped\": 31}, \"respond\": {\"blocked\": 4, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"queued\": 1, \"retry_wait\": 3, \"running\": 2, \"skipped\": 3, \"validation_wait\": 2}}}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791453908.2420614"
       },
@@ -8572,8 +8560,28 @@
         "value": "{\"started\": 1791453850.7716253, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791454230.4320261, \"folder\": \"jobs/544/attempt-1\", \"attempt\": 1, \"phase\": \"retry_wait\", \"base\": \"18ce518405d130cdad23ba3ff84690a2054fafa6\", \"last_execution_phase\": \"checkout\", \"finished\": 1791453930.4334264}"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791453955.3367672, \"tasks\": {\"fix\": {\"capacity_wait\": 12, \"human_wait\": 4, \"retry_wait\": 1, \"skipped\": 31}, \"respond\": {\"blocked\": 4, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"queued\": 1, \"retry_wait\": 4, \"running\": 1, \"skipped\": 3, \"validation_wait\": 2}}}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1791453942.5355275"
+        "value": "1791453972.538492"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791453980.68101, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:reply:543",
+        "value": "{\"status\": \"needs_human\", \"reason\": \"The reply is a CI status update, but the supplied PR context has no comments or reviews requiring a response. Its check results and failure descriptions are supported by the recorded evidence; they do not make this an answer to unresolved feedback.\"}"
+      },
+      {
+        "key": "followup:task:543",
+        "value": "{\"status\": \"needs_human\", \"task\": 543, \"repo\": \"run-llama/llama_index\", \"number\": 23279, \"reason\": \"HUMAN_REVIEW_REQUIRED: The PR discloses AI-assisted code, but the supplied context has no human-review attestation. The required Python 3.10\\u20133.12 CI jobs are also red. Their failures have not been reproduced on the base commit, so they cannot be classified as pre-existing.\", \"base\": \"c9616e702d83c95ab61ff320993f6f98bbc37a2c\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"543-2.json.enc\"}"
+      },
+      {
+        "key": "task:543",
+        "value": "{\"started\": 1791453768.3246508, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/543/attempt-2\", \"attempt\": 2, \"phase\": \"human_wait\", \"base\": \"c9616e702d83c95ab61ff320993f6f98bbc37a2c\", \"phase_started\": 1791453883.0802445, \"last_execution_phase\": \"reply-review\", \"finished\": 1791453983.2248614, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\"}"
       }
     ],
     "calls": [
