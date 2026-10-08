@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791435271.7455745,
+  "saved_at": 1791435323.1974134,
   "tables": {
     "tasks": [
       {
@@ -6614,10 +6614,10 @@
         "repo": "hermes",
         "number": 134915,
         "note": "",
-        "status": "running",
+        "status": "human_wait",
         "created": 1791434649.830176,
-        "updated": 1791434874.2503448,
-        "result": "",
+        "updated": 1791435323.1750824,
+        "result": "review: HUMAN_REVIEW_REQUIRED: The controller context has no named human attestation for this exact patch and base. Technical validation passed: the new non-echo regression fails on HEAD and passes with the patch; 42 relevant tests and all 11 repository checks passed.",
         "attempts": 1
       },
       {
@@ -7452,10 +7452,6 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791426445.1799762, \"comfyui\": 1791418494.4007776, \"hermes\": 1791434874.2502313, \"langfuse\": 1791418848.0356576, \"firecrawl\": 1791420725.9632778, \"mem0\": 1791376873.1927829, \"llama-index\": 1791348701.136964, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791403286.339092, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791371043.7510295}}"
       },
       {
-        "key": "prwatch_heartbeat",
-        "value": "1791434888.5021648"
-      },
-      {
         "key": "task:55",
         "value": "{\"recovery_checked_at\": 1791434923.0002196}"
       },
@@ -7640,16 +7636,8 @@
         "value": "{\"started\": 1791364273.360593, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791364275.7329543, \"recovery_checked_at\": 1791435195.3451269}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791435196.226959, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:487",
         "value": "{\"started\": 1791368639.1645067, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791368641.5031555, \"recovery_checked_at\": 1791435196.3161173}"
-      },
-      {
-        "key": "task:509",
-        "value": "{\"started\": 1791434874.2503738, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/509/attempt-1\", \"attempt\": 1, \"phase\": \"review\", \"base\": \"17737af97cdc77a8c7b6a80c0c0d05bf18f514a7\", \"generation_started\": 1791434932.6336913, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791435197.9501414}"
       },
       {
         "key": "task:491",
@@ -7676,10 +7664,6 @@
         "value": "{\"started\": 1791404093.9744883, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791404099.788691, \"recovery_checked_at\": 1791435206.609059}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791435208.9449482, \"tasks\": {\"fix\": {\"capacity_wait\": 20, \"human_wait\": 2, \"queued\": 1, \"running\": 1, \"skipped\": 33}, \"respond\": {\"blocked\": 2}}}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791435229.3096578"
       },
@@ -7688,16 +7672,36 @@
         "value": "1791435229.3189735"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791435268.6256866"
-      },
-      {
         "key": "task:502",
         "value": "{\"started\": 1791418478.0687816, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791418482.0423975, \"recovery_checked_at\": 1791435269.596558}"
       },
       {
         "key": "task:506",
         "value": "{\"started\": 1791424286.0125072, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791424288.4139316, \"recovery_checked_at\": 1791435270.6482527}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791435273.8661506, \"tasks\": {\"fix\": {\"capacity_wait\": 20, \"human_wait\": 2, \"queued\": 1, \"running\": 1, \"skipped\": 33}, \"respond\": {\"blocked\": 2}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791435313.6589262"
+      },
+      {
+        "key": "prwatch_heartbeat",
+        "value": "1791435319.4601831"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791435322.7661617, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:task:509",
+        "value": "{\"status\": \"needs_human\", \"task\": 509, \"repo\": \"hermes\", \"number\": 134915, \"reason\": \"review: HUMAN_REVIEW_REQUIRED: The controller context has no named human attestation for this exact patch and base. Technical validation passed: the new non-echo regression fails on HEAD and passes with the patch; 42 relevant tests and all 11 repository checks passed.\", \"base\": \"17737af97cdc77a8c7b6a80c0c0d05bf18f514a7\", \"patch_digest\": \"c7ac7f2b45149acbf56f61b470b30c3c3a91c5d72fb1523b1f430a5832500840\", \"evidence_bundle\": \"509-1.json.enc\"}"
+      },
+      {
+        "key": "task:509",
+        "value": "{\"started\": 1791434874.2503738, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/509/attempt-1\", \"attempt\": 1, \"phase\": \"human_wait\", \"base\": \"17737af97cdc77a8c7b6a80c0c0d05bf18f514a7\", \"generation_started\": 1791434932.6336913, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791435197.9501414, \"patch_digest\": \"c7ac7f2b45149acbf56f61b470b30c3c3a91c5d72fb1523b1f430a5832500840\", \"last_execution_phase\": \"review\", \"finished\": 1791435323.0359447}"
       }
     ],
     "calls": [
