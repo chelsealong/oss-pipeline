@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791453273.5814178,
+  "saved_at": 1791453324.8798227,
   "tables": {
     "tasks": [
       {
@@ -7056,10 +7056,10 @@
         "repo": "run-llama/llama_index",
         "number": 23279,
         "note": "{\"authors\": \"ci\", \"events\": [\"check:c9616e702d83:test (3.10):2026-10-02\", \"check:c9616e702d83:test (3.11):2026-10-02\", \"check:c9616e702d83:test (3.12):2026-10-02\"], \"followup_policy\": \"2026-10-08-replies-v1\", \"head\": \"c9616e702d83c95ab61ff320993f6f98bbc37a2c\", \"is_issue\": false, \"previous_task\": 56}",
-        "status": "running",
+        "status": "retry_wait",
         "created": 1791452752.5194845,
-        "updated": 1791453222.8567288,
-        "result": "",
+        "updated": 1791453324.8733227,
+        "result": "Codex session budget reached; judge paused too",
         "attempts": 1
       },
       {
@@ -8447,14 +8447,6 @@
         "value": "{\"at\": 1791452752.5212972, \"previous_task\": 56, \"head\": \"c9616e702d83c95ab61ff320993f6f98bbc37a2c\"}"
       },
       {
-        "key": "prwatch_heartbeat",
-        "value": "1791453008.125567"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791453015.5280488, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "pr_body:c6a9b4daaf80a1e80438efc1",
         "value": "{\"status\": \"sent\", \"task\": 536, \"at\": 1791453025.6728866}"
       },
@@ -8483,10 +8475,6 @@
         "value": "{\"at\": 1791453201.790509, \"previous_task\": 275, \"head\": \"18ce518405d130cdad23ba3ff84690a2054fafa6\"}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791453206.4703193, \"tasks\": {\"fix\": {\"capacity_wait\": 12, \"human_wait\": 4, \"running\": 1, \"skipped\": 28}, \"respond\": {\"blocked\": 4, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"queued\": 5, \"retry_wait\": 1, \"running\": 1, \"skipped\": 3, \"validation_wait\": 1}}}"
-      },
-      {
         "key": "task:457",
         "value": "{\"started\": 1791453203.6177104, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791453210.61203, \"recovery_checked_at\": 1791452601.8287175, \"last_execution_phase\": \"queued\"}"
       },
@@ -8495,16 +8483,8 @@
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791453203.617412, \"comfyui\": 1791438252.843542, \"hermes\": 1791452429.5707996, \"langfuse\": 1791438563.9593794, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453222.8534904, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791403286.339092, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791452369.7714255}}"
       },
       {
-        "key": "task:543",
-        "value": "{\"started\": 1791453222.8567822, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/543/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"c9616e702d83c95ab61ff320993f6f98bbc37a2c\", \"phase_started\": 1791453258.412721}"
-      },
-      {
         "key": "task:504",
         "value": "{\"started\": 1791420691.934641, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791420694.5123725, \"recovery_checked_at\": 1791453267.1334777}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791453267.2595325"
       },
       {
         "key": "task:505",
@@ -8523,12 +8503,32 @@
         "value": "{\"started\": 1791426445.1801422, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791426447.6238666, \"recovery_checked_at\": 1791453272.3610272}"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791453276.5830617, \"tasks\": {\"fix\": {\"capacity_wait\": 12, \"human_wait\": 4, \"queued\": 1, \"skipped\": 29}, \"respond\": {\"blocked\": 4, \"done\": 2, \"error\": 2, \"human_wait\": 2, \"queued\": 4, \"retry_wait\": 1, \"running\": 2, \"skipped\": 3, \"validation_wait\": 1}}}"
+      },
+      {
+        "key": "prwatch_heartbeat",
+        "value": "1791453308.2276752"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791453312.2647583"
+      },
+      {
         "key": "watch_heartbeat",
-        "value": "1791453273.2285793"
+        "value": "1791453323.2869308"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791453273.2310596"
+        "value": "1791453323.2884376"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791453323.97625, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:543",
+        "value": "{\"started\": 1791453222.8567822, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791453624.4173565, \"folder\": \"jobs/543/attempt-1\", \"attempt\": 1, \"phase\": \"retry_wait\", \"base\": \"c9616e702d83c95ab61ff320993f6f98bbc37a2c\", \"phase_started\": 1791453258.412721, \"last_execution_phase\": \"generation\", \"finished\": 1791453324.419134}"
       }
     ],
     "calls": [
