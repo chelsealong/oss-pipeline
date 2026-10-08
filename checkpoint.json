@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791456989.4154236,
+  "saved_at": 1791456996.8767602,
   "tables": {
     "tasks": [
       {
@@ -7225,10 +7225,10 @@
         "repo": "hermes",
         "number": 135050,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791456304.9984,
-        "updated": 1791456924.319397,
-        "result": "",
+        "updated": 1791456996.8692853,
+        "result": "Issue #135050 is a two-part feature proposal, and its stated defects do not match the current Desktop implementation. Desktop already persists session tiles and a transcript tail, restores the routed conversation, loads the sidebar from the backend, and reconnects with backoff after socket loss. Hydrating the entire sidebar before connection would be a new product design choice, not a minimal bug fix. No distinct reproducible defect was identified.",
         "attempts": 1
       },
       {
@@ -8965,24 +8965,12 @@
         "value": "{\"at\": 1791456927.2102523, \"reason\": \"PR closed or not owned by our fork\"}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791456928.8207052, \"tasks\": {\"fix\": {\"capacity_wait\": 7, \"human_wait\": 5, \"running\": 1, \"skipped\": 42}, \"respond\": {\"blocked\": 4, \"done\": 4, \"error\": 5, \"human_wait\": 7, \"queued\": 3, \"running\": 1, \"skipped\": 5, \"validation_wait\": 3}}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"hermes\", \"task\": 540, \"at\": 1791439062.7217453}, {\"repo\": \"hermes\", \"task\": 542, \"at\": 1791452451.1883984}, {\"repo\": \"hermes\", \"task\": 545, \"at\": 1791453379.7983534}, {\"repo\": \"hermes\", \"task\": 549, \"at\": 1791454961.8522875}, {\"repo\": \"hermes\", \"task\": 551, \"at\": 1791455803.6296494}, {\"repo\": \"openclaw\", \"task\": 553, \"at\": 1791456342.5341842}, {\"repo\": \"hermes\", \"task\": 555, \"at\": 1791456362.174279}, {\"repo\": \"openclaw\", \"task\": 554, \"at\": 1791456759.7480388}, {\"repo\": \"hermes\", \"task\": 556, \"at\": 1791456943.3477037}]"
       },
       {
         "key": "dispatch_budget",
         "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 2, \"comfyui\": 1, \"firecrawl\": 1, \"hermes\": 23, \"openclaw\": 2}}"
-      },
-      {
-        "key": "task:556",
-        "value": "{\"started\": 1791456924.3194416, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/556/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"2e8e2188b82241f94c8f737d77b90af5aaf47025\", \"generation_started\": 1791456943.3477046, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791456945.7232666}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791456969.4354494, \"source\": \"completed task phase\"}"
       },
       {
         "key": "task:561",
@@ -8993,12 +8981,24 @@
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791456986.887713, \"comfyui\": 1791456823.3390005, \"hermes\": 1791456924.3191028, \"langfuse\": 1791438563.9593794, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453768.3244345, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791403286.339092, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879}}"
       },
       {
-        "key": "task:562",
-        "value": "{\"started\": 1791456986.8878903, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0}"
-      },
-      {
         "key": "worker_heartbeat",
         "value": "1791456989.352207"
+      },
+      {
+        "key": "task:562",
+        "value": "{\"started\": 1791456986.8878903, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/562/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": null}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791456991.7106009, \"tasks\": {\"fix\": {\"capacity_wait\": 7, \"human_wait\": 5, \"running\": 1, \"skipped\": 42}, \"respond\": {\"blocked\": 4, \"done\": 4, \"error\": 5, \"human_wait\": 7, \"queued\": 2, \"running\": 1, \"skipped\": 6, \"validation_wait\": 3}}}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791456996.4738805, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:556",
+        "value": "{\"started\": 1791456924.3194416, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/556/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"2e8e2188b82241f94c8f737d77b90af5aaf47025\", \"generation_started\": 1791456943.3477046, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791456945.7232666, \"last_execution_phase\": \"generation\", \"finished\": 1791456996.4761593}"
       }
     ],
     "calls": [
