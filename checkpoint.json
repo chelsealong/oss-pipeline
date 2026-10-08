@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791434861.366154,
+  "saved_at": 1791434864.4392416,
   "tables": {
     "tasks": [
       {
@@ -6159,10 +6159,10 @@
         "repo": "hermes",
         "number": 134285,
         "note": "",
-        "status": "running",
+        "status": "human_wait",
         "created": 1791347049.7481408,
-        "updated": 1791434403.2283068,
-        "result": "",
+        "updated": 1791434864.4280834,
+        "result": "review: HUMAN_REVIEW_REQUIRED: context.json has no named human attestation for this exact patch and base. The source supports the reported menu bug, and the patch appears focused; no exact duplicate was found. The focused test passed (11/11), Desktop typecheck and lint passed (0 errors), and all 11 repository checks passed. These checks do not replace the missing human signoff.",
         "attempts": 1
       },
       {
@@ -7632,20 +7632,8 @@
         "value": "{\"started\": 1791426439.6317172, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791426442.2873793, \"recovery_checked_at\": 1791434670.3679142}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791434724.1427758, \"source\": \"completed task phase\"}"
-      },
-      {
-        "key": "task:474",
-        "value": "{\"phase\": \"review\", \"publication_hold_until\": 0, \"started\": 1791434403.2283516, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/474/attempt-1\", \"attempt\": 1, \"base\": \"2966cb68da0817451093d14544d6da37296de608\", \"generation_started\": 1791434418.9590914, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791434726.3469958}"
-      },
-      {
         "key": "task:508",
         "value": "{\"started\": 1791426445.1801422, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791426447.6238666, \"recovery_checked_at\": 1791434733.0090182}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791434797.6529722, \"tasks\": {\"fix\": {\"capacity_wait\": 20, \"human_wait\": 1, \"queued\": 2, \"running\": 1, \"skipped\": 34}, \"respond\": {\"blocked\": 2}}}"
       },
       {
         "key": "watch_heartbeat",
@@ -7654,10 +7642,6 @@
       {
         "key": "detector_heartbeat",
         "value": "1791434832.0217228"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791434847.9654868"
       },
       {
         "key": "task:16",
@@ -7690,6 +7674,26 @@
       {
         "key": "recovery_audit:54",
         "value": "{\"at\": 1791434861.276181, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791434862.8367882, \"tasks\": {\"fix\": {\"capacity_wait\": 20, \"human_wait\": 1, \"queued\": 2, \"running\": 1, \"skipped\": 34}, \"respond\": {\"blocked\": 2}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791434862.9694262"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791434863.5214057, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:task:474",
+        "value": "{\"status\": \"needs_human\", \"task\": 474, \"repo\": \"hermes\", \"number\": 134285, \"reason\": \"review: HUMAN_REVIEW_REQUIRED: context.json has no named human attestation for this exact patch and base. The source supports the reported menu bug, and the patch appears focused; no exact duplicate was found. The focused test passed (11/11), Desktop typecheck and lint passed (0 errors), and all 11 repository checks passed. These checks do not replace the missing human signoff.\", \"base\": \"2966cb68da0817451093d14544d6da37296de608\", \"patch_digest\": \"49f79de4a9601b56215f3d9140f25f59af301c852446509f7bcf789edc44332d\", \"evidence_bundle\": \"474-1.json.enc\"}"
+      },
+      {
+        "key": "task:474",
+        "value": "{\"phase\": \"human_wait\", \"publication_hold_until\": 0, \"started\": 1791434403.2283516, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/474/attempt-1\", \"attempt\": 1, \"base\": \"2966cb68da0817451093d14544d6da37296de608\", \"generation_started\": 1791434418.9590914, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791434726.3469958, \"patch_digest\": \"49f79de4a9601b56215f3d9140f25f59af301c852446509f7bcf789edc44332d\", \"last_execution_phase\": \"review\", \"finished\": 1791434864.1249251}"
       }
     ],
     "calls": [
