@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791488998.0109956,
+  "saved_at": 1791489009.2922919,
   "tables": {
     "tasks": [
       {
@@ -6510,10 +6510,10 @@
         "repo": "openclaw",
         "number": 166712,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791404086.7613316,
-        "updated": 1791488845.76624,
-        "result": "openclaw open PR cap (20)",
+        "updated": 1791489009.2150772,
+        "result": "The reported undercount is not localized or reproducible on this checkout. The native agent path accumulates completed calls before emitting model.usage; the issue lacks the runtime/provider route and correlated raw events needed to identify where usage was lost. A speculative change would risk duplicating existing accounting.",
         "attempts": 1
       },
       {
@@ -9879,10 +9879,6 @@
         "value": "{\"at\": 1791488523.5730867, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791488575.0916495, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:607",
         "value": "{\"started\": 1791488517.4103143, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/607/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"d94b70f675205c2c046138997819428772cd2678\", \"generation_started\": 1791488541.6529713, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791488544.273002, \"last_execution_phase\": \"generation\", \"finished\": 1791488575.0971632}"
       },
@@ -9971,24 +9967,28 @@
         "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 4, \"comfyui\": 2, \"firecrawl\": 1, \"hermes\": 37, \"openclaw\": 6, \"spec-kit\": 1}}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791488935.38488, \"tasks\": {\"fix\": {\"blocked\": 2, \"human_wait\": 5, \"queued\": 3, \"retry_wait\": 1, \"running\": 2, \"skipped\": 74}, \"respond\": {\"blocked\": 17, \"done\": 5, \"error\": 5, \"human_wait\": 7, \"skipped\": 8, \"validation_wait\": 8}}}"
-      },
-      {
-        "key": "task:501",
-        "value": "{\"started\": 1791488845.7666, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"generation\", \"finished\": 1791404099.788691, \"recovery_checked_at\": 1791488792.708922, \"folder\": \"jobs/501/attempt-1\", \"attempt\": 1, \"base\": \"b992cfcd9c31b800f2ca8bfb22b4b892ec8a8149\", \"generation_started\": 1791488929.9328048, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791488940.7332535}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791488983.594889"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791488987.603058"
       },
       {
         "key": "detector_heartbeat",
         "value": "1791488987.6107807"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791488998.5992408"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791489007.8431516, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:501",
+        "value": "{\"started\": 1791488845.7666, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": \"generation\", \"phase\": \"skipped\", \"finished\": 1791489007.8610847, \"recovery_checked_at\": 1791488792.708922, \"folder\": \"jobs/501/attempt-1\", \"attempt\": 1, \"base\": \"b992cfcd9c31b800f2ca8bfb22b4b892ec8a8149\", \"generation_started\": 1791488929.9328048, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791488940.7332535}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791489008.282298, \"tasks\": {\"fix\": {\"blocked\": 2, \"human_wait\": 5, \"queued\": 3, \"retry_wait\": 1, \"running\": 2, \"skipped\": 74}, \"respond\": {\"blocked\": 17, \"done\": 5, \"error\": 5, \"human_wait\": 7, \"skipped\": 8, \"validation_wait\": 8}}}"
       }
     ],
     "calls": [
