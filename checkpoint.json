@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791482933.2998996,
+  "saved_at": 1791482948.2301846,
   "tables": {
     "tasks": [
       {
@@ -7381,10 +7381,10 @@
         "repo": "openclaw/openclaw",
         "number": 152746,
         "note": "{\"authors\": \"ci, clawsweeper\", \"events\": [\"IC_kwDOQb6kR88AAAABViyYpw@2026-10-07T17:54:17Z\", \"standing:needs proof:8eb132a2a50c\"], \"is_issue\": false, \"head\": \"8eb132a2a50c8da6959e8a97adb759a41b7d5654\"}",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1791457635.5633972,
-        "updated": 1791482787.6026938,
-        "result": "Claim checkpoint failed before execution; durable checkpoint required before retry",
+        "updated": 1791482948.2234693,
+        "result": "VALIDATION_ENVIRONMENT: ClawSweeper still requires native macOS launch, relaunch, upgrade, and before/after screenshot proof. This Linux runner has no macOS host. The PR also has merge conflicts. Focused macOS CI passes, but neither blocker is resolved.",
         "attempts": 8
       },
       {
@@ -9352,10 +9352,6 @@
         "value": "{\"at\": 1791482825.8781693, \"previous_task\": 579, \"head\": \"648222649a6385ca92553e9a69054d76a8914fa8\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791482844.9822485, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:582",
         "value": "{\"started\": 1791482790.8491118, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/582/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"46493d824fd7eac25a741e505159e4c9e0ef0ebd\", \"generation_started\": 1791482799.1485631, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791482801.9620423, \"last_execution_phase\": \"generation\", \"finished\": 1791482844.984448}"
       },
@@ -9378,10 +9374,6 @@
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791482787.6025198, \"comfyui\": 1791482790.8489242, \"hermes\": 1791482857.194715, \"langfuse\": 1791470397.360302, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453768.3244345, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791470830.5865817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879}}"
-      },
-      {
-        "key": "task:568",
-        "value": "{\"started\": 1791482787.6027524, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/568/attempt-8\", \"attempt\": 8, \"phase\": \"generation\", \"base\": \"8eb132a2a50c8da6959e8a97adb759a41b7d5654\", \"last_execution_phase\": \"checkout\", \"finished\": 1791471340.9500139, \"phase_started\": 1791482872.3777688}"
       },
       {
         "key": "task:172",
@@ -9448,20 +9440,32 @@
         "value": "{\"at\": 1791482908.1096857, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 3, \"human_wait\": 5, \"queued\": 3, \"skipped\": 58}, \"respond\": {\"blocked\": 7, \"done\": 4, \"error\": 5, \"human_wait\": 7, \"queued\": 1, \"running\": 2, \"skipped\": 7, \"validation_wait\": 5}}}"
       },
       {
+        "key": "task:586",
+        "value": "{\"started\": 1791482857.1949015, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/586/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"648222649a6385ca92553e9a69054d76a8914fa8\", \"phase_started\": 1791482933.292762}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1791482922.5872808"
+        "value": "1791482937.5896766"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791482928.253655"
+        "value": "1791482943.2711744"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791482928.2553263"
+        "value": "1791482943.272813"
       },
       {
-        "key": "task:586",
-        "value": "{\"started\": 1791482857.1949015, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/586/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"648222649a6385ca92553e9a69054d76a8914fa8\", \"phase_started\": 1791482933.292762}"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791482946.2981255, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:task:568",
+        "value": "{\"status\": \"needs_human\", \"task\": 568, \"repo\": \"openclaw/openclaw\", \"number\": 152746, \"reason\": \"VALIDATION_ENVIRONMENT: ClawSweeper still requires native macOS launch, relaunch, upgrade, and before/after screenshot proof. This Linux runner has no macOS host. The PR also has merge conflicts. Focused macOS CI passes, but neither blocker is resolved.\", \"base\": \"8eb132a2a50c8da6959e8a97adb759a41b7d5654\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"568-8.json.enc\"}"
+      },
+      {
+        "key": "task:568",
+        "value": "{\"started\": 1791482787.6027524, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/568/attempt-8\", \"attempt\": 8, \"phase\": \"validation_wait\", \"base\": \"8eb132a2a50c8da6959e8a97adb759a41b7d5654\", \"last_execution_phase\": \"generation\", \"finished\": 1791482947.2536163, \"phase_started\": 1791482872.3777688, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\"}"
       }
     ],
     "calls": [
