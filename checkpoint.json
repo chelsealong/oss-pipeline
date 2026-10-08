@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791475416.5631135,
+  "saved_at": 1791475423.984101,
   "tables": {
     "tasks": [
       {
@@ -7511,10 +7511,10 @@
         "repo": "hermes",
         "number": 135181,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1791473570.3555582,
-        "updated": 1791475397.9573262,
-        "result": "",
+        "updated": 1791475423.9722457,
+        "result": "Cloud checkpoint unavailable; keep task state for recovery",
         "attempts": 1
       },
       {
@@ -9277,10 +9277,6 @@
         "value": "{\"started\": 1791426445.1801422, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791426447.6238666, \"recovery_checked_at\": 1791475349.2445488}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791475352.5910323, \"tasks\": {\"fix\": {\"capacity_wait\": 3, \"human_wait\": 5, \"queued\": 2, \"skipped\": 54}, \"respond\": {\"blocked\": 6, \"done\": 4, \"error\": 5, \"human_wait\": 7, \"queued\": 2, \"retry_wait\": 1, \"skipped\": 7, \"validation_wait\": 5}}}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791475402.440173"
       },
@@ -9297,14 +9293,6 @@
         "value": "{\"until\": 1791477205.138942, \"reason\": \"Cloud checkpoint unavailable; keep task state for recovery\"}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791475405.8000543"
-      },
-      {
-        "key": "task:578",
-        "value": "{\"started\": 1791475397.9573476, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/578/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": null}"
-      },
-      {
         "key": "task:44",
         "value": "{\"recovery_checked_at\": 1791475412.893843}"
       },
@@ -9317,14 +9305,6 @@
         "value": "{\"recovery_checked_at\": 1791475413.998567}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1791475414.5939937"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791475414.5961208"
-      },
-      {
         "key": "recovery_audit:45",
         "value": "{\"at\": 1791475415.1967087, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -9335,6 +9315,26 @@
       {
         "key": "recovery_audit:54",
         "value": "{\"at\": 1791475416.5014467, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791475418.5780342, \"tasks\": {\"fix\": {\"capacity_wait\": 3, \"human_wait\": 5, \"queued\": 1, \"running\": 1, \"skipped\": 54}, \"respond\": {\"blocked\": 6, \"done\": 4, \"error\": 5, \"human_wait\": 7, \"queued\": 2, \"retry_wait\": 1, \"skipped\": 7, \"validation_wait\": 5}}}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791475419.5973494"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791475419.598712"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791475420.801146"
+      },
+      {
+        "key": "task:578",
+        "value": "{\"started\": 1791475397.9573476, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/578/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"38880bd2f1e90dbc9a1aeec03af62539ee64719a\", \"last_execution_phase\": \"checkout\", \"finished\": 1791475423.5207224}"
       }
     ],
     "calls": [
