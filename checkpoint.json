@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791455724.326888,
+  "saved_at": 1791455738.7422483,
   "tables": {
     "tasks": [
       {
@@ -6978,10 +6978,10 @@
         "repo": "NousResearch/hermes-agent",
         "number": 127606,
         "note": "{\"authors\": \"Enough1122\", \"events\": [\"IC_kwDOPRF1G88AAAABZEy1gQ@2026-10-04T07:30:07Z\"], \"followup_policy\": \"2026-10-08-replies-v1\", \"head\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\", \"is_issue\": false, \"previous_task\": 310}",
-        "status": "running",
+        "status": "human_wait",
         "created": 1791438666.076757,
-        "updated": 1791455360.8827937,
-        "result": "Codex session budget reached; judge paused too",
+        "updated": 1791455738.7356954,
+        "result": "review: HUMAN_REVIEW_REQUIRED: context.json has no named human signoff for this exact patch and base. The billing-path defect is real: the base omits the reported reset, while the patch carries it through. The proposed reply and PR body accurately describe the checked scope. The focused suite passed (98 passed, 1 Windows-marked test skipped); Ruff, the Windows footgun check, and git diff --check passed. These technical checks cannot replace the missing human review.",
         "attempts": 2
       },
       {
@@ -8701,36 +8701,40 @@
         "value": "{\"started\": 1791404093.9744883, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791404099.788691, \"recovery_checked_at\": 1791455590.9004261}"
       },
       {
-        "key": "task:537",
-        "value": "{\"started\": 1791455360.8828444, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/537/attempt-2\", \"attempt\": 2, \"phase\": \"review\", \"base\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\", \"last_execution_phase\": \"checkout\", \"finished\": 1791455039.4631152, \"phase_started\": 1791455636.15389}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791455663.8813586, \"tasks\": {\"fix\": {\"capacity_wait\": 9, \"human_wait\": 4, \"queued\": 2, \"skipped\": 35}, \"respond\": {\"blocked\": 4, \"done\": 2, \"error\": 3, \"human_wait\": 5, \"queued\": 1, \"retry_wait\": 1, \"running\": 2, \"skipped\": 4, \"validation_wait\": 2}}}"
-      },
-      {
         "key": "coordination:google/adk-python#7455",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7455\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791455709.349184, \"source\": \"completed task phase\"}"
       },
       {
         "key": "task:544",
         "value": "{\"started\": 1791455533.1244361, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/544/attempt-3\", \"attempt\": 3, \"phase\": \"reply-review\", \"base\": \"18ce518405d130cdad23ba3ff84690a2054fafa6\", \"last_execution_phase\": \"generation\", \"finished\": 1791455104.0233567, \"phase_started\": 1791455712.6653028}"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791455726.7435043, \"tasks\": {\"fix\": {\"capacity_wait\": 9, \"human_wait\": 4, \"queued\": 2, \"skipped\": 35}, \"respond\": {\"blocked\": 4, \"done\": 2, \"error\": 3, \"human_wait\": 5, \"queued\": 1, \"retry_wait\": 1, \"running\": 2, \"skipped\": 4, \"validation_wait\": 2}}}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1791455712.9350724"
+        "value": "1791455727.9363842"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791455718.0400007"
+        "value": "1791455732.515215"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791455718.041763"
+        "value": "1791455732.5170245"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791455737.07504, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:task:537",
+        "value": "{\"status\": \"needs_human\", \"task\": 537, \"repo\": \"NousResearch/hermes-agent\", \"number\": 127606, \"reason\": \"review: HUMAN_REVIEW_REQUIRED: context.json has no named human signoff for this exact patch and base. The billing-path defect is real: the base omits the reported reset, while the patch carries it through. The proposed reply and PR body accurately describe the checked scope. The focused suite passed (98 passed, 1 Windows-marked test skipped); Ruff, the Windows footgun check, and git diff --check passed. These technical checks cannot replace the missing human review.\", \"base\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\", \"patch_digest\": \"6c2134f1beb9b1084f80861c9b6d4ec411d0ed82f83240153a188a893e5d693d\", \"evidence_bundle\": \"537-2.json.enc\"}"
+      },
+      {
+        "key": "task:537",
+        "value": "{\"started\": 1791455360.8828444, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/537/attempt-2\", \"attempt\": 2, \"phase\": \"human_wait\", \"base\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\", \"last_execution_phase\": \"review\", \"finished\": 1791455738.1702235, \"phase_started\": 1791455636.15389, \"patch_digest\": \"6c2134f1beb9b1084f80861c9b6d4ec411d0ed82f83240153a188a893e5d693d\"}"
       }
     ],
     "calls": [
