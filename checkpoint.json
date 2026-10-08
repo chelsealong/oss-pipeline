@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791436496.4595647,
+  "saved_at": 1791436503.270625,
   "tables": {
     "tasks": [
       {
@@ -6718,10 +6718,10 @@
         "repo": "hermes",
         "number": 134925,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791436437.6461096,
-        "updated": 1791436440.9955945,
-        "result": "",
+        "updated": 1791436503.265428,
+        "result": "The proposed fix would mark `kimi-k3` verified from a listing that contains only `k3`, while leaving `kimi-k3` as the ID sent to the endpoint. That ID has been reported rejected by Kimi Coding ([#105650](https://github.com/NousResearch/hermes-agent/issues/105650)). Current code labels the alias table picker-only, and an existing validation test expects this warning. Suppressing it would give false assurance; resolving wire-ID handling needs a separate decision.",
         "attempts": 1
       },
       {
@@ -7796,10 +7796,6 @@
         "value": "{\"started\": 1791436302.320231, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/515/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791436318.9205973, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791436320.5571632, \"last_execution_phase\": \"generation\", \"finished\": 1791436368.9921014}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791436379.1423633, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:516",
         "value": "{\"started\": 1791436344.465171, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/516/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"21df53ef71d3d96c1dcda006c050a015efc74ec8\", \"generation_started\": 1791436353.1377926, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791436354.668447, \"last_execution_phase\": \"generation\", \"finished\": 1791436379.2038794}"
       },
@@ -7810,10 +7806,6 @@
       {
         "key": "coordination:google/adk-python#7443",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7443\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791436435.2740571, \"tasks\": {\"fix\": {\"capacity_wait\": 20, \"human_wait\": 4, \"skipped\": 40}, \"respond\": {\"blocked\": 2}}}"
       },
       {
         "key": "scheduler",
@@ -7828,24 +7820,32 @@
         "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 2, \"comfyui\": 1, \"firecrawl\": 1, \"hermes\": 11}}"
       },
       {
-        "key": "task:517",
-        "value": "{\"started\": 1791436440.9956222, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/517/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791436457.1060364, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791436458.7403097}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791436486.657818"
+        "key": "task:507",
+        "value": "{\"started\": 1791426439.6317172, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791426442.2873793, \"recovery_checked_at\": 1791436495.5571501}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791436490.3129306"
+        "value": "1791436497.1883118"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791436490.335501"
+        "value": "1791436497.1897721"
       },
       {
-        "key": "task:507",
-        "value": "{\"started\": 1791426439.6317172, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"capacity_wait\", \"finished\": 1791426442.2873793, \"recovery_checked_at\": 1791436495.5571501}"
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791436498.0610645, \"tasks\": {\"fix\": {\"capacity_wait\": 19, \"human_wait\": 4, \"queued\": 1, \"running\": 1, \"skipped\": 40}, \"respond\": {\"blocked\": 2}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791436501.6699338"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791436502.908518, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:517",
+        "value": "{\"started\": 1791436440.9956222, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/517/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791436457.1060364, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791436458.7403097, \"last_execution_phase\": \"generation\", \"finished\": 1791436502.9101627}"
       }
     ],
     "calls": [
