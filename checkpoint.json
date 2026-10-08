@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791502014.2108135,
+  "saved_at": 1791502016.1324246,
   "tables": {
     "tasks": [
       {
@@ -10296,10 +10296,6 @@
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791501438.4044576, \"comfyui\": 1791482790.8489242, \"hermes\": 1791501914.891378, \"langfuse\": 1791491182.2146845, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453768.3244345, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879}}"
       },
       {
-        "key": "task:625",
-        "value": "{\"started\": 1791501914.8915577, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/625/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"f202bd9b8a4fd406230b2a22dd453e3313c60a96\", \"phase_started\": 1791501946.391544}"
-      },
-      {
         "key": "followup:NousResearch/hermes-agent#85693",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/NousResearch/hermes-agent/issues/85693\", \"events\": [{\"id\": \"IC_kwDOPRF1G88AAAABO8NF2g@2026-08-14T20:01:52Z\", \"author\": \"frankydzoro\", \"when\": \"2026-08-14T20:01:52Z\", \"kind\": \"comment\", \"assoc\": \"NONE\", \"body\": \"Here is the requested data:\\n\\n**`hermes tools list --platform cli`** (grep computer_use):\\n```\\n\\u2713 enabled  computer_use  \\ud83d\\uddb1\\ufe0f  Computer Use (macOS/Windows/Linux)\\n```\\n\\nSo it is NOT a config override \\u2014 `computer_use` is enabled in the CLI toolset.\\n\\n**`hermes computer-use doctor`**:\\n```\\n\\u2705 cua-driver cua-driver 0.19.3 on darwin \\u2014 ok\\n  \\u2705 binary_version: cua-driver 0.19.3\\n  \\u2705 session_active: MCP session is active.\\n  \\u2705 tcc_accessibility: Accessibility is granted.\\n  \\u2705 tcc_screen_recording: Screen Recording is granted.\\n  \\u2705 ax_capability: AX is trusted and reachable.\\n  \\u23ed\\ufe0f screen_capture_capability: not probed (read-only health report)\\n```\\n\\n**Extra observation:** `hermes tools list --platform desktop` fails with \\\"Unknown platform desktop\\\" \\u2014 valid platforms are cli, telegram, discord, ... So the desktop app does not run under a distinct platform; it falls back to the `cli` toolset, which already has computer_use enabled.\\n\\n**Likely cause in my case:** cua-driver was installed mid-session (after the desktop backend had already started). The computer_use tool appears to be registered at backend startup, so it stays absent until the backend restarts. Worth confirming whether tool registration is startup-bound rather than resolved at call time \\u2014 if so, installing cua-driver during a running session should surface the tool (or at least log a hint) without a full backend restart.\"}, {\"id\": \"IC_kwDOPRF1G88AAAABUyvsjQ@2026-09-16T00:50:50Z\", \"author\": \"halytech\", \"when\": \"2026-09-16T00:50:50Z\", \"kind\": \"comment\", \"assoc\": \"NONE\", \"body\": \"I'm having the same issue after starting with a very clean and fresh Hermes installation.  When I run from the CLI, computer-use works brilliantly (`hermes -t computer_use chat`)\\n\\nI did not install the cua-driver mid-session,  I configured all that stuff before I even started the desktop stuff (was trying to get a very stable and usable CLI environment first).\"}, {\"id\": \"IC_kwDOPRF1G88AAAABU0uSbg@2026-09-16T05:18:48Z\", \"author\": \"herman925\", \"when\": \"2026-09-16T05:18:48Z\", \"kind\": \"comment\", \"assoc\": \"NONE\", \"body\": \"**Second instance of the same root cause \\u2014 `vision_analyze` missing from TUI sessions**\\n\\nIdentical symptom trio to the original report (*not in the direct toolset, not in the deferred catalog, not returned by `tool_search`*), but the tool is `vision_analyze` and the platform is the **TUI** rather than Desktop.\\n\\n## Environment\\n\\n- Hermes 0.21.3, git HEAD `10652c93` (2026-09-15)\\n- Windows 11, TUI session\\n- `hermes tools` reports `[\\u2713] Vision / Image Analysis (vision_analyze)` enabled for CLI\\n- `platform_toolsets.cli` **does** include `vision`\\n\\nSo the toolset is enabled and declared for `cli` \\u2014 it just never reaches a TUI session.\\n\\n## Root cause \\u2014 same shape as the report\\n\\nA TUI session declares `platform=\\\"tui\\\"` (`tui_gateway/agent_callbacks.py:305`). But:\\n\\n1. `platform_toolsets` in `config.yaml` has entries for `cli` and the messaging platforms only \\u2014 **no `tui` key**.\\n2. The platform registry `PLATFORMS` (`hermes_cli/platforms.py:14-37`) also has **no `tui` entry**, so there is no `default_toolset` to fall back to either.\\n\\nWith neither a `platform_toolsets.tui` list nor a registry default, the TUI session registers no `vision` toolset, so `vision_analyze` is absent from the tool surface entirely.\\n\\n`toolset_allowed_for_platform()` (`hermes_cli/toolset_scope.py:10`) is **not** the blocker \\u2014 it only restricts `discord` / `discord_admin`, and everything else is allowed on every platform.\\n\\nThis looks like the same class as the `computer_use` case: a toolset reachable only via the `cli` entry, silently absent on any platform without its own entry.\\n\\n## Workaround that works\\n\\nAdding the key manually restores the tool, because the runtime reads `platform_toolsets` as a free-form dict (`gateway/run_turn.py:2244`):\\n\\n```bash\\nhermes config set platform_toolsets.tui \\\\\\n  '[\\\"browser\\\",\\\"clarify\\\",\\\"code_execution\\\",\\\"computer_use\\\",\\\"connections\\\",\\\"cronjob\\\",\\\"delegation\\\",\\\"file\\\",\\\"image_gen\\\",\\\"memory\\\",\\\"session_search\\\",\\\"skills\\\",\\\"terminal\\\",\\\"todo\\\",\\\"tts\\\",\\\"vision\\\",\\\"web\\\"]'\\n```\\n\\nCaveat \\u2014 the config validator rejects the key as unrecognized:\\n\\n```\\n\\u26a0 'platform_toolsets.tui' is not a recognized config key \\u2014 it was saved anyway, but Hermes may not read it.\\n  Did you mean: platform_hints.tui\\n```\\n\\nThe value persists and is read at runtime, but it is flagged on every write. That validation gap appears to be #107098.\\n\\n## Suggested fix\\n\\nEither\\n\\n- add `tui` (and `desktop`) to `PLATFORMS` with an appropriate `default_toolset`, or\\n- have the platform-scope resolver fall back to the `cli` toolset list when the session platform has no entry of its own.\\n\\nEither would also fix the `computer_use`/Desktop case above.\\n\"}, {\"id\": \"IC_kwDOPRF1G88AAAABYUpXjA@2026-10-01T07:55:07Z\", \"author\": \"OutThisLife\", \"when\": \"2026-10-01T07:55:07Z\", \"kind\": \"comment\", \"assoc\": \"NONE\", \"body\": \"The wiring on main already exposes computer_use to Desktop and TUI sessions: _load_enabled_toolsets in tui_gateway/server.py resolves the session's toolsets from the configured cli platform (_get_platform_tools(cfg, \\\"cli\\\", ...)), and computer_use rides _HERMES_CORE_TOOLS inside that composite \\u2014 confirmed live earlier in this thread. Two things could still hide it on a machine where the tool is absent. One is the coding posture: _CODING_TOOLS in toolsets.py deliberately strips computer_use, so a Desktop session opened inside a code workspace legitimately lacks it. The other is the environment the desktop backend spawns from \\u2014 the original report's mid-session-install theory fits how toolsets resolve (the set is fixed at agent build, so a session started after the install should show the tool). @halytech \\u2014 on your clean install, could you run `hermes computer-use doctor` and `hermes tools list --platform cli` from inside the environment the desktop backend spawns from, and note whether the session's cwd was inside a repo? Those two outputs would settle whether this is posture/config or a real resolution gap. The TUI/vision_analyze report above goes through a different resolver (the messaging gateway's platform_toolsets, which has no tui key) \\u2014 we'll track that separately.\\n\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
@@ -10308,20 +10304,24 @@
         "value": "{\"at\": 1791502000.276869, \"tasks\": {\"fix\": {\"blocked\": 2, \"error\": 2, \"human_wait\": 6, \"running\": 1, \"skipped\": 85}, \"respond\": {\"blocked\": 19, \"done\": 5, \"error\": 5, \"human_wait\": 9, \"queued\": 1, \"running\": 1, \"skipped\": 8, \"validation_wait\": 8}}}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1791502008.2560494"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791502008.2579765"
-      },
-      {
         "key": "worker_heartbeat",
         "value": "1791502010.5075483"
       },
       {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1791502013.904029, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791502015.556201"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791502015.558076"
+      },
+      {
+        "key": "task:625",
+        "value": "{\"started\": 1791501914.8915577, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/625/attempt-1\", \"attempt\": 1, \"phase\": \"reply-review\", \"base\": \"f202bd9b8a4fd406230b2a22dd453e3313c60a96\", \"phase_started\": 1791502016.12005}"
       }
     ],
     "calls": [
