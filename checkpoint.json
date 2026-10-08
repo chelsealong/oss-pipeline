@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791456870.9462578,
+  "saved_at": 1791456904.235567,
   "tables": {
     "tasks": [
       {
@@ -7212,10 +7212,10 @@
         "repo": "hermes",
         "number": 135056,
         "note": "",
-        "status": "running",
+        "status": "human_wait",
         "created": 1791456302.5083203,
-        "updated": 1791456329.474683,
-        "result": "",
+        "updated": 1791456904.2277422,
+        "result": "review: HUMAN_REVIEW_REQUIRED: context.json contains no human signoff for this exact patch and base. Open PR #135060 already addresses issue #135056 in the same guide sections, so this patch duplicates active work. The site build, link check, repository checks, and diff check passed; the required diagram lint could not run because ascii-guard is absent.",
         "attempts": 1
       },
       {
@@ -8949,14 +8949,6 @@
         "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 2, \"comfyui\": 1, \"firecrawl\": 1, \"hermes\": 22, \"openclaw\": 2}}"
       },
       {
-        "key": "task:555",
-        "value": "{\"started\": 1791456329.4747202, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/555/attempt-1\", \"attempt\": 1, \"phase\": \"review\", \"base\": \"f549953a38f7648391932c1aa072e4304a66055e\", \"generation_started\": 1791456362.1742806, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791456801.9321432}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791456804.5277765, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:554",
         "value": "{\"started\": 1791456677.5538585, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/554/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"83421e15378489d0ba473a3cd653592bf424b3c0\", \"generation_started\": 1791456759.7480392, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791456763.5497723, \"last_execution_phase\": \"generation\", \"finished\": 1791456804.53015}"
       },
@@ -8986,7 +8978,19 @@
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791456869.321591"
+        "value": "1791456899.3254356"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791456903.211309, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:task:555",
+        "value": "{\"status\": \"needs_human\", \"task\": 555, \"repo\": \"hermes\", \"number\": 135056, \"reason\": \"review: HUMAN_REVIEW_REQUIRED: context.json contains no human signoff for this exact patch and base. Open PR #135060 already addresses issue #135056 in the same guide sections, so this patch duplicates active work. The site build, link check, repository checks, and diff check passed; the required diagram lint could not run because ascii-guard is absent.\", \"base\": \"f549953a38f7648391932c1aa072e4304a66055e\", \"patch_digest\": \"1dc71e92b1f111b06bd499bc42a3682f5515230603871e76408745f7e6201fea\", \"evidence_bundle\": \"555-1.json.enc\"}"
+      },
+      {
+        "key": "task:555",
+        "value": "{\"started\": 1791456329.4747202, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/555/attempt-1\", \"attempt\": 1, \"phase\": \"human_wait\", \"base\": \"f549953a38f7648391932c1aa072e4304a66055e\", \"generation_started\": 1791456362.1742806, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791456801.9321432, \"patch_digest\": \"1dc71e92b1f111b06bd499bc42a3682f5515230603871e76408745f7e6201fea\", \"last_execution_phase\": \"review\", \"finished\": 1791456903.881012}"
       }
     ],
     "calls": [
