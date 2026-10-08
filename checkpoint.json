@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791438209.559308,
+  "saved_at": 1791438234.8764458,
   "tables": {
     "tasks": [
       {
@@ -6783,10 +6783,10 @@
         "repo": "hermes",
         "number": 134933,
         "note": "",
-        "status": "running",
+        "status": "human_wait",
         "created": 1791437587.830423,
-        "updated": 1791437593.4966092,
-        "result": "",
+        "updated": 1791438234.8706217,
+        "result": "review: HUMAN_REVIEW_REQUIRED: context.json has no human signoff. The patch also leaves a recovery gap: if the initial SDK probe marks `_MCP_AVAILABLE` false, or the base SDK import fails once, later HTTP connections remain latched and produce the reported error. The new test covers only a failed HTTP symbol import, so the PR body’s recovery claim is too broad. I verified the regression fails against HEAD and passes with the patch; 107 focused tests and all 11 lint checks passed.",
         "attempts": 1
       },
       {
@@ -8131,20 +8131,12 @@
         "value": "{\"started\": 1791437994.8991969, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/523/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"037b799bb242f669d4a121a11220b506e2bc4f05\", \"phase_started\": 1791438012.0407555, \"last_execution_phase\": \"generation\", \"finished\": 1791438045.5232968}"
       },
       {
-        "key": "task:522",
-        "value": "{\"started\": 1791437593.496649, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/522/attempt-1\", \"attempt\": 1, \"phase\": \"review\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791437638.0307567, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791438048.6478956}"
-      },
-      {
         "key": "pr_followup_upgrade:BerriAI/litellm#37412:checked",
         "value": "1791438077.4797146"
       },
       {
         "key": "pr_followup_upgrade:BerriAI/litellm#37412",
         "value": "{\"at\": 1791438081.0188482, \"previous_task\": 379, \"head\": \"b791384c42baaaff4dc348056544c6f3fa6212fe\"}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791438125.079151, \"source\": \"completed task phase\"}"
       },
       {
         "key": "task:531",
@@ -8163,28 +8155,40 @@
         "value": "{\"at\": 1791438146.126823, \"previous_task\": 375, \"head\": \"5bd2b74ea4f8cdc53365286b139cbb076fdf2d08\"}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791438149.1861165, \"tasks\": {\"fix\": {\"capacity_wait\": 19, \"human_wait\": 4, \"running\": 1, \"skipped\": 45}, \"respond\": {\"blocked\": 3, \"error\": 1, \"queued\": 6, \"running\": 1, \"skipped\": 2}}}"
-      },
-      {
         "key": "task:532",
         "value": "{\"started\": 1791438141.3066285, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/532/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"b791384c42baaaff4dc348056544c6f3fa6212fe\", \"phase_started\": 1791438165.8842762}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791438200.7694693"
       },
       {
         "key": "prwatch_heartbeat",
         "value": "1791438206.4482467"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791438211.1351516, \"tasks\": {\"fix\": {\"capacity_wait\": 19, \"human_wait\": 4, \"running\": 1, \"skipped\": 45}, \"respond\": {\"blocked\": 3, \"error\": 1, \"queued\": 6, \"running\": 1, \"skipped\": 2}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791438230.7718902"
+      },
+      {
         "key": "watch_heartbeat",
-        "value": "1791438207.8147748"
+        "value": "1791438234.5501132"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791438207.8165658"
+        "value": "1791438234.5516775"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791438234.6823409, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:task:522",
+        "value": "{\"status\": \"needs_human\", \"task\": 522, \"repo\": \"hermes\", \"number\": 134933, \"reason\": \"review: HUMAN_REVIEW_REQUIRED: context.json has no human signoff. The patch also leaves a recovery gap: if the initial SDK probe marks `_MCP_AVAILABLE` false, or the base SDK import fails once, later HTTP connections remain latched and produce the reported error. The new test covers only a failed HTTP symbol import, so the PR body\\u2019s recovery claim is too broad. I verified the regression fails against HEAD and passes with the patch; 107 focused tests and all 11 lint checks passed.\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"patch_digest\": \"5efb3c97550f5beb9100d9715c847a8487dd24b23be4f3d6521d5899ec6e8cf6\", \"evidence_bundle\": \"522-1.json.enc\"}"
+      },
+      {
+        "key": "task:522",
+        "value": "{\"started\": 1791437593.496649, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/522/attempt-1\", \"attempt\": 1, \"phase\": \"human_wait\", \"base\": \"457a1e1cdb7fc00fe21d5b8503dae1f9e2effbb0\", \"generation_started\": 1791437638.0307567, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791438048.6478956, \"patch_digest\": \"5efb3c97550f5beb9100d9715c847a8487dd24b23be4f3d6521d5899ec6e8cf6\", \"last_execution_phase\": \"review\", \"finished\": 1791438234.8011773}"
       }
     ],
     "calls": [
