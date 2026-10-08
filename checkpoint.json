@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791477321.3574352,
+  "saved_at": 1791477366.2258148,
   "tables": {
     "tasks": [
       {
@@ -7383,9 +7383,9 @@
         "note": "{\"authors\": \"ci, clawsweeper\", \"events\": [\"IC_kwDOQb6kR88AAAABViyYpw@2026-10-07T17:54:17Z\", \"standing:needs proof:8eb132a2a50c\"], \"is_issue\": false, \"head\": \"8eb132a2a50c8da6959e8a97adb759a41b7d5654\"}",
         "status": "retry_wait",
         "created": 1791457635.5633972,
-        "updated": 1791475405.1381454,
+        "updated": 1791477340.5825927,
         "result": "Claim checkpoint failed before execution; durable checkpoint required before retry",
-        "attempts": 4
+        "attempts": 5
       },
       {
         "id": 569,
@@ -7524,10 +7524,10 @@
         "repo": "NousResearch/hermes-agent",
         "number": 101759,
         "note": "{\"authors\": \"ahrazzle\", \"events\": [\"IC_kwDOPRF1G88AAAABUqBTcA@2026-09-15T13:57:06Z\"], \"is_issue\": false, \"head\": \"648222649a6385ca92553e9a69054d76a8914fa8\"}",
-        "status": "running",
+        "status": "blocked",
         "created": 1791473590.2929518,
-        "updated": 1791477207.7843082,
-        "result": "",
+        "updated": 1791477366.2196233,
+        "result": "Cloud checkpoint unavailable; keep task state for recovery",
         "attempts": 1
       },
       {
@@ -9131,48 +9131,8 @@
         "value": "{\"status\": \"resumed\", \"task\": 477}"
       },
       {
-        "key": "task:568",
-        "value": "{\"started\": 1791475405.1205442, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 1791475705.138054, \"folder\": \"jobs/568/attempt-2\", \"attempt\": 2, \"phase\": \"retry_wait\", \"base\": \"8eb132a2a50c8da6959e8a97adb759a41b7d5654\", \"last_execution_phase\": \"checkout\", \"finished\": 1791471340.9500139}"
-      },
-      {
         "key": "task:578",
         "value": "{\"started\": 1791475397.9573476, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/578/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"38880bd2f1e90dbc9a1aeec03af62539ee64719a\", \"last_execution_phase\": \"checkout\", \"finished\": 1791475423.5207224}"
-      },
-      {
-        "key": "task:61",
-        "value": "{\"recovery_checked_at\": 1791476454.975083}"
-      },
-      {
-        "key": "recovery_audit:61",
-        "value": "{\"at\": 1791476456.273886, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:166",
-        "value": "{\"recovery_checked_at\": 1791476456.2859645}"
-      },
-      {
-        "key": "recovery_audit:166",
-        "value": "{\"at\": 1791476457.4835367, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:167",
-        "value": "{\"recovery_checked_at\": 1791476457.485112}"
-      },
-      {
-        "key": "recovery_audit:167",
-        "value": "{\"at\": 1791476458.7166579, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:171",
-        "value": "{\"recovery_checked_at\": 1791476458.7186618}"
-      },
-      {
-        "key": "recovery_audit:171",
-        "value": "{\"at\": 1791476459.882693, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:172",
-        "value": "{\"recovery_checked_at\": 1791476459.8842225}"
       },
       {
         "key": "recovery_audit:172",
@@ -9275,14 +9235,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7462\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "pause",
-        "value": "{}"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791477206.7668457, \"comfyui\": 1791456823.3390005, \"hermes\": 1791477207.7842004, \"langfuse\": 1791470397.360302, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453768.3244345, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791470830.5865817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879}}"
-      },
-      {
         "key": "task:44",
         "value": "{\"recovery_checked_at\": 1791477225.8415778}"
       },
@@ -9305,10 +9257,6 @@
       {
         "key": "recovery_audit:54",
         "value": "{\"at\": 1791477229.6713934, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:579",
-        "value": "{\"started\": 1791477207.784333, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/579/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"648222649a6385ca92553e9a69054d76a8914fa8\", \"phase_started\": 1791477233.2783468}"
       },
       {
         "key": "prwatch_heartbeat",
@@ -9359,16 +9307,68 @@
         "value": "{\"at\": 1791477299.4651759, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 3, \"human_wait\": 5, \"queued\": 2, \"running\": 1, \"skipped\": 54}, \"respond\": {\"blocked\": 6, \"done\": 4, \"error\": 5, \"human_wait\": 7, \"queued\": 1, \"retry_wait\": 1, \"running\": 1, \"skipped\": 7, \"validation_wait\": 5}}}"
       },
       {
+        "key": "task:477",
+        "value": "{\"started\": 1791477206.767012, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791477321.264872, \"recovery_checked_at\": 1791473806.8126395, \"folder\": \"jobs/477/attempt-2\", \"attempt\": 2, \"base\": \"1fe2aa03fe4fb4f53ac11290562f9b60acc45e91\", \"generation_started\": 1791477261.8669102, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791477264.2593553, \"last_execution_phase\": \"generation\"}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791477340.5349455, \"comfyui\": 1791456823.3390005, \"hermes\": 1791477207.7842004, \"langfuse\": 1791470397.360302, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453768.3244345, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791470830.5865817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879}}"
+      },
+      {
+        "key": "task:568",
+        "value": "{\"started\": 1791477340.5350916, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 1791477640.5825212, \"folder\": \"jobs/568/attempt-2\", \"attempt\": 2, \"phase\": \"retry_wait\", \"base\": \"8eb132a2a50c8da6959e8a97adb759a41b7d5654\", \"last_execution_phase\": \"checkout\", \"finished\": 1791471340.9500139}"
+      },
+      {
+        "key": "pause",
+        "value": "{\"until\": 1791479140.5834107, \"reason\": \"Cloud checkpoint unavailable; keep task state for recovery\"}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1791477311.3541982"
+        "value": "1791477356.5627232"
+      },
+      {
+        "key": "task:61",
+        "value": "{\"recovery_checked_at\": 1791477359.7801294}"
+      },
+      {
+        "key": "recovery_audit:61",
+        "value": "{\"at\": 1791477361.075211, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:166",
+        "value": "{\"recovery_checked_at\": 1791477361.0878763}"
+      },
+      {
+        "key": "recovery_audit:166",
+        "value": "{\"at\": 1791477362.2111642, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:167",
+        "value": "{\"recovery_checked_at\": 1791477362.212773}"
+      },
+      {
+        "key": "recovery_audit:167",
+        "value": "{\"at\": 1791477363.3295882, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:171",
+        "value": "{\"recovery_checked_at\": 1791477363.331514}"
+      },
+      {
+        "key": "recovery_audit:171",
+        "value": "{\"at\": 1791477365.2128193, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:172",
+        "value": "{\"recovery_checked_at\": 1791477365.2144592}"
       },
       {
         "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791477321.2630675, \"source\": \"completed task phase\"}"
+        "value": "{\"ok\": true, \"at\": 1791477365.4886627, \"source\": \"completed task phase\"}"
       },
       {
-        "key": "task:477",
-        "value": "{\"started\": 1791477206.767012, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"phase\": \"skipped\", \"finished\": 1791477321.264872, \"recovery_checked_at\": 1791473806.8126395, \"folder\": \"jobs/477/attempt-2\", \"attempt\": 2, \"base\": \"1fe2aa03fe4fb4f53ac11290562f9b60acc45e91\", \"generation_started\": 1791477261.8669102, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791477264.2593553, \"last_execution_phase\": \"generation\"}"
+        "key": "task:579",
+        "value": "{\"started\": 1791477207.784333, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/579/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"648222649a6385ca92553e9a69054d76a8914fa8\", \"phase_started\": 1791477233.2783468, \"last_execution_phase\": \"generation\", \"finished\": 1791477365.8571634}"
       }
     ],
     "calls": [
