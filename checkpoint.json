@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791484438.7450538,
+  "saved_at": 1791484461.037804,
   "tables": {
     "tasks": [
       {
@@ -7836,11 +7836,24 @@
         "repo": "hermes",
         "number": 134940,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791484253.0127888,
-        "updated": 1791484372.194613,
-        "result": "",
+        "updated": 1791484461.0309978,
+        "result": "The defect is still present: shared room members omit installation identity, while seating and merging key them by client-local connection ID. A safe fix requires coordinated serialization, route rebinding, deduplication, and legacy-room handling across clients; a small patch would risk substituting the wrong bot or disrupting existing sessions. The earlier identity PR was closed unmerged after its target files were retired.",
         "attempts": 1
+      },
+      {
+        "id": 604,
+        "identity": "fix:hermes:135248:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 135248,
+        "note": "",
+        "status": "queued",
+        "created": 1791484443.5647311,
+        "updated": 1791484443.5647311,
+        "result": "",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -9825,10 +9838,6 @@
         "value": "{\"started\": 1791484182.0642643, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/598/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"dd2a98a67c398f6fabd98ae41547bfaf1bb45c4a\", \"phase_started\": 1791484271.731878, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1791484332.055712}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791484358.6330853, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:600",
         "value": "{\"started\": 1791484267.6337314, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/600/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"517b5e10febd619ce30bb22580e29b160266eb43\", \"generation_started\": 1791484289.9894419, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791484292.3288586, \"last_execution_phase\": \"generation\", \"finished\": 1791484358.6349716}"
       },
@@ -9853,20 +9862,8 @@
         "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 3, \"comfyui\": 2, \"firecrawl\": 1, \"hermes\": 35, \"openclaw\": 5, \"spec-kit\": 1}}"
       },
       {
-        "key": "task:603",
-        "value": "{\"started\": 1791484372.1946485, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/603/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"517b5e10febd619ce30bb22580e29b160266eb43\", \"generation_started\": 1791484392.290003, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791484393.9557734}"
-      },
-      {
         "key": "throughput_24h",
         "value": "{\"at\": 1791484433.4578974, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 2, \"human_wait\": 5, \"queued\": 1, \"running\": 1, \"skipped\": 69}, \"respond\": {\"blocked\": 15, \"done\": 5, \"error\": 5, \"human_wait\": 7, \"queued\": 1, \"running\": 1, \"skipped\": 8, \"validation_wait\": 8}}}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791484435.6108675"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791484435.6128829"
       },
       {
         "key": "task:601",
@@ -9874,7 +9871,23 @@
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791484437.9068012"
+        "value": "1791484452.9079545"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791484455.6841218"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791484455.68597"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791484460.7374437, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:603",
+        "value": "{\"started\": 1791484372.1946485, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/603/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"517b5e10febd619ce30bb22580e29b160266eb43\", \"generation_started\": 1791484392.290003, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791484393.9557734, \"last_execution_phase\": \"generation\", \"finished\": 1791484460.7408981}"
       }
     ],
     "calls": [
