@@ -14,6 +14,7 @@ import cloud_store
 import runtime as rt
 import work_evidence
 import task_recovery
+import pr_followup
 
 REPOSITORY='chelsealong/oss-pipeline'
 # Audited tasks whose previous attempt stopped before publication. Recreate
@@ -101,7 +102,8 @@ def configure(mode):
     rt.CONFIG.parent.mkdir(exist_ok=True)
     rt.CONFIG.write_text(json.dumps({'backend':'codex-cloud' if mode=='live' else 'codex-local',
         'enabled':True,'cloud_environment':True,'model':'gpt-6-sol','max_pending':8,
-        'response_slots':1,'fix_slots':1,'max_pending_per_repo':3,'workers':2,
+        'response_slots':2,'fix_slots':1,'max_pending_per_repo':3,'workers':2,
+        'public_pr_replies':True,'maintain_existing_prs':True,
         'codex_socket':str(rt.DATA/'codex-host.sock'),
         'codex_sessions_per_5h':45,'judge_requests_per_hour':120})+'\n')
     rt.DATA.mkdir(exist_ok=True)
@@ -193,6 +195,7 @@ def run(mode,seconds):
                 print('Cloud restart circuit is cooling down; no work admitted.',flush=True)
                 return
             task_recovery.reconcile()
+            pr_followup.recover_backlog()
         import codex_worker
         host=start('codex-host',['codex_host.py','--binary',codex_worker.binary()])
         for _ in range(120):
@@ -223,6 +226,7 @@ def run(mode,seconds):
             if any(p.poll() is not None for p in children):raise RuntimeError('A cloud service exited unexpectedly')
             requeue_validation_repair()
             task_recovery.reconcile()
+            pr_followup.recover_backlog()
             cloud_store.save()
             previous=rotate_auth(previous)
             s=rt.status()

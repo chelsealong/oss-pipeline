@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import argparse
 import runtime as rt
+import pr_followup
 import json
 import traceback
 import os
@@ -922,7 +923,7 @@ def one_pass(seen: dict) -> int:
         key = f"{repo}#{num}"
         if rt.local():
             cfg=scan.REPOS.get(rt.repo_key(repo),{})
-            if cfg.get('paused') or not rt.room('respond',repo)[0]:continue
+            if pr_followup.response_paused(cfg) or not rt.room('respond',repo)[0]:continue
 
         # If someone else pushed the newest commit, they have taken the branch
         # over — and that is the single best sign a PR is about to land, which
@@ -952,7 +953,7 @@ def one_pass(seen: dict) -> int:
         if rt.local():
             # Existing daily keys must not trigger a fresh repair at migration.
             known.update(re.sub(r':\d{4}-\d{2}-\d{2}$','',item) for item in rec['ids'] if item.startswith('check:'))
-        if stale:
+        if stale and not (rt.local() and rt.config().get('maintain_existing_prs')):
             if (mt := maintainer_reopened(pr, known)):
                 log(f"  [{key}] {why}, but maintainer {mt} wrote recently — answering")
             else:
@@ -1010,7 +1011,8 @@ def one_pass(seen: dict) -> int:
         labels = [l["name"] for l in ((pr.get("labels") or {}).get("nodes") or [])]
         log(f"  [{key}] {len(fresh)} new item(s) from {who} [{budget} budget]; "
             f"labels: {', '.join(labels) or '-'}")
-        note = json.dumps({"authors": who, "events": sorted(i["id"] for i in fresh), "is_issue": bool(pr.get("_is_issue"))}) if rt.local() else who
+        head=((pr.get('commits') or {}).get('nodes') or [{}])[0].get('commit',{}).get('oid')
+        note = json.dumps({"authors": who, "events": sorted(i["id"] for i in fresh), "is_issue": bool(pr.get("_is_issue")), "head": head}) if rt.local() else who
         if dispatch(repo, num, note):
             # A dry run must not consume the day's budget; dispatch() returns
             # True in DRY_RUN so the flow can be exercised, which had already

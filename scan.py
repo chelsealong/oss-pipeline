@@ -145,6 +145,7 @@ REPOS: dict[str, dict] = {
     "litellm": {
         "upstream": "BerriAI/litellm",
         "paused": "cannot create PRs — repo-level restriction, see comment above",
+        "respond_when_paused": True,
         "searches": ['label:bug sort:created-desc', "sort:created-desc"],
         "exclude_labels": set(),
         # enterprise/ is under a separate licence; nothing there is ours to fix.

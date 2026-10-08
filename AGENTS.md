@@ -57,8 +57,11 @@ and in cloud probe 37251066168. The earlier successful PR #132982 was a draft.
 There were 137 open non-draft Hermes PRs; a concurrent PR cap is a supported
 explanation, not a confirmed exact limit (only repository admins can read it).
 Retain the repository hold; a new token or successful draft is not clearance.
-No automatic claim/reply comments or PR closures: record these
-for human follow-up. Code fixes may create/update PRs after independent review,
+On 2026-10-08 the user explicitly authorized restoring PR replies and continuing
+necessary follow-up updates to existing PRs. The controller may publish concise,
+independently verified replies, including honest validation/approval blockers.
+No automatic issue-claim comments or PR closures: record those for human follow-up.
+Code fixes may create/update PRs after independent review,
 within upstream policy and the existing repository caps.
 
 Stop cloud admission by setting `CODEX_CLOUD_ENABLED=false`; the runner drains
@@ -116,7 +119,18 @@ The human review workflow requires a named human's explicit exact-patch
 attestation. Never dispatch it as an agent, fabricate approval, or use this
 task's general repair authorization as patch-specific human review. A changed
 base or patch invalidates that review and publication still needs independent
-technical review and normal upstream eligibility. No automatic public messages.
+technical review and normal upstream eligibility. PR follow-up replies are now
+authorized; issue claims, unsolicited outreach and PR closures remain separate.
+
+PR replies use durable publication markers, checkpoint-before-POST, and bounded
+daily/hourly budgets. Never retry an ambiguous comment write; reconcile it first.
+The old blocked response backlog is re-offered once with fresh remote context;
+never replay an old push or treat an old approval as approval of a changed patch.
+Existing PRs with actionable feedback remain eligible beyond age-based merge
+windows. LiteLLM's creation-only pause does not prohibit existing-PR maintenance.
+The user reports that Langfuse CLA is already signed. Verify the current
+`license/cla` status; pending bot state may need rechecking, never fabricate a
+successful legal/identity check or sign an agreement as the user.
 
 Langfuse validation uses disposable synthetic Docker services and a secretless
 bubblewrap process. No host socket, production data or external volume mounts
