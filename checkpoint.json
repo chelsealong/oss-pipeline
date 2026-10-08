@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791418494.40716,
+  "saved_at": 1791418502.0363884,
   "tables": {
     "tasks": [
       {
@@ -7537,14 +7537,6 @@
         "value": "{\"at\": 1791418474.888574, \"tasks\": {\"fix\": {\"capacity_wait\": 15, \"error\": 2, \"human_wait\": 1, \"interrupted\": 1, \"publication_wait\": 2, \"running\": 1, \"skipped\": 36}, \"respond\": {\"blocked\": 2}}}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"spec-kit\", \"task\": 498, \"at\": 1791403294.9811811}, {\"repo\": \"langfuse\", \"task\": 500, \"at\": 1791403832.8039834}, {\"repo\": \"langfuse\", \"task\": 31, \"at\": 1791418476.098258}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 1}}"
-      },
-      {
         "key": "task:31",
         "value": "{\"phase\": \"generation\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791418465.5339975, \"worker_slot\": 0, \"folder\": \"jobs/31/attempt-2\", \"attempt\": 2, \"base\": \"21df53ef71d3d96c1dcda006c050a015efc74ec8\", \"generation_started\": 1791418476.0982592, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791418477.5786014}"
       },
@@ -7562,7 +7554,15 @@
       },
       {
         "key": "task:503",
-        "value": "{\"started\": 1791418494.4009664, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0}"
+        "value": "{\"started\": 1791418494.4009664, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/503/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"52f98af2e2e42c421070a3e147c161c47cdeaf22\", \"generation_started\": 1791418502.030007, \"dispatch_paid_date\": \"2026-10-08\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"spec-kit\", \"task\": 498, \"at\": 1791403294.9811811}, {\"repo\": \"langfuse\", \"task\": 500, \"at\": 1791403832.8039834}, {\"repo\": \"langfuse\", \"task\": 31, \"at\": 1791418476.098258}, {\"repo\": \"comfyui\", \"task\": 503, \"at\": 1791418502.030006}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-10-08\", \"used\": {\"langfuse\": 1, \"comfyui\": 1}}"
       }
     ],
     "calls": [
@@ -14613,6 +14613,10 @@
       {
         "at": 1791418486.401889,
         "kind": "judge"
+      },
+      {
+        "at": 1791418502.0301466,
+        "kind": "codex"
       }
     ]
   }
