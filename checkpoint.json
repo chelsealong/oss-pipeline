@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791528948.0623085,
+  "saved_at": 1791528950.7566023,
   "tables": {
     "tasks": [
       {
@@ -8473,10 +8473,10 @@
         "repo": "dify",
         "number": 38912,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791528821.7987683,
-        "updated": 1791528821.995092,
-        "result": "",
+        "updated": 1791528949.326983,
+        "result": "The reported hang in v1.15.0 has no confirmed cause in the current checkout. The accompanying `service_api` enum error is already addressed by an existing database migration. The earlier proposed fix in PR #38955 did not resolve the reporter’s hang and was closed without merging. A separate MCP client change is in open PR #42658, but the report does not establish that the affected API path caused this plugin-daemon hang. A small, testable fix for #38912 cannot be justified from the available evidence.",
         "attempts": 1
       }
     ],
@@ -10594,10 +10594,6 @@
         "value": "{\"started\": 1791524653.1951911, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/651/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"4403e932a6c2721820648d87329edf8ec53236e6\", \"last_execution_phase\": \"checkout\", \"finished\": 1791524707.1134553}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791526458.4602532, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -10782,10 +10778,6 @@
         "value": "{\"date\": \"2026-10-09\", \"used\": {\"hermes\": 6, \"comfyui\": 3, \"llama-index\": 1, \"openclaw\": 1, \"dify\": 1}}"
       },
       {
-        "key": "task:652",
-        "value": "{\"started\": 1791528821.9959798, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/652/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"c0dbb26f3e25755cf5dcb60895918a1a5b90fb07\", \"generation_started\": 1791528840.6009703, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791528842.6703217}"
-      },
-      {
         "key": "throughput_24h",
         "value": "{\"at\": 1791528887.403984, \"tasks\": {\"fix\": {\"blocked\": 3, \"error\": 2, \"human_wait\": 3, \"running\": 2, \"skipped\": 89}, \"respond\": {\"blocked\": 18, \"done\": 3, \"error\": 3, \"human_wait\": 8, \"skipped\": 6, \"validation_wait\": 7}}}"
       },
@@ -10800,6 +10792,14 @@
       {
         "key": "detector_heartbeat",
         "value": "1791528945.5832076"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791528948.4126635, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:652",
+        "value": "{\"started\": 1791528821.9959798, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/652/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"c0dbb26f3e25755cf5dcb60895918a1a5b90fb07\", \"generation_started\": 1791528840.6009703, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791528842.6703217, \"last_execution_phase\": \"generation\", \"finished\": 1791528948.4169574}"
       }
     ],
     "calls": [
