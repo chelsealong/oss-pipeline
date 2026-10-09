@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791585513.9507642,
+  "saved_at": 1791585516.4936092,
   "tables": {
     "tasks": [
       {
@@ -9019,10 +9019,10 @@
         "repo": "NousResearch/hermes-agent",
         "number": 122340,
         "note": "{\"authors\": \"dwaxe\", \"events\": [\"IC_kwDOPRF1G88AAAABawGsHA@2026-10-09T22:22:59Z\"], \"followup_policy\": \"2026-10-08-replies-v1\", \"head\": \"4c0e7e6dfd001dd01105c065368ed98bc1e4a5b0\", \"is_issue\": false, \"previous_task\": 693}",
-        "status": "running",
+        "status": "blocked",
         "created": 1791585438.2397165,
-        "updated": 1791585439.9098663,
-        "result": "",
+        "updated": 1791585516.4806101,
+        "result": "The feedback identifies a real test issue: current main resolves npm through _pm_tool_path, while PR #122340 still patches _safe_which. Addressing it requires rebasing and validating the PR against current main. This isolated checkout is shallow, and the task prohibits creating commits, so I could not update the PR branch. No files changed; no public reply is useful until the test is updated.",
         "attempts": 1
       }
     ],
@@ -11432,10 +11432,6 @@
         "value": "1791585211.281914"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791585382.067829, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:693",
         "value": "{\"started\": 1791584846.948167, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/693/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"4c0e7e6dfd001dd01105c065368ed98bc1e4a5b0\", \"phase_started\": 1791585217.5681028, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"remediation\", \"finished\": 1791585382.1086276}"
       },
@@ -11524,14 +11520,6 @@
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791581267.7373955, \"comfyui\": 1791570425.4152215, \"hermes\": 1791585439.909747, \"langfuse\": 1791582260.90761, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791585443.6123292, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"error\": 4, \"human_wait\": 4, \"skipped\": 52, \"validation_wait\": 3}, \"respond\": {\"blocked\": 6, \"done\": 2, \"human_wait\": 1, \"running\": 1, \"skipped\": 4}}}"
-      },
-      {
-        "key": "task:694",
-        "value": "{\"started\": 1791585439.909887, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/694/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"4c0e7e6dfd001dd01105c065368ed98bc1e4a5b0\", \"phase_started\": 1791585463.7706726}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791585470.347023"
       },
@@ -11610,6 +11598,18 @@
       {
         "key": "recovery_audit:177",
         "value": "{\"at\": 1791585513.8402035, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791585515.546578, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791585515.9488616, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"error\": 4, \"human_wait\": 4, \"skipped\": 52, \"validation_wait\": 3}, \"respond\": {\"blocked\": 6, \"done\": 2, \"human_wait\": 1, \"running\": 1, \"skipped\": 4}}}"
+      },
+      {
+        "key": "task:694",
+        "value": "{\"started\": 1791585439.909887, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/694/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"4c0e7e6dfd001dd01105c065368ed98bc1e4a5b0\", \"phase_started\": 1791585463.7706726, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1791585516.012523}"
       }
     ],
     "calls": [
