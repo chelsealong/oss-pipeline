@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791510105.210976,
+  "saved_at": 1791510162.002773,
   "tables": {
     "tasks": [
       {
@@ -7914,11 +7914,11 @@
         "repo": "openclaw",
         "number": 167365,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791488525.3010886,
-        "updated": 1791509386.243377,
+        "updated": 1791510161.957676,
         "result": "Codex: host connection ended without verified completion",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 610,
@@ -10238,10 +10238,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7286\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABaas2SA@2026-10-08T19:48:19Z\", \"author\": \"surajksharma07\", \"when\": \"2026-10-08T19:48:19Z\", \"kind\": \"comment\", \"assoc\": \"COLLABORATOR\", \"body\": \"Nothing has moved on main since (7d56ef8) @jabrailkhalil. DatabaseSessionService still breaks ties on (timestamp, id) and the 40-event reverse-id test still reloads out of order from a fresh instance while SqliteSessionService keeps append order. No release after v2.11.0 yet so @rishwanth-th's override is still the workaround.\\n\\nWhile the schema question is open a draft PR with only the regression tests (tied timestamps across a fresh reader, num_recent_events and the same-timestamp stale writer) marked xfail for DatabaseSessionService would give the maintainers something concrete to decide on and those tests hold whichever order they pick.\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
       {
-        "key": "task:609",
-        "value": "{\"started\": 1791491183.0896945, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/609/attempt-1\", \"attempt\": 1, \"phase\": \"error\", \"base\": \"dcd3ca7a7fd53cfd5aa09579bb4665a422fbd6ba\", \"generation_started\": 1791491240.7529914, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791491242.6747308, \"last_execution_phase\": \"generation\", \"finished\": 1791493692.676776}"
-      },
-      {
         "key": "task:611",
         "value": "{\"started\": 1791495528.861114, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/611/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"4f9b741a3a0284ecce31dc7e4cffde49173ec764\", \"generation_started\": 1791495546.7725914, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791495548.264633, \"last_execution_phase\": \"generation\", \"finished\": 1791495600.9943845}"
       },
@@ -10558,10 +10554,6 @@
         "value": "{}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791503797.188311, \"comfyui\": 1791507946.4233913, \"hermes\": 1791506869.7548964, \"langfuse\": 1791509399.5483713, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453768.3244345, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791503079.8590636}}"
-      },
-      {
         "key": "recovery_audit:172",
         "value": "{\"at\": 1791509399.60697, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -10643,23 +10635,31 @@
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1791510042.9157658, \"tasks\": {\"fix\": {\"blocked\": 2, \"human_wait\": 7, \"queued\": 1, \"running\": 1, \"skipped\": 98}, \"respond\": {\"blocked\": 21, \"done\": 5, \"error\": 5, \"human_wait\": 9, \"skipped\": 9, \"validation_wait\": 8}}}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791510098.2185314"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791510098.2252862"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791510101.451562"
+        "value": "{\"at\": 1791510110.1014383, \"tasks\": {\"fix\": {\"blocked\": 2, \"human_wait\": 7, \"queued\": 1, \"running\": 1, \"skipped\": 98}, \"respond\": {\"blocked\": 21, \"done\": 5, \"error\": 5, \"human_wait\": 9, \"skipped\": 9, \"validation_wait\": 8}}}"
       },
       {
         "key": "watch_error",
-        "value": "{\"at\": 1791510102.9737833, \"error\": \"gh: Resource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this qu\"}"
+        "value": "{\"at\": 1791510152.8120139, \"error\": \"gh: Resource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this query exceeded.\\nResource limits for this qu\"}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791510157.8427231"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791510157.8457055"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791510161.5172071"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791510161.957055, \"comfyui\": 1791507946.4233913, \"hermes\": 1791506869.7548964, \"langfuse\": 1791509399.5483713, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453768.3244345, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791503079.8590636}}"
+      },
+      {
+        "key": "task:609",
+        "value": "{\"started\": 1791510161.9580042, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/609/attempt-1\", \"attempt\": 1, \"phase\": \"error\", \"base\": \"dcd3ca7a7fd53cfd5aa09579bb4665a422fbd6ba\", \"generation_started\": 1791491240.7529914, \"dispatch_paid_date\": \"2026-10-08\", \"phase_started\": 1791491242.6747308, \"last_execution_phase\": \"generation\", \"finished\": 1791493692.676776}"
       }
     ],
     "calls": [
