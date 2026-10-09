@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791562057.8353183,
+  "saved_at": 1791562075.7893333,
   "tables": {
     "tasks": [
       {
@@ -8681,10 +8681,10 @@
         "repo": "llama-index",
         "number": 23440,
         "note": "",
-        "status": "running",
+        "status": "human_wait",
         "created": 1791561830.5754337,
-        "updated": 1791561836.1648777,
-        "result": "",
+        "updated": 1791562075.7817135,
+        "result": "HUMAN_REVIEW_REQUIRED: CONTRIBUTING.md requires human oversight for AI-assisted contributions, and this task has no human-review attestation. The tested patch is preserved in the checkout.",
         "attempts": 1
       }
     ],
@@ -10994,10 +10994,6 @@
         "value": "{\"recovery_checked_at\": 1791561662.43974}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791561663.7250404, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "followup:task:664",
         "value": "{\"status\": \"needs_human\", \"task\": 664, \"repo\": \"openclaw\", \"number\": 167835, \"reason\": \"VALIDATION_ENVIRONMENT: The source and regression patch is preserved, but this Linux runner cannot validate startup through a native Windows Scheduled Task. The required `pnpm check:changed --base HEAD` gate was stopped before completion because its remaining test type graphs exceeded the session budget.\", \"base\": \"24ca81d55bce94b26cb5c494e6987c39f2276081\", \"patch_digest\": \"f3b00cad9422bae48ce88877cd97951d2ef6844956f38e09cf6b45ed04217251\", \"evidence_bundle\": \"664-1.json.enc\"}"
       },
@@ -11078,28 +11074,36 @@
         "value": "{\"date\": \"2026-10-09\", \"used\": {\"hermes\": 6, \"comfyui\": 6, \"llama-index\": 2, \"openclaw\": 7, \"dify\": 1, \"langfuse\": 1, \"autogpt\": 1}}"
       },
       {
-        "key": "task:668",
-        "value": "{\"started\": 1791561836.1649275, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/668/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"6dd2f3cdd9ce7ff927ea8d46ccee08875bb00f95\", \"generation_started\": 1791561864.6522884, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791561867.7826562}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791561997.151752, \"tasks\": {\"fix\": {\"blocked\": 2, \"error\": 3, \"human_wait\": 2, \"queued\": 1, \"running\": 2, \"skipped\": 66, \"validation_wait\": 2}, \"respond\": {\"blocked\": 15, \"done\": 1, \"human_wait\": 2, \"skipped\": 3, \"validation_wait\": 3}}}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791562019.283313"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791562063.1843958, \"tasks\": {\"fix\": {\"blocked\": 2, \"error\": 3, \"human_wait\": 2, \"queued\": 1, \"running\": 2, \"skipped\": 66, \"validation_wait\": 2}, \"respond\": {\"blocked\": 15, \"done\": 1, \"human_wait\": 2, \"skipped\": 3, \"validation_wait\": 3}}}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1791562048.8261397"
+        "value": "1791562063.828553"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791562072.2992694, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:task:668",
+        "value": "{\"status\": \"needs_human\", \"task\": 668, \"repo\": \"llama-index\", \"number\": 23440, \"reason\": \"HUMAN_REVIEW_REQUIRED: CONTRIBUTING.md requires human oversight for AI-assisted contributions, and this task has no human-review attestation. The tested patch is preserved in the checkout.\", \"base\": \"6dd2f3cdd9ce7ff927ea8d46ccee08875bb00f95\", \"patch_digest\": \"9b308c32ba0e7d6b9cf60597eb5233a7395b12d3b90916ca5d117e2d7acc0c7e\", \"evidence_bundle\": \"668-1.json.enc\"}"
+      },
+      {
+        "key": "task:668",
+        "value": "{\"started\": 1791561836.1649275, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/668/attempt-1\", \"attempt\": 1, \"phase\": \"human_wait\", \"base\": \"6dd2f3cdd9ce7ff927ea8d46ccee08875bb00f95\", \"generation_started\": 1791561864.6522884, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791561867.7826562, \"patch_digest\": \"9b308c32ba0e7d6b9cf60597eb5233a7395b12d3b90916ca5d117e2d7acc0c7e\", \"last_execution_phase\": \"generation\", \"finished\": 1791562074.4748714}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791562054.823649"
+        "value": "1791562075.2789798"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791562054.8277104"
+        "value": "1791562075.280862"
       }
     ],
     "calls": [
