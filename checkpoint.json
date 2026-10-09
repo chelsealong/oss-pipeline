@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791532028.3548298,
+  "saved_at": 1791532048.0907397,
   "tables": {
     "tasks": [
       {
@@ -8499,10 +8499,10 @@
         "repo": "openclaw",
         "number": 167668,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791531916.10633,
-        "updated": 1791531917.6025925,
-        "result": "",
+        "updated": 1791532048.0832717,
+        "result": "The reporter corrected the diagnosis: the active session list recovered. The reported v2026.9.9 release already provides Filter & sort → Status → Archived, and archived rows have a Restore action. The report does not show that this path fails, so there is no confirmed defect to patch.",
         "attempts": 1
       }
     ],
@@ -10708,10 +10708,6 @@
         "value": "{\"recovery_checked_at\": 1791531889.78662}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791531891.4897723, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -10792,32 +10788,12 @@
         "value": "{\"at\": 1791531963.103398, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791531965.3229394, \"tasks\": {\"fix\": {\"blocked\": 3, \"error\": 3, \"human_wait\": 3, \"running\": 1, \"skipped\": 91}, \"respond\": {\"blocked\": 18, \"done\": 3, \"error\": 3, \"human_wait\": 8, \"skipped\": 6, \"validation_wait\": 7}}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"llama-index\", \"task\": 645, \"at\": 1791516504.216679}, {\"repo\": \"comfyui\", \"task\": 649, \"at\": 1791521466.914339}, {\"repo\": \"openclaw\", \"task\": 650, \"at\": 1791522244.0415587}, {\"repo\": \"dify\", \"task\": 652, \"at\": 1791528840.6009693}, {\"repo\": \"openclaw\", \"task\": 654, \"at\": 1791531975.4446535}]"
       },
       {
         "key": "dispatch_budget",
         "value": "{\"date\": \"2026-10-09\", \"used\": {\"hermes\": 6, \"comfyui\": 3, \"llama-index\": 1, \"openclaw\": 2, \"dify\": 1}}"
-      },
-      {
-        "key": "task:654",
-        "value": "{\"started\": 1791531917.6026297, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/654/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"3b3cd5939993f16017b6747cbcf80a83b49006ef\", \"generation_started\": 1791531975.4446542, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791531977.5111077}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791532023.2840495"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791532024.0283945"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791532024.0299072"
       },
       {
         "key": "task:60",
@@ -10834,6 +10810,30 @@
       {
         "key": "recovery_audit:61",
         "value": "{\"at\": 1791532028.1073406, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791532030.9235232, \"tasks\": {\"fix\": {\"blocked\": 3, \"error\": 3, \"human_wait\": 3, \"running\": 1, \"skipped\": 91}, \"respond\": {\"blocked\": 18, \"done\": 3, \"error\": 3, \"human_wait\": 8, \"skipped\": 6, \"validation_wait\": 7}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791532038.2852044"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791532041.194992"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791532041.1966438"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791532047.4380722, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:654",
+        "value": "{\"started\": 1791531917.6026297, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/654/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"3b3cd5939993f16017b6747cbcf80a83b49006ef\", \"generation_started\": 1791531975.4446542, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791531977.5111077, \"last_execution_phase\": \"generation\", \"finished\": 1791532047.4398892}"
       }
     ],
     "calls": [
