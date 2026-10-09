@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791554338.6778224,
+  "saved_at": 1791554350.648973,
   "tables": {
     "tasks": [
       {
@@ -10792,14 +10792,6 @@
         "value": "{\"started\": 1791552674.156141, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/660/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"037b799bb242f669d4a121a11220b506e2bc4f05\", \"phase_started\": 1791552686.0182524, \"last_execution_phase\": \"generation\", \"finished\": 1791552713.0031047}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"autogpt\", \"task\": 656, \"at\": 1791552317.3195975}, {\"repo\": \"comfyui\", \"task\": 657, \"at\": 1791552322.9223766}, {\"repo\": \"comfyui\", \"task\": 658, \"at\": 1791552412.1235592}, {\"repo\": \"openclaw\", \"task\": 659, \"at\": 1791552427.971607}, {\"repo\": \"openclaw\", \"task\": 661, \"at\": 1791553658.0380592}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-10-09\", \"used\": {\"hermes\": 6, \"comfyui\": 5, \"llama-index\": 1, \"openclaw\": 4, \"dify\": 1, \"langfuse\": 1, \"autogpt\": 1}}"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1791553696.426175, \"source\": \"completed task phase\"}"
       },
@@ -10968,10 +10960,6 @@
         "value": "{\"at\": 1791554276.2416725, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791554278.1800783, \"tasks\": {\"fix\": {\"blocked\": 3, \"error\": 3, \"human_wait\": 2, \"skipped\": 74}, \"respond\": {\"blocked\": 17, \"done\": 1, \"human_wait\": 2, \"skipped\": 3, \"validation_wait\": 4}}}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791554284.8911119"
       },
@@ -10984,19 +10972,27 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791554293.9053404, \"comfyui\": 1791552405.859867, \"hermes\": 1791506869.7548964, \"langfuse\": 1791552674.1559503, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791516601.3985753, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791528821.9939194, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
       },
       {
-        "key": "task:662",
-        "value": "{\"started\": 1791554293.905563, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/662/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": null}"
-      },
-      {
         "key": "worker_heartbeat",
         "value": "1791554336.0047576"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791554340.9821742, \"tasks\": {\"fix\": {\"blocked\": 3, \"error\": 3, \"human_wait\": 2, \"running\": 1, \"skipped\": 74}, \"respond\": {\"blocked\": 17, \"done\": 1, \"human_wait\": 2, \"skipped\": 3, \"validation_wait\": 4}}}"
+      },
+      {
+        "key": "task:662",
+        "value": "{\"started\": 1791554293.905563, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/662/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"4360894cc86b1c9a2389dad2a1530d9f8d9cbc32\", \"generation_started\": 1791554350.6363916, \"dispatch_paid_date\": \"2026-10-09\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"autogpt\", \"task\": 656, \"at\": 1791552317.3195975}, {\"repo\": \"comfyui\", \"task\": 657, \"at\": 1791552322.9223766}, {\"repo\": \"comfyui\", \"task\": 658, \"at\": 1791552412.1235592}, {\"repo\": \"openclaw\", \"task\": 659, \"at\": 1791552427.971607}, {\"repo\": \"openclaw\", \"task\": 661, \"at\": 1791553658.0380592}, {\"repo\": \"openclaw\", \"task\": 662, \"at\": 1791554350.6363912}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-10-09\", \"used\": {\"hermes\": 6, \"comfyui\": 5, \"llama-index\": 1, \"openclaw\": 5, \"dify\": 1, \"langfuse\": 1, \"autogpt\": 1}}"
       }
     ],
     "calls": [
-      {
-        "at": 1790949529.0710654,
-        "kind": "codex"
-      },
       {
         "at": 1790949624.9659686,
         "kind": "judge"
@@ -20516,6 +20512,10 @@
       {
         "at": 1791553840.8398414,
         "kind": "judge"
+      },
+      {
+        "at": 1791554350.6366093,
+        "kind": "codex"
       }
     ]
   }
