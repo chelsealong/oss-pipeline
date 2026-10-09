@@ -112,7 +112,7 @@ class RuntimeTests(unittest.TestCase):
             task=worker.next_queued(c,rt.publication_holds())
         self.assertEqual((task['repo'],task['number']),('openclaw',3))
         with rt.db() as c:c.execute("UPDATE tasks SET updated=? WHERE repo='hermes'",(time.time()-86401,))
-        self.assertTrue(rt.enqueue('fix','hermes',2))
+        self.assertFalse(rt.enqueue('fix','hermes',2))
     def test_bad_config_fails_closed(self):
         rt.CONFIG.write_text('{')
         self.assertFalse(rt.ready()[0])
@@ -163,6 +163,10 @@ class RuntimeTests(unittest.TestCase):
             with rt.db() as c:c.execute("UPDATE tasks SET status='blocked' WHERE id=316")
             self.assertEqual(cloud_runtime.requeue_validation_repair(),[])
             with rt.db() as c:c.execute('UPDATE tasks SET updated=? WHERE id=237',(time.time()-86401,))
+            self.assertEqual(cloud_runtime.requeue_validation_repair(),[])
+            with rt.db() as c:
+                denied=c.execute('SELECT updated FROM tasks WHERE id=237').fetchone()[0]
+            rt.setmeta('publication_clearance:hermes',{'denied_at':denied,'proof':{'number':999}})
             self.assertEqual(cloud_runtime.requeue_validation_repair(),[206])
         with rt.db() as c:
             self.assertEqual(c.execute('SELECT status FROM tasks WHERE id=256').fetchone()[0],'done')

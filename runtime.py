@@ -137,13 +137,14 @@ def dispatch_headroom(key):
     return True,''
 
 def publication_holds():
-    """Temporarily stop new fixes where GitHub explicitly denied PR creation."""
+    """A creation denial needs positive clearance, not merely elapsed time."""
     with db() as c:
         rows=c.execute("""SELECT repo, MAX(updated) AS denied_at FROM tasks
-            WHERE kind='fix' AND status='error' AND updated>?
+            WHERE kind='fix' AND status='error'
             AND result LIKE '%correct permissions to execute%CreatePullRequest%'
-            GROUP BY repo""",(time.time()-86400,)).fetchall()
-    return {row['repo']:row['denied_at']+86400 for row in rows}
+            GROUP BY repo""").fetchall()
+        return {row['repo']:max(time.time()+86400,row['denied_at']+86400)
+            for row in rows if _meta(c,'publication_clearance:'+row['repo'],{}).get('denied_at')!=row['denied_at']}
 
 def enqueue(kind, repo, number, note='', *, only_new=False):
     ok, _ = ready()
@@ -253,8 +254,8 @@ def status():
             state=json.loads(row['value'])
             if state.get('published_at',0)>time.time()-86400:
                 publication_outcomes[state.get('publication_outcome','reconciled')]+=1
-    followups.extend({'key':'publication:'+repo,'status':'needs_human','repo':repo,'resume_after':until,
-        'reason':'Upstream rejected ordinary PR creation; inspect permissions/concurrent PR cap. Draft creation is not proof of ordinary PR permission.'}
+    followups.extend({'key':'publication:'+repo,'status':'needs_human','repo':repo,'requires_clearance':True,
+        'reason':'Upstream rejected ordinary PR creation; inspect permissions/concurrent PR cap. Time passing or draft creation does not clear the hold; verify a newer ordinary creation.'}
         for repo,until in publication_holds().items())
     return {'config': config(), 'ready': ready(), 'health': getmeta('health'),
             'pause': getmeta('pause'), 'tasks': counts, 'recent': recent, 'calls_last_hour': calls,

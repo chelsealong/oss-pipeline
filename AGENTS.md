@@ -45,7 +45,10 @@ model calls. Ordinary read-network failures retry only the affected task, at
 most three attempts; publication ambiguity is never automatically replayed.
 Repository-level PR creation denials place queued fixes in `publication_wait`
 without consuming other repositories' queue space. Existing-PR responses remain
-eligible. Expired holds restore tasks only when queue capacity permits. A draft
+eligible. Creation-denial holds do not expire merely with time. A bounded
+read-only check can clear one only after verifying that this account created
+a newer ordinary PR in the same repository; a later denial invalidates that
+clearance. Cleared holds restore tasks only when queue capacity permits. A draft
 PR test does not prove ordinary PR creation permission. GitHub excluded drafts
 when the October 5 probe ran; since October 8 administrators can also count
 drafts toward the limit. Never bypass upstream limits or close production

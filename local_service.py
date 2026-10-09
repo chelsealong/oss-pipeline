@@ -33,24 +33,35 @@ def main():
                     # window so quota resets do not leave only five new issues.
                     if time.time()-last_capture>60:
                         watch.sweep(keys,seen,100,bootstrap,vetting=False)
+                        import task_recovery
+                        task_recovery.refresh_publication_holds()
                         watch.save_seen(seen);bootstrap=False;last_capture=time.time()
                 elif is_ready:
                     if args.role=='watch':
-                        new,accepted=watch.sweep(keys,seen,5,bootstrap)
+                        if time.time()-last_pending_vet>60:
+                            import task_recovery
+                            task_recovery.refresh_publication_holds()
+                        holds=rt.publication_holds()
+                        held_keys=[key for key in keys if holds.get(key,0)>time.time()]
+                        active_keys=[key for key in keys if key not in held_keys]
+                        if held_keys and time.time()-last_capture>60:
+                            watch.sweep(held_keys,seen,100,bootstrap,vetting=False)
+                            last_capture=time.time()
+                        new,accepted=watch.sweep(active_keys,seen,5,bootstrap) if active_keys else (0,0)
                         watch.save_seen(seen);bootstrap=False
                         if new:watch.log(f'Codex detection: {new} new, {accepted} accepted')
                         if time.time()-last_pending_vet>60:
-                            watch.recheck_pending_vet(keys)
+                            watch.recheck_pending_vet(active_keys)
                             last_pending_vet=time.time()
                         if time.time()-last_drain>600 and rt.room()[0]:
-                            watch.recheck_deferred(keys)
-                            watch.drain_queues(keys)
-                            watch.promote_claims(keys)
+                            watch.recheck_deferred(active_keys)
+                            watch.drain_queues(active_keys)
+                            watch.promote_claims(active_keys)
                             last_drain=time.time()
                         # One repo at a time, every ~120s: reconciliation covers
                         # all active repos without a second queue-file writer.
-                        if time.time()-last_scan>120:
-                            key=keys[scan_index%len(keys)];scan_index+=1
+                        if active_keys and time.time()-last_scan>120:
+                            key=active_keys[scan_index%len(active_keys)];scan_index+=1
                             res=scan.scan_repo(key,30,15)
                             if not res.get('partial'):
                                 (scan.QUEUE/f'{key}.json').write_text(json.dumps(res,indent=2)+'\n')

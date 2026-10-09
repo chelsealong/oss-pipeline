@@ -12,6 +12,50 @@ import runtime as rt
 
 WAIT_STATES=('capacity_wait','human_wait','validation_wait')
 
+def refresh_publication_holds():
+    """Read-only clearance: a newer ordinary PR, never a draft or expired timer."""
+    import datetime
+    import scan
+    import codex_worker as worker
+    changed=[]
+    for repo in rt.publication_holds():
+        with rt.db() as db:
+            row=db.execute("""SELECT MAX(updated) AS denied_at FROM tasks WHERE repo=?
+                AND kind='fix' AND status='error'
+                AND result LIKE '%correct permissions to execute%CreatePullRequest%'""",(repo,)).fetchone()
+        denied=row['denied_at'];key='publication_check:'+repo
+        last=rt.getmeta(key,{})
+        if last.get('denied_at')==denied and last.get('at',0)>time.time()-900:continue
+        rt.setmeta(key,{'at':time.time(),'denied_at':denied,'status':'checking'})
+        cfg=scan.REPOS.get(repo,{})
+        impl=cfg.get('implements_in') or cfg.get('upstream')
+        if not impl:continue
+        try:
+            date=time.strftime('%Y-%m-%d',time.gmtime(denied))
+            prs=json.loads(worker.run(['gh','pr','list','--repo',impl,'--author',worker.ME,
+                '--state','all','--limit','100','--search','created:>='+date,
+                '--json','number,createdAt,isDraft,url']))
+            candidates=[pr for pr in prs if pr['isDraft'] is False and
+                datetime.datetime.fromisoformat(pr['createdAt'].replace('Z','+00:00')).timestamp()>denied]
+            proof=None
+            for pr in candidates[:3]:
+                pages=json.loads(worker.run(['gh','api','--paginate','--slurp',
+                    f'repos/{impl}/issues/{pr["number"]}/timeline']))
+                events=[event for page in pages for event in page]
+                # A formerly draft PR is not proof that ordinary creation works.
+                if any(event.get('event') in ('ready_for_review','converted_to_draft') for event in events):continue
+                proof=pr;break
+            if proof:
+                rt.setmeta('publication_clearance:'+repo,{'at':time.time(),'denied_at':denied,
+                    'proof':proof,'method':'newer ordinary PR created by this account'})
+                changed.append(repo)
+            rt.setmeta(key,{'at':time.time(),'denied_at':denied,'status':'cleared' if proof else 'held'})
+        except Exception as error:
+            rt.setmeta(key,{'at':time.time(),'denied_at':denied,'status':'held',
+                'error':str(error)[:350]})
+    if changed:rt.checkpoint()
+    return changed
+
 def failed_read(reason):
     # A connection reset alone could have happened during an old push whose
     # publication marker was lost. Require positive clone/fetch evidence.

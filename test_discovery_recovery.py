@@ -1,6 +1,7 @@
 """Budget pauses and transient vet failures cannot lose discovered issues."""
 import json
 import contextlib
+import time
 from pathlib import Path
 import tempfile
 import unittest
@@ -51,9 +52,28 @@ class DiscoveryRecoveryTests(unittest.TestCase):
              patch.object(rt,'config',return_value={'enabled':True}),\
              patch.dict(watch.scan.REPOS,{'adk':{'upstream':'google/adk-python'}},clear=True),\
              patch.object(watch,'load_seen',return_value={'adk':[]}),\
+             patch('task_recovery.refresh_publication_holds'),\
              patch.object(watch,'save_seen'),patch.object(watch,'sweep',return_value=(1,0)) as discover:
             local_service.main()
             discover.assert_called_once_with(['adk'],{'adk':[]},100,False,vetting=False)
+
+    def test_permission_held_repo_uses_discovery_only_while_other_repos_are_vetted(self):
+        with patch('sys.argv',['local_service.py','watch','--once']),\
+             patch.object(rt,'lock',return_value=contextlib.nullcontext()),\
+             patch.object(rt,'setmeta'),patch.object(rt,'ready',return_value=(True,'')),\
+             patch.object(rt,'room',return_value=(False,'')),\
+             patch.object(rt,'publication_holds',return_value={'hermes':time.time()+86400}),\
+             patch.dict(watch.scan.REPOS,{'hermes':{},'adk':{}},clear=True),\
+             patch.object(watch,'load_seen',return_value={'hermes':[],'adk':[]}),\
+             patch.object(watch,'save_seen'),patch('task_recovery.refresh_publication_holds'),\
+             patch.object(watch,'sweep',return_value=(0,0)) as discover,\
+             patch.object(watch,'recheck_pending_vet') as vet,\
+             patch.object(watch.scan,'scan_repo',return_value={'partial':True}) as scan:
+            local_service.main()
+            self.assertEqual(discover.call_args_list[0].args[0],['hermes'])
+            self.assertEqual(discover.call_args_list[0].kwargs,{'vetting':False})
+            self.assertEqual(discover.call_args_list[1].args[0],['adk'])
+            vet.assert_called_once_with(['adk']);self.assertEqual(scan.call_args.args[0],'adk')
 
     def test_recovery_refreshes_issue_and_never_dispatches_a_closed_one(self):
         self.sweep(vetting=False)
