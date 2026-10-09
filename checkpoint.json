@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791505313.6983526,
+  "saved_at": 1791505360.5449848,
   "tables": {
     "tasks": [
       {
@@ -8317,10 +8317,10 @@
         "repo": "hermes",
         "number": 135367,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791505238.243267,
-        "updated": 1791505294.1353385,
-        "result": "",
+        "updated": 1791505360.5398064,
+        "result": "Current code intentionally defers both image_generate and computer_use behind tool_search. A deferred tool is absent from the direct-call list, and tool_describe expects the tool name (image_generate), not the source name (image_gen). Open PR #128005 already addresses the reported failure mode by giving the agent session-scoped recovery guidance after a rejected direct call. The report provides no deterministic evidence of a separate registration-timing defect. No files changed.",
         "attempts": 1
       }
     ],
@@ -10526,20 +10526,12 @@
         "value": "{\"at\": 1791505244.7611735, \"reason\": \"PR closed or not owned by our fork\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791505286.2516098, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:639",
         "value": "{\"started\": 1791505230.5720992, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/639/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"1e0c7730d791f5ce855c5c78935cfea6fb1e43a9\", \"generation_started\": 1791505247.505126, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791505249.2349172, \"last_execution_phase\": \"generation\", \"finished\": 1791505286.256325}"
       },
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791503797.188311, \"comfyui\": 1791482790.8489242, \"hermes\": 1791505294.1352093, \"langfuse\": 1791491182.2146845, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791453768.3244345, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791438057.8846633, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791503079.8590636}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791505305.5674527"
       },
       {
         "key": "task:219",
@@ -10571,15 +10563,23 @@
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791505312.6952462"
+        "value": "1791505348.460792"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791505312.6971736"
+        "value": "1791505348.4734256"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791505350.5749965"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791505360.4122849, \"source\": \"completed task phase\"}"
       },
       {
         "key": "task:640",
-        "value": "{\"started\": 1791505294.1353602, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/640/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"1e0c7730d791f5ce855c5c78935cfea6fb1e43a9\", \"generation_started\": 1791505311.9386017, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791505313.6916623}"
+        "value": "{\"started\": 1791505294.1353602, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/640/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"1e0c7730d791f5ce855c5c78935cfea6fb1e43a9\", \"generation_started\": 1791505311.9386017, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791505313.6916623, \"last_execution_phase\": \"generation\", \"finished\": 1791505360.414634}"
       }
     ],
     "calls": [
