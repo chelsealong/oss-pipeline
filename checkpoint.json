@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791530032.3887322,
+  "saved_at": 1791530104.0153236,
   "tables": {
     "tasks": [
       {
@@ -8478,6 +8478,19 @@
         "updated": 1791528949.326983,
         "result": "The reported hang in v1.15.0 has no confirmed cause in the current checkout. The accompanying `service_api` enum error is already addressed by an existing database migration. The earlier proposed fix in PR #38955 did not resolve the reporter’s hang and was closed without merging. A separate MCP client change is in open PR #42658, but the report does not establish that the affected API path caused this plugin-daemon hang. A small, testable fix for #38912 cannot be justified from the available evidence.",
         "attempts": 1
+      },
+      {
+        "id": 653,
+        "identity": "fix:openclaw:167661:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 167661,
+        "note": "",
+        "status": "queued",
+        "created": 1791530092.551376,
+        "updated": 1791530092.551376,
+        "result": "",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -10618,70 +10631,6 @@
         "value": "{\"started\": 1791528821.9959798, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/652/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"c0dbb26f3e25755cf5dcb60895918a1a5b90fb07\", \"generation_started\": 1791528840.6009703, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791528842.6703217, \"last_execution_phase\": \"generation\", \"finished\": 1791528948.4169574}"
       },
       {
-        "key": "task:44",
-        "value": "{\"recovery_checked_at\": 1791529135.8902166}"
-      },
-      {
-        "key": "recovery_audit:44",
-        "value": "{\"at\": 1791529136.8297298, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:45",
-        "value": "{\"recovery_checked_at\": 1791529136.8329895}"
-      },
-      {
-        "key": "recovery_audit:45",
-        "value": "{\"at\": 1791529137.7104754, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:54",
-        "value": "{\"recovery_checked_at\": 1791529137.7142909}"
-      },
-      {
-        "key": "recovery_audit:54",
-        "value": "{\"at\": 1791529138.7476096, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:55",
-        "value": "{\"recovery_checked_at\": 1791529138.7502809}"
-      },
-      {
-        "key": "recovery_audit:55",
-        "value": "{\"at\": 1791529139.8461363, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:57",
-        "value": "{\"recovery_checked_at\": 1791529139.8491395}"
-      },
-      {
-        "key": "recovery_audit:57",
-        "value": "{\"at\": 1791529140.8624566, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:58",
-        "value": "{\"recovery_checked_at\": 1791529140.8641467}"
-      },
-      {
-        "key": "recovery_audit:58",
-        "value": "{\"at\": 1791529141.7922242, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:60",
-        "value": "{\"recovery_checked_at\": 1791529141.793889}"
-      },
-      {
-        "key": "recovery_audit:60",
-        "value": "{\"at\": 1791529143.0098155, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:61",
-        "value": "{\"recovery_checked_at\": 1791529143.0114357}"
-      },
-      {
-        "key": "recovery_audit:61",
-        "value": "{\"at\": 1791529144.0054982, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
         "key": "task:166",
         "value": "{\"recovery_checked_at\": 1791529206.132406}"
       },
@@ -10787,19 +10736,83 @@
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1791529971.744021, \"tasks\": {\"fix\": {\"blocked\": 3, \"error\": 2, \"human_wait\": 3, \"running\": 1, \"skipped\": 90}, \"respond\": {\"blocked\": 18, \"done\": 3, \"error\": 3, \"human_wait\": 8, \"skipped\": 6, \"validation_wait\": 7}}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791530023.8249469"
+        "value": "{\"at\": 1791530034.683401, \"tasks\": {\"fix\": {\"blocked\": 3, \"error\": 2, \"human_wait\": 3, \"running\": 1, \"skipped\": 90}, \"respond\": {\"blocked\": 18, \"done\": 3, \"error\": 3, \"human_wait\": 8, \"skipped\": 6, \"validation_wait\": 7}}}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791530028.863439"
+        "value": "1791530089.1704319"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791530028.8660266"
+        "value": "1791530089.1746511"
+      },
+      {
+        "key": "task:44",
+        "value": "{\"recovery_checked_at\": 1791530094.9707682}"
+      },
+      {
+        "key": "recovery_audit:44",
+        "value": "{\"at\": 1791530096.0241318, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:45",
+        "value": "{\"recovery_checked_at\": 1791530096.0264182}"
+      },
+      {
+        "key": "recovery_audit:45",
+        "value": "{\"at\": 1791530097.0916932, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:54",
+        "value": "{\"recovery_checked_at\": 1791530097.0961106}"
+      },
+      {
+        "key": "recovery_audit:54",
+        "value": "{\"at\": 1791530098.1273513, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:55",
+        "value": "{\"recovery_checked_at\": 1791530098.1296623}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791530098.8351367"
+      },
+      {
+        "key": "recovery_audit:55",
+        "value": "{\"at\": 1791530099.316586, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:57",
+        "value": "{\"recovery_checked_at\": 1791530099.319364}"
+      },
+      {
+        "key": "recovery_audit:57",
+        "value": "{\"at\": 1791530100.343821, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:58",
+        "value": "{\"recovery_checked_at\": 1791530100.3472853}"
+      },
+      {
+        "key": "recovery_audit:58",
+        "value": "{\"at\": 1791530101.583989, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:60",
+        "value": "{\"recovery_checked_at\": 1791530101.5859404}"
+      },
+      {
+        "key": "recovery_audit:60",
+        "value": "{\"at\": 1791530102.6193686, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:61",
+        "value": "{\"recovery_checked_at\": 1791530102.6245093}"
+      },
+      {
+        "key": "recovery_audit:61",
+        "value": "{\"at\": 1791530103.6810467, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       }
     ],
     "calls": [
