@@ -17,5 +17,5 @@ for path in (root/'.github/workflows').glob('*.yml'):
 # Git hooks export the parent index/worktree into every test subprocess. Strip
 # these so temporary fixture repositories cannot accidentally stage the parent.
 test_env={key:value for key,value in os.environ.items() if not key.startswith('GIT_')}
-subprocess.run([sys.executable,'-m','unittest','-v','test_runtime','test_recovery','test_codex_host','test_resumption','test_pr_followup'],cwd=root,env=test_env,check=True)
+subprocess.run([sys.executable,'-m','unittest','-v','test_runtime','test_recovery','test_codex_host','test_resumption','test_pr_followup','test_claim_admission','test_discovery_recovery'],cwd=root,env=test_env,check=True)
 print('Codex gate passed: Python/shell syntax, archived workflow YAML, runtime regression tests; no API calls.')

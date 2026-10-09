@@ -38,6 +38,20 @@ REVIEW_SCHEMA = {'type':'object','properties': {
     'repairable': {'type':'boolean'},
     'tests_verified': {'type':'boolean'}}, 'required':['verdict','reason','tests_verified','repairable'],'additionalProperties':False}
 
+# Share this with cloud canaries so optional attestation cannot silently become
+# a universal publication requirement again.
+HUMAN_REVIEW_POLICY = '''Human-review requirements are conditional, not universal.
+Require a named human attestation ONLY when an applicable current upstream rule explicitly
+requires human review before submission, or this exact patch was explicitly placed behind
+a human-review requirement. If required oversight is missing, BLOCK with HUMAN_REVIEW_REQUIRED:
+and cite the source path or URL and its exact requirement in reason. Do not infer a requirement
+from human_review=null, an absent approval record, generic contributor checklists, maintainer
+review after PR submission, or the fact that this patch was generated with AI assistance.
+When no such requirement applies, independently assess the code, tests and upstream policy;
+the absence of a named human attestation alone is not a reason to BLOCK. Never invent an
+attestation, tick an unfulfilled checkbox, waive a genuine required gate, or call AI review human.
+'''
+
 def validate_result(value, schema):
     if not isinstance(value, dict) or set(value) != set(schema['required']):
         raise RuntimeError('Incomplete or unexpected structured result')
@@ -592,7 +606,8 @@ Documentation-only changes need appropriate documentation validation, not a fabr
 Independently check any baseline-failure evidence against current upstream policy; do not waive mandatory gates.
 The human_review field in the controller context is a named human's attestation ONLY for the restored
 exact patch and base. Independently verify its checks; it is never a substitute for technical review.
-If actual human signoff is missing use HUMAN_REVIEW_REQUIRED: in reason. Use VALIDATION_ENVIRONMENT:
+{HUMAN_REVIEW_POLICY}
+Use VALIDATION_ENVIRONMENT:
 for unavailable required browser/service verification. Read validation.json when present.
 repairable=true only for concrete code/test defects this executor can fix now. Use false for duplicates,
 out-of-scope work, missing maintainer approval, unavailable external hardware/credentials, or no actual bug.
@@ -659,6 +674,15 @@ def canary(task):
     (work/'sum_values.py').write_text('def sum_values(a, b):\n    return a - b\n')
     (work/'test_sum_values.py').write_text('import unittest\nfrom sum_values import sum_values\nclass TestSum(unittest.TestCase):\n    def test_sum(self):\n        self.assertEqual(sum_values(2, 3), 5)\n        self.assertEqual(sum_values(-2, 3), 1)\n        self.assertEqual(sum_values(0, 0), 0)\n')
     (work/'.gitignore').write_text('__pycache__/\nnode_modules/\n.venv/\n')
+    # Exercise both sides of the production rule with the two cloud workers.
+    requires_human = task['number'] == 2
+    (work/'README.md').write_text(
+        'Automated preparation of unpublished patches is permitted.\n' +
+        ('A named human must review the exact patch before publication. Without a named human '
+         'attestation in context.json, publication review must BLOCK.\n' if requires_human else
+         'Publication after passing tests and independent technical review is permitted. '
+         'No named human attestation is required.\n'))
+    (folder/'context.json').write_text(json.dumps({'human_review':None}))
     git(work,'add','.');git(work,'commit','-m','Local runtime canary baseline')
     before=subprocess.run([sys.executable,'-m','unittest','-v'],cwd=work,capture_output=True,text=True)
     (folder/'before-tests.txt').write_text(before.stdout+before.stderr)
@@ -666,12 +690,25 @@ def canary(task):
     rt.task_state(task['id'],base=git(work,'rev-parse','HEAD'))
     result=agent('This is a pipeline canary, no upstream repository or publishing. Read the two Python files. Fix sum_values to add its arguments. Do not change the tests. Run python3 -m unittest -v in the foreground. Also verify that RUSTUP_HOME and CARGO_HOME are writable by creating a small probe file in each supplied cache. Create an ignored node_modules/probe/index.js exporting 42, and verify node can require it from this checkout. Verify node_modules is ignored by git. Do not commit or use network tools. Return READY with actual test evidence and pr_body as an empty string in the required JSON. This also checks the production response schema without posting.',work,folder/'generation.json',RESPONSE_SCHEMA,timeout=240,task=task)
     if result['outcome']!='READY':raise RuntimeError('canary generation '+result['outcome']+': '+result['reason'][:1200])
-    review=agent('This is an independent canary review. Inspect git diff and run python3 -m unittest -v. Also verify the ignored node_modules/probe module can be required by node and returns 42, and the RUSTUP_HOME and CARGO_HOME cache directories are writable. Do not edit source or commit. Return APPROVE and tests_verified=true only when all checks pass; set repairable=false if approved.',work,folder/'review.json',REVIEW_SCHEMA,timeout=240,task=task)
+    review=agent(f'''This is an independent canary review, with no upstream publication.
+Inspect git diff and run python3 -m unittest -v. Verify the ignored node_modules/probe module
+can be required by node and returns 42, and RUSTUP_HOME and CARGO_HOME are writable.
+Read README.md as this fixture's upstream publication policy and {folder/'context.json'}.
+Assess publication eligibility, even though the controller will publish nothing in this canary.
+{HUMAN_REVIEW_POLICY}
+Do not edit source or commit. Set tests_verified according to actual test results and
+repairable=false. Return the appropriate verdict under the fixture's stated policy.
+''',work,folder/'review.json',REVIEW_SCHEMA,timeout=240,task=task)
     after=run([sys.executable,'-m','unittest','-v'],cwd=work)
-    if review['verdict']!='APPROVE' or not review['tests_verified']:raise RuntimeError('canary review failed: '+review['reason'][:1200])
+    expected='BLOCK' if requires_human else 'APPROVE'
+    if review['verdict']!=expected or not review['tests_verified']:
+        raise RuntimeError('canary review failed: expected '+expected+': '+review['reason'][:1200])
+    if requires_human and not ('HUMAN_REVIEW_REQUIRED:' in review['reason'] and 'README.md' in review['reason']):
+        raise RuntimeError('canary missing required-human policy evidence')
     if git(work,'diff','--name-only')!='sum_values.py':raise RuntimeError('canary changed unexpected files')
     git(work,'add','sum_values.py');git(work,'commit','-m','Verify Codex local runtime')
-    finish(task,'done','Local canary passed: baseline failed, Codex fixed it, independent review and controller tests passed; nothing published')
+    finish(task,'done','Local canary passed: baseline failed, Codex fixed it, independent review '+expected+
+           ' matched the fixture policy and controller tests passed; nothing published')
 
 def heartbeat(stop):
     while not stop.is_set():

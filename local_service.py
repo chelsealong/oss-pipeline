@@ -16,7 +16,7 @@ def main():
             import scan, watch
             keys=[k for k,v in scan.REPOS.items() if not v.get('paused')]
             seen=watch.load_seen();bootstrap=not seen
-            last_drain=0;last_scan=0;scan_index=0
+            last_drain=0;last_scan=0;scan_index=0;last_capture=0;last_pending_vet=0
         else:
             spec=importlib.util.spec_from_file_location('prwatch',rt.ROOT/'watch-prs.py')
             wp=importlib.util.module_from_spec(spec);spec.loader.exec_module(wp)
@@ -27,11 +27,21 @@ def main():
             try:
                 # Discovery must continue while workers are busy. Admission
                 # remains separately bounded by room()/enqueue().
-                if rt.ready()[0]:
+                is_ready=rt.ready()[0]
+                if args.role=='watch' and not is_ready and rt.config().get('enabled'):
+                    # No model calls while paused. Capture a wider GitHub-only
+                    # window so quota resets do not leave only five new issues.
+                    if time.time()-last_capture>60:
+                        watch.sweep(keys,seen,100,bootstrap,vetting=False)
+                        watch.save_seen(seen);bootstrap=False;last_capture=time.time()
+                elif is_ready:
                     if args.role=='watch':
                         new,accepted=watch.sweep(keys,seen,5,bootstrap)
                         watch.save_seen(seen);bootstrap=False
                         if new:watch.log(f'Codex detection: {new} new, {accepted} accepted')
+                        if time.time()-last_pending_vet>60:
+                            watch.recheck_pending_vet(keys)
+                            last_pending_vet=time.time()
                         if time.time()-last_drain>600 and rt.room()[0]:
                             watch.recheck_deferred(keys)
                             watch.drain_queues(keys)

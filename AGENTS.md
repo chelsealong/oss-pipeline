@@ -46,8 +46,9 @@ most three attempts; publication ambiguity is never automatically replayed.
 Repository-level PR creation denials place queued fixes in `publication_wait`
 without consuming other repositories' queue space. Existing-PR responses remain
 eligible. Expired holds restore tasks only when queue capacity permits. A draft
-PR test does not prove ordinary PR creation permission: GitHub's concurrent
-open-PR limits exclude drafts. Never bypass upstream limits or close production
+PR test does not prove ordinary PR creation permission. GitHub excluded drafts
+when the October 5 probe ran; since October 8 administrators can also count
+drafts toward the limit. Never bypass upstream limits or close production
 PRs merely to free capacity. The preflight's optional temporary PR probe is off
 by default and requires an explicit user request, including its immediate cleanup.
 On 2026-10-05 the cloud GitHub PAT was synchronized with the local GitHub
@@ -115,6 +116,12 @@ Expired skips may reuse their durable task after three days, bounded by three
 attempts; the historical watcher ledger must not permanently suppress these.
 
 Human handoffs retain encrypted patches, tests, base SHAs and patch digests.
+On 2026-10-09 an audit found the review prompt had turned optional attestation
+into an unconditional requirement. A human gate must cite an applicable explicit
+upstream requirement or an exact-patch review hold; a missing optional record
+alone is not a gate. Cloud canaries exercise both publication with no human gate
+and refusal where their fixture explicitly requires human review. Never waive
+a real upstream requirement or represent automated review as human review.
 The human review workflow requires a named human's explicit exact-patch
 attestation. Never dispatch it as an agent, fabricate approval, or use this
 task's general repair authorization as patch-specific human review. A changed

@@ -684,8 +684,55 @@ def append_candidate(key: str, rec: dict) -> None:
     f.write_text(json.dumps(q, indent=2) + "\n")
 
 
+PENDING_VET = scan.STATE / 'pending-vet.json'
+
+def pending_vet() -> dict:
+    return json.loads(PENDING_VET.read_text()) if PENDING_VET.exists() else {}
+
+def save_pending_vet(rows: dict) -> None:
+    PENDING_VET.parent.mkdir(parents=True,exist_ok=True)
+    temporary=PENDING_VET.with_suffix('.tmp')
+    temporary.write_text(json.dumps(rows,ensure_ascii=False,indent=1)+'\n')
+    temporary.replace(PENDING_VET)
+
+def retain_for_vetting(key: str, node: dict) -> None:
+    """Read-only discovery must survive model-budget and service pauses."""
+    rows=pending_vet();repo=rows.setdefault(key,{})
+    repo[str(node['number'])]={'number':node['number'],'created_at':node['createdAt']}
+    rows[key]={n:repo[n] for n in sorted(repo,key=int)[-400:]}
+    save_pending_vet(rows)
+
+def recheck_pending_vet(keys: list[str], limit: int = 4) -> int:
+    """Refresh durable discoveries before vetting; never admit a stale snapshot."""
+    rows=pending_vet();accepted=checked=0
+    for key in keys:
+        for number in sorted(list(rows.get(key,{})),key=int,reverse=True):
+            if checked>=limit or not rt.ready()[0]:
+                save_pending_vet(rows);return accepted
+            checked+=1;cfg=scan.REPOS[key]
+            try:
+                issue=json.loads(scan.gh(['api',f"repos/{cfg['upstream']}/issues/{number}"],kind='other'))
+                if issue.get('state')!='open' or issue.get('pull_request'):
+                    del rows[key][number];continue
+                ok,why,extra=scan.vet(cfg,cfg['upstream'],issue)
+            except Exception as error:
+                log(f'  [{key}] #{number} pending vet remains: {str(error)[:100]}')
+                continue
+            if ok:
+                append_candidate(key,{'number':int(number),'title':issue['title'][:160],
+                    'url':issue['html_url'],'created_at':issue['created_at'],
+                    'reason':'clear after pending vet','age_hours':scan.age_hours(issue['created_at']),**extra})
+                accepted+=1
+                if not NO_TRIGGER:trigger_fix(key,int(number))
+            elif MIN_AGE_MARK in why:
+                defer(key,int(number),issue['created_at'])
+            del rows[key][number]
+    save_pending_vet(rows)
+    return accepted
+
+
 def sweep(keys: list[str], seen: dict[str, list[int]], per_repo: int,
-          bootstrap: bool) -> tuple[int, int]:
+          bootstrap: bool, *, vetting: bool = True) -> tuple[int, int]:
     """Returns (new_detected, accepted)."""
     query = build_query(keys, per_repo)
     raw = scan.gh(["api", "graphql", "-f", f"query={query}"], kind="other")
@@ -717,9 +764,14 @@ def sweep(keys: list[str], seen: dict[str, list[int]], per_repo: int,
                     f"{sorted(req)} (out of scope for this checkout)")
                 continue
 
+            if not vetting:
+                retain_for_vetting(key,node)
+                continue
+
             try:
                 ok, why, extra = scan.vet(scan.REPOS[key], scan.REPOS[key]["upstream"], issue)
             except Exception as e:  # noqa: BLE001
+                retain_for_vetting(key,node)
                 log(f"  [{key}] #{num} vet failed: {e}")
                 continue
 

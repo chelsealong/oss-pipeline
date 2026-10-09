@@ -492,8 +492,11 @@ def is_claim(text: str, *, author: str = "?", default: bool = True) -> tuple[boo
     if not MAYBE_CLAIM.search(body):
         return False, "no first-person marker"
 
-    snippet = body[:1200]
-    key = hashlib.sha256(snippet.encode("utf-8", "replace")).hexdigest()[:16]
+    # Contribution checkboxes and ready-made fixes often follow long reports.
+    # Prefix-only judgements admitted claimed work and spent a coding session
+    # rediscovering the tail. Old cached prefix verdicts must not be reused.
+    snippet = body
+    key = hashlib.sha256(('claim-full-v2\0'+body).encode("utf-8", "replace")).hexdigest()[:16]
     cache = _cache()
     if key in cache:
         hit = cache[key]
