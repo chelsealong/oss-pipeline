@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791507897.123059,
+  "saved_at": 1791507937.8000884,
   "tables": {
     "tasks": [
       {
@@ -8356,10 +8356,10 @@
         "repo": "comfyui",
         "number": 16885,
         "note": "",
-        "status": "running",
+        "status": "human_wait",
         "created": 1791507577.9546459,
-        "updated": 1791507584.086837,
-        "result": "",
+        "updated": 1791507937.7941127,
+        "result": "review: HUMAN_REVIEW_REQUIRED: context.json has no named human attestation for this exact patch and base. Technical review found a real regression: the new test fails with the original eviction condition and passes with the patch. The CPU execution suite passed (224 tests), as did Ruff and git diff --check. The PR body accurately describes the change and checks.",
         "attempts": 1
       },
       {
@@ -10622,18 +10622,6 @@
         "value": "1791507811.7510145"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791507836.8123472, \"tasks\": {\"fix\": {\"blocked\": 2, \"error\": 2, \"human_wait\": 6, \"queued\": 1, \"running\": 1, \"skipped\": 97}, \"respond\": {\"blocked\": 21, \"done\": 5, \"error\": 5, \"human_wait\": 9, \"skipped\": 9, \"validation_wait\": 8}}}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791507854.775259, \"source\": \"completed task phase\"}"
-      },
-      {
-        "key": "task:643",
-        "value": "{\"started\": 1791507584.0868607, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/643/attempt-1\", \"attempt\": 1, \"phase\": \"review\", \"base\": \"a4b5a045e56fc334903db8457b728b64e006119c\", \"generation_started\": 1791507591.2486444, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791507856.699614}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791507869.9997663"
       },
@@ -10642,8 +10630,24 @@
         "value": "1791507870.0032237"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791507898.817961, \"tasks\": {\"fix\": {\"blocked\": 2, \"error\": 2, \"human_wait\": 6, \"queued\": 1, \"running\": 1, \"skipped\": 97}, \"respond\": {\"blocked\": 21, \"done\": 5, \"error\": 5, \"human_wait\": 9, \"skipped\": 9, \"validation_wait\": 8}}}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1791507886.6086113"
+        "value": "1791507931.6147785"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791507937.4490194, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:task:643",
+        "value": "{\"status\": \"needs_human\", \"task\": 643, \"repo\": \"comfyui\", \"number\": 16885, \"reason\": \"review: HUMAN_REVIEW_REQUIRED: context.json has no named human attestation for this exact patch and base. Technical review found a real regression: the new test fails with the original eviction condition and passes with the patch. The CPU execution suite passed (224 tests), as did Ruff and git diff --check. The PR body accurately describes the change and checks.\", \"base\": \"a4b5a045e56fc334903db8457b728b64e006119c\", \"patch_digest\": \"ff5d29bdd16b9432198e3a7dbd0e4b065b88bbd0b61252080c1080c62b46330a\", \"evidence_bundle\": \"643-1.json.enc\"}"
+      },
+      {
+        "key": "task:643",
+        "value": "{\"started\": 1791507584.0868607, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/643/attempt-1\", \"attempt\": 1, \"phase\": \"human_wait\", \"base\": \"a4b5a045e56fc334903db8457b728b64e006119c\", \"generation_started\": 1791507591.2486444, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791507856.699614, \"patch_digest\": \"ff5d29bdd16b9432198e3a7dbd0e4b065b88bbd0b61252080c1080c62b46330a\", \"last_execution_phase\": \"review\", \"finished\": 1791507937.6705174}"
       }
     ],
     "calls": [
