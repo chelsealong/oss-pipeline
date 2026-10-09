@@ -172,6 +172,21 @@ class RuntimeTests(unittest.TestCase):
             self.assertEqual(c.execute('SELECT status FROM tasks WHERE id=256').fetchone()[0],'done')
             self.assertEqual(c.execute('SELECT status FROM tasks WHERE id=219').fetchone()[0],'error')
         self.assertEqual(rt.getmeta(cloud_runtime.RETRY_MARKER),[206,244,267,295,316])
+    def test_audited_disconnect_recovery_respects_attempts_and_publication_markers(self):
+        self.cfg['backend']='codex-cloud';self.save()
+        reason='Codex: host connection ended without verified completion'
+        with rt.db() as c:
+            for task_id,attempts in [(605,2),(609,3)]:
+                c.execute('INSERT INTO tasks(id,identity,kind,repo,number,status,created,updated,result,attempts) VALUES (?,?,?,?,?,?,?,?,?,?)',
+                    (task_id,f'test:{task_id}','fix','langfuse' if task_id==605 else 'openclaw',task_id,
+                     'error',time.time(),time.time(),reason,attempts))
+        rt.task_state(605,publication_started=True)
+        with patch.object(rt,'checkpoint'):
+            self.assertEqual(cloud_runtime.requeue_validation_repair(),[])
+            rt.task_state(605,publication_started=False)
+            self.assertEqual(cloud_runtime.requeue_validation_repair(),[605])
+            self.assertEqual(cloud_runtime.requeue_validation_repair(),[])
+
     def test_cloud_login_only_publishes_encrypted_device_code(self):
         private=self.root/'private.pem';public=self.root/'public.pem'
         subprocess.run(['openssl','genpkey','-algorithm','RSA','-pkeyopt','rsa_keygen_bits:2048','-out',str(private)],capture_output=True,check=True)

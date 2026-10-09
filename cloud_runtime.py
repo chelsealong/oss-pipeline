@@ -40,6 +40,13 @@ VALIDATION_RETRY = (
     (300,'blocked','/var/tmp/hermes-pytest'),
 )
 REPAIR_RETRY = (
+    # 2026-10-09 audit: old runners completed, retained execution state has no
+    # publication marker, and both fork refs and all-state upstream PR searches
+    # are absent. Re-run fresh eligibility/review, never replay an old write.
+    (605,'error','Codex: host connection ended without verified completion'),
+    (609,'error','Codex: host connection ended without verified completion'),
+    (578,'blocked','Cloud checkpoint unavailable; keep task state for recovery'),
+    (581,'blocked','Cloud checkpoint unavailable; keep task state for recovery'),
     (384,'blocked','check:changed rejects TypeScript outside the checkout'),
     (325,'blocked','requires compiler files inside the checkout'),
     (359,'blocked','requires dependencies physically inside the checkout'),
@@ -135,8 +142,10 @@ def requeue_validation_repair():
         for task_id,status,evidence in VALIDATION_RETRY:
             if not slots:break
             if task_id in attempted:continue
-            task=db.execute('SELECT kind,repo,status,result FROM tasks WHERE id=?',(task_id,)).fetchone()
+            task=db.execute('SELECT kind,repo,status,result,attempts FROM tasks WHERE id=?',(task_id,)).fetchone()
             if not task or task['status']!=status or evidence not in (task['result'] or ''):
+                continue
+            if task['attempts']>=3 or rt._meta(db,f'task:{task_id}',{}).get('publication_started'):
                 continue
             if not rt._room(db,task['kind'],task['repo'])[0]:continue
             if task['kind']=='fix' and held.get(task['repo'],0)>time.time():
