@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791575851.4127157,
+  "saved_at": 1791575863.2124822,
   "tables": {
     "tasks": [
       {
@@ -8837,10 +8837,10 @@
         "repo": "openclaw",
         "number": 167913,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1791572985.3911564,
-        "updated": 1791573578.064018,
-        "result": "",
+        "updated": 1791575863.2031424,
+        "result": "VALIDATION_ENVIRONMENT: The patch is preserved, but an isolated Gateway-to-Prometheus run was unavailable. The full check:changed gate also did not complete within this bounded session; its initial run found a test-fixture type error that was corrected, and its rerun was stopped during the broad test-graph sweep. Required end-to-end validation remains open.",
         "attempts": 1
       },
       {
@@ -11132,10 +11132,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7475\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791573576.8447633, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:679",
         "value": "{\"started\": 1791572984.4350412, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/679/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"590a0257d137ea43828151481a2fc47f5e73783e\", \"generation_started\": 1791573043.41533, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791573045.3614726, \"last_execution_phase\": \"generation\", \"finished\": 1791573576.847236}"
       },
@@ -11150,10 +11146,6 @@
       {
         "key": "dispatch_budget",
         "value": "{\"date\": \"2026-10-09\", \"used\": {\"hermes\": 6, \"comfyui\": 9, \"llama-index\": 3, \"openclaw\": 12, \"dify\": 2, \"langfuse\": 2, \"autogpt\": 1}}"
-      },
-      {
-        "key": "task:680",
-        "value": "{\"started\": 1791573578.0640666, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/680/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"8eb960d42a709610f5ad5ba587efa2ddcbeca367\", \"generation_started\": 1791573638.225023, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791573640.1239786}"
       },
       {
         "key": "task:44",
@@ -11350,6 +11342,18 @@
       {
         "key": "worker_heartbeat",
         "value": "1791575848.8518562"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791575862.0291793, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "followup:task:680",
+        "value": "{\"status\": \"needs_human\", \"task\": 680, \"repo\": \"openclaw\", \"number\": 167913, \"reason\": \"VALIDATION_ENVIRONMENT: The patch is preserved, but an isolated Gateway-to-Prometheus run was unavailable. The full check:changed gate also did not complete within this bounded session; its initial run found a test-fixture type error that was corrected, and its rerun was stopped during the broad test-graph sweep. Required end-to-end validation remains open.\", \"base\": \"8eb960d42a709610f5ad5ba587efa2ddcbeca367\", \"patch_digest\": \"e218de1b26c85d45d3d6c0d4fdc7bcbbf9d62a8a2e3baf4fbe8643dc0129f778\", \"evidence_bundle\": \"680-1.json.enc\"}"
+      },
+      {
+        "key": "task:680",
+        "value": "{\"started\": 1791573578.0640666, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/680/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"8eb960d42a709610f5ad5ba587efa2ddcbeca367\", \"generation_started\": 1791573638.225023, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791573640.1239786, \"patch_digest\": \"e218de1b26c85d45d3d6c0d4fdc7bcbbf9d62a8a2e3baf4fbe8643dc0129f778\", \"last_execution_phase\": \"generation\", \"finished\": 1791575862.5946665}"
       }
     ],
     "calls": [
