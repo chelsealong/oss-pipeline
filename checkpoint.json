@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791579401.4137623,
+  "saved_at": 1791579442.6433578,
   "tables": {
     "tasks": [
       {
@@ -8902,10 +8902,10 @@
         "repo": "openclaw",
         "number": 167920,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791576643.6722388,
-        "updated": 1791579343.616317,
-        "result": "",
+        "updated": 1791579442.6336226,
+        "result": "No still-present defect is established on current main. The reported install runs 2026.9.9; main already emits model.usage before silent-reply exits. The report lacks a correlated failing turn showing whether usage is lost in core or the external plugin, so another patch would be speculative.",
         "attempts": 1
       }
     ],
@@ -11375,40 +11375,16 @@
         "value": "{\"at\": 1791578900.951942, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "prwatch_heartbeat",
-        "value": "1791579002.9067075"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791579297.6562057, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:684",
         "value": "{\"started\": 1791578625.6786852, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/684/attempt-1\", \"attempt\": 1, \"phase\": \"done\", \"base\": \"d0fc39e872901407f8ace13fa6e3ce0858a8d298\", \"generation_started\": 1791578685.011131, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791579143.9173164, \"publication_started\": true, \"branch\": \"fix/codex-openclaw-167921\", \"head\": \"caedf59635d2174a21aaa37b663a4a9fcd91c812\", \"published_at\": 1791579322.9566908, \"publication_outcome\": \"created\", \"last_execution_phase\": \"publishing\", \"finished\": 1791579322.958315}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791579323.2888777"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791579323.2905366"
       },
       {
         "key": "task:683",
         "value": "{\"started\": 1791579328.785557, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/683/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"d6158cc48033794ef09f6c9b34e1a377b767f604\", \"generation_started\": 1791576212.7882786, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791576214.492564, \"last_execution_phase\": \"retry_wait\", \"finished\": 1791579331.9567244}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791579340.9965255, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"error\": 4, \"human_wait\": 4, \"queued\": 1, \"skipped\": 54, \"validation_wait\": 3}, \"respond\": {\"blocked\": 4, \"human_wait\": 3, \"skipped\": 2}}}"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791579343.6161757, \"comfyui\": 1791570425.4152215, \"hermes\": 1791506869.7548964, \"langfuse\": 1791565848.1392827, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791579395.2696466"
       },
       {
         "key": "fix_sessions",
@@ -11419,8 +11395,32 @@
         "value": "{\"date\": \"2026-10-09\", \"used\": {\"hermes\": 6, \"comfyui\": 9, \"llama-index\": 3, \"openclaw\": 15, \"dify\": 2, \"langfuse\": 2, \"autogpt\": 1}}"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791579403.0924604, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"error\": 4, \"human_wait\": 4, \"running\": 1, \"skipped\": 54, \"validation_wait\": 3}, \"respond\": {\"blocked\": 4, \"human_wait\": 3, \"skipped\": 2}}}"
+      },
+      {
+        "key": "prwatch_heartbeat",
+        "value": "1791579428.0888162"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791579437.3826609"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791579437.3843079"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791579440.3526201"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791579442.4940898, \"source\": \"completed task phase\"}"
+      },
+      {
         "key": "task:685",
-        "value": "{\"started\": 1791579343.6163456, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/685/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"69bfe7b645c8fa5b5a0499c575d33f269295beed\", \"generation_started\": 1791579396.977985, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791579398.6664827}"
+        "value": "{\"started\": 1791579343.6163456, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/685/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"69bfe7b645c8fa5b5a0499c575d33f269295beed\", \"generation_started\": 1791579396.977985, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791579398.6664827, \"last_execution_phase\": \"generation\", \"finished\": 1791579442.5022705}"
       }
     ],
     "calls": [
