@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791564340.6968226,
+  "saved_at": 1791564368.3599858,
   "tables": {
     "tasks": [
       {
@@ -8668,10 +8668,10 @@
         "repo": "openclaw",
         "number": 167838,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791561079.5573673,
-        "updated": 1791564267.1173985,
-        "result": "",
+        "updated": 1791564368.3527648,
+        "result": "The defect is in the published 2026.9.9 release, while this checkout already contains the bounded-query fix. A maintainer confirmed the release omission and said it is planned for the next patch release. A source change here would duplicate the fix; selecting and publishing a corrective release is outside this task’s authority.",
         "attempts": 1
       },
       {
@@ -11055,10 +11055,6 @@
         "value": "{\"at\": 1791564276.2680836, \"reason\": \"PR closed or not owned by our fork\"}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791564278.2710521, \"tasks\": {\"fix\": {\"blocked\": 2, \"error\": 3, \"human_wait\": 3, \"retry_wait\": 1, \"running\": 1, \"skipped\": 65, \"validation_wait\": 2}, \"respond\": {\"blocked\": 14, \"done\": 1, \"human_wait\": 2, \"skipped\": 3, \"validation_wait\": 3}}}"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791564267.117274, \"comfyui\": 1791560586.7564309, \"hermes\": 1791506869.7548964, \"langfuse\": 1791552674.1559503, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791561836.1647184, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
       },
@@ -11083,10 +11079,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7475\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791564320.5301204, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "task:669",
         "value": "{\"started\": 1791564279.8736398, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/669/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"4663d3e5fb4b45520f118120a8fc1aca35ffda86\", \"generation_started\": 1791564295.693131, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791564297.640782, \"last_execution_phase\": \"generation\", \"finished\": 1791564320.5380828}"
       },
@@ -11099,20 +11091,8 @@
         "value": "{\"date\": \"2026-10-09\", \"used\": {\"hermes\": 6, \"comfyui\": 6, \"llama-index\": 2, \"openclaw\": 8, \"dify\": 2, \"langfuse\": 1, \"autogpt\": 1}}"
       },
       {
-        "key": "task:667",
-        "value": "{\"started\": 1791564267.1174366, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/667/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"c647ce7bb0e584da609bc847ae6dd545f4d5bd01\", \"generation_started\": 1791564326.5776792, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791564328.6771536}"
-      },
-      {
         "key": "task:219",
         "value": "{\"recovery_checked_at\": 1791564338.6163182}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791564339.5312767"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791564339.533967"
       },
       {
         "key": "recovery_audit:219",
@@ -11123,12 +11103,32 @@
         "value": "{\"recovery_checked_at\": 1791564339.677907}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791564339.8999283"
-      },
-      {
         "key": "recovery_audit:222",
         "value": "{\"at\": 1791564340.478606, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791564344.0091057, \"tasks\": {\"fix\": {\"blocked\": 2, \"error\": 3, \"human_wait\": 3, \"retry_wait\": 1, \"running\": 1, \"skipped\": 66, \"validation_wait\": 2}, \"respond\": {\"blocked\": 14, \"done\": 1, \"human_wait\": 2, \"skipped\": 3, \"validation_wait\": 3}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791564354.901243"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791564362.2435365"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791564362.2503068"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791564367.4157174, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:667",
+        "value": "{\"started\": 1791564267.1174366, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/667/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"c647ce7bb0e584da609bc847ae6dd545f4d5bd01\", \"generation_started\": 1791564326.5776792, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791564328.6771536, \"last_execution_phase\": \"generation\", \"finished\": 1791564367.4180093}"
       }
     ],
     "calls": [
