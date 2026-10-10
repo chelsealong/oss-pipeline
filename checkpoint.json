@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791629598.7495534,
+  "saved_at": 1791629625.9161332,
   "tables": {
     "tasks": [
       {
@@ -9409,10 +9409,10 @@
         "repo": "NousResearch/hermes-agent",
         "number": 127601,
         "note": "{\"authors\": \"AXFCVD\", \"events\": [\"IC_kwDOPRF1G88AAAABa14U0w@2026-10-10T09:51:29Z\"], \"followup_policy\": \"2026-10-08-replies-v1\", \"head\": \"bc1f943c412bd4a861472da444d9b7ace00b4ba4\", \"is_issue\": false, \"previous_task\": 722}",
-        "status": "running",
+        "status": "error",
         "created": 1791628110.2414098,
-        "updated": 1791629598.7425854,
-        "result": "Codex budget reserved for independent reviews",
+        "updated": 1791629625.911017,
+        "result": "git failed (128): fatal: shallow file has changed since we read it\n",
         "attempts": 2
       }
     ],
@@ -12142,10 +12142,6 @@
         "value": "{\"task\": 724, \"repo\": \"NousResearch/hermes-agent\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1791628228.7255826, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "canary_accounted:38045361593:1",
         "value": "{\"at\": 1791629311.8145566, \"calls\": 4}"
       },
@@ -12346,32 +12342,36 @@
         "value": "{\"at\": 1791629451.2220736, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1791629556.405399, \"windows\": [{\"name\": \"primary\", \"used_percent\": 47, \"resets_at\": 1792215834}]}"
-      },
-      {
         "key": "throughput_24h",
         "value": "{\"at\": 1791629577.3472347, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 2, \"error\": 1, \"human_wait\": 2, \"queued\": 1, \"quota_wait\": 2, \"skipped\": 55, \"validation_wait\": 3}, \"respond\": {\"blocked\": 2, \"done\": 3, \"error\": 3, \"human_wait\": 1, \"retry_wait\": 1, \"skipped\": 3}}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791629585.7800057"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791629598.6376207"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791629598.638904"
       },
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791628116.8471482, \"comfyui\": 1791613742.2794287, \"hermes\": 1791629598.7424486, \"langfuse\": 1791624717.1129212, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791626501.2453806, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791627655.63385}}"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1791629615.7835913"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1791629616.6610327, \"windows\": [{\"name\": \"primary\", \"used_percent\": 48, \"resets_at\": 1792215834}]}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791629621.6179626"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791629621.619343"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
         "key": "task:724",
-        "value": "{\"started\": 1791629598.7426178, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"claimed\", \"base\": null, \"remote_base\": \"bc1f943c412bd4a861472da444d9b7ace00b4ba4\", \"base_update\": {\"original_head\": \"bc1f943c412bd4a861472da444d9b7ace00b4ba4\", \"before\": \"bc1f943c412bd4a861472da444d9b7ace00b4ba4\", \"base\": \"0384bb5a5e4a40b1c77bb5a834df003372e3f661\", \"upstream\": \"9b1a56e15fe763f536b72b82809bc9f0f9b88071\"}, \"last_execution_phase\": \"checkout\", \"finished\": 1791628228.8596613}"
+        "value": "{\"started\": 1791629598.7426178, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/724/attempt-2\", \"attempt\": 2, \"phase\": \"error\", \"base\": null, \"remote_base\": \"bc1f943c412bd4a861472da444d9b7ace00b4ba4\", \"base_update\": {\"original_head\": \"bc1f943c412bd4a861472da444d9b7ace00b4ba4\", \"before\": \"bc1f943c412bd4a861472da444d9b7ace00b4ba4\", \"base\": \"0384bb5a5e4a40b1c77bb5a834df003372e3f661\", \"upstream\": \"9b1a56e15fe763f536b72b82809bc9f0f9b88071\"}, \"last_execution_phase\": \"checkout\", \"finished\": 1791629625.9094014}"
       }
     ],
     "calls": [
