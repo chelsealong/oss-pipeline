@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791595632.2471216,
+  "saved_at": 1791595664.571513,
   "tables": {
     "tasks": [
       {
@@ -9097,10 +9097,10 @@
         "repo": "openclaw",
         "number": 168046,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791595555.5460398,
-        "updated": 1791595561.2288914,
-        "result": "",
+        "updated": 1791595664.5619218,
+        "result": "The reported session readback path no longer exists on current main. The current completion API returns only text, and the report provides no trace establishing why all three phases would return empty text on that path. A repair would be speculative until a sanitized full-sweep trace identifies the completion outcome.",
         "attempts": 1
       }
     ],
@@ -11502,10 +11502,6 @@
         "value": "{\"started\": 1791592782.2260556, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/699/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"e450673ef21ad87456c138f7cbd1332e296b91a9\", \"generation_started\": 1791592798.2484388, \"dispatch_paid_date\": \"2026-10-10\", \"phase_started\": 1791592800.5755692, \"last_execution_phase\": \"generation\", \"finished\": 1791592824.2660077}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791594635.3458114, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -11690,10 +11686,6 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791595561.228735, \"comfyui\": 1791592782.2257864, \"hermes\": 1791585439.909747, \"langfuse\": 1791582260.90761, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791595571.0639217, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"error\": 5, \"human_wait\": 2, \"running\": 1, \"skipped\": 35, \"validation_wait\": 3}, \"respond\": {\"blocked\": 3, \"done\": 2, \"human_wait\": 1, \"skipped\": 3}}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"openclaw\", \"task\": 684, \"at\": 1791578685.0111303}, {\"repo\": \"openclaw\", \"task\": 685, \"at\": 1791579396.9779844}, {\"repo\": \"langfuse\", \"task\": 691, \"at\": 1791582228.64054}, {\"repo\": \"langfuse\", \"task\": 692, \"at\": 1791582270.2495935}, {\"repo\": \"openclaw\", \"task\": 695, \"at\": 1791590288.4433398}, {\"repo\": \"openclaw\", \"task\": 696, \"at\": 1791590378.950927}, {\"repo\": \"comfyui\", \"task\": 698, \"at\": 1791591840.3986018}, {\"repo\": \"comfyui\", \"task\": 699, \"at\": 1791592798.2484381}, {\"repo\": \"openclaw\", \"task\": 700, \"at\": 1791595615.8578887}]"
       },
@@ -11702,20 +11694,28 @@
         "value": "{\"date\": \"2026-10-10\", \"used\": {\"comfyui\": 2, \"openclaw\": 1}}"
       },
       {
-        "key": "task:700",
-        "value": "{\"started\": 1791595561.2289193, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/700/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"1f307d61d0f77dfe0c838420b8d2c18d73c0baf5\", \"generation_started\": 1791595615.8578897, \"dispatch_paid_date\": \"2026-10-10\", \"phase_started\": 1791595617.7413754}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791595629.41152"
-      },
-      {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:checked",
         "value": "1791595631.5670636"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
         "value": "{\"at\": 1791595632.2403414, \"reason\": \"PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791595635.1057677, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"error\": 5, \"human_wait\": 2, \"running\": 1, \"skipped\": 35, \"validation_wait\": 3}, \"respond\": {\"blocked\": 3, \"done\": 2, \"human_wait\": 1, \"skipped\": 3}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791595659.4140108"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791595663.5073736, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:700",
+        "value": "{\"started\": 1791595561.2289193, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/700/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"1f307d61d0f77dfe0c838420b8d2c18d73c0baf5\", \"generation_started\": 1791595615.8578897, \"dispatch_paid_date\": \"2026-10-10\", \"phase_started\": 1791595617.7413754, \"last_execution_phase\": \"generation\", \"finished\": 1791595663.5094488}"
       }
     ],
     "calls": [
