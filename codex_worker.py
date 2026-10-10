@@ -288,7 +288,7 @@ def finish(task, status, result):
     rt.checkpoint()
     if rt.config().get('backend')=='codex-cloud':
         # Only after the encrypted evidence and final state have been pushed.
-        state=rt.task_state(task['id']);relative=state.get('folder','')
+        state=rt.task_state(task['id']);relative=state.get('folder') or ''
         if relative.startswith(f"jobs/{task['id']}/attempt-"):
             folder=rt.DATA/relative
             with work_evidence.task_lock(task['id']):

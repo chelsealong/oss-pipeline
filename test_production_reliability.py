@@ -51,6 +51,13 @@ class ProductionReliabilityTests(unittest.TestCase):
         self.git(work,'commit','-m','base');base=self.git(work,'rev-parse','HEAD')
         rt.task_state(task['id'],folder=str(folder.relative_to(rt.DATA)),attempt=1,phase='generation',base=base)
         return folder,work,base
+    def test_cloud_precheck_skip_has_no_checkout_to_clean(self):
+        task=self.task();rt.task_state(task['id'],folder=None,phase='claimed')
+        cfg=rt.config()|{'backend':'codex-cloud'}
+        with patch.object(rt,'config',return_value=cfg),patch.object(worker,'cap_ok',return_value=(True,'')),patch.object(worker,'fix_eligible',return_value=(False,'issue closed')),patch.object(execution,'clean_owned_task') as cleanup:
+            worker.process_one(task)
+        self.assertEqual(self.status(task),'skipped');cleanup.assert_not_called()
+        with rt.db() as db:self.assertEqual(db.execute('SELECT result FROM tasks WHERE id=?',(task['id'],)).fetchone()[0],'issue closed')
     def test_retry_claim_cannot_erase_completed_logs_or_patch(self):
         task=self.task();folder,work,base=self.checkout(task)
         (work/'value.py').write_text('value = 2\n')
