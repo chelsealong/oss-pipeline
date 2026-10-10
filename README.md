@@ -93,8 +93,11 @@ to 3 each. OpenClaw also permits at most 20 open PRs, including drafts. The
 daily window resets at 08:00 Asia/Shanghai. Mem0, LiteLLM, Firecrawl, Gemini CLI,
 Pydantic AI, vLLM and Crawl4AI receive zero model/task quota, including existing
 PR maintenance; pending work is retained in `quota_wait`. Existing PRs are not
-closed. Per-repository task-attempt and five-hour limits remain separate from
-the PR creation caps and retain historical spending across policy changes.
+closed. New-fix task starts per UTC day are separately capped at Hermes 16,
+OpenClaw 10, Google ADK 10 and every other active repo 6, charged only at first
+generation. Precheck skips and subsequent reviews/retries of the same task do
+not consume another daily task slot. Existing five-hour and global model limits
+still apply; historical spending is retained across policy changes.
 
 `state/runtime.json` is local deployment configuration (ignored by git).
 `python3 runtime.py` prints queue, heartbeat, model-call counts and recent results.

@@ -129,61 +129,12 @@ GATED = {"langchain"}
 # Where fix-one.yml lives.
 PIPELINE_REPO = "chelsealong/oss-pipeline"
 
-# Daily dispatch budget per repo. The scarce resource is not detection (330+
-# candidates a day, 1 rate-limit point per sweep) but the Claude subscription's
-# session limit — a run that hits it dies with "You've hit your session limit".
-# So spend it where a PR actually has a chance, judged on measured outcomes:
-#
-#   adk        #6498 landed, three PRs live          -> best odds; PR cap 5/day,
-#                                                       dispatch budget above it so
-#                                                       skipped runs do not eat it
-#   langfuse   #12953 merged                        -> good
-#   spec-kit   ~73% community merge share, no CLA    -> good
-#   openclaw   3 PRs: one merged by a maintainer (#116958, squashed ~5h after
-#              opening), two alive and well-rated, ZERO rejected. Its reviewer
-#              bot is demanding but fair, and lessons/openclaw.md now records
-#              what passes there -> raised to 6 PRs/day
-#   comfyui/firecrawl  thin funnels                  -> low
-#   hermes     195 candidates/day BUT: 12-second self-claims, ~92% of merges to
-#              insiders, and our one PR was closed as `duplicate`. Highest volume,
-#              worst odds — it would otherwise eat the whole budget. Raised to
-#              5 PRs/day by explicit decision; the rolling 30-day duplicate
-#              circuit breaker in run-fix.sh is what keeps that safe, since
-#              repeated duplicates are the actual ban vector there.
-# Sized at roughly 1.5x fix-one.yml's daily PR cap for the same repo: enough
-# slack for dispatches that fail for a real reason (quota refusal, tests that
-# do not pass, an agent that decides the issue is not fixable), and not enough
-# to spend a whole day's allowance on candidates that cannot produce a PR.
-#
-# They were set far above supply on 2026-08-23, after hermes hit 10/10 with
-# fourteen vetted candidates waiting — correct then, because a doomed dispatch
-# and a live one cost the same. They do not any more. On 2026-09-22 hermes hit
-# 60/60 by 18:16 and kept hitting it; issue #119388 was ACCEPTED 2.6s after it
-# was filed, could not dispatch, sat in the queue until the UTC reset, went out
-# at 00:15 and was refused by the re-vet because a competitor had opened a PR
-# at 18:17. The day's entire hermes allowance went on stale drains while the
-# fresh issues — the winnable ones — queued behind them.
-#
-# What makes a smaller number safe now is that drain_queues re-vets before
-# spending anything (RESCAN_ON_DRAIN), so a taken candidate is dropped without
-# charging the budget. These units are therefore viable dispatches, not
-# attempts. If a repo starts hitting its number with a full queue of genuinely
-# fresh candidates, raise that repo — and say which measurement asked for it.
-DISPATCH_BUDGET = {
-    # Task-start budgets remain the previous allocation; PR creation caps are
-    # separately reduced by the user's October 10 update in repo_limits.py.
-    "hermes": 60,
-    "openclaw": 18, "comfyui": 18, "dify": 18,
-    "adk": 18, "langfuse": 18,
-    "langfuse-python": 12, "gemini-cli": 12,
-    "autogpt": 12, "litellm": 12, "llama-index": 12,
-    "crawl4ai": 12, "mem0": 12,
-    "spec-kit": 6,
-    "firecrawl": 6,
-    "langchain": 9,
-}
-DEFAULT_BUDGET = 9
-DISPATCH_BUDGET.update(dict.fromkeys(repo_limits.DISABLED_REPOS,0))
+# Daily new-fix task starts (UTC), approved by the user on 2026-10-10.
+# runtime.reserve_call charges only first generation, preserving prior spending.
+# PR publication caps and rolling five-hour model shares are separate limits.
+DEFAULT_BUDGET = repo_limits.DEFAULT_TASK_BUDGET
+DISPATCH_BUDGET = dict.fromkeys(scan.REPOS, DEFAULT_BUDGET)
+DISPATCH_BUDGET.update(repo_limits.TASK_BUDGETS)
 BUDGET_FILE = scan.STATE / "dispatch-budget.json"
 
 

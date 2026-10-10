@@ -62,8 +62,10 @@ remain untracked and explicitly denied; never admit them through default budgets
 New PR caps per UTC day: Hermes 8, OpenClaw 5, Google ADK 5, every other active
 repo 3. OpenClaw also has a pipeline cap of 20 concurrently open PRs, including
 drafts. Recheck these caps before publication; never close PRs to create space.
-Active repositories retain their separate task-attempt and five-hour shares;
-the user has not requested changing those additional controls in this allocation.
+The user also approved daily new-fix task-start budgets: Hermes 16, OpenClaw 10,
+Google ADK 10, every other active repo 6. Charge at first generation, not precheck
+skips or subsequent reviews/retries of the same task. Preserve today's spending
+when lowering caps; existing five-hour shares and global model limits remain.
 Repository-level PR creation denials place queued fixes in `publication_wait`
 without consuming other repositories' queue space. Existing-PR responses remain
 eligible. Creation-denial holds do not expire merely with time. A bounded

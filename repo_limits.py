@@ -12,6 +12,9 @@ DISABLED_NAMES = {name.lower() for pair in DISABLED_REPOS.items() for name in pa
 DEFAULT_PR_CAP = 3
 PR_CAPS = {'hermes': 8, 'openclaw': 5, 'adk': 5,
            **dict.fromkeys(DISABLED_REPOS, 0)}
+DEFAULT_TASK_BUDGET = 6
+TASK_BUDGETS = {'hermes': 16, 'openclaw': 10, 'adk': 10,
+                **dict.fromkeys(DISABLED_REPOS, 0)}
 OPEN_PR_CAPS = {'openclaw': 20}
 DISABLED_REASON = 'repository quota disabled by user on 2026-10-10'
 

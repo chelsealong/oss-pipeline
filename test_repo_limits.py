@@ -79,6 +79,41 @@ class RepoLimitTests(unittest.TestCase):
             query=read.call_args.args[0]
             self.assertEqual(query[query.index('--state')+1],'open')
             self.assertNotIn('--draft',query)
+    def test_last_daily_task_slot_keeps_review_and_retry_available(self):
+        today=time.strftime('%Y-%m-%d',time.gmtime())
+        for key in scan.REPOS:
+            if limits.disabled(key):continue
+            with self.subTest(repo=key):
+                maximum={'hermes':16,'openclaw':10,'adk':10}.get(key,6)
+                rt.setmeta('dispatch_budget',{'date':today,'used':{key:maximum-1}})
+                self.assertTrue(rt.enqueue('fix',key,901))
+                self.assertTrue(rt.enqueue('fix',key,902))
+                with rt.db() as db:
+                    tasks=[dict(row) for row in db.execute(
+                        'SELECT * FROM tasks WHERE repo=? ORDER BY number',(key,))]
+                    before=db.execute('SELECT count(*) FROM calls').fetchone()[0]
+                self.assertTrue(rt.reserve_call('codex',task=tasks[0],phase='generation')[0])
+                self.assertEqual(rt.dispatch_headroom(key),(False,'daily viable-task budget reached'))
+                self.assertFalse(rt.enqueue('fix',key,903))
+                self.assertEqual(rt.reserve_call('codex',task=tasks[1],phase='generation'),
+                                 (False,'daily viable-task budget reached'))
+                self.assertFalse(rt.task_state(tasks[1]['id']).get('generation_started'))
+                self.assertTrue(rt.reserve_call('codex',task=tasks[0],phase='review')[0])
+                self.assertTrue(rt.reserve_call('codex',task=tasks[0],phase='generation')[0])
+                self.assertEqual(rt.getmeta('dispatch_budget')['used'][key],maximum)
+                with rt.db() as db:
+                    self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],before+3)
+                    db.execute("UPDATE tasks SET status='done' WHERE repo=?",(key,))
+    def test_lowered_cap_preserves_already_spent_daily_budget(self):
+        budget={'date':time.strftime('%Y-%m-%d',time.gmtime()),'used':{'hermes':25,'adk':12}}
+        rt.setmeta('dispatch_budget',budget)
+        self.assertFalse(rt.dispatch_headroom('hermes')[0])
+        self.assertFalse(rt.enqueue('fix','hermes',903))
+        self.assertFalse(rt.reserve_call('codex',
+            task={'id':999,'kind':'fix','repo':'hermes'},phase='generation')[0])
+        self.assertEqual(rt.getmeta('dispatch_budget'),budget)
+        with rt.db() as db:
+            self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],0)
     def test_disabled_pr_feedback_never_reaches_judge(self):
         spec=importlib.util.spec_from_file_location('quota_prwatch',Path(__file__).with_name('watch-prs.py'))
         watcher=importlib.util.module_from_spec(spec);spec.loader.exec_module(watcher)
