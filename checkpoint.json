@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791592776.6317985,
+  "saved_at": 1791592782.2371666,
   "tables": {
     "tasks": [
       {
@@ -9076,6 +9076,19 @@
         "updated": 1791591909.608749,
         "result": "The reported failure is a native Windows access violation during hook weight copying with DynamicVRAM enabled. The attached workflow identifies the path, but there is no CPU reproduction or verified ComfyUI source defect. The available environment lacks the required Windows CUDA setup and model weights, so a meaningful fix and regression test cannot be established. Open PRs #15532 and #15533 also modify this hook/offload path.",
         "attempts": 1
+      },
+      {
+        "id": 699,
+        "identity": "fix:comfyui:16925:",
+        "kind": "fix",
+        "repo": "comfyui",
+        "number": 16925,
+        "note": "",
+        "status": "running",
+        "created": 1791592781.4429705,
+        "updated": 1791592782.2260118,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -11480,10 +11493,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7477\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791590322.764189, \"comfyui\": 1791591829.4755914, \"hermes\": 1791585439.909747, \"langfuse\": 1791582260.90761, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"openclaw\", \"task\": 683, \"at\": 1791576212.7882779}, {\"repo\": \"openclaw\", \"task\": 684, \"at\": 1791578685.0111303}, {\"repo\": \"openclaw\", \"task\": 685, \"at\": 1791579396.9779844}, {\"repo\": \"langfuse\", \"task\": 691, \"at\": 1791582228.64054}, {\"repo\": \"langfuse\", \"task\": 692, \"at\": 1791582270.2495935}, {\"repo\": \"openclaw\", \"task\": 695, \"at\": 1791590288.4433398}, {\"repo\": \"openclaw\", \"task\": 696, \"at\": 1791590378.950927}, {\"repo\": \"comfyui\", \"task\": 698, \"at\": 1791591840.3986018}]"
       },
@@ -11664,16 +11673,24 @@
         "value": "{\"at\": 1791592763.4943004, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"error\": 4, \"human_wait\": 3, \"queued\": 1, \"running\": 1, \"skipped\": 35, \"validation_wait\": 3}, \"respond\": {\"blocked\": 3, \"done\": 2, \"human_wait\": 1, \"skipped\": 3}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791592763.5711696"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791592773.213112"
       },
       {
         "key": "detector_heartbeat",
         "value": "1791592773.215039"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791592778.5730965"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791590322.764189, \"comfyui\": 1791592782.2257864, \"hermes\": 1791585439.909747, \"langfuse\": 1791582260.90761, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
+      },
+      {
+        "key": "task:699",
+        "value": "{\"started\": 1791592782.2260556, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0}"
       }
     ],
     "calls": [
