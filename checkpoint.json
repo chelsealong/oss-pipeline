@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791613617.77346,
+  "saved_at": 1791613623.4713917,
   "tables": {
     "tasks": [
       {
@@ -5080,10 +5080,10 @@
         "repo": "comfyui",
         "number": 16787,
         "note": "",
-        "status": "running",
+        "status": "done",
         "created": 1791167067.060218,
-        "updated": 1791613117.4951246,
-        "result": "review: VALIDATION_ENVIRONMENT: The regression test cannot collect because PyTorch is missing, and Ruff is unavailable. Syntax compilation and git diff --check pass, but the claimed failing-before/passing-after result and PR body’s test claims remain unverified. No applicable pre-submission human-review requirement was found.",
+        "updated": 1791613623.4446664,
+        "result": "https://github.com/Comfy-Org/ComfyUI/pull/16933",
         "attempts": 5
       },
       {
@@ -11981,20 +11981,12 @@
         "value": "1791613332.8713462"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791613554.63294, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 1, \"error\": 3, \"human_wait\": 2, \"queued\": 4, \"retry_wait\": 1, \"running\": 1, \"skipped\": 39, \"validation_wait\": 3}, \"respond\": {\"blocked\": 2, \"done\": 3, \"human_wait\": 1, \"running\": 1, \"skipped\": 3}}}"
-      },
-      {
         "key": "usage:694:2:generation",
         "value": "{\"task\": 694, \"repo\": \"NousResearch/hermes-agent\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1791613580.4338152, \"seconds\": 386.284, \"tokens\": {\"totalTokens\": 4771214, \"inputTokens\": 4764174, \"cachedInputTokens\": 4661248, \"cacheWriteInputTokens\": 0, \"outputTokens\": 7040, \"reasoningOutputTokens\": 1505}, \"first_event_ms\": 1791613198354, \"last_event_ms\": 1791613580417, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "task:694",
         "value": "{\"started\": 1791613035.9771569, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/694/attempt-2\", \"attempt\": 2, \"phase\": \"review\", \"base\": \"502e1f1a6bf69a81b156d1e1e8d8ba40214403e2\", \"phase_started\": 1791613582.6485214, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1791585516.012523, \"recovery_checked_at\": 1791610039.1318388, \"remote_base\": \"4c0e7e6dfd001dd01105c065368ed98bc1e4a5b0\", \"base_update\": {\"original_head\": \"4c0e7e6dfd001dd01105c065368ed98bc1e4a5b0\", \"before\": \"4c0e7e6dfd001dd01105c065368ed98bc1e4a5b0\", \"base\": \"502e1f1a6bf69a81b156d1e1e8d8ba40214403e2\", \"upstream\": \"dce1e9b37581dd62e480a9064dc04a709c2940d3\"}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791613603.7088215"
       },
       {
         "key": "health",
@@ -12013,8 +12005,16 @@
         "value": "1791613615.2652407"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791613617.7995765, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 1, \"error\": 3, \"human_wait\": 2, \"queued\": 4, \"retry_wait\": 1, \"running\": 1, \"skipped\": 39, \"validation_wait\": 3}, \"respond\": {\"blocked\": 2, \"done\": 3, \"human_wait\": 1, \"running\": 1, \"skipped\": 3}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791613618.7105117"
+      },
+      {
         "key": "task:391",
-        "value": "{\"started\": 1791613117.495161, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/391/attempt-5\", \"attempt\": 5, \"phase\": \"publishing\", \"base\": \"0df64eb242b7c5759c3e86afd5d1846d923b1033\", \"generation_started\": 1791168187.9516895, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791613293.621828, \"recovery_checked_at\": 1791609965.425627, \"patch_digest\": \"6306309260f304acadedce346a42c1cc4d251b55ebe8faa53e0c0337fd58f6bf\", \"last_execution_phase\": \"review\", \"finished\": 1791612298.2031274, \"resume_progress\": {\"bundle\": \"391-4.json\", \"sha256\": \"e5d0a5d465747cd5abcda45c22ec7a14042594b4e16923781279599c0eb2f572\", \"base\": \"0df64eb242b7c5759c3e86afd5d1846d923b1033\", \"phase\": \"generation\"}, \"policy_gate_rechecked\": true, \"progress_restored\": true, \"restored_from\": \"391-4.json\", \"explicit_quota_resume\": {\"at\": 1791611441.926364, \"canary\": 38028627575, \"previous_attempts\": 3, \"reason\": \"User reported usage reset and explicitly requested resuming work; unchanged call ledger and attempt IDs.\"}, \"explicit_validation_resume\": {\"at\": 1791612954.337226, \"canary\": 38030142880, \"source_head\": \"08ff93931bec2ca5aae5e3a0a4414719494f6f20\", \"prior_state\": \"a0e0d377f29b227c30caa81b8d5074718e721e88\", \"previous_attempts\": 4, \"reason\": \"Audited continuation after repairing the observed generation-to-review virtual-environment handoff; no publication or approval is reused.\"}, \"publication_started\": true, \"branch\": \"fix/codex-comfyui-16787\", \"head\": \"3ae18356c88a2febcee86ff5855f009936f60c5b\"}"
+        "value": "{\"started\": 1791613117.495161, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/391/attempt-5\", \"attempt\": 5, \"phase\": \"done\", \"base\": \"0df64eb242b7c5759c3e86afd5d1846d923b1033\", \"generation_started\": 1791168187.9516895, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791613293.621828, \"recovery_checked_at\": 1791609965.425627, \"patch_digest\": \"6306309260f304acadedce346a42c1cc4d251b55ebe8faa53e0c0337fd58f6bf\", \"last_execution_phase\": \"publishing\", \"finished\": 1791613623.4130409, \"resume_progress\": {\"bundle\": \"391-4.json\", \"sha256\": \"e5d0a5d465747cd5abcda45c22ec7a14042594b4e16923781279599c0eb2f572\", \"base\": \"0df64eb242b7c5759c3e86afd5d1846d923b1033\", \"phase\": \"generation\"}, \"policy_gate_rechecked\": true, \"progress_restored\": true, \"restored_from\": \"391-4.json\", \"explicit_quota_resume\": {\"at\": 1791611441.926364, \"canary\": 38028627575, \"previous_attempts\": 3, \"reason\": \"User reported usage reset and explicitly requested resuming work; unchanged call ledger and attempt IDs.\"}, \"explicit_validation_resume\": {\"at\": 1791612954.337226, \"canary\": 38030142880, \"source_head\": \"08ff93931bec2ca5aae5e3a0a4414719494f6f20\", \"prior_state\": \"a0e0d377f29b227c30caa81b8d5074718e721e88\", \"previous_attempts\": 4, \"reason\": \"Audited continuation after repairing the observed generation-to-review virtual-environment handoff; no publication or approval is reused.\"}, \"publication_started\": true, \"branch\": \"fix/codex-comfyui-16787\", \"head\": \"3ae18356c88a2febcee86ff5855f009936f60c5b\", \"published_at\": 1791613623.4109123, \"publication_outcome\": \"created\"}"
       }
     ],
     "calls": [
