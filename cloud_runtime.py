@@ -112,7 +112,13 @@ def configure(mode):
         'response_slots':2,'fix_slots':1,'max_pending_per_repo':3,'workers':2,
         'public_pr_replies':True,'maintain_existing_prs':True,
         'codex_socket':str(rt.DATA/'codex-host.sock'),
-        'codex_sessions_per_5h':45,'judge_requests_per_hour':120})+'\n')
+        'codex_sessions_per_5h':45,'codex_review_reservations':True,
+        'codex_phase_shares':{'new_fix':24,'maintenance':10,'repair':6,'validation':5},
+        'codex_start_used_percent':85,'codex_stop_used_percent':95,
+        'judge_requests_per_hour':30,'judge_requests_per_day':150,'judge_tokens_per_day':100000,
+        'judge_max_attempts':2,'judge_max_input_bytes':12000,'judge_issue_triage':True,
+        'judge_free_only_required':True,
+        'judge_free_only_models':[m.strip() for m in os.environ.get('QWEN_FREE_ONLY_MODELS','').split(',') if m.strip()]})+'\n')
     rt.DATA.mkdir(exist_ok=True)
 
 def migrate_accounting():

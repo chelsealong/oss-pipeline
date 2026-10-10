@@ -38,11 +38,21 @@ The user selected `gpt-6-sol` for pipeline coding and review on 2026-10-01.
 Use it for both backends and probes; do not fall back to Astra or inherit the
 interactive IDE's model. Continue using the ChatGPT subscription, not API billing.
 
-Qwen/DashScope is used only for the existing cached claim/feedback judge. Every
+Qwen/DashScope is used only for the cached claim/feedback and light issue judge. Every
 actual request is capped (including fallback requests) and requires a healthy
 worker. Authentication/quota failures and unavailable worker heartbeat pause
 model calls. Ordinary read-network failures retry only the affected task, at
 most three attempts; publication ambiguity is never automatically replayed.
+On 2026-10-10 the user confirmed provider-side free-quota-only protection for
+all current models. Require the `QWEN_FREE_ONLY_MODELS` allowlist; never enable
+paid spillover or infer remaining provider balance. Enforce 30 requests/hour,
+150/rolling 24h, 100,000 input+output tokens/rolling 24h and two model attempts.
+Reserve conservatively before HTTP and preserve unknown/failed spending. Keep
+deferred judgments out of active queues without marking feedback handled.
+Codex generation reserves independent review capacity within the existing
+45-turn/5h cap. Use the same authenticated host for read-only quota status;
+85% usage stops new generation and 95% stops ordinary model admission. Preserve
+call history and reviewed publication; no additional auth owner or paid fallback.
 Repository-level PR creation denials place queued fixes in `publication_wait`
 without consuming other repositories' queue space. Existing-PR responses remain
 eligible. Creation-denial holds do not expire merely with time. A bounded

@@ -80,7 +80,13 @@ def account_canary(started):
     if any(row['key']==marker for row in snapshot['tables']['meta']):return
     with rt.db() as db:
         calls=[dict(row) for row in db.execute('SELECT at,kind FROM calls WHERE at>=?',(started,))]
+        allocations=[x for x in rt._meta(db,'codex_allocations',[]) if x['at']>=started]
     snapshot['tables']['calls'].extend(calls)
+    previous=next((row for row in snapshot['tables']['meta'] if row['key']=='codex_allocations'),None)
+    combined=(json.loads(previous['value']) if previous else [])+allocations
+    combined=[x for x in combined if x['at']>time.time()-18000]
+    if previous:previous['value']=json.dumps(combined)
+    else:snapshot['tables']['meta'].append({'key':'codex_allocations','value':json.dumps(combined)})
     snapshot['tables']['meta'].append({'key':marker,'value':json.dumps({'at':time.time(),'calls':len(calls)})})
     work_evidence.atomic(path,json.dumps(snapshot,sort_keys=True).encode())
     command(['git','add','checkpoint.json'],store)

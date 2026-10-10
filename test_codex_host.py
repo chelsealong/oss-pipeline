@@ -6,6 +6,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 import threading
+import time
 import unittest
 from unittest.mock import patch
 import codex_host
@@ -32,6 +33,8 @@ for line in sys.stdin:
     if method=='thread/start':
         serial+=1;t='thread-'+str(serial);threads[t]=p;result={'thread':{'id':t}}
     if method=='turn/start':result={'turn':{'id':p['threadId']}}
+    if method=='account/rateLimits/read':result={'rateLimits':{'primary':{'usedPercent':23,'resetsAt':time.time()+500}}}
+    if method=='test/quota':send({'method':'account/rateLimits/updated','params':{'rateLimits':{'primary':{'usedPercent':91,'resetsAt':time.time()+500}},'ignored_secret':'do-not-store'}})
     send({'id':m['id'],'result':result})
     if method=='turn/start':threading.Thread(target=finish,args=(p,),daemon=True).start()
     if method=='turn/interrupt':event(p['threadId'],'turn/completed',turn={'id':p['turnId'],'status':'interrupted'})
@@ -41,7 +44,7 @@ class HostTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name)
         self.socket=self.root/'host.sock'
-        self.patches=[patch.object(rt,'DATA',self.root),patch.object(rt,'config',return_value={'codex_socket':str(self.socket)})]
+        self.patches=[patch.object(rt,'DATA',self.root),patch.object(rt,'config',return_value={'codex_socket':str(self.socket),'codex_review_reservations':True})]
         for p in self.patches:p.start()
         binary=self.root/'fake-codex';binary.write_text(FAKE);binary.chmod(0o700)
         self.host=codex_host.Host(str(binary))
@@ -83,5 +86,11 @@ class HostTests(unittest.TestCase):
             env=codex_host.clean_environment()
         for name in names:self.assertNotIn(name,env)
         self.assertEqual(env['GH_TOKEN'],'read-only')
+    def test_existing_host_reads_and_routes_global_quota_without_new_turn(self):
+        self.assertEqual(rt.getmeta('codex_quota')['windows'][0]['used_percent'],23)
+        self.host.call('test/quota',{})
+        self.assertEqual(rt.getmeta('codex_quota')['windows'][0]['used_percent'],91)
+        self.assertNotIn('do-not-store',json.dumps(rt.getmeta('codex_quota')))
+        self.assertFalse(self.host.streams)
 
 if __name__=='__main__':unittest.main()

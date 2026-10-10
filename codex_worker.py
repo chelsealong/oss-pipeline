@@ -279,6 +279,8 @@ def healthcheck():
     log('Codex authenticated probe passed')
 
 def finish(task, status, result):
+    import model_budget
+    model_budget.release_review(task['id'])
     previous=rt.task_state(task['id'])
     rt.task_state(task['id'],last_execution_phase=previous.get('phase'),phase=status,terminal=True,finished=time.time())
     work_evidence.capture(task['id'])
@@ -774,6 +776,11 @@ def heartbeat(stop):
         stop.wait(15)
 
 def next_queued(db, holds):
+    for row in db.execute("SELECT * FROM tasks WHERE status='triage_wait'").fetchall():
+        state=rt._meta(db,f"task:{row['id']}",{})
+        if (state.get('retry_after',0)<=time.time() and holds.get(row['repo'],0)<=time.time()
+                and rt._room(db,row['kind'],row['repo'])[0]):
+            db.execute("UPDATE tasks SET status='queued' WHERE id=?",(row['id'],))
     # A repository-level publication denial must not occupy the entire shared
     # admission queue. Keep its work durable and resume only within queue caps.
     for row in db.execute("SELECT id,repo,status FROM tasks WHERE kind='fix' AND status IN ('queued','retry_wait','publication_wait')").fetchall():
@@ -796,9 +803,12 @@ def next_queued(db, holds):
         if row['kind']=='fix' and holds.get(row['repo'],0)>time.time():
             continue
         if row['kind']=='fix' and not state.get('generation_started') and not rt.dispatch_headroom(row['repo'])[0]:continue
+        import model_budget
+        if not model_budget.queue_ready(db,state):continue
         candidates.append(dict(row))
     if not candidates:return None
-    chosen=min(candidates,key=lambda t:(t['kind']!=schedule['prefer'],
+    chosen=min(candidates,key=lambda t:(not bool(rt._meta(db,f"task:{t['id']}",{}).get('resume_progress')),
+        t['kind']!=schedule['prefer'],
         schedule['repos'].get(rt.repo_key(t['repo']),0),t['created']))
     schedule['prefer']='fix' if chosen['kind']=='respond' else 'respond'
     schedule['repos'][rt.repo_key(chosen['repo'])]=time.time()
@@ -807,6 +817,12 @@ def next_queued(db, holds):
 
 def handle_task_error(task,error):
     state=rt.task_state(task['id'])
+    if isinstance(error,rt.JudgeDeferred) and not state.get('folder') and not state.get('publication_started'):
+        delay=21600 if 'triage pending' in str(error) or 'bounded context' in str(error) else 900
+        rt.task_state(task['id'],retry_after=time.time()+delay)
+        with rt.db() as db:
+            db.execute('UPDATE tasks SET attempts=MAX(0,attempts-1) WHERE id=?',(task['id'],))
+        finish(task,'triage_wait',str(error));return
     if isinstance(error,subprocess.TimeoutExpired) and str(error.cmd).startswith('Codex '):
         # A model timeout is not a read-network retry. Capture first; continue
         # once only if a complete unpublished source patch can actually resume.
@@ -826,7 +842,7 @@ def handle_task_error(task,error):
     if cooldown:rt.pause(str(error)[:250],cooldown)
     transient=isinstance(error,subprocess.TimeoutExpired) or bool(re.search(
         r'TLS|SSL|connection reset|Recv failure|connection timeout|HTTP 50[234]|unexpected EOF',str(error),re.I))
-    quota_wait=isinstance(error,rt.Paused) and bool(re.search('budget|share|health|heartbeat|circuit|runtime disabled',str(error),re.I))
+    quota_wait=isinstance(error,rt.JudgeDeferred) or (isinstance(error,rt.Paused) and bool(re.search('budget|quota reserve|share|health|heartbeat|circuit|runtime disabled',str(error),re.I)))
     if not state.get('publication_started') and (quota_wait or ((transient or cooldown) and task.get('attempts',1)<3)):
         rt.task_state(task['id'],retry_after=time.time()+max(60,cooldown or 300))
         finish(task,'retry_wait',str(error))

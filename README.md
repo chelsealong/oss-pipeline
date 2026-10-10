@@ -47,21 +47,40 @@ The cloud supervisor runs three services formerly managed by launchd:
 - `oss-watch`: new issue detection plus rotating backlog scans; retains repository
   exclusions, duplicate checks and dispatch caps from `scan.py` / `watch.py`.
 - `oss-prwatch`: actionable feedback and failing-check detection, every five minutes.
-- `oss-fix`: one serial worker with durable SQLite jobs under `.runtime/`.
+- `oss-fix`: two workers sharing one authenticated host, with durable SQLite jobs under `.runtime/`.
 
 Every coding job has an isolated checkout, bounded generation and independent
 review. The controller checks scope, caps, current ownership/eligibility, and
 exact reviewed patch before committing and pushing. No force pushes or merges.
 Codex-generated work is disclosed; automated review is never described as human.
-Conversational replies, coordination requests and proposed PR closures are kept
-for human follow-up, not automatically posted.
+Independently verified PR replies and necessary updates are authorized. Issue
+coordination requests and proposed PR closures remain human follow-ups.
 
-The existing Qwen/DashScope judge retains cached semantic claim/feedback checks.
-Actual HTTP requests (including fallbacks) are capped at 120/hour. The existing
-45 coding sessions/5h limit includes both generation and review. Judge calls pause
-when the worker is unhealthy, stale, rate-capped or disabled. Network failures
-open a one-minute circuit; other task failures retain a 30-minute circuit.
-Failed/interrupted tasks are preserved and not replayed.
+Qwen/DashScope handles cached claim, feedback and light issue classification;
+it neither writes nor approves code. Requests, including fallback attempts, are
+capped at 30/hour and 150/rolling 24h, with at most two attempts per judgment.
+The rolling 24h input+output allowance is 100,000 tokens. Requests reserve a
+conservative UTF-8 byte estimate plus output/overhead before HTTP; returned usage
+settles the reservation, while failed or unmetered calls retain it. Historical
+requests stay in the count; historical tokens are explicitly unknown.
+Only models in repository variable `QWEN_FREE_ONLY_MODELS` are admitted. The user
+confirmed the provider's free-quota-only switch on October 10; this allowlist
+records that confirmation, not an API check of provider settings or balances.
+Missing configuration fails closed. Quota/authentication errors retain work.
+Concurrent cache writes merge atomically and identical requests share a lock.
+Oversized, unavailable or uncertain judgments retain pending feedback/issues;
+discussion changes invalidate issue verdicts. Pending candidates rotate fairly.
+
+The existing 45 Codex turns/5h ceiling includes generation and independent
+review. Generation reserves its next review slot. Soft allocation targets are
+24 new-fix, 10 maintenance, 6 repair and 5 validation turns; idle capacity can
+be borrowed and these targets are not additional quotas. The queue prioritizes
+retained patches. The existing authenticated host reads official quota without
+another login or inference probe: stop fresh generation at 85% used and ordinary
+model admission at 95%. Unknown/stale quota falls back to the durable call cap.
+These local turn counts are not the provider's token-based subscription balance.
+Reviewed publication does not need fresh inference headroom. Budget state and
+actual canary spending survive cloud handover; failed work is not blindly replayed.
 
 `state/runtime.json` is local deployment configuration (ignored by git).
 `python3 runtime.py` prints queue, heartbeat, model-call counts and recent results.

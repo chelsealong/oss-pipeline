@@ -705,28 +705,33 @@ def retain_for_vetting(key: str, node: dict) -> None:
 def recheck_pending_vet(keys: list[str], limit: int = 4) -> int:
     """Refresh durable discoveries before vetting; never admit a stale snapshot."""
     rows=pending_vet();accepted=checked=0
-    for key in keys:
-        for number in sorted(list(rows.get(key,{})),key=int,reverse=True):
-            if checked>=limit or not rt.ready()[0]:
-                save_pending_vet(rows);return accepted
-            checked+=1;cfg=scan.REPOS[key]
-            try:
-                issue=json.loads(scan.gh(['api',f"repos/{cfg['upstream']}/issues/{number}"],kind='other'))
-                if issue.get('state')!='open' or issue.get('pull_request'):
-                    del rows[key][number];continue
-                ok,why,extra=scan.vet(cfg,cfg['upstream'],issue)
-            except Exception as error:
-                log(f'  [{key}] #{number} pending vet remains: {str(error)[:100]}')
-                continue
-            if ok:
-                append_candidate(key,{'number':int(number),'title':issue['title'][:160],
-                    'url':issue['html_url'],'created_at':issue['created_at'],
-                    'reason':'clear after pending vet','age_hours':scan.age_hours(issue['created_at']),**extra})
-                accepted+=1
-                if not NO_TRIGGER:trigger_fix(key,int(number))
-            elif MIN_AGE_MARK in why:
-                defer(key,int(number),issue['created_at'])
-            del rows[key][number]
+    ordered=sorted(((key,number) for key in keys for number in rows.get(key,{})),
+                   key=lambda pair:(rows[pair[0]][pair[1]].get('checked_at',0),-int(pair[1])))
+    for key,number in ordered:
+        if rows[key][number].get('retry_after',0)>time.time():continue
+        if checked>=limit or not rt.ready()[0]:
+            save_pending_vet(rows);return accepted
+        checked+=1;cfg=scan.REPOS[key]
+        rows[key][number]['checked_at']=time.time()
+        try:
+            issue=json.loads(scan.gh(['api',f"repos/{cfg['upstream']}/issues/{number}"],kind='other'))
+            if issue.get('state')!='open' or issue.get('pull_request'):
+                del rows[key][number];continue
+            ok,why,extra=scan.vet(cfg,cfg['upstream'],issue)
+        except Exception as error:
+            rows[key][number]['retry_after']=time.time()+(21600 if 'triage pending' in str(error) or 'bounded context' in str(error) else 900)
+            rows[key][number]['reason']=str(error)[:400]
+            log(f'  [{key}] #{number} pending vet remains: {str(error)[:100]}')
+            continue
+        if ok:
+            append_candidate(key,{'number':int(number),'title':issue['title'][:160],
+                'url':issue['html_url'],'created_at':issue['created_at'],
+                'reason':'clear after pending vet','age_hours':scan.age_hours(issue['created_at']),**extra})
+            accepted+=1
+            if not NO_TRIGGER:trigger_fix(key,int(number))
+        elif MIN_AGE_MARK in why:
+            defer(key,int(number),issue['created_at'])
+        del rows[key][number]
     save_pending_vet(rows)
     return accepted
 

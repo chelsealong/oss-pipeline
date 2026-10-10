@@ -938,7 +938,16 @@ def one_pass(seen: dict) -> int:
         # Keeping the announcement's promise: if someone claimed the issue after
         # we opened, the PR comes down. This runs before the merge-window check —
         # standing down matters even on a PR too old to be worth answering.
-        who, claimed_issue = someone_claimed_the_issue(pr)
+        rec = seen.setdefault(key, {"ids": [], "responses": {}})
+        if rec.get('claim_retry_after',0)>time.time():continue
+        try:
+            who, claimed_issue = someone_claimed_the_issue(pr)
+        except rt.JudgeDeferred as error:
+            rec['claim_retry_after']=time.time()+900
+            rec['judge_reason']=str(error)[:300]
+            continue
+        rec.pop('claim_retry_after',None)
+        rec.pop('judge_reason',None)
         if who and not (engaged := has_outside_engagement(pr)):
             stand_down(pr, who, claimed_issue)
             continue
@@ -961,10 +970,17 @@ def one_pass(seen: dict) -> int:
                 continue
 
         fresh = []
+        judge_wait=rec.setdefault('judge_wait',{})
         for item in feedback_items(pr):
             if item["id"] in known:
                 continue
-            ok, why = actionable(item, pr)
+            if judge_wait.get(item['id'],{}).get('retry_after',0)>time.time():continue
+            try:
+                ok, why = actionable(item, pr)
+            except rt.JudgeDeferred as error:
+                judge_wait[item['id']]={'retry_after':time.time()+900,'reason':str(error)[:300]}
+                continue
+            judge_wait.pop(item['id'],None)
             if ok:
                 # NOT marked seen yet. Marking happened here, before the daily
                 # cap was consulted, so anything the cap turned away was recorded

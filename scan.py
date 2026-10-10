@@ -1084,7 +1084,24 @@ def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
     # The author can claim work in the original issue, not just comments.
     author = (issue.get('user') or {}).get('login','')
     if author and author.lower() != 'chelsealong' and '[bot]' not in author:
-        authored_claim, _ = intent.is_claim(body, author=author, default=True)
+        if rt.local() and rt.config().get('judge_issue_triage'):
+            discussion=''
+            if issue.get('comments',0):
+                try:
+                    pages=json.loads(gh(['api','-X','GET','--paginate','--slurp',
+                        f'repos/{upstream}/issues/{num}/comments','-f','per_page=100']))
+                    discussion='\n\n'.join(f"{c['user']['login']} ({c.get('author_association','')}):\n{c.get('body') or ''}"
+                        for page in pages for c in page)
+                except Exception as error:
+                    raise rt.JudgeDeferred('judge discussion lookup unavailable; retain pending work') from error
+            finding=intent.issue_intent(title+'\n\n'+body,author=author,discussion=discussion)
+            authored_claim=finding['claim']
+            if not authored_claim and finding['kind'] in ('QUESTION','DECISION'):
+                # Keep the candidate in pending vetting; a text classification
+                # cannot permanently discard a real bug or maintainer feedback.
+                raise rt.JudgeDeferred('judge triage pending: '+finding['kind']+'; '+finding['evidence'][:240])
+        else:
+            authored_claim, _ = intent.is_claim(body, author=author, default=True)
         if authored_claim:
             return False, f'issue author {author} offers to implement', {}
 
@@ -1143,6 +1160,11 @@ def scan_repo(key: str, limit: int, max_vet: int) -> dict:
             errors.append(f"vet aborted at #{num}: {e}")
             print(f"  ! vet aborted at #{num} (rate limited)", file=sys.stderr)
             break
+        except rt.JudgeDeferred as e:
+            import watch
+            watch.retain_for_vetting(key,{'number':num,'createdAt':it['created_at']})
+            errors.append(f'vet pending at #{num}: {str(e)[:160]}')
+            continue
         rec = {
             "number": num,
             "title": it.get("title", "")[:160],

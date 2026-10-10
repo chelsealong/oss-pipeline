@@ -38,11 +38,16 @@ class Host:
                 stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=errors,
                 env=clean_environment(),text=True,bufsize=1,start_new_session=True)
         self.ids=itertools.count(1);self.pending={};self.streams={};self.lock=threading.Lock()
+        self.quota_stop=threading.Event();self.quota_thread=None
         self.reader=threading.Thread(target=self.read,daemon=True);self.reader.start()
         try:
             self.call('initialize',{'clientInfo':{'name':'oss_pipeline','title':'OSS pipeline','version':'2'},
                 'capabilities':{'experimentalApi':True}})
             self.send({'method':'initialized','params':{}})
+            if rt.config().get('codex_review_reservations'):
+                self.refresh_quota()
+                self.quota_thread=threading.Thread(target=self.quota_loop,daemon=True)
+                self.quota_thread.start()
         except BaseException:
             self.stop();raise
     def send(self,message):
@@ -66,17 +71,31 @@ class Host:
             elif 'id'in message:
                 # approvalPolicy=never: no implicit approval of an unexpected request.
                 self.send({'id':message['id'],'error':{'code':-32601,'message':'Interactive requests are disabled'}})
+            elif message.get('method')=='account/rateLimits/updated':
+                import model_budget
+                model_budget.rate_snapshot(message.get('params',{}))
             else:
                 target=self.streams.get(message.get('params',{}).get('threadId'))
                 if target is not None:target.put(message)
         for target in list(self.pending.values()):target.put({'error':{'message':'app-server exited'}})
         for target in list(self.streams.values()):target.put({'method':'host/exited','params':{}})
+    def refresh_quota(self):
+        import model_budget
+        try:
+            model_budget.rate_snapshot(self.call('account/rateLimits/read',{},timeout=15))
+        except Exception:
+            # No prompt/probe fallback: unknown quota retains the local ceiling.
+            rt.setmeta('codex_quota_read',{'at':time.time(),'status':'unavailable'})
+    def quota_loop(self):
+        while not self.quota_stop.wait(60):self.refresh_quota()
     def stop(self):
+        self.quota_stop.set()
         if self.proc.poll() is None:
             os.killpg(self.proc.pid,signal.SIGTERM)
             try:self.proc.wait(timeout=15)
             except subprocess.TimeoutExpired:os.killpg(self.proc.pid,signal.SIGKILL);self.proc.wait()
         self.reader.join(timeout=5)
+        if self.quota_thread:self.quota_thread.join(timeout=16)
         self.proc.stdin.close();self.proc.stdout.close()
 
 def run_turn(host,request,emit):

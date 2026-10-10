@@ -73,6 +73,10 @@ def ready(*, require_worker=True, check_budget=True):
         return False, 'worker heartbeat stale'
     with db() as c:
         spent = c.execute("SELECT count(*) FROM calls WHERE kind='codex' AND at>?", (time.time()-18000,)).fetchone()[0]
+        if check_budget and cfg.get('codex_review_reservations'):
+            import model_budget
+            ok, why = model_budget.quota_gate(c)
+            if not ok:return ok, why
     if check_budget and spent >= cfg.get('codex_sessions_per_5h', 45):
         return False, 'Codex session budget reached; judge paused too'
     return True, ''
@@ -190,6 +194,8 @@ def reserve_call(kind, *, task=None, phase=None):
         n = c.execute('SELECT count(*) FROM calls WHERE kind=? AND at>?', (kind, time.time()-seconds)).fetchone()[0]
         if n >= limit:
             return False, f'{kind} call budget reached ({limit})'
+        if kind=='judge' and c.execute("SELECT count(*) FROM calls WHERE kind='judge' AND at>?",(time.time()-86400,)).fetchone()[0]>=cfg.get('judge_requests_per_day',150):
+            return False, 'judge daily request budget reached'
         if task and task['kind']=='fix' and phase=='generation':
             import watch,scan
             key=task['repo'];state=_meta(c,f"task:{task['id']}",{})
@@ -207,6 +213,12 @@ def reserve_call(kind, *, task=None, phase=None):
                 _putmeta(c,f"task:{task['id']}",state)
                 _putmeta(c,'fix_sessions',starts)
                 _putmeta(c,'dispatch_budget',budget)
+        if kind=='codex':
+            import model_budget
+            ok,why=model_budget.codex_admit(c,task,phase,n,limit)
+            if not ok:
+                c.rollback()
+                return ok,why
         c.execute('INSERT INTO calls VALUES (?,?)', (time.time(), kind))
         c.execute('DELETE FROM calls WHERE at<?', (time.time()-86400*7,))
     checkpoint()  # Persist spending BEFORE a cloud model request.
@@ -215,10 +227,17 @@ def reserve_call(kind, *, task=None, phase=None):
 class Paused(RuntimeError):
     pass
 
+class JudgeDeferred(Paused):
+    """No judgement is available; keep feedback/candidates pending, never SKIP."""
+    pass
+
 class PersistenceError(RuntimeError):
     pass
 
-def require_judge():
+def require_judge(*, model=None, system='', user=''):
+    if model is not None:
+        import model_budget
+        return model_budget.reserve_judge(model,system,user)
     ok, why = reserve_call('judge')
     if not ok:
         # Propagate, never turn an infrastructure pause into a final verdict.
@@ -238,12 +257,13 @@ def lock(name):
         yield
 
 def status():
+    import model_budget
     with db() as c:
         counts = dict(c.execute('SELECT status,count(*) FROM tasks GROUP BY status').fetchall())
         recent = [dict(r) for r in c.execute('SELECT id,kind,repo,number,status,result,updated FROM tasks ORDER BY id DESC LIMIT 8')]
         calls = dict(c.execute('SELECT kind,count(*) FROM calls WHERE at>? GROUP BY kind', (time.time()-3600,)).fetchall())
         budget=_dispatch_budget(c)
-        active=[dict(r) for r in c.execute("SELECT id,repo,number,kind,status FROM tasks WHERE status IN ('running','queued','retry_wait','publication_wait','capacity_wait','human_wait','validation_wait')")]
+        active=[dict(r) for r in c.execute("SELECT id,repo,number,kind,status FROM tasks WHERE status IN ('running','queued','retry_wait','triage_wait','publication_wait','capacity_wait','human_wait','validation_wait')")]
         for task in active:task['execution']=_meta(c,f"task:{task['id']}",{})
         throughput={kind:dict(c.execute('SELECT status,count(*) FROM tasks WHERE kind=? AND updated>? GROUP BY status',
                     (kind,time.time()-86400)).fetchall()) for kind in ('fix','respond')}
@@ -273,7 +293,7 @@ def status():
     followups.extend({'key':'publication:'+repo,'status':'needs_human','repo':repo,'requires_clearance':True,
         'reason':'Upstream rejected ordinary PR creation; inspect permissions/concurrent PR cap. Time passing or draft creation does not clear the hold; verify a newer ordinary creation.'}
         for repo,until in publication_holds().items())
-    return {'config': config(), 'ready': ready(), 'health': getmeta('health'),
+    return {'config': config(), 'ready': ready(), 'model_budgets': model_budget.status(), 'health': getmeta('health'),
             'pause': getmeta('pause'), 'tasks': counts, 'recent': recent, 'calls_last_hour': calls,
             'active':active,'dispatch_budget':budget,'throughput_24h':throughput,'human_followups':followups,
             'publication_outcomes_24h':publication_outcomes,
