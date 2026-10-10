@@ -13,6 +13,25 @@ import runtime as rt
 class RequiredCheckFailed(RuntimeError):pass
 
 
+def validation_environment(work, env):
+    """Carry ignored task-local Python dependencies into a fresh review thread."""
+    for name in ('.venv','venv'):
+        root=work/name
+        if (not root.resolve().is_relative_to(work.resolve()) or not (root/'pyvenv.cfg').is_file()
+                or not (root/'bin/python').is_file()):continue
+        ignored=subprocess.run(['git','check-ignore','-q',name+'/pyvenv.cfg'],cwd=work,capture_output=True)
+        if ignored.returncode:continue
+        env['VIRTUAL_ENV']=str(root)
+        env['PATH']=str(root/'bin')+os.pathsep+env.get('PATH',os.defpath)
+        return ('\nController validation environment: the existing ignored virtual environment is '+str(root)+'. '
+            'Use its explicit interpreter '+str(root/'bin/python')+' for Python tests and its bin directory for Ruff/tools. '
+            'Dependencies installed during generation persist in this same checkout; a fresh review thread must independently rerun '
+            'checks in that environment. A login shell may reset PATH, so use absolute executable paths when necessary. '
+            'Missing packages in system Python do not establish a validation blocker. Inspect the existing environment and the '
+            'recorded commands before returning VALIDATION_ENVIRONMENT; never accept prior test claims without checking them.\n')
+    return ''
+
+
 def github_throttle(error):
     return bool(re.search(r'(?:GraphQL|gh failed|HTTP 429).*?(?:rate.limit|too many)|secondary rate limit|API rate limit already exceeded',str(error),re.I|re.S))
 

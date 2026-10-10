@@ -130,6 +130,12 @@ The initial October 10 repair missed this case. Its exact pre-model false-confli
 checkout error may resume once after verifying the unchanged remote head and
 unpublished empty-attempt evidence. Preserve attempt IDs and all prior spending;
 never turn real merge conflicts or ambiguous publication into a retry.
+Fresh generation/review threads share their checkout but not shell activation.
+The controller carries an existing ignored .venv into the next thread's PATH
+and prompt, with an explicit interpreter path for login shells. A system-Python
+import failure alone is not proof that task-local validation is unavailable.
+Both concurrent canaries must verify a dependency created only in generation's
+virtual environment from the fresh independent review thread.
 Uncited, metadata-only human-attestation blocks receive one fresh policy review,
 never an automatic approval. The matching historical backlog resumes once from
 retained patches after remote reconciliation; cited upstream requirements and

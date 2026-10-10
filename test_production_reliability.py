@@ -58,6 +58,33 @@ class ProductionReliabilityTests(unittest.TestCase):
             worker.process_one(task)
         self.assertEqual(self.status(task),'skipped');cleanup.assert_not_called()
         with rt.db() as db:self.assertEqual(db.execute('SELECT result FROM tasks WHERE id=?',(task['id'],)).fetchone()[0],'issue closed')
+    def test_fresh_review_thread_uses_generation_virtual_environment(self):
+        task=self.task();folder,work,base=self.checkout(task)
+        (work/'.gitignore').write_text('.venv/\n')
+        subprocess.run([sys.executable,'-m','venv','--without-pip',str(work/'.venv')],check=True)
+        python=work/'.venv/bin/python'
+        site=Path(subprocess.check_output([str(python),'-c','import sysconfig; print(sysconfig.get_path("purelib"))'],text=True).strip())
+        (site/'oss_test_only_dependency.py').write_text('VALUE = 42\n')
+        self.assertNotEqual(subprocess.run([sys.executable,'-c','import oss_test_only_dependency'],cwd=work,capture_output=True).returncode,0)
+        cfg=rt.config()|{'codex_socket':str(self.root/'fake.sock'),'cloud_environment':True}
+        def execute(request,output):
+            environment=dict(os.environ)|request['cache_env']
+            result=subprocess.run(['python','-c','import oss_test_only_dependency as d; print(d.VALUE)'],cwd=work,env=environment,capture_output=True,text=True,check=True)
+            self.assertEqual(result.stdout.strip(),'42')
+            self.assertEqual(environment['VIRTUAL_ENV'],str(work/'.venv'))
+            self.assertIn(str(python),request['prompt'])
+            return json.dumps({'verdict':'APPROVE','reason':'verified local dependency','tests_verified':True,'repairable':False})
+        with patch.object(rt,'config',return_value=cfg),patch.object(worker,'binary',return_value='/fake/codex'),patch.object(codex_host,'execute',side_effect=execute):
+            worker._agent('Independently review.',work,folder/'review.json',worker.REVIEW_SCHEMA,task=task)
+    def test_tracked_virtual_environment_is_not_implicitly_selected(self):
+        task=self.task();folder,work,base=self.checkout(task)
+        root=work/'.venv';(root/'bin').mkdir(parents=True)
+        (root/'pyvenv.cfg').write_text('test');(root/'bin/python').write_text('test')
+        (work/'.gitignore').write_text('.venv/\n')
+        self.git(work,'add','-f','.venv/pyvenv.cfg')
+        env={'PATH':'/usr/bin'}
+        self.assertEqual(execution.validation_environment(work,env),'')
+        self.assertEqual(env,{'PATH':'/usr/bin'})
     def test_retry_claim_cannot_erase_completed_logs_or_patch(self):
         task=self.task();folder,work,base=self.checkout(task)
         (work/'value.py').write_text('value = 2\n')

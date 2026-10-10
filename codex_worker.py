@@ -168,6 +168,7 @@ def _agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_ke
     if bundled_rg:
         tool_dirs.append(str(bundled_rg[-1].parent))
     env['PATH'] = ':'.join(tool_dirs+[env.get('PATH','/usr/bin:/bin')])
+    if not probe:prompt+=execution.validation_environment(work,env)
     if cache is not None:
         env.update({'OSS_TASK_CACHE':str(cache),
                     'COREPACK_HOME':str(cache/'corepack'),
@@ -194,7 +195,7 @@ def _agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_ke
         if cache is not None:roots.append(str(cache))
         if repo_key=='hermes' and cache is not None:roots.append(str(scratch))
         cache_names=('OSS_TASK_CACHE','COREPACK_HOME','XDG_CACHE_HOME','XDG_DATA_HOME','npm_config_cache',
-                     'npm_config_store_dir','CARGO_HOME','RUSTUP_HOME','UV_CACHE_DIR','UV_PYTHON_INSTALL_DIR')
+                     'npm_config_store_dir','CARGO_HOME','RUSTUP_HOME','UV_CACHE_DIR','UV_PYTHON_INSTALL_DIR','PATH','VIRTUAL_ENV')
         request={'prompt':prompt,'work':str(work),'roots':roots,'schema':schema,'model':model,
             'effort':effort,'cache_env':{k:env[k] for k in cache_names if k in env},
             'timeout':timeout,'probe':probe,'phase':output.stem}
@@ -739,10 +740,13 @@ def canary(task):
     (folder/'before-tests.txt').write_text(before.stdout+before.stderr)
     if before.returncode==0:raise RuntimeError('canary baseline unexpectedly passed')
     rt.task_state(task['id'],base=git(work,'rev-parse','HEAD'))
-    result=agent('This is a pipeline canary, no upstream repository or publishing. Read the two Python files. Fix sum_values to add its arguments. Do not change the tests. Run python3 -m unittest -v in the foreground. Also verify that RUSTUP_HOME and CARGO_HOME are writable by creating a small probe file in each supplied cache. Create an ignored node_modules/probe/index.js exporting 42, and verify node can require it from this checkout. Verify node_modules is ignored by git. Do not commit or use network tools. Return READY with actual test evidence and pr_body as an empty string in the required JSON. This also checks the production response schema without posting.',work,folder/'generation.json',RESPONSE_SCHEMA,timeout=240,task=task)
+    result=agent('This is a pipeline canary, no upstream repository or publishing. Read the two Python files. Fix sum_values to add its arguments. Do not change the tests. Create an ignored .venv with python3 -m venv --without-pip. Put a test-only module named oss_canary_dependency.py containing VALUE=42 in that virtual environment site-packages (locate it with .venv/bin/python and sysconfig.get_path("purelib")); do not put the module in the source directory. Run .venv/bin/python -m unittest -v and import that module using the same interpreter. Leave the ignored .venv in place for independent review. Also verify that RUSTUP_HOME and CARGO_HOME are writable by creating a small probe file in each supplied cache. Create an ignored node_modules/probe/index.js exporting 42, and verify node can require it from this checkout. Verify both dependency directories are ignored by git. Do not commit or use network tools. Return READY with actual test evidence and pr_body as an empty string in the required JSON. This also checks the production response schema without posting.',work,folder/'generation.json',RESPONSE_SCHEMA,timeout=240,task=task)
     if result['outcome']!='READY':raise RuntimeError('canary generation '+result['outcome']+': '+result['reason'][:1200])
     review=agent(f'''This is an independent canary review, with no upstream publication.
-Inspect git diff and run python3 -m unittest -v. Verify the ignored node_modules/probe module
+Inspect git diff and run the tests using the controller-supplied validation interpreter.
+Independently import oss_canary_dependency and check VALUE==42 with that interpreter;
+this test dependency must be available from the ignored environment left by generation.
+Verify the ignored node_modules/probe module
 can be required by node and returns 42, and RUSTUP_HOME and CARGO_HOME are writable.
 Read README.md as this fixture's upstream publication policy and {folder/'context.json'}.
 Assess publication eligibility, even though the controller will publish nothing in this canary.
@@ -750,7 +754,10 @@ Assess publication eligibility, even though the controller will publish nothing 
 Do not edit source or commit. Set tests_verified according to actual test results and
 repairable=false. Return the appropriate verdict under the fixture's stated policy.
 ''',work,folder/'review.json',REVIEW_SCHEMA,timeout=240,task=task)
-    after=run([sys.executable,'-m','unittest','-v'],cwd=work)
+    after=run([str(work/'.venv/bin/python'),'-m','unittest','-v'],cwd=work)
+    run([str(work/'.venv/bin/python'),'-c','import oss_canary_dependency as d; assert d.VALUE == 42'],cwd=work)
+    if subprocess.run([sys.executable,'-c','import oss_canary_dependency'],cwd=work,capture_output=True).returncode==0:
+        raise RuntimeError('canary dependency must be isolated from system Python')
     expected='BLOCK' if requires_human else 'APPROVE'
     if review['verdict']!=expected or not review['tests_verified']:
         raise RuntimeError('canary review failed: expected '+expected+': '+review['reason'][:1200])
