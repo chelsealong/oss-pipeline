@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791612278.6830895,
+  "saved_at": 1791612298.2473276,
   "tables": {
     "tasks": [
       {
@@ -5080,10 +5080,10 @@
         "repo": "comfyui",
         "number": 16787,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1791167067.060218,
-        "updated": 1791611586.6567996,
-        "result": "Codex: {'message': 'You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 14th, 2026 3:48 AM.', 'codexErrorInfo': 'usageLimitExceeded', 'additionalDetails': None, 'misalignment': None}",
+        "updated": 1791612298.2397933,
+        "result": "review: VALIDATION_ENVIRONMENT: The regression test cannot collect because PyTorch is missing, and Ruff is unavailable. Syntax compilation and git diff --check pass, but the claimed failing-before/passing-after result and PR body’s test claims remain unverified. No applicable pre-submission human-review requirement was found.",
         "attempts": 4
       },
       {
@@ -11620,10 +11620,6 @@
         "value": "{\"at\": 1791609966.2272534, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
       },
       {
-        "key": "followup:task:391",
-        "value": "{\"status\": \"resumed\", \"task\": 391}"
-      },
-      {
         "key": "recovery_audit:537",
         "value": "{\"at\": 1791609968.5759845, \"safe\": true, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -11940,20 +11936,28 @@
         "value": "{\"started\": 1791611549.7746167, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/537/attempt-4\", \"attempt\": 4, \"phase\": \"remediation\", \"base\": \"23875c06538055b5d79613ecec3f8fc22d502008\", \"last_execution_phase\": \"checkout\", \"finished\": 1791610041.2433875, \"phase_started\": 1791612159.6229012, \"patch_digest\": \"6c2134f1beb9b1084f80861c9b6d4ec411d0ed82f83240153a188a893e5d693d\", \"recovery_checked_at\": 1791609966.3026824, \"resume_progress\": {\"bundle\": \"537-2.json\", \"sha256\": \"c53e14442b0dcc781a23ec127ad097b1d3a1945dadcaae0a453831eca4aa5d84\", \"base\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\", \"phase\": \"review\"}, \"policy_gate_rechecked\": true, \"merge_history_repaired\": {\"at\": 1791611533.8124213, \"checkout_attempt\": 3, \"verified_head\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\"}, \"remote_base\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\", \"base_update\": {\"original_head\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\", \"before\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\", \"base\": \"23875c06538055b5d79613ecec3f8fc22d502008\", \"upstream\": \"dce1e9b37581dd62e480a9064dc04a709c2940d3\"}, \"progress_restored\": true, \"restored_from\": \"537-2.json\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791612236.666764, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:391:4:generation",
         "value": "{\"task\": 391, \"repo\": \"comfyui\", \"attempt\": 4, \"phase\": \"generation\", \"at\": 1791612236.6919909, \"seconds\": 641.42, \"tokens\": {\"totalTokens\": 2451727, \"inputTokens\": 2445324, \"cachedInputTokens\": 2349056, \"cacheWriteInputTokens\": 0, \"outputTokens\": 6403, \"reasoningOutputTokens\": 2106}, \"first_event_ms\": 1791611599133, \"last_event_ms\": 1791612236666, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "task:391",
-        "value": "{\"started\": 1791611586.6568654, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/391/attempt-4\", \"attempt\": 4, \"phase\": \"review\", \"base\": \"0df64eb242b7c5759c3e86afd5d1846d923b1033\", \"generation_started\": 1791168187.9516895, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791612240.626305, \"recovery_checked_at\": 1791609965.425627, \"patch_digest\": \"77674cf2ff6c5103491ab435e1653438cdc9a5dfa29767ade280570547cff5e9\", \"last_execution_phase\": \"generation\", \"finished\": 1791610525.429979, \"resume_progress\": {\"bundle\": \"391-3.json\", \"sha256\": \"76c600c2ae5ed83a35f1c620f7a4ef0615312699d6fb3a9ace9e9ea391529dd3\", \"base\": \"0df64eb242b7c5759c3e86afd5d1846d923b1033\", \"phase\": \"generation\"}, \"policy_gate_rechecked\": true, \"progress_restored\": true, \"restored_from\": \"391-3.json\", \"explicit_quota_resume\": {\"at\": 1791611441.926364, \"canary\": 38028627575, \"previous_attempts\": 3, \"reason\": \"User reported usage reset and explicitly requested resuming work; unchanged call ledger and attempt IDs.\"}}"
+        "key": "worker_heartbeat",
+        "value": "1791612283.421497"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791612268.4196324"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791612298.1706498, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:391:4:review",
+        "value": "{\"task\": 391, \"repo\": \"comfyui\", \"attempt\": 4, \"phase\": \"review\", \"at\": 1791612298.1749928, \"seconds\": 59.781, \"tokens\": {\"totalTokens\": 383544, \"inputTokens\": 380699, \"cachedInputTokens\": 317568, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2845, \"reasoningOutputTokens\": 1150}, \"first_event_ms\": 1791612242951, \"last_event_ms\": 1791612298169, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:391",
+        "value": "{\"status\": \"needs_human\", \"task\": 391, \"repo\": \"comfyui\", \"number\": 16787, \"reason\": \"review: VALIDATION_ENVIRONMENT: The regression test cannot collect because PyTorch is missing, and Ruff is unavailable. Syntax compilation and git diff --check pass, but the claimed failing-before/passing-after result and PR body\\u2019s test claims remain unverified. No applicable pre-submission human-review requirement was found.\", \"base\": \"0df64eb242b7c5759c3e86afd5d1846d923b1033\", \"patch_digest\": \"6306309260f304acadedce346a42c1cc4d251b55ebe8faa53e0c0337fd58f6bf\", \"evidence_bundle\": \"391-4.json.enc\"}"
+      },
+      {
+        "key": "task:391",
+        "value": "{\"started\": 1791611586.6568654, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/391/attempt-4\", \"attempt\": 4, \"phase\": \"validation_wait\", \"base\": \"0df64eb242b7c5759c3e86afd5d1846d923b1033\", \"generation_started\": 1791168187.9516895, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791612240.626305, \"recovery_checked_at\": 1791609965.425627, \"patch_digest\": \"6306309260f304acadedce346a42c1cc4d251b55ebe8faa53e0c0337fd58f6bf\", \"last_execution_phase\": \"review\", \"finished\": 1791612298.2031274, \"resume_progress\": {\"bundle\": \"391-3.json\", \"sha256\": \"76c600c2ae5ed83a35f1c620f7a4ef0615312699d6fb3a9ace9e9ea391529dd3\", \"base\": \"0df64eb242b7c5759c3e86afd5d1846d923b1033\", \"phase\": \"generation\"}, \"policy_gate_rechecked\": true, \"progress_restored\": true, \"restored_from\": \"391-3.json\", \"explicit_quota_resume\": {\"at\": 1791611441.926364, \"canary\": 38028627575, \"previous_attempts\": 3, \"reason\": \"User reported usage reset and explicitly requested resuming work; unchanged call ledger and attempt IDs.\"}}"
       }
     ],
     "calls": [
