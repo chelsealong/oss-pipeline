@@ -71,6 +71,23 @@ class ProductionReliabilityTests(unittest.TestCase):
         worker.handle_task_error(task,subprocess.TimeoutExpired('Codex generation',2400))
         self.assertEqual(self.status(task),'execution_wait');self.assertTrue(rt.ready()[0])
         with rt.db() as db:self.assertIsNone(worker.next_queued(db,{}))
+    def test_deployment_migrates_old_model_retries_without_starting_new_work(self):
+        task=self.task();folder,work,base=self.checkout(task)
+        (work/'value.py').write_text('value = 42\n')
+        worker.finish(task,'retry_wait',"Command 'Codex generation' timed out after 2400 seconds")
+        empty=self.task(2,'comfyui')
+        worker.finish(empty,'retry_wait',"Command 'Codex generation' timed out after 2400 seconds")
+        with patch.object(worker,'agent',side_effect=AssertionError('No model during migration')):
+            self.assertEqual(task_recovery.migrate_model_retries(),[task['id'],empty['id']])
+            self.assertEqual(task_recovery.migrate_model_retries(),[])
+        self.assertEqual(rt.task_state(task['id'])['timeout_continuations'],1)
+        self.assertIsNotNone(rt.task_state(task['id'])['resume_progress'])
+        self.assertEqual(self.status(empty),'execution_wait')
+    def test_deadline_continuation_cannot_exceed_existing_attempt_limit(self):
+        task=self.task();folder,work,base=self.checkout(task)
+        (work/'value.py').write_text('value = 42\n');task['attempts']=3
+        worker.handle_task_error(task,subprocess.TimeoutExpired('Codex generation',2400))
+        self.assertEqual(self.status(task),'execution_wait')
     def test_model_deadline_continues_saved_patch_once_and_never_regenerates_twice(self):
         task=self.task();folder,work,base=self.checkout(task)
         (work/'value.py').write_text('value = 42\n')
@@ -188,6 +205,49 @@ class ProductionReliabilityTests(unittest.TestCase):
         self.assertEqual(self.git(work,'rev-parse','HEAD'),original)
         self.assertEqual(self.git(source,'rev-parse','old-pr'),original)
         self.assertEqual(self.git(work,'status','--porcelain'),'')
+    def run_real_response_controller(self,outcome):
+        source,unused,original=self.response_fixture()
+        task=self.task(repo='openclaw/openclaw',kind='respond')
+        pr={'head':{'sha':original,'ref':'old-pr'},'body':'Existing PR description',
+            'html_url':'https://github.com/openclaw/openclaw/pull/1'}
+        real_run=worker.run
+        def run(args,**kwargs):
+            if args[0]=='gh':
+                self.assertEqual(args[:4],['gh','api','--paginate','--slurp'])
+                return '[[]]'
+            if args[:4]==['git','remote','add','upstream']:args=args[:4]+[source.as_uri()]
+            return real_run(args,**kwargs)
+        def api(path):
+            if path=='repos/chelsealong/openclaw':return {'parent':{'full_name':'openclaw/openclaw'},'clone_url':source.as_uri()}
+            if path=='repos/openclaw/openclaw':return {'default_branch':'main'}
+            if path=='repos/openclaw/openclaw/issues/1':return {'body':'Please update against current main','state':'open'}
+            raise AssertionError('Unexpected API '+path)
+        def agent(prompt,work,output,*args,**kwargs):
+            if output.stem=='generation':
+                if outcome=='READY':(work/'fix').write_text('updated fix\n')
+                value={'outcome':outcome,'reason':'addressed','title':'Update fix against main',
+                       'body':'Verified the requested change. Codex assisted.','tests':'fixture verified','pr_body':''}
+            else:value={'verdict':'APPROVE','tests_verified':True,'repairable':False,'reason':'verified'}
+            output.write_text(json.dumps(value));return value
+        with patch.object(worker,'run',side_effect=run),patch.object(worker,'api',side_effect=api),\
+             patch.object(worker,'response_context',return_value=pr),patch.object(worker,'agent',side_effect=agent),\
+             patch.object(worker.pr_followup,'publish',return_value='https://example.invalid/comment') as post:
+            worker.process(task)
+        self.assertEqual(self.status(task),'done')
+        return source,original,post.call_args,rt.task_state(task['id'])
+    def test_reply_only_controller_uses_remote_head_and_does_not_publish_local_merge(self):
+        source,original,call,state=self.run_real_response_controller('REPLY')
+        self.assertEqual(self.git(source,'rev-parse','old-pr'),original)
+        self.assertEqual(call.args[2],original)
+        self.assertNotEqual(state['base'],original)
+    def test_code_update_controller_publishes_reviewed_fast_forward_after_base_update(self):
+        source,original,call,state=self.run_real_response_controller('READY')
+        new=self.git(source,'rev-parse','old-pr')
+        self.assertNotEqual(new,original)
+        self.git(source,'merge-base','--is-ancestor',original,new)
+        self.assertEqual(call.args[2],new)
+        self.assertEqual(self.git(source,'show','old-pr:fix'),'updated fix')
+        self.assertEqual(state['publication_outcome'],'updated')
     def test_agent_environment_cannot_write_runner_control_files(self):
         names=('GITHUB_STEP_SUMMARY','GITHUB_OUTPUT','GITHUB_ENV','GITHUB_PATH','GITHUB_STATE')
         with patch.dict(os.environ,dict.fromkeys(names,'/runner/protected')):
@@ -205,15 +265,33 @@ class ProductionReliabilityTests(unittest.TestCase):
             (work/'value.py').write_text('value = 7\n')
             execution.managed_check(task,work,folder,'openclaw');self.assertEqual(sandbox.call_count,2)
         self.assertEqual(json.loads((folder/'required-check.json').read_text())['exit_code'],0)
-    def test_failed_required_gate_never_reaches_reviewer(self):
+    def test_failed_required_gate_cannot_be_overridden_by_reviewer(self):
         task=self.task();folder,work,base=self.checkout(task)
         with patch.object(rt,'config',return_value={'cloud_environment':True}),\
              patch.object(validation_setup,'sandbox',return_value=[sys.executable,'-c','raise SystemExit(1)']),\
-             patch.object(worker,'agent') as agent:
-            with self.assertRaises(validation_setup.ValidationUnavailable):
-                worker.review_patch(task,work,folder,'openclaw',base,{},'review')
-            agent.assert_not_called()
+             patch.object(worker,'agent',return_value={'verdict':'APPROVE','tests_verified':True,'repairable':False,'reason':'incorrect approval'}):
+            _,review=worker.review_patch(task,work,folder,'openclaw',base,{},'review')
+            self.assertEqual(review['verdict'],'BLOCK');self.assertFalse(review['tests_verified'])
         self.assertEqual(json.loads((folder/'required-check.json').read_text())['exit_code'],1)
+    def test_failed_required_gate_allows_one_repair_then_requires_passing_gate(self):
+        task=self.task();folder,work,base=self.checkout(task)
+        (work/'value.py').write_text('value = 2\n')
+        result={'outcome':'READY','reason':'fixed','title':'fix','body':'Codex','tests':'focused tests pass'}
+        calls=[]
+        def agent(*args,**kwargs):
+            phase=args[2].stem;calls.append(phase)
+            if phase=='review':return {'verdict':'BLOCK','tests_verified':False,'repairable':True,'reason':'test fixture needs correction'}
+            if phase=='remediation':
+                (work/'value.py').write_text('value = 3\n');return result
+            self.assertNotIn('mandatory controller gate FAILED',args[0])
+            return {'verdict':'APPROVE','tests_verified':True,'repairable':False,'reason':'verified'}
+        command=[sys.executable,'-c',f'from pathlib import Path; assert "value = 3" in Path({str(work / "value.py")!r}).read_text()']
+        with patch.object(rt,'config',return_value={'cloud_environment':True}),\
+             patch.object(validation_setup,'sandbox',return_value=command),patch.object(worker,'agent',side_effect=agent):
+            _,review=worker.review_patch(task,work,folder,'openclaw',base,result,'review')
+        self.assertEqual(calls,['review','remediation','rereview'])
+        self.assertEqual(review['verdict'],'APPROVE')
+        self.assertEqual(json.loads((folder/'required-check.json').read_text())['exit_code'],0)
 
 
 if __name__=='__main__':unittest.main()

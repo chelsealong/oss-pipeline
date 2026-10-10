@@ -10,6 +10,8 @@ import subprocess
 import time
 import runtime as rt
 
+class RequiredCheckFailed(RuntimeError):pass
+
 
 def github_throttle(error):
     return bool(re.search(r'(?:GraphQL|gh failed|HTTP 429).*?(?:rate.limit|too many)|secondary rate limit|API rate limit already exceeded',str(error),re.I|re.S))
@@ -170,4 +172,4 @@ def managed_check(task,work,folder,key):
                 'head':worker.git(work,'rev-parse','HEAD'),'patch_digest':worker.fingerprint(work)}
         report_path.write_text(json.dumps(report,indent=2))
     if status!=0:
-        raise validation.ValidationUnavailable('Required check:changed did not pass; retained required-check.log. No automatic regeneration.')
+        raise RequiredCheckFailed('Required check:changed failed; inspect required-check.log and repair concrete code/test failures before rerunning the gate.')

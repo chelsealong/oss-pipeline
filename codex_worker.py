@@ -380,15 +380,22 @@ def scope_check(work,key):
 def review_patch(task, work, folder, key, base, result, prompt):
     """At most one repair, always followed by a new immutable review."""
     for round_no in range(2):
-        execution.managed_check(task,work,folder,key)
+        gate_failure=None
+        try:execution.managed_check(task,work,folder,key)
+        except execution.RequiredCheckFailed as error:gate_failure=str(error)
+        review_prompt=prompt
         if (folder/'required-check.json').exists():
-            prompt+='\nThe controller ran the required full gate outside model time. Verify required-check.json/log against the current HEAD and patch. Run independent focused checks; an unchanged full gate need not be repeated solely because this is a new review phase.\n'
+            review_prompt+='\nThe controller ran the required full gate outside model time. Verify required-check.json/log against the current HEAD and patch. Run independent focused checks; an unchanged full gate need not be repeated solely because this is a new review phase.\n'
+        if gate_failure:
+            review_prompt+='\nThe mandatory controller gate FAILED. Approval is forbidden. Inspect its log and return BLOCK, repairable=true only for a concrete code/test defect fixable in this checkout; otherwise explain the actual validation obstacle.\n'
         before=fingerprint(work)
         name='review' if round_no==0 else 'rereview'
-        review=agent(prompt,work,folder/(name+'.json'),REVIEW_SCHEMA,timeout=1200,repo_key=key,task=task)
+        review=agent(review_prompt,work,folder/(name+'.json'),REVIEW_SCHEMA,timeout=1200,repo_key=key,task=task)
         if before!=fingerprint(work) or git(work,'rev-parse','HEAD')!=base:
             raise RuntimeError('review changed the patch; approval invalid')
-        if review['verdict']=='APPROVE' and review['tests_verified']:return result,review
+        if review['verdict']=='APPROVE' and review['tests_verified']:
+            if gate_failure:return result,{'verdict':'BLOCK','reason':gate_failure,'tests_verified':False,'repairable':False}
+            return result,review
         if round_no or not review['repairable']:return result,review
         # The rejected version and reasoning survive even if remediation crashes.
         work_evidence.capture(task['id']);rt.checkpoint()
@@ -590,7 +597,7 @@ a replacement PR description. State actual validation and disclose Codex assista
 Do not assert personal human validation.
 '''
     schema=RESPONSE_SCHEMA if kind=='respond' else GEN_SCHEMA
-    prompt+='\nBefore editing, identify required hardware, platform, external services and explicit human oversight. If unavailable, return the specific blocker immediately; do not spend a coding turn on work that cannot be validated or submitted here. Generic optional attestations are not a gate.\n'
+    prompt+='\nBefore editing, identify required hardware, platform and external services. If unavailable, return the specific validation blocker immediately. If upstream explicitly requires human oversight, retain a minimal tested draft for the exact-patch human review workflow and return BLOCKED with reason beginning HUMAN_REVIEW_REQUIRED: before publication review; do not invent approval. Generic optional attestations are not a gate.\n'
     if kind=='respond':
         prompt+='\nThe controller fetched shared history and locally merged current upstream into the PR branch. HEAD is the validation base. Do not rebase/commit yourself. Any approved update will be a fast-forward from the original PR head; a reply-only result will not publish the local merge.\n'
     if key=='openclaw' and rt.config().get('cloud_environment'):
@@ -625,6 +632,10 @@ Do not assert personal human validation.
     if kind=='respond' and not result['body'].strip():
         hold_result(task,'Response code update is missing its factual follow-up reply',work);return
     scope_check(work,key)
+    if kind=='fix':
+        ok,why=fix_eligible(key,cfg,num)
+        if not ok:
+            finish(task,'skipped','Before expensive validation: '+why);return
     result,review=review_patch(task,work,folder,key,base,result,f'''Independently review the uncommitted patch in this checkout for {issue_repo}#{num}.
 Read {folder/'context.json'} and {folder/'generation.json'}, contributor instructions, surrounding code and tests.
 Try to refute it: no-op/already-fixed behavior, correctness, scope, regression evidence, security and duplicates.
@@ -782,7 +793,8 @@ def handle_task_error(task,error):
         # once only if a complete unpublished source patch can actually resume.
         finish(task,'execution_wait',str(error))
         progress=execution.retained_progress(task)
-        if progress and not state.get('publication_started') and not state.get('timeout_continuations'):
+        if (progress and not state.get('publication_started') and not state.get('timeout_continuations')
+                and task.get('attempts',1)<3):
             rt.task_state(task['id'],resume_progress=progress,timeout_continuations=1,retry_after=time.time()+300)
             with rt.db() as db:db.execute("UPDATE tasks SET status='retry_wait' WHERE id=?",(task['id'],))
         else:
@@ -798,7 +810,11 @@ def handle_task_error(task,error):
     quota_wait=isinstance(error,rt.Paused) and bool(re.search('budget|share|health|heartbeat|circuit|runtime disabled',str(error),re.I))
     if not state.get('publication_started') and (quota_wait or ((transient or cooldown) and task.get('attempts',1)<3)):
         rt.task_state(task['id'],retry_after=time.time()+max(60,cooldown or 300))
-        finish(task,'retry_wait',str(error));return
+        finish(task,'retry_wait',str(error))
+        progress=execution.retained_progress(task)
+        if progress:
+            rt.task_state(task['id'],resume_progress=progress);rt.checkpoint()
+        return
     finish(task,'blocked' if isinstance(error,rt.Paused) else 'error',str(error))
 
 def checkpoint_claim(task):

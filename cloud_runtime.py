@@ -199,6 +199,7 @@ def run(mode,seconds):
             cloud_store.restore()
             restored=True
             migrate_accounting()
+            task_recovery.migrate_model_retries()
             requeue_validation_repair()
             if rt.getmeta('runner_restart_after',0)>time.time():
                 print('Cloud restart circuit is cooling down; no work admitted.',flush=True)

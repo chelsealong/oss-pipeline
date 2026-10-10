@@ -12,6 +12,27 @@ import runtime as rt
 
 WAIT_STATES=('capacity_wait','human_wait','validation_wait','execution_wait')
 
+def migrate_model_retries():
+    """Apply the deadline repair to retries left queued by the old deployment."""
+    import execution_support
+    changed=[]
+    with rt.db() as db:
+        tasks=[dict(row) for row in db.execute("SELECT * FROM tasks WHERE status='retry_wait'")]
+    for task in tasks:
+        state=rt.task_state(task['id'])
+        if state.get('publication_started') or state.get('timeout_continuations'):continue
+        if not re.search(r"Command 'Codex .*' timed out",task.get('result','')):continue
+        progress=execution_support.retained_progress(task)
+        if progress and task['attempts']<3:
+            rt.task_state(task['id'],resume_progress=progress,timeout_continuations=1)
+        else:
+            with rt.db() as db:
+                db.execute("UPDATE tasks SET status='execution_wait' WHERE id=? AND status='retry_wait'",(task['id'],))
+            handoff(task)
+        changed.append(task['id'])
+    if changed:rt.checkpoint()
+    return changed
+
 def refresh_publication_holds():
     """Read-only clearance: a newer ordinary PR, never a draft or expired timer."""
     import datetime
