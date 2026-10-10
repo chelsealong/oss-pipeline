@@ -232,6 +232,10 @@ def run(mode,seconds):
             work_evidence.key()  # Never run production without encrypted recovery.
             cloud_store.restore()
             restored=True
+            import repo_limits
+            with rt.db() as db:
+                db.execute('BEGIN IMMEDIATE')
+                repo_limits.hold_pending(db)
             migrate_accounting()
             task_recovery.migrate_model_retries()
             task_recovery.recover_shallow_merge_errors()

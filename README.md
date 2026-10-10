@@ -87,6 +87,15 @@ These local turn counts are not the provider's token-based subscription balance.
 Reviewed publication does not need fresh inference headroom. Budget state and
 actual canary spending survive cloud handover; failed work is not blindly replayed.
 
+Repository allocation (user update, October 10): `repo_limits.py` sets Hermes
+to 8 new PRs/UTC day, OpenClaw and Google ADK to 5 each, and other active repos
+to 3 each. OpenClaw also permits at most 20 open PRs, including drafts. The
+daily window resets at 08:00 Asia/Shanghai. Mem0, LiteLLM, Firecrawl, Gemini CLI,
+Pydantic AI, vLLM and Crawl4AI receive zero model/task quota, including existing
+PR maintenance; pending work is retained in `quota_wait`. Existing PRs are not
+closed. Per-repository task-attempt and five-hour limits remain separate from
+the PR creation caps and retain historical spending across policy changes.
+
 `state/runtime.json` is local deployment configuration (ignored by git).
 `python3 runtime.py` prints queue, heartbeat, model-call counts and recent results.
 `./verify.sh` runs the offline commit gate (syntax, workflow YAML and runtime

@@ -53,6 +53,17 @@ Codex generation reserves independent review capacity within the existing
 45-turn/5h cap. Use the same authenticated host for read-only quota status;
 85% usage stops new generation and 95% stops ordinary model admission. Preserve
 call history and reviewed publication; no additional auth owner or paid fallback.
+The user's later October 10 allocation is authoritative: zero quota for Mem0,
+LiteLLM, Firecrawl, Gemini CLI, Pydantic AI, vLLM and Crawl4AI, including issue
+judgments, new fixes, automatic PR replies and maintenance. Keep their pending
+work in `quota_wait`, preserving patches, attempts and past spending. This
+supersedes LiteLLM's older maintenance exception below. Pydantic AI and vLLM
+remain untracked and explicitly denied; never admit them through default budgets.
+New PR caps per UTC day: Hermes 8, OpenClaw 5, Google ADK 5, every other active
+repo 3. OpenClaw also has a pipeline cap of 20 concurrently open PRs, including
+drafts. Recheck these caps before publication; never close PRs to create space.
+Active repositories retain their separate task-attempt and five-hour shares;
+the user has not requested changing those additional controls in this allocation.
 Repository-level PR creation denials place queued fixes in `publication_wait`
 without consuming other repositories' queue space. Existing-PR responses remain
 eligible. Creation-denial holds do not expire merely with time. A bounded

@@ -19,13 +19,11 @@ import work_evidence
 import task_recovery
 import pr_followup
 import execution_support as execution
+import repo_limits
 
 ME = 'chelsealong'
 EMAIL = 'chelsealong@126.com'
-CAPS = {'spec-kit': 3, 'firecrawl': 4, 'hermes': 20, 'adk': 12, 'dify': 12,
-        'langfuse': 12, 'openclaw': 12, 'comfyui': 12, 'autogpt': 8,
-        'langfuse-python': 8, 'gemini-cli': 8, 'llama-index': 8, 'crawl4ai': 8,
-        'litellm': 8, 'mem0': 8}
+CAPS = repo_limits.PR_CAPS
 GEN_SCHEMA = {'type':'object','properties': {
     'outcome': {'type':'string','enum':['READY','SKIP','BLOCKED']},
     'reason': {'type':'string'}, 'title': {'type':'string'}, 'body': {'type':'string'},
@@ -310,6 +308,7 @@ def hold_result(task,reason,work=None):
     finish(task,status,reason)
 
 def configs(task):
+    if repo_limits.disabled(task['repo']):raise rt.Paused(repo_limits.DISABLED_REASON)
     import scan
     if task['kind']=='fix':
         key=task['repo']; cfg=scan.REPOS[key]
@@ -333,12 +332,15 @@ def fix_eligible(key,cfg,number):
     return ok,why
 
 def cap_ok(key, impl):
+    if repo_limits.disabled(key) or repo_limits.disabled(impl):
+        return False,repo_limits.DISABLED_REASON
     prs=json.loads(run(['gh','pr','list','--repo',impl,'--author',ME,'--state','all','--limit','100',
                        '--search','created:>='+time.strftime('%Y-%m-%d',time.gmtime()),'--json','number']))
-    if len(prs)>=CAPS.get(key,6): return False,'daily PR cap'
-    if key=='openclaw':
+    if len(prs)>=CAPS.get(key,repo_limits.DEFAULT_PR_CAP): return False,'daily PR cap'
+    if key in repo_limits.OPEN_PR_CAPS:
         opens=json.loads(run(['gh','pr','list','--repo',impl,'--author',ME,'--state','open','--limit','100','--json','number']))
-        if len(opens)>=20: return False,'openclaw open PR cap (20)'
+        maximum=repo_limits.OPEN_PR_CAPS[key]
+        if len(opens)>=maximum: return False,f'{key} open PR cap ({maximum})'
     return True,''
 
 def response_context(repo,number):
@@ -776,6 +778,7 @@ def heartbeat(stop):
         stop.wait(15)
 
 def next_queued(db, holds):
+    repo_limits.hold_pending(db)
     for row in db.execute("SELECT * FROM tasks WHERE status='triage_wait'").fetchall():
         state=rt._meta(db,f"task:{row['id']}",{})
         if (state.get('retry_after',0)<=time.time() and holds.get(row['repo'],0)<=time.time()

@@ -37,6 +37,7 @@ import time
 from datetime import datetime, timedelta, timezone
 
 import runtime as rt
+import repo_limits
 import scan  # reuse REPOS, vet(), gh(), QUEUE, STATE
 
 ROOT = pathlib.Path(__file__).resolve().parent
@@ -169,23 +170,20 @@ PIPELINE_REPO = "chelsealong/oss-pipeline"
 # attempts. If a repo starts hitting its number with a full queue of genuinely
 # fresh candidates, raise that repo — and say which measurement asked for it.
 DISPATCH_BUDGET = {
-    # Bruce's decision, 2026-09-23 — do not lower without asking. Set above the
-    # 1.5x rule deliberately: hermes lands by salvage in same-day batches, so
-    # volume is what gets work carried across, and RESCAN_ON_DRAIN now drops a
-    # taken candidate before it is charged, which removes the failure that
-    # drove this down to 25 the day before. Past 20 PRs a day the extra
-    # dispatches stop at fix-one.yml's Daily cap step, before checkout.
-    "hermes": 60,                                    # PR cap 20 — decided, see above
-    "openclaw": 18, "comfyui": 18, "dify": 18,       # PR cap 12
+    # Task-start budgets remain the previous allocation; PR creation caps are
+    # separately reduced by the user's October 10 update in repo_limits.py.
+    "hermes": 60,
+    "openclaw": 18, "comfyui": 18, "dify": 18,
     "adk": 18, "langfuse": 18,
-    "langfuse-python": 12, "gemini-cli": 12,         # PR cap 8
+    "langfuse-python": 12, "gemini-cli": 12,
     "autogpt": 12, "litellm": 12, "llama-index": 12,
     "crawl4ai": 12, "mem0": 12,
-    "spec-kit": 6,                                   # PR cap 3 — mnriem's, do not raise
-    "firecrawl": 6,                                  # PR cap 4
-    "langchain": 9,                                  # PR cap 6 (default)
+    "spec-kit": 6,
+    "firecrawl": 6,
+    "langchain": 9,
 }
-DEFAULT_BUDGET = 9                                   # PR cap 6
+DEFAULT_BUDGET = 9
+DISPATCH_BUDGET.update(dict.fromkeys(repo_limits.DISABLED_REPOS,0))
 BUDGET_FILE = scan.STATE / "dispatch-budget.json"
 
 

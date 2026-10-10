@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import runtime as rt
+import repo_limits
 import json
 import pathlib
 import re
@@ -418,6 +419,12 @@ REPOS: dict[str, dict] = {
     },
 }
 
+# The October 10 allocation supersedes older creation-only pauses. Zero means
+# no automated issue triage, coding, PR replies or maintenance for these repos.
+for _key,_cfg in REPOS.items():
+    if repo_limits.disabled(_key):
+        _cfg.update(paused=repo_limits.DISABLED_REASON,respond_when_paused=False)
+
 # Missed "Hi, I'd like to work on this issue" on dify#39736 and dispatched a
 # fixer at an issue someone had claimed three days earlier. The old pattern
 # only covered "I'll take/work on"; people announce intent in many more ways,
@@ -804,6 +811,7 @@ SESSION_SHARE_OVERRIDE = {"hermes": 30, "openclaw": 15, "adk": 15}
 
 
 def session_share(key: str) -> int:
+    if repo_limits.disabled(key):return 0
     return SESSION_SHARE_OVERRIDE.get(key, SESSION_SHARE_PER_REPO)
 
 

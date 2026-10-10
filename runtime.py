@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 import sqlite3
 import time
+import repo_limits
 
 ROOT = Path(__file__).resolve().parent
 CONFIG = ROOT / 'state/runtime.json'
@@ -103,6 +104,7 @@ def repo_key(repo):
                  if repo in (k,v.get('implements_in') or v['upstream'])),repo)
 
 def _room(c, kind, repo=None):
+    if repo_limits.disabled(repo):return False,repo_limits.DISABLED_REASON
     rows=c.execute("SELECT kind,repo FROM tasks WHERE status IN ('queued','running','retry_wait')").fetchall()
     cfg=config();limit=cfg.get('max_pending',8)
     reserve=cfg.get('response_slots',1) if kind=='fix' else cfg.get('fix_slots',1)
@@ -151,6 +153,7 @@ def publication_holds():
             for row in rows if _meta(c,'publication_clearance:'+row['repo'],{}).get('denied_at')!=row['denied_at']}
 
 def enqueue(kind, repo, number, note='', *, only_new=False):
+    if repo_limits.disabled(repo):return False
     ok, _ = ready()
     if not ok:
         return False
@@ -184,6 +187,7 @@ def enqueue(kind, repo, number, note='', *, only_new=False):
     return True
 
 def reserve_call(kind, *, task=None, phase=None):
+    if task and repo_limits.disabled(task['repo']):return False,repo_limits.DISABLED_REASON
     ok, why = ready()
     if not ok:
         return False, why
@@ -263,7 +267,7 @@ def status():
         recent = [dict(r) for r in c.execute('SELECT id,kind,repo,number,status,result,updated FROM tasks ORDER BY id DESC LIMIT 8')]
         calls = dict(c.execute('SELECT kind,count(*) FROM calls WHERE at>? GROUP BY kind', (time.time()-3600,)).fetchall())
         budget=_dispatch_budget(c)
-        active=[dict(r) for r in c.execute("SELECT id,repo,number,kind,status FROM tasks WHERE status IN ('running','queued','retry_wait','triage_wait','publication_wait','capacity_wait','human_wait','validation_wait')")]
+        active=[dict(r) for r in c.execute("SELECT id,repo,number,kind,status FROM tasks WHERE status IN ('running','queued','retry_wait','triage_wait','quota_wait','publication_wait','capacity_wait','human_wait','validation_wait')")]
         for task in active:task['execution']=_meta(c,f"task:{task['id']}",{})
         throughput={kind:dict(c.execute('SELECT status,count(*) FROM tasks WHERE kind=? AND updated>? GROUP BY status',
                     (kind,time.time()-86400)).fetchall()) for kind in ('fix','respond')}
