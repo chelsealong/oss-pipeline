@@ -140,6 +140,32 @@ class ProductionReliabilityTests(unittest.TestCase):
         response=json.dumps({'resources':{'graphql':{'remaining':0,'reset':reset},'core':{'remaining':12}}})
         with patch.object(execution.subprocess,'run',return_value=subprocess.CompletedProcess([],0,response)):
             self.assertEqual(execution.github_retry_after(),reset+5)
+    def test_missing_optional_attestation_gets_one_fresh_policy_review(self):
+        task=self.task();folder,work,base=self.checkout(task)
+        (work/'value.py').write_text('value = 2\n')
+        missing={'verdict':'BLOCK','tests_verified':True,'repairable':False,
+            'reason':'HUMAN_REVIEW_REQUIRED: context.json has no named human attestation. Technical checks passed.'}
+        approved={'verdict':'APPROVE','tests_verified':True,'repairable':False,'reason':'No applicable human gate; patch verified.'}
+        with patch.object(worker,'agent',side_effect=[missing,approved]) as agent:
+            _,review=worker.review_patch(task,work,folder,'comfyui',base,{},'review')
+        self.assertEqual(review['verdict'],'APPROVE')
+        self.assertEqual([c.args[2].stem for c in agent.call_args_list],['review','review-policy'])
+        missing['reason']='HUMAN_REVIEW_REQUIRED: CONTRIBUTING.md requires human oversight for every contribution.'
+        with patch.object(worker,'agent',return_value=missing) as agent:
+            _,review=worker.review_patch(task,work,folder,'comfyui',base,{},'review')
+        self.assertEqual(review['verdict'],'BLOCK');agent.assert_called_once()
+    def test_old_metadata_only_human_block_rechecks_policy_once_with_retained_patch(self):
+        task=self.task(repo='comfyui');folder,work,base=self.checkout(task)
+        (work/'value.py').write_text('value = 2\n')
+        rt.task_state(task['id'],phase='review')
+        worker.finish(task,'human_wait','review: HUMAN_REVIEW_REQUIRED: context.json has no named human attestation. Technical checks passed.')
+        with patch.object(worker,'run',return_value='[]'),patch.object(task_recovery,'optional_api',return_value=None):
+            self.assertEqual(task_recovery.reconcile(),[task['id']])
+        state=rt.task_state(task['id']);self.assertTrue(state['policy_gate_rechecked'])
+        self.assertIn('resume_progress',state);self.assertFalse(state.get('approval_resume'))
+        worker.finish(task,'human_wait','HUMAN_REVIEW_REQUIRED: context.json has no named human attestation.')
+        rt.task_state(task['id'],recovery_checked_at=0)
+        self.assertEqual(task_recovery.reconcile(),[])
     def test_subjectless_claim_reaches_judge_but_is_not_blindly_true(self):
         for body,claim in [('Yes, PR coming shortly.',True),('Proposed fix (PR to follow)',True),
                            ('Is a PR coming shortly?',False)]:

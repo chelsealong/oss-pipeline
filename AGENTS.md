@@ -124,6 +124,10 @@ Existing PR maintenance fetches a bounded shared history and merges current main
 locally; publication remains a reviewed fast-forward from the original remote
 head. Reply-only tasks never publish that local merge. Cleanup failures remain
 task-local and cannot activate the account circuit breaker.
+Uncited, metadata-only human-attestation blocks receive one fresh policy review,
+never an automatic approval. The matching historical backlog resumes once from
+retained patches after remote reconciliation; cited upstream requirements and
+explicit human-review holds remain enforced.
 
 The 2026-10-07 repair distinguishes `capacity_wait`, `human_wait` and
 `validation_wait`. Waits do not occupy active queue slots or call budgets.

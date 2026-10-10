@@ -379,6 +379,7 @@ def scope_check(work,key):
 
 def review_patch(task, work, folder, key, base, result, prompt):
     """At most one repair, always followed by a new immutable review."""
+    policy_rechecked=False
     for round_no in range(2):
         gate_failure=None
         try:execution.managed_check(task,work,folder,key)
@@ -393,6 +394,16 @@ def review_patch(task, work, folder, key, base, result, prompt):
         review=agent(review_prompt,work,folder/(name+'.json'),REVIEW_SCHEMA,timeout=1200,repo_key=key,task=task)
         if before!=fingerprint(work) or git(work,'rev-parse','HEAD')!=base:
             raise RuntimeError('review changed the patch; approval invalid')
+        if task_recovery.attestation_only_gate(review['reason']) and not policy_rechecked:
+            policy_rechecked=True
+            review=agent(review_prompt+'\nThe previous verdict cited only an absent context.json attestation. '
+                'Re-read current upstream instructions. If human review is mandatory, cite its actual '
+                'source and quote the requirement; do not infer it from missing optional metadata. '
+                'Otherwise assess the exact patch and test evidence normally. This is not human approval '
+                'and cannot waive a genuine upstream or explicit exact-patch human hold.\n',
+                work,folder/(name+'-policy.json'),REVIEW_SCHEMA,timeout=900,repo_key=key,task=task)
+            if before!=fingerprint(work) or git(work,'rev-parse','HEAD')!=base:
+                raise RuntimeError('policy reviewer changed the patch; approval invalid')
         if review['verdict']=='APPROVE' and review['tests_verified']:
             if gate_failure:return result,{'verdict':'BLOCK','reason':gate_failure,'tests_verified':False,'repairable':False}
             return result,review

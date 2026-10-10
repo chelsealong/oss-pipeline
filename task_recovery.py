@@ -85,6 +85,8 @@ def failed_read(reason):
 
 def repaired_infrastructure(task,state):
     if state.get('publication_started'):return False
+    if (task['status']=='human_wait' and not state.get('policy_gate_rechecked')
+            and attestation_only_gate(task.get('result',''))):return True
     reason=task.get('result','')
     phase=state.get('last_execution_phase',state.get('phase'))
     if (phase in ('checkout','generation','review','remediation','rereview')
@@ -92,6 +94,11 @@ def repaired_infrastructure(task,state):
         return True
     return (task['kind']=='respond' and bool(state.get('base'))
         and bool(re.search(r'shallow.*(?:merge base|rebas)|rebas.*shallow',reason,re.I|re.S)))
+
+def attestation_only_gate(reason):
+    """Request a fresh policy review, never waive a cited upstream requirement."""
+    return (bool(re.search(r'HUMAN_REVIEW_REQUIRED:.*context\.json (?:has|contains) no',reason,re.I|re.S))
+        and not re.search(r'CONTRIBUTING|AGENTS\.md|README|https?://|policy|requires? human|duplicate|already (?:open|fix)|recovery gap|also |could not|not independently',reason,re.I))
 
 def wait_kind(reason):
     if re.search(r'HUMAN_REVIEW_REQUIRED:|human (?:oversight|verification|review|signoff|sign-off)|maintainer (?:approval|permission)|coordination required',reason,re.I):
@@ -214,6 +221,8 @@ def audited_unpublished(task):
     return True,'Verified pre-publication failure and no remote branch/PR'
 
 def requeue(task):
+    from execution_support import retained_progress
+    progress=retained_progress(task)
     with rt.db() as db:
         db.execute('BEGIN IMMEDIATE')
         current=db.execute('SELECT * FROM tasks WHERE id=?',(task['id'],)).fetchone()
@@ -221,8 +230,11 @@ def requeue(task):
         if not rt._room(db,current['kind'],current['repo'])[0]:return False
         state=rt._meta(db,f"task:{task['id']}",{})
         if state.get('publication_started'):return False
-        if current['status']=='human_wait':
+        if current['status']=='human_wait' and not attestation_only_gate(current['result']):
             state['approval_resume']=True
+        else:
+            if progress:state['resume_progress']=progress
+            if current['status']=='human_wait':state['policy_gate_rechecked']=True
         state.update(phase='queued',terminal=False,retry_after=0)
         rt._putmeta(db,f"task:{task['id']}",state)
         db.execute("UPDATE tasks SET status='queued',updated=? WHERE id=?",(time.time(),task['id']))
@@ -249,7 +261,7 @@ def reconcile(limit=8):
             task['status']=status=new
             handoff(task)
         if state.get('recovery_checked_at',0)>time.time()-900:continue
-        if status=='human_wait':
+        if status=='human_wait' and not repaired_infrastructure(task,state):
             approval=approval_for(task['id'])
             if not approval or approval.get('base')!=state.get('base') or approval.get('patch_digest')!=state.get('patch_digest'):continue
         if status=='validation_wait':
