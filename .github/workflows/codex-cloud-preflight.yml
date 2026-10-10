@@ -17,6 +17,10 @@ on:
         description: Validate an existing real OpenClaw PR in the controller sandbox (no model or publication)
         type: boolean
         default: false
+      response_rehearsal:
+        description: Rehearse existing Hermes PR base update without model calls or publication
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -142,6 +146,18 @@ jobs:
       - name: Rehearse real OpenClaw required checks without model calls
         if: inputs.production_rehearsal == true
         run: python -u production_rehearsal.py
+      - name: Rehearse real Hermes PR base update without publication
+        if: inputs.response_rehearsal == true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -u response_rehearsal.py
+      - uses: actions/upload-artifact@v4
+        if: always() && inputs.response_rehearsal == true
+        with:
+          name: response-rehearsal-${{ github.run_id }}
+          path: .runtime/response-rehearsal/result.json
+          include-hidden-files: true
+          retention-days: 14
       - name: Show bounded real repository validation diagnostics
         if: failure() && inputs.production_rehearsal == true
         run: |

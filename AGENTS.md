@@ -124,6 +124,12 @@ Existing PR maintenance fetches a bounded shared history and merges current main
 locally; publication remains a reviewed fast-forward from the original remote
 head. Reply-only tasks never publish that local merge. Cleanup failures remain
 task-local and cannot activate the account circuit breaker.
+The response history check must also prove there are no shallow boundaries
+above its candidate merge bases: finding any common ancestor is insufficient.
+The initial October 10 repair missed this case. Its exact pre-model false-conflict
+checkout error may resume once after verifying the unchanged remote head and
+unpublished empty-attempt evidence. Preserve attempt IDs and all prior spending;
+never turn real merge conflicts or ambiguous publication into a retry.
 Uncited, metadata-only human-attestation blocks receive one fresh policy review,
 never an automatic approval. The matching historical backlog resumes once from
 retained patches after remote reconciliation; cited upstream requirements and

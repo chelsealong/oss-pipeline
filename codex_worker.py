@@ -518,6 +518,7 @@ def process_one(task):
         git(work,'checkout','-b',branch,'FETCH_HEAD')
         if git(work,'rev-parse','HEAD')!=pr['head']['sha']:
             raise rt.Paused('PR head moved before checkout')
+        rt.task_state(task['id'],remote_base=pr['head']['sha'])
         merged=execution.update_response_base(work,default,pr['head']['sha'])
         rt.task_state(task['id'],remote_base=pr['head']['sha'],base_update=merged)
     base=git(work,'rev-parse','HEAD')

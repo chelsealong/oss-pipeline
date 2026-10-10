@@ -119,26 +119,45 @@ def restore_progress(task, work, base):
     return True
 
 
+def response_history_complete(work, upstream):
+    """A shallow graph can report an older, incorrect common ancestor."""
+    import codex_worker as worker
+    result=subprocess.run(['git','merge-base','--all','HEAD',upstream],cwd=work,capture_output=True,text=True)
+    if result.returncode==1:return False
+    if result.returncode:raise RuntimeError('Cannot determine PR merge base')
+    shallow=Path(worker.git(work,'rev-parse','--git-path','shallow'))
+    if not shallow.is_absolute():shallow=work/shallow
+    if not shallow.exists():return True
+    # Every path above the candidate bases must be complete. A cutoff on any
+    # of those paths can hide a nearer common ancestor, even when another
+    # (shorter) merge-parent path already reaches an old shared commit.
+    boundary=set(shallow.read_text().splitlines())
+    above=set(worker.git(work,'rev-list','HEAD',upstream,'--not',*result.stdout.split()).splitlines())
+    return not boundary.intersection(above)
+
+
 def update_response_base(work, default, original_head):
     """Merge current main locally, without rewriting or publishing PR history."""
     import codex_worker as worker
     upstream='refs/remotes/upstream/'+default
     for depth in (128,512,2048,8192):
-        result=subprocess.run(['git','merge-base','HEAD',upstream],cwd=work,capture_output=True)
-        if result.returncode==0:break
-        if result.returncode!=1:raise RuntimeError('Cannot determine PR merge base')
+        if response_history_complete(work,upstream):break
         worker.git(work,'fetch','--depth='+str(depth),'upstream',f'{default}:{upstream}')
         worker.git(work,'fetch','--depth='+str(depth),'origin',original_head)
     else:
-        result=subprocess.run(['git','merge-base','HEAD',upstream],cwd=work,capture_output=True)
-        if result.returncode:raise RuntimeError('PR history exceeds bounded merge-base fetch; retained for follow-up')
+        if not response_history_complete(work,upstream):
+            raise RuntimeError('PR history exceeds bounded merge-base fetch; retained for follow-up')
     before=worker.git(work,'rev-parse','HEAD')
     try:
         worker.git(work,'-c','user.name='+worker.ME,'-c','user.email='+worker.EMAIL,
             'merge','--no-edit','--no-ff',upstream,'-m','Merge current upstream '+default+' for PR validation')
-    except Exception:
+    except Exception as error:
+        conflicts=subprocess.run(['git','diff','--name-only','--diff-filter=U'],cwd=work,capture_output=True,text=True)
         subprocess.run(['git','merge','--abort'],cwd=work,capture_output=True)
-        raise RuntimeError('Current upstream conflicts with PR branch; manual conflict resolution required')
+        if conflicts.returncode==0 and conflicts.stdout.strip():
+            raise RuntimeError('Current upstream conflicts with PR branch; manual conflict resolution required: '+
+                ', '.join(conflicts.stdout.splitlines())[:1200]) from error
+        raise
     return {'original_head':original_head,'before':before,'base':worker.git(work,'rev-parse','HEAD'),
             'upstream':worker.git(work,'rev-parse',upstream)}
 

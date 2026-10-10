@@ -12,6 +12,51 @@ import runtime as rt
 
 WAIT_STATES=('capacity_wait','human_wait','validation_wait','execution_wait')
 
+def recover_shallow_merge_errors():
+    """Once-only recovery of the pre-model false-conflict checkout regression."""
+    import codex_worker as worker
+    changed=[]
+    old_error='Current upstream conflicts with PR branch; manual conflict resolution required'
+    with rt.db() as db:
+        tasks=[dict(r) for r in db.execute("SELECT * FROM tasks WHERE kind='respond' AND status='error' AND result=?",(old_error,))]
+    for task in tasks:
+        state=rt.task_state(task['id'])
+        if (state.get('merge_history_repaired') or state.get('publication_started') or state.get('base')
+                or state.get('last_execution_phase')!='checkout'):continue
+        paths=sorted((rt.DATA/'evidence').glob(f"{task['id']}-*.json"),key=lambda p:int(p.stem.split('-')[-1]))
+        bundles=[(p,json.loads(p.read_text())) for p in paths]
+        if not bundles or any(b['execution'].get('publication_started') for _,b in bundles):continue
+        current=bundles[-1][1]
+        if (current['execution'].get('attempt')!=task['attempts'] or current.get('files')
+                or current.get('diff') or current.get('untracked') or current['execution'].get('base')):continue
+        previous=[b for _,b in bundles[:-1] if b['execution'].get('base')]
+        if not previous:continue
+        expected=previous[-1]['execution'].get('remote_base') or previous[-1]['execution']['base']
+        with rt.db() as db:
+            if db.execute('SELECT 1 FROM tasks WHERE kind=? AND repo=? AND number=? AND id>?',
+                          ('respond',task['repo'],task['number'],task['id'])).fetchone():continue
+        try:
+            _,cfg=worker.configs(task);pr=worker.response_context(cfg.get('implements_in') or cfg['upstream'],task['number'])
+            if pr['head']['sha']!=expected:continue
+            with rt.db() as db:
+                db.execute('BEGIN IMMEDIATE')
+                if not rt._room(db,'respond',task['repo'])[0]:continue
+                live=db.execute('SELECT * FROM tasks WHERE id=?',(task['id'],)).fetchone()
+                if live['status']!='error' or live['updated']!=task['updated']:continue
+                state.update(merge_history_repaired={'at':time.time(),'checkout_attempt':task['attempts'],
+                    'verified_head':expected},remote_base=expected,phase='queued',terminal=False,retry_after=0)
+                rt._putmeta(db,f"task:{task['id']}",state)
+                # Keep attempt IDs and the entire spending ledger. The failed
+                # checkout made no model call; this allows one actual retry,
+                # not a reset of prior coding attempts or publication markers.
+                db.execute("UPDATE tasks SET status='queued',updated=? WHERE id=?",(time.time(),task['id']))
+            changed.append(task['id'])
+        except Exception as error:
+            rt.setmeta(f"merge_history_recovery:{task['id']}",{'at':time.time(),'error':str(error)[:350]})
+    if changed:rt.checkpoint()
+    return changed
+
+
 def migrate_model_retries():
     """Apply the deadline repair to retries left queued by the old deployment."""
     import execution_support

@@ -231,6 +231,57 @@ class ProductionReliabilityTests(unittest.TestCase):
         self.assertEqual(self.git(work,'rev-parse','HEAD'),original)
         self.assertEqual(self.git(source,'rev-parse','old-pr'),original)
         self.assertEqual(self.git(work,'status','--porcelain'),'')
+    def test_shallow_old_common_ancestor_does_not_trigger_false_conflicts(self):
+        source=self.root/'source';source.mkdir();self.git(source,'init','-b','main')
+        self.git(source,'config','user.name','Test');self.git(source,'config','user.email','test@example.invalid')
+        (source/'shared').write_text('old\n');self.git(source,'add','.');self.git(source,'commit','-m','root')
+        root=self.git(source,'rev-parse','HEAD');self.git(source,'branch','side')
+        (source/'shared').write_text('base\n');self.git(source,'commit','-am','actual PR base')
+        base=self.git(source,'rev-parse','HEAD');self.git(source,'checkout','-b','old-pr')
+        (source/'shared').write_text('patch\n');self.git(source,'commit','-am','fix')
+        original=self.git(source,'rev-parse','HEAD');self.git(source,'checkout','main')
+        for i in range(8):self.git(source,'commit','--allow-empty','-m','main '+str(i))
+        self.git(source,'checkout','side');(source/'side').write_text('independent\n')
+        self.git(source,'add','.');self.git(source,'commit','-m','short path to old ancestor')
+        self.git(source,'checkout','main');self.git(source,'merge','--no-ff','side','-m','merge side')
+        work=self.root/'checkout';self.git(self.root,'clone','--depth=3',source.as_uri(),str(work))
+        self.git(work,'remote','add','upstream',source.as_uri())
+        self.git(work,'fetch','--depth=3','upstream','main:refs/remotes/upstream/main')
+        self.git(work,'fetch','--depth=3','origin','old-pr');self.git(work,'checkout','-b','old-pr','FETCH_HEAD')
+        self.assertEqual(self.git(work,'merge-base','HEAD','upstream/main'),root)
+        self.assertFalse(execution.response_history_complete(work,'upstream/main'))
+        execution.update_response_base(work,'main',original)
+        self.assertEqual(self.git(work,'merge-base',original,'upstream/main'),base)
+        self.assertEqual((work/'shared').read_text(),'patch\n')
+        self.assertTrue((work/'side').exists())
+        self.git(work,'merge-base','--is-ancestor',original,'HEAD')
+        self.assertEqual(self.git(source,'rev-parse','old-pr'),original)
+    def test_non_conflict_merge_errors_keep_the_actual_cause(self):
+        source,work,original=self.response_fixture();real_git=worker.git
+        def fail_merge(path,*args):
+            if 'merge' in args:raise subprocess.TimeoutExpired('git merge',300)
+            return real_git(path,*args)
+        with patch.object(worker,'git',side_effect=fail_merge):
+            with self.assertRaises(subprocess.TimeoutExpired):execution.update_response_base(work,'main',original)
+        self.assertEqual(self.git(work,'rev-parse','HEAD'),original)
+    def test_false_conflict_recovery_preserves_attempts_and_requires_unchanged_remote(self):
+        task=self.task(repo='NousResearch/hermes-agent',kind='respond');task.update(attempts=3,status='error')
+        old_error='Current upstream conflicts with PR branch; manual conflict resolution required'
+        with rt.db() as db:db.execute("UPDATE tasks SET status='error',attempts=3,result=? WHERE id=?",(old_error,task['id']))
+        rt.task_state(task['id'],attempt=3,phase='error',last_execution_phase='checkout',base=None)
+        evidence=rt.DATA/'evidence';evidence.mkdir()
+        (evidence/f"{task['id']}-2.json").write_text(json.dumps({'execution':{'attempt':2,'base':'a'*40}}))
+        (evidence/f"{task['id']}-3.json").write_text(json.dumps({'execution':{'attempt':3,'base':None},'files':{}}))
+        with patch.object(worker,'response_context',return_value={'head':{'sha':'b'*40}}):
+            self.assertEqual(task_recovery.recover_shallow_merge_errors(),[])
+        with patch.object(worker,'response_context',return_value={'head':{'sha':'a'*40}}):
+            self.assertEqual(task_recovery.recover_shallow_merge_errors(),[task['id']])
+            self.assertEqual(task_recovery.recover_shallow_merge_errors(),[])
+        with rt.db() as db:self.assertEqual(db.execute('SELECT attempts FROM tasks WHERE id=?',(task['id'],)).fetchone()[0],3)
+        self.assertEqual(self.status(task),'queued')
+        self.assertEqual(rt.task_state(task['id'])['remote_base'],'a'*40)
+        with rt.db() as db:db.execute("UPDATE tasks SET status='error' WHERE id=?",(task['id'],))
+        self.assertEqual(task_recovery.recover_shallow_merge_errors(),[])
     def run_real_response_controller(self,outcome):
         source,unused,original=self.response_fixture()
         task=self.task(repo='openclaw/openclaw',kind='respond')
