@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791606941.4264894,
+  "saved_at": 1791606961.7702954,
   "tables": {
     "tasks": [
       {
@@ -9188,10 +9188,10 @@
         "repo": "openclaw",
         "number": 168136,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1791604628.2575722,
-        "updated": 1791604629.9885495,
-        "result": "",
+        "updated": 1791606961.7617579,
+        "result": "review: An open upstream PR, https://github.com/openclaw/openclaw/pull/168179, already closes #168136 and changes the same publisher and test files. This patch also leaves canonical metadata rereads on the one-shot publicAsset path, so stale bytes can still fail publication after an upload succeeds. I verified the three new regressions fail against the original publisher and pass in the patched 50/50 suite. The changed-file gate was stopped before completion after the duplicate was confirmed. No applicable pre-submission human-attestation requirement was found.",
         "attempts": 1
       },
       {
@@ -11818,18 +11818,6 @@
         "value": "1791606528.4827607"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791606683.1643023, \"source\": \"completed task phase\"}"
-      },
-      {
-        "key": "task:707",
-        "value": "{\"started\": 1791604629.988587, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/707/attempt-1\", \"attempt\": 1, \"phase\": \"review\", \"base\": \"9c9b2bbc177b1902f66c8639661ecd02a47e4ce6\", \"generation_started\": 1791604685.6861432, \"dispatch_paid_date\": \"2026-10-10\", \"phase_started\": 1791606685.5834248}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791606879.6141934, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"error\": 3, \"human_wait\": 2, \"queued\": 1, \"running\": 1, \"skipped\": 38, \"validation_wait\": 3}, \"respond\": {\"blocked\": 3, \"done\": 2, \"human_wait\": 1, \"skipped\": 3}}}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791606901.491061"
       },
@@ -11838,16 +11826,28 @@
         "value": "1791606901.4926898"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791606929.503295"
-      },
-      {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:checked",
         "value": "1791606940.6121945"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
         "value": "{\"at\": 1791606941.401887, \"reason\": \"PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791606944.139428, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"error\": 3, \"human_wait\": 2, \"queued\": 1, \"running\": 1, \"skipped\": 38, \"validation_wait\": 3}, \"respond\": {\"blocked\": 3, \"done\": 2, \"human_wait\": 1, \"skipped\": 3}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791606959.5085738"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791606961.351207, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "task:707",
+        "value": "{\"started\": 1791604629.988587, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/707/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"9c9b2bbc177b1902f66c8639661ecd02a47e4ce6\", \"generation_started\": 1791604685.6861432, \"dispatch_paid_date\": \"2026-10-10\", \"phase_started\": 1791606685.5834248, \"patch_digest\": \"152d60d5d6057faa2b364f4183f229a3380f63f751a42e6324bef3fc9dc7a6ac\", \"last_execution_phase\": \"review\", \"finished\": 1791606961.6024277}"
       }
     ],
     "calls": [
