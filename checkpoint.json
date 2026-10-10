@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791609972.0272152,
+  "saved_at": 1791609974.0145426,
   "tables": {
     "tasks": [
       {
@@ -6978,11 +6978,11 @@
         "repo": "NousResearch/hermes-agent",
         "number": 127606,
         "note": "{\"authors\": \"Enough1122\", \"events\": [\"IC_kwDOPRF1G88AAAABZEy1gQ@2026-10-04T07:30:07Z\"], \"followup_policy\": \"2026-10-08-replies-v1\", \"head\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\", \"is_issue\": false, \"previous_task\": 310}",
-        "status": "queued",
+        "status": "running",
         "created": 1791438666.076757,
-        "updated": 1791609968.5876687,
+        "updated": 1791609972.9279373,
         "result": "review: HUMAN_REVIEW_REQUIRED: context.json has no named human signoff for this exact patch and base. The billing-path defect is real: the base omits the reported reset, while the patch carries it through. The proposed reply and PR body accurately describe the checked scope. The focused suite passed (98 passed, 1 Windows-marked test skipped); Ruff, the Windows footgun check, and git diff --check passed. These technical checks cannot replace the missing human review.",
-        "attempts": 2
+        "attempts": 3
       },
       {
         "id": 538,
@@ -11699,10 +11699,6 @@
         "value": "{}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791609890.6957262, \"comfyui\": 1791592782.2257864, \"hermes\": 1791585439.909747, \"langfuse\": 1791582260.90761, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
-      },
-      {
         "key": "recovery_audit:167",
         "value": "{\"at\": 1791609890.2857683, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -11839,10 +11835,6 @@
         "value": "{\"at\": 1791609968.5759845, \"safe\": true, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "task:537",
-        "value": "{\"started\": 1791455360.8828444, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/537/attempt-2\", \"attempt\": 2, \"phase\": \"queued\", \"base\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\", \"last_execution_phase\": \"review\", \"finished\": 1791455738.1702235, \"phase_started\": 1791455636.15389, \"patch_digest\": \"6c2134f1beb9b1084f80861c9b6d4ec411d0ed82f83240153a188a893e5d693d\", \"recovery_checked_at\": 1791609966.3026824, \"resume_progress\": {\"bundle\": \"537-2.json\", \"sha256\": \"c53e14442b0dcc781a23ec127ad097b1d3a1945dadcaae0a453831eca4aa5d84\", \"base\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\", \"phase\": \"review\"}, \"policy_gate_rechecked\": true}"
-      },
-      {
         "key": "followup:task:537",
         "value": "{\"status\": \"resumed\", \"task\": 537}"
       },
@@ -11893,6 +11885,14 @@
       {
         "key": "recovery_audit:674",
         "value": "{\"at\": 1791609972.0157104, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791609890.6957262, \"comfyui\": 1791592782.2257864, \"hermes\": 1791609972.9278064, \"langfuse\": 1791582260.90761, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
+      },
+      {
+        "key": "task:537",
+        "value": "{\"started\": 1791609972.9279795, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 3, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"review\", \"finished\": 1791455738.1702235, \"phase_started\": 1791455636.15389, \"patch_digest\": \"6c2134f1beb9b1084f80861c9b6d4ec411d0ed82f83240153a188a893e5d693d\", \"recovery_checked_at\": 1791609966.3026824, \"resume_progress\": {\"bundle\": \"537-2.json\", \"sha256\": \"c53e14442b0dcc781a23ec127ad097b1d3a1945dadcaae0a453831eca4aa5d84\", \"base\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\", \"phase\": \"review\"}, \"policy_gate_rechecked\": true}"
       }
     ],
     "calls": [
