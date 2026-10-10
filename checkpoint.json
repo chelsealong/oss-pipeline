@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791610045.5900025,
+  "saved_at": 1791610055.5766973,
   "tables": {
     "tasks": [
       {
@@ -5080,11 +5080,11 @@
         "repo": "comfyui",
         "number": 16787,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791167067.060218,
-        "updated": 1791609966.285222,
+        "updated": 1791610055.4758942,
         "result": "review: HUMAN_REVIEW_REQUIRED: context.json has no human attestation for this exact patch and base. Technical checks passed: the regression test failed on the original loader and passed with the patch; the full unit suite, Ruff, and git diff --check passed. Upstream master still matches the checkout base.",
-        "attempts": 2
+        "attempts": 3
       },
       {
         "id": 392,
@@ -11807,10 +11807,6 @@
         "value": "{\"at\": 1791609966.2272534, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
       },
       {
-        "key": "task:391",
-        "value": "{\"started\": 1791353481.631955, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/391/attempt-2\", \"attempt\": 2, \"phase\": \"queued\", \"base\": \"c9d8a6e69c4b5ab7fa0f789e7b988c172cd31fc9\", \"generation_started\": 1791168187.9516895, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791353893.455012, \"recovery_checked_at\": 1791609965.425627, \"patch_digest\": \"77674cf2ff6c5103491ab435e1653438cdc9a5dfa29767ade280570547cff5e9\", \"last_execution_phase\": \"review\", \"finished\": 1791354135.98452, \"resume_progress\": {\"bundle\": \"391-2.json\", \"sha256\": \"47e559d143567d16d7ec9007556c883cfd33d12d74239d4d2f8cf7abf0bdbe9d\", \"base\": \"c9d8a6e69c4b5ab7fa0f789e7b988c172cd31fc9\", \"phase\": \"review\"}, \"policy_gate_rechecked\": true}"
-      },
-      {
         "key": "followup:task:391",
         "value": "{\"status\": \"resumed\", \"task\": 391}"
       },
@@ -11863,26 +11859,6 @@
         "value": "{\"at\": 1791609972.0157104, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791609890.6957262, \"comfyui\": 1791592782.2257864, \"hermes\": 1791609972.9278064, \"langfuse\": 1791582260.90761, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791609978.3948123, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"error\": 3, \"human_wait\": 2, \"queued\": 4, \"running\": 1, \"skipped\": 37, \"validation_wait\": 3}, \"respond\": {\"blocked\": 3, \"done\": 2, \"human_wait\": 1, \"running\": 1, \"skipped\": 3}}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791610039.3638997"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791610040.2512374"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791610040.263425"
-      },
-      {
         "key": "recovery_audit:694",
         "value": "{\"at\": 1791610040.7414663, \"safe\": true, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -11905,6 +11881,30 @@
       {
         "key": "recovery_audit:697",
         "value": "{\"at\": 1791610041.6017213, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791610047.631117, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"error\": 3, \"human_wait\": 2, \"queued\": 4, \"running\": 1, \"skipped\": 37, \"validation_wait\": 3}, \"respond\": {\"blocked\": 2, \"done\": 2, \"error\": 1, \"human_wait\": 1, \"queued\": 1, \"skipped\": 3}}}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791610048.086931"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791610048.093389"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791610054.398909"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791609890.6957262, \"comfyui\": 1791610055.4757128, \"hermes\": 1791609972.9278064, \"langfuse\": 1791582260.90761, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
+      },
+      {
+        "key": "task:391",
+        "value": "{\"started\": 1791610055.475963, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 3, \"phase\": \"claimed\", \"base\": null, \"generation_started\": 1791168187.9516895, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791353893.455012, \"recovery_checked_at\": 1791609965.425627, \"patch_digest\": \"77674cf2ff6c5103491ab435e1653438cdc9a5dfa29767ade280570547cff5e9\", \"last_execution_phase\": \"review\", \"finished\": 1791354135.98452, \"resume_progress\": {\"bundle\": \"391-2.json\", \"sha256\": \"47e559d143567d16d7ec9007556c883cfd33d12d74239d4d2f8cf7abf0bdbe9d\", \"base\": \"c9d8a6e69c4b5ab7fa0f789e7b988c172cd31fc9\", \"phase\": \"review\"}, \"policy_gate_rechecked\": true}"
       }
     ],
     "calls": [
