@@ -18,6 +18,7 @@ import runtime as rt
 import work_evidence
 import task_recovery
 import pr_followup
+import execution_support as execution
 
 ME = 'chelsealong'
 EMAIL = 'chelsealong@126.com'
@@ -108,6 +109,14 @@ def binary():
     return str(candidates[-1])
 
 def agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_key=None, task=None):
+    started=time.monotonic()
+    try:
+        return _agent(prompt,work,output,schema,timeout,probe,repo_key,task)
+    finally:
+        if not probe:
+            execution.record_usage(task,output,started)
+
+def _agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_key=None, task=None):
     if not probe:
         ok, why = rt.reserve_call('codex',task=task,phase=output.stem)
         if not ok:
@@ -171,7 +180,8 @@ def agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_key
                     'UV_CACHE_DIR':str(cache/'uv'),
                     'UV_PYTHON_INSTALL_DIR':str(cache/'uv-python')})
     for name in ('OPENAI_API_KEY','CODEX_API_KEY','ANTHROPIC_API_KEY','CLAUDE_CODE_OAUTH_TOKEN',
-                 'GH_TOKEN','GITHUB_TOKEN','GH_PAT','QWEN_API_KEY','DASHSCOPE_API_KEY','CODEX_AUTH_JSON','OSS_ARTIFACT_KEY'):
+                 'GH_TOKEN','GITHUB_TOKEN','GH_PAT','QWEN_API_KEY','DASHSCOPE_API_KEY','CODEX_AUTH_JSON','OSS_ARTIFACT_KEY',
+                 'GITHUB_STEP_SUMMARY','GITHUB_OUTPUT','GITHUB_ENV','GITHUB_PATH','GITHUB_STATE'):
         env.pop(name, None)
     readonly_github = env.pop('OSS_READONLY_GH_TOKEN', '')
     if readonly_github:
@@ -282,8 +292,7 @@ def finish(task, status, result):
         if relative.startswith(f"jobs/{task['id']}/attempt-"):
             folder=rt.DATA/relative
             with work_evidence.task_lock(task['id']):
-                for name in ('work','tool-cache'):
-                    if (folder/name).is_dir():shutil.rmtree(folder/name)
+                execution.clean_owned_task(task,folder)
 
 def hold_result(task,reason,work=None):
     status=task_recovery.wait_kind(reason)
@@ -371,6 +380,9 @@ def scope_check(work,key):
 def review_patch(task, work, folder, key, base, result, prompt):
     """At most one repair, always followed by a new immutable review."""
     for round_no in range(2):
+        execution.managed_check(task,work,folder,key)
+        if (folder/'required-check.json').exists():
+            prompt+='\nThe controller ran the required full gate outside model time. Verify required-check.json/log against the current HEAD and patch. Run independent focused checks; an unchanged full gate need not be repeated solely because this is a new review phase.\n'
         before=fingerprint(work)
         name='review' if round_no==0 else 'rereview'
         review=agent(prompt,work,folder/(name+'.json'),REVIEW_SCHEMA,timeout=1200,repo_key=key,task=task)
@@ -387,6 +399,8 @@ restrictions. Do not commit, push, post comments, edit tracked manifests/lockfil
 Use the writable caches and ignored local dependencies as in generation. If the objection cannot be
 resolved with permitted local work, return BLOCKED and explain. Refresh the proposed PR title/body and
 actual test evidence in the requested JSON. Never claim human verification. Foreground commands only.
+For cloud OpenClaw work, the controller runs check:changed after your READY result. Run focused
+tests here and leave that full gate to the controller. Read required-check.json/log if present.
 ''',work,folder/'remediation.json',RESPONSE_SCHEMA if task['kind']=='respond' else GEN_SCHEMA,timeout=1200,repo_key=key,task=task)
         if result['outcome']!='READY':
             return result,{'verdict':'BLOCK','reason':result['reason'],'repairable':False,'tests_verified':False}
@@ -398,9 +412,13 @@ actual test evidence in the requested JSON. Never claim human verification. Fore
 def process(task):
     import validation_setup
     with validation_setup.session(task):
-        return process_one(task)
+        try:return process_one(task)
+        except validation_setup.ValidationUnavailable as error:
+            relative=rt.task_state(task['id']).get('folder')
+            work=rt.DATA/relative/'work' if relative else None
+            hold_result(task,'VALIDATION_ENVIRONMENT: '+str(error),work)
 
-def reviewed_reply(task,work,folder,key,base,body,pr_body='',original_body=None):
+def reviewed_reply(task,work,folder,key,base,body,pr_body='',original_body=None,publication_head=None):
     """Review factual replies independently, including honest blocked updates."""
     if not body.strip():return None
     path=folder/'proposed-reply.txt';path.write_text(body)
@@ -426,7 +444,7 @@ was verified, not that all code checks pass. repairable=false. APPROVE only if s
     if review['verdict']!='APPROVE' or not review['tests_verified']:
         rt.setmeta(f"followup:reply:{task['id']}",{'status':'needs_human','reason':review['reason']})
         return None
-    return pr_followup.publish(task,body,base,pr_body=pr_body,original_body=original_body)
+    return pr_followup.publish(task,body,publication_head or base,pr_body=pr_body,original_body=original_body)
 
 def process_one(task):
     if task['kind']=='canary':
@@ -462,7 +480,7 @@ def process_one(task):
     run(['git','clone','--depth=1','--no-checkout',fork['clone_url'],str(work)],timeout=600)
     git(work,'remote','add','upstream','https://github.com/'+impl+'.git')
     default=api('repos/'+impl)['default_branch']
-    git(work,'fetch','--depth=1','upstream',default)
+    git(work,'fetch','--depth=1','upstream',f'{default}:refs/remotes/upstream/{default}')
     if kind=='fix':
         branch=f'fix/codex-{key}-{num}'
         if git(work,'ls-remote','--heads','origin','refs/heads/'+branch):
@@ -482,9 +500,12 @@ def process_one(task):
         git(work,'checkout','-b',branch,'FETCH_HEAD')
         if git(work,'rev-parse','HEAD')!=pr['head']['sha']:
             raise rt.Paused('PR head moved before checkout')
+        merged=execution.update_response_base(work,default,pr['head']['sha'])
+        rt.task_state(task['id'],remote_base=pr['head']['sha'],base_update=merged)
     base=git(work,'rev-parse','HEAD')
     rt.task_state(task['id'],base=base)
     human_review=task_recovery.restore_approved(task,work,base)
+    continued=execution.restore_progress(task,work,base) if not human_review else False
     git(work,'config','user.name',ME);git(work,'config','user.email',EMAIL)
     context={'task':dict(task),'config':{k:list(v) if isinstance(v,set) else v for k,v in cfg.items()},'pr':pr,
              'human_review':human_review}
@@ -569,7 +590,14 @@ a replacement PR description. State actual validation and disclose Codex assista
 Do not assert personal human validation.
 '''
     schema=RESPONSE_SCHEMA if kind=='respond' else GEN_SCHEMA
-    result=agent(prompt,work,folder/'generation.json',schema,timeout=2400,repo_key=key,task=task)
+    prompt+='\nBefore editing, identify required hardware, platform, external services and explicit human oversight. If unavailable, return the specific blocker immediately; do not spend a coding turn on work that cannot be validated or submitted here. Generic optional attestations are not a gate.\n'
+    if kind=='respond':
+        prompt+='\nThe controller fetched shared history and locally merged current upstream into the PR branch. HEAD is the validation base. Do not rebase/commit yourself. Any approved update will be a fast-forward from the original PR head; a reply-only result will not publish the local merge.\n'
+    if key=='openclaw' and rt.config().get('cloud_environment'):
+        prompt+='\nThe controller runs pnpm check:changed --base HEAD after READY and before independent review, outside your model turn. Run focused regression tests and before/after proof now; do not run that full check here. READY requests the controller gate, not publication. State that the full gate is pending; do not claim it passed. All other mandatory validation remains required.\n'
+    if continued:
+        prompt+='\nThe controller restored the previous complete source/test patch. Continue that work, inspect prior evidence, and finish only outstanding checks/corrections; do not restart the investigation from scratch. No prior review is reused.\n'
+    result=agent(prompt,work,folder/'generation.json',schema,timeout=1200 if continued else 2400,repo_key=key,task=task)
     if (key=='langfuse' and result['outcome']=='BLOCKED'
             and task_recovery.wait_kind(result['reason'])=='validation_wait'):
         import validation_setup
@@ -589,7 +617,7 @@ Do not assert personal human validation.
         else:
             if result['outcome']=='REPLY' and git(work,'status','--porcelain'):
                 raise RuntimeError('REPLY must not include source changes')
-            url=reviewed_reply(task,work,folder,key,base,result['body'],result.get('pr_body',''),pr.get('body') or '') if kind=='respond' else None
+            url=reviewed_reply(task,work,folder,key,base,result['body'],result.get('pr_body',''),pr.get('body') or '',pr['head']['sha']) if kind=='respond' else None
             if result['outcome']=='REPLY' and url:finish(task,'done','Replied '+url)
             else:hold_result(task,result['reason']+(' Reply: '+url if url else ''),work)
         return
@@ -635,7 +663,7 @@ Also review pr_body when nonempty; preserve scope/disclosure and do not invent h
         if not ok:finish(task,'blocked','final eligibility: '+why);return
     else:
         current=response_context(impl,num)
-        if current['head']['sha']!=base:raise rt.Paused('PR head moved; refusing push')
+        if current['head']['sha']!=pr['head']['sha']:raise rt.Paused('PR head moved; refusing push')
     title=result['title'].strip().splitlines()[0]
     if not title or re.search(r'Co-Authored-By:',title,re.I):raise RuntimeError('invalid commit title')
     git(work,'-c','user.name='+ME,'-c','user.email='+EMAIL,'commit','-m',title)
@@ -749,6 +777,20 @@ def next_queued(db, holds):
 
 def handle_task_error(task,error):
     state=rt.task_state(task['id'])
+    if isinstance(error,subprocess.TimeoutExpired) and str(error.cmd).startswith('Codex '):
+        # A model timeout is not a read-network retry. Capture first; continue
+        # once only if a complete unpublished source patch can actually resume.
+        finish(task,'execution_wait',str(error))
+        progress=execution.retained_progress(task)
+        if progress and not state.get('publication_started') and not state.get('timeout_continuations'):
+            rt.task_state(task['id'],resume_progress=progress,timeout_continuations=1,retry_after=time.time()+300)
+            with rt.db() as db:db.execute("UPDATE tasks SET status='retry_wait' WHERE id=?",(task['id'],))
+        else:
+            task_recovery.handoff({**task,'result':'Execution deadline reached; retained evidence needs inspection, no full regeneration.'})
+        rt.checkpoint();return
+    if execution.github_throttle(error) and not state.get('publication_started') and task.get('attempts',1)<3:
+        rt.task_state(task['id'],retry_after=execution.github_retry_after(),github_throttled=True)
+        finish(task,'retry_wait',str(error));return
     cooldown=failure_cooldown(error)
     if cooldown:rt.pause(str(error)[:250],cooldown)
     transient=isinstance(error,subprocess.TimeoutExpired) or bool(re.search(
@@ -808,7 +850,7 @@ def main():
                         c.execute("UPDATE tasks SET status='running',attempts=attempts+1,updated=? WHERE id=?",(time.time(),task['id']))
                         task['attempts']+=1
                         state=rt._meta(c,f"task:{task['id']}",{})
-                        state.update(started=time.time(),worker_slot=a.slot,terminal=False,retry_after=0)
+                        execution.claim_state(state,task,a.slot)
                         rt._putmeta(c,f"task:{task['id']}",state)
                 if task:
                     checkpoint_claim(task)  # Persist running state before any side effect.
@@ -831,7 +873,9 @@ def main():
                 if a.once:return
                 time.sleep(10)
             except Exception as e:
-                log('worker error: '+str(e)[:300]);rt.pause(str(e)[:250],1800)
+                log('worker error: '+str(e)[:300])
+                if isinstance(e,rt.PersistenceError) or failure_cooldown(e):rt.pause(str(e)[:250],1800)
+                else:rt.setmeta(f'worker_error:{a.slot}',{'at':time.time(),'error':str(e)[:350]})
                 if a.once:raise
                 time.sleep(15)
 

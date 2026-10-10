@@ -243,6 +243,7 @@ def run(mode,seconds):
             print(json.dumps({'at':time.time(),'ready':s['ready'],'tasks':s['tasks'],'calls':s['calls_last_hour'],
                 'active':s['active'],'dispatch_budget':s['dispatch_budget'],
                 'throughput_24h':s['throughput_24h'],
+                'model_usage_24h':s['model_usage_24h'],
                 'publication_outcomes_24h':s['publication_outcomes_24h']}),flush=True)
             time.sleep(60)
         # Stop admitting work, allow the active task to complete, then hand over.

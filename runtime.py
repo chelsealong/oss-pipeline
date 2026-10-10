@@ -254,6 +254,22 @@ def status():
             state=json.loads(row['value'])
             if state.get('published_at',0)>time.time()-86400:
                 publication_outcomes[state.get('publication_outcome','reconciled')]+=1
+        usage={'phases':0,'phases_with_usage':0,'input_tokens':0,'cached_input_tokens':0,
+               'output_tokens':0,'seconds':0,'per_repo':{}}
+        for row in c.execute("SELECT value FROM meta WHERE key LIKE 'usage:%'"):
+            entry=json.loads(row['value'])
+            if entry.get('at',0)<=time.time()-86400:continue
+            usage['phases']+=1;usage['seconds']+=entry.get('seconds',0)
+            tokens=entry.get('tokens')
+            if not tokens:continue
+            usage['phases_with_usage']+=1
+            repo=usage['per_repo'].setdefault(entry['repo'],{'phases':0,'uncached_input_tokens':0,'output_tokens':0})
+            repo['phases']+=1
+            for source,target in [('inputTokens','input_tokens'),('cachedInputTokens','cached_input_tokens'),('outputTokens','output_tokens')]:
+                usage[target]+=tokens.get(source,0)
+            repo['uncached_input_tokens']+=max(0,tokens.get('inputTokens',0)-tokens.get('cachedInputTokens',0))
+            repo['output_tokens']+=tokens.get('outputTokens',0)
+        usage['uncached_input_tokens']=max(0,usage['input_tokens']-usage['cached_input_tokens'])
     followups.extend({'key':'publication:'+repo,'status':'needs_human','repo':repo,'requires_clearance':True,
         'reason':'Upstream rejected ordinary PR creation; inspect permissions/concurrent PR cap. Time passing or draft creation does not clear the hold; verify a newer ordinary creation.'}
         for repo,until in publication_holds().items())
@@ -261,6 +277,7 @@ def status():
             'pause': getmeta('pause'), 'tasks': counts, 'recent': recent, 'calls_last_hour': calls,
             'active':active,'dispatch_budget':budget,'throughput_24h':throughput,'human_followups':followups,
             'publication_outcomes_24h':publication_outcomes,
+            'model_usage_24h':usage,
             'runner_failure':getmeta('runner_failure'),
             'worker_heartbeat': getmeta('worker_heartbeat'), 'detector_heartbeat': getmeta('detector_heartbeat')}
 

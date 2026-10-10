@@ -32,6 +32,7 @@ def main():
                     # No model calls while paused. Capture a wider GitHub-only
                     # window so quota resets do not leave only five new issues.
                     if time.time()-last_capture>60:
+                        last_capture=time.time()  # Back off failed captures too.
                         watch.sweep(keys,seen,100,bootstrap,vetting=False)
                         import task_recovery
                         task_recovery.refresh_publication_holds()
@@ -45,6 +46,7 @@ def main():
                         held_keys=[key for key in keys if holds.get(key,0)>time.time()]
                         active_keys=[key for key in keys if key not in held_keys]
                         if held_keys and time.time()-last_capture>60:
+                            last_capture=time.time()
                             watch.sweep(held_keys,seen,100,bootstrap,vetting=False)
                             last_capture=time.time()
                         new,accepted=watch.sweep(active_keys,seen,5,bootstrap) if active_keys else (0,0)

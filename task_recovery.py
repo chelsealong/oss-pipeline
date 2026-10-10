@@ -10,7 +10,7 @@ import re
 import time
 import runtime as rt
 
-WAIT_STATES=('capacity_wait','human_wait','validation_wait')
+WAIT_STATES=('capacity_wait','human_wait','validation_wait','execution_wait')
 
 def refresh_publication_holds():
     """Read-only clearance: a newer ordinary PR, never a draft or expired timer."""
@@ -59,7 +59,18 @@ def refresh_publication_holds():
 def failed_read(reason):
     # A connection reset alone could have happened during an old push whose
     # publication marker was lost. Require positive clone/fetch evidence.
-    return bool(re.search(r'Cloning into|\[.*git.*(?:fetch|clone).*timed out',reason,re.I))
+    from execution_support import github_throttle
+    return github_throttle(reason) or bool(re.search(r'Cloning into|\[.*git.*(?:fetch|clone).*timed out',reason,re.I))
+
+def repaired_infrastructure(task,state):
+    if state.get('publication_started'):return False
+    reason=task.get('result','')
+    phase=state.get('last_execution_phase',state.get('phase'))
+    if (phase in ('checkout','generation','review','remediation','rereview')
+            and re.search(r"No such file or directory: .*?/jobs/\d+/attempt-\d+/work/\.aws",reason)):
+        return True
+    return (task['kind']=='respond' and bool(state.get('base'))
+        and bool(re.search(r'shallow.*(?:merge base|rebas)|rebas.*shallow',reason,re.I|re.S)))
 
 def wait_kind(reason):
     if re.search(r'HUMAN_REVIEW_REQUIRED:|human (?:oversight|verification|review|signoff|sign-off)|maintainer (?:approval|permission)|coordination required',reason,re.I):
@@ -166,12 +177,13 @@ def audited_unpublished(task):
     read_failure=failed_read(task.get('result',''))
     phase=state.get('last_execution_phase',state.get('phase'))
     known_phase=phase in ('checkout','generation','review','remediation','rereview','validation')
-    if not read_failure and not (task['status']=='interrupted' and known_phase):
+    if not read_failure and not repaired_infrastructure(task,state) and not (task['status']=='interrupted' and known_phase):
         return False,'No positive evidence of a pre-publication interruption'
     key,cfg=worker.configs(task);impl=cfg.get('implements_in') or cfg['upstream']
     if task['kind']=='respond':
         pr=worker.response_context(impl,task['number'])
-        return bool(state.get('base') and pr['head']['sha']==state['base']),'Current PR head must match the retained base'
+        remote_base=state.get('remote_base') or state.get('base')
+        return bool(remote_base and pr['head']['sha']==remote_base),'Current PR head must match the retained base'
     branch=f"fix/codex-{key}-{task['number']}"
     remote=optional_api(f'repos/{worker.ME}/{impl.split("/")[1]}/git/ref/heads/{branch}')
     if remote:return False,'Remote branch exists; inspect publication before resuming'
@@ -222,10 +234,17 @@ def reconcile(limit=8):
         if status=='validation_wait':
             # A new validation bootstrap can rescue an old environment block once.
             if task['repo']!='langfuse' or state.get('validation_bootstrap_version')=='1':continue
-        if status in ('error','interrupted'):
+        repaired=repaired_infrastructure(task,state)
+        if repaired and task['kind']=='respond':
+            with rt.db() as db:
+                newer=db.execute('SELECT 1 FROM tasks WHERE kind=? AND repo=? AND number=? AND id>? LIMIT 1',
+                    ('respond',task['repo'],task['number'],task['id'])).fetchone()
+            if newer:continue
+        if status=='execution_wait':continue
+        if status in ('error','interrupted') or repaired:
             if task['attempts']>=3 or state.get('publication_started'):continue
             phase=state.get('last_execution_phase',state.get('phase'))
-            if status=='error' and not failed_read(reason):continue
+            if status=='error' and not failed_read(reason) and not repaired:continue
             if status=='interrupted' and phase not in ('checkout','generation','review','remediation','rereview','validation'):continue
         elif status not in WAIT_STATES:continue
         if checked>=limit:break
@@ -235,7 +254,7 @@ def reconcile(limit=8):
             if status=='capacity_wait':
                 key,cfg=worker.configs(task)
                 if not worker.cap_ok(key,cfg.get('implements_in') or cfg['upstream'])[0]:continue
-            elif status in ('error','interrupted'):
+            elif status in ('error','interrupted') or repaired:
                 ok,why=audited_unpublished(task)
                 rt.setmeta(f"recovery_audit:{task['id']}",{'at':time.time(),'safe':ok,'reason':why})
                 if not ok:continue

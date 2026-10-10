@@ -269,7 +269,8 @@ MAYBE_CLAIM = re.compile(
     # "on it", "taking this one". The first version of this filter dropped
     # "working on it" before the model ever saw it — a pre-filter that is too
     # tight simply moves the phrase-list problem one layer up.
-    r"|\b(working|taking|picking|looking|on it|wip)\b",
+    r"|\b(working|taking|picking|looking|on it|wip)\b"
+    r"|\b(?:PR|pull request|patch|fix)\s+(?:coming|to follow|in progress|ready|underway)\b",
     re.I,
 )
 

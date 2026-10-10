@@ -13,6 +13,10 @@ on:
         description: Rehearse synthetic Langfuse database, web and Chromium setup (no model or PR)
         type: boolean
         default: false
+      production_rehearsal:
+        description: Validate an existing real OpenClaw PR in the controller sandbox (no model or publication)
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -135,6 +139,24 @@ jobs:
               validation.prepare_langfuse(work,folder)
           print('Synthetic validation canary passed; no model calls, upstream changes or production writes.')
           PY
+      - name: Rehearse real OpenClaw required checks without model calls
+        if: inputs.production_rehearsal == true
+        run: python -u production_rehearsal.py
+      - name: Show bounded real repository validation diagnostics
+        if: failure() && inputs.production_rehearsal == true
+        run: |
+          for path in .runtime/production-rehearsal/install.log .runtime/production-rehearsal/required-check.log; do
+            if [ -f "$path" ]; then tail -60 "$path"; fi
+          done
+      - uses: actions/upload-artifact@v4
+        if: always() && inputs.production_rehearsal == true
+        with:
+          name: production-rehearsal-${{ github.run_id }}
+          path: |
+            .runtime/production-rehearsal/result.json
+            .runtime/production-rehearsal/required-check.json
+          include-hidden-files: true
+          retention-days: 14
       - name: Show synthetic setup diagnostics
         if: failure() && inputs.validation_canary == true
         run: tail -100 .runtime/validation-canary/validation-setup.log

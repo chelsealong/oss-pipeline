@@ -734,8 +734,32 @@ def recheck_pending_vet(keys: list[str], limit: int = 4) -> int:
 def sweep(keys: list[str], seen: dict[str, list[int]], per_repo: int,
           bootstrap: bool, *, vetting: bool = True) -> tuple[int, int]:
     """Returns (new_detected, accepted)."""
+    # Large discovery-only snapshots exhausted GitHub's per-query resources.
+    # Keep aliases bounded, reduce individual queries on resource errors, and
+    # retain successful repositories even if a different repository is failing.
+    if per_repo>5 and len(keys)>1:
+        totals=[0,0]
+        for key in keys:
+            try:
+                result=sweep([key],seen,per_repo,bootstrap,vetting=vetting)
+                totals=[a+b for a,b in zip(totals,result)]
+            except Exception as error:
+                rt.setmeta('discovery_error:'+key,{'at':time.time(),'error':str(error)[:350]})
+        return tuple(totals)
     query = build_query(keys, per_repo)
-    raw = scan.gh(["api", "graphql", "-f", f"query={query}"], kind="other")
+    try:
+        raw = scan.gh(["api", "graphql", "-f", f"query={query}"], kind="other")
+    except RuntimeError as error:
+        if re.search(r'Resource limits|query.*(?:complex|timeout)|timed out',str(error),re.I):
+            if len(keys)>1:
+                totals=[0,0]
+                for key in keys:
+                    result=sweep([key],seen,per_repo,bootstrap,vetting=vetting)
+                    totals=[a+b for a,b in zip(totals,result)]
+                return tuple(totals)
+            if per_repo>5:
+                return sweep(keys,seen,max(5,per_repo//2),bootstrap,vetting=vetting)
+        raise
     data = json.loads(raw)["data"]
 
     new_count = accepted = 0

@@ -24,6 +24,8 @@ def clean_environment():
         env.pop(name,None)
     token=env.pop('OSS_READONLY_GH_TOKEN','')
     if token:env['GH_TOKEN']=token
+    for name in ('GITHUB_STEP_SUMMARY','GITHUB_OUTPUT','GITHUB_ENV','GITHUB_PATH','GITHUB_STATE'):
+        env.pop(name,None)
     return env
 
 class Host:

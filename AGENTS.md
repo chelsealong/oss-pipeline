@@ -106,9 +106,24 @@ Actions recovery artifacts expire after 14 days; state-branch evidence persists.
 
 Explicit maintainer permission can satisfy ADK coordination. Otherwise record
 the issue URL and proposed request for human follow-up; never post automatically.
+An existing explicit request by this account also satisfies ADK's ask-before-work
+rule unless a maintainer has asked us to wait. Do not require special approval
+wording where upstream requires only asking first.
 Check `runtime.status()` for active phases, 24-hour outcomes and human follow-ups.
 Run `verify_codex.py` with PyYAML and cryptography, then the cloud preflight and
 two concurrent canaries before restoring production after runtime changes.
+
+The 2026-10-10 repair separates model deadlines from read-network retries.
+A deadline may continue once from a complete retained patch; otherwise it enters
+execution_wait without consuming another coding turn. Claims clear old attempt
+paths before checkpointing. Usage records persist separately from attempt logs.
+Cloud OpenClaw check:changed runs in a secretless controller sandbox before
+independent review, without model polling. Failed mandatory checks still block
+publication; a changed patch invalidates the cached validation result.
+Existing PR maintenance fetches a bounded shared history and merges current main
+locally; publication remains a reviewed fast-forward from the original remote
+head. Reply-only tasks never publish that local merge. Cleanup failures remain
+task-local and cannot activate the account circuit breaker.
 
 The 2026-10-07 repair distinguishes `capacity_wait`, `human_wait` and
 `validation_wait`. Waits do not occupy active queue slots or call budgets.

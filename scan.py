@@ -646,7 +646,19 @@ def claimants(upstream: str, number: int) -> list[str]:
     who, judged = [], 0
     for c in comments:
         u = c["u"]
-        if "[bot]" in u or u in who:
+        if u in who:
+            continue
+        if "[bot]" in u:
+            # Review bots are not claimants. OpenClaw's implementation bot is:
+            # use its structured progress marker, and verify stale runs remotely.
+            body=c.get('b') or ''
+            if (u=='clawsweeper[bot]' and '<!-- clawsweeper-command-status:' in body
+                    and re.search(r'^- State: (?:Building|Queued|Running)\b',body,re.M)):
+                match=re.search(r'https://github.com/openclaw/clawsweeper/actions/runs/(\d+)',body)
+                if match:
+                    run=json.loads(gh(['api',f'repos/openclaw/clawsweeper/actions/runs/{match[1]}']))
+                    if run.get('status') in ('queued','in_progress','waiting','pending','requested'):
+                        who.append(u)
             continue
         # Strip quoted text: a maintainer replying to a claimant quotes their
         # "I'd like to work on this", which would otherwise count as a second
@@ -962,7 +974,7 @@ def reconcile_sessions() -> int:
 
 
 def coordination_allowed(upstream, issue):
-    """Accept explicit invitations; retain a concrete draft when coordination is needed."""
+    """Honor ask-before-contributing; never send a claim without authorization."""
     labels={x['name'] for x in issue.get('labels',[])}
     assigned={x.get('login','').lower() for x in issue.get('assignees',[])}
     name=f"coordination:{upstream}#{issue['number']}"
@@ -973,14 +985,22 @@ def coordination_allowed(upstream, issue):
     # is not maintainer permission. Re-read current comments on every eligibility check.
     if issue.get('comments',0):
         pages=json.loads(gh(['api','--paginate','--slurp',f"repos/{upstream}/issues/{issue['number']}/comments"]))
-        decision=None
+        decision=None;asked=None
         for comment in (c for page in pages for c in page):
             body=comment.get('body','')
+            author=(comment.get('user') or {}).get('login','').lower()
+            if author=='chelsealong' and re.search(
+                    r'(?:may|can|could) I (?:work|take|submit)|I(?:\x27d| would) like to (?:work|take)|I(?:\x27ll| will| am going to) (?:work|take|submit)',body,re.I):
+                asked=comment
             if comment.get('author_association') not in ('MEMBER','OWNER','COLLABORATOR') or not re.search(r'@chelsealong\b',body,re.I):continue
             if re.search(r"do not|don't|please wait|hold off|not approved|someone else|already working",body,re.I):decision=False
             elif re.search(r'go ahead|please proceed|feel free to (?:work|take)|you (?:can|may) (?:work|take)|assigned (?:this )?to you',body,re.I):decision=comment
         if isinstance(decision,dict):
             rt.setmeta(name,{'status':'approved','source':decision.get('html_url'),'comment_id':decision['id']})
+            return True
+        if asked and decision is not False:
+            rt.setmeta(name,{'status':'asked','source':asked.get('html_url'),'comment_id':asked['id'],
+                'rule':'Upstream requires asking before contributing, not a particular approval phrase.'})
             return True
     rt.setmeta(name,{'status':'needs_human','url':f"https://github.com/{upstream}/issues/{issue['number']}",
         'draft':'May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.'})

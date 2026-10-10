@@ -61,18 +61,20 @@ def _capture(task_id):
     folder=rt.DATA/relative
     if not folder.resolve().is_relative_to(rt.DATA.resolve()) or not folder.is_dir():return
     dest=rt.DATA/'evidence'/f"{task_id}-{state.get('attempt',1)}.json"
-    if state.get('terminal') and not (folder/'work/.git').exists() and dest.exists():return
+    # A new claim must never downgrade evidence from a completed old attempt,
+    # even when restoring a checkpoint written by an older worker.
+    if not (folder/'work/.git').exists() and dest.exists():return
     work=folder/'work';payload={'task':task_id,'execution':state,'files':{},'omitted':[]}
     # Explicitly omit tool-cache, Git metadata, credentials, and complete clones.
     total=0
     for path in sorted(folder.iterdir()):
         if path.is_symlink() or not path.is_file() or path.suffix not in ('.json','.jsonl','.log','.txt','.md'):continue
-        if path.suffix in ('.jsonl','.log') and not state.get('terminal'):continue
         try:raw=path.read_bytes()
         except FileNotFoundError:
             payload['omitted'].append(path.name+': removed during snapshot');continue
-        if len(raw)>4*1024**2:
-            raw=raw[-4*1024**2:];payload['omitted'].append(path.name+': earlier log content exceeds 4 MiB')
+        limit=(4*1024**2 if state.get('terminal') else 256*1024)
+        if len(raw)>limit:
+            raw=raw[-limit:];payload['omitted'].append(path.name+': earlier log content exceeds retained tail')
         total+=len(raw)
         if total>16*1024**2:
             payload['omitted'].append(path.name+': evidence size limit');continue
