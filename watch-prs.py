@@ -415,6 +415,7 @@ def log(msg: str) -> None:
 def upstreams() -> list[str]:
     seen, out = set(), []
     for cfg in scan.REPOS.values():
+        if pr_followup.response_paused(cfg):continue
         for r in (cfg["upstream"], cfg.get("implements_in") or cfg["upstream"]):
             if r not in seen:
                 seen.add(r); out.append(r)
@@ -447,6 +448,7 @@ def open_prs() -> list[dict]:
     # ~440 PRs/day, so ours never appear in a "first: 20" window and were being
     # missed entirely. One search covers every repo at once.
     repo_filter = " ".join(f"repo:{r}" for r in upstreams())
+    if not repo_filter:return []
     q = ('{search(type:ISSUE, first:20, after:%%s, query:"is:pr is:open author:%s %s")'
          '{pageInfo{hasNextPage endCursor} nodes{'
          '... on PullRequest{'
@@ -514,6 +516,7 @@ def claimed_issues() -> list[dict]:
     empty rather than missing.
     """
     repo_filter = " ".join(f"repo:{r}" for r in upstreams())
+    if not repo_filter:return []
     q = ('{search(type:ISSUE, first:50, after:%%s, query:"is:issue is:open '
          'commenter:%s -author:%s %s")'
          '{pageInfo{hasNextPage endCursor} nodes{'

@@ -15,6 +15,7 @@ import cloud_runtime
 import cloud_store
 import codex_worker as worker
 import runtime as rt
+from test_support import active_hermes
 import scan
 import watch
 import work_evidence as evidence
@@ -24,6 +25,7 @@ prwatch=importlib.util.module_from_spec(spec);spec.loader.exec_module(prwatch)
 
 class RecoveryTests(unittest.TestCase):
     def setUp(self):
+        self.enterContext(active_hermes())
         self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name)
         self.patches=[patch.object(rt,'ROOT',self.root),patch.object(rt,'DATA',self.root/'data'),
             patch.object(rt,'CONFIG',self.root/'runtime.json'),

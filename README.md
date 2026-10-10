@@ -98,6 +98,9 @@ OpenClaw 10, Google ADK 10 and every other active repo 6, charged only at first
 generation. Precheck skips and subsequent reviews/retries of the same task do
 not consume another daily task slot. Existing five-hour and global model limits
 still apply; historical spending is retained across policy changes.
+The subsequent October 10 user instruction disables all Hermes automation as
+well, overriding its 8 PR / 16 task allocation with zero. This includes scanning,
+judgments, new fixes and existing-PR replies/maintenance; existing PRs remain open.
 
 `state/runtime.json` is local deployment configuration (ignored by git).
 `python3 runtime.py` prints queue, heartbeat, model-call counts and recent results.

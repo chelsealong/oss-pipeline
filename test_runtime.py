@@ -8,6 +8,7 @@ import unittest
 import subprocess
 from unittest.mock import patch, Mock
 import runtime as rt
+from test_support import active_hermes
 import codex_worker as worker
 import intent
 import watch
@@ -21,6 +22,7 @@ import work_evidence
 
 class RuntimeTests(unittest.TestCase):
     def setUp(self):
+        self.enterContext(active_hermes())
         self.temp=tempfile.TemporaryDirectory()
         self.root=Path(self.temp.name)
         self.patches=[patch.object(rt,'ROOT',self.root),patch.object(rt,'DATA',self.root/'data'),patch.object(rt,'CONFIG',self.root/'runtime.json'),

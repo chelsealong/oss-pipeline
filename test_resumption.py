@@ -15,6 +15,7 @@ import cloud_store
 import human_review
 import codex_worker as worker
 import runtime as rt
+from test_support import active_hermes
 import task_recovery as recovery
 import validation_setup as validation
 import watch
@@ -22,6 +23,7 @@ import work_evidence
 
 class ResumptionTests(unittest.TestCase):
     def setUp(self):
+        self.enterContext(active_hermes())
         self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name)
         self.patches=[patch.object(rt,'ROOT',self.root),patch.object(rt,'DATA',self.root/'data'),
             patch.object(rt,'CONFIG',self.root/'runtime.json'),

@@ -1,5 +1,6 @@
 """User-selected repository budgets. No network or model calls."""
 DISABLED_REPOS = {
+    'hermes': 'NousResearch/hermes-agent',
     'mem0': 'mem0ai/mem0',
     'litellm': 'BerriAI/litellm',
     'firecrawl': 'firecrawl/firecrawl',
@@ -10,10 +11,10 @@ DISABLED_REPOS = {
 }
 DISABLED_NAMES = {name.lower() for pair in DISABLED_REPOS.items() for name in pair}
 DEFAULT_PR_CAP = 3
-PR_CAPS = {'hermes': 8, 'openclaw': 5, 'adk': 5,
+PR_CAPS = {'openclaw': 5, 'adk': 5,
            **dict.fromkeys(DISABLED_REPOS, 0)}
 DEFAULT_TASK_BUDGET = 6
-TASK_BUDGETS = {'hermes': 16, 'openclaw': 10, 'adk': 10,
+TASK_BUDGETS = {'openclaw': 10, 'adk': 10,
                 **dict.fromkeys(DISABLED_REPOS, 0)}
 OPEN_PR_CAPS = {'openclaw': 20}
 DISABLED_REASON = 'repository quota disabled by user on 2026-10-10'
@@ -28,7 +29,8 @@ def hold_pending(db):
     import time
     import runtime as rt
     rows=db.execute("SELECT id,repo,status FROM tasks WHERE status IN "
-        "('queued','retry_wait','triage_wait','capacity_wait','publication_wait','execution_wait')").fetchall()
+        "('queued','retry_wait','triage_wait','capacity_wait','publication_wait','execution_wait',"
+        "'human_wait','validation_wait')").fetchall()
     for row in rows:
         if not disabled(row['repo']):continue
         state=rt._meta(db,f"task:{row['id']}",{})

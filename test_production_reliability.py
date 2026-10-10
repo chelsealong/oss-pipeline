@@ -299,7 +299,7 @@ class ProductionReliabilityTests(unittest.TestCase):
             with self.assertRaises(subprocess.TimeoutExpired):execution.update_response_base(work,'main',original)
         self.assertEqual(self.git(work,'rev-parse','HEAD'),original)
     def test_false_conflict_recovery_preserves_attempts_and_requires_unchanged_remote(self):
-        task=self.task(repo='NousResearch/hermes-agent',kind='respond');task.update(attempts=3,status='error')
+        task=self.task(repo='openclaw/openclaw',kind='respond');task.update(attempts=3,status='error')
         old_error='Current upstream conflicts with PR branch; manual conflict resolution required'
         with rt.db() as db:db.execute("UPDATE tasks SET status='error',attempts=3,result=? WHERE id=?",(old_error,task['id']))
         rt.task_state(task['id'],attempt=3,phase='error',last_execution_phase='checkout',base=None)

@@ -9,6 +9,7 @@ from unittest.mock import patch
 import codex_worker as worker
 import repo_limits as limits
 import runtime as rt
+import task_recovery
 import scan
 import watch
 
@@ -45,12 +46,17 @@ class RepoLimitTests(unittest.TestCase):
         with patch.object(worker,'run',side_effect=AssertionError('unnecessary GitHub read')):
             for key,upstream in limits.DISABLED_REPOS.items():
                 self.assertFalse(worker.cap_ok(key,upstream)[0])
+    def test_disabled_hermes_is_not_polled_for_permission_clearance(self):
+        with patch.object(rt,'publication_holds',return_value={'hermes':time.time()+86400}), \
+             patch.object(worker,'run',side_effect=AssertionError('disabled repo was polled')):
+            self.assertEqual(task_recovery.refresh_publication_holds(),[])
     def test_historical_backlog_held_without_losing_evidence_or_call_history(self):
         now=time.time()
         with rt.db() as db:
             db.executemany('INSERT INTO tasks(id,kind,repo,number,status,created,updated,attempts) VALUES (?,?,?,?,?,?,?,?)',[
                 (1,'fix','firecrawl',100,'queued',now,now,2),
-                (2,'respond','BerriAI/litellm',200,'retry_wait',now,now,1)])
+                (2,'respond','BerriAI/litellm',200,'retry_wait',now,now,1),
+                (3,'respond','NousResearch/hermes-agent',201,'validation_wait',now,now,2)])
             db.execute('INSERT INTO calls VALUES (?,?)',(now,'codex'))
         rt.task_state(1,folder='retained',patch_digest='exact-patch')
         self.assertTrue(rt.enqueue('fix','spec-kit',300))
@@ -60,6 +66,8 @@ class RepoLimitTests(unittest.TestCase):
             self.assertEqual(chosen['repo'],'spec-kit')
             rows=[tuple(r) for r in db.execute('SELECT id,status,attempts FROM tasks WHERE id<=2 ORDER BY id')]
             self.assertEqual(rows,[(1,'quota_wait',2),(2,'quota_wait',1)])
+            self.assertEqual(tuple(db.execute('SELECT status,attempts FROM tasks WHERE id=3').fetchone()),
+                             ('quota_wait',2))
             self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],1)
         self.assertEqual(rt.task_state(1)['patch_digest'],'exact-patch')
         self.assertEqual(rt.task_state(1)['folder'],'retained')
@@ -105,18 +113,24 @@ class RepoLimitTests(unittest.TestCase):
                     self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],before+3)
                     db.execute("UPDATE tasks SET status='done' WHERE repo=?",(key,))
     def test_lowered_cap_preserves_already_spent_daily_budget(self):
-        budget={'date':time.strftime('%Y-%m-%d',time.gmtime()),'used':{'hermes':25,'adk':12}}
+        budget={'date':time.strftime('%Y-%m-%d',time.gmtime()),'used':{'openclaw':25,'adk':12}}
         rt.setmeta('dispatch_budget',budget)
-        self.assertFalse(rt.dispatch_headroom('hermes')[0])
-        self.assertFalse(rt.enqueue('fix','hermes',903))
+        self.assertFalse(rt.dispatch_headroom('openclaw')[0])
+        self.assertFalse(rt.enqueue('fix','openclaw',903))
         self.assertFalse(rt.reserve_call('codex',
-            task={'id':999,'kind':'fix','repo':'hermes'},phase='generation')[0])
+            task={'id':999,'kind':'fix','repo':'openclaw'},phase='generation')[0])
         self.assertEqual(rt.getmeta('dispatch_budget'),budget)
         with rt.db() as db:
             self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],0)
     def test_disabled_pr_feedback_never_reaches_judge(self):
         spec=importlib.util.spec_from_file_location('quota_prwatch',Path(__file__).with_name('watch-prs.py'))
         watcher=importlib.util.module_from_spec(spec);spec.loader.exec_module(watcher)
+        self.assertNotIn('NousResearch/hermes-agent',watcher.upstreams())
+        self.assertIn('openclaw/openclaw',watcher.upstreams())
+        with patch.object(watcher,'upstreams',return_value=[]), \
+             patch.object(watcher.scan,'gh',side_effect=AssertionError('unscoped feedback scan')):
+            self.assertEqual(watcher.open_prs(),[])
+            self.assertEqual(watcher.claimed_issues(),[])
         prs=[{'_repo':repo,'number':1} for repo in limits.DISABLED_REPOS.values()]
         with patch.object(watcher,'open_prs',return_value=prs),patch.object(watcher,'claimed_issues',return_value=[]),\
              patch.object(watcher,'last_commit_author',side_effect=AssertionError('feedback examined')),\

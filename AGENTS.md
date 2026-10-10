@@ -66,6 +66,10 @@ The user also approved daily new-fix task-start budgets: Hermes 16, OpenClaw 10,
 Google ADK 10, every other active repo 6. Charge at first generation, not precheck
 skips or subsequent reviews/retries of the same task. Preserve today's spending
 when lowering caps; existing five-hour shares and global model limits remain.
+The user's subsequent October 10 instruction stops all Hermes automation until
+explicitly resumed: discovery, model judgments, new fixes, automatic replies and
+existing-PR maintenance. Hermes now has zero quotas, overriding the 8 PR / 16
+task limits above. Preserve its existing PRs, pending tasks and spending history.
 Repository-level PR creation denials place queued fixes in `publication_wait`
 without consuming other repositories' queue space. Existing-PR responses remain
 eligible. Creation-denial holds do not expire merely with time. A bounded

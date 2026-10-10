@@ -9,6 +9,7 @@ from pathlib import Path
 import re
 import time
 import runtime as rt
+import repo_limits
 
 WAIT_STATES=('capacity_wait','human_wait','validation_wait','execution_wait')
 
@@ -20,6 +21,7 @@ def recover_shallow_merge_errors():
     with rt.db() as db:
         tasks=[dict(r) for r in db.execute("SELECT * FROM tasks WHERE kind='respond' AND status='error' AND result=?",(old_error,))]
     for task in tasks:
+        if repo_limits.disabled(task['repo']):continue
         state=rt.task_state(task['id'])
         if (state.get('merge_history_repaired') or state.get('publication_started') or state.get('base')
                 or state.get('last_execution_phase')!='checkout'):continue
@@ -85,6 +87,7 @@ def refresh_publication_holds():
     import codex_worker as worker
     changed=[]
     for repo in rt.publication_holds():
+        if repo_limits.disabled(repo):continue
         with rt.db() as db:
             row=db.execute("""SELECT MAX(updated) AS denied_at FROM tasks WHERE repo=?
                 AND kind='fix' AND status='error'
@@ -294,6 +297,7 @@ def reconcile(limit=8):
         tasks=[dict(r) for r in db.execute("SELECT * FROM tasks WHERE status IN ('capacity_wait','human_wait','validation_wait','error','interrupted','skipped','blocked') ORDER BY updated")]
     checked=0
     for task in tasks:
+        if repo_limits.disabled(task['repo']):continue
         state=rt.task_state(task['id']);status=task['status'];reason=task.get('result','')
         # Upgrade historical transient cap skips without generating again.
         if task['kind']=='fix' and status in ('skipped','blocked') and re.search(r'open PR cap|daily PR cap',reason):
