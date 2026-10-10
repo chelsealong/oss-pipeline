@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791609976.0098789,
+  "saved_at": 1791610041.2803338,
   "tables": {
     "tasks": [
       {
@@ -6978,10 +6978,10 @@
         "repo": "NousResearch/hermes-agent",
         "number": 127606,
         "note": "{\"authors\": \"Enough1122\", \"events\": [\"IC_kwDOPRF1G88AAAABZEy1gQ@2026-10-04T07:30:07Z\"], \"followup_policy\": \"2026-10-08-replies-v1\", \"head\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\", \"is_issue\": false, \"previous_task\": 310}",
-        "status": "running",
+        "status": "error",
         "created": 1791438666.076757,
-        "updated": 1791609972.9279373,
-        "result": "review: HUMAN_REVIEW_REQUIRED: context.json has no named human signoff for this exact patch and base. The billing-path defect is real: the base omits the reported reset, while the patch carries it through. The proposed reply and PR body accurately describe the checked scope. The focused suite passed (98 passed, 1 Windows-marked test skipped); Ruff, the Windows footgun check, and git diff --check passed. These technical checks cannot replace the missing human review.",
+        "updated": 1791610041.258374,
+        "result": "Current upstream conflicts with PR branch; manual conflict resolution required",
         "attempts": 3
       },
       {
@@ -9019,9 +9019,9 @@
         "repo": "NousResearch/hermes-agent",
         "number": 122340,
         "note": "{\"authors\": \"dwaxe\", \"events\": [\"IC_kwDOPRF1G88AAAABawGsHA@2026-10-09T22:22:59Z\"], \"followup_policy\": \"2026-10-08-replies-v1\", \"head\": \"4c0e7e6dfd001dd01105c065368ed98bc1e4a5b0\", \"is_issue\": false, \"previous_task\": 693}",
-        "status": "blocked",
+        "status": "queued",
         "created": 1791585438.2397165,
-        "updated": 1791585516.4806101,
+        "updated": 1791610040.7700534,
         "result": "The feedback identifies a real test issue: current main resolves npm through _pm_tool_path, while PR #122340 still patches _safe_which. Addressing it requires rebasing and validating the PR against current main. This isolated checkout is shallow, and the task prohibits creating commits, so I could not update the PR branch. No files changed; no public reply is useful until the test is updated.",
         "attempts": 1
       },
@@ -11535,10 +11535,6 @@
         "value": "{\"at\": 1791585438.2406876, \"previous_task\": 693, \"head\": \"4c0e7e6dfd001dd01105c065368ed98bc1e4a5b0\"}"
       },
       {
-        "key": "task:694",
-        "value": "{\"started\": 1791585439.909887, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/694/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"4c0e7e6dfd001dd01105c065368ed98bc1e4a5b0\", \"phase_started\": 1791585463.7706726, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1791585516.012523}"
-      },
-      {
         "key": "task:695",
         "value": "{\"started\": 1791590232.500501, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/695/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"06ecc309f5550a52acea2f6a82b918537996ccbf\", \"generation_started\": 1791590288.4433403, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791590290.198009, \"last_execution_phase\": \"generation\", \"finished\": 1791590317.6588714}"
       },
@@ -11553,10 +11549,6 @@
       {
         "key": "task:696",
         "value": "{\"started\": 1791594635.3516793, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/696/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"9c241fea9080083518a64a2b3278d3e7f391167e\", \"generation_started\": 1791590378.950928, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791590381.0193684, \"last_execution_phase\": \"retry_wait\", \"finished\": 1791594639.2894843}"
-      },
-      {
-        "key": "task:697",
-        "value": "{\"started\": 1791594649.1173816, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"error\", \"finished\": 1791594651.6376538}"
       },
       {
         "key": "task:700",
@@ -11759,10 +11751,6 @@
         "value": "{\"at\": 1791609900.7258143, \"reason\": \"PR closed or not owned by our fork\"}"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791609902.557864, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 1, \"error\": 3, \"human_wait\": 2, \"queued\": 1, \"running\": 1, \"skipped\": 37, \"validation_wait\": 3}, \"respond\": {\"blocked\": 3, \"done\": 2, \"human_wait\": 1, \"skipped\": 3}}}"
-      },
-      {
         "key": "publication_check:hermes",
         "value": "{\"at\": 1791609920.1513886, \"denied_at\": 1791347936.1261988, \"status\": \"held\"}"
       },
@@ -11797,10 +11785,6 @@
       {
         "key": "coordination:google/adk-python#7477",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7477\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791609962.9262981"
       },
       {
         "key": "task:219",
@@ -11867,14 +11851,6 @@
         "value": "{\"started\": 1791568306.9993038, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/672/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"3e90389813229bd33c169fb07b883b567847224e\", \"last_execution_phase\": \"checkout\", \"finished\": 1791568368.4746692, \"recovery_checked_at\": 1791609970.3113284}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1791609970.9412532"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791609970.9833436"
-      },
-      {
         "key": "recovery_audit:672",
         "value": "{\"at\": 1791609971.1583688, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
       },
@@ -11891,8 +11867,40 @@
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791609890.6957262, \"comfyui\": 1791592782.2257864, \"hermes\": 1791609972.9278064, \"langfuse\": 1791582260.90761, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
       },
       {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791609978.3948123, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"error\": 3, \"human_wait\": 2, \"queued\": 4, \"running\": 1, \"skipped\": 37, \"validation_wait\": 3}, \"respond\": {\"blocked\": 3, \"done\": 2, \"human_wait\": 1, \"running\": 1, \"skipped\": 3}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791610039.3638997"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791610040.2512374"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791610040.263425"
+      },
+      {
+        "key": "recovery_audit:694",
+        "value": "{\"at\": 1791610040.7414663, \"safe\": true, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:694",
+        "value": "{\"started\": 1791585439.909887, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/694/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"4c0e7e6dfd001dd01105c065368ed98bc1e4a5b0\", \"phase_started\": 1791585463.7706726, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1791585516.012523, \"recovery_checked_at\": 1791610039.1318388}"
+      },
+      {
+        "key": "followup:task:694",
+        "value": "{\"status\": \"resumed\", \"task\": 694}"
+      },
+      {
+        "key": "task:697",
+        "value": "{\"started\": 1791594649.1173816, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"last_execution_phase\": null, \"phase\": \"error\", \"finished\": 1791594651.6376538, \"recovery_checked_at\": 1791610040.772504}"
+      },
+      {
         "key": "task:537",
-        "value": "{\"started\": 1791609972.9279795, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 3, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"review\", \"finished\": 1791455738.1702235, \"phase_started\": 1791455636.15389, \"patch_digest\": \"6c2134f1beb9b1084f80861c9b6d4ec411d0ed82f83240153a188a893e5d693d\", \"recovery_checked_at\": 1791609966.3026824, \"resume_progress\": {\"bundle\": \"537-2.json\", \"sha256\": \"c53e14442b0dcc781a23ec127ad097b1d3a1945dadcaae0a453831eca4aa5d84\", \"base\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\", \"phase\": \"review\"}, \"policy_gate_rechecked\": true}"
+        "value": "{\"started\": 1791609972.9279795, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/537/attempt-3\", \"attempt\": 3, \"phase\": \"error\", \"base\": null, \"last_execution_phase\": \"checkout\", \"finished\": 1791610041.2433875, \"phase_started\": 1791455636.15389, \"patch_digest\": \"6c2134f1beb9b1084f80861c9b6d4ec411d0ed82f83240153a188a893e5d693d\", \"recovery_checked_at\": 1791609966.3026824, \"resume_progress\": {\"bundle\": \"537-2.json\", \"sha256\": \"c53e14442b0dcc781a23ec127ad097b1d3a1945dadcaae0a453831eca4aa5d84\", \"base\": \"cc75fa86de1a35dd0528f22b0b5a50a356e5a807\", \"phase\": \"review\"}, \"policy_gate_rechecked\": true}"
       }
     ],
     "calls": [
