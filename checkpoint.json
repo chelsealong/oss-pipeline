@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791624717.1211762,
+  "saved_at": 1791624719.01364,
   "tables": {
     "tasks": [
       {
@@ -3026,11 +3026,11 @@
         "repo": "firecrawl",
         "number": 4774,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791028913.687987,
-        "updated": 1791617873.9805162,
+        "updated": 1791624718.966735,
         "result": "[Issue #4774](https://github.com/firecrawl/firecrawl/issues/4774) proposes a new webhook delivery history and manual redelivery API, rather than a still-present bug with a small fix. The current webhook logs do not retain a replayable payload. Implementing the proposal requires decisions about retention, storage, access, and retry policy, plus security-sensitive changes outside this task’s allowed scope. The issue has no maintainer resolution or comments. No open PR claims #4774; related open PRs address automatic delivery reliability.",
-        "attempts": 2
+        "attempts": 3
       },
       {
         "id": 234,
@@ -11973,10 +11973,6 @@
         "value": "{\"task\": 697, \"repo\": \"openclaw\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1791615703.0087886, \"seconds\": 0.001, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "task:233",
-        "value": "{\"phase\": \"queued\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791355617.7747123, \"worker_slot\": 0, \"folder\": \"jobs/233/attempt-2\", \"attempt\": 2, \"base\": \"0b25e17057e140236b2081cfaa5baecd1154d090\", \"generation_started\": 1791355626.6147254, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791355628.379996, \"last_execution_phase\": \"generation\", \"finished\": 1791355683.9323711}"
-      },
-      {
         "key": "usage:697:3:generation",
         "value": "{\"task\": 697, \"repo\": \"openclaw\", \"attempt\": 3, \"phase\": \"generation\", \"at\": 1791617911.3545175, \"seconds\": 0.001, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -12221,10 +12217,6 @@
         "value": "1791624701.3337739"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791624702.9697392"
-      },
-      {
         "key": "task:232",
         "value": "{\"phase\": \"triage_wait\", \"terminal\": true, \"retry_after\": 1791625605.0553613, \"started\": 1791624701.2455802, \"worker_slot\": 1, \"folder\": null, \"attempt\": 3, \"base\": null, \"generation_started\": 1791355574.1082613, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791355575.8691587, \"last_execution_phase\": \"claimed\", \"finished\": 1791624705.0600085}"
       },
@@ -12241,12 +12233,20 @@
         "value": "{\"at\": 1791624716.6238225, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 2, \"error\": 1, \"human_wait\": 2, \"queued\": 3, \"skipped\": 50, \"triage_wait\": 3, \"validation_wait\": 3}, \"respond\": {\"blocked\": 2, \"done\": 3, \"error\": 1, \"human_wait\": 1, \"skipped\": 3}}}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791624703.5230558, \"comfyui\": 1791613742.2794287, \"hermes\": 1791613035.9770277, \"langfuse\": 1791624717.1129212, \"firecrawl\": 1791624701.2453637, \"mem0\": 1791614333.2471364, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791624684.123619, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
-      },
-      {
         "key": "task:719",
         "value": "{\"started\": 1791624717.11307, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791624717.9721859"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791624703.5230558, \"comfyui\": 1791613742.2794287, \"hermes\": 1791613035.9770277, \"langfuse\": 1791624717.1129212, \"firecrawl\": 1791624718.966607, \"mem0\": 1791614333.2471364, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791624684.123619, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
+      },
+      {
+        "key": "task:233",
+        "value": "{\"phase\": \"claimed\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791624718.9667883, \"worker_slot\": 0, \"folder\": null, \"attempt\": 3, \"base\": null, \"generation_started\": 1791355626.6147254, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791355628.379996, \"last_execution_phase\": \"generation\", \"finished\": 1791355683.9323711}"
       }
     ],
     "calls": [
