@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791613678.3202055,
+  "saved_at": 1791613714.7192013,
   "tables": {
     "tasks": [
       {
@@ -2831,9 +2831,9 @@
         "repo": "langfuse",
         "number": 18057,
         "note": "",
-        "status": "skipped",
+        "status": "queued",
         "created": 1791018287.493217,
-        "updated": 1791354068.8278594,
+        "updated": 1791613712.244552,
         "result": "The reported bug is already fixed in this checkout: the pydantic-ai path reads both cache attribute families and subtracts cached tokens from inclusive input. An existing OTel test checks the resulting usage fields, and open PR #18298 adds coverage for the exact pydantic-ai 2.0 shape. No files changed.",
         "attempts": 2
       },
@@ -9240,10 +9240,10 @@
         "repo": "langfuse",
         "number": 17909,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791613162.8272052,
-        "updated": 1791613646.8742726,
-        "result": "",
+        "updated": 1791613714.7134666,
+        "result": "The reporter says merged PR #17929 fixed #17909. The current checkout also contains a directional improvement/regression test, so a new patch would duplicate existing work. The issue remains open, but no code was changed.",
         "attempts": 1
       }
     ],
@@ -9795,10 +9795,6 @@
       {
         "key": "task:401",
         "value": "{\"started\": 1791353539.367868, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/401/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"1cfcf5af37ffd1ba9706433308f5b9631d41273e\", \"generation_started\": 1791221004.3835506, \"dispatch_paid_date\": \"2026-10-05\", \"phase_started\": 1791221006.0802107, \"recovery_checked_at\": 1791353475.9772563, \"last_execution_phase\": \"queued\", \"finished\": 1791353541.7708545}"
-      },
-      {
-        "key": "task:218",
-        "value": "{\"phase\": \"skipped\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791354013.4118974, \"worker_slot\": 0, \"folder\": \"jobs/218/attempt-2\", \"attempt\": 2, \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"generation_started\": 1791354024.809943, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791354026.269233, \"last_execution_phase\": \"generation\", \"finished\": 1791354068.6618073}"
       },
       {
         "key": "followup:task:453",
@@ -11977,16 +11973,8 @@
         "value": "{\"started\": 1791613035.9771569, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/694/attempt-2\", \"attempt\": 2, \"phase\": \"review\", \"base\": \"502e1f1a6bf69a81b156d1e1e8d8ba40214403e2\", \"phase_started\": 1791613582.6485214, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1791585516.012523, \"recovery_checked_at\": 1791610039.1318388, \"remote_base\": \"4c0e7e6dfd001dd01105c065368ed98bc1e4a5b0\", \"base_update\": {\"original_head\": \"4c0e7e6dfd001dd01105c065368ed98bc1e4a5b0\", \"before\": \"4c0e7e6dfd001dd01105c065368ed98bc1e4a5b0\", \"base\": \"502e1f1a6bf69a81b156d1e1e8d8ba40214403e2\", \"upstream\": \"dce1e9b37581dd62e480a9064dc04a709c2940d3\"}}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791613614.9688377, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:391:5:review",
         "value": "{\"task\": 391, \"repo\": \"comfyui\", \"attempt\": 5, \"phase\": \"review\", \"at\": 1791613614.9916275, \"seconds\": 323.244, \"tokens\": {\"totalTokens\": 1352843, \"inputTokens\": 1348038, \"cachedInputTokens\": 1266048, \"cacheWriteInputTokens\": 0, \"outputTokens\": 4805, \"reasoningOutputTokens\": 1691}, \"first_event_ms\": 1791613295363, \"last_event_ms\": 1791613614966, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791613617.7995765, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 1, \"error\": 3, \"human_wait\": 2, \"queued\": 4, \"retry_wait\": 1, \"running\": 1, \"skipped\": 39, \"validation_wait\": 3}, \"respond\": {\"blocked\": 2, \"done\": 3, \"human_wait\": 1, \"running\": 1, \"skipped\": 3}}}"
       },
       {
         "key": "task:391",
@@ -11997,10 +11985,6 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791613102.6253405, \"comfyui\": 1791613117.4949813, \"hermes\": 1791613035.9770277, \"langfuse\": 1791613646.8741224, \"firecrawl\": 1791437978.4136531, \"mem0\": 1791376873.1927829, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791495684.3535037, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791613664.5134966"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"openclaw\", \"task\": 701, \"at\": 1791597648.718227}, {\"repo\": \"openclaw\", \"task\": 702, \"at\": 1791599849.5116682}, {\"repo\": \"openclaw\", \"task\": 703, \"at\": 1791603275.0971777}, {\"repo\": \"openclaw\", \"task\": 704, \"at\": 1791603971.1568794}, {\"repo\": \"openclaw\", \"task\": 705, \"at\": 1791604062.9058669}, {\"repo\": \"openclaw\", \"task\": 706, \"at\": 1791604150.6381056}, {\"repo\": \"openclaw\", \"task\": 707, \"at\": 1791604685.6861427}, {\"repo\": \"openclaw\", \"task\": 708, \"at\": 1791607037.2357771}, {\"repo\": \"langfuse\", \"task\": 710, \"at\": 1791613058.597071}, {\"repo\": \"langfuse\", \"task\": 711, \"at\": 1791613665.0853996}]"
       },
@@ -12009,16 +11993,36 @@
         "value": "{\"date\": \"2026-10-10\", \"used\": {\"comfyui\": 2, \"openclaw\": 9, \"langfuse\": 2}}"
       },
       {
-        "key": "task:711",
-        "value": "{\"started\": 1791613646.8743012, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/711/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"eecc7d023b9aa351bb96b3ddd22cf6761a842dd9\", \"generation_started\": 1791613665.0854003, \"dispatch_paid_date\": \"2026-10-10\", \"phase_started\": 1791613666.9776824}"
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791613680.3772602, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 2, \"error\": 3, \"human_wait\": 2, \"queued\": 3, \"retry_wait\": 1, \"running\": 1, \"skipped\": 39, \"validation_wait\": 3}, \"respond\": {\"blocked\": 2, \"done\": 3, \"human_wait\": 1, \"running\": 1, \"skipped\": 3}}}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791613675.5937955"
+        "value": "1791613702.8149269"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791613675.596547"
+        "value": "1791613702.8253458"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791613709.5209935"
+      },
+      {
+        "key": "task:218",
+        "value": "{\"phase\": \"queued\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791354013.4118974, \"worker_slot\": 0, \"folder\": \"jobs/218/attempt-2\", \"attempt\": 2, \"base\": \"1a21a4229c98dd0dbba2916631ca5fe3e05fd504\", \"generation_started\": 1791354024.809943, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791354026.269233, \"last_execution_phase\": \"generation\", \"finished\": 1791354068.6618073}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791613714.5689557, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:711:1:generation",
+        "value": "{\"task\": 711, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1791613714.5723412, \"seconds\": 49.488, \"tokens\": {\"totalTokens\": 490650, \"inputTokens\": 488471, \"cachedInputTokens\": 422528, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2179, \"reasoningOutputTokens\": 770}, \"first_event_ms\": 1791613668816, \"last_event_ms\": 1791613714566, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "task:711",
+        "value": "{\"started\": 1791613646.8743012, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/711/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"eecc7d023b9aa351bb96b3ddd22cf6761a842dd9\", \"generation_started\": 1791613665.0854003, \"dispatch_paid_date\": \"2026-10-10\", \"phase_started\": 1791613666.9776824, \"last_execution_phase\": \"generation\", \"finished\": 1791613714.5740395}"
       }
     ],
     "calls": [
