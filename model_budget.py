@@ -105,6 +105,19 @@ def free_models():
     return set(cfg.get('judge_free_only_models', []))
 
 
+def canary_delay():
+    """Seconds until four ordinary turns fit; never refund prior spending."""
+    now=time.time()
+    limit=rt.config().get('codex_sessions_per_5h',45)
+    if limit<4:
+        raise RuntimeError('Two canaries require a configured ceiling of at least four turns')
+    with rt.db() as db:
+        times=[row[0] for row in db.execute(
+            "SELECT at FROM calls WHERE kind='codex' AND at>? ORDER BY at",(now-18000,))]
+    release=len(times)+4-limit
+    return max(0,times[release-1]+18000-now+1) if release>0 else 0
+
+
 def reserve_judge(model, system, user, output_limit=200):
     ok, why = rt.ready()
     if not ok:

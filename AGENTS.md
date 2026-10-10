@@ -197,6 +197,11 @@ checkpoint cannot dispatch an immediate successor. Preserve all spending.
 Cloud canaries import only the live call ledger, never production tasks, and
 append their actual reservations back to that ledger after stopping the auth
 owner. Failed canaries retain spending too; repeated accounting is idempotent.
+Canaries wait in cloud for four free turns before starting the host; waiting
+does not consume model quota. Manual `resume_after_canary=true` explicitly
+requests deployment: only a successful canary and successful preflight at the
+unchanged main commit can re-enable production. Cancel that deployment run to
+withdraw a pending restart. The default canary never changes the production switch.
 
 ## Locations and sources of truth
 

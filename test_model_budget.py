@@ -92,6 +92,31 @@ class BudgetTests(unittest.TestCase):
         with rt.db() as db:db.executemany('INSERT INTO calls VALUES (?,?)',[(time.time()-7200,'judge')]*2)
         with self.assertRaisesRegex(rt.JudgeDeferred,'request budget'):budget.reserve_judge('a','s','u')
         self.assertEqual(budget.status()['judge_historical_unmetered_requests'],2)
+    def test_canaries_wait_for_all_four_turns_and_keep_spending(self):
+        self.cfg['codex_sessions_per_5h']=5;self.save()
+        with rt.db() as db:db.executemany('INSERT INTO calls VALUES (?,?)',[(100+i,'codex') for i in range(5)])
+        with patch.object(budget.time,'time',return_value=150):
+            self.assertEqual(budget.canary_delay(),17954)
+        with patch.object(budget.time,'time',return_value=18105):
+            self.assertEqual(budget.canary_delay(),0)
+        with rt.db() as db:self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],5)
+    def test_cloud_resume_requires_same_commit_successful_preflight(self):
+        import cloud_runtime as cloud
+        with patch.dict(cloud.os.environ,{'GITHUB_SHA':'expected'}),\
+             patch.object(cloud,'gh',return_value=json.dumps({'object':{'sha':'moved'}})) as gh:
+            with self.assertRaisesRegex(RuntimeError,'Main changed'):cloud.resume_after_canary()
+            self.assertEqual(gh.call_count,1)
+        with patch.dict(cloud.os.environ,{'GITHUB_SHA':'expected'}),\
+             patch.object(cloud,'gh',side_effect=[json.dumps({'object':{'sha':'expected'}}),
+                json.dumps({'workflow_runs':[{'head_sha':'other','status':'completed','conclusion':'success'}]})]) as gh:
+            with self.assertRaisesRegex(RuntimeError,'No successful preflight'):cloud.resume_after_canary()
+            self.assertEqual(gh.call_count,2)
+        with patch.dict(cloud.os.environ,{'GITHUB_SHA':'expected'}),\
+             patch.object(cloud,'gh',side_effect=[json.dumps({'object':{'sha':'expected'}}),
+                json.dumps({'workflow_runs':[{'head_sha':'expected','status':'completed','conclusion':'success'}]}),'','']) as gh:
+            cloud.resume_after_canary()
+            self.assertEqual(gh.call_args_list[2].args[0][:2],['variable','set'])
+            self.assertEqual(gh.call_args_list[3].args[0][:2],['workflow','run'])
     def test_daily_tokens_atomic_for_two_workers(self):
         self.cfg['judge_tokens_per_day']=400;self.save()
         def reserve(_):

@@ -16,6 +16,11 @@ in encrypted Secret `CODEX_AUTH_JSON` plus the existing `GH_PAT` and
 successful `mode=canary` run, stopping local services, and seeding the dedicated
 `codex-state` branch. Missing/false means scheduled production cannot start.
 One GitHub concurrency group owns all cloud modes and subscription refreshes.
+Canaries wait in cloud until four turns fit the retained spending window before
+starting the model host. An explicitly dispatched canary with
+`resume_after_canary=true` can restore production after success, provided a
+successful preflight exists for the same unchanged main commit. Cancel that
+run to withdraw the pending restart; ordinary canaries do not enable production.
 An isolated local browser login supplied the initial credentials after device
 authorization failed. The existing desktop login was not exported. Ubuntu 24.04
 installs Bubblewrap and loads its AppArmor user-namespace profile before running

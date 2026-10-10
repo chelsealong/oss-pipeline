@@ -105,6 +105,33 @@ def rotate_auth(previous):
 def cloud_enabled():
     return gh(['api',f'repos/{REPOSITORY}/actions/variables/CODEX_CLOUD_ENABLED','--jq','.value'])=='true'
 
+def resume_after_canary():
+    """Called only by the explicitly requested successful canary workflow step."""
+    expected=os.environ['GITHUB_SHA']
+    current=json.loads(gh(['api',f'repos/{REPOSITORY}/git/ref/heads/main']))['object']['sha']
+    if current!=expected:
+        raise RuntimeError('Main changed during validation; production remains paused')
+    runs=json.loads(gh(['api',f'repos/{REPOSITORY}/actions/workflows/codex-cloud-preflight.yml/runs?head_sha={expected}&per_page=20']))
+    if not any(row['head_sha']==expected and row['status']=='completed' and row['conclusion']=='success'
+               for row in runs['workflow_runs']):
+        raise RuntimeError('No successful preflight for this commit; production remains paused')
+    gh(['variable','set','CODEX_CLOUD_ENABLED','--repo',REPOSITORY,'--body','true'])
+    gh(['workflow','run','codex-cloud.yml','--repo',REPOSITORY,'--ref','main','-f','mode=live'])
+    print('Validated commit enabled for production:',expected,flush=True)
+
+
+def wait_canary_capacity():
+    import model_budget
+    deadline=time.monotonic()+18120
+    announced=False
+    while delay:=model_budget.canary_delay():
+        if time.monotonic()>deadline:
+            raise RuntimeError('Canary capacity did not become available within one budget window')
+        if not announced:
+            print(f'Waiting {delay:.0f}s for four canary turns; no model requests while waiting.',flush=True)
+            announced=True
+        time.sleep(min(30,delay))
+
 def configure(mode):
     rt.CONFIG.parent.mkdir(exist_ok=True)
     rt.CONFIG.write_text(json.dumps({'backend':'codex-cloud' if mode=='live' else 'codex-local',
@@ -199,6 +226,7 @@ def run(mode,seconds):
     try:
         if mode=='canary':
             cloud_store.seed_canary_budget();canary_budget=True
+            wait_canary_capacity()  # Before starting any authentication/model owner.
         if mode=='live':
             if not cloud_enabled():raise RuntimeError('Cloud production switch is off')
             work_evidence.key()  # Never run production without encrypted recovery.

@@ -10,6 +10,10 @@ on:
       run_seconds:
         description: Detection window before draining active work (60–10800 seconds)
         default: '10800'
+      resume_after_canary:
+        description: Restore production only after this canary and same-commit preflight pass
+        type: boolean
+        default: false
   schedule:
     - cron: '17,47 * * * *'
 
@@ -129,3 +133,8 @@ jobs:
           import os,shutil
           shutil.rmtree(os.environ['CODEX_HOME'],ignore_errors=True)
           PY
+      - name: Restore production after requested deployment validation
+        if: success() && inputs.mode == 'canary' && inputs.resume_after_canary == true
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: python -c 'import cloud_runtime; cloud_runtime.resume_after_canary()'
