@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791617871.623779,
+  "saved_at": 1791617879.8406734,
   "tables": {
     "tasks": [
       {
@@ -3026,9 +3026,9 @@
         "repo": "firecrawl",
         "number": 4774,
         "note": "",
-        "status": "skipped",
+        "status": "queued",
         "created": 1791028913.687987,
-        "updated": 1791355684.2035456,
+        "updated": 1791617873.9805162,
         "result": "[Issue #4774](https://github.com/firecrawl/firecrawl/issues/4774) proposes a new webhook delivery history and manual redelivery API, rather than a still-present bug with a small fix. The current webhook logs do not retain a replayable payload. Implementing the proposal requires decisions about retention, storage, access, and retry policy, plus security-sensitive changes outside this task’s allowed scope. The issue has no maintainer resolution or comments. No open PR claims #4774; related open PRs address automatic delivery reliability.",
         "attempts": 2
       },
@@ -9895,10 +9895,6 @@
         "value": "{\"phase\": \"skipped\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791355554.9785454, \"worker_slot\": 1, \"folder\": \"jobs/262/attempt-2\", \"attempt\": 2, \"base\": \"e7d9c8897a4ddf104396e4efc8c321e0f8075bac\", \"generation_started\": 1791355570.435367, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791355571.941381, \"last_execution_phase\": \"generation\", \"finished\": 1791355607.3471212}"
       },
       {
-        "key": "task:233",
-        "value": "{\"phase\": \"skipped\", \"terminal\": true, \"retry_after\": 0, \"started\": 1791355617.7747123, \"worker_slot\": 0, \"folder\": \"jobs/233/attempt-2\", \"attempt\": 2, \"base\": \"0b25e17057e140236b2081cfaa5baecd1154d090\", \"generation_started\": 1791355626.6147254, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791355628.379996, \"last_execution_phase\": \"generation\", \"finished\": 1791355683.9323711}"
-      },
-      {
         "key": "task:481",
         "value": "{\"started\": 1791361562.2677774, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/481/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"9cfe51c96eb07a34b2950dbd935a8830dcd7c45a\", \"generation_started\": 1791361573.936179, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791361575.433619, \"last_execution_phase\": \"generation\", \"finished\": 1791361598.2504752}"
       },
@@ -12175,8 +12171,12 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791617858.8480673, \"comfyui\": 1791613742.2794287, \"hermes\": 1791613035.9770277, \"langfuse\": 1791613755.0865147, \"firecrawl\": 1791617871.6178951, \"mem0\": 1791614333.2471364, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791309564.2366197, \"spec-kit\": 1791615650.2260282, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791564279.8734426, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791552304.4196568}}"
       },
       {
+        "key": "task:233",
+        "value": "{\"phase\": \"queued\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791355617.7747123, \"worker_slot\": 0, \"folder\": \"jobs/233/attempt-2\", \"attempt\": 2, \"base\": \"0b25e17057e140236b2081cfaa5baecd1154d090\", \"generation_started\": 1791355626.6147254, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791355628.379996, \"last_execution_phase\": \"generation\", \"finished\": 1791355683.9323711}"
+      },
+      {
         "key": "task:37",
-        "value": "{\"phase\": \"claimed\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791617871.618053, \"worker_slot\": 1, \"folder\": null, \"attempt\": 3, \"base\": null, \"generation_started\": 1791355520.6363606, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791355522.5505168, \"last_execution_phase\": \"generation\", \"finished\": 1791355552.6483715}"
+        "value": "{\"phase\": \"checkout\", \"terminal\": false, \"retry_after\": 0, \"started\": 1791617871.618053, \"worker_slot\": 1, \"folder\": \"jobs/37/attempt-3\", \"attempt\": 3, \"base\": \"6f892bc5026efc6355d017ec38dfffb84c228100\", \"generation_started\": 1791355520.6363606, \"dispatch_paid_date\": \"2026-10-07\", \"phase_started\": 1791355522.5505168, \"last_execution_phase\": \"generation\", \"finished\": 1791355552.6483715}"
       }
     ],
     "calls": [
@@ -21487,6 +21487,10 @@
       {
         "at": 1791617857.0698278,
         "kind": "judge"
+      },
+      {
+        "at": 1791617879.8319263,
+        "kind": "codex"
       }
     ]
   }
