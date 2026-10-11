@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791702831.7097917,
+  "saved_at": 1791702835.195823,
   "tables": {
     "tasks": [
       {
@@ -9864,11 +9864,11 @@
         "repo": "comfyui",
         "number": 16579,
         "note": "",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1791689171.3586242,
-        "updated": 1791702831.701319,
+        "updated": 1791702835.1831234,
         "result": "screening budget reached; retain pending work",
-        "attempts": 1
+        "attempts": 0
       },
       {
         "id": 760,
@@ -13006,28 +13006,12 @@
         "value": "{\"task\": 766, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-fc135ddb9d878517b326\", \"at\": 1791701584.3149574, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "task:219",
-        "value": "{\"recovery_checked_at\": 1791701877.0720408}"
-      },
-      {
-        "key": "recovery_audit:219",
-        "value": "{\"at\": 1791701877.961312, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:222",
-        "value": "{\"recovery_checked_at\": 1791701877.9631495}"
-      },
-      {
         "key": "recovery_audit:222",
         "value": "{\"at\": 1791701878.744842, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
         "key": "usage:764:1:screening-46010759f7df7ec33091",
         "value": "{\"task\": 764, \"repo\": \"llama-index\", \"attempt\": 1, \"phase\": \"screening-46010759f7df7ec33091\", \"at\": 1791701902.156143, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
-      },
-      {
-        "key": "usage:759:1:screening-b4b4c9f9ad99a5dac4e5",
-        "value": "{\"task\": 759, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-b4b4c9f9ad99a5dac4e5\", \"at\": 1791701927.8609786, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
         "key": "usage:762:1:screening-02b9166ed150ffebd1e6",
@@ -13418,10 +13402,6 @@
         "value": "{\"started\": 1791702806.1833415, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791703709.726411, \"folder\": \"jobs/764/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791702809.729647}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791702818.50242"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1791702819.3799934, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1792296963}]}"
       },
@@ -13430,32 +13410,52 @@
         "value": "{\"task\": 758, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-0156f967d553b5645c33\", \"at\": 1791702825.2673535, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:758",
         "value": "{\"started\": 1791702821.5784152, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791703725.2689042, \"folder\": \"jobs/758/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791702825.2719624}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791702827.7969108"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791702829.3428319"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791702829.5037394"
       },
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791702780.3376644, \"comfyui\": 1791702831.7012467, \"hermes\": 1791629598.7424486, \"langfuse\": 1791702256.4940453, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791702806.1832356, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791702704.1408772, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791702200.8136277, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
       },
       {
+        "key": "detector_heartbeat",
+        "value": "1791702832.797004"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791702833.5041218"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791702834.1429942"
+      },
+      {
+        "key": "task:219",
+        "value": "{\"recovery_checked_at\": 1791702834.17042}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791702834.5110118"
+      },
+      {
+        "key": "recovery_audit:219",
+        "value": "{\"at\": 1791702835.1532257, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:222",
+        "value": "{\"recovery_checked_at\": 1791702835.1549141}"
+      },
+      {
+        "key": "usage:759:1:screening-b4b4c9f9ad99a5dac4e5",
+        "value": "{\"task\": 759, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-b4b4c9f9ad99a5dac4e5\", \"at\": 1791702835.174511, \"seconds\": 0.003, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
         "key": "task:759",
-        "value": "{\"started\": 1791702831.7013555, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791701927.8683524}"
+        "value": "{\"started\": 1791702831.7013555, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791703735.1764433, \"folder\": \"jobs/759/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791702835.1809785}"
       }
     ],
     "calls": [
