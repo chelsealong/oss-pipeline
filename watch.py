@@ -638,35 +638,77 @@ PENDING_VET = scan.STATE / 'pending-vet.json'
 def pending_vet() -> dict:
     return json.loads(PENDING_VET.read_text()) if PENDING_VET.exists() else {}
 
-def save_pending_vet(rows: dict) -> None:
+def _write_pending_vet(rows):
     PENDING_VET.parent.mkdir(parents=True,exist_ok=True)
     temporary=PENDING_VET.with_suffix('.tmp')
     temporary.write_text(json.dumps(rows,ensure_ascii=False,indent=1)+'\n')
     temporary.replace(PENDING_VET)
 
+def save_pending_vet(rows: dict, previous=None) -> None:
+    # Discovery owns seen.json; admission owns decisions. Merge only changed
+    # records under a short lock, so slow screening cannot lose new discoveries.
+    import fcntl
+    PENDING_VET.parent.mkdir(parents=True,exist_ok=True)
+    with PENDING_VET.with_suffix('.lock').open('w') as lock:
+        fcntl.flock(lock,fcntl.LOCK_EX)
+        if previous is None:
+            _write_pending_vet(rows);return
+        latest=pending_vet()
+        for key in set(previous)|set(rows):
+            for number in set(previous.get(key,{}))|set(rows.get(key,{})):
+                before=previous.get(key,{}).get(number)
+                after=rows.get(key,{}).get(number)
+                if before==after:continue
+                current=latest.setdefault(key,{})
+                if current.get(number)!=before:continue
+                if after is None:current.pop(number,None)
+                else:current[number]=after
+        _write_pending_vet(latest)
+
 def retain_for_vetting(key: str, node: dict) -> None:
     """Read-only discovery must survive model-budget and service pauses."""
-    rows=pending_vet();repo=rows.setdefault(key,{})
-    repo[str(node['number'])]={'number':node['number'],'created_at':node['createdAt']}
-    rows[key]={n:repo[n] for n in sorted(repo,key=int)[-400:]}
-    save_pending_vet(rows)
+    import fcntl
+    PENDING_VET.parent.mkdir(parents=True,exist_ok=True)
+    with PENDING_VET.with_suffix('.lock').open('w') as lock:
+        fcntl.flock(lock,fcntl.LOCK_EX)
+        rows=pending_vet();repo=rows.setdefault(key,{})
+        repo.setdefault(str(node['number']),{'number':node['number'],'created_at':node['createdAt']})
+        rows[key]={n:repo[n] for n in sorted(repo,key=int)[-400:]}
+        _write_pending_vet(rows)
+
+def migrate_screening_waits():
+    if not rt.config().get('codex_screening_fallback') or rt.getmeta('screening_waits_v1'):return
+    import screening
+    rows=pending_vet();before=json.loads(json.dumps(rows))
+    for key,items in rows.items():
+        if scan.REPOS.get(key,{}).get('paused'):continue
+        for item in items.values():
+            if screening.eligible(rt.JudgeDeferred(item.get('reason',''))):
+                item['retry_after']=0
+    save_pending_vet(rows,before)
+    rt.setmeta('screening_waits_v1',time.time())
 
 def recheck_pending_vet(keys: list[str], limit: int = 4) -> int:
     """Refresh durable discoveries before vetting; never admit a stale snapshot."""
-    rows=pending_vet();accepted=checked=0
-    ordered=sorted(((key,number) for key in keys for number in rows.get(key,{})),
-                   key=lambda pair:(rows[pair[0]][pair[1]].get('checked_at',0),-int(pair[1])))
+    rows=pending_vet();before=json.loads(json.dumps(rows));accepted=checked=0
+    # Repository issue numbers are unrelated. Rotate repositories instead of
+    # exhausting a high-volume repository's backlog before seeing the others.
+    import itertools
+    groups=[sorted(((key,n) for n in rows.get(key,{})),
+                   key=lambda pair:(rows[key][pair[1]].get('checked_at',0),-int(pair[1]))) for key in keys]
+    groups.sort(key=lambda group:min((rows[k][n].get('checked_at',0) for k,n in group),default=float('inf')))
+    ordered=[pair for batch in itertools.zip_longest(*groups) for pair in batch if pair]
     for key,number in ordered:
         if rows[key][number].get('retry_after',0)>time.time():continue
         if checked>=limit or not rt.ready()[0]:
-            save_pending_vet(rows);return accepted
+            save_pending_vet(rows,before);return accepted
         checked+=1;cfg=scan.REPOS[key]
         rows[key][number]['checked_at']=time.time()
         try:
             issue=json.loads(scan.gh(['api',f"repos/{cfg['upstream']}/issues/{number}"],kind='other'))
             if issue.get('state')!='open' or issue.get('pull_request'):
                 del rows[key][number];continue
-            ok,why,extra=scan.vet(cfg,cfg['upstream'],issue)
+            ok,why,extra=scan.vet_candidate(cfg,cfg['upstream'],issue)
         except Exception as error:
             rows[key][number]['retry_after']=time.time()+(21600 if 'triage pending' in str(error) or 'bounded context' in str(error) else 900)
             rows[key][number]['reason']=str(error)[:400]
@@ -675,13 +717,13 @@ def recheck_pending_vet(keys: list[str], limit: int = 4) -> int:
         if ok:
             append_candidate(key,{'number':int(number),'title':issue['title'][:160],
                 'url':issue['html_url'],'created_at':issue['created_at'],
-                'reason':'clear after pending vet','age_hours':scan.age_hours(issue['created_at']),**extra})
+                'reason':why,'age_hours':scan.age_hours(issue['created_at']),**extra})
             accepted+=1
             if not NO_TRIGGER:trigger_fix(key,int(number))
         elif MIN_AGE_MARK in why:
             defer(key,int(number),issue['created_at'])
         del rows[key][number]
-    save_pending_vet(rows)
+    save_pending_vet(rows,before)
     return accepted
 
 
@@ -747,7 +789,7 @@ def sweep(keys: list[str], seen: dict[str, list[int]], per_repo: int,
                 continue
 
             try:
-                ok, why, extra = scan.vet(scan.REPOS[key], scan.REPOS[key]["upstream"], issue)
+                ok, why, extra = scan.vet_candidate(scan.REPOS[key], scan.REPOS[key]["upstream"], issue)
             except Exception as e:  # noqa: BLE001
                 retain_for_vetting(key,node)
                 log(f"  [{key}] #{num} vet failed: {e}")
@@ -761,7 +803,7 @@ def sweep(keys: list[str], seen: dict[str, list[int]], per_repo: int,
                     "url": issue["html_url"],
                     "created_at": node["createdAt"],
                     "age_hours": round(lag / 3600, 2),
-                    "reason": "clear",
+                    "reason": why,
                     "detected_after_s": round(lag, 1),
                     **extra,
                 })
@@ -830,7 +872,7 @@ def recheck_deferred(keys: list[str]) -> int:
                                            timeout=30, kind="other"))
                 if issue.get("state") != "open" or issue.get("pull_request"):
                     continue
-                ok, why, extra = scan.vet(cfg, cfg["upstream"], issue)
+                ok, why, extra = scan.vet_candidate(cfg, cfg["upstream"], issue)
             except Exception as e:  # noqa: BLE001
                 log(f"  [{key}] #{num_s} deferred re-vet failed: {str(e)[:100]}")
                 continue
@@ -1085,7 +1127,7 @@ def drain_queues(keys: list[str]) -> int:
                 try:
                     issue = json.loads(scan.gh(
                         ["api", f"repos/{upstream}/issues/{num}"], timeout=30, kind="other"))
-                    ok, why, _ = scan.vet(cfg, upstream, issue)
+                    ok, why, _ = scan.vet_candidate(cfg, upstream, issue)
                     if not ok:
                         log(f"  [{key}] #{num} no longer eligible ({why[:70]}) — dropped, no dispatch")
                         q["candidates"] = [c for c in q["candidates"] if c["number"] != num]

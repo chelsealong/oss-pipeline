@@ -7,15 +7,36 @@ import signal
 import time
 import runtime as rt
 
+def discover(once=False):
+    """GitHub-only five-second loop, independent of semantic/model latency."""
+    import scan,watch
+    keys=[k for k,v in scan.REPOS.items() if not v.get('paused')]
+    seen=watch.load_seen();bootstrap=not seen;wide=True
+    with rt.lock('discover'):
+        while True:
+            started=time.monotonic()
+            rt.setmeta('detector_heartbeat',time.time())
+            try:
+                if rt.config().get('enabled'):
+                    watch.sweep(keys,seen,100 if wide else 5,bootstrap,vetting=False)
+                    watch.save_seen(seen);bootstrap=False;wide=False
+                    rt.setmeta('discovery_last_success',time.time())
+            except Exception as error:
+                rt.setmeta('discovery_error',{'at':time.time(),'error':str(error)[:500]})
+            if once:return
+            time.sleep(max(.1,5-(time.monotonic()-started)))
+
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('role',choices=['watch','prwatch','health']);ap.add_argument('--once',action='store_true');args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('role',choices=['discover','watch','prwatch','health']);ap.add_argument('--once',action='store_true');args=ap.parse_args()
     if args.role=='health':
         print(json.dumps(rt.status(),indent=2));return
+    if args.role=='discover':return discover(args.once)
     with rt.lock(args.role):
         if args.role=='watch':
             import scan, watch
             keys=[k for k,v in scan.REPOS.items() if not v.get('paused')]
             seen=watch.load_seen();bootstrap=not seen
+            watch.migrate_screening_waits()
             last_drain=0;last_scan=0;scan_index=0;last_capture=0;last_pending_vet=0
         else:
             spec=importlib.util.spec_from_file_location('prwatch',rt.ROOT/'watch-prs.py')
@@ -23,7 +44,8 @@ def main():
             seen=wp.load_seen()
         while True:
             rt.setmeta(args.role+'_heartbeat',time.time())
-            if args.role=='watch':rt.setmeta('detector_heartbeat',time.time())
+            decoupled=rt.config().get('decouple_discovery',False)
+            if args.role=='watch' and not decoupled:rt.setmeta('detector_heartbeat',time.time())
             try:
                 # Discovery must continue while workers are busy. Admission
                 # remains separately bounded by room()/enqueue().
@@ -31,7 +53,7 @@ def main():
                 if args.role=='watch' and not is_ready and rt.config().get('enabled'):
                     # No model calls while paused. Capture a wider GitHub-only
                     # window so quota resets do not leave only five new issues.
-                    if time.time()-last_capture>60:
+                    if not decoupled and time.time()-last_capture>60:
                         last_capture=time.time()  # Back off failed captures too.
                         watch.sweep(keys,seen,100,bootstrap,vetting=False)
                         import task_recovery
@@ -45,15 +67,17 @@ def main():
                         holds=rt.publication_holds()
                         held_keys=[key for key in keys if holds.get(key,0)>time.time()]
                         active_keys=[key for key in keys if key not in held_keys]
-                        if held_keys and time.time()-last_capture>60:
+                        if not decoupled and held_keys and time.time()-last_capture>60:
                             last_capture=time.time()
                             watch.sweep(held_keys,seen,100,bootstrap,vetting=False)
                             last_capture=time.time()
-                        new,accepted=watch.sweep(active_keys,seen,5,bootstrap) if active_keys else (0,0)
-                        watch.save_seen(seen);bootstrap=False
+                        new,accepted=watch.sweep(active_keys,seen,5,bootstrap) if active_keys and not decoupled else (0,0)
+                        if not decoupled:watch.save_seen(seen)
+                        bootstrap=False
                         if new:watch.log(f'Codex detection: {new} new, {accepted} accepted')
-                        if time.time()-last_pending_vet>60:
-                            watch.recheck_pending_vet(active_keys)
+                        if time.time()-last_pending_vet>(5 if decoupled else 60):
+                            if decoupled:watch.recheck_pending_vet(active_keys,limit=8)
+                            else:watch.recheck_pending_vet(active_keys)
                             last_pending_vet=time.time()
                         if time.time()-last_drain>600 and rt.room()[0]:
                             watch.recheck_deferred(active_keys)

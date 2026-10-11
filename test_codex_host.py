@@ -74,6 +74,10 @@ class HostTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError,'intentional failure'):
             codex_host.execute(self.request(0,'fail'),output)
         self.assertFalse(output.exists())
+    def test_screening_uses_read_only_sandbox_without_health_probe_flag(self):
+        request={**self.request(0),'read_only':True,'probe':False}
+        result=json.loads(codex_host.execute(request,self.root/'screening.json'))
+        self.assertEqual(result['sandbox'],{'type':'readOnly'})
     def test_timeout_waits_for_confirmed_interruption_before_retry(self):
         with self.assertRaises(subprocess.TimeoutExpired):
             codex_host.execute(self.request(0,'hang',timeout=.15),self.root/'timeout.json')

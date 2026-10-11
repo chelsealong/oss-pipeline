@@ -124,11 +124,12 @@ def wait_canary_capacity():
     import model_budget
     deadline=time.monotonic()+18120
     announced=False
-    while delay:=model_budget.canary_delay():
+    required=6 if rt.config().get('codex_screening_fallback') else 4
+    while delay:=model_budget.canary_delay(required):
         if time.monotonic()>deadline:
             raise RuntimeError('Canary capacity did not become available within one budget window')
         if not announced:
-            print(f'Waiting {delay:.0f}s for four canary turns; no model requests while waiting.',flush=True)
+            print(f'Waiting {delay:.0f}s for {required} canary turns; no model requests while waiting.',flush=True)
             announced=True
         time.sleep(min(30,delay))
 
@@ -144,6 +145,8 @@ def configure(mode):
         'codex_start_used_percent':85,'codex_stop_used_percent':95,
         'judge_requests_per_hour':30,'judge_requests_per_day':150,'judge_tokens_per_day':100000,
         'judge_max_attempts':2,'judge_max_input_bytes':12000,'judge_issue_triage':True,
+        'codex_screening_fallback':True,'codex_screening_per_5h':6,'codex_screening_per_day':18,
+        'codex_screening_max_bytes':128000,'decouple_discovery':True,
         'judge_free_only_required':True,
         'judge_free_only_models':[m.strip() for m in os.environ.get('QWEN_FREE_ONLY_MODELS','').split(',') if m.strip()]})+'\n')
     rt.DATA.mkdir(exist_ok=True)
@@ -269,7 +272,8 @@ def run(mode,seconds):
             print('Cloud '+mode+' passed; no upstream publication.',flush=True)
             return
         workers=[start(f'worker-{slot}',['codex_worker.py','--managed','--slot',str(slot)]) for slot in range(rt.config()['workers'])]
-        detectors=[start('watch',['local_service.py','watch']),start('prwatch',['local_service.py','prwatch'])]
+        detectors=[start('discover',['local_service.py','discover']),
+                   start('watch',['local_service.py','watch']),start('prwatch',['local_service.py','prwatch'])]
         deadline=time.monotonic()+seconds
         while time.monotonic()<deadline and cloud_enabled():
             if any(p.poll() is not None for p in children):raise RuntimeError('A cloud service exited unexpectedly')
@@ -279,9 +283,11 @@ def run(mode,seconds):
             cloud_store.save()
             previous=rotate_auth(previous)
             s=rt.status()
+            import admission_health
+            admission_health.report(s['admission'])
             rt.setmeta('throughput_24h',{'at':time.time(),'tasks':s['throughput_24h']})
             print(json.dumps({'at':time.time(),'ready':s['ready'],'tasks':s['tasks'],'calls':s['calls_last_hour'],
-                'active':s['active'],'dispatch_budget':s['dispatch_budget'],
+                'active':s['active'],'dispatch_budget':s['dispatch_budget'],'admission':s['admission'],
                 'throughput_24h':s['throughput_24h'],
                 'model_usage_24h':s['model_usage_24h'],
                 'publication_outcomes_24h':s['publication_outcomes_24h']}),flush=True)

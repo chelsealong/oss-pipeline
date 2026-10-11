@@ -47,9 +47,11 @@ The cloud CLI version is pinned independently of IDE updates. All seven legacy
 Claude workflows remain disabled. The former local deployment remains under
 `~/.local/share/oss-scanner` for recovery; do not start it alongside cloud production.
 
-The cloud supervisor runs three services formerly managed by launchd:
+The cloud supervisor separates discovery from admission and execution:
 
-- `oss-watch`: new issue detection plus rotating backlog scans; retains repository
+- `oss-discover`: GitHub-only GraphQL polling with a five-second target period,
+  durable discoveries and no model calls; actual latency includes GitHub response time.
+- `oss-watch`: candidate screening plus rotating backlog scans; retains repository
   exclusions, duplicate checks and dispatch caps from `scan.py` / `watch.py`.
 - `oss-prwatch`: actionable feedback and failing-check detection, every five minutes.
 - `oss-fix`: two workers sharing one authenticated host, with durable SQLite jobs under `.runtime/`.
@@ -75,6 +77,24 @@ Missing configuration fails closed. Quota/authentication errors retain work.
 Concurrent cache writes merge atomically and identical requests share a lock.
 Oversized, unavailable or uncertain judgments retain pending feedback/issues;
 discussion changes invalidate issue verdicts. Pending candidates rotate fairly.
+
+When the local Qwen request/token allowance or 12 KB input ceiling prevents a
+judgement, discovery may queue a provisional candidate. An existing worker then
+performs full-text, read-only screening through the shared `gpt-6-sol` subscription
+host before checkout/coding. No claim, competing PR, coordination rule or publication
+review is waived. Fallback screening is capped at 6 calls/5h and 18 calls/24h,
+inside the shared 45-call limit, with two turns retained for coding/review.
+Content above 128 KB gets a visible manual handoff; it is never truncated.
+Failed identical screenings are not replayed indefinitely. Deferred PR feedback
+is refreshed and screened before its checkout as well. Free-only API protection
+and disabled repositories remain enforced.
+
+`runtime.status().admission` distinguishes productive admission from authentication
+health, reports pending reasons and unsent coordination requests, and flags an
+empty worker queue with waiting candidates after 30 minutes without a Codex call.
+Cloud logs emit a bounded Actions warning for that condition. ADK duplicate checks
+run before preparing coordination requests; the controller never sends those
+issue comments automatically.
 
 The existing 45 Codex turns/5h ceiling includes generation and independent
 review. Generation reserves its next review slot. Soft allocation targets are
@@ -109,6 +129,9 @@ regression checks). Legacy Claude checks remain archived below the active route.
 `python3 codex_worker.py --probe` performs one real, read-only Codex auth probe.
 The launchd canary passed on 2026-10-01: failing baseline, generated fix,
 independent review, controller test rerun and local commit, with no public PR.
+Current cloud deployment additionally requires two concurrent full-text screening
+canaries, including an author claim after 12 KB, generation/environment checks and
+independent review. All six turns are reserved before starting the shared host.
 `run-fix.sh` drains at most one already-queued task; it no longer invokes Claude.
 
 Pause cloud admission with `CODEX_CLOUD_ENABLED=false` and let the active task

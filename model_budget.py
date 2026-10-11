@@ -43,6 +43,7 @@ def codex_admit(db, task, phase, spent, limit):
     if not cfg.get('codex_review_reservations'):
         return True, ''
     now = time.time()
+    screening = bool(phase and phase.startswith('screening-') and (not task or task['kind']!='canary'))
     active = {str(r[0]) for r in db.execute("SELECT id FROM tasks WHERE status='running'")}
     leases = {k: v for k, v in rt._meta(db, 'codex_review_leases', {}).items()
               if k in active and v.get('until', 0) > now}
@@ -51,12 +52,21 @@ def codex_admit(db, task, phase, spent, limit):
     own = leases.get(ident, {}).get('remaining', 0)
     start = phase in ('generation', 'remediation')
     need = 2 if task and start else 1
-    allowed, why = quota_gate(db, starting=phase == 'generation' and not own)
+    allowed, why = quota_gate(db, starting=screening or (phase == 'generation' and not own))
     if not allowed:
         return False, why
     if spent + remaining + max(own, need) > limit:
         return False, 'Codex budget reserved for independent reviews'
-    group = ('validation' if not task or task['kind'] == 'canary' else
+    if screening:
+        calls = [x for x in rt._meta(db, 'codex_screening_calls', []) if x['at'] > now - 86400 * 7]
+        if (sum(x['at'] > now - 18000 for x in calls) >= cfg.get('codex_screening_per_5h', 6)
+                or sum(x['at'] > now - 86400 for x in calls) >= cfg.get('codex_screening_per_day', 18)):
+            return False, 'screening budget reached; retain pending work'
+        if spent + remaining + max(own, 1) + 2 > limit:
+            return False, 'screening budget reserved for coding and review'
+        calls.append({'at': now, 'task': task['id'] if task else None, 'phase': phase})
+        rt._putmeta(db, 'codex_screening_calls', calls)
+    group = ('screening' if screening else 'validation' if not task or task['kind'] == 'canary' else
              'repair' if phase in ('remediation', 'rereview', 'review-policy', 'rereview-policy') else
              'maintenance' if task['kind'] == 'respond' else 'new_fix')
     usage = [x for x in rt._meta(db, 'codex_allocations', []) if x['at'] > now - 18000]
@@ -105,16 +115,16 @@ def free_models():
     return set(cfg.get('judge_free_only_models', []))
 
 
-def canary_delay():
-    """Seconds until four ordinary turns fit; never refund prior spending."""
+def canary_delay(required=4):
+    """Seconds until all canary turns fit; never refund prior spending."""
     now=time.time()
     limit=rt.config().get('codex_sessions_per_5h',45)
-    if limit<4:
-        raise RuntimeError('Two canaries require a configured ceiling of at least four turns')
+    if limit<required:
+        raise RuntimeError('Two canaries exceed the configured call ceiling')
     with rt.db() as db:
         times=[row[0] for row in db.execute(
             "SELECT at FROM calls WHERE kind='codex' AND at>? ORDER BY at",(now-18000,))]
-    release=len(times)+4-limit
+    release=len(times)+required-limit
     return max(0,times[release-1]+18000-now+1) if release>0 else 0
 
 

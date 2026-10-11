@@ -981,6 +981,12 @@ def one_pass(seen: dict) -> int:
             try:
                 ok, why = actionable(item, pr)
             except rt.JudgeDeferred as error:
+                import screening
+                if screening.eligible(error) and not pr.get('_is_issue'):
+                    item['screening_required']=True
+                    fresh.append(item)
+                    judge_wait.pop(item['id'],None)
+                    continue
                 judge_wait[item['id']]={'retry_after':time.time()+900,'reason':str(error)[:300]}
                 continue
             judge_wait.pop(item['id'],None)
@@ -1031,7 +1037,9 @@ def one_pass(seen: dict) -> int:
         log(f"  [{key}] {len(fresh)} new item(s) from {who} [{budget} budget]; "
             f"labels: {', '.join(labels) or '-'}")
         head=((pr.get('commits') or {}).get('nodes') or [{}])[0].get('commit',{}).get('oid')
-        note = json.dumps({"authors": who, "events": sorted(i["id"] for i in fresh), "is_issue": bool(pr.get("_is_issue")), "head": head}) if rt.local() else who
+        note = json.dumps({"authors": who, "events": sorted(i["id"] for i in fresh),
+            "screening_events":sorted(i['id'] for i in fresh if i.get('screening_required')),
+            "is_issue": bool(pr.get("_is_issue")), "head": head}) if rt.local() else who
         if dispatch(repo, num, note):
             # A dry run must not consume the day's budget; dispatch() returns
             # True in DRY_RUN so the flow can be exercised, which had already

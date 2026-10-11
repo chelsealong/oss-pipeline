@@ -15,7 +15,8 @@ checkouts, durable SQLite tasks, separate generation/review phases and
 controller-only publication. Never run two independent CLI authentication
 owners on the same refreshable login. Task claims and budgets are atomic;
 at most one task per upstream repository runs at a time.
-`local_service.py watch` owns issue detection and periodic reconciliation;
+`local_service.py discover` owns issue detection; `local_service.py watch` owns
+candidate screening and periodic reconciliation;
 `local_service.py prwatch` handles PR feedback. The legacy Claude GitHub Actions
 workflows remain disabled and cloud `state/watcher.json` stays off. Never start
 them alongside the local worker. Do not upload the existing desktop Codex
@@ -48,7 +49,22 @@ all current models. Require the `QWEN_FREE_ONLY_MODELS` allowlist; never enable
 paid spillover or infer remaining provider balance. Enforce 30 requests/hour,
 150/rolling 24h, 100,000 input+output tokens/rolling 24h and two model attempts.
 Reserve conservatively before HTTP and preserve unknown/failed spending. Keep
-deferred judgments out of active queues without marking feedback handled.
+deferred judgments durable without marking feedback handled. The October 11
+admission repair permits provisional candidates for worker screening when the
+local judge token/request budget or 12 KB input ceiling is reached. This is
+not eligibility approval. Before checkout/coding, the existing worker must
+complete full-text semantic screening through the same subscription host in
+read-only mode, then recheck all upstream/claim/duplicate rules. Cap fallback
+at six calls/rolling five hours and 18/rolling day, inside the shared 45-call
+limit, retaining capacity for coding and independent review. Never truncate
+claims or objections. Context over 128 KB needs a visible manual handoff.
+Authentication failures, disabled repos and creation holds are not bypasses.
+Discovery is a separate GitHub-only five-second loop; pending-file writes are
+merged under short locks so slow screening cannot lose new issues. Startup
+rechecks prior budget/length holds once, preserving other waits and spending.
+Report admission starvation separately from process/auth health. ADK requests
+remain unsent, visible human follow-ups; check duplicates before requesting
+coordination. No new authority to post issue comments is implied.
 Codex generation reserves independent review capacity within the existing
 45-turn/5h cap. Use the same authenticated host for read-only quota status;
 85% usage stops new generation and 95% stops ordinary model admission. Preserve
@@ -139,6 +155,8 @@ wording where upstream requires only asking first.
 Check `runtime.status()` for active phases, 24-hour outcomes and human follow-ups.
 Run `verify_codex.py` with PyYAML and cryptography, then the cloud preflight and
 two concurrent canaries before restoring production after runtime changes.
+Each canary also verifies full-text read-only screening, including a tail claim
+after 12 KB; reserve all six turns before starting the shared auth owner.
 
 The 2026-10-10 repair separates model deadlines from read-network retries.
 A deadline may continue once from a complete retained patch; otherwise it enters
@@ -214,7 +232,7 @@ checkpoint cannot dispatch an immediate successor. Preserve all spending.
 Cloud canaries import only the live call ledger, never production tasks, and
 append their actual reservations back to that ledger after stopping the auth
 owner. Failed canaries retain spending too; repeated accounting is idempotent.
-Canaries wait in cloud for four free turns before starting the host; waiting
+Canaries wait in cloud for all six free turns before starting the host; waiting
 does not consume model quota. Manual `resume_after_canary=true` explicitly
 requests deployment: only a successful canary and successful preflight at the
 unchanged main commit can re-enable production. Cancel that deployment run to

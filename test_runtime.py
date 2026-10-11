@@ -71,7 +71,7 @@ class RuntimeTests(unittest.TestCase):
                'labels':[],'assignees':[],'user':{'login':'reporter'}}
         with patch.object(scan,'linked_prs',return_value=[]),patch.object(intent,'is_claim',return_value=(True,'offered fix')),patch.object(scan,'claimants',side_effect=AssertionError('unnecessary API')):
             self.assertIn('issue author',scan.vet({},'o/r',issue)[1])
-        with patch.object(scan,'linked_prs',side_effect=AssertionError('unnecessary API')):
+        with patch.object(scan,'linked_prs',return_value=[]),patch.object(intent,'is_claim',side_effect=AssertionError('No coding/semantic work before coordination')):
             self.assertIn('coordination',scan.vet({'announce_before_work':True},'o/r',issue)[1])
     def test_langfuse_triage_assignment_is_not_a_claim(self):
         issue={'number':9,'title':'A real bug','body':'A detailed reproducible report. '*6,

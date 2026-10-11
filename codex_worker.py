@@ -2,6 +2,7 @@
 """Bounded executors with isolated checkouts, independent review and durable evidence."""
 from __future__ import annotations
 import argparse
+import contextlib
 import hashlib
 import json
 import os
@@ -106,15 +107,15 @@ def binary():
         raise RuntimeError('Codex CLI not found')
     return str(candidates[-1])
 
-def agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_key=None, task=None):
+def agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_key=None, task=None, read_only=False):
     started=time.monotonic()
     try:
-        return _agent(prompt,work,output,schema,timeout,probe,repo_key,task)
+        return _agent(prompt,work,output,schema,timeout,probe,repo_key,task,read_only)
     finally:
         if not probe:
             execution.record_usage(task,output,started)
 
-def _agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_key=None, task=None):
+def _agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_key=None, task=None, read_only=False):
     if not probe:
         ok, why = rt.reserve_call('codex',task=task,phase=output.stem)
         if not ok:
@@ -124,13 +125,13 @@ def _agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_ke
         rt.checkpoint()
     output.parent.mkdir(parents=True, exist_ok=True)
     cmd = [binary(), 'exec', '--ignore-user-config', '--ephemeral', '--json',
-           '--skip-git-repo-check', '-s', 'read-only' if probe else 'workspace-write',
+           '--skip-git-repo-check', '-s', 'read-only' if probe or read_only else 'workspace-write',
            '-c', 'approval_policy="never"', '-c', 'sandbox_workspace_write.network_access=true',
            '--disable', 'plugins', '--disable', 'remote_plugin', '--disable', 'apps',
            '--disable', 'multi_agent', '--disable', 'hooks',
            '-C', str(work), '-o', str(output), '-']
     cache = None
-    if not probe and (rt.config().get('cloud_environment') or rt.config().get('backend') == 'codex-cloud'):
+    if not probe and not read_only and (rt.config().get('cloud_environment') or rt.config().get('backend') == 'codex-cloud'):
         # Tool caches must stay writable without entering the source checkout
         # (and therefore without being staged into an upstream PR).
         cache = output.parent/'tool-cache'
@@ -166,7 +167,7 @@ def _agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_ke
     if bundled_rg:
         tool_dirs.append(str(bundled_rg[-1].parent))
     env['PATH'] = ':'.join(tool_dirs+[env.get('PATH','/usr/bin:/bin')])
-    if not probe:prompt+=execution.validation_environment(work,env)
+    if not probe and not read_only:prompt+=execution.validation_environment(work,env)
     if cache is not None:
         env.update({'OSS_TASK_CACHE':str(cache),
                     'COREPACK_HOME':str(cache/'corepack'),
@@ -196,7 +197,7 @@ def _agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_ke
                      'npm_config_store_dir','CARGO_HOME','RUSTUP_HOME','UV_CACHE_DIR','UV_PYTHON_INSTALL_DIR','PATH','VIRTUAL_ENV')
         request={'prompt':prompt,'work':str(work),'roots':roots,'schema':schema,'model':model,
             'effort':effort,'cache_env':{k:env[k] for k in cache_names if k in env},
-            'timeout':timeout,'probe':probe,'phase':output.stem}
+            'timeout':timeout,'probe':probe,'read_only':read_only,'phase':output.stem}
         text=codex_host.execute(request,output)
         if not probe:rt.setmeta('health',{'ok':True,'at':time.time(),'source':'completed task phase'})
         return validate_result(json.loads(text),schema) if schema else text
@@ -321,14 +322,16 @@ def configs(task):
         raise rt.Paused('repo paused: '+cfg['paused'])
     return key,cfg
 
-def fix_eligible(key,cfg,number):
+def fix_eligible(key,cfg,number,task=None):
     import scan
     up=cfg['upstream']
     issue=api(f'repos/{up}/issues/{number}')
     if issue['state']!='open': return False,'issue closed'
     if cfg.get('needs_assignment') and ME not in [a['login'] for a in issue.get('assignees',[])]:
         return False,'assignment required; no automated claim comment'
-    ok,why,_=scan.vet(cfg,up,issue)
+    import screening
+    with screening.worker(task,key) if task else contextlib.nullcontext():
+        ok,why,_=scan.vet(cfg,up,issue)
     return ok,why
 
 def cap_ok(key, impl):
@@ -484,10 +487,13 @@ def process_one(task):
             # pre-check-only claim; no checkout/model/publication occurred.
             with rt.db() as db:db.execute('UPDATE tasks SET attempts=MAX(0,attempts-1) WHERE id=?',(task['id'],))
             finish(task,'capacity_wait',why);return
-        ok,why=fix_eligible(key,cfg,num)
+        ok,why=fix_eligible(key,cfg,num,task)
         if not ok: finish(task,'skipped',why);return
     else:
         pr=response_context(impl,num)
+        import screening
+        if not screening.feedback(task,key,impl):
+            finish(task,'skipped','Fresh read-only screening found no actionable feedback');return
     attempt=task.get('attempts',1)
     folder=rt.DATA/'jobs'/str(task['id'])/f'attempt-{attempt}';folder.mkdir(parents=True,exist_ok=True)
     rt.task_state(task['id'],folder=str(folder.relative_to(rt.DATA)),attempt=attempt,phase='checkout',terminal=False,base=None)
@@ -650,7 +656,7 @@ Do not assert personal human validation.
         hold_result(task,'Response code update is missing its factual follow-up reply',work);return
     scope_check(work,key)
     if kind=='fix':
-        ok,why=fix_eligible(key,cfg,num)
+        ok,why=fix_eligible(key,cfg,num,task)
         if not ok:
             finish(task,'skipped','Before expensive validation: '+why);return
     result,review=review_patch(task,work,folder,key,base,result,f'''Independently review the uncommitted patch in this checkout for {issue_repo}#{num}.
@@ -687,7 +693,7 @@ Also review pr_body when nonempty; preserve scope/disclosure and do not invent h
     if kind=='fix':
         ok,why=cap_ok(key,impl)
         if not ok:finish(task,'capacity_wait','final eligibility: '+why);return
-        if ok:ok,why=fix_eligible(key,cfg,num)
+        if ok:ok,why=fix_eligible(key,cfg,num,task)
         if not ok:finish(task,'blocked','final eligibility: '+why);return
     else:
         current=response_context(impl,num)
@@ -744,6 +750,22 @@ def canary(task):
     (folder/'before-tests.txt').write_text(before.stdout+before.stderr)
     if before.returncode==0:raise RuntimeError('canary baseline unexpectedly passed')
     rt.task_state(task['id'],base=git(work,'rev-parse','HEAD'))
+    if rt.config().get('codex_screening_fallback'):
+        import screening,intent
+        # Exercise the real read-only subscription fallback on full >12 KB text,
+        # including a decisive author statement at the end. No provider/API spend.
+        report=('The application reports a reproducible addition error.\n'*260+
+                ('I have implemented the fix and will open a PR.' if requires_human else
+                 'I am only reporting this bug and cannot implement the fix.'))
+        with screening.worker(task,'canary'):
+            verdict=screening.ask(intent.ISSUE_SYSTEM,report,
+                rt.JudgeDeferred('judge input exceeds bounded context; retain for inspection'))
+        if verdict['claim']!=requires_human or verdict['kind']!='BUG':
+            raise RuntimeError('canary read-only screening missed the full report or tail claim')
+        if requires_human and verdict['evidence'] not in report:
+            raise RuntimeError('canary screening lacks exact source evidence')
+        (folder/'screening-verified.json').write_text(json.dumps({'full_bytes':len(report.encode()),
+            'tail_claim_verified':True,'verdict':verdict,'no_api_call':True}))
     result=agent('This is a pipeline canary, no upstream repository or publishing. Read the two Python files. Fix sum_values to add its arguments. Do not change the tests. Create an ignored .venv with python3 -m venv --without-pip. Put a test-only module named oss_canary_dependency.py containing VALUE=42 in that virtual environment site-packages (locate it with .venv/bin/python and sysconfig.get_path("purelib")); do not put the module in the source directory. Run .venv/bin/python -m unittest -v and import that module using the same interpreter. Leave the ignored .venv in place for independent review. Also verify that RUSTUP_HOME and CARGO_HOME are writable by creating a small probe file in each supplied cache. Create an ignored node_modules/probe/index.js exporting 42, and verify node can require it from this checkout. Verify both dependency directories are ignored by git. Do not commit or use network tools. Return READY with actual test evidence and pr_body as an empty string in the required JSON. This also checks the production response schema without posting.',work,folder/'generation.json',RESPONSE_SCHEMA,timeout=240,task=task)
     if result['outcome']!='READY':raise RuntimeError('canary generation '+result['outcome']+': '+result['reason'][:1200])
     review=agent(f'''This is an independent canary review, with no upstream publication.
@@ -820,7 +842,9 @@ def next_queued(db, holds):
 
 def handle_task_error(task,error):
     state=rt.task_state(task['id'])
-    if isinstance(error,rt.JudgeDeferred) and not state.get('folder') and not state.get('publication_started'):
+    if isinstance(error,rt.JudgeDeferred) and not state.get('base') and not state.get('publication_started'):
+        if 'manual assessment' in str(error):
+            finish(task,'blocked',str(error));return
         delay=21600 if 'triage pending' in str(error) or 'bounded context' in str(error) else 900
         rt.task_state(task['id'],retry_after=time.time()+delay)
         with rt.db() as db:

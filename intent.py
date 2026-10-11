@@ -412,6 +412,14 @@ def _window(t: str, head: int = 6000, tail: int = 6000) -> str:
 
 
 def _ask(system: str, user: str, *, author: str = "?") -> dict | None:
+    try:
+        return _ask_remote(system, user, author=author)
+    except rt.JudgeDeferred as error:
+        import screening
+        return screening.ask(system, user, error)
+
+
+def _ask_remote(system: str, user: str, *, author: str = "?") -> dict | None:
     """One judgement call, down the model list. None means none of them answered."""
     if rt.local() and not rt.ready()[0]:
         raise rt.JudgeDeferred(rt.ready()[1])

@@ -99,7 +99,7 @@ class Host:
         self.proc.stdin.close();self.proc.stdout.close()
 
 def run_turn(host,request,emit):
-    probe=request.get('probe',False)
+    probe=request.get('probe',False) or request.get('read_only',False)
     work=request['work'];roots=request.get('roots',[work])
     thread=host.call('thread/start',{'model':request['model'],'cwd':work,'approvalPolicy':'never',
         'sandbox':'read-only' if probe else 'workspace-write','ephemeral':True,

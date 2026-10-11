@@ -1010,7 +1010,11 @@ def coordination_allowed(upstream, issue):
             rt.setmeta(name,{'status':'asked','source':asked.get('html_url'),'comment_id':asked['id'],
                 'rule':'Upstream requires asking before contributing, not a particular approval phrase.'})
             return True
+    previous=rt.getmeta(name,{})
+    import time
     rt.setmeta(name,{'status':'needs_human','url':f"https://github.com/{upstream}/issues/{issue['number']}",
+        'title':issue.get('title',''), 'first_seen':previous.get('first_seen',time.time()),
+        'last_checked':time.time(), 'delivery':'not_sent',
         'draft':'May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.'})
     return False
 
@@ -1026,9 +1030,6 @@ def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
     assignees = {a.get('login','').lower() for a in issue.get('assignees',[]) if isinstance(a,dict)}
     if not cfg.get('ignore_assignees') and assignees-{'chelsealong'}:
         return False, 'assigned to another contributor', {}
-    if rt.local() and cfg.get('announce_before_work') and not coordination_allowed(upstream,issue):
-        return False, 'upstream coordination required', {}
-
     if labels & cfg.get("exclude_labels", set()):
         return False, f"excluded label {sorted(labels & cfg['exclude_labels'])}", {}
     pfx = cfg.get("exclude_label_prefix")
@@ -1087,7 +1088,13 @@ def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
     if prs and str(prs[0]).startswith("?unknown"):
         return False, f"linked-PR lookup unavailable, deferring: {prs[0][:110]}", {}
     if prs:
+        if rt.local() and cfg.get('announce_before_work'):
+            rt.setmeta(f'coordination:{upstream}#{num}',{'status':'not_needed',
+                'reason':'Existing linked PR; no coordination message should be sent.', 'prs':prs[:3]})
         return False, f"already has PR(s): {prs[:3]}", {}
+
+    if rt.local() and cfg.get('announce_before_work') and not coordination_allowed(upstream,issue):
+        return False, 'upstream coordination required', {}
 
     # The author can claim work in the original issue, not just comments.
     author = (issue.get('user') or {}).get('login','')
@@ -1136,6 +1143,11 @@ def age_hours(iso: str) -> float:
     return (datetime.now(timezone.utc) - t).total_seconds() / 3600
 
 
+def vet_candidate(cfg, upstream, issue):
+    import screening
+    return screening.candidate(vet, cfg, upstream, issue)
+
+
 def scan_repo(key: str, limit: int, max_vet: int) -> dict:
     cfg = REPOS[key]
     upstream = cfg["upstream"]
@@ -1163,7 +1175,7 @@ def scan_repo(key: str, limit: int, max_vet: int) -> dict:
     ordered = sorted(seen.items(), key=lambda kv: kv[1]["created_at"], reverse=True)[:depth]
     for num, it in ordered:
         try:
-            passed, why, extra = vet(cfg, upstream, it)
+            passed, why, extra = vet_candidate(cfg, upstream, it)
         except RateLimited as e:
             errors.append(f"vet aborted at #{num}: {e}")
             print(f"  ! vet aborted at #{num} (rate limited)", file=sys.stderr)

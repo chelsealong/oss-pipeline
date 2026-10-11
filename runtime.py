@@ -262,6 +262,7 @@ def lock(name):
 
 def status():
     import model_budget
+    import admission_health
     with db() as c:
         counts = dict(c.execute('SELECT status,count(*) FROM tasks GROUP BY status').fetchall())
         recent = [dict(r) for r in c.execute('SELECT id,kind,repo,number,status,result,updated FROM tasks ORDER BY id DESC LIMIT 8')]
@@ -297,7 +298,8 @@ def status():
     followups.extend({'key':'publication:'+repo,'status':'needs_human','repo':repo,'requires_clearance':True,
         'reason':'Upstream rejected ordinary PR creation; inspect permissions/concurrent PR cap. Time passing or draft creation does not clear the hold; verify a newer ordinary creation.'}
         for repo,until in publication_holds().items())
-    return {'config': config(), 'ready': ready(), 'model_budgets': model_budget.status(), 'health': getmeta('health'),
+    return {'config': config(), 'ready': ready(), 'admission': admission_health.status(),
+            'model_budgets': model_budget.status(), 'health': getmeta('health'),
             'pause': getmeta('pause'), 'tasks': counts, 'recent': recent, 'calls_last_hour': calls,
             'active':active,'dispatch_budget':budget,'throughput_24h':throughput,'human_followups':followups,
             'publication_outcomes_24h':publication_outcomes,
