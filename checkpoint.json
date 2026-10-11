@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791703338.6930082,
+  "saved_at": 1791703384.7248924,
   "tables": {
     "tasks": [
       {
@@ -9942,11 +9942,11 @@
         "repo": "openclaw",
         "number": 168870,
         "note": "",
-        "status": "triage_wait",
+        "status": "running",
         "created": 1791694305.498844,
-        "updated": 1791702482.1658258,
+        "updated": 1791703384.716679,
         "result": "screening budget reached; retain pending work",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 766,
@@ -13106,10 +13106,6 @@
         "value": "{\"task\": 765, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-a43cb33b87c030a374dd\", \"at\": 1791702482.1589398, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "task:765",
-        "value": "{\"started\": 1791702477.7607715, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791703382.160606, \"folder\": \"jobs/765/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791702482.1640728}"
-      },
-      {
         "key": "task:766",
         "value": "{\"started\": 1791702488.3944643, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"skipped\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1791702491.896937}"
       },
@@ -13390,24 +13386,12 @@
         "value": "{\"started\": 1791703258.352979, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791704161.9402916, \"folder\": \"jobs/746/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791703261.9433792}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1791703276.3347945, \"state\": \"stalled\", \"pending_candidates\": 1, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"provisional_triage\": 1}, \"screening_wait_tasks\": 28, \"active_tasks\": 0, \"seconds_since_codex_call\": 14729.685032367706, \"judge_tokens_spent_24h\": 98964, \"screening_calls_5h\": 6, \"screening_calls_24h\": 6, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7488\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7488\", \"title\": \"_get_current_turn_contents picks wrong anchor when single_turn agents run in parallel\", \"first_seen\": 1791688491.2892158, \"last_checked\": 1791702319.6346238, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791703276.3361967, \"tasks\": {\"fix\": {\"quota_wait\": 8, \"skipped\": 22, \"triage_wait\": 21}, \"respond\": {\"error\": 5, \"quota_wait\": 2, \"triage_wait\": 7}}}"
-      },
-      {
         "key": "usage:747:1:screening-a2189002a4a50d9a21ae",
         "value": "{\"task\": 747, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"screening-a2189002a4a50d9a21ae\", \"at\": 1791703292.1885989, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
         "key": "task:747",
         "value": "{\"started\": 1791703288.9303668, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791704192.1903498, \"folder\": \"jobs/747/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791703292.193479}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1791703301.9921305, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1792296963}]}"
       },
       {
         "key": "usage:748:1:screening-b647014f632930c37656",
@@ -13426,18 +13410,6 @@
         "value": "{\"started\": 1791703319.4393752, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791704222.6864052, \"folder\": \"jobs/749/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791703322.6897256}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791703328.560906"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791703334.0768287, \"comfyui\": 1791703258.352847, \"hermes\": 1791629598.7424486, \"langfuse\": 1791703161.7366223, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791702806.1832356, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791703140.6250603, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791703107.7984476, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791703334.1611145"
-      },
-      {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
         "value": "{\"at\": 1791703336.8346372, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
       },
@@ -13454,12 +13426,40 @@
         "value": "{\"started\": 1791703334.0769427, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791704237.3218367, \"folder\": \"jobs/750/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791703337.3252106}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1791703337.808719"
+        "key": "admission_health",
+        "value": "{\"at\": 1791703338.6982217, \"state\": \"stalled\", \"pending_candidates\": 1, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"provisional_triage\": 1}, \"screening_wait_tasks\": 28, \"active_tasks\": 0, \"seconds_since_codex_call\": 14792.048471450806, \"judge_tokens_spent_24h\": 98964, \"screening_calls_5h\": 6, \"screening_calls_24h\": 6, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7488\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7488\", \"title\": \"_get_current_turn_contents picks wrong anchor when single_turn agents run in parallel\", \"first_seen\": 1791688491.2892158, \"last_checked\": 1791702319.6346238, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791703338.6999586, \"tasks\": {\"fix\": {\"quota_wait\": 8, \"skipped\": 22, \"triage_wait\": 21}, \"respond\": {\"error\": 5, \"quota_wait\": 2, \"triage_wait\": 7}}}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1791703362.2399263, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1792296963}]}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791703338.3656962"
+        "value": "1791703363.3988118"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791703373.5661767"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791703382.8098185"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791703384.0809047"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791703384.7165918, \"comfyui\": 1791703258.352847, \"hermes\": 1791629598.7424486, \"langfuse\": 1791703161.7366223, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791702806.1832356, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791703140.6250603, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791703107.7984476, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:765",
+        "value": "{\"started\": 1791703384.7167165, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791702482.1640728}"
       }
     ],
     "calls": [
