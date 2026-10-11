@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791695534.4599411,
+  "saved_at": 1791695545.5012784,
   "tables": {
     "tasks": [
       {
@@ -9851,7 +9851,7 @@
         "repo": "comfyui",
         "number": 16562,
         "note": "",
-        "status": "triage_wait",
+        "status": "queued",
         "created": 1791689169.2349005,
         "updated": 1791694645.28176,
         "result": "screening budget reached; retain pending work",
@@ -9929,11 +9929,11 @@
         "repo": "llama-index",
         "number": 23459,
         "note": "",
-        "status": "triage_wait",
+        "status": "running",
         "created": 1791693727.1798632,
-        "updated": 1791694642.2093024,
+        "updated": 1791695545.4944685,
         "result": "screening budget reached; retain pending work",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 765,
@@ -12916,10 +12916,6 @@
         "value": "{\"task\": 764, \"repo\": \"llama-index\", \"attempt\": 1, \"phase\": \"screening-46010759f7df7ec33091\", \"at\": 1791694642.2034965, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "task:764",
-        "value": "{\"started\": 1791694638.7975426, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791695542.2049701, \"folder\": \"jobs/764/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791694642.2078197}"
-      },
-      {
         "key": "usage:758:1:screening-0156f967d553b5645c33",
         "value": "{\"task\": 758, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-0156f967d553b5645c33\", \"at\": 1791694645.276333, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -13308,28 +13304,8 @@
         "value": "{\"started\": 1791695520.1754668, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791696423.6834788, \"folder\": \"jobs/756/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791695523.6867087}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791695527.1430817"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791695527.837345"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791695529.5617757"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791695530.5123312"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791695520.1753843, \"comfyui\": 1791695530.7347999, \"hermes\": 1791629598.7424486, \"langfuse\": 1791624717.1129212, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791694638.7974577, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791695444.8447683, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791694932.2640395, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791695532.940731"
       },
       {
         "key": "usage:757:1:screening-8c0d145f7635235b29a7",
@@ -13342,6 +13318,30 @@
       {
         "key": "task:757",
         "value": "{\"started\": 1791695530.7348878, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791696434.437447, \"folder\": \"jobs/757/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791695534.4522011}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791695540.5260448"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791695542.1447325"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791695542.9411345"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791695544.6064804"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791695520.1753843, \"comfyui\": 1791695530.7347999, \"hermes\": 1791629598.7424486, \"langfuse\": 1791624717.1129212, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791695545.4944096, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791695444.8447683, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791694932.2640395, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:764",
+        "value": "{\"started\": 1791695545.4944947, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791694642.2078197}"
       }
     ],
     "calls": [
