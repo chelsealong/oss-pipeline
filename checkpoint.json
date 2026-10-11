@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791705915.9285417,
+  "saved_at": 1791705919.6015654,
   "tables": {
     "tasks": [
       {
@@ -9643,11 +9643,11 @@
         "repo": "comfyui",
         "number": 16648,
         "note": "",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1791688660.2321095,
-        "updated": 1791705915.9201334,
+        "updated": 1791705919.5938272,
         "result": "screening budget reached; retain pending work",
-        "attempts": 1
+        "attempts": 0
       },
       {
         "id": 743,
@@ -13064,10 +13064,6 @@
         "value": "{}"
       },
       {
-        "key": "usage:742:1:screening-c46d7c4c728a91cb4957",
-        "value": "{\"task\": 742, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-c46d7c4c728a91cb4957\", \"at\": 1791705012.968201, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
-      },
-      {
         "key": "usage:743:1:screening-437877a61dcbe60e2304",
         "value": "{\"task\": 743, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-437877a61dcbe60e2304\", \"at\": 1791705027.3162076, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -13476,10 +13472,6 @@
         "value": "{\"at\": 1791705888.0450337, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1791705889.303435"
-      },
-      {
         "key": "admission_health",
         "value": "{\"at\": 1791705890.2996876, \"state\": \"stalled\", \"pending_candidates\": 1, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"provisional_triage\": 1}, \"screening_wait_tasks\": 29, \"active_tasks\": 0, \"seconds_since_codex_call\": 17343.649938344955, \"judge_tokens_spent_24h\": 98964, \"screening_calls_5h\": 6, \"screening_calls_24h\": 6, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7488\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7488\", \"title\": \"_get_current_turn_contents picks wrong anchor when single_turn agents run in parallel\", \"first_seen\": 1791688491.2892158, \"last_checked\": 1791705289.3698013, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7502\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7502\", \"title\": \"Answering parallel RequestInput pauses in one message deadlocks replay: ReplaySequenceBarrier drops out-of-order completions\", \"first_seen\": 1791705802.9700265, \"last_checked\": 1791705802.970027, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
       },
@@ -13504,10 +13496,6 @@
         "value": "{\"task\": 770, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-cff3fffd5a39a650a161\", \"at\": 1791705903.9782765, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:770",
         "value": "{\"started\": 1791705898.399139, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791706803.979906, \"folder\": \"jobs/770/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791705903.9832146}"
       },
@@ -13516,20 +13504,32 @@
         "value": "1791705908.8690255"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1791705912.8706603"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791705914.2880316"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791705898.3989031, \"comfyui\": 1791705915.9200385, \"hermes\": 1791629598.7424486, \"langfuse\": 1791705882.9016376, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791705523.7796352, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791705857.3160906, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791705825.8056197, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
       },
       {
+        "key": "detector_heartbeat",
+        "value": "1791705917.8707488"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791705919.1444147"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791705919.385543"
+      },
+      {
+        "key": "usage:742:1:screening-c46d7c4c728a91cb4957",
+        "value": "{\"task\": 742, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-c46d7c4c728a91cb4957\", \"at\": 1791705919.5871148, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
         "key": "task:742",
-        "value": "{\"started\": 1791705915.9201746, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791705012.973427}"
+        "value": "{\"started\": 1791705915.9201746, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791706819.5888088, \"folder\": \"jobs/742/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791705919.5919538}"
       }
     ],
     "calls": [
