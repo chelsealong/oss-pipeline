@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791703656.4841518,
+  "saved_at": 1791703676.446467,
   "tables": {
     "tasks": [
       {
@@ -9812,11 +9812,11 @@
         "repo": "openclaw",
         "number": 168645,
         "note": "",
-        "status": "triage_wait",
+        "status": "running",
         "created": 1791689119.1861115,
-        "updated": 1791702774.4051716,
+        "updated": 1791703676.4381828,
         "result": "screening budget reached; retain pending work",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 756,
@@ -13106,10 +13106,6 @@
         "value": "{\"task\": 755, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-0f2242250ed9630d63f2\", \"at\": 1791702774.3981102, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "task:755",
-        "value": "{\"started\": 1791702770.068584, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791703674.3996623, \"folder\": \"jobs/755/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791702774.4034312}"
-      },
-      {
         "key": "usage:756:1:screening-d52bbb024cb7d61cbd73",
         "value": "{\"task\": 756, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"screening-d52bbb024cb7d61cbd73\", \"at\": 1791702784.1928039, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -13414,22 +13410,6 @@
         "value": "{\"started\": 1791703410.5579312, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791704314.7791104, \"folder\": \"jobs/760/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791703414.7822874}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1791703595.9776537, \"state\": \"stalled\", \"pending_candidates\": 1, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"provisional_triage\": 1}, \"screening_wait_tasks\": 28, \"active_tasks\": 0, \"seconds_since_codex_call\": 15049.327811717987, \"judge_tokens_spent_24h\": 98964, \"screening_calls_5h\": 6, \"screening_calls_24h\": 6, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7488\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7488\", \"title\": \"_get_current_turn_contents picks wrong anchor when single_turn agents run in parallel\", \"first_seen\": 1791688491.2892158, \"last_checked\": 1791702319.6346238, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791703595.9790652, \"tasks\": {\"fix\": {\"quota_wait\": 8, \"skipped\": 22, \"triage_wait\": 21}, \"respond\": {\"error\": 5, \"quota_wait\": 2, \"triage_wait\": 7}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1791703603.811139, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1792296963}]}"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791703410.5578115, \"comfyui\": 1791703258.352847, \"hermes\": 1791629598.7424486, \"langfuse\": 1791703161.7366223, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791702806.1832356, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791703610.9722002, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791703107.7984476, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
-      },
-      {
         "key": "usage:751:1:screening-b4565485f1fa96a6b712",
         "value": "{\"task\": 751, \"repo\": \"spec-kit\", \"attempt\": 1, \"phase\": \"screening-b4565485f1fa96a6b712\", \"at\": 1791703614.5759177, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -13442,24 +13422,44 @@
         "value": "{\"started\": 1791703610.9723096, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791704514.577461, \"folder\": \"jobs/751/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791703614.5805702}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791703643.5967903"
+        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
+        "value": "{\"at\": 1791703656.4753828, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1791703658.3690615, \"state\": \"stalled\", \"pending_candidates\": 1, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"provisional_triage\": 1}, \"screening_wait_tasks\": 28, \"active_tasks\": 0, \"seconds_since_codex_call\": 15111.719261169434, \"judge_tokens_spent_24h\": 98964, \"screening_calls_5h\": 6, \"screening_calls_24h\": 6, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7488\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7488\", \"title\": \"_get_current_turn_contents picks wrong anchor when single_turn agents run in parallel\", \"first_seen\": 1791688491.2892158, \"last_checked\": 1791702319.6346238, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791703658.3718767, \"tasks\": {\"fix\": {\"quota_wait\": 8, \"skipped\": 22, \"triage_wait\": 21}, \"respond\": {\"error\": 5, \"quota_wait\": 2, \"triage_wait\": 7}}}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1791703664.1275256, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1792296963}]}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791703652.8160574"
+        "value": "1791703672.8165715"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791703673.6004121"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791703654.2280471"
+        "value": "1791703674.253811"
       },
       {
         "key": "discovery_last_success",
-        "value": "1791703654.481244"
+        "value": "1791703674.5639431"
       },
       {
-        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
-        "value": "{\"at\": 1791703656.4753828, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791703676.4381115, \"comfyui\": 1791703258.352847, \"hermes\": 1791629598.7424486, \"langfuse\": 1791703161.7366223, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791702806.1832356, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791703610.9722002, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791703107.7984476, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:755",
+        "value": "{\"started\": 1791703676.43822, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791702774.4034312}"
       }
     ],
     "calls": [
