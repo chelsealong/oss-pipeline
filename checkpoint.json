@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791693102.1677108,
+  "saved_at": 1791693113.2503932,
   "tables": {
     "tasks": [
       {
@@ -9552,11 +9552,11 @@
         "repo": "comfyui",
         "number": 16947,
         "note": "",
-        "status": "triage_wait",
+        "status": "running",
         "created": 1791688531.5562942,
-        "updated": 1791692206.873846,
+        "updated": 1791693113.243853,
         "result": "screening budget reached; retain pending work",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 736,
@@ -9591,7 +9591,7 @@
         "repo": "dify",
         "number": 39434,
         "note": "",
-        "status": "triage_wait",
+        "status": "queued",
         "created": 1791688573.2005532,
         "updated": 1791692213.1077447,
         "result": "screening budget reached; retain pending work",
@@ -12809,10 +12809,6 @@
         "value": "{\"task\": 735, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-ca521e703c5f21745681\", \"at\": 1791692206.8677998, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "task:735",
-        "value": "{\"started\": 1791692202.8600476, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791693106.8691764, \"folder\": \"jobs/735/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791692206.8722918}"
-      },
-      {
         "key": "usage:738:1:screening-40c4425e368608739d46",
         "value": "{\"task\": 738, \"repo\": \"dify\", \"attempt\": 1, \"phase\": \"screening-40c4425e368608739d46\", \"at\": 1791692213.1023514, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -13221,32 +13217,12 @@
         "value": "{\"at\": 1791693094.212766, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791693095.2668433"
-      },
-      {
         "key": "admission_health",
         "value": "{\"at\": 1791693096.0617585, \"state\": \"stalled\", \"pending_candidates\": 1, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"provisional_triage\": 1}, \"screening_wait_tasks\": 29, \"active_tasks\": 0, \"seconds_since_codex_call\": 4549.412714481354, \"judge_tokens_spent_24h\": 98964, \"screening_calls_5h\": 6, \"screening_calls_24h\": 6, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7488\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7488\", \"title\": \"_get_current_turn_contents picks wrong anchor when single_turn agents run in parallel\", \"first_seen\": 1791688491.2892158, \"last_checked\": 1791693084.5891547, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
       },
       {
         "key": "throughput_24h",
         "value": "{\"at\": 1791693096.062999, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"error\": 1, \"quota_wait\": 8, \"skipped\": 30, \"triage_wait\": 23}, \"respond\": {\"done\": 1, \"error\": 6, \"quota_wait\": 2, \"triage_wait\": 6}}}"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791693097.721957, \"comfyui\": 1791692825.9240315, \"hermes\": 1791629598.7424486, \"langfuse\": 1791624717.1129212, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791692723.7647488, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791693037.2398598, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791693097.8868122"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791693099.5302238"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791693102.114797"
       },
       {
         "key": "usage:729:1:screening-2b0063c156ea9f7b33d1",
@@ -13259,6 +13235,30 @@
       {
         "key": "task:729",
         "value": "{\"started\": 1791693097.7220478, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791694002.1564867, \"folder\": \"jobs/729/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791693102.1592112}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791693109.5361123"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791693110.2681959"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791693112.1255188"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791693112.8871033"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791693097.721957, \"comfyui\": 1791693113.243786, \"hermes\": 1791629598.7424486, \"langfuse\": 1791624717.1129212, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791566957.777444, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791692723.7647488, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791693037.2398598, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:735",
+        "value": "{\"started\": 1791693113.2438793, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791692206.8722918}"
       }
     ],
     "calls": [
