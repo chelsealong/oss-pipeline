@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791699156.2704978,
+  "saved_at": 1791699163.2328024,
   "tables": {
     "tasks": [
       {
@@ -9838,11 +9838,11 @@
         "repo": "comfyui",
         "number": 16946,
         "note": "",
-        "status": "triage_wait",
+        "status": "running",
         "created": 1791689163.8299181,
-        "updated": 1791698260.1342208,
+        "updated": 1791699163.2262645,
         "result": "screening budget reached; retain pending work",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 758,
@@ -12946,10 +12946,6 @@
         "value": "{\"task\": 757, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-8c0d145f7635235b29a7\", \"at\": 1791698260.1256793, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "task:757",
-        "value": "{\"started\": 1791698256.7376156, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791699160.1272583, \"folder\": \"jobs/757/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791698260.1323326}"
-      },
-      {
         "key": "usage:764:1:screening-46010759f7df7ec33091",
         "value": "{\"task\": 764, \"repo\": \"llama-index\", \"attempt\": 1, \"phase\": \"screening-46010759f7df7ec33091\", \"at\": 1791698270.4869628, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -13350,20 +13346,8 @@
         "value": "{\"started\": 1791699086.7529159, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"skipped\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1791699090.4049654}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1791699095.831611, \"state\": \"stalled\", \"pending_candidates\": 1, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"provisional_triage\": 1}, \"screening_wait_tasks\": 30, \"active_tasks\": 0, \"seconds_since_codex_call\": 10549.182591676712, \"judge_tokens_spent_24h\": 98964, \"screening_calls_5h\": 6, \"screening_calls_24h\": 6, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7488\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7488\", \"title\": \"_get_current_turn_contents picks wrong anchor when single_turn agents run in parallel\", \"first_seen\": 1791688491.2892158, \"last_checked\": 1791699011.0534596, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791699095.8329322, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 1, \"quota_wait\": 8, \"skipped\": 34, \"triage_wait\": 23}, \"respond\": {\"error\": 6, \"quota_wait\": 2, \"triage_wait\": 7}}}"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1791699131.8546722, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1792296963}]}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791699134.2319694"
       },
       {
         "key": "usage:755:1:screening-0f2242250ed9630d63f2",
@@ -13372,14 +13356,6 @@
       {
         "key": "task:755",
         "value": "{\"started\": 1791699132.1610117, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791700036.4211164, \"folder\": \"jobs/755/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791699136.5294197}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791699144.4649827"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791699148.3854005, \"comfyui\": 1791698706.667319, \"hermes\": 1791629598.7424486, \"langfuse\": 1791698627.7734935, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791698267.0397556, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791699074.0156903, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791698577.9695616, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
       },
       {
         "key": "usage:756:1:screening-d52bbb024cb7d61cbd73",
@@ -13394,16 +13370,40 @@
         "value": "{\"started\": 1791699148.3854842, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791700051.5049965, \"folder\": \"jobs/756/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791699151.5093844}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1791699153.0217807"
+        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
+        "value": "{\"at\": 1791699156.2638335, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1791699158.0077202, \"state\": \"stalled\", \"pending_candidates\": 1, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"provisional_triage\": 1}, \"screening_wait_tasks\": 30, \"active_tasks\": 0, \"seconds_since_codex_call\": 10611.358709335327, \"judge_tokens_spent_24h\": 98964, \"screening_calls_5h\": 6, \"screening_calls_24h\": 6, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7488\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7488\", \"title\": \"_get_current_turn_contents picks wrong anchor when single_turn agents run in parallel\", \"first_seen\": 1791688491.2892158, \"last_checked\": 1791699011.0534596, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791699158.020995, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 1, \"quota_wait\": 8, \"skipped\": 34, \"triage_wait\": 23}, \"respond\": {\"error\": 6, \"quota_wait\": 2, \"triage_wait\": 7}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791699159.466425"
       },
       {
         "key": "discovery_last_success",
-        "value": "1791699154.5848062"
+        "value": "1791699159.6852775"
       },
       {
-        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
-        "value": "{\"at\": 1791699156.2638335, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+        "key": "watch_heartbeat",
+        "value": "1791699160.1700642"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791699163.021984"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791699148.3854005, \"comfyui\": 1791699163.2262042, \"hermes\": 1791629598.7424486, \"langfuse\": 1791698627.7734935, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791698267.0397556, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791699074.0156903, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791698577.9695616, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:757",
+        "value": "{\"started\": 1791699163.2262905, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791698260.1323326}"
       }
     ],
     "calls": [
