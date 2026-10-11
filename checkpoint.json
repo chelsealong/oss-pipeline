@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791709610.9589772,
+  "saved_at": 1791709619.4531093,
   "tables": {
     "tasks": [
       {
@@ -9656,11 +9656,11 @@
         "repo": "comfyui",
         "number": 16644,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791688664.8321297,
-        "updated": 1791708653.7765524,
+        "updated": 1791709619.4448252,
         "result": "screening budget reached; retain pending work",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 744,
@@ -9682,7 +9682,7 @@
         "repo": "comfyui",
         "number": 16591,
         "note": "",
-        "status": "triage_wait",
+        "status": "queued",
         "created": 1791688674.834455,
         "updated": 1791708689.0444942,
         "result": "screening budget reached; retain pending work",
@@ -13233,10 +13233,6 @@
         "value": "{\"task\": 743, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-437877a61dcbe60e2304\", \"at\": 1791708653.766636, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "task:743",
-        "value": "{\"started\": 1791708650.3044393, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791709553.768279, \"folder\": \"jobs/743/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791708653.7745757}"
-      },
-      {
         "key": "usage:744:1:screening-794cefe793465ae38648",
         "value": "{\"task\": 744, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-794cefe793465ae38648\", \"at\": 1791708677.4107325, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -13541,32 +13537,12 @@
         "value": "{\"at\": 1791709590.7226698, \"tasks\": {\"fix\": {\"queued\": 2, \"quota_wait\": 8, \"running\": 1, \"skipped\": 32, \"triage_wait\": 9}, \"respond\": {\"error\": 9, \"quota_wait\": 2, \"skipped\": 1, \"triage_wait\": 3}}}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791709591.1091194, \"comfyui\": 1791709559.900244, \"hermes\": 1791629598.7424486, \"langfuse\": 1791709504.1755824, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791709158.2752867, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791709480.7384963, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791709468.1955652, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
-      },
-      {
         "key": "usage:739:1:screening-1a4543aa8775f7711708",
         "value": "{\"task\": 739, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-1a4543aa8775f7711708\", \"at\": 1791709597.2899253, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
         "key": "task:739",
         "value": "{\"started\": 1791709591.1093159, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791710497.2916312, \"folder\": \"jobs/739/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791709597.2949183}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791709599.3259883"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791709607.7707973"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791709607.957667"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791709610.6938014"
       },
       {
         "key": "codex_quota",
@@ -13587,6 +13563,30 @@
       {
         "key": "task:742",
         "value": "{\"started\": 1791709559.9003613, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/742/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"7f7fd918ed0815c5d5ef2ccfe44bfc8e72cfd217\", \"last_execution_phase\": \"generation\", \"finished\": 1791709610.8351817, \"generation_started\": 1791709586.8239243, \"dispatch_paid_date\": \"2026-10-11\", \"phase_started\": 1791709588.7269866}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791709614.3277235"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791709614.675056"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791709617.7906065"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791709617.957936"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791709591.1091194, \"comfyui\": 1791709619.4447315, \"hermes\": 1791629598.7424486, \"langfuse\": 1791709504.1755824, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791709158.2752867, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791709480.7384963, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791709468.1955652, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:743",
+        "value": "{\"started\": 1791709619.4448657, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791708653.7745757}"
       }
     ],
     "calls": [
