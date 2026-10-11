@@ -73,6 +73,9 @@ requests stay in the count; historical tokens are explicitly unknown.
 Only models in repository variable `QWEN_FREE_ONLY_MODELS` are admitted. The user
 confirmed the provider's free-quota-only switch on October 10; this allowlist
 records that confirmation, not an API check of provider settings or balances.
+The October 11 selection is `qwen3.8-27b` followed by `deepseek-v4.1-flash`,
+ordered by the confirmed November 17 and December 13 free-quota expiry dates.
+Both the source list and deployment allowlist use only these two models.
 Missing configuration fails closed. Quota/authentication errors retain work.
 Concurrent cache writes merge atomically and identical requests share a lock.
 Oversized, unavailable or uncertain judgments retain pending feedback/issues;

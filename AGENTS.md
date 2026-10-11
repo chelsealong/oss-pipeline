@@ -46,8 +46,13 @@ model calls. Ordinary read-network failures retry only the affected task, at
 most three attempts; publication ambiguity is never automatically replayed.
 On 2026-10-10 the user confirmed provider-side free-quota-only protection for
 all current models. Require the `QWEN_FREE_ONLY_MODELS` allowlist; never enable
-paid spillover or infer remaining provider balance. Enforce 30 requests/hour,
-150/rolling 24h, 100,000 input+output tokens/rolling 24h and two model attempts.
+paid spillover or infer remaining provider balance.
+On October 11 the user selected the two remaining free models for subsequent
+use: `qwen3.8-27b` first (expires November 17), then `deepseek-v4.1-flash`
+(expires December 13). Keep the deployment allowlist limited to these two;
+model selection does not reset spending or waive answer validation.
+Enforce 30 requests/hour, 150/rolling 24h, 100,000 input+output tokens/rolling
+24h and two model attempts.
 Reserve conservatively before HTTP and preserve unknown/failed spending. Keep
 deferred judgments durable without marking feedback handled. The October 11
 admission repair permits provisional candidates for worker screening when the
