@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791702334.9132388,
+  "saved_at": 1791702338.351615,
   "tables": {
     "tasks": [
       {
@@ -9682,11 +9682,11 @@
         "repo": "comfyui",
         "number": 16591,
         "note": "",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1791688674.834455,
-        "updated": 1791702334.903989,
+        "updated": 1791702338.3439999,
         "result": "screening budget reached; retain pending work",
-        "attempts": 1
+        "attempts": 0
       },
       {
         "id": 746,
@@ -9695,7 +9695,7 @@
         "repo": "comfyui",
         "number": 16586,
         "note": "",
-        "status": "triage_wait",
+        "status": "queued",
         "created": 1791688683.992519,
         "updated": 1791701437.0534463,
         "result": "screening budget reached; retain pending work",
@@ -12994,10 +12994,6 @@
         "value": "{\"task\": 767, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"screening-eaf42aef14aced36e0ad\", \"at\": 1791701405.304351, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "usage:745:1:screening-9ae8d6ce70f66252dee3",
-        "value": "{\"task\": 745, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-9ae8d6ce70f66252dee3\", \"at\": 1791701421.264989, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
-      },
-      {
         "key": "usage:746:1:screening-860cd3e04a6a61dca4fe",
         "value": "{\"task\": 746, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-860cd3e04a6a61dca4fe\", \"at\": 1791701437.0464904, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -13338,10 +13334,6 @@
         "value": "{\"started\": 1791702260.268, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791703164.5984933, \"folder\": \"jobs/739/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791702264.6014462}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1791702276.4521942, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1792296963}]}"
-      },
-      {
         "key": "usage:742:1:screening-c46d7c4c728a91cb4957",
         "value": "{\"task\": 742, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-c46d7c4c728a91cb4957\", \"at\": 1791702287.7389817, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -13414,28 +13406,12 @@
         "value": "{\"status\": \"not_needed\", \"reason\": \"Existing linked PR; no coordination message should be sent.\", \"prs\": [\"closing-ref PR#7479(OPEN)\", \"xref PR#7479(OPEN)\"]}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791702323.4395585"
-      },
-      {
         "key": "usage:744:1:screening-794cefe793465ae38648",
         "value": "{\"task\": 744, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-794cefe793465ae38648\", \"at\": 1791702325.148595, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:744",
         "value": "{\"started\": 1791702321.6087115, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791703225.1501567, \"folder\": \"jobs/744/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791702325.1532257}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791702331.8308485"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791702332.7856681"
       },
       {
         "key": "discovery_last_success",
@@ -13446,8 +13422,32 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791702309.691394, \"comfyui\": 1791702334.9038486, \"hermes\": 1791629598.7424486, \"langfuse\": 1791702256.4940453, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791701898.6358411, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791702234.291341, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791702200.8136277, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
       },
       {
+        "key": "codex_quota",
+        "value": "{\"at\": 1791702336.6888595, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1792296963}]}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791702336.8393977"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791702337.785758"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791702338.207205"
+      },
+      {
+        "key": "usage:745:1:screening-9ae8d6ce70f66252dee3",
+        "value": "{\"task\": 745, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-9ae8d6ce70f66252dee3\", \"at\": 1791702338.3376439, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
         "key": "task:745",
-        "value": "{\"started\": 1791702334.904041, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791701421.2700148}"
+        "value": "{\"started\": 1791702334.904041, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791703238.339263, \"folder\": \"jobs/745/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791702338.3423138}"
       }
     ],
     "calls": [
