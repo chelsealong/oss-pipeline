@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791804094.997444,
+  "saved_at": 1791804108.0025063,
   "tables": {
     "tasks": [
       {
@@ -10748,10 +10748,10 @@
         "repo": "langfuse",
         "number": 18612,
         "note": "",
-        "status": "running",
+        "status": "retry_wait",
         "created": 1791802984.280824,
-        "updated": 1791802985.880634,
-        "result": "",
+        "updated": 1791804107.9179063,
+        "result": "Codex: {'message': 'Selected model is at capacity. Please try a different model.', 'codexErrorInfo': 'serverOverloaded', 'additionalDetails': None, 'misalignment': None}",
         "attempts": 1
       },
       {
@@ -14742,14 +14742,6 @@
         "value": "1791799488.2492452"
       },
       {
-        "key": "pause",
-        "value": "{}"
-      },
-      {
-        "key": "task:827",
-        "value": "{\"started\": 1791802985.880659, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/827/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"b6b5dd794a43cc0d5f148675aee680bc5a0cd682\", \"generation_started\": 1791802996.8846748, \"dispatch_paid_date\": \"2026-10-12\", \"phase_started\": 1791802999.3335946}"
-      },
-      {
         "key": "task:219",
         "value": "{\"recovery_checked_at\": 1791803034.099991}"
       },
@@ -14800,10 +14792,6 @@
       {
         "key": "usage:777:1:generation",
         "value": "{\"task\": 777, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1791803828.0783787, \"seconds\": 769.1, \"tokens\": {\"totalTokens\": 24875395, \"inputTokens\": 24851890, \"cachedInputTokens\": 24656000, \"cacheWriteInputTokens\": 0, \"outputTokens\": 23505, \"reasoningOutputTokens\": 10299}, \"first_event_ms\": 1791803064194, \"last_event_ms\": 1791803828015, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"827\": {\"remaining\": 1, \"until\": 1791810196.884925}}"
       },
       {
         "key": "task:777",
@@ -14978,12 +14966,28 @@
         "value": "1791804028.8597062"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1791804077.5815392, \"windows\": [{\"name\": \"primary\", \"used_percent\": 16, \"resets_at\": 1792296963}]}"
+        "key": "worker_heartbeat",
+        "value": "1791804102.6755862"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791804087.6715071"
+        "key": "codex_quota",
+        "value": "{\"at\": 1791804107.6590579, \"windows\": [{\"name\": \"primary\", \"used_percent\": 16, \"resets_at\": 1792296963}]}"
+      },
+      {
+        "key": "usage:827:1:generation",
+        "value": "{\"task\": 827, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1791804107.708922, \"seconds\": 1110.826, \"tokens\": {\"totalTokens\": 10216053, \"inputTokens\": 10203669, \"cachedInputTokens\": 9987072, \"cacheWriteInputTokens\": 0, \"outputTokens\": 12384, \"reasoningOutputTokens\": 3284}, \"first_event_ms\": 1791803002795, \"last_event_ms\": 1791804107661, \"model\": \"gpt-6-sol\", \"complete\": false, \"usage_available\": true}"
+      },
+      {
+        "key": "pause",
+        "value": "{\"until\": 1791805907.7542017, \"reason\": \"Codex: {'message': 'Selected model is at capacity. Please try a different model.', 'codexErrorInfo': 'serverOverloaded', 'additionalDetails': None, 'misalignment': None}\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:827",
+        "value": "{\"started\": 1791802985.880659, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791805907.7574427, \"folder\": \"jobs/827/attempt-1\", \"attempt\": 1, \"phase\": \"retry_wait\", \"base\": \"b6b5dd794a43cc0d5f148675aee680bc5a0cd682\", \"generation_started\": 1791802996.8846748, \"dispatch_paid_date\": \"2026-10-12\", \"phase_started\": 1791802999.3335946, \"last_execution_phase\": \"generation\", \"finished\": 1791804107.7641714}"
       }
     ],
     "calls": [
