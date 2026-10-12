@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791798680.9281673,
+  "saved_at": 1791798685.3784978,
   "tables": {
     "tasks": [
       {
@@ -10124,11 +10124,11 @@
         "repo": "openclaw",
         "number": 169184,
         "note": "",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1791734717.0369258,
-        "updated": 1791798680.9205213,
+        "updated": 1791798685.3714736,
         "result": "screening budget reached; retain pending work",
-        "attempts": 1
+        "attempts": 0
       },
       {
         "id": 780,
@@ -10137,7 +10137,7 @@
         "repo": "openclaw",
         "number": 169185,
         "note": "",
-        "status": "triage_wait",
+        "status": "queued",
         "created": 1791734719.5623984,
         "updated": 1791797781.851862,
         "result": "screening budget reached; retain pending work",
@@ -14599,10 +14599,6 @@
         "value": "{\"started\": 1791797570.408414, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/797/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"d502f1aac87aee6c99c92a8a667810a2fefa4d88\", \"last_execution_phase\": \"generation\", \"finished\": 1791797735.7842357, \"generation_started\": 1791797650.3178775, \"dispatch_paid_date\": \"2026-10-12\", \"phase_started\": 1791797653.68619}"
       },
       {
-        "key": "usage:779:1:screening-629618d4b87da2569978",
-        "value": "{\"task\": 779, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-629618d4b87da2569978\", \"at\": 1791797774.1506836, \"seconds\": 0.001, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
-      },
-      {
         "key": "usage:780:1:screening-015df2f480365f806bf5",
         "value": "{\"task\": 780, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-015df2f480365f806bf5\", \"at\": 1791797781.8457127, \"seconds\": 0.001, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -14887,44 +14883,48 @@
         "value": "{\"at\": 1791798656.1404307, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 1, \"skipped\": 36, \"triage_wait\": 15, \"validation_wait\": 2}, \"respond\": {\"error\": 6, \"triage_wait\": 1, \"validation_wait\": 1}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791798668.5894592"
-      },
-      {
         "key": "usage:777:1:screening-2ed2c89a117d170153bc",
         "value": "{\"task\": 777, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-2ed2c89a117d170153bc\", \"at\": 1791798673.4472413, \"seconds\": 0.001, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:777",
         "value": "{\"started\": 1791798669.2069268, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791799573.448761, \"folder\": \"jobs/777/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791798673.4516897}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1791798676.4665582"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1791798676.5032077, \"windows\": [{\"name\": \"primary\", \"used_percent\": 11, \"resets_at\": 1792296963}]}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791798676.5541177"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791798678.3575807"
       },
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791798680.9204512, \"comfyui\": 1791796127.307875, \"hermes\": 1791629598.7424486, \"langfuse\": 1791795677.2095616, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791709158.2752867, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791793672.2339332, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
       },
       {
+        "key": "watch_heartbeat",
+        "value": "1791798681.47185"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791798681.5541945"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791798683.2072973"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791798683.591144"
+      },
+      {
+        "key": "usage:779:1:screening-629618d4b87da2569978",
+        "value": "{\"task\": 779, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-629618d4b87da2569978\", \"at\": 1791798685.3653367, \"seconds\": 0.001, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
         "key": "task:779",
-        "value": "{\"started\": 1791798680.9205463, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791797774.155377}"
+        "value": "{\"started\": 1791798680.9205463, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791799585.3667793, \"folder\": \"jobs/779/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791798685.3699338}"
       }
     ],
     "calls": [
