@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791797819.1808643,
+  "saved_at": 1791797824.134764,
   "tables": {
     "tasks": [
       {
@@ -10605,11 +10605,11 @@
         "repo": "openclaw",
         "number": 169662,
         "note": "",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1791788612.8839247,
-        "updated": 1791797819.1736147,
+        "updated": 1791797824.1278152,
         "result": "screening budget reached; retain pending work",
-        "attempts": 1
+        "attempts": 0
       },
       {
         "id": 817,
@@ -14559,10 +14559,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7286\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABbNVxKg@2026-10-12T08:49:27Z\", \"author\": \"surajksharma07\", \"when\": \"2026-10-12T08:49:27Z\", \"kind\": \"comment\", \"assoc\": \"COLLABORATOR\", \"body\": \"#7492 is what I had in mind @jabrailkhalil. Merged it onto current main (ca3b490): the new cases give 7 passed / 5 xfailed and with --runxfail exactly the reverse-id append order (None/1/5/100) and the same-timestamp stale writer fail. The rest of test_session_service.py matches main on Windows apart from test_create_get_session[database] which flakes on plain main too.\\n\\nOne thing to call out in the description: the existing test_get_session_orders_tied_timestamps_by_id[True] right above your tests asserts the opposite contract (reverse-appended ids come back in id order) so whichever fix lands will have to flip or drop it. Linking it to #7286 would make that explicit for the reviewers.\\n\\nSmall nit: the title reads \\\"I cover\\\" so \\\"test(sessions): cover tied-timestamp persistence gaps\\\" reads better. Nothing has moved on main for DatabaseSessionService (still (timestamp, id)) and there's no release after v2.11.0 so @rishwanth-th's override is still the workaround.\\n\\n@DeanChensj with the tests in place could you make the call on primary append order vs tie-break only and approve the 2 pending workflows on #7492?\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
       {
-        "key": "usage:816:1:screening-b61ecdce2b847d3b7b92",
-        "value": "{\"task\": 816, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-b61ecdce2b847d3b7b92\", \"at\": 1791796260.4490607, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
-      },
-      {
         "key": "usage:817:1:screening-8a2fbedfbcf93e045214",
         "value": "{\"task\": 817, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-8a2fbedfbcf93e045214\", \"at\": 1791796278.0731876, \"seconds\": 0.001, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -14887,32 +14883,36 @@
         "value": "{\"task\": 812, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-9530f44a6d4234bea7e9\", \"at\": 1791797815.1068022, \"seconds\": 0.001, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:812",
         "value": "{\"started\": 1791797810.593649, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791798715.108117, \"folder\": \"jobs/812/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791797815.1110194}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791797816.5321147"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791797818.0854526"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791797818.333875"
       },
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791797819.1735337, \"comfyui\": 1791796127.307875, \"hermes\": 1791629598.7424486, \"langfuse\": 1791795677.2095616, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791709158.2752867, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791793672.2339332, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
       },
       {
+        "key": "detector_heartbeat",
+        "value": "1791797821.532209"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791797823.0907707"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791797823.2805617"
+      },
+      {
+        "key": "usage:816:1:screening-b61ecdce2b847d3b7b92",
+        "value": "{\"task\": 816, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-b61ecdce2b847d3b7b92\", \"at\": 1791797824.1219316, \"seconds\": 0.001, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
         "key": "task:816",
-        "value": "{\"started\": 1791797819.17364, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791796260.4552352}"
+        "value": "{\"started\": 1791797819.17364, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791798724.1233137, \"folder\": \"jobs/816/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791797824.1262932}"
       }
     ],
     "calls": [
