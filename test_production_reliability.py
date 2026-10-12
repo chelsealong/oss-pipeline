@@ -359,17 +359,20 @@ class ProductionReliabilityTests(unittest.TestCase):
         self.assertEqual(rt.task_state(task['id'])['remote_base'],'a'*40)
         with rt.db() as db:db.execute("UPDATE tasks SET status='error' WHERE id=?",(task['id'],))
         self.assertEqual(task_recovery.recover_shallow_merge_errors(),[])
-    def run_real_response_controller(self,outcome):
+    def run_real_response_controller(self,outcome,fail_fetch=False):
         source,unused,original=self.response_fixture()
         task=self.task(repo='openclaw/openclaw',kind='respond')
         pr={'head':{'sha':original,'ref':'old-pr'},'body':'Existing PR description',
             'html_url':'https://github.com/openclaw/openclaw/pull/1'}
-        real_run=worker.run
+        real_run=worker.run;fetches=[]
         def run(args,**kwargs):
             if args[0]=='gh':
                 self.assertEqual(args[:4],['gh','api','--paginate','--slurp'])
                 return '[[]]'
             if args[:4]==['git','remote','add','upstream']:args=args[:4]+[source.as_uri()]
+            if fail_fetch and args==['git','fetch','--depth=1','origin','old-pr']:
+                fetches.append(args)
+                raise subprocess.TimeoutExpired(args,300)
             return real_run(args,**kwargs)
         def api(path):
             if path=='repos/chelsealong/openclaw':return {'parent':{'full_name':'openclaw/openclaw'},'clone_url':source.as_uri()}
@@ -377,6 +380,7 @@ class ProductionReliabilityTests(unittest.TestCase):
             if path=='repos/openclaw/openclaw/issues/1':return {'body':'Please update against current main','state':'open'}
             raise AssertionError('Unexpected API '+path)
         def agent(prompt,work,output,*args,**kwargs):
+            self.assertFalse(fail_fetch,'A timed-out checkout must not reach a model')
             if output.stem=='generation':
                 if outcome=='READY':(work/'fix').write_text('updated fix\n')
                 value={'outcome':outcome,'reason':'addressed','title':'Update fix against main',
@@ -386,9 +390,19 @@ class ProductionReliabilityTests(unittest.TestCase):
         with patch.object(worker,'run',side_effect=run),patch.object(worker,'api',side_effect=api),\
              patch.object(worker,'response_context',return_value=pr),patch.object(worker,'agent',side_effect=agent),\
              patch.object(worker.pr_followup,'publish',return_value='https://example.invalid/comment') as post:
-            worker.process(task)
-        self.assertEqual(self.status(task),'done')
+            if fail_fetch:
+                with self.assertRaises(subprocess.TimeoutExpired) as caught:worker.process(task)
+                worker.handle_task_error(task,caught.exception)
+            else:worker.process(task)
+        if fail_fetch:
+            self.assertEqual(len(fetches),1);self.assertEqual(self.status(task),'retry_wait')
+            post.assert_not_called()
+        else:self.assertEqual(self.status(task),'done')
         return source,original,post.call_args,rt.task_state(task['id'])
+    def test_response_fetch_timeout_defers_without_reusing_possibly_locked_checkout(self):
+        source,original,call,state=self.run_real_response_controller('READY',fail_fetch=True)
+        self.assertEqual(self.git(source,'rev-parse','old-pr'),original)
+        self.assertIsNone(state.get('base'));self.assertFalse(state.get('publication_started'))
     def test_reply_only_controller_uses_remote_head_and_does_not_publish_local_merge(self):
         source,original,call,state=self.run_real_response_controller('REPLY')
         self.assertEqual(self.git(source,'rev-parse','old-pr'),original)

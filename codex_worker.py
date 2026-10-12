@@ -518,15 +518,9 @@ def process_one(task):
         git(work,'checkout','-b',branch,'FETCH_HEAD')
     else:
         branch=pr['head']['ref']
-        # The initial clone is shallow. Keep feedback fetches shallow too;
-        # otherwise Git may transfer the PR branch's entire history.
-        for fetch_attempt in range(2):
-            try:
-                git(work,'fetch','--depth=1','origin',branch)
-                break
-            except subprocess.TimeoutExpired:
-                if fetch_attempt: raise
-                time.sleep(3)
+        # Keep the first fetch shallow. A timeout may leave owned lock files;
+        # let task recovery retry in a fresh attempt instead of reusing this tree.
+        git(work,'fetch','--depth=1','origin',branch)
         git(work,'checkout','-b',branch,'FETCH_HEAD')
         if git(work,'rev-parse','HEAD')!=pr['head']['sha']:
             raise rt.Paused('PR head moved before checkout')
