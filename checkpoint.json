@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791797791.1626582,
+  "saved_at": 1791797793.8987536,
   "tables": {
     "tasks": [
       {
@@ -10488,11 +10488,11 @@
         "repo": "openclaw",
         "number": 169473,
         "note": "",
-        "status": "triage_wait",
+        "status": "running",
         "created": 1791767412.5122914,
-        "updated": 1791796208.9559238,
+        "updated": 1791797793.8912108,
         "result": "screening budget reached; retain pending work",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 808,
@@ -14559,10 +14559,6 @@
         "value": "{\"task\": 807, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-126904cb6ca9d046b6d5\", \"at\": 1791796208.9448404, \"seconds\": 0.001, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "task:807",
-        "value": "{\"started\": 1791796204.4000442, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791797108.9461772, \"folder\": \"jobs/807/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791796208.9521835}"
-      },
-      {
         "key": "followup:google/adk-python#7286",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7286\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABbNVxKg@2026-10-12T08:49:27Z\", \"author\": \"surajksharma07\", \"when\": \"2026-10-12T08:49:27Z\", \"kind\": \"comment\", \"assoc\": \"COLLABORATOR\", \"body\": \"#7492 is what I had in mind @jabrailkhalil. Merged it onto current main (ca3b490): the new cases give 7 passed / 5 xfailed and with --runxfail exactly the reverse-id append order (None/1/5/100) and the same-timestamp stale writer fail. The rest of test_session_service.py matches main on Windows apart from test_create_get_session[database] which flakes on plain main too.\\n\\nOne thing to call out in the description: the existing test_get_session_orders_tied_timestamps_by_id[True] right above your tests asserts the opposite contract (reverse-appended ids come back in id order) so whichever fix lands will have to flip or drop it. Linking it to #7286 would make that explicit for the reviewers.\\n\\nSmall nit: the title reads \\\"I cover\\\" so \\\"test(sessions): cover tied-timestamp persistence gaps\\\" reads better. Nothing has moved on main for DatabaseSessionService (still (timestamp, id)) and there's no release after v2.11.0 so @rishwanth-th's override is still the workaround.\\n\\n@DeanChensj with the tests in place could you make the call on primary append order vs tie-break only and approve the 2 pending workflows on #7492?\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
@@ -14887,22 +14883,6 @@
         "value": "{\"started\": 1791797774.1707397, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791798681.8472674, \"folder\": \"jobs/780/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791797781.8503885}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791797786.3767526, \"comfyui\": 1791796127.307875, \"hermes\": 1791629598.7424486, \"langfuse\": 1791795677.2095616, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791709158.2752867, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791793672.2339332, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791797786.5313723"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791797788.052802"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791797788.6752164"
-      },
-      {
         "key": "usage:798:1:screening-5a084d01ada6aa5e4452",
         "value": "{\"task\": 798, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-5a084d01ada6aa5e4452\", \"at\": 1791797791.1498957, \"seconds\": 0.001, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -14913,6 +14893,26 @@
       {
         "key": "task:798",
         "value": "{\"started\": 1791797786.376836, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791798691.151309, \"folder\": \"jobs/798/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791797791.154243}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791797791.5315733"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791797793.0582836"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791797793.307266"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791797793.8911529, \"comfyui\": 1791796127.307875, \"hermes\": 1791629598.7424486, \"langfuse\": 1791795677.2095616, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791709158.2752867, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791793672.2339332, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:807",
+        "value": "{\"started\": 1791797793.8912342, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791796208.9521835}"
       }
     ],
     "calls": [
