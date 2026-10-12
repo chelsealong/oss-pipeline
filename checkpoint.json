@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791788637.0134065,
+  "saved_at": 1791788647.30788,
   "tables": {
     "tasks": [
       {
@@ -8473,11 +8473,11 @@
         "repo": "dify",
         "number": 38912,
         "note": "",
-        "status": "skipped",
+        "status": "running",
         "created": 1791528821.7987683,
-        "updated": 1791528949.326983,
+        "updated": 1791788647.299055,
         "result": "The reported hang in v1.15.0 has no confirmed cause in the current checkout. The accompanying `service_api` enum error is already addressed by an existing database migration. The earlier proposed fix in PR #38955 did not resolve the reporter’s hang and was closed without merging. A separate MCP client change is in open PR #42658, but the report does not establish that the affected API path caused this plugin-daemon hang. A small, testable fix for #38912 cannot be justified from the available evidence.",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 653,
@@ -12631,10 +12631,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7468\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "task:652",
-        "value": "{\"started\": 1791528821.9959798, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/652/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"c0dbb26f3e25755cf5dcb60895918a1a5b90fb07\", \"generation_started\": 1791528840.6009703, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791528842.6703217, \"last_execution_phase\": \"generation\", \"finished\": 1791528948.4169574}"
-      },
-      {
         "key": "task:650",
         "value": "{\"started\": 1791529284.7075646, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/650/attempt-3\", \"attempt\": 3, \"phase\": \"error\", \"base\": \"1d03e5d2ce452b15d5c345e382c96b43fc013bac\", \"generation_started\": 1791522244.0415602, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791529339.6779637, \"last_execution_phase\": \"generation\", \"finished\": 1791531741.8430872}"
       },
@@ -14651,22 +14647,6 @@
         "value": "{\"started\": 1791788620.0892708, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791789524.973817, \"folder\": \"jobs/816/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791788624.977137}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791788630.675112"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791788632.322539, \"comfyui\": 1791788280.5641162, \"hermes\": 1791629598.7424486, \"langfuse\": 1791788556.6091478, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791709158.2752867, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791788183.6529028, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791724888.639255, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791788632.4465194"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791788634.0741875"
-      },
-      {
         "key": "usage:817:1:screening-8a2fbedfbcf93e045214",
         "value": "{\"task\": 817, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-8a2fbedfbcf93e045214\", \"at\": 1791788636.9991655, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -14677,6 +14657,26 @@
       {
         "key": "task:817",
         "value": "{\"started\": 1791788632.3227103, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791789537.0007267, \"folder\": \"jobs/817/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791788637.0038166}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791788642.4467463"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791788643.9885938"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791788645.676418"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791788632.322539, \"comfyui\": 1791788280.5641162, \"hermes\": 1791629598.7424486, \"langfuse\": 1791788556.6091478, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791709158.2752867, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791788183.6529028, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791788647.298914, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:652",
+        "value": "{\"started\": 1791788647.2991095, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"claimed\", \"base\": null, \"generation_started\": 1791528840.6009703, \"dispatch_paid_date\": \"2026-10-09\", \"phase_started\": 1791528842.6703217, \"last_execution_phase\": \"generation\", \"finished\": 1791528948.4169574}"
       }
     ],
     "calls": [
