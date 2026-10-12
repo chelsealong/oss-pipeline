@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791778344.904224,
+  "saved_at": 1791778346.845665,
   "tables": {
     "tasks": [
       {
@@ -10514,11 +10514,11 @@
         "repo": "openclaw",
         "number": 169491,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791769333.9536278,
-        "updated": 1791774778.9620564,
+        "updated": 1791778346.4458923,
         "result": "screening budget reached; retain pending work",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 810,
@@ -14065,10 +14065,6 @@
         "value": "{\"task\": 809, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-4ecce594a710934b489b\", \"at\": 1791774778.9550135, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "task:809",
-        "value": "{\"started\": 1791774774.7120483, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791775678.956793, \"folder\": \"jobs/809/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791774778.9602168}"
-      },
-      {
         "key": "usage:745:1:screening-9ae8d6ce70f66252dee3",
         "value": "{\"task\": 745, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-9ae8d6ce70f66252dee3\", \"at\": 1791774997.8172424, \"seconds\": 7.422, \"tokens\": {\"totalTokens\": 18095, \"inputTokens\": 18007, \"cachedInputTokens\": 0, \"cacheWriteInputTokens\": 0, \"outputTokens\": 88, \"reasoningOutputTokens\": 37}, \"first_event_ms\": 1791774994229, \"last_event_ms\": 1791774997812, \"model\": null, \"complete\": true, \"usage_available\": true}"
       },
@@ -14425,14 +14421,6 @@
         "value": "{\"at\": 1791778280.0936663, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1791778282.4164324, \"state\": \"active\", \"pending_candidates\": 1, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"provisional_triage\": 1}, \"screening_wait_tasks\": 16, \"active_tasks\": 3, \"seconds_since_codex_call\": 592.8663835525513, \"judge_tokens_spent_24h\": 98941, \"screening_calls_5h\": 6, \"screening_calls_24h\": 18, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7502\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7502\", \"title\": \"Answering parallel RequestInput pauses in one message deadlocks replay: ReplaySequenceBarrier drops out-of-order completions\", \"first_seen\": 1791705802.9700265, \"last_checked\": 1791778212.456742, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7488\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7488\", \"title\": \"_get_current_turn_contents picks wrong anchor when single_turn agents run in parallel\", \"first_seen\": 1791688491.2892158, \"last_checked\": 1791778214.9599233, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791778282.41762, \"tasks\": {\"fix\": {\"queued\": 3, \"skipped\": 45, \"triage_wait\": 13, \"validation_wait\": 3}, \"respond\": {\"error\": 11, \"skipped\": 1, \"triage_wait\": 3}}}"
-      },
-      {
         "key": "usage:796:1:screening-ada993265ddd90f18848",
         "value": "{\"task\": 796, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-ada993265ddd90f18848\", \"at\": 1791778286.7112765, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -14501,14 +14489,6 @@
         "value": "1791778339.4328766"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791778339.650113, \"comfyui\": 1791778274.820459, \"hermes\": 1791629598.7424486, \"langfuse\": 1791775240.0053203, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791709158.2752867, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791778208.451057, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791724888.639255, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791778341.3360364"
-      },
-      {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
         "value": "{\"at\": 1791778342.9906013, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
       },
@@ -14527,6 +14507,26 @@
       {
         "key": "detector_heartbeat",
         "value": "1791778344.7140627"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1791778344.910519, \"state\": \"active\", \"pending_candidates\": 2, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 1, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"provisional_triage\": 1, \"awaiting_admission\": 1}, \"screening_wait_tasks\": 17, \"active_tasks\": 2, \"seconds_since_codex_call\": 655.3604373931885, \"judge_tokens_spent_24h\": 98941, \"screening_calls_5h\": 6, \"screening_calls_24h\": 18, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7502\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7502\", \"title\": \"Answering parallel RequestInput pauses in one message deadlocks replay: ReplaySequenceBarrier drops out-of-order completions\", \"first_seen\": 1791705802.9700265, \"last_checked\": 1791778212.456742, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7488\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7488\", \"title\": \"_get_current_turn_contents picks wrong anchor when single_turn agents run in parallel\", \"first_seen\": 1791688491.2892158, \"last_checked\": 1791778214.9599233, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791778344.9118297, \"tasks\": {\"fix\": {\"queued\": 2, \"skipped\": 45, \"triage_wait\": 14, \"validation_wait\": 3}, \"respond\": {\"error\": 11, \"skipped\": 1, \"triage_wait\": 3}}}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791778346.4457097, \"comfyui\": 1791778274.820459, \"hermes\": 1791629598.7424486, \"langfuse\": 1791775240.0053203, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791709158.2752867, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791778208.451057, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791724888.639255, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:809",
+        "value": "{\"started\": 1791778346.445947, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791774778.9602168}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791778346.4541824"
       }
     ],
     "calls": [
