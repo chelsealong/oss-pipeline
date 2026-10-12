@@ -79,7 +79,11 @@ Both the source list and deployment allowlist use only these two models.
 Missing configuration fails closed. Quota/authentication errors retain work.
 Concurrent cache writes merge atomically and identical requests share a lock.
 Oversized, unavailable or uncertain judgments retain pending feedback/issues;
-discussion changes invalidate issue verdicts. Pending candidates rotate fairly.
+discussion changes invalidate issue verdicts when optional issue classification
+is enabled. Production disables that redundant full-discussion classification:
+coding already assesses scope, and bot discussion churn must not block admission.
+Full author-body and human-comment claim checks remain mandatory, as do competing
+PR, coordination and publication checks. Pending candidates rotate fairly.
 
 When the local Qwen request/token allowance or 12 KB input ceiling prevents a
 judgement, discovery may queue a provisional candidate. An existing worker then

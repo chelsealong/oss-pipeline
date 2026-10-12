@@ -18,7 +18,7 @@ on:
         type: boolean
         default: false
       response_rehearsal:
-        description: Rehearse existing Hermes PR base update without model calls or publication
+        description: Rehearse existing OpenClaw PR base update without model calls or publication
         type: boolean
         default: false
 
@@ -146,7 +146,7 @@ jobs:
       - name: Rehearse real OpenClaw required checks without model calls
         if: inputs.production_rehearsal == true
         run: python -u production_rehearsal.py
-      - name: Rehearse real Hermes PR base update without publication
+      - name: Rehearse real OpenClaw PR base update without publication
         if: inputs.response_rehearsal == true
         env:
           GH_TOKEN: ${{ github.token }}

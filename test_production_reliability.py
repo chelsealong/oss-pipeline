@@ -245,6 +245,7 @@ class ProductionReliabilityTests(unittest.TestCase):
         (source/'shared').write_text('base\n');self.git(source,'add','.');self.git(source,'commit','-m','base')
         self.git(source,'checkout','-b','old-pr');(source/'shared' if conflict else source/'fix').write_text('fix\n')
         self.git(source,'add','.');self.git(source,'commit','-m','fix');original=self.git(source,'rev-parse','HEAD')
+        self.git(source,'update-ref','refs/pull/1/head',original)
         self.git(source,'checkout','main');(source/'shared' if conflict else source/'new-main').write_text('advance\n')
         self.git(source,'add','.');self.git(source,'commit','-m','advance')
         work=self.root/'checkout';self.git(self.root,'clone','--depth=1',source.as_uri(),str(work))
@@ -259,6 +260,48 @@ class ProductionReliabilityTests(unittest.TestCase):
         self.git(work,'merge-base','--is-ancestor','upstream/main','HEAD')
         self.assertEqual(self.git(source,'rev-parse','old-pr'),original)
         self.assertNotEqual(result['base'],original)
+    def test_old_pr_fetches_complete_history_without_publishing(self):
+        source,work,original=self.response_fixture()
+        base=self.git(source,'merge-base','main','old-pr')
+        # Long main history exceeds both cheap fetch steps; build it in one process.
+        rows=[];tip=self.git(source,'rev-parse','main')
+        for i in range(600):
+            rows.append(f'commit refs/heads/main\ncommitter Test <test@example.invalid> {1800000000+i} +0000\ndata 7\nadvance\n'+
+                        ('from '+tip+'\n' if i==0 else '')+'\n')
+        subprocess.run(['git','fast-import','--quiet'],cwd=source,input=''.join(rows),text=True,check=True,capture_output=True)
+        self.git(work,'fetch','--depth=1','upstream','+main:refs/remotes/upstream/main')
+        result=execution.update_response_base(work,'main',original,1)
+        self.assertEqual(self.git(work,'rev-parse','--is-shallow-repository'),'false')
+        self.assertEqual(self.git(work,'merge-base',original,'upstream/main'),base)
+        self.git(work,'merge-base','--is-ancestor',original,result['base'])
+        self.assertEqual(self.git(source,'rev-parse','old-pr'),original)
+        self.assertEqual((work/'fix').read_text(),'fix\n')
+    def test_changed_pr_head_during_history_fetch_does_not_merge(self):
+        source,work,original=self.response_fixture()
+        self.git(source,'update-ref','refs/pull/1/head',self.git(source,'rev-parse','main'))
+        with self.assertRaisesRegex(rt.Paused,'PR head moved'):
+            execution.update_response_base(work,'main',original,1)
+        self.assertEqual(self.git(work,'rev-parse','HEAD'),original)
+    def test_timed_out_git_process_reaps_helper_writers(self):
+        marker=self.root/'orphan-write'
+        child='import time;from pathlib import Path;time.sleep(1);Path('+repr(str(marker))+').touch()'
+        parent='import subprocess,sys,time;subprocess.Popen([sys.executable,"-c",'+repr(child)+']);print("started",flush=True);time.sleep(10)'
+        with self.assertRaises(subprocess.TimeoutExpired):
+            execution.git_process([sys.executable,'-c',parent],timeout=.3)
+        time.sleep(1.1)
+        self.assertFalse(marker.exists(),'Timed-out helper still wrote to the checkout')
+    def test_history_failure_recovery_requires_unchanged_unpublished_head(self):
+        task=self.task(repo='openclaw/openclaw',kind='respond');task.update(status='error',
+            result='PR history exceeds bounded merge-base fetch; retained for follow-up')
+        state={'phase':'error','last_execution_phase':'checkout','remote_base':'a'*40,'base':None}
+        rt.task_state(task['id'],**state)
+        self.assertTrue(task_recovery.repaired_infrastructure(task,state))
+        with patch.object(worker,'response_context',return_value={'head':{'sha':'a'*40}}):
+            self.assertTrue(task_recovery.audited_unpublished(task)[0])
+        with patch.object(worker,'response_context',return_value={'head':{'sha':'b'*40}}):
+            self.assertFalse(task_recovery.audited_unpublished(task)[0])
+        self.assertFalse(task_recovery.repaired_infrastructure(task,state|{'publication_started':True}))
+        self.assertFalse(task_recovery.repaired_infrastructure(task|{'result':'Current upstream conflicts with PR branch'},state))
     def test_base_conflict_leaves_original_pr_head_intact(self):
         source,work,original=self.response_fixture(conflict=True)
         with self.assertRaisesRegex(RuntimeError,'conflicts'):execution.update_response_base(work,'main',original)

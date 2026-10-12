@@ -677,6 +677,7 @@ def retain_for_vetting(key: str, node: dict) -> None:
         _write_pending_vet(rows)
 
 def migrate_screening_waits():
+    migrate_issue_classification_waits()
     if not rt.config().get('codex_screening_fallback') or rt.getmeta('screening_waits_v1'):return
     import screening
     rows=pending_vet();before=json.loads(json.dumps(rows))
@@ -687,6 +688,31 @@ def migrate_screening_waits():
                 item['retry_after']=0
     save_pending_vet(rows,before)
     rt.setmeta('screening_waits_v1',time.time())
+
+
+def migrate_issue_classification_waits():
+    """Recheck pre-code classifier holds once; preserve claims and spending."""
+    if rt.config().get('judge_issue_triage') or rt.getmeta('issue_classifier_rollback_v1'):return
+    prefixes=('screening budget reached', 'judge triage pending', 'judge input exceeds bounded context',
+              'judge token budget reached', 'judge request budget reached')
+    rows=pending_vet();before=json.loads(json.dumps(rows))
+    for key,items in rows.items():
+        if repo_limits.disabled(key) or scan.REPOS.get(key,{}).get('paused'):continue
+        for item in items.values():
+            if item.get('reason','').startswith(prefixes):item['retry_after']=0
+    save_pending_vet(rows,before)
+    changed=[]
+    with rt.db() as db:
+        db.execute('BEGIN IMMEDIATE')
+        for row in db.execute("SELECT id,repo,result FROM tasks WHERE kind='fix' AND status='triage_wait'").fetchall():
+            state=rt._meta(db,f"task:{row['id']}",{})
+            if (repo_limits.disabled(row['repo']) or scan.REPOS.get(row['repo'],{}).get('paused')
+                    or state.get('base') or state.get('generation_started')
+                    or state.get('publication_started') or not row['result'].startswith(prefixes)):continue
+            state['retry_after']=0
+            rt._putmeta(db,f"task:{row['id']}",state);changed.append(row['id'])
+        rt._putmeta(db,'issue_classifier_rollback_v1',{'at':time.time(),'recheck_tasks':changed})
+    rt.checkpoint()
 
 def recheck_pending_vet(keys: list[str], limit: int = 4) -> int:
     """Refresh durable discoveries before vetting; never admit a stale snapshot."""

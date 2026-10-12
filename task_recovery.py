@@ -137,6 +137,10 @@ def repaired_infrastructure(task,state):
             and attestation_only_gate(task.get('result',''))):return True
     reason=task.get('result','')
     phase=state.get('last_execution_phase',state.get('phase'))
+    if (task['kind']=='respond' and phase=='checkout' and state.get('remote_base')
+            and not state.get('base') and (reason=='PR history exceeds bounded merge-base fetch; retained for follow-up'
+                or reason.strip()=='git failed (128): fatal: shallow file has changed since we read it')):
+        return True
     if (phase in ('checkout','generation','review','remediation','rereview')
             and re.search(r"No such file or directory: .*?/jobs/\d+/attempt-\d+/work/\.aws",reason)):
         return True

@@ -6,11 +6,26 @@ import os
 from pathlib import Path
 import re
 import shutil
+import signal
 import subprocess
 import time
 import runtime as rt
 
 class RequiredCheckFailed(RuntimeError):pass
+
+
+def git_process(args, cwd=None, timeout=300):
+    """Own fetch helpers too: a timed-out Git parent must not leave writers."""
+    process=subprocess.Popen(args,cwd=cwd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,
+                             text=True,start_new_session=True)
+    try:
+        stdout,stderr=process.communicate(timeout=timeout)
+    except BaseException:
+        try:os.killpg(process.pid,signal.SIGKILL)
+        except ProcessLookupError:pass
+        process.communicate()
+        raise
+    return subprocess.CompletedProcess(args,process.returncode,stdout,stderr)
 
 
 def validation_environment(work, env):
@@ -155,17 +170,23 @@ def response_history_complete(work, upstream):
     return not boundary.intersection(above)
 
 
-def update_response_base(work, default, original_head):
+def update_response_base(work, default, original_head, pr_number=None):
     """Merge current main locally, without rewriting or publishing PR history."""
     import codex_worker as worker
     upstream='refs/remotes/upstream/'+default
-    for depth in (128,512,2048,8192):
+    head_ref='refs/remotes/upstream/response-head'
+    source=f'refs/pull/{pr_number}/head' if pr_number is not None else original_head
+    for extent in ('--depth=128','--depth=512','--unshallow'):
         if response_history_complete(work,upstream):break
-        worker.git(work,'fetch','--depth='+str(depth),'upstream',f'{default}:{upstream}')
-        worker.git(work,'fetch','--depth='+str(depth),'origin',original_head)
-    else:
-        if not response_history_complete(work,upstream):
-            raise RuntimeError('PR history exceeds bounded merge-base fetch; retained for follow-up')
+        if worker.git(work,'rev-parse','--is-shallow-repository')=='false':break
+        # Fetch both graph tips together from upstream; omit historical blobs.
+        # A fixed depth ceiling cannot handle old PRs in fast-moving repositories.
+        worker.run(['git','fetch','--no-tags','--filter=blob:none',extent,'upstream',
+                    f'+{default}:{upstream}',f'{source}:{head_ref}'],cwd=work,timeout=900)
+        if worker.git(work,'rev-parse',head_ref)!=original_head:
+            raise rt.Paused('PR head moved during response history fetch')
+    if not response_history_complete(work,upstream):
+        raise RuntimeError('Cannot prove complete PR merge history; retained for follow-up')
     before=worker.git(work,'rev-parse','HEAD')
     try:
         worker.git(work,'-c','user.name='+worker.ME,'-c','user.email='+worker.EMAIL,

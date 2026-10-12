@@ -1,6 +1,7 @@
 """Production admission regressions; all model and network I/O is simulated."""
 import contextlib
 import importlib.util
+import io
 import json
 from pathlib import Path
 import tempfile
@@ -47,6 +48,7 @@ class ScreeningTests(unittest.TestCase):
             'user':{'login':'reporter'},'comments':0,'labels':[],'assignees':[],
             'created_at':'2026-10-01T00:00:00Z','html_url':'https://github.com/Comfy-Org/ComfyUI/issues/1'}
         self.stack.enter_context(patch.object(scan,'linked_prs',return_value=[]))
+        self.real_claimants=scan.claimants
         self.stack.enter_context(patch.object(scan,'claimants',return_value=[]))
         self.stack.enter_context(patch.object(codex_worker,'api',side_effect=lambda _:self.issue))
         self.agent=self.stack.enter_context(patch.object(codex_worker,'agent',side_effect=self.fake_agent))
@@ -95,6 +97,57 @@ class ScreeningTests(unittest.TestCase):
         with patch.object(scan,'linked_prs',return_value=['closing-ref PR#2(OPEN)']):
             self.assertFalse(self.eligible()[0])
         self.agent.assert_not_called()
+
+    def test_bot_discussion_does_not_inflate_or_invalidate_author_claim_check(self):
+        self.cfg['judge_issue_triage']=False
+        rt.setmeta('judge_usage',[])
+        self.issue['comments']=1
+        comments=[{'user':{'login':'triage[bot]'},'body':'Automated assessment. '*1200,
+                   'created_at':'2026-10-10T00:00:00Z'}]
+        def answer(request,**kwargs):
+            payload=json.loads(request.data)
+            self.assertNotIn('Automated assessment',payload['messages'][1]['content'])
+            claim='I have implemented' in payload['messages'][1]['content']
+            return io.BytesIO(json.dumps({'choices':[{'message':{'content':json.dumps(
+                {'claim':claim,'why':'author claim' if claim else 'report only'})}}],
+                'usage':{'total_tokens':400}}).encode())
+        self.http.side_effect=answer
+        with patch.object(scan,'claimants',side_effect=self.real_claimants),\
+             patch.object(scan,'gh',side_effect=lambda *a,**k:json.dumps([comments])):
+            self.assertTrue(self.eligible()[0])
+            comments[0]['body']+=' New bot status.'
+            self.assertTrue(self.eligible()[0]);self.assertEqual(self.http.call_count,1)
+            comments.append({'user':{'login':'contributor'},'body':'I have implemented the fix.',
+                             'created_at':'2026-10-10T00:00:00Z'})
+            with patch.object(scan,'_claim_went_cold',return_value=False):
+                self.assertFalse(self.eligible()[0])
+        self.assertEqual(self.http.call_count,2);self.agent.assert_not_called()
+
+    def test_lightweight_admission_still_blocks_tail_claims(self):
+        self.cfg['judge_issue_triage']=False
+        self.test_claim_at_end_of_long_report_stops_before_checkout()
+
+    def test_classifier_wait_migration_preserves_spending_and_other_holds(self):
+        self.cfg['judge_issue_triage']=False
+        with rt.db() as db:
+            db.execute("UPDATE tasks SET status='triage_wait',result='screening budget reached; retain pending work'")
+            db.execute("INSERT INTO calls VALUES (?,'codex')",(time.time(),))
+        rt.task_state(self.ident,retry_after=time.time()+900,screening_requests={'old':1})
+        watch.retain_for_vetting('comfyui',{'number':1,'createdAt':'2026-10-01T00:00:00Z'})
+        rows=watch.pending_vet();rows['comfyui']['1'].update(reason='judge triage pending: QUESTION',retry_after=9999999999)
+        rows['comfyui']['2']={'reason':'judge authentication unavailable','retry_after':9999999999}
+        watch.save_pending_vet(rows)
+        watch.migrate_issue_classification_waits()
+        state=rt.task_state(self.ident)
+        self.assertEqual(state['retry_after'],0);self.assertEqual(state['screening_requests'],{'old':1})
+        self.assertEqual(watch.pending_vet()['comfyui']['1']['retry_after'],0)
+        self.assertEqual(watch.pending_vet()['comfyui']['2']['retry_after'],9999999999)
+        with rt.db() as db:
+            self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],1)
+            self.assertEqual(db.execute('SELECT status FROM tasks').fetchone()[0],'triage_wait')
+        rt.task_state(self.ident,retry_after=12345)
+        watch.migrate_issue_classification_waits()
+        self.assertEqual(rt.task_state(self.ident)['retry_after'],12345)
 
     def test_auth_unavailability_does_not_become_an_admission_approval(self):
         with patch.object(intent,'_ask_remote',side_effect=rt.JudgeDeferred('judge authentication unavailable')):

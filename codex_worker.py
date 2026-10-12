@@ -80,7 +80,8 @@ def run(args, cwd=None, timeout=120):
     # reached GitHub and must never be blindly replayed.
     readonly = (args[:2]==['gh','api'] and not any(x in args for x in ['-X','--method','-f','-F','--field','--raw-field'])) or args[:3]==['gh','pr','list']
     for attempt in range(3 if readonly else 1):
-        p = subprocess.run(args, cwd=cwd, capture_output=True, text=True, timeout=timeout)
+        p = (execution.git_process(args,cwd=cwd,timeout=timeout) if args[0]=='git' else
+             subprocess.run(args,cwd=cwd,capture_output=True,text=True,timeout=timeout))
         if not p.returncode or not readonly or not re.search(r'TLS handshake timeout|connection reset|unexpected EOF|i/o timeout|HTTP 50[234]',p.stderr,re.I):
             break
         if attempt<2:time.sleep(2*(attempt+1))
@@ -530,7 +531,7 @@ def process_one(task):
         if git(work,'rev-parse','HEAD')!=pr['head']['sha']:
             raise rt.Paused('PR head moved before checkout')
         rt.task_state(task['id'],remote_base=pr['head']['sha'])
-        merged=execution.update_response_base(work,default,pr['head']['sha'])
+        merged=execution.update_response_base(work,default,pr['head']['sha'],num)
         rt.task_state(task['id'],remote_base=pr['head']['sha'],base_update=merged)
     base=git(work,'rev-parse','HEAD')
     rt.task_state(task['id'],base=base)

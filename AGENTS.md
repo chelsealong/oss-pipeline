@@ -70,6 +70,12 @@ rechecks prior budget/length holds once, preserving other waits and spending.
 Report admission starvation separately from process/auth health. ADK requests
 remain unsent, visible human follow-ups; check duplicates before requesting
 coordination. No new authority to post issue comments is implied.
+The October 12 audit found mandatory full-issue/discussion classification was
+duplicating coding scope assessment and repeatedly reclassifying bot updates.
+Production now disables `judge_issue_triage`; retain full author-body and human
+comment claim checks, assignments, competing PRs and all publication gates.
+Do not increase budgets to pay for that redundant classification. Recheck only
+pre-code classifier/budget holds once, without resetting attempts or spending.
 Codex generation reserves independent review capacity within the existing
 45-turn/5h cap. Use the same authenticated host for read-only quota status;
 85% usage stops new generation and 95% stops ordinary model admission. Preserve
@@ -176,6 +182,12 @@ head. Reply-only tasks never publish that local merge. Cleanup failures remain
 task-local and cannot activate the account circuit breaker.
 The response history check must also prove there are no shallow boundaries
 above its candidate merge bases: finding any common ancestor is insufficient.
+The October 12 repair fetches main and the PR head together from upstream,
+omitting historical blobs. If two bounded depth attempts cannot prove the base,
+complete the graph within a 900-second fetch deadline. Timed-out Git processes
+must terminate their owned helper process group before checkout reuse. Known
+pre-merge depth/shallow-file failures may retry only after unpublished evidence
+and the unchanged remote PR head are verified. Real conflicts remain blocked.
 The initial October 10 repair missed this case. Its exact pre-model false-conflict
 checkout error may resume once after verifying the unchanged remote head and
 unpublished empty-attempt evidence. Preserve attempt IDs and all prior spending;

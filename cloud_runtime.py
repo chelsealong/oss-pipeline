@@ -144,7 +144,10 @@ def configure(mode):
         'codex_phase_shares':{'new_fix':24,'maintenance':10,'repair':6,'validation':5},
         'codex_start_used_percent':85,'codex_stop_used_percent':95,
         'judge_requests_per_hour':30,'judge_requests_per_day':150,'judge_tokens_per_day':100000,
-        'judge_max_attempts':2,'judge_max_input_bytes':12000,'judge_issue_triage':True,
+        # Issue kind/scope is assessed by the coding worker. A second mandatory
+        # full-discussion classifier amplified bot text and blocked otherwise
+        # eligible work. Keep complete author/comment claim checks in scan.vet.
+        'judge_max_attempts':2,'judge_max_input_bytes':12000,'judge_issue_triage':False,
         'codex_screening_fallback':True,'codex_screening_per_5h':6,'codex_screening_per_day':18,
         'codex_screening_max_bytes':128000,'decouple_discovery':True,
         'judge_free_only_required':True,
