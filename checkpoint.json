@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791763306.3240352,
+  "saved_at": 1791763323.77575,
   "tables": {
     "tasks": [
       {
@@ -10098,11 +10098,11 @@
         "repo": "openclaw",
         "number": 169154,
         "note": "",
-        "status": "triage_wait",
+        "status": "running",
         "created": 1791731572.6910384,
-        "updated": 1791762417.777785,
+        "updated": 1791763323.7670543,
         "result": "screening budget reached; retain pending work",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 778,
@@ -13894,10 +13894,6 @@
         "value": "{\"task\": 777, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-1689bec049cb84e468a7\", \"at\": 1791762417.7679513, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "task:777",
-        "value": "{\"started\": 1791762414.6534286, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791763317.7725706, \"folder\": \"jobs/777/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791762417.7759564}"
-      },
-      {
         "key": "usage:790:1:screening-e12e942aa1845af39370",
         "value": "{\"task\": 790, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"screening-e12e942aa1845af39370\", \"at\": 1791762489.314789, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -14214,20 +14210,8 @@
         "value": "{\"started\": 1791763238.5878413, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791764142.1212974, \"folder\": \"jobs/794/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791763242.1243842}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1791763245.9016006, \"state\": \"stalled\", \"pending_candidates\": 1, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"provisional_triage\": 1}, \"screening_wait_tasks\": 18, \"active_tasks\": 0, \"seconds_since_codex_call\": 37227.56896233559, \"judge_tokens_spent_24h\": 98941, \"screening_calls_5h\": 0, \"screening_calls_24h\": 18, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7502\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7502\", \"title\": \"Answering parallel RequestInput pauses in one message deadlocks replay: ReplaySequenceBarrier drops out-of-order completions\", \"first_seen\": 1791705802.9700265, \"last_checked\": 1791762824.7596812, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7488\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7488\", \"title\": \"_get_current_turn_contents picks wrong anchor when single_turn agents run in parallel\", \"first_seen\": 1791688491.2892158, \"last_checked\": 1791762827.2442694, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
-      },
-      {
         "key": "admission_warning_at",
         "value": "1791763245.90497"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791763245.9061048, \"tasks\": {\"fix\": {\"skipped\": 45, \"triage_wait\": 15, \"validation_wait\": 1}, \"respond\": {\"error\": 9, \"skipped\": 1, \"triage_wait\": 3}}}"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791763249.113016, \"comfyui\": 1791763207.6407766, \"hermes\": 1791629598.7424486, \"langfuse\": 1791762544.7598248, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791709158.2752867, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791762726.046657, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791724888.639255, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
       },
       {
         "key": "usage:796:1:screening-ada993265ddd90f18848",
@@ -14246,24 +14230,40 @@
         "value": "{\"at\": 1791763263.812808, \"windows\": [{\"name\": \"primary\", \"used_percent\": 7, \"resets_at\": 1792296963}]}"
       },
       {
+        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
+        "value": "{\"at\": 1791763306.315718, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1791763308.0619457, \"state\": \"stalled\", \"pending_candidates\": 1, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"provisional_triage\": 1}, \"screening_wait_tasks\": 18, \"active_tasks\": 0, \"seconds_since_codex_call\": 37289.7293112278, \"judge_tokens_spent_24h\": 98941, \"screening_calls_5h\": 0, \"screening_calls_24h\": 18, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7502\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7502\", \"title\": \"Answering parallel RequestInput pauses in one message deadlocks replay: ReplaySequenceBarrier drops out-of-order completions\", \"first_seen\": 1791705802.9700265, \"last_checked\": 1791762824.7596812, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7488\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7488\", \"title\": \"_get_current_turn_contents picks wrong anchor when single_turn agents run in parallel\", \"first_seen\": 1791688491.2892158, \"last_checked\": 1791762827.2442694, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791763308.063886, \"tasks\": {\"fix\": {\"skipped\": 45, \"triage_wait\": 15, \"validation_wait\": 1}, \"respond\": {\"error\": 9, \"skipped\": 1, \"triage_wait\": 3}}}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1791763299.2123349"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791763302.0403132"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791763303.5089533"
+        "value": "1791763314.2148805"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791763305.4054341"
+        "value": "1791763320.4058213"
       },
       {
-        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
-        "value": "{\"at\": 1791763306.315718, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+        "key": "discovery_last_success",
+        "value": "1791763321.8338063"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791763323.5351963"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791763323.7669823, \"comfyui\": 1791763207.6407766, \"hermes\": 1791629598.7424486, \"langfuse\": 1791762544.7598248, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791709158.2752867, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791762726.046657, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791724888.639255, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:777",
+        "value": "{\"started\": 1791763323.767092, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791762417.7759564}"
       }
     ],
     "calls": [
