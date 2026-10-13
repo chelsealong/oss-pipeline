@@ -15,7 +15,9 @@ class DiscoveryRecoveryTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.root=Path(self.temp.name)
         self.patches=[patch.object(watch,'PENDING_VET',self.root/'pending.json'),
-                      patch.object(watch,'log'),patch.object(watch,'NO_TRIGGER',True)]
+                      patch.object(watch,'log'),patch.object(watch,'NO_TRIGGER',True),
+                      patch.object(rt,'ROOT',self.root),patch.object(rt,'DATA',self.root/'data'),
+                      patch.object(rt,'CONFIG',self.root/'runtime.json'),patch.object(rt,'checkpoint')]
         for p in self.patches:p.start()
         self.node={'number':123,'title':'A reproducible bug','body':'Reproduction. '*30,
                    'url':'https://github.com/google/adk-python/issues/123',

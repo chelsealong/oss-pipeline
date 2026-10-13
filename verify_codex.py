@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline commit gate for the active Codex runtime; never invokes model APIs."""
 import ast
+import hashlib
 import os
 from pathlib import Path
 import subprocess
@@ -17,5 +18,13 @@ for path in (root/'.github/workflows').glob('*.yml'):
 # Git hooks export the parent index/worktree into every test subprocess. Strip
 # these so temporary fixture repositories cannot accidentally stage the parent.
 test_env={key:value for key,value in os.environ.items() if not key.startswith('GIT_')}
-subprocess.run([sys.executable,'-m','unittest','-v','test_runtime','test_recovery','test_codex_host','test_resumption','test_pr_followup','test_claim_admission','test_discovery_recovery','test_publication_holds','test_production_reliability','test_model_budget','test_repo_limits','test_screening'],cwd=root,env=test_env,check=True)
+def runtime_database():
+    return {path.name:hashlib.sha256(path.read_bytes()).hexdigest()
+            for path in (root/'.runtime').glob('queue.sqlite3*') if path.is_file()}
+before=runtime_database()
+try:
+    subprocess.run([sys.executable,'-m','unittest','-v','test_runtime','test_recovery','test_codex_host','test_resumption','test_pr_followup','test_claim_admission','test_discovery_recovery','test_publication_holds','test_production_reliability','test_model_budget','test_repo_limits','test_screening'],cwd=root,env=test_env,check=True)
+finally:
+    if runtime_database()!=before:
+        raise RuntimeError('Offline tests modified the real runtime database; fix fixture isolation before deployment')
 print('Codex gate passed: Python/shell syntax, archived workflow YAML, runtime regression tests; no API calls.')

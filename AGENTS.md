@@ -166,6 +166,10 @@ wording where upstream requires only asking first.
 Check `runtime.status()` for active phases, 24-hour outcomes and human follow-ups.
 Run `verify_codex.py` with PyYAML and cryptography, then the cloud preflight and
 two concurrent canaries before restoring production after runtime changes.
+Offline tests must isolate runtime paths and leave the checkout's real database
+unchanged. The gate verifies this: leaked fixture metadata can prevent the live
+checkpoint from restoring even when canaries pass. Never bypass the import
+overwrite guard or discard live state to make a deployment start.
 Each canary also verifies full-text read-only screening, including a tail claim
 after 12 KB; reserve all six turns before starting the shared auth owner.
 
