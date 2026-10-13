@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791873642.3229787,
+  "saved_at": 1791873646.0207474,
   "tables": {
     "tasks": [
       {
@@ -10865,11 +10865,11 @@
         "repo": "openclaw/openclaw",
         "number": 142692,
         "note": "{\"authors\": \"clawsweeper, openclaw-barnacle\", \"events\": [\"IC_kwDOQb6kR88AAAABTWdCcA@2026-10-12T16:40:25Z\", \"IC_kwDOQb6kR88AAAABbdnl2g@2026-10-13T04:03:01Z\"], \"screening_events\": [\"IC_kwDOQb6kR88AAAABTWdCcA@2026-10-12T16:40:25Z\", \"IC_kwDOQb6kR88AAAABbdnl2g@2026-10-13T04:03:01Z\"], \"is_issue\": false, \"head\": \"6b739765df4e106f7a3dbc77a8912c205a64ba37\"}",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1791864386.4335814,
-        "updated": 1791873642.3159049,
+        "updated": 1791873646.0144436,
         "result": "screening budget reached; retain pending work",
-        "attempts": 1
+        "attempts": 0
       },
       {
         "id": 837,
@@ -15115,14 +15115,6 @@
         "value": "{\"task\": 836, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"screening-c37a5accaea5e71c9c9a\", \"at\": 1791872739.4280705, \"seconds\": 7.976, \"tokens\": {\"totalTokens\": 18135, \"inputTokens\": 18071, \"cachedInputTokens\": 0, \"cacheWriteInputTokens\": 0, \"outputTokens\": 64, \"reasoningOutputTokens\": 38}, \"first_event_ms\": 1791872735305, \"last_event_ms\": 1791872739425, \"model\": null, \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "usage:836:1:screening-d8a4f65b7939ae859ab9",
-        "value": "{\"task\": 836, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"screening-d8a4f65b7939ae859ab9\", \"at\": 1791872739.8438165, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:44",
         "value": "{\"recovery_checked_at\": 1791873447.9081721}"
       },
@@ -15283,32 +15275,40 @@
         "value": "{\"at\": 1791873597.2200944, \"tasks\": {\"fix\": {\"blocked\": 5, \"done\": 1, \"skipped\": 31, \"validation_wait\": 1}, \"respond\": {\"error\": 4, \"triage_wait\": 1, \"validation_wait\": 3}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791873628.9618864"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791873634.5150845"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791873639.0582924"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791873640.4442718"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791873640.6128979"
       },
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1791873642.3158386, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791852393.735594, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791866448.144085, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791793672.2339332, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1791873643.9634423"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791873644.0584002"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791873645.449667"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791873645.7186427"
+      },
+      {
+        "key": "usage:836:1:screening-d8a4f65b7939ae859ab9",
+        "value": "{\"task\": 836, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"screening-d8a4f65b7939ae859ab9\", \"at\": 1791873646.0088232, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
         "key": "task:836",
-        "value": "{\"started\": 1791873642.3159316, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791872739.870102, \"phase_started\": 1791872733.3555193, \"screening_requests\": {\"c37a5accaea5e71c9c9a\": 1791872739.4292402}}"
+        "value": "{\"started\": 1791873642.3159316, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791874546.0102675, \"folder\": \"jobs/836/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791873646.0130243, \"phase_started\": 1791872733.3555193, \"screening_requests\": {\"c37a5accaea5e71c9c9a\": 1791872739.4292402}}"
       }
     ],
     "calls": [
