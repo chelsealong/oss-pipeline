@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791858242.048574,
+  "saved_at": 1791858255.9769847,
   "tables": {
     "tasks": [
       {
@@ -10792,6 +10792,19 @@
         "updated": 1791852445.8760624,
         "result": "Already fixed upstream: PR #18651 merged on 2026-10-12 and gave the two included scores distinct timestamps. The fix is present in this checkout.",
         "attempts": 1
+      },
+      {
+        "id": 831,
+        "identity": "fix:comfyui:16991:",
+        "kind": "fix",
+        "repo": "comfyui",
+        "number": 16991,
+        "note": "",
+        "status": "running",
+        "created": 1791858247.2844667,
+        "updated": 1791858255.915109,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -14856,10 +14869,6 @@
         "value": "{\"started\": 1791856611.1828098, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/798/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"e5606888f0a503dba456c7fb6905e67440d6877b\", \"last_execution_phase\": \"generation\", \"finished\": 1791856982.3927217, \"phase_started\": 1791856677.4007666, \"screening_requests\": {\"af87e884178d05198289\": 1791856624.539444}, \"generation_started\": 1791856675.4623513, \"dispatch_paid_date\": \"2026-10-13\"}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791856992.9144347, \"comfyui\": 1791796127.307875, \"hermes\": 1791629598.7424486, \"langfuse\": 1791852393.735594, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791852324.0317657, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791793672.2339332, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"langfuse\", \"task\": 829, \"at\": 1791852250.114503}, {\"repo\": \"openclaw\", \"task\": 780, \"at\": 1791852293.4710832}, {\"repo\": \"langfuse\", \"task\": 830, \"at\": 1791852406.003755}, {\"repo\": \"openclaw\", \"task\": 796, \"at\": 1791854136.9307709}, {\"repo\": \"openclaw\", \"task\": 798, \"at\": 1791856675.4623508}, {\"repo\": \"openclaw\", \"task\": 807, \"at\": 1791857049.6545508}]"
       },
@@ -15076,36 +15085,44 @@
         "value": "{\"at\": 1791857926.4915915, \"safe\": true, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1791858181.3785846, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 7, \"active_tasks\": 3, \"seconds_since_codex_call\": 1131.7180857658386, \"judge_tokens_spent_24h\": 97755, \"screening_calls_5h\": 2, \"screening_calls_24h\": 14, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7502\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7502\", \"title\": \"Answering parallel RequestInput pauses in one message deadlocks replay: ReplaySequenceBarrier drops out-of-order completions\", \"first_seen\": 1791705802.9700265, \"last_checked\": 1791779717.719459, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7488\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7488\", \"title\": \"_get_current_turn_contents picks wrong anchor when single_turn agents run in parallel\", \"first_seen\": 1791688491.2892158, \"last_checked\": 1791779720.260513, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7507\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7507\", \"title\": \"ExecuteBashTool buffers unbounded stdout/stderr in the parent process\", \"first_seen\": 1791786602.5673227, \"last_checked\": 1791803047.4432328, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7515\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7515\", \"title\": \"Workflow: node returning None in a later loop iteration leaves its previous output for JoinNode\", \"first_seen\": 1791852187.5247638, \"last_checked\": 1791855469.40007, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791858181.4646316, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 1, \"queued\": 2, \"running\": 1, \"skipped\": 27, \"triage_wait\": 7, \"validation_wait\": 2}, \"respond\": {\"error\": 4, \"validation_wait\": 1}}}"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1791858225.167535, \"windows\": [{\"name\": \"primary\", \"used_percent\": 32, \"resets_at\": 1792296963}]}"
       },
       {
+        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
+        "value": "{\"at\": 1791858242.0413249, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1791858244.1419978, \"state\": \"active\", \"pending_candidates\": 1, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 1, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 1}, \"screening_wait_tasks\": 7, \"active_tasks\": 3, \"seconds_since_codex_call\": 1194.4832100868225, \"judge_tokens_spent_24h\": 97755, \"screening_calls_5h\": 2, \"screening_calls_24h\": 14, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7502\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7502\", \"title\": \"Answering parallel RequestInput pauses in one message deadlocks replay: ReplaySequenceBarrier drops out-of-order completions\", \"first_seen\": 1791705802.9700265, \"last_checked\": 1791779717.719459, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7488\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7488\", \"title\": \"_get_current_turn_contents picks wrong anchor when single_turn agents run in parallel\", \"first_seen\": 1791688491.2892158, \"last_checked\": 1791779720.260513, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7507\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7507\", \"title\": \"ExecuteBashTool buffers unbounded stdout/stderr in the parent process\", \"first_seen\": 1791786602.5673227, \"last_checked\": 1791803047.4432328, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7515\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7515\", \"title\": \"Workflow: node returning None in a later loop iteration leaves its previous output for JoinNode\", \"first_seen\": 1791852187.5247638, \"last_checked\": 1791855469.40007, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791858244.143609, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 1, \"queued\": 2, \"running\": 1, \"skipped\": 27, \"triage_wait\": 7, \"validation_wait\": 2}, \"respond\": {\"error\": 4, \"validation_wait\": 1}}}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1791858235.49052"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791858240.161325"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791858240.626031"
+        "value": "1791858250.4923577"
       },
       {
         "key": "discovery_last_success",
-        "value": "1791858241.8578851"
+        "value": "1791858252.1084704"
       },
       {
-        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
-        "value": "{\"at\": 1791858242.0413249, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+        "key": "watch_heartbeat",
+        "value": "1791858252.3020205"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791858255.1615868"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791856992.9144347, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791852393.735594, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791852324.0317657, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791793672.2339332, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:831",
+        "value": "{\"started\": 1791858255.9162388, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       }
     ],
     "calls": [
