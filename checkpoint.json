@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791889851.051792,
+  "saved_at": 1791889854.7299297,
   "tables": {
     "tasks": [
       {
@@ -10488,11 +10488,11 @@
         "repo": "openclaw",
         "number": 169473,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791767412.5122914,
-        "updated": 1791889771.7538443,
+        "updated": 1791889854.7025259,
         "result": "review: The mandatory `pnpm check:changed --base HEAD` gate failed on the dead export scan. Its reported unused exports are outside the patch and present in HEAD, but current upstream landing policy does not treat an inherited failure as a passed gate. The focused Doctor migration test passed (3/3). The proposed PR body also needs updating: it says the controller gate is pending, though it has failed.",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 808,
@@ -15332,10 +15332,6 @@
         "value": "{\"at\": 1791889771.7460139, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"optional_broad_check\"}"
       },
       {
-        "key": "task:807",
-        "value": "{\"started\": 1791856992.9146097, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/807/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"ebf0a83c6bb396e52aaeb3cdfd9999fb22c288da\", \"last_execution_phase\": \"review\", \"finished\": 1791859845.3943703, \"generation_started\": 1791857049.6545513, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791859752.1245003, \"patch_digest\": \"83c20b1bf4904c0649d7ccc36bf9f2c3a63d0aee07effae435c14305c293b00f\", \"recovery_checked_at\": 1791889770.9810421, \"resume_progress\": {\"bundle\": \"807-1.json\", \"sha256\": \"b10555faf3bf0dc28655583695dd15b3d42cf4ac1f0f1a66341aeae56b70e176\", \"base\": \"ebf0a83c6bb396e52aaeb3cdfd9999fb22c288da\", \"phase\": \"review\"}, \"submission_repaired\": {\"at\": 1791889771.7537081, \"repair\": \"optional_broad_check\", \"attempt\": 1}}"
-      },
-      {
         "key": "followup:task:807",
         "value": "{\"status\": \"resumed\", \"task\": 807}"
       },
@@ -15516,10 +15512,6 @@
         "value": "{\"at\": 1791889800.4896905, \"tasks\": {\"fix\": {\"blocked\": 1, \"interrupted\": 3, \"queued\": 4, \"running\": 1, \"skipped\": 24, \"validation_wait\": 1}, \"respond\": {\"error\": 6, \"validation_wait\": 2}}}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791889790.912225, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791887206.9526615, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791889803.226476, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"langfuse\", \"task\": 841, \"at\": 1791878613.671895}, {\"repo\": \"langfuse\", \"task\": 842, \"at\": 1791878714.5639021}, {\"repo\": \"llama-index\", \"task\": 840, \"at\": 1791879428.9563568}, {\"repo\": \"openclaw\", \"task\": 844, \"at\": 1791880959.1920288}, {\"repo\": \"langfuse\", \"task\": 843, \"at\": 1791881482.4688804}, {\"repo\": \"spec-kit\", \"task\": 846, \"at\": 1791889811.9745765}]"
       },
@@ -15544,10 +15536,6 @@
         "value": "{\"started\": 1791889803.2266362, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/846/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"6c62e10d5ab1d676c557eb2d0cee86be52c893d2\", \"generation_started\": 1791889811.9745774, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791889814.1679602, \"last_execution_phase\": \"generation\", \"finished\": 1791889842.2033527}"
       },
       {
-        "key": "discovery_last_success",
-        "value": "1791889847.1467953"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1791889848.0369608, \"windows\": [{\"name\": \"primary\", \"used_percent\": 23, \"resets_at\": 1792473656}]}"
       },
@@ -15570,6 +15558,18 @@
       {
         "key": "detector_heartbeat",
         "value": "1791889850.4430015"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791889852.2242458"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791889854.7023742, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791887206.9526615, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791889803.226476, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:807",
+        "value": "{\"started\": 1791889854.7025857, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"review\", \"finished\": 1791859845.3943703, \"generation_started\": 1791857049.6545513, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791859752.1245003, \"patch_digest\": \"83c20b1bf4904c0649d7ccc36bf9f2c3a63d0aee07effae435c14305c293b00f\", \"recovery_checked_at\": 1791889770.9810421, \"resume_progress\": {\"bundle\": \"807-1.json\", \"sha256\": \"b10555faf3bf0dc28655583695dd15b3d42cf4ac1f0f1a66341aeae56b70e176\", \"base\": \"ebf0a83c6bb396e52aaeb3cdfd9999fb22c288da\", \"phase\": \"review\"}, \"submission_repaired\": {\"at\": 1791889771.7537081, \"repair\": \"optional_broad_check\", \"attempt\": 1}}"
       }
     ],
     "calls": [
