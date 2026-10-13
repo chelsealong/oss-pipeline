@@ -151,6 +151,16 @@ lockfiles cannot be published as incidental changes. Documentation fixes use
 appropriate documentation checks. Baseline failure evidence cannot waive
 mandatory upstream checks. A repairable review rejection permits one correction
 followed by a fresh independent review; publication still requires approval.
+This includes locally producible validation evidence and PR-description omissions.
+Where upstream requires UI evidence, the agent captures actual before/after PNGs
+using synthetic data in its task cache. The independent reviewer verifies their
+visual content and exact-patch provenance. Only approved, hash-locked images are
+published to the user's pr-assets branch before the PR is sent; logs/caches and
+private data never go there. The encrypted recovery bundle retains these two
+images separately without feeding base64 image data into resumed text prompts.
+The identified October 13 screenshot-delivery block may resume once from its
+unpublished retained patch after remote reconciliation. Preserve attempts and
+spending, and require new evidence and fresh independent approval.
 
 Per-attempt patches, untracked source files and bounded logs are encrypted with
 `OSS_ARTIFACT_KEY` before entering the public `codex-state` branch or Actions

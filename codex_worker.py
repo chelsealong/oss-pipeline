@@ -390,7 +390,14 @@ def review_patch(task, work, folder, key, base, result, prompt):
     """At most one repair, always followed by a new immutable review."""
     policy_rechecked=False
     for round_no in range(2):
+        import screenshot_evidence
+        result,images=screenshot_evidence.prepare(result,task,folder)
+        # The reviewer sees the exact proposed description, including planned
+        # content-addressed image URLs. No screenshot is public before approval.
+        (folder/('generation.json' if round_no==0 else 'remediation.json')).write_text(json.dumps(result,indent=2))
         review_prompt=prompt
+        if images:
+            review_prompt+=f'\nRead {folder/"screenshots-review.json"} and visually inspect both local PNGs. Verify actual before/after rendering for this exact patch using synthetic data and no credentials/private user data. The controller will upload these exact immutable images to their planned URLs only after approval and before creating/updating the PR. The URL is not expected to exist yet; local evidence must be real and sufficient. Do not edit the images.\n'
         if key=='openclaw':
             review_prompt+='\nReview this change for PR submission/update. Read CONTRIBUTING.md and the openclaw-testing skill for pre-PR requirements. Distinguish focused submission checks from maintainer landing gates: check:changed is an optional broad diagnostic under the current policy, not an automatic submission prerequisite. Cite the applicable requirement for any blocking check and disclose failures honestly.\n'
         if (folder/'required-check.json').exists():
@@ -398,6 +405,7 @@ def review_patch(task, work, folder, key, base, result, prompt):
         before=fingerprint(work)
         name='review' if round_no==0 else 'rereview'
         review=agent(review_prompt,work,folder/(name+'.json'),REVIEW_SCHEMA,timeout=1200,repo_key=key,task=task)
+        screenshot_evidence.verify(images)
         if before!=fingerprint(work) or git(work,'rev-parse','HEAD')!=base:
             raise RuntimeError('review changed the patch; approval invalid')
         if task_recovery.attestation_only_gate(review['reason']) and not policy_rechecked:
@@ -408,15 +416,20 @@ def review_patch(task, work, folder, key, base, result, prompt):
                 'Otherwise assess the exact patch and test evidence normally. This is not human approval '
                 'and cannot waive a genuine upstream or explicit exact-patch human hold.\n',
                 work,folder/(name+'-policy.json'),REVIEW_SCHEMA,timeout=900,repo_key=key,task=task)
+            screenshot_evidence.verify(images)
             if before!=fingerprint(work) or git(work,'rev-parse','HEAD')!=base:
                 raise RuntimeError('policy reviewer changed the patch; approval invalid')
         if review['verdict']=='APPROVE' and review['tests_verified']:
+            rt.task_state(task['id'],reviewed_screenshots=images)
             return result,review
         if round_no or not review['repairable']:return result,review
         # The rejected version and reasoning survive even if remediation crashes.
         work_evidence.capture(task['id']);rt.checkpoint()
         result=agent(f'''An independent reviewer blocked this patch. Read {folder/'generation.json'} and
-{folder/'review.json'}, then correct only the specific code/test defects. Re-run relevant checks and
+{folder/'review.json'}, then correct only the specific code/test defects or missing locally producible
+validation evidence/PR description. For required UI evidence, capture real before/after PNGs in
+$OSS_TASK_CACHE/pr-evidence/before.png and after.png; the controller reviews and publishes verified images.
+Re-run relevant checks and
 failing-before/passing-after proof for behavioral fixes. Honor upstream policy and all original scope
 restrictions. Do not commit, push, post comments, edit tracked manifests/lockfiles, or change remotes.
 Use the writable caches and ignored local dependencies as in generation. If the objection cannot be
@@ -587,6 +600,10 @@ For behavioral code fixes, add a meaningful regression test. Prove the observabl
 it: temporarily copy and restore only YOUR source edits; never discard existing work or reset the checkout.
 For documentation-only changes, run the applicable documentation/link/lint checks; do not invent a runtime
 test that greps prose or repeats already-covered behavior. Record exact commands/results.
+When upstream requires UI screenshots, capture actual before/after rendering using synthetic local data.
+Save PNGs at $OSS_TASK_CACHE/pr-evidence/before.png and after.png (max 2 MiB each). Do not fabricate
+screenshots or include credentials/private data. The controller inserts image links for independent review,
+then uploads only approved immutable images before publishing the PR. Do not upload them yourself.
 Run required lint and relevant tests. For a failure suspected to predate this patch, reproduce the SAME
 failure with only your source edits temporarily removed and restored; disclose both results. Such evidence
 may establish an unrelated baseline failure only when current upstream policy allows it. Never waive an
@@ -660,7 +677,8 @@ exact patch and base. Independently verify its checks; it is never a substitute 
 {HUMAN_REVIEW_POLICY}
 Use VALIDATION_ENVIRONMENT:
 for unavailable required browser/service verification. Read validation.json when present.
-repairable=true only for concrete code/test defects this executor can fix now. Use false for duplicates,
+repairable=true for concrete code/test defects, missing locally producible validation evidence, or PR
+description omissions this executor can fix now. Use false for duplicates,
 out-of-scope work, missing maintainer approval, unavailable external hardware/credentials, or no actual bug.
 Do not edit source/test files, commit, push, post comments or PRs, or call other agents. Foreground checks only.
 Return APPROVE only when the current exact patch is justified, minimal, permitted, and test evidence verified.
@@ -687,6 +705,8 @@ Also review pr_body when nonempty; preserve scope/disclosure and do not invent h
     else:
         current=response_context(impl,num)
         if current['head']['sha']!=pr['head']['sha']:raise rt.Paused('PR head moved; refusing push')
+    import screenshot_evidence
+    screenshot_evidence.publish(rt.task_state(task['id']).get('reviewed_screenshots',[]))
     title=result['title'].strip().splitlines()[0]
     if not title or re.search(r'Co-Authored-By:',title,re.I):raise RuntimeError('invalid commit title')
     git(work,'-c','user.name='+ME,'-c','user.email='+EMAIL,'commit','-m',title)

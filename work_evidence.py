@@ -65,7 +65,18 @@ def _capture(task_id):
     # even when restoring a checkpoint written by an older worker.
     if not (folder/'work/.git').exists() and dest.exists():return
     work=folder/'work';payload={'task':task_id,'execution':state,'files':{},'omitted':[]}
-    # Explicitly omit tool-cache, Git metadata, credentials, and complete clones.
+    # Omit caches except the two explicit PR screenshots, retained encrypted.
+    payload['screenshots']={}
+    screenshot_root=folder/'tool-cache'/'pr-evidence'
+    for name in ('before.png','after.png'):
+        path=screenshot_root/name
+        if path.is_symlink() or not path.is_file() or not path.resolve().is_relative_to(folder.resolve()):continue
+        try:
+            if path.stat().st_size>2*1024**2:continue
+            raw=path.read_bytes()
+        except FileNotFoundError:continue
+        if len(raw)<=2*1024**2:payload['screenshots'][name]=base64.b64encode(raw).decode()
+    # Git metadata, credentials, and complete clones are never retained.
     total=0
     for path in sorted(folder.iterdir()):
         if path.is_symlink() or not path.is_file() or path.suffix not in ('.json','.jsonl','.log','.txt','.md'):continue

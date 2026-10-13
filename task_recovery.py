@@ -15,9 +15,16 @@ WAIT_STATES=('capacity_wait','human_wait','validation_wait','execution_wait')
 
 def submission_regression(task,state):
     """Identify only the October 13 controller regressions, never approve work."""
-    if state.get('publication_started') or state.get('submission_repaired'):return None
+    if state.get('publication_started'):return None
     phase=state.get('last_execution_phase',state.get('phase'))
     reason=task.get('result','')
+    if (task['kind']=='fix' and task['repo']=='openclaw' and task['status']=='blocked'
+            and phase in ('review','rereview') and task['attempts']<=3
+            and not state.get('ui_evidence_repaired')
+            and 'before/after screenshots' in reason and 'checks found no defect' in reason
+            and 'missing submission gate' in reason):
+        return 'ui_screenshot_delivery'
+    if state.get('submission_repaired'):return None
     if (task['kind']=='fix' and task['repo']=='openclaw' and task['status']=='blocked'
             and phase in ('review','rereview') and task['attempts']<3
             and reason.startswith('review: The mandatory')
@@ -46,7 +53,7 @@ def recover_submission_regressions():
         if not path:continue
         payload=json.loads(path.read_text())
         if payload['execution'].get('attempt')!=task['attempts']:continue
-        if repair=='optional_broad_check' and not retained_progress(task):continue
+        if repair in ('optional_broad_check','ui_screenshot_delivery') and not retained_progress(task):continue
         if repair=='unnecessary_main_merge':
             if payload.get('diff') or payload.get('untracked') or payload.get('files') or payload['execution'].get('base'):continue
             with rt.db() as db:
@@ -341,7 +348,9 @@ def requeue(task,repair=None):
             if progress:state['resume_progress']=progress
             if current['status']=='human_wait':state['policy_gate_rechecked']=True
         state.update(phase='queued',terminal=False,retry_after=0)
-        if repair:state['submission_repaired']={'at':time.time(),'repair':repair,'attempt':current['attempts']}
+        if repair:
+            marker='ui_evidence_repaired' if repair=='ui_screenshot_delivery' else 'submission_repaired'
+            state[marker]={'at':time.time(),'repair':repair,'attempt':current['attempts']}
         rt._putmeta(db,f"task:{task['id']}",state)
         db.execute("UPDATE tasks SET status='queued',updated=? WHERE id=?",(time.time(),task['id']))
         rt._putmeta(db,f"followup:task:{task['id']}",{'status':'resumed','task':task['id']})

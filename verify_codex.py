@@ -23,7 +23,7 @@ def runtime_database():
             for path in (root/'.runtime').glob('queue.sqlite3*') if path.is_file()}
 before=runtime_database()
 try:
-    subprocess.run([sys.executable,'-m','unittest','-v','test_runtime','test_recovery','test_codex_host','test_resumption','test_pr_followup','test_claim_admission','test_discovery_recovery','test_publication_holds','test_production_reliability','test_model_budget','test_repo_limits','test_screening'],cwd=root,env=test_env,check=True)
+    subprocess.run([sys.executable,'-m','unittest','-v','test_runtime','test_recovery','test_codex_host','test_resumption','test_pr_followup','test_claim_admission','test_discovery_recovery','test_publication_holds','test_production_reliability','test_model_budget','test_repo_limits','test_screening','test_screenshot_evidence'],cwd=root,env=test_env,check=True)
 finally:
     if runtime_database()!=before:
         raise RuntimeError('Offline tests modified the real runtime database; fix fixture isolation before deployment')
