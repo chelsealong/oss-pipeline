@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791889842.3451312,
+  "saved_at": 1791889851.051792,
   "tables": {
     "tasks": [
       {
@@ -10345,10 +10345,10 @@
         "repo": "openclaw",
         "number": 169383,
         "note": "",
-        "status": "running",
+        "status": "error",
         "created": 1791757779.7879694,
-        "updated": 1791889790.9123552,
-        "result": "review: The mandatory `pnpm check:changed --base HEAD` gate failed at the dead export scan. Its reported exports are outside this patch and exist at HEAD, but current upstream policy does not automatically waive an inherited failure. The focused UI tests passed (93/93), and the before/after screenshots support the visual change; neither overrides the failed gate. The proposed PR body also incorrectly says the controller gate is pending. No applicable rule requires a named human attestation for this patch.",
+        "updated": 1791889851.0401592,
+        "result": "git failed (1): error: ui/src/app/update-confirmation.runtime.ts: No such file or directory\n",
         "attempts": 2
       },
       {
@@ -15496,10 +15496,6 @@
         "value": "{\"recovery_checked_at\": 1791889796.1685}"
       },
       {
-        "key": "task:796",
-        "value": "{\"started\": 1791889790.9124155, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/796/attempt-2\", \"attempt\": 2, \"phase\": \"checkout\", \"base\": null, \"last_execution_phase\": \"review\", \"finished\": 1791856607.1064427, \"phase_started\": 1791856424.756306, \"screening_requests\": {\"15dc7b2d84dee27e9e82\": 1791854085.8712373}, \"generation_started\": 1791854136.930771, \"dispatch_paid_date\": \"2026-10-13\", \"patch_digest\": \"ee8491e2e6e9d8ffd2f4db29f3c71fdaaaa5495c5e2e2984ae2833d5b07a91a4\", \"recovery_checked_at\": 1791887175.0255635, \"resume_progress\": {\"bundle\": \"796-1.json\", \"sha256\": \"b809867947ec86008d1e31b779b802c851d4eb37ceb72525948efdeaa08c3a89\", \"base\": \"2dd42a977aa9086801b27a7ede145451e83bc07f\", \"phase\": \"review\"}, \"submission_repaired\": {\"at\": 1791887175.9389343, \"repair\": \"optional_broad_check\", \"attempt\": 1}}"
-      },
-      {
         "key": "recovery_audit:177",
         "value": "{\"at\": 1791889798.0641358, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -15536,26 +15532,6 @@
         "value": "[{\"at\": 1791872731.4529674, \"group\": \"screening\", \"task\": 836, \"phase\": \"screening-c37a5accaea5e71c9c9a\"}, {\"at\": 1791875457.6143548, \"group\": \"screening\", \"task\": 836, \"phase\": \"screening-d8a4f65b7939ae859ab9\"}, {\"at\": 1791878613.6721268, \"group\": \"new_fix\", \"task\": 841, \"phase\": \"generation\"}, {\"at\": 1791878714.5641313, \"group\": \"new_fix\", \"task\": 842, \"phase\": \"generation\"}, {\"at\": 1791879027.0208044, \"group\": \"new_fix\", \"task\": 842, \"phase\": \"validation\"}, {\"at\": 1791879394.8361113, \"group\": \"screening\", \"task\": 840, \"phase\": \"screening-93535e7eec06863f06f4\"}, {\"at\": 1791879428.9566288, \"group\": \"new_fix\", \"task\": 840, \"phase\": \"generation\"}, {\"at\": 1791880959.1925473, \"group\": \"new_fix\", \"task\": 844, \"phase\": \"generation\"}, {\"at\": 1791881482.4691656, \"group\": \"new_fix\", \"task\": 843, \"phase\": \"generation\"}, {\"at\": 1791883741.390387, \"group\": \"new_fix\", \"task\": 842, \"phase\": \"generation\"}, {\"at\": 1791883976.3256195, \"group\": \"new_fix\", \"task\": 842, \"phase\": \"validation\"}, {\"at\": 1791887028.1802623, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1791887028.2260678, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1791887031.3462193, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1791887033.4857025, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1791887065.3718224, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1791887068.7001047, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1791887217.8579366, \"group\": \"new_fix\", \"task\": 843, \"phase\": \"generation\"}, {\"at\": 1791887250.0696943, \"group\": \"new_fix\", \"task\": 780, \"phase\": \"generation\"}, {\"at\": 1791889640.7744768, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1791889640.8032987, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1791889644.4911435, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1791889645.4101665, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1791889665.6202524, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1791889682.4793468, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1791889811.9748082, \"group\": \"new_fix\", \"task\": 846, \"phase\": \"generation\"}]"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791889833.202325"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791889840.0133338"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791889840.4428031"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791889842.0170732"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1791889842.1869943, \"windows\": [{\"name\": \"primary\", \"used_percent\": 23, \"resets_at\": 1792473656}]}"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1791889842.1952486, \"source\": \"completed task phase\"}"
       },
@@ -15564,12 +15540,36 @@
         "value": "{\"task\": 846, \"repo\": \"spec-kit\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1791889842.2006357, \"seconds\": 30.228, \"tokens\": {\"totalTokens\": 154189, \"inputTokens\": 153105, \"cachedInputTokens\": 113664, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1084, \"reasoningOutputTokens\": 373}, \"first_event_ms\": 1791889816501, \"last_event_ms\": 1791889842184, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
+        "key": "task:846",
+        "value": "{\"started\": 1791889803.2266362, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/846/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"6c62e10d5ab1d676c557eb2d0cee86be52c893d2\", \"generation_started\": 1791889811.9745774, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791889814.1679602, \"last_execution_phase\": \"generation\", \"finished\": 1791889842.2033527}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791889847.1467953"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1791889848.0369608, \"windows\": [{\"name\": \"primary\", \"used_percent\": 23, \"resets_at\": 1792473656}]}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791889848.2036133"
+      },
+      {
         "key": "codex_review_leases",
         "value": "{}"
       },
       {
-        "key": "task:846",
-        "value": "{\"started\": 1791889803.2266362, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/846/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"6c62e10d5ab1d676c557eb2d0cee86be52c893d2\", \"generation_started\": 1791889811.9745774, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791889814.1679602, \"last_execution_phase\": \"generation\", \"finished\": 1791889842.2033527}"
+        "key": "task:796",
+        "value": "{\"started\": 1791889790.9124155, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/796/attempt-2\", \"attempt\": 2, \"phase\": \"error\", \"base\": \"f787a896894d52b7351b841416b194711315ac28\", \"last_execution_phase\": \"checkout\", \"finished\": 1791889849.8333387, \"phase_started\": 1791856424.756306, \"screening_requests\": {\"15dc7b2d84dee27e9e82\": 1791854085.8712373}, \"generation_started\": 1791854136.930771, \"dispatch_paid_date\": \"2026-10-13\", \"patch_digest\": \"ee8491e2e6e9d8ffd2f4db29f3c71fdaaaa5495c5e2e2984ae2833d5b07a91a4\", \"recovery_checked_at\": 1791887175.0255635, \"resume_progress\": {\"bundle\": \"796-1.json\", \"sha256\": \"b809867947ec86008d1e31b779b802c851d4eb37ceb72525948efdeaa08c3a89\", \"base\": \"2dd42a977aa9086801b27a7ede145451e83bc07f\", \"phase\": \"review\"}, \"submission_repaired\": {\"at\": 1791887175.9389343, \"repair\": \"optional_broad_check\", \"attempt\": 1}}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791889850.369277"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791889850.4430015"
       }
     ],
     "calls": [
