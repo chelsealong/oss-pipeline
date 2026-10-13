@@ -33,6 +33,7 @@ jobs:
             'browser':r'playwright|chromium|puppeteer',
             'docker':r'\bdocker\b',
             'git_history':r'git (?:fetch|merge|rebase)',
+            'bulk_evidence_read':r'evidence/|base64|generation\.events',
             'oom':r'out of memory|heap limit|OOM|ENOMEM|Cannot allocate memory',
             'disk_full':r'ENOSPC|No space left on device',
             'killed':r'SIGKILL|exit(?:ed)? (?:with )?code 137|Killed|signal 9',
@@ -58,14 +59,14 @@ jobs:
                 if method=='thread/tokenUsage/updated':usage=data.get('tokenUsage',{}).get('total')
                 item=data.get('item',{})
                 if method not in ('item/started','item/completed'):continue
-                command=item.get('command','');command=json.dumps(command) if not isinstance(command,str) else command
+                command=json.dumps({k:v for k,v in item.items() if k not in ('aggregatedOutput','text','content')})
                 row={'event':method,'type':item.get('type'),'status':item.get('status'),'exit':item.get('exitCode'),
-                     'duration_ms':item.get('durationMs'),'at':event.get('emittedAtMs'),
+                     'duration_ms':item.get('durationMs'),'at':event.get('emittedAtMs'),'keys':sorted(item),
                      'features':[label for label,pattern in features.items() if re.search(pattern,command,re.I)]}
                 output=item.get('aggregatedOutput') or ''
                 row['failure_signals']=[label for label in ('oom','disk_full','killed','timeout') if re.search(features[label],output,re.I)]
                 rows.append(row)
             print(json.dumps({'task':task,'attempt':attempt,'phase':payload['execution'].get('phase'),
-                'event_counts':counts,'usage':usage,'log_signals':log_flags,'recent_tools':rows[-24:],
+                'event_counts':counts,'usage':usage,'log_signals':log_flags,'recent_tools':[row for row in rows if row['type']=='commandExecution'][-24:],
                 'process_control_events':[row for row in rows if 'broad_kill' in row['features'] or 'runner_target' in row['features']]}))
           PY
