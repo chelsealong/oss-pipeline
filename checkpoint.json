@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791860644.3854177,
+  "saved_at": 1791860656.37295,
   "tables": {
     "tasks": [
       {
@@ -10644,11 +10644,11 @@
         "repo": "openclaw",
         "number": 169679,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791789776.7637434,
-        "updated": 1791798805.686323,
+        "updated": 1791860656.3351738,
         "result": "screening budget reached; retain pending work",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 820,
@@ -10805,6 +10805,19 @@
         "updated": 1791858301.3840818,
         "result": "VALIDATION_ENVIRONMENT: Issue #16991 depends on an Intel XPU boolean-indexing failure. This checkout has no exposed XPU device or installed PyTorch, so the reported failure and any workaround cannot be validated here. The reported indexing line is still present; no files were changed.",
         "attempts": 1
+      },
+      {
+        "id": 832,
+        "identity": "fix:openclaw:170528:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 170528,
+        "note": "",
+        "status": "queued",
+        "created": 1791860654.536584,
+        "updated": 1791860654.536584,
+        "result": "",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -14733,10 +14746,6 @@
         "value": "{\"at\": 1791852102.0301483, \"calls\": 6}"
       },
       {
-        "key": "task:819",
-        "value": "{\"started\": 1791798801.1841323, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/819/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791798805.6848006}"
-      },
-      {
         "key": "task:823",
         "value": "{\"started\": 1791798814.1793492, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/823/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791798818.7888868}"
       },
@@ -15109,28 +15118,8 @@
         "value": "{\"started\": 1791860623.1997302, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"skipped\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1791860627.2806337}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791860639.1367502"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791860639.5970302, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791852393.735594, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791852324.0317657, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791793672.2339332, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1791860640.8121622, \"windows\": [{\"name\": \"primary\", \"used_percent\": 33, \"resets_at\": 1792296963}]}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791860641.002188"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791860643.1742284"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791860644.2958267"
       },
       {
         "key": "codex_review_leases",
@@ -15139,6 +15128,30 @@
       {
         "key": "task:818",
         "value": "{\"started\": 1791860639.5971255, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"skipped\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1791860644.3723845}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791860652.1222677"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791860653.2188165"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791860654.2237535"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791860654.2960212"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791860656.3350492, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791852393.735594, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791852324.0317657, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791793672.2339332, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:819",
+        "value": "{\"started\": 1791860656.335212, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791798805.6848006}"
       }
     ],
     "calls": [
