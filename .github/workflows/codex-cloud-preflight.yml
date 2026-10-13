@@ -39,8 +39,8 @@ jobs:
             'killed':r'SIGKILL|exit(?:ed)? (?:with )?code 137|Killed|signal 9',
             'timeout':r'timed out|ETIMEDOUT',
           }
-          for task,attempt in [(780,2),(843,2),(842,2)]:
-            url=f'https://api.github.com/repos/chelsealong/oss-pipeline/contents/evidence/{task}-{attempt}.json.enc?ref=63866643de99dc6aaec02d392e2bfd9bf112a58b'
+          for task,attempt in [(842,3)]:
+            url=f'https://api.github.com/repos/chelsealong/oss-pipeline/contents/evidence/{task}-{attempt}.json.enc?ref=codex-state'
             request=urllib.request.Request(url,headers={'Accept':'application/vnd.github.raw+json','Authorization':'Bearer '+os.environ['GH_TOKEN']})
             with urllib.request.urlopen(request,timeout=60) as response: raw=response.read()
             assert raw.startswith(b'OSSE1')
