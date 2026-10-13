@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791893243.409584,
+  "saved_at": 1791893246.8688757,
   "tables": {
     "tasks": [
       {
@@ -10943,10 +10943,10 @@
         "repo": "langfuse",
         "number": 18675,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1791878663.129214,
-        "updated": 1791891978.551046,
-        "result": "Previous runner ended during task; inspect remote before retry",
+        "updated": 1791893245.9008868,
+        "result": "VALIDATION_ENVIRONMENT: Full web lint exhausted the runner’s fixed 4 GiB Node heap twice. The restored patch is preserved, but the required lint gate has not passed.",
         "attempts": 4
       },
       {
@@ -15370,10 +15370,6 @@
         "value": "{\"at\": 1791891965.714408, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"checkpoint_resource_failure\"}"
       },
       {
-        "key": "followup:task:842",
-        "value": "{\"status\": \"resumed\", \"task\": 842}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -15408,10 +15404,6 @@
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791892222.1019855, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791891978.5509362, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791889803.226476, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
-      },
-      {
-        "key": "task:842",
-        "value": "{\"started\": 1791891978.55109, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/842/attempt-4\", \"attempt\": 4, \"phase\": \"validation\", \"base\": \"ecd847d518c7360cd5d78e9aede124773bec7a28\", \"generation_started\": 1791878714.5639026, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791892274.3985229, \"validation_bootstrap_version\": \"1\", \"last_execution_phase\": \"validation\", \"finished\": 1791881460.6073108, \"resume_progress\": {\"bundle\": \"842-3.json\", \"sha256\": \"bf9ce3f3061b0d082c95a4ab45813e1156cff54abbea0241ae1cbc799134bed0\", \"base\": \"d03eed2cc3d5b6143113bc4142d9cca937faee43\", \"phase\": \"validation\"}, \"timeout_continuations\": 1, \"progress_restored\": true, \"restored_from\": \"842-3.json\", \"recovery_checked_at\": 1791891965.2308414, \"checkpoint_repaired\": {\"at\": 1791891965.719092, \"repair\": \"checkpoint_resource_failure\", \"attempt\": 3}, \"progress_rebase_needed\": null}"
       },
       {
         "key": "codex_allocations",
@@ -15594,24 +15586,8 @@
         "value": "{\"at\": 1791893233.2954686, \"disk_free_bytes\": 66017665024, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 3823042560, \"SwapTotal\": 3221221376, \"SwapFree\": 380928}, \"memory_events\": null}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791893237.2554152, \"source\": \"completed task phase\"}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791893239.137583"
-      },
-      {
         "key": "usage:796:3:generation",
         "value": "{\"task\": 796, \"repo\": \"openclaw\", \"attempt\": 3, \"phase\": \"generation\", \"at\": 1791893239.3772523, \"seconds\": 959.079, \"tokens\": {\"totalTokens\": 26620708, \"inputTokens\": 26599388, \"cachedInputTokens\": 26433024, \"cacheWriteInputTokens\": 0, \"outputTokens\": 21320, \"reasoningOutputTokens\": 6381}, \"first_event_ms\": 1791892284955, \"last_event_ms\": 1791893236223, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1791893239.6424553, \"windows\": [{\"name\": \"primary\", \"used_percent\": 34, \"resets_at\": 1792473656}]}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791893240.3617303"
       },
       {
         "key": "worker_heartbeat",
@@ -15630,16 +15606,44 @@
         "value": "{\"status\": \"needs_human\", \"task\": 796, \"repo\": \"openclaw\", \"number\": 169383, \"reason\": \"VALIDATION_ENVIRONMENT: Both system and Playwright Chromium aborted before rendering. Browser E2E validation and the required before/after UI screenshots remain unavailable.\", \"base\": \"febccf6716d6bfbdfe830f089f4828fd6db9dfe4\", \"patch_digest\": \"922df2d74d0a26579e0c701b36cf871bf0284c7eb63c9d7468d03841d9eb08b5\", \"evidence_bundle\": \"796-3.json.enc\"}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"842\": {\"remaining\": 0, \"until\": 1791899472.144715}}"
-      },
-      {
         "key": "task:796",
         "value": "{\"started\": 1791892222.1021752, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/796/attempt-3\", \"attempt\": 3, \"phase\": \"validation_wait\", \"base\": \"febccf6716d6bfbdfe830f089f4828fd6db9dfe4\", \"last_execution_phase\": \"generation\", \"finished\": 1791893242.7844753, \"phase_started\": 1791892282.4835806, \"screening_requests\": {\"15dc7b2d84dee27e9e82\": 1791854085.8712373}, \"generation_started\": 1791854136.930771, \"dispatch_paid_date\": \"2026-10-13\", \"patch_digest\": \"922df2d74d0a26579e0c701b36cf871bf0284c7eb63c9d7468d03841d9eb08b5\", \"recovery_checked_at\": 1791892051.640205, \"resume_progress\": {\"bundle\": \"796-1.json\", \"sha256\": \"b809867947ec86008d1e31b779b802c851d4eb37ceb72525948efdeaa08c3a89\", \"base\": \"2dd42a977aa9086801b27a7ede145451e83bc07f\", \"phase\": \"review\"}, \"submission_repaired\": {\"at\": 1791887175.9389343, \"repair\": \"optional_broad_check\", \"attempt\": 1}, \"progress_rebase_needed\": {\"patch\": \"/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/796/attempt-3/retained-progress.patch\", \"source\": null, \"reason\": \"git failed (1): error: ui/src/app/update-confirmation.runtime.ts: No such file or directory\\n\", \"original_base\": \"2dd42a977aa9086801b27a7ede145451e83bc07f\"}, \"progress_restored\": false}"
       },
       {
         "key": "detector_heartbeat",
         "value": "1791893243.3125594"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791893244.540666"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791893245.2838123"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791893245.5429785, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:842:4:validation",
+        "value": "{\"task\": 842, \"repo\": \"langfuse\", \"attempt\": 4, \"phase\": \"validation\", \"at\": 1791893245.5939913, \"seconds\": 973.46, \"tokens\": {\"totalTokens\": 19125186, \"inputTokens\": 19111488, \"cachedInputTokens\": 18977152, \"cacheWriteInputTokens\": 0, \"outputTokens\": 13698, \"reasoningOutputTokens\": 2400}, \"first_event_ms\": 1791892276593, \"last_event_ms\": 1791893245464, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:842",
+        "value": "{\"status\": \"needs_human\", \"task\": 842, \"repo\": \"langfuse\", \"number\": 18675, \"reason\": \"VALIDATION_ENVIRONMENT: Full web lint exhausted the runner\\u2019s fixed 4 GiB Node heap twice. The restored patch is preserved, but the required lint gate has not passed.\", \"base\": \"ecd847d518c7360cd5d78e9aede124773bec7a28\", \"patch_digest\": \"9a8489a931b2c263ad33e15cac9d2c61dbae1549745c708dd61d3586f4b10737\", \"evidence_bundle\": \"842-4.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:842",
+        "value": "{\"started\": 1791891978.55109, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/842/attempt-4\", \"attempt\": 4, \"phase\": \"validation_wait\", \"base\": \"ecd847d518c7360cd5d78e9aede124773bec7a28\", \"generation_started\": 1791878714.5639026, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791892274.3985229, \"validation_bootstrap_version\": \"1\", \"last_execution_phase\": \"validation\", \"finished\": 1791893245.6957982, \"resume_progress\": {\"bundle\": \"842-3.json\", \"sha256\": \"bf9ce3f3061b0d082c95a4ab45813e1156cff54abbea0241ae1cbc799134bed0\", \"base\": \"d03eed2cc3d5b6143113bc4142d9cca937faee43\", \"phase\": \"validation\"}, \"timeout_continuations\": 1, \"progress_restored\": true, \"restored_from\": \"842-3.json\", \"recovery_checked_at\": 1791891965.2308414, \"checkpoint_repaired\": {\"at\": 1791891965.719092, \"repair\": \"checkpoint_resource_failure\", \"attempt\": 3}, \"progress_rebase_needed\": null, \"patch_digest\": \"9a8489a931b2c263ad33e15cac9d2c61dbae1549745c708dd61d3586f4b10737\"}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1791893245.7732115, \"windows\": [{\"name\": \"primary\", \"used_percent\": 34, \"resets_at\": 1792473656}]}"
       }
     ],
     "calls": [
