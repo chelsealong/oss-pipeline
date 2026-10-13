@@ -614,6 +614,8 @@ Do not assert personal human validation.
         prompt+='\nHEAD is the validation base; context.json includes the original remote PR. The controller preserves the branch unless GitHub reports an actual merge conflict. Do not rebase/commit yourself or refresh main merely because it advanced. Any approved update must be a fast-forward from the original PR head. Identify any concrete base-related blocker explicitly.\n'
     if continued:
         prompt+='\nThe controller restored the previous complete source/test patch. Continue that work, inspect prior evidence, and finish only outstanding checks/corrections; do not restart the investigation from scratch. No prior review is reused.\n'
+    elif adaptation:=rt.task_state(task['id']).get('progress_rebase_needed'):
+        prompt+='\nThe saved patch could not apply cleanly to advanced upstream. The checkout is unchanged. Read this retained source (not old event logs): '+json.dumps(adaptation)+'. Recheck whether the issue remains and adapt only the relevant changes to current files if still needed. Do not blindly reapply obsolete code; skip if already fixed or superseded. All current tests and fresh independent review are required.\n'
     result=agent(prompt,work,folder/'generation.json',schema,timeout=1200 if continued else 2400,repo_key=key,task=task)
     if (key=='langfuse' and result['outcome']=='BLOCKED'
             and task_recovery.wait_kind(result['reason'])=='validation_wait'):

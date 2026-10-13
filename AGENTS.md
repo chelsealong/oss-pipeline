@@ -213,6 +213,10 @@ Resumed model turns receive bounded structured findings and inspect the restored
 diff. Do not ask them to read entire base64 evidence bundles or previous event
 transcripts; complete encrypted evidence remains retained for audit. Past test
 claims and approvals are never sufficient for a changed/current patch.
+If advanced upstream renamed/changed a retained patch's targets, a failed
+git apply --check now keeps the checkout untouched and supplies the saved source
+for semantic adaptation. Revalidate eligibility and current tests, then obtain
+fresh independent review; never force an obsolete patch onto current code.
 An October 13 live runner was terminated without its cleanup steps or a Python
 exception. Do not assert an OOM cause without evidence. Numeric RAM, cgroup OOM
 counts and free-disk telemetry now accompany live runs and checkpoints so a

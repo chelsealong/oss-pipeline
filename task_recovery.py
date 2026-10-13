@@ -186,6 +186,10 @@ def repaired_infrastructure(task,state):
             and attestation_only_gate(task.get('result',''))):return True
     reason=task.get('result','')
     phase=state.get('last_execution_phase',state.get('phase'))
+    if (task['kind']=='fix' and phase=='checkout' and state.get('base') and state.get('resume_progress')
+            and reason.startswith('git failed (1): error:')
+            and re.search(r'No such file or directory|patch does not apply|patch failed|already exists',reason)):
+        return True
     if (task['kind']=='respond' and phase=='checkout' and state.get('remote_base')
             and not state.get('base') and (reason=='PR history exceeds bounded merge-base fetch; retained for follow-up'
                 or reason.strip()=='git failed (128): fatal: shallow file has changed since we read it')):

@@ -132,18 +132,36 @@ def restore_progress(task, work, base):
     payload=json.loads(path.read_text())
     if payload['execution'].get('publication_started'):
         raise RuntimeError('Retained attempt may have published')
+    rt.task_state(task['id'],progress_rebase_needed=None,progress_restored=False)
     # An advisory patch may be applied to advanced main only if Git can apply it
     # cleanly. The generator must recheck eligibility/tests and a fresh reviewer
     # must approve; a human-reviewed patch uses the separate exact-base path.
     paths=payload.get('untracked',{})
+    collisions=[]
     for name in paths:
         target=work/name
-        if '.git' in Path(name).parts or not target.resolve().is_relative_to(work.resolve()) or target.exists():
-            raise RuntimeError('Unsafe or conflicting retained source file')
+        if (Path(name).is_absolute() or any(part in ('.git','..') for part in Path(name).parts)
+                or not target.resolve().is_relative_to(work.resolve())):
+            raise RuntimeError('Unsafe retained source file')
+        if target.exists():collisions.append(name)
     diff=base64.b64decode(payload.get('diff',''))
+    patch=work.parent/'retained-progress.patch';patch.write_bytes(diff)
+    def adaptation(reason):
+        source=work.parent/'retained-source'
+        for name,raw in paths.items():
+            target=source/name;target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_bytes(base64.b64decode(raw))
+        rt.task_state(task['id'],progress_rebase_needed={'patch':str(patch),
+            'source':str(source) if paths else None,'reason':reason,'original_base':entry['base']})
+        return False
+    if collisions:return adaptation('Upstream now contains retained paths: '+', '.join(collisions))
     if diff:
-        patch=work.parent/'retained-progress.patch';patch.write_bytes(diff)
-        worker.git(work,'apply','--check',str(patch));worker.git(work,'apply',str(patch))
+        try:worker.git(work,'apply','--check',str(patch))
+        except RuntimeError as error:
+            # --check changes nothing. Preserve source for semantic adaptation,
+            # rather than discarding work after an upstream rename/context edit.
+            return adaptation(str(error)[:1200])
+        worker.git(work,'apply',str(patch))
     for name,raw in paths.items():
         mode=payload.get('untracked_modes',{}).get(name,0o644)
         if mode not in (0o644,0o755):raise RuntimeError('Unsafe retained file mode')
