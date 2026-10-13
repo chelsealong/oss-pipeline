@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791898914.1976254,
+  "saved_at": 1791898960.128164,
   "tables": {
     "tasks": [
       {
@@ -10982,11 +10982,11 @@
         "repo": "langfuse",
         "number": 18703,
         "note": "",
-        "status": "retry_wait",
+        "status": "running",
         "created": 1791887198.7368925,
-        "updated": 1791897902.2874112,
+        "updated": 1791898960.1210194,
         "result": "Codex session budget reached; judge paused too",
-        "attempts": 3
+        "attempts": 4
       },
       {
         "id": 846,
@@ -15540,10 +15540,6 @@
         "value": "{\"started\": 1791897403.4379704, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/723/attempt-3\", \"attempt\": 3, \"phase\": \"skipped\", \"base\": \"0edeafc5902fb07c89bb6ebd8c5374621b5c6bf6\", \"generation_started\": 1791627690.3932498, \"dispatch_paid_date\": \"2026-10-10\", \"phase_started\": 1791897438.6748874, \"last_execution_phase\": \"generation\", \"finished\": 1791897503.3051045}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791897403.3675034, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791897589.4634633, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791889803.226476, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791897403.4377935}}"
-      },
-      {
         "key": "coordination:google/adk-python#7520",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791897612.6866424, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
@@ -15574,10 +15570,6 @@
       {
         "key": "codex_review_leases",
         "value": "{}"
-      },
-      {
-        "key": "task:845",
-        "value": "{\"started\": 1791897589.4636366, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791898202.0601182, \"folder\": \"jobs/845/attempt-3\", \"attempt\": 3, \"phase\": \"retry_wait\", \"base\": \"3eb71e89be4fcb52e9b9015b1e4090982d826945\", \"generation_started\": 1791896728.7358978, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791897785.5001495, \"last_execution_phase\": \"review\", \"finished\": 1791897902.0626266, \"resume_progress\": {\"bundle\": \"845-3.json\", \"sha256\": \"6e48b156947c0140f959f4c82f774805da769757078c7e96bbafb8cb0ad9cb90\", \"base\": \"3eb71e89be4fcb52e9b9015b1e4090982d826945\", \"phase\": \"review\"}, \"progress_rebase_needed\": null, \"progress_restored\": true, \"restored_from\": \"845-2.json\"}"
       },
       {
         "key": "task:44",
@@ -15728,36 +15720,44 @@
         "value": "1791898702.302881"
       },
       {
+        "key": "runner_resources",
+        "value": "{\"at\": 1791898914.0735562, \"disk_free_bytes\": 82903646208, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15232114688, \"SwapTotal\": 3221221376, \"SwapFree\": 2983219200}, \"memory_events\": null}"
+      },
+      {
         "key": "admission_health",
-        "value": "{\"at\": 1791898853.533524, \"state\": \"active\", \"pending_candidates\": 3, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 1, \"openclaw\": 2, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 3}, \"screening_wait_tasks\": 0, \"active_tasks\": 2, \"seconds_since_codex_call\": 1070.2312846183777, \"judge_tokens_spent_24h\": 50748, \"screening_calls_5h\": 0, \"screening_calls_24h\": 9, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7515\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7515\", \"title\": \"Workflow: node returning None in a later loop iteration leaves its previous output for JoinNode\", \"first_seen\": 1791852187.5247638, \"last_checked\": 1791855469.40007, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791897612.6866424, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+        "value": "{\"at\": 1791898916.611271, \"state\": \"active\", \"pending_candidates\": 4, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 1, \"openclaw\": 3, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 4}, \"screening_wait_tasks\": 0, \"active_tasks\": 2, \"seconds_since_codex_call\": 1133.309003353119, \"judge_tokens_spent_24h\": 50748, \"screening_calls_5h\": 0, \"screening_calls_24h\": 9, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7515\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7515\", \"title\": \"Workflow: node returning None in a later loop iteration leaves its previous output for JoinNode\", \"first_seen\": 1791852187.5247638, \"last_checked\": 1791855469.40007, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791897612.6866424, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1791898853.5802484, \"tasks\": {\"fix\": {\"done\": 1, \"queued\": 1, \"retry_wait\": 1, \"skipped\": 30, \"validation_wait\": 5}, \"respond\": {\"blocked\": 1, \"error\": 4, \"skipped\": 1, \"validation_wait\": 2}}}"
+        "value": "{\"at\": 1791898916.612326, \"tasks\": {\"fix\": {\"done\": 1, \"queued\": 1, \"retry_wait\": 1, \"skipped\": 30, \"validation_wait\": 5}, \"respond\": {\"blocked\": 1, \"error\": 4, \"skipped\": 1, \"validation_wait\": 2}}}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1791898867.7008924, \"windows\": [{\"name\": \"primary\", \"used_percent\": 38, \"resets_at\": 1792473656}]}"
+        "value": "{\"at\": 1791898927.958415, \"windows\": [{\"name\": \"primary\", \"used_percent\": 38, \"resets_at\": 1792473656}]}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791898910.6976738"
+        "value": "1791898955.6986895"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791898911.8640356"
+        "value": "1791898956.9011238"
       },
       {
         "key": "discovery_last_success",
-        "value": "1791898912.131931"
+        "value": "1791898957.1308935"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1791898913.8001628"
+        "value": "1791898959.1929202"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1791898914.0735562, \"disk_free_bytes\": 82903646208, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15232114688, \"SwapTotal\": 3221221376, \"SwapFree\": 2983219200}, \"memory_events\": null}"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791897403.3675034, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791898960.1208434, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791889803.226476, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791897403.4377935}}"
+      },
+      {
+        "key": "task:845",
+        "value": "{\"started\": 1791898960.121064, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 4, \"phase\": \"claimed\", \"base\": null, \"generation_started\": 1791896728.7358978, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791897785.5001495, \"last_execution_phase\": \"review\", \"finished\": 1791897902.0626266, \"resume_progress\": {\"bundle\": \"845-3.json\", \"sha256\": \"6e48b156947c0140f959f4c82f774805da769757078c7e96bbafb8cb0ad9cb90\", \"base\": \"3eb71e89be4fcb52e9b9015b1e4090982d826945\", \"phase\": \"review\"}, \"progress_rebase_needed\": null, \"progress_restored\": true, \"restored_from\": \"845-2.json\"}"
       }
     ],
     "calls": [
