@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791897374.5472088,
+  "saved_at": 1791897403.3745632,
   "tables": {
     "tasks": [
       {
@@ -11034,11 +11034,11 @@
         "repo": "openclaw",
         "number": 171018,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791896630.1806293,
-        "updated": 1791896630.1806293,
+        "updated": 1791897403.367639,
         "result": "",
-        "attempts": 0
+        "attempts": 1
       }
     ],
     "meta": [
@@ -15675,10 +15675,6 @@
         "value": "1791897045.7889333"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791894890.402712, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791897279.5435627, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791889803.226476, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791896716.3715003}}"
-      },
-      {
         "key": "usage:845:2:generation",
         "value": "{\"task\": 845, \"repo\": \"langfuse\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1791897288.9802604, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -15691,32 +15687,8 @@
         "value": "{\"started\": 1791897279.5437589, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791897589.0644538, \"folder\": \"jobs/845/attempt-2\", \"attempt\": 2, \"phase\": \"retry_wait\", \"base\": \"3eb71e89be4fcb52e9b9015b1e4090982d826945\", \"generation_started\": 1791896728.7358978, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791896865.4241803, \"last_execution_phase\": \"checkout\", \"finished\": 1791897289.0714288, \"resume_progress\": {\"bundle\": \"845-2.json\", \"sha256\": \"4c63bf6c638ad38b34da20df103c4ef9ca2530cda7a77b5249938c11497d8e23\", \"base\": \"3eb71e89be4fcb52e9b9015b1e4090982d826945\", \"phase\": \"checkout\"}, \"progress_rebase_needed\": null, \"progress_restored\": true, \"restored_from\": \"845-1.json\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1791897314.1541667, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"seconds_since_codex_call\": 450.7234604358673, \"judge_tokens_spent_24h\": 50748, \"screening_calls_5h\": 1, \"screening_calls_24h\": 9, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7515\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7515\", \"title\": \"Workflow: node returning None in a later loop iteration leaves its previous output for JoinNode\", \"first_seen\": 1791852187.5247638, \"last_checked\": 1791855469.40007, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791895236.611096, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791897314.1551638, \"tasks\": {\"fix\": {\"done\": 1, \"queued\": 1, \"retry_wait\": 2, \"skipped\": 28, \"validation_wait\": 5}, \"respond\": {\"blocked\": 1, \"error\": 4, \"skipped\": 1, \"validation_wait\": 2}}}"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1791897356.3548446, \"windows\": [{\"name\": \"primary\", \"used_percent\": 37, \"resets_at\": 1792473656}]}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791897363.5228372"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791897369.913947"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791897370.7023864"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791897371.6168525"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
@@ -15725,6 +15697,38 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1791897374.5400302, \"disk_free_bytes\": 82923724800, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15231635456, \"SwapTotal\": 3221221376, \"SwapFree\": 2982256640}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1791897376.8734124, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"seconds_since_codex_call\": 513.4426307678223, \"judge_tokens_spent_24h\": 50748, \"screening_calls_5h\": 1, \"screening_calls_24h\": 9, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7515\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7515\", \"title\": \"Workflow: node returning None in a later loop iteration leaves its previous output for JoinNode\", \"first_seen\": 1791852187.5247638, \"last_checked\": 1791855469.40007, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791895236.611096, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791897376.8744304, \"tasks\": {\"fix\": {\"done\": 1, \"queued\": 1, \"retry_wait\": 2, \"skipped\": 28, \"validation_wait\": 5}, \"respond\": {\"blocked\": 1, \"error\": 4, \"skipped\": 1, \"validation_wait\": 2}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791897393.6209476"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791897399.9145844"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791897400.9104645"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791897402.0281312"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791897403.3675034, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791897279.5435627, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791889803.226476, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791896716.3715003}}"
+      },
+      {
+        "key": "task:849",
+        "value": "{\"started\": 1791897403.3676696, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       }
     ],
     "calls": [
