@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791897279.6445825,
+  "saved_at": 1791897289.3157818,
   "tables": {
     "tasks": [
       {
@@ -10982,10 +10982,10 @@
         "repo": "langfuse",
         "number": 18703,
         "note": "",
-        "status": "running",
+        "status": "retry_wait",
         "created": 1791887198.7368925,
-        "updated": 1791897279.5437171,
-        "result": "Codex session budget reached; judge paused too",
+        "updated": 1791897289.2451353,
+        "result": "Codex budget reserved for independent reviews",
         "attempts": 2
       },
       {
@@ -15671,10 +15671,6 @@
         "value": "{\"task\": 845, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"remediation\", \"at\": 1791896978.8197844, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791897045.7889333"
       },
@@ -15703,24 +15699,32 @@
         "value": "1791897262.4965096"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791897273.453659"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791897274.9121659"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791897276.293555"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791894890.402712, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791897279.5435627, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791889803.226476, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791896716.3715003}}"
       },
       {
+        "key": "detector_heartbeat",
+        "value": "1791897284.9123123"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791897286.4323049"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791897288.4889963"
+      },
+      {
+        "key": "usage:845:2:generation",
+        "value": "{\"task\": 845, \"repo\": \"langfuse\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1791897288.9802604, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
         "key": "task:845",
-        "value": "{\"started\": 1791897279.5437589, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"claimed\", \"base\": null, \"generation_started\": 1791896728.7358978, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791896865.4241803, \"last_execution_phase\": \"review\", \"finished\": 1791896978.8900926, \"resume_progress\": {\"bundle\": \"845-1.json\", \"sha256\": \"6e4f562e44b1cd625986a5b1da284df33fb418f2ed6bf4d5680ed407f7689390\", \"base\": \"3eb71e89be4fcb52e9b9015b1e4090982d826945\", \"phase\": \"review\"}}"
+        "value": "{\"started\": 1791897279.5437589, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1791897589.0644538, \"folder\": \"jobs/845/attempt-2\", \"attempt\": 2, \"phase\": \"retry_wait\", \"base\": \"3eb71e89be4fcb52e9b9015b1e4090982d826945\", \"generation_started\": 1791896728.7358978, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791896865.4241803, \"last_execution_phase\": \"checkout\", \"finished\": 1791897289.0714288, \"resume_progress\": {\"bundle\": \"845-1.json\", \"sha256\": \"6e4f562e44b1cd625986a5b1da284df33fb418f2ed6bf4d5680ed407f7689390\", \"base\": \"3eb71e89be4fcb52e9b9015b1e4090982d826945\", \"phase\": \"review\"}, \"progress_rebase_needed\": null, \"progress_restored\": true, \"restored_from\": \"845-1.json\"}"
       }
     ],
     "calls": [
