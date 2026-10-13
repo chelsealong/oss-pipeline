@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791889868.6618137,
+  "saved_at": 1791889871.305017,
   "tables": {
     "tasks": [
       {
@@ -10137,11 +10137,11 @@
         "repo": "openclaw",
         "number": 169185,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791734719.5623984,
-        "updated": 1791889864.3676405,
+        "updated": 1791889871.296532,
         "result": "Previous runner ended during task; inspect remote before retry",
-        "attempts": 2
+        "attempts": 3
       },
       {
         "id": 781,
@@ -15448,14 +15448,6 @@
         "value": "{\"at\": 1791889798.0641358, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1791889800.4879358, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 5, \"seconds_since_codex_call\": 118.00393176078796, \"judge_tokens_spent_24h\": 44993, \"screening_calls_5h\": 3, \"screening_calls_24h\": 9, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7515\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7515\", \"title\": \"Workflow: node returning None in a later loop iteration leaves its previous output for JoinNode\", \"first_seen\": 1791852187.5247638, \"last_checked\": 1791855469.40007, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791889800.4896905, \"tasks\": {\"fix\": {\"blocked\": 1, \"interrupted\": 3, \"queued\": 4, \"running\": 1, \"skipped\": 24, \"validation_wait\": 1}, \"respond\": {\"error\": 6, \"validation_wait\": 2}}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"langfuse\", \"task\": 841, \"at\": 1791878613.671895}, {\"repo\": \"langfuse\", \"task\": 842, \"at\": 1791878714.5639021}, {\"repo\": \"llama-index\", \"task\": 840, \"at\": 1791879428.9563568}, {\"repo\": \"openclaw\", \"task\": 844, \"at\": 1791880959.1920288}, {\"repo\": \"langfuse\", \"task\": 843, \"at\": 1791881482.4688804}, {\"repo\": \"spec-kit\", \"task\": 846, \"at\": 1791889811.9745765}]"
       },
@@ -15528,16 +15520,8 @@
         "value": "{\"at\": 1791889864.363986, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
       },
       {
-        "key": "task:780",
-        "value": "{\"started\": 1791887194.2415566, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/780/attempt-2\", \"attempt\": 2, \"phase\": \"queued\", \"base\": \"548999bd426ab03ec75e43e406f737a29d9a1f97\", \"last_execution_phase\": \"review\", \"finished\": 1791854068.387993, \"generation_started\": 1791852293.471084, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791887252.205412, \"patch_digest\": \"74fc439213efc0a050950ab8e0cea6511f164c224021f63ad9b37d1771f89ff0\", \"recovery_checked_at\": 1791889863.7004118, \"resume_progress\": {\"bundle\": \"780-2.json\", \"sha256\": \"73bd9bc9a9d40f0852950e16ce0c722da408f7479ef664e5b8feda1f78f51050\", \"base\": \"548999bd426ab03ec75e43e406f737a29d9a1f97\", \"phase\": \"review\"}, \"submission_repaired\": {\"at\": 1791887175.0110412, \"repair\": \"optional_broad_check\", \"attempt\": 1}, \"progress_restored\": true, \"restored_from\": \"780-1.json\"}"
-      },
-      {
         "key": "followup:task:780",
         "value": "{\"status\": \"resumed\", \"task\": 780}"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791889854.7023742, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791889864.4362226, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791889803.226476, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
       },
       {
         "key": "recovery_audit:843",
@@ -15550,14 +15534,6 @@
       {
         "key": "followup:task:843",
         "value": "{\"status\": \"resumed\", \"task\": 843}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791889865.390145"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791889865.4432914"
       },
       {
         "key": "discovery_last_success",
@@ -15574,6 +15550,30 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1791889868.6536531, \"disk_free_bytes\": 89444999168, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15290155008, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791889870.3962715"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791889870.443378"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1791889870.8467488, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 5, \"seconds_since_codex_call\": 58.86715292930603, \"judge_tokens_spent_24h\": 44993, \"screening_calls_5h\": 3, \"screening_calls_24h\": 9, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7515\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7515\", \"title\": \"Workflow: node returning None in a later loop iteration leaves its previous output for JoinNode\", \"first_seen\": 1791852187.5247638, \"last_checked\": 1791855469.40007, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791889870.8480039, \"tasks\": {\"fix\": {\"blocked\": 1, \"error\": 1, \"queued\": 4, \"running\": 1, \"skipped\": 26, \"validation_wait\": 1}, \"respond\": {\"error\": 6, \"validation_wait\": 2}}}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791889871.296392, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791889864.4362226, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791889803.226476, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:780",
+        "value": "{\"started\": 1791889871.29659, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 3, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"review\", \"finished\": 1791854068.387993, \"generation_started\": 1791852293.471084, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791887252.205412, \"patch_digest\": \"74fc439213efc0a050950ab8e0cea6511f164c224021f63ad9b37d1771f89ff0\", \"recovery_checked_at\": 1791889863.7004118, \"resume_progress\": {\"bundle\": \"780-2.json\", \"sha256\": \"73bd9bc9a9d40f0852950e16ce0c722da408f7479ef664e5b8feda1f78f51050\", \"base\": \"548999bd426ab03ec75e43e406f737a29d9a1f97\", \"phase\": \"review\"}, \"submission_repaired\": {\"at\": 1791887175.0110412, \"repair\": \"optional_broad_check\", \"attempt\": 1}, \"progress_restored\": true, \"restored_from\": \"780-1.json\"}"
       }
     ],
     "calls": [
