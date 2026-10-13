@@ -200,6 +200,14 @@ class ScreeningTests(unittest.TestCase):
             db.execute("INSERT INTO calls VALUES (?,'codex')",(time.time()-7200,))
         watch.retain_for_vetting('comfyui',{'number':2,'createdAt':'2026-10-02T00:00:00Z'})
         self.assertTrue(rt.ready()[0]);self.assertEqual(admission_health.status()['state'],'stalled')
+    def test_queued_budget_wait_is_not_reported_as_active_production(self):
+        with rt.db() as db:
+            db.execute("UPDATE tasks SET status='queued'")
+            db.executemany("INSERT INTO calls VALUES (?,'codex')",[(time.time(),)]*44)
+        with patch.object(model_budget,'queue_ready',return_value=False):
+            health=admission_health.status()
+        self.assertEqual(health['state'],'budget_wait');self.assertEqual(health['running_tasks'],0)
+        self.assertGreater(health['queued_tasks'],0);self.assertEqual(health['codex_calls_5h'],44)
 
     def test_adk_duplicate_does_not_generate_coordination_request(self):
         with patch.object(scan,'linked_prs',return_value=['PR#2']),patch.object(scan,'coordination_allowed') as coordinate:

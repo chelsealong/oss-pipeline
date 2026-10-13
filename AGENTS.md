@@ -250,6 +250,8 @@ now receive a writable task-owned XDG_CONFIG_HOME; browser rehearsal must prove
 Chromium renders and captures with read-only HOME. Hardware/signoff waits remain.
 Queue admission always reserves two calls for resumed generation plus new review;
 one-call admission caused repeated checkouts followed by budget rejection.
+Admission reporting distinguishes running work, queued work and model-budget
+waits; a nonempty queue alone is not evidence of active PR production.
 Fresh generation/review threads share their checkout but not shell activation.
 The controller carries an existing ignored .venv into the next thread's PATH
 and prompt, with an explicit interpreter path for login shells. A system-Python

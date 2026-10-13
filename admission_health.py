@@ -23,6 +23,12 @@ def status():
             reasons[category]+=1
     with rt.db() as db:
         active=db.execute("SELECT count(*) FROM tasks WHERE status IN ('queued','running','retry_wait')").fetchone()[0]
+        running=db.execute("SELECT count(*) FROM tasks WHERE status='running'").fetchone()[0]
+        queued=[dict(row) for row in db.execute("SELECT id FROM tasks WHERE status IN ('queued','retry_wait')")]
+        import model_budget
+        budget_wait=bool(queued and not running and all(
+            not model_budget.queue_ready(db,rt._meta(db,f"task:{row['id']}",{})) for row in queued))
+        calls_5h=db.execute("SELECT count(*) FROM calls WHERE kind='codex' AND at>?",(now-18000,)).fetchone()[0]
         latest=db.execute("SELECT max(at) FROM calls WHERE kind='codex'").fetchone()[0]
         waits=db.execute("SELECT count(*) FROM tasks WHERE status='triage_wait'").fetchone()[0]
         coordination=[]
@@ -37,10 +43,12 @@ def status():
         screenings_day=sum(x['at']>now-86400 for x in screening)
     idle_seconds=max(0,now-latest) if latest else None
     waiting=sum(by_repo.values())+waits
-    stalled=bool(waiting and active==0 and (idle_seconds is None or idle_seconds>1800))
-    return {'state':'stalled' if stalled else 'active' if active else 'idle',
+    stalled=bool((waiting or queued) and not running and not budget_wait and (idle_seconds is None or idle_seconds>1800))
+    return {'state':'budget_wait' if budget_wait else 'stalled' if stalled else 'active' if running else 'queued' if queued else 'idle',
             'pending_candidates':sum(by_repo.values()),'pending_by_repo':by_repo,
             'pending_reasons':dict(reasons),'screening_wait_tasks':waits,'active_tasks':active,
+            'running_tasks':running,'queued_tasks':len(queued),'codex_calls_5h':calls_5h,
+            'codex_call_limit':rt.config().get('codex_sessions_per_5h',45),
             'seconds_since_codex_call':idle_seconds,'judge_tokens_spent_24h':spent,
             'screening_calls_5h':screenings_5h,'screening_calls_24h':screenings_day,
             'coordination_requests':coordination,
