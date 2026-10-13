@@ -145,6 +145,7 @@ def prepare_langfuse(work,folder):
                 (work/name).write_bytes(raw)
         docker_run(['up','--detach','--wait','--wait-timeout','180'],600)
         execute(['pnpm','install','--frozen-lockfile'],1800)
+        execute(['pnpm','--filter=@repo/eslint-plugin','run','build'])
         execute(['pnpm','run','db:generate'])
         execute(['pnpm','--filter=shared','run','db:deploy'])
         execute(['pnpm','--filter=shared','run','ch:up'])
@@ -169,7 +170,7 @@ def rehearse_langfuse_static(work,folder):
     for name,args in checks:
         started=time.monotonic()
         with (folder/('static-'+name+'.log')).open('w') as log:
-            process=subprocess.Popen(['/usr/bin/time','-v',*sandbox(work,cache,args)],env=env,
+            process=subprocess.Popen(sandbox(work,cache,['/usr/bin/time','-v',*args]),env=env,
                 stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
             try:code=process.wait(timeout=1200)
             except BaseException:terminate(process);raise
