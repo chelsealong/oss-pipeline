@@ -62,7 +62,7 @@ jobs:
                 row={'event':method,'type':item.get('type'),'status':item.get('status'),'exit':item.get('exitCode'),
                      'duration_ms':item.get('durationMs'),'at':event.get('emittedAtMs'),
                      'features':[label for label,pattern in features.items() if re.search(pattern,command,re.I)]}
-                output=item.get('aggregatedOutput','')
+                output=item.get('aggregatedOutput') or ''
                 row['failure_signals']=[label for label in ('oom','disk_full','killed','timeout') if re.search(features[label],output,re.I)]
                 rows.append(row)
             print(json.dumps({'task':task,'attempt':attempt,'phase':payload['execution'].get('phase'),
