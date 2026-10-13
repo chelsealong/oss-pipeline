@@ -19,7 +19,15 @@ def rehearse(number):
     git('remote','add','upstream','https://github.com/'+repo+'.git')
     git('fetch','--depth=1','upstream','main:refs/remotes/upstream/main')
     git('fetch','--depth=1','origin',head);git('checkout','--detach','FETCH_HEAD')
-    result=execution_support.prepare_response_base(work,'main',pr,number)
+    try:result=execution_support.prepare_response_base(work,'main',pr,number)
+    except RuntimeError as error:
+        # An independently confirmed real source conflict is an expected held
+        # outcome, not a shallow-graph failure or a reason to disable all repos.
+        if (pr.get('mergeable') is not False or
+                not str(error).startswith('Current upstream conflicts with PR branch; manual conflict resolution required: ')):
+            raise
+        if git('rev-parse','HEAD')!=head:raise RuntimeError('Conflict recovery changed the PR head') from error
+        result={'original_head':head,'base':head,'outcome':'confirmed_conflict_retained','reason':str(error)}
     git('merge-base','--is-ancestor',head,'HEAD')
     if git('status','--porcelain'):raise RuntimeError('Response rehearsal left an unresolved working tree')
     result.update(repository=repo,pr=number,model_calls=0,publications=0)
