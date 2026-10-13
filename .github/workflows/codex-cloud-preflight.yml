@@ -39,12 +39,14 @@ jobs:
             'killed':r'SIGKILL|exit(?:ed)? (?:with )?code 137|Killed|signal 9',
             'timeout':r'timed out|ETIMEDOUT',
           }
-          for task,attempt in [(842,3)]:
+          payloads={}
+          for task,attempt in [(842,4),(843,3),(796,3)]:
             url=f'https://api.github.com/repos/chelsealong/oss-pipeline/contents/evidence/{task}-{attempt}.json.enc?ref=codex-state'
             request=urllib.request.Request(url,headers={'Accept':'application/vnd.github.raw+json','Authorization':'Bearer '+os.environ['GH_TOKEN']})
             with urllib.request.urlopen(request,timeout=60) as response: raw=response.read()
             assert raw.startswith(b'OSSE1')
             payload=json.loads(zlib.decompress(AESGCM(key).decrypt(raw[5:17],raw[17:],b'oss-pipeline-evidence-v1')))
+            payloads[str(task)]=payload
             rows=[];counts=collections.Counter();usage=None;log_flags=collections.Counter()
             for name,value in payload.get('files',{}).items():
               if not name.endswith(('.jsonl','.log')):continue
@@ -76,7 +78,7 @@ jobs:
           from cryptography.hazmat.primitives.asymmetric import padding
           public=serialization.load_pem_public_key(base64.b64decode('LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUEzMDFiNVovaVMrejBzczF0WTJBNQpDQU9UOTdGWGhKY21BQ2FzZ2ZZQ24yOEY5cEdjeXlmdk4yQjBRN2dEQ2dRbml6UkxzTnVnOHREd0RncjRpWGVoCjVwZE9QUEFrNXFNVHQ1Rkd3QUtkZ1F2U3BwSlN0VGN5TEx0aytTTXZpb2xFZUhlMWtoMkZ4aitWYWpqUHF0WUEKL0tmSGdvcGVCQ0FCbC8ycTZ1VFVrZE1vOFZBRzEzaHkxK3BOUDY3TXo5K3ZkMXE2OHNqUHBxbUV5T2ZKcklYVApyVmFUekhpSFRqU2lidFZNTm1aZ2VDdlhiUU1KUlRPQmw0eWgwd25SVGFscHhZcEVVT2pHYlprQTlad2RxUlBrCkZkTXI0Y3ZRQVhidmxFTGJ6WkJLKzRJSnY3eXR3QmFqdjEvVGVMdzU5WURBT0tZbDg1UEdDZG9WZnpSSVk1YS8KclFJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg=='))
           debug_key=os.urandom(32);nonce=os.urandom(12)
-          sealed=AESGCM(debug_key).encrypt(nonce,json.dumps(payload).encode(),b'oss-debug')
+          sealed=AESGCM(debug_key).encrypt(nonce,json.dumps(payloads).encode(),b'oss-debug')
           wrapped=public.encrypt(debug_key,padding.OAEP(mgf=padding.MGF1(hashes.SHA256()),algorithm=hashes.SHA256(),label=None))
           Path('debug-evidence.json').write_text(json.dumps({'key':base64.b64encode(wrapped).decode(),'nonce':base64.b64encode(nonce).decode(),'data':base64.b64encode(sealed).decode()}))
           PY
