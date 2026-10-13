@@ -192,13 +192,25 @@ class BudgetTests(unittest.TestCase):
         self.assertEqual(result,[True,True])
         for t in tasks:self.assertTrue(rt.reserve_call('codex',task=t,phase='review')[0])
         self.assertFalse(rt.reserve_call('codex')[0])
-    def test_last_turn_can_resume_patch_but_cannot_start_checkout(self):
+    def test_last_turn_cannot_start_fresh_or_resumed_generation(self):
         with rt.db() as db:
             db.executemany('INSERT INTO calls VALUES (?,?)',[(time.time(),'codex')]*44)
             self.assertFalse(budget.queue_ready(db,{}))
             self.assertFalse(budget.queue_ready(db,{'resume_progress':{'phase':'review'}}))
             db.execute('DELETE FROM calls WHERE rowid=(SELECT MIN(rowid) FROM calls)')
             self.assertTrue(budget.queue_ready(db,{'resume_progress':{'phase':'review'}}))
+    def test_resumed_checkout_obeys_start_quota_and_leaves_reserved_review_running(self):
+        first=self.task();second=self.task(repo='comfyui')
+        self.assertTrue(rt.reserve_call('codex',task=first,phase='generation')[0])
+        budget.rate_snapshot({'rateLimits':{'primary':{'usedPercent':85,'resetsAt':time.time()+3600}}})
+        with rt.db() as db:
+            self.assertFalse(budget.queue_ready(db,{'resume_progress':{'phase':'review'}}))
+        ok,why=rt.reserve_call('codex',task=second,phase='generation')
+        self.assertFalse(ok)
+        with patch.object(rt,'checkpoint'):
+            codex_worker.handle_task_error(second,rt.Paused(why))
+        self.assertFalse(rt.getmeta('pause',{}).get('until',0)>time.time())
+        self.assertTrue(rt.reserve_call('codex',task=first,phase='review')[0])
     def test_finishing_skip_releases_review_reservation(self):
         self.cfg['codex_sessions_per_5h']=3;self.save()
         first=self.task();second=self.task(repo='comfyui')

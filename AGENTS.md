@@ -252,6 +252,9 @@ Queue admission always reserves two calls for resumed generation plus new review
 one-call admission caused repeated checkouts followed by budget rejection.
 Admission reporting distinguishes running work, queued work and model-budget
 waits; a nonempty queue alone is not evidence of active PR production.
+The queue and actual generation use the same 85% start-reserve threshold even
+for retained patches. A local start-reserve refusal must not open an account
+circuit that prevents another task's already-reserved independent review.
 Fresh generation/review threads share their checkout but not shell activation.
 The controller carries an existing ignored .venv into the next thread's PATH
 and prompt, with an explicit interpreter path for login shells. A system-Python

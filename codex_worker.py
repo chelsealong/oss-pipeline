@@ -66,6 +66,8 @@ def log(msg):
 
 def failure_cooldown(error):
     message=str(error)
+    if isinstance(error,rt.Paused) and message.startswith('Codex reported quota reserve reached'):
+        return 0  # Local start admission must not pause another task's reserved review.
     # Only account/service failures warrant an account-wide circuit breaker.
     if re.search(r'quota|usage.limit|credits|auth unavailable|Codex unavailable',message,re.I):return 1800
     if message.startswith('Codex:') and re.search(r'401|403|auth|capacity|rate.limit',message,re.I):return 1800

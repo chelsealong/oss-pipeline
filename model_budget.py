@@ -91,8 +91,9 @@ def queue_ready(db, state):
     cfg=rt.config()
     if not cfg.get('codex_review_reservations'):
         return True
-    resumed=bool(state.get('resume_progress'))
-    if not quota_gate(db,starting=not resumed)[0]:
+    # Every queued task currently enters generation, including retained patches.
+    # Match codex_admit's start threshold before checkout or judge work.
+    if not quota_gate(db,starting=True)[0]:
         return False
     now=time.time()
     active={str(r[0]) for r in db.execute("SELECT id FROM tasks WHERE status='running'")}
