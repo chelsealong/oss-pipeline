@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791882162.2387745,
+  "saved_at": 1791883730.8836505,
   "tables": {
     "tasks": [
       {
@@ -10943,11 +10943,11 @@
         "repo": "langfuse",
         "number": 18675,
         "note": "",
-        "status": "retry_wait",
+        "status": "running",
         "created": 1791878663.129214,
-        "updated": 1791881461.0179904,
+        "updated": 1791883730.8728948,
         "result": "Command 'Codex validation' timed out after 2400 seconds",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 843,
@@ -10956,10 +10956,10 @@
         "repo": "langfuse",
         "number": 18676,
         "note": "",
-        "status": "running",
+        "status": "interrupted",
         "created": 1791878810.0228822,
-        "updated": 1791881469.9135833,
-        "result": "",
+        "updated": 1791883715.0803366,
+        "result": "Previous runner ended during task; inspect remote before retry",
         "attempts": 1
       },
       {
@@ -15194,10 +15194,6 @@
         "value": "1791877264.5676646"
       },
       {
-        "key": "pause",
-        "value": "{}"
-      },
-      {
         "key": "usage:838:1:screening-759c8a9dc1b134a7c47d",
         "value": "{\"task\": 838, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-759c8a9dc1b134a7c47d\", \"at\": 1791877459.2292333, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -15234,10 +15230,6 @@
         "value": "{\"started\": 1791879389.83065, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/840/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"5b7b6e323e1da3edd787a2104a89257c14f026d0\", \"last_execution_phase\": \"generation\", \"finished\": 1791879490.9018724, \"phase_started\": 1791879431.338744, \"screening_requests\": {\"93535e7eec06863f06f4\": 1791879406.3947933}, \"generation_started\": 1791879428.9563582, \"dispatch_paid_date\": \"2026-10-13\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791881051.6441405, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:844:1:generation",
         "value": "{\"task\": 844, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1791881051.6603057, \"seconds\": 92.478, \"tokens\": {\"totalTokens\": 305178, \"inputTokens\": 303129, \"cachedInputTokens\": 240640, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2049, \"reasoningOutputTokens\": 593}, \"first_event_ms\": 1791880969776, \"last_event_ms\": 1791881051631, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -15248,10 +15240,6 @@
       {
         "key": "usage:842:1:validation",
         "value": "{\"task\": 842, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"validation\", \"at\": 1791881432.9157176, \"seconds\": 2405.898, \"tokens\": {\"totalTokens\": 11409961, \"inputTokens\": 11378293, \"cachedInputTokens\": 11219328, \"cacheWriteInputTokens\": 0, \"outputTokens\": 31668, \"reasoningOutputTokens\": 14576}, \"first_event_ms\": 1791879032754, \"last_event_ms\": 1791881431178, \"model\": \"gpt-6-sol\", \"complete\": false, \"usage_available\": true}"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791880856.0041838, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791881469.913349, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791793672.2339332, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
       },
       {
         "key": "fix_sessions",
@@ -15272,98 +15260,6 @@
       {
         "key": "task:843",
         "value": "{\"started\": 1791881469.913652, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/843/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"314cd9b59005372bd1863362e53a35ddaab23664\", \"generation_started\": 1791881482.468881, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791881485.4809825}"
-      },
-      {
-        "key": "task:842",
-        "value": "{\"started\": 1791878702.4842875, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1791881790.0126905, \"folder\": \"jobs/842/attempt-1\", \"attempt\": 1, \"phase\": \"execution_wait\", \"base\": \"e7caaad6a1978a569f35da3e0fdd6bb4aeb70a92\", \"generation_started\": 1791878714.5639026, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791879029.732437, \"validation_bootstrap_version\": \"1\", \"last_execution_phase\": \"validation\", \"finished\": 1791881460.6073108, \"resume_progress\": {\"bundle\": \"842-1.json\", \"sha256\": \"4932602aa3b789b4923a873b90406607cbea924924bea0f241d5581fc4cc33a0\", \"base\": \"e7caaad6a1978a569f35da3e0fdd6bb4aeb70a92\", \"phase\": \"validation\"}, \"timeout_continuations\": 1}"
-      },
-      {
-        "key": "task:44",
-        "value": "{\"recovery_checked_at\": 1791881861.8795981}"
-      },
-      {
-        "key": "recovery_audit:44",
-        "value": "{\"at\": 1791881863.9671843, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:45",
-        "value": "{\"recovery_checked_at\": 1791881863.9778771}"
-      },
-      {
-        "key": "recovery_audit:45",
-        "value": "{\"at\": 1791881866.072998, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:54",
-        "value": "{\"recovery_checked_at\": 1791881866.0947368}"
-      },
-      {
-        "key": "recovery_audit:54",
-        "value": "{\"at\": 1791881868.2056935, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:55",
-        "value": "{\"recovery_checked_at\": 1791881868.212512}"
-      },
-      {
-        "key": "recovery_audit:55",
-        "value": "{\"at\": 1791881870.2306688, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:57",
-        "value": "{\"recovery_checked_at\": 1791881870.24256}"
-      },
-      {
-        "key": "recovery_audit:57",
-        "value": "{\"at\": 1791881872.5674784, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:58",
-        "value": "{\"recovery_checked_at\": 1791881872.5777726}"
-      },
-      {
-        "key": "recovery_audit:58",
-        "value": "{\"at\": 1791881874.686307, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:60",
-        "value": "{\"recovery_checked_at\": 1791881874.69267}"
-      },
-      {
-        "key": "recovery_audit:60",
-        "value": "{\"at\": 1791881876.6933324, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:61",
-        "value": "{\"recovery_checked_at\": 1791881876.6964953}"
-      },
-      {
-        "key": "recovery_audit:61",
-        "value": "{\"at\": 1791881878.674816, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "prwatch_heartbeat",
-        "value": "1791881909.389424"
-      },
-      {
-        "key": "task:166",
-        "value": "{\"recovery_checked_at\": 1791881947.0727787}"
-      },
-      {
-        "key": "recovery_audit:166",
-        "value": "{\"at\": 1791881948.3783472, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:167",
-        "value": "{\"recovery_checked_at\": 1791881948.3907597}"
-      },
-      {
-        "key": "recovery_audit:167",
-        "value": "{\"at\": 1791881949.784609, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:171",
-        "value": "{\"recovery_checked_at\": 1791881949.7873487}"
       },
       {
         "key": "recovery_audit:171",
@@ -15442,28 +15338,132 @@
         "value": "{\"at\": 1791882101.379352, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 1, \"retry_wait\": 1, \"running\": 1, \"skipped\": 28, \"validation_wait\": 1}, \"respond\": {\"error\": 6, \"validation_wait\": 3}}}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1791882148.1696236"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791882155.7668157"
-      },
-      {
         "key": "discovery_last_success",
         "value": "1791882158.520433"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1791882159.1386657, \"windows\": [{\"name\": \"primary\", \"used_percent\": 2, \"resets_at\": 1792473656}]}"
+        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
+        "value": "{\"at\": 1791882162.2234762, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+      },
+      {
+        "key": "task:44",
+        "value": "{\"recovery_checked_at\": 1791883718.6731656}"
+      },
+      {
+        "key": "recovery_audit:44",
+        "value": "{\"at\": 1791883719.6865065, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:45",
+        "value": "{\"recovery_checked_at\": 1791883719.6884801}"
+      },
+      {
+        "key": "recovery_audit:45",
+        "value": "{\"at\": 1791883720.6435971, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:54",
+        "value": "{\"recovery_checked_at\": 1791883720.6469452}"
+      },
+      {
+        "key": "recovery_audit:54",
+        "value": "{\"at\": 1791883721.633301, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:55",
+        "value": "{\"recovery_checked_at\": 1791883721.6351323}"
+      },
+      {
+        "key": "recovery_audit:55",
+        "value": "{\"at\": 1791883722.7293181, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:57",
+        "value": "{\"recovery_checked_at\": 1791883722.7319934}"
+      },
+      {
+        "key": "recovery_audit:57",
+        "value": "{\"at\": 1791883723.6520786, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:58",
+        "value": "{\"recovery_checked_at\": 1791883723.65383}"
+      },
+      {
+        "key": "recovery_audit:58",
+        "value": "{\"at\": 1791883724.6267297, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:60",
+        "value": "{\"recovery_checked_at\": 1791883724.7984924}"
+      },
+      {
+        "key": "recovery_audit:60",
+        "value": "{\"at\": 1791883726.135516, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:61",
+        "value": "{\"recovery_checked_at\": 1791883726.1374862}"
+      },
+      {
+        "key": "recovery_audit:61",
+        "value": "{\"at\": 1791883727.0889163, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791883728.2013493"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1791882160.8170137"
+        "value": "1791883728.2334936"
       },
       {
-        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
-        "value": "{\"at\": 1791882162.2234762, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+        "key": "watch_heartbeat",
+        "value": "1791883728.2609248"
+      },
+      {
+        "key": "prwatch_heartbeat",
+        "value": "1791883728.2948506"
+      },
+      {
+        "key": "task:166",
+        "value": "{\"recovery_checked_at\": 1791883728.4425504}"
+      },
+      {
+        "key": "recovery_audit:166",
+        "value": "{\"at\": 1791883729.3814416, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:167",
+        "value": "{\"recovery_checked_at\": 1791883729.3833601}"
+      },
+      {
+        "key": "recovery_audit:167",
+        "value": "{\"at\": 1791883730.1751685, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:171",
+        "value": "{\"recovery_checked_at\": 1791883730.1776574}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1791883730.8370104, \"windows\": [{\"name\": \"primary\", \"used_percent\": 2, \"resets_at\": 1792473656}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791883730.8397791, \"source\": \"authenticated probe\"}"
+      },
+      {
+        "key": "pause",
+        "value": "{}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791880856.0041838, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791883730.8727388, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791793672.2339332, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:842",
+        "value": "{\"started\": 1791883730.872957, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"claimed\", \"base\": null, \"generation_started\": 1791878714.5639026, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791879029.732437, \"validation_bootstrap_version\": \"1\", \"last_execution_phase\": \"validation\", \"finished\": 1791881460.6073108, \"resume_progress\": {\"bundle\": \"842-1.json\", \"sha256\": \"4932602aa3b789b4923a873b90406607cbea924924bea0f241d5581fc4cc33a0\", \"base\": \"e7caaad6a1978a569f35da3e0fdd6bb4aeb70a92\", \"phase\": \"validation\"}, \"timeout_continuations\": 1}"
       }
     ],
     "calls": [
