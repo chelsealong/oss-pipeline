@@ -13,6 +13,55 @@ import repo_limits
 
 WAIT_STATES=('capacity_wait','human_wait','validation_wait','execution_wait')
 
+def submission_regression(task,state):
+    """Identify only the October 13 controller regressions, never approve work."""
+    if state.get('publication_started') or state.get('submission_repaired'):return None
+    phase=state.get('last_execution_phase',state.get('phase'))
+    reason=task.get('result','')
+    if (task['kind']=='fix' and task['repo']=='openclaw' and task['status']=='blocked'
+            and phase in ('review','rereview') and task['attempts']<3
+            and reason.startswith('review: The mandatory')
+            and re.search(r'dead[- ]export',reason,re.I)):
+        return 'optional_broad_check'
+    if (task['kind']=='respond' and task['status']=='error' and task['attempts']<=3
+            and phase=='checkout' and state.get('remote_base') and not state.get('base')
+            and reason.strip()=='git failed (128): fatal: shallow file has changed since we read it'):
+        return 'unnecessary_main_merge'
+    return None
+
+
+def recover_submission_regressions():
+    """One audited retry; preserve patches, attempts, spending and fresh review."""
+    from execution_support import retained_progress
+    resumed=[]
+    with rt.db() as db:
+        tasks=[dict(r) for r in db.execute("SELECT * FROM tasks WHERE status IN ('blocked','error') ORDER BY updated")]
+    for task in tasks:
+        if repo_limits.disabled(task['repo']):continue
+        state=rt.task_state(task['id']);repair=submission_regression(task,state)
+        if not repair:continue
+        if task['kind']=='fix' and rt.publication_holds().get(task['repo'],0)>time.time():continue
+        if state.get('recovery_checked_at',0)>time.time()-900:continue
+        path=latest_bundle(task['id'])
+        if not path:continue
+        payload=json.loads(path.read_text())
+        if payload['execution'].get('attempt')!=task['attempts']:continue
+        if repair=='optional_broad_check' and not retained_progress(task):continue
+        if repair=='unnecessary_main_merge':
+            if payload.get('diff') or payload.get('untracked') or payload.get('files') or payload['execution'].get('base'):continue
+            with rt.db() as db:
+                if db.execute('SELECT 1 FROM tasks WHERE kind=? AND repo=? AND number=? AND id>?',
+                              ('respond',task['repo'],task['number'],task['id'])).fetchone():continue
+        rt.task_state(task['id'],recovery_checked_at=time.time())
+        try:
+            ok,why=audited_unpublished(task)
+            rt.setmeta(f"recovery_audit:{task['id']}",{'at':time.time(),'safe':ok,'reason':why,'repair':repair})
+            if ok and requeue(task,repair=repair):resumed.append(task['id'])
+        except Exception as error:
+            rt.setmeta(f"submission_recovery:{task['id']}",{'at':time.time(),'error':str(error)[:350]})
+    if resumed:rt.checkpoint()
+    return resumed
+
 def recover_shallow_merge_errors():
     """Once-only recovery of the pre-model false-conflict checkout regression."""
     import codex_worker as worker
@@ -257,7 +306,7 @@ def audited_unpublished(task):
     read_failure=failed_read(task.get('result',''))
     phase=state.get('last_execution_phase',state.get('phase'))
     known_phase=phase in ('checkout','generation','review','remediation','rereview','validation')
-    if not read_failure and not repaired_infrastructure(task,state) and not (task['status']=='interrupted' and known_phase):
+    if not read_failure and not repaired_infrastructure(task,state) and not submission_regression(task,state) and not (task['status']=='interrupted' and known_phase):
         return False,'No positive evidence of a pre-publication interruption'
     key,cfg=worker.configs(task);impl=cfg.get('implements_in') or cfg['upstream']
     if task['kind']=='respond':
@@ -272,7 +321,7 @@ def audited_unpublished(task):
     if prs:return False,'A remote PR already uses this task branch'
     return True,'Verified pre-publication failure and no remote branch/PR'
 
-def requeue(task):
+def requeue(task,repair=None):
     from execution_support import retained_progress
     progress=retained_progress(task)
     with rt.db() as db:
@@ -288,6 +337,7 @@ def requeue(task):
             if progress:state['resume_progress']=progress
             if current['status']=='human_wait':state['policy_gate_rechecked']=True
         state.update(phase='queued',terminal=False,retry_after=0)
+        if repair:state['submission_repaired']={'at':time.time(),'repair':repair,'attempt':current['attempts']}
         rt._putmeta(db,f"task:{task['id']}",state)
         db.execute("UPDATE tasks SET status='queued',updated=? WHERE id=?",(time.time(),task['id']))
         rt._putmeta(db,f"followup:task:{task['id']}",{'status':'resumed','task':task['id']})

@@ -206,7 +206,7 @@ def stop(process, timeout=30):
 
 def successor(failed):
     """Only after every auth owner stopped and state/token persistence succeeded."""
-    if not cloud_enabled():return False
+    if not admission_enabled():return False
     with rt.db() as db:
         db.execute('BEGIN IMMEDIATE')
         now=time.time()
@@ -220,6 +220,17 @@ def successor(failed):
             events.append(now)
         rt._putmeta(db,'runner_restarts',events)
     return True
+
+def admission_enabled():
+    """Unknown control state stops admission but lets active work drain safely."""
+    try:return cloud_enabled()
+    except (RuntimeError,OSError,subprocess.SubprocessError) as error:
+        reason={'at':time.time(),'type':type(error).__name__,'reason':str(error)[:350]}
+        rt.setmeta('control_read_failure',reason)
+        (rt.DATA/'drain').touch()
+        print('Cloud control read unavailable; draining active tasks: '+json.dumps(reason),flush=True)
+        return False
+
 
 def run(mode,seconds):
     configure(mode)
@@ -245,6 +256,7 @@ def run(mode,seconds):
             migrate_accounting()
             task_recovery.migrate_model_retries()
             task_recovery.recover_shallow_merge_errors()
+            task_recovery.recover_submission_regressions()
             requeue_validation_repair()
             if rt.getmeta('runner_restart_after',0)>time.time():
                 print('Cloud restart circuit is cooling down; no work admitted.',flush=True)
@@ -278,9 +290,10 @@ def run(mode,seconds):
         detectors=[start('discover',['local_service.py','discover']),
                    start('watch',['local_service.py','watch']),start('prwatch',['local_service.py','prwatch'])]
         deadline=time.monotonic()+seconds
-        while time.monotonic()<deadline and cloud_enabled():
+        while time.monotonic()<deadline and admission_enabled():
             if any(p.poll() is not None for p in children):raise RuntimeError('A cloud service exited unexpectedly')
             requeue_validation_repair()
+            task_recovery.recover_submission_regressions()
             task_recovery.reconcile()
             pr_followup.recover_backlog()
             cloud_store.save()

@@ -403,12 +403,13 @@ class ProductionReliabilityTests(unittest.TestCase):
         source,original,call,state=self.run_real_response_controller('READY',fail_fetch=True)
         self.assertEqual(self.git(source,'rev-parse','old-pr'),original)
         self.assertIsNone(state.get('base'));self.assertFalse(state.get('publication_started'))
-    def test_reply_only_controller_uses_remote_head_and_does_not_publish_local_merge(self):
+    def test_reply_only_controller_preserves_original_pr_base(self):
         source,original,call,state=self.run_real_response_controller('REPLY')
         self.assertEqual(self.git(source,'rev-parse','old-pr'),original)
         self.assertEqual(call.args[2],original)
-        self.assertNotEqual(state['base'],original)
-    def test_code_update_controller_publishes_reviewed_fast_forward_after_base_update(self):
+        self.assertEqual(state['base'],original)
+        self.assertFalse(state['base_update']['merged'])
+    def test_code_update_controller_publishes_reviewed_fast_forward_without_main_merge(self):
         source,original,call,state=self.run_real_response_controller('READY')
         new=self.git(source,'rev-parse','old-pr')
         self.assertNotEqual(new,original)
@@ -433,15 +434,23 @@ class ProductionReliabilityTests(unittest.TestCase):
             (work/'value.py').write_text('value = 7\n')
             execution.managed_check(task,work,folder,'openclaw');self.assertEqual(sandbox.call_count,2)
         self.assertEqual(json.loads((folder/'required-check.json').read_text())['exit_code'],0)
-    def test_failed_required_gate_cannot_be_overridden_by_reviewer(self):
+    def test_submission_does_not_run_optional_broad_diagnostic(self):
         task=self.task();folder,work,base=self.checkout(task)
-        with patch.object(rt,'config',return_value={'cloud_environment':True}),\
-             patch.object(validation_setup,'sandbox',return_value=[sys.executable,'-c','raise SystemExit(1)']),\
-             patch.object(worker,'agent',return_value={'verdict':'APPROVE','tests_verified':True,'repairable':False,'reason':'incorrect approval'}):
+        (folder/'required-check.json').write_text(json.dumps({'exit_code':1,'head':base}))
+        (folder/'required-check.log').write_text('Unchanged baseline dead export')
+        verdict={'verdict':'APPROVE','tests_verified':True,'repairable':False,'reason':'focused checks verified; baseline disclosed'}
+        with patch.object(execution,'managed_check',side_effect=AssertionError('Optional broad diagnostic must not block PR submission')),\
+             patch.object(worker,'agent',return_value=verdict) as agent:
             _,review=worker.review_patch(task,work,folder,'openclaw',base,{},'review')
-            self.assertEqual(review['verdict'],'BLOCK');self.assertFalse(review['tests_verified'])
-        self.assertEqual(json.loads((folder/'required-check.json').read_text())['exit_code'],1)
-    def test_failed_required_gate_allows_one_repair_then_requires_passing_gate(self):
+        self.assertEqual(review,verdict)
+        self.assertIn('Inspect and disclose',agent.call_args.args[0])
+    def test_required_focused_failure_still_blocks_submission(self):
+        task=self.task();folder,work,base=self.checkout(task)
+        verdict={'verdict':'BLOCK','tests_verified':False,'repairable':False,'reason':'Required regression failed'}
+        with patch.object(worker,'agent',return_value=verdict):
+            _,review=worker.review_patch(task,work,folder,'openclaw',base,{},'review')
+        self.assertEqual(review,verdict)
+    def test_repair_still_requires_fresh_independent_review(self):
         task=self.task();folder,work,base=self.checkout(task)
         (work/'value.py').write_text('value = 2\n')
         result={'outcome':'READY','reason':'fixed','title':'fix','body':'Codex','tests':'focused tests pass'}
@@ -451,15 +460,43 @@ class ProductionReliabilityTests(unittest.TestCase):
             if phase=='review':return {'verdict':'BLOCK','tests_verified':False,'repairable':True,'reason':'test fixture needs correction'}
             if phase=='remediation':
                 (work/'value.py').write_text('value = 3\n');return result
-            self.assertNotIn('mandatory controller gate FAILED',args[0])
+            self.assertEqual((work/'value.py').read_text(),'value = 3\n')
             return {'verdict':'APPROVE','tests_verified':True,'repairable':False,'reason':'verified'}
-        command=[sys.executable,'-c',f'from pathlib import Path; assert "value = 3" in Path({str(work / "value.py")!r}).read_text()']
-        with patch.object(rt,'config',return_value={'cloud_environment':True}),\
-             patch.object(validation_setup,'sandbox',return_value=command),patch.object(worker,'agent',side_effect=agent):
+        with patch.object(worker,'agent',side_effect=agent):
             _,review=worker.review_patch(task,work,folder,'openclaw',base,result,'review')
         self.assertEqual(calls,['review','remediation','rereview'])
         self.assertEqual(review['verdict'],'APPROVE')
-        self.assertEqual(json.loads((folder/'required-check.json').read_text())['exit_code'],0)
+    def test_confirmed_conflict_is_not_bypassed_by_response_preparation(self):
+        source,work,original=self.response_fixture(conflict=True)
+        with self.assertRaisesRegex(RuntimeError,'conflicts'):
+            execution.prepare_response_base(work,'main',{'head':{'sha':original},'mergeable':False},1)
+        self.assertEqual(self.git(work,'rev-parse','HEAD'),original)
+    def test_optional_gate_recovery_restores_patch_once_without_approval(self):
+        task=self.task();folder,work,base=self.checkout(task)
+        (work/'value.py').write_text('value = 42\n')
+        rt.task_state(task['id'],phase='review')
+        worker.finish(task,'blocked','review: The mandatory controller gate failed on a dead-export scan; unchanged baseline.')
+        with patch.object(task_recovery,'optional_api',return_value=None),patch.object(worker,'run',return_value='[]'):
+            self.assertEqual(task_recovery.recover_submission_regressions(),[task['id']])
+            self.assertEqual(task_recovery.recover_submission_regressions(),[])
+        state=rt.task_state(task['id']);self.assertIn('resume_progress',state)
+        self.assertNotIn('approval_resume',state);self.assertEqual(self.status(task),'queued')
+        with rt.db() as db:self.assertEqual(db.execute('SELECT attempts FROM tasks').fetchone()[0],1)
+    def test_exhausted_checkout_regression_gets_one_audited_attempt_not_reset(self):
+        task=self.task(repo='openclaw/openclaw',kind='respond')
+        with rt.db() as db:
+            db.execute("UPDATE tasks SET status='error',attempts=3,result=?",('git failed (128): fatal: shallow file has changed since we read it\n',))
+        rt.task_state(task['id'],attempt=3,last_execution_phase='checkout',base=None,remote_base='a'*40)
+        evidence=rt.DATA/'evidence';evidence.mkdir()
+        (evidence/f"{task['id']}-3.json").write_text(json.dumps({'execution':{'attempt':3,'base':None},'files':{}}))
+        with patch.object(worker,'response_context',return_value={'head':{'sha':'b'*40}}):
+            self.assertEqual(task_recovery.recover_submission_regressions(),[])
+        rt.task_state(task['id'],recovery_checked_at=0)
+        with patch.object(worker,'response_context',return_value={'head':{'sha':'a'*40}}):
+            self.assertEqual(task_recovery.recover_submission_regressions(),[task['id']])
+            with rt.db() as db:db.execute("UPDATE tasks SET status='error'")
+            self.assertEqual(task_recovery.recover_submission_regressions(),[])
+        with rt.db() as db:self.assertEqual(db.execute('SELECT attempts FROM tasks').fetchone()[0],3)
 
 
 if __name__=='__main__':unittest.main()

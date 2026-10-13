@@ -177,17 +177,21 @@ The 2026-10-10 repair separates model deadlines from read-network retries.
 A deadline may continue once from a complete retained patch; otherwise it enters
 execution_wait without consuming another coding turn. Claims clear old attempt
 paths before checkpointing. Usage records persist separately from attempt logs.
-Cloud OpenClaw check:changed runs in a secretless controller sandbox before
-independent review, without model polling. Failed mandatory checks still block
-publication; a changed patch invalidates the cached validation result.
-Existing PR maintenance fetches a bounded shared history and merges current main
-locally; publication remains a reviewed fast-forward from the original remote
-head. Reply-only tasks never publish that local merge. Cleanup failures remain
-task-local and cannot activate the account circuit breaker.
+The October 13 correction removes the controller's mandatory OpenClaw
+check:changed prerequisite: upstream CONTRIBUTING.md and openclaw-testing state
+that targeted pre-PR checks precede submission and PR CI supplies broad proof.
+check:changed remains an explicit sandboxed rehearsal diagnostic. Independently
+verify focused regression and applicable lint/type checks, disclose observed
+baseline failures, and enforce actual upstream submission requirements. Do not
+apply maintainer landing gates to PR creation or claim an optional failure passed.
+Existing PR maintenance keeps the original PR head unless GitHub reports a real
+merge conflict; advancing main alone does not trigger integration. Publication
+remains a reviewed fast-forward. Cleanup failures remain task-local.
 The response history check must also prove there are no shallow boundaries
 above its candidate merge bases: finding any common ancestor is insufficient.
-The October 12 repair fetches main and the PR head together from upstream,
-omitting historical blobs. If two bounded depth attempts cannot prove the base,
+When integration is actually needed, fetch main and the PR head together from
+upstream with actual blobs; partial/promisor fetches are no longer mixed with
+shallow graph updates. If two bounded depth attempts cannot prove the base,
 complete the graph within a 900-second fetch deadline. Timed-out Git processes
 must terminate their owned helper process group before checkout reuse. Known
 pre-merge depth/shallow-file failures may retry only after unpublished evidence
@@ -196,6 +200,12 @@ The initial October 10 repair missed this case. Its exact pre-model false-confli
 checkout error may resume once after verifying the unchanged remote head and
 unpublished empty-attempt evidence. Preserve attempt IDs and all prior spending;
 never turn real merge conflicts or ambiguous publication into a retry.
+The October 13 recovery retries positively identified optional-gate blocks and
+empty pre-model shallow-file failures once, after checking retained evidence and
+remote publication/head state. Preserve attempt IDs, patches and spending;
+recheck eligibility and obtain fresh independent review. No prior approval carries
+over. A control-switch read failure after startup now stops admission and drains
+active workers; unknown initial control state still cannot start production.
 Fresh generation/review threads share their checkout but not shell activation.
 The controller carries an existing ignored .venv into the next thread's PATH
 and prompt, with an explicit interpreter path for login shells. A system-Python

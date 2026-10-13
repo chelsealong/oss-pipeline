@@ -155,6 +155,45 @@ class ResumptionTests(unittest.TestCase):
     def test_disabled_production_does_not_chain(self):
         with patch.object(cloud_runtime,'cloud_enabled',return_value=False):self.assertFalse(cloud_runtime.successor(True))
         self.assertIsNone(rt.getmeta('runner_restarts'))
+    def test_control_read_timeout_drains_active_workers_before_stopping_host(self):
+        auth=self.root/'auth.json';auth.write_text('{}')
+        socket=self.root/'host.sock';socket.touch()
+        cfg=rt.config()|{'workers':2,'codex_socket':str(socket)}
+        children=[];completed=[]
+        class Process:
+            def __init__(self,args):self.worker='codex_worker.py' in args;self.returncode=None
+            def poll(self):return self.returncode
+            def terminate(process):
+                self.assertFalse(process.worker,'Active worker killed on a control read failure')
+                process.returncode=0
+            def wait(process,timeout=None):return process.returncode
+        def start(args,**kwargs):
+            process=Process(args);children.append(process);return process
+        def finish_work(seconds):
+            self.assertTrue((rt.DATA/'drain').exists())
+            for process in children:
+                if process.worker:process.returncode=0;completed.append(process)
+        with patch.object(cloud_runtime,'configure'),patch.object(rt,'config',return_value=cfg),\
+             patch.object(cloud_runtime,'auth_file',return_value=auth),\
+             patch.object(cloud_runtime,'cloud_enabled',side_effect=[True,subprocess.TimeoutExpired('gh api control',90)]),\
+             patch.object(cloud_store,'restore'),patch.object(cloud_store,'save') as save,\
+             patch.object(worker,'binary',return_value='/bin/fake-codex'),\
+             patch.object(cloud_runtime.subprocess,'Popen',side_effect=start),\
+             patch.object(cloud_runtime.time,'sleep',side_effect=finish_work),\
+             patch.object(cloud_runtime,'rotate_auth',side_effect=lambda previous:previous),\
+             patch.object(cloud_runtime,'successor',return_value=False):
+            cloud_runtime.run('live',60)
+        self.assertEqual(len(completed),2);self.assertGreaterEqual(save.call_count,2)
+        self.assertEqual(rt.getmeta('control_read_failure')['type'],'TimeoutExpired')
+        self.assertIsNone(rt.getmeta('runner_failure'))
+    def test_unknown_initial_control_state_cannot_start_workers(self):
+        auth=self.root/'auth.json';auth.write_text('{}')
+        with patch.object(cloud_runtime,'auth_file',return_value=auth),\
+             patch.object(cloud_runtime,'cloud_enabled',side_effect=subprocess.TimeoutExpired('gh api control',90)),\
+             patch.object(cloud_runtime.subprocess,'Popen') as start,\
+             patch.object(cloud_runtime,'rotate_auth'):
+            with self.assertRaises(subprocess.TimeoutExpired):cloud_runtime.run('live',60)
+        start.assert_not_called()
     def test_failure_successor_requires_stopped_owner_persisted_state_and_auth(self):
         auth=self.root/'auth.json';auth.write_text('{}');output=self.root/'output'
         order=[]

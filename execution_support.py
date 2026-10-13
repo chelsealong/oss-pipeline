@@ -170,6 +170,20 @@ def response_history_complete(work, upstream):
     return not boundary.intersection(above)
 
 
+def prepare_response_base(work, default, pr, pr_number):
+    """Ordinary follow-ups operate on the PR head, not an unsolicited main merge."""
+    import codex_worker as worker
+    original=pr['head']['sha']
+    if worker.git(work,'rev-parse','HEAD')!=original:
+        raise rt.Paused('PR head moved before response preparation')
+    if pr.get('mergeable') is False:
+        return update_response_base(work,default,original,pr_number)
+    # Unknown mergeability is not a claim of being mergeable. CI/review still
+    # decides landing; a reply or scoped code update needs no main integration.
+    return {'original_head':original,'base':original,'merged':False,
+            'mergeable':pr.get('mergeable'),'reason':'No confirmed merge conflict'}
+
+
 def update_response_base(work, default, original_head, pr_number=None):
     """Merge current main locally, without rewriting or publishing PR history."""
     import codex_worker as worker
@@ -179,9 +193,10 @@ def update_response_base(work, default, original_head, pr_number=None):
     for extent in ('--depth=128','--depth=512','--unshallow'):
         if response_history_complete(work,upstream):break
         if worker.git(work,'rev-parse','--is-shallow-repository')=='false':break
-        # Fetch both graph tips together from upstream; omit historical blobs.
+        # Fetch both graph tips together without creating a partial/promisor
+        # repository. Lazy blob fetches must not race an outer shallow update.
         # A fixed depth ceiling cannot handle old PRs in fast-moving repositories.
-        worker.run(['git','fetch','--no-tags','--filter=blob:none',extent,'upstream',
+        worker.run(['git','fetch','--no-tags',extent,'upstream',
                     f'+{default}:{upstream}',f'{source}:{head_ref}'],cwd=work,timeout=900)
         if worker.git(work,'rev-parse',head_ref)!=original_head:
             raise rt.Paused('PR head moved during response history fetch')
@@ -203,7 +218,7 @@ def update_response_base(work, default, original_head, pr_number=None):
 
 
 def managed_check(task,work,folder,key):
-    """Run OpenClaw's slow required gate without model polling or model tokens."""
+    """Explicit rehearsal diagnostic; not an automatic PR-submission gate."""
     if key!='openclaw' or not rt.config().get('cloud_environment'):return
     import codex_worker as worker
     import validation_setup as validation

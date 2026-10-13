@@ -390,14 +390,9 @@ def review_patch(task, work, folder, key, base, result, prompt):
     """At most one repair, always followed by a new immutable review."""
     policy_rechecked=False
     for round_no in range(2):
-        gate_failure=None
-        try:execution.managed_check(task,work,folder,key)
-        except execution.RequiredCheckFailed as error:gate_failure=str(error)
         review_prompt=prompt
         if (folder/'required-check.json').exists():
-            review_prompt+='\nThe controller ran the required full gate outside model time. Verify required-check.json/log against the current HEAD and patch. Run independent focused checks; an unchanged full gate need not be repeated solely because this is a new review phase.\n'
-        if gate_failure:
-            review_prompt+='\nThe mandatory controller gate FAILED. Approval is forbidden. Inspect its log and return BLOCK, repairable=true only for a concrete code/test defect fixable in this checkout; otherwise explain the actual validation obstacle.\n'
+            review_prompt+='\nA previous broad diagnostic is in required-check.json/log. Inspect and disclose its actual result and patch identity. Determine required pre-PR checks from current upstream policy; do not turn optional diagnostics or maintainer landing checks into submission gates. Verify focused tests and applicable lint/type checks independently. Patch-caused failures must be repaired; unrelated baseline failures require evidence and honest disclosure where upstream permits submission.\n'
         before=fingerprint(work)
         name='review' if round_no==0 else 'rereview'
         review=agent(review_prompt,work,folder/(name+'.json'),REVIEW_SCHEMA,timeout=1200,repo_key=key,task=task)
@@ -414,7 +409,6 @@ def review_patch(task, work, folder, key, base, result, prompt):
             if before!=fingerprint(work) or git(work,'rev-parse','HEAD')!=base:
                 raise RuntimeError('policy reviewer changed the patch; approval invalid')
         if review['verdict']=='APPROVE' and review['tests_verified']:
-            if gate_failure:return result,{'verdict':'BLOCK','reason':gate_failure,'tests_verified':False,'repairable':False}
             return result,review
         if round_no or not review['repairable']:return result,review
         # The rejected version and reasoning survive even if remediation crashes.
@@ -426,8 +420,8 @@ restrictions. Do not commit, push, post comments, edit tracked manifests/lockfil
 Use the writable caches and ignored local dependencies as in generation. If the objection cannot be
 resolved with permitted local work, return BLOCKED and explain. Refresh the proposed PR title/body and
 actual test evidence in the requested JSON. Never claim human verification. Foreground commands only.
-For cloud OpenClaw work, the controller runs check:changed after your READY result. Run focused
-tests here and leave that full gate to the controller. Read required-check.json/log if present.
+Run the actual upstream pre-PR checks. For OpenClaw, PR CI supplies broad proof; check:changed
+is an optional diagnostic, not a controller prerequisite. Disclose any observed failure honestly.
 ''',work,folder/'remediation.json',RESPONSE_SCHEMA if task['kind']=='respond' else GEN_SCHEMA,timeout=1200,repo_key=key,task=task)
         if result['outcome']!='READY':
             return result,{'verdict':'BLOCK','reason':result['reason'],'repairable':False,'tests_verified':False}
@@ -525,7 +519,7 @@ def process_one(task):
         if git(work,'rev-parse','HEAD')!=pr['head']['sha']:
             raise rt.Paused('PR head moved before checkout')
         rt.task_state(task['id'],remote_base=pr['head']['sha'])
-        merged=execution.update_response_base(work,default,pr['head']['sha'],num)
+        merged=execution.prepare_response_base(work,default,pr,num)
         rt.task_state(task['id'],remote_base=pr['head']['sha'],base_update=merged)
     base=git(work,'rev-parse','HEAD')
     rt.task_state(task['id'],base=base)
@@ -584,7 +578,9 @@ caches or generated lockfiles. For uv/tox, a missing untracked lockfile may be g
 and removed afterward, but tracked dependency manifests/lockfiles must remain byte-for-byte unchanged.
 RUSTUP_HOME and CARGO_HOME are writable task caches; install the required Rust toolchain there if needed.
 Openclaw excludes src/cron/stagger.ts, src/security, src/secrets and auth under src/gateway/src/agents;
-use its scoped test/check commands. For uncommitted changes run check:changed with --base HEAD;
+use its scoped test/check commands. Follow the current pre-PR contribution policy: focused regression
+proof and targeted checks first, then PR CI provides broad proof. Do not apply maintainer landing gates
+to submission. If an optional check:changed diagnostic is useful, use --base HEAD for uncommitted changes;
 the default origin/main in this shallow fork checkout can select an unrelated repository-wide diff.
 Hermes excludes optional-mcps and hermes_cli/mcp_catalog.py;
 use scripts/run_tests.sh if required by current docs. ComfyUI: CPU-verifiable issues only, no model weights.
@@ -617,9 +613,7 @@ Do not assert personal human validation.
     schema=RESPONSE_SCHEMA if kind=='respond' else GEN_SCHEMA
     prompt+='\nBefore editing, identify required hardware, platform and external services. If unavailable, return the specific validation blocker immediately. If upstream explicitly requires human oversight, retain a minimal tested draft for the exact-patch human review workflow and return BLOCKED with reason beginning HUMAN_REVIEW_REQUIRED: before publication review; do not invent approval. Generic optional attestations are not a gate.\n'
     if kind=='respond':
-        prompt+='\nThe controller fetched shared history and locally merged current upstream into the PR branch. HEAD is the validation base. Do not rebase/commit yourself. Any approved update will be a fast-forward from the original PR head; a reply-only result will not publish the local merge.\n'
-    if key=='openclaw' and rt.config().get('cloud_environment'):
-        prompt+='\nThe controller runs pnpm check:changed --base HEAD after READY and before independent review, outside your model turn. Run focused regression tests and before/after proof now; do not run that full check here. READY requests the controller gate, not publication. State that the full gate is pending; do not claim it passed. All other mandatory validation remains required.\n'
+        prompt+='\nHEAD is the validation base; context.json includes the original remote PR. The controller preserves the branch unless GitHub reports an actual merge conflict. Do not rebase/commit yourself or refresh main merely because it advanced. Any approved update must be a fast-forward from the original PR head. Identify any concrete base-related blocker explicitly.\n'
     if continued:
         prompt+='\nThe controller restored the previous complete source/test patch. Continue that work, inspect prior evidence, and finish only outstanding checks/corrections; do not restart the investigation from scratch. No prior review is reused.\n'
     result=agent(prompt,work,folder/'generation.json',schema,timeout=1200 if continued else 2400,repo_key=key,task=task)
