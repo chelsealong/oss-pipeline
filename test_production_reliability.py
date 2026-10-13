@@ -104,6 +104,7 @@ class ProductionReliabilityTests(unittest.TestCase):
             self.assertTrue(state_dir.is_relative_to(folder/'tool-cache'))
             (state_dir/'pnpm-lock-fixture').write_text('writable')
             self.assertEqual(validation_setup.safe_env(folder/'tool-cache')['XDG_STATE_HOME'],str(state_dir))
+            self.assertEqual(environment['XDG_CONFIG_HOME'],str(folder/'tool-cache/xdg-config'))
             self.assertIn(str(python),request['prompt'])
             return json.dumps({'verdict':'APPROVE','reason':'verified local dependency','tests_verified':True,'repairable':False})
         with patch.object(rt,'config',return_value=cfg),patch.object(worker,'binary',return_value='/fake/codex'),patch.object(codex_host,'execute',side_effect=execute):
@@ -117,6 +118,35 @@ class ProductionReliabilityTests(unittest.TestCase):
         env={'PATH':'/usr/bin'}
         self.assertEqual(execution.validation_environment(work,env),'')
         self.assertEqual(env,{'PATH':'/usr/bin'})
+    def test_langfuse_runs_exclusively_without_stopping_existing_work(self):
+        ordinary=self.task(number=11);heavy=self.task(number=12,repo='langfuse')
+        with rt.db() as db:
+            db.execute("UPDATE tasks SET status='running' WHERE id=?",(ordinary['id'],))
+            self.assertIsNone(worker.next_queued(db,{}))
+            self.assertEqual(db.execute('SELECT status FROM tasks WHERE id=?',(ordinary['id'],)).fetchone()[0],'running')
+            db.execute("UPDATE tasks SET status='done' WHERE id=?",(ordinary['id'],))
+            self.assertEqual(worker.next_queued(db,{})['id'],heavy['id'])
+            db.execute("UPDATE tasks SET status='running' WHERE id=?",(heavy['id'],))
+        self.task(number=13,repo='comfyui')
+        with rt.db() as db:self.assertIsNone(worker.next_queued(db,{}))
+    def test_langfuse_review_inherits_measured_memory_profile(self):
+        task=self.task(repo='langfuse');folder,work,base=self.checkout(task)
+        cfg=rt.config()|{'codex_socket':str(self.root/'fake.sock'),'cloud_environment':True}
+        def execute(request,output):
+            self.assertEqual(request['cache_env']['NODE_OPTIONS'],'--max-old-space-size=8192')
+            self.assertEqual(request['cache_env']['XDG_CONFIG_HOME'],str(folder/'tool-cache/xdg-config'))
+            return json.dumps({'verdict':'APPROVE','reason':'fixture','tests_verified':True,'repairable':False})
+        with patch.object(rt,'config',return_value=cfg),patch.object(worker,'binary',return_value='/fake/codex'),patch.object(codex_host,'execute',side_effect=execute):
+            worker._agent('Review',work,folder/'review.json',worker.REVIEW_SCHEMA,repo_key='langfuse',task=task)
+    def test_validation_recovery_does_not_waive_hardware_or_repeat_memory_repair(self):
+        for key,reason,marker in (
+            ('langfuse','VALIDATION_ENVIRONMENT: Full web lint exhausted the runner’s fixed 4 GiB Node heap twice.','validation_memory_repaired'),
+            ('openclaw','VALIDATION_ENVIRONMENT: Both system and Playwright Chromium aborted before rendering.','browser_config_repaired')):
+            task={'kind':'fix','repo':key,'status':'validation_wait','attempts':3,'result':reason}
+            state={'base':'a'*40}
+            self.assertTrue(task_recovery.submission_regression(task,state))
+            self.assertIsNone(task_recovery.submission_regression(task,state|{marker:{'at':1}}))
+            self.assertIsNone(task_recovery.submission_regression(task|{'result':'Android device unavailable'},state))
     def test_checkpoint_failure_recovery_requires_matching_failure_and_unpublished_patch(self):
         task=self.task(repo='langfuse');folder,work,base=self.checkout(task)
         (work/'value.py').write_text('value = 2\n')

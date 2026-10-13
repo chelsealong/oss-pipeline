@@ -19,6 +19,14 @@ def submission_regression(task,state):
     phase=state.get('last_execution_phase',state.get('phase'))
     reason=task.get('result','')
     failure=rt.getmeta('runner_failure',{})
+    if (task['status']=='validation_wait' and task['repo']=='openclaw' and task['attempts']<=3
+            and state.get('base') and not state.get('browser_config_repaired')
+            and 'Both system and Playwright Chromium aborted before rendering' in reason):
+        return 'browser_config_directory'
+    if (task['status']=='validation_wait' and task['repo']=='langfuse' and task['attempts']<=4
+            and state.get('base') and not state.get('validation_memory_repaired')
+            and 'full web lint' in reason.lower() and '4 GiB Node heap' in reason):
+        return 'langfuse_static_memory'
     if (task['status']=='interrupted' and task['repo']=='langfuse' and task['attempts']<=3
             and phase=='validation' and state.get('base') and not state.get('checkpoint_repaired')
             and failure.get('type')=='TimeoutExpired'
@@ -49,7 +57,7 @@ def recover_submission_regressions():
     from execution_support import retained_progress
     resumed=[]
     with rt.db() as db:
-        tasks=[dict(r) for r in db.execute("SELECT * FROM tasks WHERE status IN ('blocked','error','interrupted') ORDER BY updated")]
+        tasks=[dict(r) for r in db.execute("SELECT * FROM tasks WHERE status IN ('blocked','error','interrupted','validation_wait') ORDER BY updated")]
     for task in tasks:
         if repo_limits.disabled(task['repo']):continue
         state=rt.task_state(task['id']);repair=submission_regression(task,state)
@@ -60,7 +68,7 @@ def recover_submission_regressions():
         if not path:continue
         payload=json.loads(path.read_text())
         if payload['execution'].get('attempt')!=task['attempts']:continue
-        if repair in ('optional_broad_check','ui_screenshot_delivery','checkpoint_resource_failure') and not retained_progress(task):continue
+        if repair in ('optional_broad_check','ui_screenshot_delivery','checkpoint_resource_failure','langfuse_static_memory','browser_config_directory') and not retained_progress(task):continue
         if repair=='unnecessary_main_merge':
             if payload.get('diff') or payload.get('untracked') or payload.get('files') or payload['execution'].get('base'):continue
             with rt.db() as db:
@@ -356,7 +364,9 @@ def requeue(task,repair=None):
             if current['status']=='human_wait':state['policy_gate_rechecked']=True
         state.update(phase='queued',terminal=False,retry_after=0)
         if repair:
-            marker={'ui_screenshot_delivery':'ui_evidence_repaired','checkpoint_resource_failure':'checkpoint_repaired'}.get(repair,'submission_repaired')
+            marker={'ui_screenshot_delivery':'ui_evidence_repaired','checkpoint_resource_failure':'checkpoint_repaired',
+                    'langfuse_static_memory':'validation_memory_repaired',
+                    'browser_config_directory':'browser_config_repaired'}.get(repair,'submission_repaired')
             state[marker]={'at':time.time(),'repair':repair,'attempt':current['attempts']}
         rt._putmeta(db,f"task:{task['id']}",state)
         db.execute("UPDATE tasks SET status='queued',updated=? WHERE id=?",(time.time(),task['id']))

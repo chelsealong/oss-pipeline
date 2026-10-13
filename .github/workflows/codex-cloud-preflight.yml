@@ -141,6 +141,8 @@ jobs:
           subprocess.run(['git','clone','--depth=1','https://github.com/langfuse/langfuse.git',str(work)],check=True,timeout=600)
           with validation.session({'id':'canary'}):
               validation.prepare_langfuse(work,folder)
+              validation.rehearse_browser_config(work,folder)
+              print(validation.rehearse_langfuse_static(work,folder))
           print('Synthetic validation canary passed; no model calls, upstream changes or production writes.')
           PY
       - name: Rehearse real OpenClaw required checks without model calls
@@ -175,7 +177,12 @@ jobs:
           retention-days: 14
       - name: Show synthetic setup diagnostics
         if: failure() && inputs.validation_canary == true
-        run: tail -100 .runtime/validation-canary/validation-setup.log
+        run: |
+          tail -60 .runtime/validation-canary/validation-setup.log
+          if [ -f .runtime/validation-canary/browser-config.log ]; then tail -60 .runtime/validation-canary/browser-config.log; fi
+          for path in .runtime/validation-canary/static-*.log; do
+            if [ -f "$path" ]; then tail -60 "$path"; fi
+          done
       - name: Explicit temporary publication probe
         if: inputs.publication_probe == true
         env:

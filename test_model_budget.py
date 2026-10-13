@@ -196,6 +196,8 @@ class BudgetTests(unittest.TestCase):
         with rt.db() as db:
             db.executemany('INSERT INTO calls VALUES (?,?)',[(time.time(),'codex')]*44)
             self.assertFalse(budget.queue_ready(db,{}))
+            self.assertFalse(budget.queue_ready(db,{'resume_progress':{'phase':'review'}}))
+            db.execute('DELETE FROM calls WHERE rowid=(SELECT MIN(rowid) FROM calls)')
             self.assertTrue(budget.queue_ready(db,{'resume_progress':{'phase':'review'}}))
     def test_finishing_skip_releases_review_reservation(self):
         self.cfg['codex_sessions_per_5h']=3;self.save()

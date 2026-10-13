@@ -99,7 +99,9 @@ def queue_ready(db, state):
     reserved=sum(v['remaining'] for k,v in rt._meta(db,'codex_review_leases',{}).items()
                  if k in active and v.get('until',0)>now)
     spent=db.execute("SELECT count(*) FROM calls WHERE kind='codex' AND at>?",(now-18000,)).fetchone()[0]
-    return spent+reserved+(1 if resumed else 2)<=cfg.get('codex_sessions_per_5h',45)
+    # Resumption still enters generation and must retain a fresh review turn.
+    # Counting it as one admitted repeated checkouts that codex_admit rejected.
+    return spent+reserved+2<=cfg.get('codex_sessions_per_5h',45)
 
 
 def release_review(task_id):

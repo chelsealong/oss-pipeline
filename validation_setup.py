@@ -37,6 +37,7 @@ def safe_env(cache):
     return {'PATH':os.environ.get('PATH','/usr/bin:/bin'),'HOME':str(cache/'home'),
         'COREPACK_HOME':str(cache/'corepack'),'XDG_CACHE_HOME':str(cache/'xdg-cache'),
         'XDG_DATA_HOME':str(cache/'xdg-data'),'XDG_STATE_HOME':str(cache/'xdg-state'),
+        'XDG_CONFIG_HOME':str(cache/'xdg-config'),
         'npm_config_cache':str(cache/'npm'),'npm_config_store_dir':str(cache/'pnpm-store'),
         'CI':'true','NEXT_TELEMETRY_DISABLED':'1',
         'LANG':'C.UTF-8','NODE_OPTIONS':'--max-old-space-size=4096'}
@@ -157,3 +158,36 @@ def prepare_langfuse(work,folder):
         wait_for_web(web,work,cache,log)
     except (subprocess.SubprocessError,OSError) as error:
         raise ValidationUnavailable('Synthetic setup failed: '+type(error).__name__+'; see validation-setup.log') from error
+
+
+def rehearse_langfuse_static(work,folder):
+    """Measure real full-web checks alongside the synthetic stack, without LLMs."""
+    cache=folder/'tool-cache';env=safe_env(cache)|{'NODE_OPTIONS':'--max-old-space-size=8192'}
+    checks=[('lint',['pnpm','--filter','web','run','lint','--concurrency=1']),
+            ('typecheck',['pnpm','--filter','web','run','typecheck'])]
+    results=[]
+    for name,args in checks:
+        started=time.monotonic()
+        with (folder/('static-'+name+'.log')).open('w') as log:
+            process=subprocess.Popen(['/usr/bin/time','-v',*sandbox(work,cache,args)],env=env,
+                stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+            try:code=process.wait(timeout=1200)
+            except BaseException:terminate(process);raise
+        results.append({'check':name,'command':args,'exit_code':code,'seconds':round(time.monotonic()-started,2)})
+        (folder/'static-checks.json').write_text(json.dumps(results,indent=2))
+        if code:raise ValidationUnavailable('Full web '+name+' failed; inspect static-'+name+'.log')
+    return results
+
+
+def rehearse_browser_config(work,folder):
+    """Launch real Chromium with the agent's read-only HOME and writable XDG config."""
+    cache=folder/'tool-cache';env=safe_env(cache)|{'HOME':str(Path.home())}
+    script="""const {chromium}=require('@playwright/test');
+    (async()=>{const b=await chromium.launch({headless:true});try{
+      const p=await b.newPage();await p.setContent('<button>Fixture</button>');
+      if(await p.getByRole('button',{name:'Fixture'}).count()!==1)throw Error('Render failed');
+      const image=await p.screenshot();if(image.length<100)throw Error('Screenshot failed');
+    }finally{await b.close();}})().catch(e=>{console.error(e);process.exit(1)});"""
+    with (folder/'browser-config.log').open('w') as log:
+        subprocess.run(sandbox(work,cache,['pnpm','--filter=web','exec','node','-e',script]),
+            env=env,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=180)

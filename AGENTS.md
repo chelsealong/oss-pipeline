@@ -233,14 +233,23 @@ counts and free-disk telemetry now accompany live runs and checkpoints so a
 runner loss can be distinguished from model and task failures.
 The next October 13 run recorded exhausted RAM/swap followed by checkpoint Git
 push timeouts during concurrent Langfuse validation. The task-owned XDG state
-directory now carries pnpm concurrency locks; Node heaps are bounded to 4 GiB
-and heavy validation runs sequentially with bounded workers and unchanged test
-coverage. Use Langfuse web-scoped commands for web-only work. Checkpoint Git
+directory now carries pnpm concurrency locks; ordinary Node heaps are bounded to
+4 GiB and heavy validation runs sequentially with unchanged test coverage. Live
+full-web lint proved 4 GiB insufficient for Langfuse: it now receives 8 GiB and
+exclusive use of the shared worker runner while its synthetic services are active.
+The zero-model validation rehearsal must run full web lint/typecheck with that
+stack. Use Langfuse web-scoped commands for web-only work. Checkpoint Git
 disables useless encrypted-blob delta searches and auto-GC, limits packing to
 one thread, and terminates its entire owned process group on timeout. Numeric
 per-process RSS diagnostics exclude arguments and environment variables.
 An unpublished retained Langfuse validation task interrupted by this specific
 checkpoint timeout may resume once with its counters preserved and new checks.
+The identified full-web heap-limit blocks and Chromium crashpad startup block
+may likewise resume once, from verified unpublished patches. All agent phases
+now receive a writable task-owned XDG_CONFIG_HOME; browser rehearsal must prove
+Chromium renders and captures with read-only HOME. Hardware/signoff waits remain.
+Queue admission always reserves two calls for resumed generation plus new review;
+one-call admission caused repeated checkouts followed by budget rejection.
 Fresh generation/review threads share their checkout but not shell activation.
 The controller carries an existing ignored .venv into the next thread's PATH
 and prompt, with an explicit interpreter path for login shells. A system-Python
