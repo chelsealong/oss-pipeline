@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791891989.2262015,
+  "saved_at": 1791891993.7625346,
   "tables": {
     "tasks": [
       {
@@ -10670,11 +10670,11 @@
         "repo": "openclaw",
         "number": 169718,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791793020.3311663,
-        "updated": 1791887174.3753247,
+        "updated": 1791891991.3755858,
         "result": "review: The mandatory check:changed gate failed: its dead-export scan reports renderPublicSessionCardSvg as unused. That export is present at HEAD in an untouched file, but current CONTRIBUTING.md still requires checks to pass. The focused memory regression passed independently; it cannot clear the required gate. No applicable pre-submission human-attestation requirement was found.",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 822,
@@ -15244,10 +15244,6 @@
         "value": "{\"at\": 1791887174.3690557, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"optional_broad_check\"}"
       },
       {
-        "key": "task:821",
-        "value": "{\"started\": 1791793023.2379534, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/821/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"ccb7b5f7e5de8e0e6c3bd20030c902d2134e9a15\", \"phase_started\": 1791794538.2928805, \"screening_requests\": {\"2302159c7a41beaebc22\": 1791793040.5105312}, \"generation_started\": 1791793092.332087, \"dispatch_paid_date\": \"2026-10-12\", \"patch_digest\": \"a62e14c26d657e4718b6869a4bac58a4fdd59a39b1280613dcf008af5b409ab0\", \"last_execution_phase\": \"review\", \"finished\": 1791794635.8667786, \"recovery_checked_at\": 1791887173.656441, \"resume_progress\": {\"bundle\": \"821-1.json\", \"sha256\": \"66e7ca85c652f890797617d152e6e12c57bdf3b11c3b8d8a414a19d93d38e90c\", \"base\": \"ccb7b5f7e5de8e0e6c3bd20030c902d2134e9a15\", \"phase\": \"review\"}, \"submission_repaired\": {\"at\": 1791887174.3752065, \"repair\": \"optional_broad_check\", \"attempt\": 1}}"
-      },
-      {
         "key": "followup:task:821",
         "value": "{\"status\": \"resumed\", \"task\": 821}"
       },
@@ -15336,20 +15332,8 @@
         "value": "{\"task\": 842, \"repo\": \"langfuse\", \"attempt\": 3, \"phase\": \"generation\", \"at\": 1791889942.3341012, \"seconds\": 67.689, \"tokens\": {\"totalTokens\": 344352, \"inputTokens\": 341792, \"cachedInputTokens\": 293376, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2560, \"reasoningOutputTokens\": 879}, \"first_event_ms\": 1791889879482, \"last_event_ms\": 1791889942323, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1791890266.5603712, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 5, \"seconds_since_codex_call\": 91.19554495811462, \"judge_tokens_spent_24h\": 34814, \"screening_calls_5h\": 3, \"screening_calls_24h\": 9, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7515\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7515\", \"title\": \"Workflow: node returning None in a later loop iteration leaves its previous output for JoinNode\", \"first_seen\": 1791852187.5247638, \"last_checked\": 1791855469.40007, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791890266.5620372, \"tasks\": {\"fix\": {\"blocked\": 1, \"error\": 1, \"queued\": 3, \"running\": 2, \"skipped\": 25, \"validation_wait\": 1}, \"respond\": {\"error\": 6, \"validation_wait\": 2}}}"
-      },
-      {
         "key": "usage:780:3:generation",
         "value": "{\"task\": 780, \"repo\": \"openclaw\", \"attempt\": 3, \"phase\": \"generation\", \"at\": 1791890287.3886867, \"seconds\": 360.324, \"tokens\": {\"totalTokens\": 4169274, \"inputTokens\": 4160734, \"cachedInputTokens\": 4056576, \"cacheWriteInputTokens\": 0, \"outputTokens\": 8540, \"reasoningOutputTokens\": 2745}, \"first_event_ms\": 1791889933783, \"last_event_ms\": 1791890287354, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791890321.883545"
       },
       {
         "key": "usage:780:3:review",
@@ -15484,14 +15468,6 @@
         "value": "{\"at\": 1791891974.8262196, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1791891975.9236531"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791891975.954734"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791891975.9666615"
       },
@@ -15526,10 +15502,6 @@
       {
         "key": "pause",
         "value": "{}"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791889871.296392, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791891978.5509362, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791889803.226476, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
       },
       {
         "key": "recovery_audit:171",
@@ -15602,6 +15574,34 @@
       {
         "key": "codex_allocations",
         "value": "[{\"at\": 1791875457.6143548, \"group\": \"screening\", \"task\": 836, \"phase\": \"screening-d8a4f65b7939ae859ab9\"}, {\"at\": 1791878613.6721268, \"group\": \"new_fix\", \"task\": 841, \"phase\": \"generation\"}, {\"at\": 1791878714.5641313, \"group\": \"new_fix\", \"task\": 842, \"phase\": \"generation\"}, {\"at\": 1791879027.0208044, \"group\": \"new_fix\", \"task\": 842, \"phase\": \"validation\"}, {\"at\": 1791879394.8361113, \"group\": \"screening\", \"task\": 840, \"phase\": \"screening-93535e7eec06863f06f4\"}, {\"at\": 1791879428.9566288, \"group\": \"new_fix\", \"task\": 840, \"phase\": \"generation\"}, {\"at\": 1791880959.1925473, \"group\": \"new_fix\", \"task\": 844, \"phase\": \"generation\"}, {\"at\": 1791881482.4691656, \"group\": \"new_fix\", \"task\": 843, \"phase\": \"generation\"}, {\"at\": 1791883741.390387, \"group\": \"new_fix\", \"task\": 842, \"phase\": \"generation\"}, {\"at\": 1791883976.3256195, \"group\": \"new_fix\", \"task\": 842, \"phase\": \"validation\"}, {\"at\": 1791887028.1802623, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1791887028.2260678, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1791887031.3462193, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1791887033.4857025, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1791887065.3718224, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1791887068.7001047, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1791887217.8579366, \"group\": \"new_fix\", \"task\": 843, \"phase\": \"generation\"}, {\"at\": 1791887250.0696943, \"group\": \"new_fix\", \"task\": 780, \"phase\": \"generation\"}, {\"at\": 1791889640.7744768, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1791889640.8032987, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1791889644.4911435, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1791889645.4101665, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1791889665.6202524, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1791889682.4793468, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1791889811.9748082, \"group\": \"new_fix\", \"task\": 846, \"phase\": \"generation\"}, {\"at\": 1791889874.647522, \"group\": \"new_fix\", \"task\": 842, \"phase\": \"generation\"}, {\"at\": 1791889927.0680501, \"group\": \"new_fix\", \"task\": 780, \"phase\": \"generation\"}, {\"at\": 1791890175.3573422, \"group\": \"new_fix\", \"task\": 842, \"phase\": \"validation\"}, {\"at\": 1791890290.9123595, \"group\": \"new_fix\", \"task\": 780, \"phase\": \"review\"}, {\"at\": 1791891815.936823, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1791891815.981202, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1791891819.436862, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1791891820.125168, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1791891850.4932187, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1791891860.4826381, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1791891987.8306441, \"group\": \"new_fix\", \"task\": 842, \"phase\": \"generation\"}]"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1791891989.234234, \"state\": \"active\", \"pending_candidates\": 7, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 7, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 7}, \"screening_wait_tasks\": 0, \"active_tasks\": 6, \"seconds_since_codex_call\": 1.3983287811279297, \"judge_tokens_spent_24h\": 32859, \"screening_calls_5h\": 2, \"screening_calls_24h\": 9, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7515\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7515\", \"title\": \"Workflow: node returning None in a later loop iteration leaves its previous output for JoinNode\", \"first_seen\": 1791852187.5247638, \"last_checked\": 1791855469.40007, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791891981.9739459, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791891989.5398211, \"tasks\": {\"fix\": {\"blocked\": 1, \"error\": 1, \"queued\": 4, \"running\": 1, \"skipped\": 25, \"validation_wait\": 1}, \"respond\": {\"error\": 5, \"queued\": 1, \"validation_wait\": 2}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791891990.959667"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791891991.37546, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791891978.5509362, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791889803.226476, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:821",
+        "value": "{\"started\": 1791891991.375632, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"claimed\", \"base\": null, \"phase_started\": 1791794538.2928805, \"screening_requests\": {\"2302159c7a41beaebc22\": 1791793040.5105312}, \"generation_started\": 1791793092.332087, \"dispatch_paid_date\": \"2026-10-12\", \"patch_digest\": \"a62e14c26d657e4718b6869a4bac58a4fdd59a39b1280613dcf008af5b409ab0\", \"last_execution_phase\": \"review\", \"finished\": 1791794635.8667786, \"recovery_checked_at\": 1791887173.656441, \"resume_progress\": {\"bundle\": \"821-1.json\", \"sha256\": \"66e7ca85c652f890797617d152e6e12c57bdf3b11c3b8d8a414a19d93d38e90c\", \"base\": \"ccb7b5f7e5de8e0e6c3bd20030c902d2134e9a15\", \"phase\": \"review\"}, \"submission_repaired\": {\"at\": 1791887174.3752065, \"repair\": \"optional_broad_check\", \"attempt\": 1}}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791891992.9361825"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791891993.1970475"
       }
     ],
     "calls": [
