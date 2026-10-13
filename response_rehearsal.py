@@ -14,11 +14,9 @@ def rehearse(number):
     repo='openclaw/openclaw'
     pr=json.loads(run(['gh','api',f'repos/{repo}/pulls/{number}']))
     head=pr['head']['sha']
-    run(['git','clone','--depth=1','--no-checkout',pr['head']['repo']['clone_url'],str(work)])
+    execution_support.checkout_response(work,'https://github.com/'+repo+'.git',
+        pr['head']['repo']['clone_url'],'main',pr,number)
     def git(*args):return run(['git',*args],work)
-    git('remote','add','upstream','https://github.com/'+repo+'.git')
-    git('fetch','--depth=1','upstream','main:refs/remotes/upstream/main')
-    git('fetch','--depth=1','origin',head);git('checkout','--detach','FETCH_HEAD')
     try:result=execution_support.prepare_response_base(work,'main',pr,number)
     except RuntimeError as error:
         # An independently confirmed real source conflict is an expected held

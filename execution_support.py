@@ -170,6 +170,23 @@ def response_history_complete(work, upstream):
     return not boundary.intersection(above)
 
 
+def checkout_response(work, upstream_url, fork_url, default, pr, pr_number):
+    """Complete commit graph from its authoritative promisor; no shallow upgrades."""
+    import codex_worker as worker
+    worker.run(['git','clone','--filter=blob:none','--single-branch','--branch',default,
+                '--no-checkout',upstream_url,str(work)],timeout=900)
+    worker.git(work,'remote','rename','origin','upstream')
+    worker.git(work,'remote','add','origin',fork_url)
+    target='refs/remotes/upstream/response-head'
+    worker.run(['git','fetch','--no-tags','--filter=blob:none','upstream',
+                f'refs/pull/{pr_number}/head:{target}'],cwd=work,timeout=900)
+    if worker.git(work,'rev-parse',target)!=pr['head']['sha']:
+        raise rt.Paused('PR head moved before checkout')
+    worker.git(work,'checkout','-b',pr['head']['ref'],target)
+    if worker.git(work,'rev-parse','--is-shallow-repository')!='false':
+        raise RuntimeError('Response checkout must have complete commit history')
+
+
 def prepare_response_base(work, default, pr, pr_number):
     """Ordinary follow-ups operate on the PR head, not an unsolicited main merge."""
     import codex_worker as worker

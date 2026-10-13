@@ -80,7 +80,11 @@ jobs:
           OSS_ARTIFACT_KEY: ${{ secrets.OSS_ARTIFACT_KEY }}
           MODE: ${{ inputs.mode || 'live' }}
           RUN_SECONDS: ${{ inputs.run_seconds || '10800' }}
-        run: python -u cloud_runtime.py "$MODE" --seconds "$RUN_SECONDS"
+        run: |
+          python -u runner_resources.py --output .runtime/runner-resources.log &
+          oss_monitor_pid=$!
+          trap 'kill "$oss_monitor_pid" 2>/dev/null || true' EXIT
+          python -u cloud_runtime.py "$MODE" --seconds "$RUN_SECONDS"
       - name: Preserve encrypted recovery evidence
         if: always()
         env:

@@ -189,10 +189,13 @@ merge conflict; advancing main alone does not trigger integration. Publication
 remains a reviewed fast-forward. Cleanup failures remain task-local.
 The response history check must also prove there are no shallow boundaries
 above its candidate merge bases: finding any common ancestor is insufficient.
-When integration is actually needed, fetch main and the PR head together from
-upstream with actual blobs; partial/promisor fetches are no longer mixed with
-shallow graph updates. If two bounded depth attempts cannot prove the base,
-complete the graph within a 900-second fetch deadline. Timed-out Git processes
+The real October 13 history rehearsal also reproduced a 900-second unshallow
+timeout. New response checkouts now clone a complete commit graph with deferred
+blobs directly from upstream, retaining upstream as the authoritative promisor
+and adding the fork only as the publishing remote. Fetch the full PR head without
+depth limits and verify its SHA before checkout. Never mix partial fetches with
+shallow graph updates; real source conflicts remain held. New fixes still use
+shallow, full-blob checkouts. Timed-out Git processes
 must terminate their owned helper process group before checkout reuse. Known
 pre-merge depth/shallow-file failures may retry only after unpublished evidence
 and the unchanged remote PR head are verified. Real conflicts remain blocked.
@@ -206,6 +209,14 @@ remote publication/head state. Preserve attempt IDs, patches and spending;
 recheck eligibility and obtain fresh independent review. No prior approval carries
 over. A control-switch read failure after startup now stops admission and drains
 active workers; unknown initial control state still cannot start production.
+Resumed model turns receive bounded structured findings and inspect the restored
+diff. Do not ask them to read entire base64 evidence bundles or previous event
+transcripts; complete encrypted evidence remains retained for audit. Past test
+claims and approvals are never sufficient for a changed/current patch.
+An October 13 live runner was terminated without its cleanup steps or a Python
+exception. Do not assert an OOM cause without evidence. Numeric RAM, cgroup OOM
+counts and free-disk telemetry now accompany live runs and checkpoints so a
+runner loss can be distinguished from model and task failures.
 Fresh generation/review threads share their checkout but not shell activation.
 The controller carries an existing ignored .venv into the next thread's PATH
 and prompt, with an explicit interpreter path for login shells. A system-Python

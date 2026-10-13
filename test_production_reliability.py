@@ -143,6 +143,29 @@ class ProductionReliabilityTests(unittest.TestCase):
         data['omitted']=[];bundle.write_text(json.dumps(data));entry=execution.retained_progress(task)
         rt.task_state(task['id'],resume_progress=entry);bundle.write_text(bundle.read_text()+' ')
         with self.assertRaisesRegex(RuntimeError,'changed'):execution.restore_progress(task,work,base)
+    def test_resume_context_keeps_findings_without_recursive_base64_transcripts(self):
+        task=self.task();folder,work,base=self.checkout(task)
+        (work/'value.py').write_text('value = 42\n')
+        findings={'outcome':'READY','reason':'fix retained','tests':'3 regressions passed','body':'Focused proof'}
+        (folder/'generation.json').write_text(json.dumps(findings))
+        (folder/'generation.events.jsonl').write_text('OLD_TRANSCRIPT_'*50000)
+        worker.finish(task,'blocked','review needs correction')
+        following=rt.DATA/'jobs'/str(task['id'])/'attempt-2';following.mkdir()
+        path=work_evidence.recovery_context(task['id'],2,following)
+        brief=json.loads(path.read_text())
+        self.assertEqual(brief['results']['generation.json'],findings)
+        self.assertNotIn('OLD_TRANSCRIPT',path.read_text());self.assertLess(path.stat().st_size,2048)
+        self.assertTrue(task_recovery.latest_bundle(task['id']).exists())
+    def test_resource_diagnostics_record_pressure_and_tolerate_unavailable_cgroups(self):
+        import runner_resources
+        memory=self.root/'meminfo';memory.write_text('MemTotal: 16000000 kB\nMemAvailable: 900000 kB\nSwapTotal: 0 kB\nSwapFree: 0 kB\n')
+        events=self.root/'events';events.write_text('oom 2\noom_kill 1\n')
+        value=runner_resources.sample(memory,events,self.root)
+        self.assertLess(value['memory_bytes']['MemAvailable'],1024**3)
+        self.assertEqual(value['memory_events']['oom_kill'],1)
+        events.unlink();memory.unlink()
+        value=runner_resources.sample(memory,events,self.root)
+        self.assertIsNone(value['memory_bytes']);self.assertIsNone(value['memory_events'])
     def test_usage_keeps_last_cumulative_total_and_survives_attempt_cleanup(self):
         task=self.task();folder,work,base=self.checkout(task);output=folder/'generation.json'
         events=[{'method':'thread/tokenUsage/updated','params':{'tokenUsage':{'total':{'inputTokens':n,'cachedInputTokens':n-5,'outputTokens':2}}}} for n in (50,100)]
@@ -282,6 +305,15 @@ class ProductionReliabilityTests(unittest.TestCase):
         with self.assertRaisesRegex(rt.Paused,'PR head moved'):
             execution.update_response_base(work,'main',original,1)
         self.assertEqual(self.git(work,'rev-parse','HEAD'),original)
+    def test_full_graph_response_checkout_refuses_changed_pr_head(self):
+        source,unused,original=self.response_fixture()
+        self.git(source,'update-ref','refs/pull/1/head',self.git(source,'rev-parse','main'))
+        work=self.root/'fresh-response'
+        with self.assertRaisesRegex(rt.Paused,'PR head moved'):
+            execution.checkout_response(work,source.as_uri(),source.as_uri(),'main',
+                {'head':{'sha':original,'ref':'old-pr'}},1)
+        self.assertEqual(self.git(work,'rev-parse','--is-shallow-repository'),'false')
+        self.assertEqual(self.git(work,'branch','--list','old-pr'),'')
     def test_timed_out_git_process_reaps_helper_writers(self):
         marker=self.root/'orphan-write'
         child='import time;from pathlib import Path;time.sleep(1);Path('+repr(str(marker))+').touch()'
@@ -369,8 +401,8 @@ class ProductionReliabilityTests(unittest.TestCase):
             if args[0]=='gh':
                 self.assertEqual(args[:4],['gh','api','--paginate','--slurp'])
                 return '[[]]'
-            if args[:4]==['git','remote','add','upstream']:args=args[:4]+[source.as_uri()]
-            if fail_fetch and args==['git','fetch','--depth=1','origin','old-pr']:
+            if args[0]=='git':args=[source.as_uri() if arg=='https://github.com/openclaw/openclaw.git' else arg for arg in args]
+            if fail_fetch and args[:5]==['git','fetch','--no-tags','--filter=blob:none','upstream']:
                 fetches.append(args)
                 raise subprocess.TimeoutExpired(args,300)
             return real_run(args,**kwargs)
@@ -381,6 +413,9 @@ class ProductionReliabilityTests(unittest.TestCase):
             raise AssertionError('Unexpected API '+path)
         def agent(prompt,work,output,*args,**kwargs):
             self.assertFalse(fail_fetch,'A timed-out checkout must not reach a model')
+            self.assertEqual(self.git(work,'rev-parse','--is-shallow-repository'),'false')
+            self.assertEqual(self.git(work,'config','remote.upstream.promisor'),'true')
+            self.assertEqual(self.git(work,'remote','get-url','origin'),source.as_uri())
             if output.stem=='generation':
                 if outcome=='READY':(work/'fix').write_text('updated fix\n')
                 value={'outcome':outcome,'reason':'addressed','title':'Update fix against main',

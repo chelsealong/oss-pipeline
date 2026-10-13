@@ -132,3 +132,32 @@ def previous(task_id, attempt):
     paths=list((rt.DATA/'evidence').glob(f'{task_id}-*.json'))
     paths=[p for p in paths if int(p.stem.split('-')[-1])<attempt]
     return max(paths,key=lambda p:int(p.stem.split('-')[-1])) if paths else None
+
+
+def recovery_context(task_id, attempt, folder):
+    """Give a resumed turn findings, not base64 transcripts of previous turns."""
+    path=previous(task_id,attempt)
+    if path is None:return None
+    payload=json.loads(path.read_text());state=payload['execution']
+    brief={'previous_attempt':state.get('attempt'),'base':state.get('base'),
+        'phase':state.get('last_execution_phase',state.get('phase')),
+        'notice':'Prior findings are advisory. Inspect the current diff and rerun checks; no old approval carries over.',
+        'results':{},'omitted':[]}
+    budget=24*1024
+    for name in ('generation.json','validation.json','review.json','remediation.json','rereview.json','required-check.json'):
+        encoded=payload.get('files',{}).get(name)
+        if not encoded:continue
+        try:value=json.loads(base64.b64decode(encoded))
+        except (ValueError,UnicodeError):
+            brief['omitted'].append(name+': incomplete structured result');continue
+        if not isinstance(value,dict):continue
+        selected={}
+        for key in ('outcome','verdict','reason','tests','tests_verified','repairable','command','exit_code','title','body','pr_body'):
+            if key not in value:continue
+            size=len(json.dumps(value[key]).encode())
+            if size>budget:
+                brief['omitted'].append(name+': '+key+' exceeds advisory context budget');continue
+            selected[key]=value[key];budget-=size
+        brief['results'][name]=selected
+    target=folder/'recovery-context.json';atomic(target,json.dumps(brief,indent=2).encode())
+    return target

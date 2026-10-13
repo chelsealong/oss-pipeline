@@ -296,6 +296,8 @@ def run(mode,seconds):
             task_recovery.recover_submission_regressions()
             task_recovery.reconcile()
             pr_followup.recover_backlog()
+            import runner_resources
+            rt.setmeta('runner_resources',runner_resources.sample())
             cloud_store.save()
             previous=rotate_auth(previous)
             s=rt.status()
