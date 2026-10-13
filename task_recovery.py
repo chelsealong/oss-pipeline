@@ -18,6 +18,13 @@ def submission_regression(task,state):
     if state.get('publication_started'):return None
     phase=state.get('last_execution_phase',state.get('phase'))
     reason=task.get('result','')
+    failure=rt.getmeta('runner_failure',{})
+    if (task['status']=='interrupted' and task['repo']=='langfuse' and task['attempts']<=3
+            and phase=='validation' and state.get('base') and not state.get('checkpoint_repaired')
+            and failure.get('type')=='TimeoutExpired'
+            and "'HEAD:refs/heads/codex-state'" in failure.get('reason','')
+            and failure.get('at',0)>=state.get('started',float('inf'))):
+        return 'checkpoint_resource_failure'
     if (task['kind']=='fix' and task['repo']=='openclaw' and task['status']=='blocked'
             and phase in ('review','rereview') and task['attempts']<=3
             and not state.get('ui_evidence_repaired')
@@ -42,7 +49,7 @@ def recover_submission_regressions():
     from execution_support import retained_progress
     resumed=[]
     with rt.db() as db:
-        tasks=[dict(r) for r in db.execute("SELECT * FROM tasks WHERE status IN ('blocked','error') ORDER BY updated")]
+        tasks=[dict(r) for r in db.execute("SELECT * FROM tasks WHERE status IN ('blocked','error','interrupted') ORDER BY updated")]
     for task in tasks:
         if repo_limits.disabled(task['repo']):continue
         state=rt.task_state(task['id']);repair=submission_regression(task,state)
@@ -53,7 +60,7 @@ def recover_submission_regressions():
         if not path:continue
         payload=json.loads(path.read_text())
         if payload['execution'].get('attempt')!=task['attempts']:continue
-        if repair in ('optional_broad_check','ui_screenshot_delivery') and not retained_progress(task):continue
+        if repair in ('optional_broad_check','ui_screenshot_delivery','checkpoint_resource_failure') and not retained_progress(task):continue
         if repair=='unnecessary_main_merge':
             if payload.get('diff') or payload.get('untracked') or payload.get('files') or payload['execution'].get('base'):continue
             with rt.db() as db:
@@ -349,7 +356,7 @@ def requeue(task,repair=None):
             if current['status']=='human_wait':state['policy_gate_rechecked']=True
         state.update(phase='queued',terminal=False,retry_after=0)
         if repair:
-            marker='ui_evidence_repaired' if repair=='ui_screenshot_delivery' else 'submission_repaired'
+            marker={'ui_screenshot_delivery':'ui_evidence_repaired','checkpoint_resource_failure':'checkpoint_repaired'}.get(repair,'submission_repaired')
             state[marker]={'at':time.time(),'repair':repair,'attempt':current['attempts']}
         rt._putmeta(db,f"task:{task['id']}",state)
         db.execute("UPDATE tasks SET status='queued',updated=? WHERE id=?",(time.time(),task['id']))

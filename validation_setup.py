@@ -36,6 +36,7 @@ def safe_env(cache):
     # A strict allowlist also excludes future controller secrets.
     return {'PATH':os.environ.get('PATH','/usr/bin:/bin'),'HOME':str(cache/'home'),
         'COREPACK_HOME':str(cache/'corepack'),'XDG_CACHE_HOME':str(cache/'xdg-cache'),
+        'XDG_DATA_HOME':str(cache/'xdg-data'),'XDG_STATE_HOME':str(cache/'xdg-state'),
         'npm_config_cache':str(cache/'npm'),'npm_config_store_dir':str(cache/'pnpm-store'),
         'CI':'true','NEXT_TELEMETRY_DISABLED':'1',
         'LANG':'C.UTF-8','NODE_OPTIONS':'--max-old-space-size=4096'}

@@ -174,6 +174,8 @@ def _agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_ke
                     'COREPACK_HOME':str(cache/'corepack'),
                     'XDG_CACHE_HOME':str(cache/'xdg-cache'),
                     'XDG_DATA_HOME':str(cache/'xdg-data'),
+                    'XDG_STATE_HOME':str(cache/'xdg-state'),
+                    'NODE_OPTIONS':'--max-old-space-size=4096',
                     'npm_config_cache':str(cache/'npm'),
                     'npm_config_store_dir':str(cache/'pnpm-store'),
                     'CARGO_HOME':str(cache/'cargo'),
@@ -194,7 +196,7 @@ def _agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_ke
         roots=[str(work)]
         if cache is not None:roots.append(str(cache))
         if repo_key=='hermes' and cache is not None:roots.append(str(scratch))
-        cache_names=('OSS_TASK_CACHE','COREPACK_HOME','XDG_CACHE_HOME','XDG_DATA_HOME','npm_config_cache',
+        cache_names=('OSS_TASK_CACHE','COREPACK_HOME','XDG_CACHE_HOME','XDG_DATA_HOME','XDG_STATE_HOME','NODE_OPTIONS','npm_config_cache',
                      'npm_config_store_dir','CARGO_HOME','RUSTUP_HOME','UV_CACHE_DIR','UV_PYTHON_INSTALL_DIR','PATH','VIRTUAL_ENV')
         request={'prompt':prompt,'work':str(work),'roots':roots,'schema':schema,'model':model,
             'effort':effort,'cache_env':{k:env[k] for k in cache_names if k in env},
@@ -402,6 +404,7 @@ def review_patch(task, work, folder, key, base, result, prompt):
             review_prompt+='\nReview this change for PR submission/update. Read CONTRIBUTING.md and the openclaw-testing skill for pre-PR requirements. Distinguish focused submission checks from maintainer landing gates: check:changed is an optional broad diagnostic under the current policy, not an automatic submission prerequisite. Cite the applicable requirement for any blocking check and disclose failures honestly.\n'
         if (folder/'required-check.json').exists():
             review_prompt+='\nA previous broad diagnostic is in required-check.json/log. Inspect and disclose its actual result and patch identity. Determine required pre-PR checks from current upstream policy; do not turn optional diagnostics or maintainer landing checks into submission gates. Verify focused tests and applicable lint/type checks independently. Patch-caused failures must be repaired; unrelated baseline failures require evidence and honest disclosure where upstream permits submission.\n'
+        review_prompt+='\nRun heavy validation commands sequentially with bounded workers. For Langfuse web-only work, use the applicable web/AGENTS.md scoped commands; full web lint can run with --concurrency=1 without reducing coverage. Keep the inherited 4 GiB Node heap limit.\n'
         before=fingerprint(work)
         name='review' if round_no==0 else 'rereview'
         review=agent(review_prompt,work,folder/(name+'.json'),REVIEW_SCHEMA,timeout=1200,repo_key=key,task=task)
@@ -630,9 +633,13 @@ Do not assert personal human validation.
     if kind=='respond':
         prompt+='\nHEAD is the validation base; context.json includes the original remote PR. The controller preserves the branch unless GitHub reports an actual merge conflict. Do not rebase/commit yourself or refresh main merely because it advanced. Any approved update must be a fast-forward from the original PR head. Identify any concrete base-related blocker explicitly.\n'
     if continued:
+        prompt+='\nRetained evidence may include an incomplete validation run; independently finish it under current resource limits.\n'
         prompt+='\nThe controller restored the previous complete source/test patch. Continue that work, inspect prior evidence, and finish only outstanding checks/corrections; do not restart the investigation from scratch. No prior review is reused.\n'
     elif adaptation:=rt.task_state(task['id']).get('progress_rebase_needed'):
         prompt+='\nThe saved patch could not apply cleanly to advanced upstream. The checkout is unchanged. Read this retained source (not old event logs): '+json.dumps(adaptation)+'. Recheck whether the issue remains and adapt only the relevant changes to current files if still needed. Do not blindly reapply obsolete code; skip if already fixed or superseded. All current tests and fresh independent review are required.\n'
+    prompt+='\nRunner resource limits: run builds, lint, typechecking and browser suites sequentially, never as concurrent shell calls or background jobs. Wait for each command to finish before starting another heavy check. Use one test/lint worker where supported; do not narrow required coverage. NODE_OPTIONS bounds each Node heap to 4 GiB; XDG_STATE_HOME is task-owned for pnpm concurrency locks. Do not increase heap limits or start competing full-workspace checks.\n'
+    if key=='langfuse':
+        prompt+='\nFor web-only changes, read web/AGENTS.md Quick Commands and use the web-scoped lint/typecheck scripts, not root Turbo tasks that also build unrelated Rust packages. Run the same full web lint with --concurrency=1 to bound memory, sequentially with typecheck. Inspect actual upstream requirements; never describe unavailable or failing checks as passed.\n'
     result=agent(prompt,work,folder/'generation.json',schema,timeout=1200 if continued else 2400,repo_key=key,task=task)
     if (key=='langfuse' and result['outcome']=='BLOCKED'
             and task_recovery.wait_kind(result['reason'])=='validation_wait'):

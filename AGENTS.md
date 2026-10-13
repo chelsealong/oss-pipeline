@@ -231,6 +231,16 @@ An October 13 live runner was terminated without its cleanup steps or a Python
 exception. Do not assert an OOM cause without evidence. Numeric RAM, cgroup OOM
 counts and free-disk telemetry now accompany live runs and checkpoints so a
 runner loss can be distinguished from model and task failures.
+The next October 13 run recorded exhausted RAM/swap followed by checkpoint Git
+push timeouts during concurrent Langfuse validation. The task-owned XDG state
+directory now carries pnpm concurrency locks; Node heaps are bounded to 4 GiB
+and heavy validation runs sequentially with bounded workers and unchanged test
+coverage. Use Langfuse web-scoped commands for web-only work. Checkpoint Git
+disables useless encrypted-blob delta searches and auto-GC, limits packing to
+one thread, and terminates its entire owned process group on timeout. Numeric
+per-process RSS diagnostics exclude arguments and environment variables.
+An unpublished retained Langfuse validation task interrupted by this specific
+checkpoint timeout may resume once with its counters preserved and new checks.
 Fresh generation/review threads share their checkout but not shell activation.
 The controller carries an existing ignored .venv into the next thread's PATH
 and prompt, with an explicit interpreter path for login shells. A system-Python

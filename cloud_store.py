@@ -10,8 +10,14 @@ import cloud_state
 import runtime as rt
 import work_evidence
 
-def command(args, cwd):
-    p=subprocess.run(args,cwd=cwd,capture_output=True,text=True,timeout=90)
+def command(args, cwd, timeout=90):
+    from execution_support import git_process
+    # Encrypted evidence has no reusable deltas. Bound pack memory, disable
+    # background auto-GC, and own every helper so a timeout cannot leave pack
+    # processes consuming the runner while the next retry starts.
+    bounded=(['git','-c','pack.threads=1','-c','pack.window=0','-c','pack.compression=1',
+              '-c','gc.auto=0',*args[1:]] if args[0]=='git' else args)
+    p=git_process(bounded,cwd=cwd,timeout=timeout)
     if p.returncode:
         # Do not log credential-helper output or signed network redirect URLs.
         import re

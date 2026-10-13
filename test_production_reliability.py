@@ -58,6 +58,33 @@ class ProductionReliabilityTests(unittest.TestCase):
             worker.process_one(task)
         self.assertEqual(self.status(task),'skipped');cleanup.assert_not_called()
         with rt.db() as db:self.assertEqual(db.execute('SELECT result FROM tasks WHERE id=?',(task['id'],)).fetchone()[0],'issue closed')
+    def test_checkpoint_git_bounds_pack_without_changing_push_target(self):
+        import cloud_store
+        result=subprocess.CompletedProcess([],0,'saved\n','')
+        with patch.object(execution,'git_process',return_value=result) as run:
+            self.assertEqual(cloud_store.command(['git','push','origin','HEAD:refs/heads/codex-state'],self.root),'saved')
+        command=run.call_args.args[0]
+        self.assertIn('pack.window=0',command);self.assertIn('pack.threads=1',command)
+        self.assertIn('gc.auto=0',command)
+        self.assertEqual(command[-3:],['push','origin','HEAD:refs/heads/codex-state'])
+    def test_checkpoint_timeout_terminates_owned_helpers(self):
+        import cloud_store
+        pidfile=self.root/'helper.pid'
+        script='import subprocess,sys,time; from pathlib import Path; p=subprocess.Popen([sys.executable,"-c","import time; time.sleep(60)"]); Path(sys.argv[1]).write_text(str(p.pid)); time.sleep(60)'
+        with self.assertRaises(subprocess.TimeoutExpired):
+            cloud_store.command([sys.executable,'-c',script,str(pidfile)],self.root,timeout=1)
+        pid=int(pidfile.read_text())
+        status=subprocess.run(['ps','-o','stat=','-p',str(pid)],capture_output=True,text=True).stdout.strip()
+        self.assertTrue(not status or status.startswith('Z'),status)
+    def test_process_memory_diagnostics_never_read_arguments(self):
+        import runner_resources
+        for pid,rss in ((1,100),(2,500)):
+            root=self.root/str(pid);root.mkdir()
+            (root/'status').write_text(f'Name:\tgit\nVmRSS:\t{rss} kB\n')
+            (root/'cmdline').write_text('a sensitive command argument')
+        rows=runner_resources.process_memory(self.root)
+        self.assertEqual(rows[0],{'pid':2,'name':'git','rss_bytes':500*1024})
+        self.assertNotIn('sensitive',json.dumps(rows))
     def test_fresh_review_thread_uses_generation_virtual_environment(self):
         task=self.task();folder,work,base=self.checkout(task)
         (work/'.gitignore').write_text('.venv/\n')
@@ -72,6 +99,11 @@ class ProductionReliabilityTests(unittest.TestCase):
             result=subprocess.run(['python','-c','import oss_test_only_dependency as d; print(d.VALUE)'],cwd=work,env=environment,capture_output=True,text=True,check=True)
             self.assertEqual(result.stdout.strip(),'42')
             self.assertEqual(environment['VIRTUAL_ENV'],str(work/'.venv'))
+            self.assertEqual(environment['NODE_OPTIONS'],'--max-old-space-size=4096')
+            state_dir=Path(environment['XDG_STATE_HOME']);state_dir.mkdir(parents=True,exist_ok=True)
+            self.assertTrue(state_dir.is_relative_to(folder/'tool-cache'))
+            (state_dir/'pnpm-lock-fixture').write_text('writable')
+            self.assertEqual(validation_setup.safe_env(folder/'tool-cache')['XDG_STATE_HOME'],str(state_dir))
             self.assertIn(str(python),request['prompt'])
             return json.dumps({'verdict':'APPROVE','reason':'verified local dependency','tests_verified':True,'repairable':False})
         with patch.object(rt,'config',return_value=cfg),patch.object(worker,'binary',return_value='/fake/codex'),patch.object(codex_host,'execute',side_effect=execute):
@@ -85,6 +117,24 @@ class ProductionReliabilityTests(unittest.TestCase):
         env={'PATH':'/usr/bin'}
         self.assertEqual(execution.validation_environment(work,env),'')
         self.assertEqual(env,{'PATH':'/usr/bin'})
+    def test_checkpoint_failure_recovery_requires_matching_failure_and_unpublished_patch(self):
+        task=self.task(repo='langfuse');folder,work,base=self.checkout(task)
+        (work/'value.py').write_text('value = 2\n')
+        rt.task_state(task['id'],attempt=3,phase='validation',started=100,last_execution_phase='validation')
+        with rt.db() as db:db.execute("UPDATE tasks SET status='interrupted',attempts=3 WHERE id=?",(task['id'],))
+        work_evidence.capture(task['id'])
+        self.assertEqual(task_recovery.recover_submission_regressions(),[])
+        failure={'at':200,'type':'TimeoutExpired','reason':"Command '['git', 'push', 'origin', 'HEAD:refs/heads/codex-state']' timed out after 90 seconds"}
+        rt.setmeta('runner_failure',failure)
+        with patch.object(task_recovery,'audited_unpublished',return_value=(True,'verified absent')):
+            self.assertEqual(task_recovery.recover_submission_regressions(),[task['id']])
+        state=rt.task_state(task['id']);self.assertIn('checkpoint_repaired',state)
+        self.assertIn('resume_progress',state)
+        with rt.db() as db:
+            self.assertEqual(db.execute('SELECT attempts FROM tasks WHERE id=?',(task['id'],)).fetchone()[0],3)
+            db.execute("UPDATE tasks SET status='interrupted' WHERE id=?",(task['id'],))
+        rt.task_state(task['id'],recovery_checked_at=0)
+        self.assertEqual(task_recovery.recover_submission_regressions(),[])
     def test_retry_claim_cannot_erase_completed_logs_or_patch(self):
         task=self.task();folder,work,base=self.checkout(task)
         (work/'value.py').write_text('value = 2\n')
