@@ -1,217 +1,71 @@
 name: Codex cloud preflight
-
-# Read-only by default; the optional temporary PR probe requires explicit user
-# authorization. Neither mode calls a model or changes the production switch.
 on:
   workflow_dispatch:
-    inputs:
-      publication_probe:
-        description: Explicitly requested temporary Hermes PR; close immediately after creation
-        type: boolean
-        default: false
-      validation_canary:
-        description: Rehearse synthetic Langfuse database, web and Chromium setup (no model or PR)
-        type: boolean
-        default: false
-      production_rehearsal:
-        description: Validate an existing real OpenClaw PR in the controller sandbox (no model or publication)
-        type: boolean
-        default: false
-      response_rehearsal:
-        description: Rehearse existing OpenClaw PR base update without model calls or publication
-        type: boolean
-        default: false
-
 permissions:
   contents: read
-
 concurrency:
-  group: codex-cloud-preflight
+  group: codex-evidence-diagnostic
   cancel-in-progress: false
-
 jobs:
-  verify:
+  diagnose:
     runs-on: ubuntu-24.04
-    timeout-minutes: 75
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24.21.0'
-      - name: Install pinned Codex CLI and test dependency
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install --no-install-recommends -y ripgrep bubblewrap apparmor-profiles apparmor-utils libnss3 libnspr4 libatk1.0-0t64 libatk-bridge2.0-0t64 libcups2t64 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libcairo2 libpango-1.0-0 libasound2t64
-          sudo install -m 0644 /usr/share/apparmor/extra-profiles/bwrap-userns-restrict /etc/apparmor.d/bwrap-userns-restrict
-          sudo apparmor_parser -r /etc/apparmor.d/bwrap-userns-restrict
-          corepack enable
-          npm install --global @openai/codex@0.159.3
-          bash install-validation-tools.sh
-          python -m pip install PyYAML==6.0.3 cryptography==48.0.1 'aiohttp>=3.11.8,<4' 'pytest-aiohttp>=1,<2' 'pytest-asyncio>=1,<2' 'websocket-client>=1,<2'
-      - name: Check portable runtime and offline regressions
-        run: |
-          codex --version
-          node --version
-          corepack --version
-          command -v pnpm
-          python -c 'import aiohttp, pytest_aiohttp, pytest_asyncio, websocket'
-          gh --version
-          command -v rg
-          ./verify.sh
-      - name: Confirm credential readiness without exposing values
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
-          QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
-          CODEX_AUTH_JSON: ${{ secrets.CODEX_AUTH_JSON }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OSS_ARTIFACT_KEY: ${{ secrets.OSS_ARTIFACT_KEY }}
-        run: |
-          python - <<'PY'
-          import os
-          from pathlib import Path
-          rows = ['## Codex cloud preflight', '',
-                  'Runtime/credential validation; this workflow does not change the production switch.', '']
-          for name in ['GH_TOKEN','QWEN_API_KEY','CODEX_AUTH_JSON','OPENAI_API_KEY']:
-              rows.append(f'- {name}: '+('configured' if os.environ.get(name) else 'not configured'))
-          Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(rows)+'\n')
-          if not os.environ.get('GH_TOKEN'):
-              raise SystemExit('Missing GH_PAT')
-          import work_evidence
-          assert work_evidence.decrypt(work_evidence.encrypt(b'preflight'))==b'preflight'
-          # Keep credential identity comparisons encrypted, even for a public repo.
-          # This makes cloud/local permission discrepancies diagnosable without
-          # exporting a token or assuming the desktop login equals GH_PAT.
-          import hashlib, json, urllib.request
-          token=os.environ['GH_TOKEN']
-          diagnostic={'fingerprint':hashlib.sha256(token.encode()).hexdigest(),'repositories':{}}
-          for endpoint in ['user','repos/NousResearch/hermes-agent','repos/chelsealong/hermes-agent']:
-              request=urllib.request.Request('https://api.github.com/'+endpoint,
-                  headers={'Authorization':'Bearer '+token,'User-Agent':'oss-pipeline-preflight'})
-              with urllib.request.urlopen(request,timeout=30) as response:
-                  value=json.load(response)
-                  diagnostic['oauth_scopes']=response.headers.get('X-OAuth-Scopes')
-              if endpoint=='user':diagnostic['actor']={'login':value['login'],'id':value['id']}
-              else:diagnostic['repositories'][endpoint]={k:value.get(k) for k in ('full_name','archived','disabled','permissions')}
-          work_evidence.atomic(Path('.runtime/preflight-github.json.enc'),work_evidence.encrypt(json.dumps(diagnostic).encode()))
-          rows.append('- Encrypted recovery key: verified')
-          Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(rows)+'\n')
-          PY
-          gh api user --jq '"GitHub authentication verified for: " + .login'
-      - name: Rehearse restoration of real cloud state without modifying production
+      - run: python -m pip install cryptography==48.0.1
+      - name: Summarize retained execution signals without exposing agent logs
         env:
           OSS_ARTIFACT_KEY: ${{ secrets.OSS_ARTIFACT_KEY }}
-        run: |
-          python - <<'PY'
-          import json, os, subprocess, tempfile
-          from pathlib import Path
-          from unittest.mock import patch
-          import cloud_store, runtime as rt
-          with tempfile.TemporaryDirectory() as directory:
-              root=Path(directory);store=root/'cloud-state';isolated=root/'isolated';isolated.mkdir()
-              subprocess.run(['git','clone','--quiet','--depth=1','--single-branch','--branch','codex-state',
-                  'https://github.com/chelsealong/oss-pipeline.git',str(store)],check=True,timeout=90)
-              snapshot=json.loads((store/'checkpoint.json').read_text())
-              with patch.object(rt,'ROOT',isolated),patch.object(rt,'DATA',isolated/'.runtime'),patch.object(rt,'CONFIG',isolated/'runtime.json'),patch.dict(os.environ,{'OSS_CLOUD_STATE_DIR':str(store)}):
-                  cloud_store.restore()
-                  with rt.db() as db:
-                      assert db.execute('SELECT count(*) FROM tasks').fetchone()[0]==len(snapshot['tables']['tasks'])
-                      assert db.execute('SELECT count(*) FROM calls').fetchone()[0]==len(snapshot['tables']['calls'])
-                      assert db.execute("SELECT count(*) FROM tasks WHERE status='running'").fetchone()[0]==0
-                  assert rt.getmeta('health') is None
-                  encrypted=list((store/'evidence').glob('*.json.enc'))
-                  for path in encrypted:
-                      restored=json.loads((rt.DATA/'evidence'/path.name.removesuffix('.enc')).read_text())
-                      assert restored['task']>0
-                  print('Real cloud restore verified:',len(snapshot['tables']['tasks']),'tasks,',len(encrypted),'authenticated evidence bundles; no production writes.')
-          PY
-      - name: Rehearse synthetic browser and database validation
-        if: inputs.validation_canary == true
-        run: |
-          python -u - <<'PY'
-          import subprocess
-          import validation_setup as validation
-          import runtime as rt
-          folder=rt.DATA/'validation-canary';folder.mkdir(parents=True,exist_ok=True)
-          work=folder/'work'
-          subprocess.run(['git','clone','--depth=1','https://github.com/langfuse/langfuse.git',str(work)],check=True,timeout=600)
-          with validation.session({'id':'canary'}):
-              validation.prepare_langfuse(work,folder)
-          print('Synthetic validation canary passed; no model calls, upstream changes or production writes.')
-          PY
-      - name: Rehearse real OpenClaw required checks without model calls
-        if: inputs.production_rehearsal == true
-        run: python -u production_rehearsal.py
-      - name: Rehearse real OpenClaw PR base update without publication
-        if: inputs.response_rehearsal == true
-        env:
           GH_TOKEN: ${{ github.token }}
-        run: python -u response_rehearsal.py
-      - uses: actions/upload-artifact@v4
-        if: always() && inputs.response_rehearsal == true
-        with:
-          name: response-rehearsal-${{ github.run_id }}
-          path: .runtime/response-rehearsal/result.json
-          include-hidden-files: true
-          retention-days: 14
-      - name: Show bounded real repository validation diagnostics
-        if: failure() && inputs.production_rehearsal == true
-        run: |
-          for path in .runtime/production-rehearsal/install.log .runtime/production-rehearsal/required-check.log; do
-            if [ -f "$path" ]; then tail -60 "$path"; fi
-          done
-      - uses: actions/upload-artifact@v4
-        if: always() && inputs.production_rehearsal == true
-        with:
-          name: production-rehearsal-${{ github.run_id }}
-          path: |
-            .runtime/production-rehearsal/result.json
-            .runtime/production-rehearsal/required-check.json
-          include-hidden-files: true
-          retention-days: 14
-      - name: Show synthetic setup diagnostics
-        if: failure() && inputs.validation_canary == true
-        run: tail -100 .runtime/validation-canary/validation-setup.log
-      - name: Explicit temporary publication probe
-        if: inputs.publication_probe == true
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           python - <<'PY'
-          import json, os, subprocess
-          from pathlib import Path
-          repo='NousResearch/hermes-agent';head='chelsealong:fix/codex-hermes-132989'
-          title='Temporary cloud permission check — '+os.environ['GITHUB_RUN_ID']
-          def gh(*args):return subprocess.run(['gh',*args],capture_output=True,text=True,check=True,timeout=90).stdout.strip()
-          existing=json.loads(gh('pr','list','--repo',repo,'--head',head,'--state','open','--json','number'))
-          if existing:raise SystemExit('An existing PR owns this branch; refusing test publication')
-          body=Path('.runtime/permission-probe-body.txt')
-          body.write_text('Temporary cloud publication check explicitly requested by the contributor. This PR will be closed immediately; please do not review. It is excluded from contribution counts.\n')
-          try:
-              result=subprocess.run(['gh','pr','create','--repo',repo,'--base','main','--head',head,
-                  '--title',title,'--body-file',str(body)],capture_output=True,text=True,timeout=90)
-              if result.returncode:raise RuntimeError(result.stderr[-1000:])
-              print('Created temporary PR:',result.stdout.strip())
-          finally:
-              # Reconcile even an ambiguous CLI timeout; close only this exact
-              # explicitly requested probe, never a real contribution PR.
-              rows=json.loads(gh('pr','list','--repo',repo,'--head',head,'--state','all','--json','number,title,author,state,url'))
-              ours=[r for r in rows if r['title']==title and r['author']['login']=='chelsealong']
-              for pr in ours:
-                  if pr['state']=='OPEN':gh('pr','close',str(pr['number']),'--repo',repo)
-                  state=json.loads(gh('pr','view',str(pr['number']),'--repo',repo,'--json','state'))['state']
-                  if state!='CLOSED':raise RuntimeError('Temporary PR needs cleanup: '+pr['url'])
-                  print('Verified temporary PR closed:',pr['url'])
-              if len(ours)!=1:raise RuntimeError('Cloud publication was not verified')
+          import base64,collections,json,os,re,urllib.request,zlib
+          from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+          key=base64.b64decode(os.environ['OSS_ARTIFACT_KEY'],validate=True)
+          features={
+            'broad_kill':r'\b(?:pkill|killall)\b|kill\s+(?:-9\s+)?-1\b|os\.killpg',
+            'runner_target':r'Runner\.(?:Worker|Listener)|pkill[^\n]*runner',
+            'build':r'\b(?:build|tsc|webpack|next)\b',
+            'tests':r'\b(?:vitest|pytest|test|jest)\b',
+            'install':r'\b(?:install|pnpm i|uv sync|npm ci)\b',
+            'browser':r'playwright|chromium|puppeteer',
+            'docker':r'\bdocker\b',
+            'git_history':r'git (?:fetch|merge|rebase)',
+            'oom':r'out of memory|heap limit|OOM|ENOMEM|Cannot allocate memory',
+            'disk_full':r'ENOSPC|No space left on device',
+            'killed':r'SIGKILL|exit(?:ed)? (?:with )?code 137|Killed|signal 9',
+            'timeout':r'timed out|ETIMEDOUT',
+          }
+          for task,attempt in [(780,2),(843,2),(842,2)]:
+            url=f'https://api.github.com/repos/chelsealong/oss-pipeline/contents/evidence/{task}-{attempt}.json.enc?ref=63866643de99dc6aaec02d392e2bfd9bf112a58b'
+            request=urllib.request.Request(url,headers={'Accept':'application/vnd.github.raw+json','Authorization':'Bearer '+os.environ['GH_TOKEN']})
+            with urllib.request.urlopen(request,timeout=60) as response: raw=response.read()
+            assert raw.startswith(b'OSSE1')
+            payload=json.loads(zlib.decompress(AESGCM(key).decrypt(raw[5:17],raw[17:],b'oss-pipeline-evidence-v1')))
+            rows=[];counts=collections.Counter();usage=None;log_flags=collections.Counter()
+            for name,value in payload.get('files',{}).items():
+              if not name.endswith(('.jsonl','.log')):continue
+              content=base64.b64decode(value).decode(errors='replace')
+              for label,pattern in features.items():
+                if label in ('oom','disk_full','killed','timeout'):log_flags[label]+=len(re.findall(pattern,content,re.I))
+              if not name.endswith('.jsonl'):continue
+              for line in content.splitlines():
+                try: event=json.loads(line)
+                except ValueError:continue
+                event=event.get('event',event);method=event.get('method','');data=event.get('params',{});counts[method]+=1
+                if method=='thread/tokenUsage/updated':usage=data.get('tokenUsage',{}).get('total')
+                item=data.get('item',{})
+                if method not in ('item/started','item/completed'):continue
+                command=item.get('command','');command=json.dumps(command) if not isinstance(command,str) else command
+                row={'event':method,'type':item.get('type'),'status':item.get('status'),'exit':item.get('exitCode'),
+                     'duration_ms':item.get('durationMs'),'at':event.get('emittedAtMs'),
+                     'features':[label for label,pattern in features.items() if re.search(pattern,command,re.I)]}
+                output=item.get('aggregatedOutput','')
+                row['failure_signals']=[label for label in ('oom','disk_full','killed','timeout') if re.search(features[label],output,re.I)]
+                rows.append(row)
+            print(json.dumps({'task':task,'attempt':attempt,'phase':payload['execution'].get('phase'),
+                'event_counts':counts,'usage':usage,'log_signals':log_flags,'recent_tools':rows[-24:],
+                'process_control_events':[row for row in rows if 'broad_kill' in row['features'] or 'runner_target' in row['features']]}))
           PY
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: encrypted-preflight-${{ github.run_id }}
-          path: .runtime/preflight-github.json.enc
-          include-hidden-files: true
-          retention-days: 14
