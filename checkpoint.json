@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791889864.4450448,
+  "saved_at": 1791889866.523545,
   "tables": {
     "tasks": [
       {
@@ -10956,9 +10956,9 @@
         "repo": "langfuse",
         "number": 18676,
         "note": "",
-        "status": "interrupted",
+        "status": "queued",
         "created": 1791878810.0228822,
-        "updated": 1791889767.4867687,
+        "updated": 1791889865.151135,
         "result": "Previous runner ended during task; inspect remote before retry",
         "attempts": 2
       },
@@ -15228,14 +15228,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7286\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABbg1Q9g@2026-10-13T08:17:25Z\", \"author\": \"surajksharma07\", \"when\": \"2026-10-13T08:17:25Z\", \"kind\": \"comment\", \"assoc\": \"COLLABORATOR\", \"body\": \"Re-merged #7492 onto today's main (8350c14) with no conflicts @jabrailkhalil and got the same result: 7 passed / 5 xfailed and with --runxfail only the intended five fail. The sessions suite has no new failures (the only ones are vertex tests that need the gcp extra, same as on main).\\n\\nOne more spot for the eventual fix: the marker-less staleness fallback in database_session_service.py (~L627-639) picks the \\\"latest\\\" stored event by (timestamp, id) too. So with ties it can flag a fresh session as stale or let a stale one through which means the sequence column has to drive that lookup as well not just get_session. Probably worth a line in the PR description.\\n\\nSince the tests hold whichever order is picked would you be open to marking it ready for review so it can land on its own? The title still reads \\\"I cover\\\" if you want to tidy that at the same time. Nothing has changed for DatabaseSessionService on main and there's no release after v2.11.0 so @rishwanth-th's override is still the workaround.\\n\\n@DeanChensj gentle ping on primary append order vs tie-break only and on the 2 pending workflows for #7492.\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
       {
-        "key": "recovery_audit:843",
-        "value": "{\"at\": 1791883801.8597724, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
-      },
-      {
-        "key": "followup:task:843",
-        "value": "{\"status\": \"resumed\", \"task\": 843}"
-      },
-      {
         "key": "usage:842:2:generation",
         "value": "{\"task\": 842, \"repo\": \"langfuse\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1791883804.8136322, \"seconds\": 63.426, \"tokens\": {\"totalTokens\": 316038, \"inputTokens\": 313995, \"cachedInputTokens\": 251776, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2043, \"reasoningOutputTokens\": 504}, \"first_event_ms\": 1791883745777, \"last_event_ms\": 1791883804805, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -15512,14 +15504,6 @@
         "value": "{\"started\": 1791889854.7025857, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"skipped\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1791889858.9335012, \"generation_started\": 1791857049.6545513, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791859752.1245003, \"patch_digest\": \"83c20b1bf4904c0649d7ccc36bf9f2c3a63d0aee07effae435c14305c293b00f\", \"recovery_checked_at\": 1791889770.9810421, \"resume_progress\": {\"bundle\": \"807-1.json\", \"sha256\": \"b10555faf3bf0dc28655583695dd15b3d42cf4ac1f0f1a66341aeae56b70e176\", \"base\": \"ebf0a83c6bb396e52aaeb3cdfd9999fb22c288da\", \"phase\": \"review\"}, \"submission_repaired\": {\"at\": 1791889771.7537081, \"repair\": \"optional_broad_check\", \"attempt\": 1}}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1791889860.3822985"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791889860.4431953"
-      },
-      {
         "key": "task:219",
         "value": "{\"recovery_checked_at\": 1791889860.8490837}"
       },
@@ -15564,16 +15548,32 @@
         "value": "{\"status\": \"resumed\", \"task\": 780}"
       },
       {
-        "key": "task:843",
-        "value": "{\"started\": 1791887206.9528227, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/843/attempt-2\", \"attempt\": 2, \"phase\": \"generation\", \"base\": \"1be9751db27b4f1c8725fe43e19de97106e7504e\", \"generation_started\": 1791881482.468881, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791887219.8310454, \"recovery_checked_at\": 1791889864.3688085, \"resume_progress\": {\"bundle\": \"843-1.json\", \"sha256\": \"788fc116ec04158b900ee8daf464890372570ab3e159d68fde23a8f42a222912\", \"base\": \"314cd9b59005372bd1863362e53a35ddaab23664\", \"phase\": \"generation\"}, \"progress_restored\": true, \"restored_from\": \"843-1.json\"}"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791889854.7023742, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791889864.4362226, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791889803.226476, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
       },
       {
         "key": "task:842",
         "value": "{\"started\": 1791889864.4364297, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 3, \"phase\": \"claimed\", \"base\": null, \"generation_started\": 1791878714.5639026, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791883978.9555402, \"validation_bootstrap_version\": \"1\", \"last_execution_phase\": \"validation\", \"finished\": 1791881460.6073108, \"resume_progress\": {\"bundle\": \"842-2.json\", \"sha256\": \"f2c300a453066a37dbe7f69c90e86a369c0ce67fb31cecbf3ffbdc15162e032a\", \"base\": \"0ea9fdef0bda23e16bf5a45f94486e5ffd5f7a5f\", \"phase\": \"validation\"}, \"timeout_continuations\": 1, \"progress_restored\": true, \"restored_from\": \"842-1.json\", \"recovery_checked_at\": 1791889862.9157906}"
+      },
+      {
+        "key": "recovery_audit:843",
+        "value": "{\"at\": 1791889865.1475897, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
+      },
+      {
+        "key": "task:843",
+        "value": "{\"started\": 1791887206.9528227, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/843/attempt-2\", \"attempt\": 2, \"phase\": \"queued\", \"base\": \"1be9751db27b4f1c8725fe43e19de97106e7504e\", \"generation_started\": 1791881482.468881, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791887219.8310454, \"recovery_checked_at\": 1791889864.3688085, \"resume_progress\": {\"bundle\": \"843-2.json\", \"sha256\": \"b473db1b81bb2e818c0a150150b547360b78d32da669e655ff5d176e879d6536\", \"base\": \"1be9751db27b4f1c8725fe43e19de97106e7504e\", \"phase\": \"generation\"}, \"progress_restored\": true, \"restored_from\": \"843-1.json\"}"
+      },
+      {
+        "key": "followup:task:843",
+        "value": "{\"status\": \"resumed\", \"task\": 843}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791889865.390145"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791889865.4432914"
       }
     ],
     "calls": [
