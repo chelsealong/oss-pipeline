@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791887179.5945895,
+  "saved_at": 1791887194.2487247,
   "tables": {
     "tasks": [
       {
@@ -10137,11 +10137,11 @@
         "repo": "openclaw",
         "number": 169185,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791734719.5623984,
-        "updated": 1791887175.011129,
+        "updated": 1791887194.241521,
         "result": "review: The mandatory `pnpm check:changed --base HEAD` gate failed its hard-zero dead-export scan. Its two findings are in unchanged files and are present at HEAD, but current policy does not waive the required gate here. Independent focused tests passed (90/90), and the before/after UI screenshots support the header change. The proposed PR body must also report the gate failure instead of saying it is pending.",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 781,
@@ -15214,98 +15214,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7286\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABbg1Q9g@2026-10-13T08:17:25Z\", \"author\": \"surajksharma07\", \"when\": \"2026-10-13T08:17:25Z\", \"kind\": \"comment\", \"assoc\": \"COLLABORATOR\", \"body\": \"Re-merged #7492 onto today's main (8350c14) with no conflicts @jabrailkhalil and got the same result: 7 passed / 5 xfailed and with --runxfail only the intended five fail. The sessions suite has no new failures (the only ones are vertex tests that need the gcp extra, same as on main).\\n\\nOne more spot for the eventual fix: the marker-less staleness fallback in database_session_service.py (~L627-639) picks the \\\"latest\\\" stored event by (timestamp, id) too. So with ties it can flag a fresh session as stale or let a stale one through which means the sequence column has to drive that lookup as well not just get_session. Probably worth a line in the PR description.\\n\\nSince the tests hold whichever order is picked would you be open to marking it ready for review so it can land on its own? The title still reads \\\"I cover\\\" if you want to tidy that at the same time. Nothing has changed for DatabaseSessionService on main and there's no release after v2.11.0 so @rishwanth-th's override is still the workaround.\\n\\n@DeanChensj gentle ping on primary append order vs tie-break only and on the 2 pending workflows for #7492.\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
       {
-        "key": "task:44",
-        "value": "{\"recovery_checked_at\": 1791883718.6731656}"
-      },
-      {
-        "key": "recovery_audit:44",
-        "value": "{\"at\": 1791883719.6865065, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:45",
-        "value": "{\"recovery_checked_at\": 1791883719.6884801}"
-      },
-      {
-        "key": "recovery_audit:45",
-        "value": "{\"at\": 1791883720.6435971, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:54",
-        "value": "{\"recovery_checked_at\": 1791883720.6469452}"
-      },
-      {
-        "key": "recovery_audit:54",
-        "value": "{\"at\": 1791883721.633301, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:55",
-        "value": "{\"recovery_checked_at\": 1791883721.6351323}"
-      },
-      {
-        "key": "recovery_audit:55",
-        "value": "{\"at\": 1791883722.7293181, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:57",
-        "value": "{\"recovery_checked_at\": 1791883722.7319934}"
-      },
-      {
-        "key": "recovery_audit:57",
-        "value": "{\"at\": 1791883723.6520786, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:58",
-        "value": "{\"recovery_checked_at\": 1791883723.65383}"
-      },
-      {
-        "key": "recovery_audit:58",
-        "value": "{\"at\": 1791883724.6267297, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:60",
-        "value": "{\"recovery_checked_at\": 1791883724.7984924}"
-      },
-      {
-        "key": "recovery_audit:60",
-        "value": "{\"at\": 1791883726.135516, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:61",
-        "value": "{\"recovery_checked_at\": 1791883726.1374862}"
-      },
-      {
-        "key": "recovery_audit:61",
-        "value": "{\"at\": 1791883727.0889163, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:166",
-        "value": "{\"recovery_checked_at\": 1791883728.4425504}"
-      },
-      {
-        "key": "recovery_audit:166",
-        "value": "{\"at\": 1791883729.3814416, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:167",
-        "value": "{\"recovery_checked_at\": 1791883729.3833601}"
-      },
-      {
-        "key": "recovery_audit:167",
-        "value": "{\"at\": 1791883730.1751685, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:171",
-        "value": "{\"recovery_checked_at\": 1791883730.1776574}"
-      },
-      {
-        "key": "pause",
-        "value": "{}"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791880856.0041838, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791883730.8727388, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791793672.2339332, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
-      },
-      {
         "key": "recovery_audit:171",
         "value": "{\"at\": 1791883731.0869634, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -15410,10 +15318,6 @@
         "value": "{\"at\": 1791884448.4095485, \"tasks\": {\"fix\": {\"blocked\": 4, \"queued\": 1, \"running\": 1, \"skipped\": 24, \"validation_wait\": 1}, \"respond\": {\"error\": 6, \"validation_wait\": 2}}}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1791884536.2708378, \"windows\": [{\"name\": \"primary\", \"used_percent\": 2, \"resets_at\": 1792473656}]}"
-      },
-      {
         "key": "discovery_error",
         "value": "{\"at\": 1791884747.743212, \"error\": \"Command '['gh', 'api', 'graphql', '-f', 'query={ rateLimit { cost remaining } r0: repository(owner:\\\"google\\\", name:\\\"adk-python\\\") {  issues(first:5, states:OPEN,         orderBy:{field:CREATED_AT, direction:DESC}) {    nodes { number title url createdAt body author{login}             assignees(first:20){ totalCount nodes{login} }             comments { totalCount }             labels(first:20){ nodes { name } } }  }} r1: repository(owner:\\\"langfuse\\\", name:\\\"langfuse\\\") {  issues(first:5, states:OPEN,\"}"
       },
@@ -15448,10 +15352,6 @@
       {
         "key": "recovery_audit:780",
         "value": "{\"at\": 1791887175.00376, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"optional_broad_check\"}"
-      },
-      {
-        "key": "task:780",
-        "value": "{\"started\": 1791852226.634942, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/780/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"993a793007d479a047ab9875b01863e1ba5093da\", \"last_execution_phase\": \"review\", \"finished\": 1791854068.387993, \"generation_started\": 1791852293.471084, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791854005.8157623, \"patch_digest\": \"74fc439213efc0a050950ab8e0cea6511f164c224021f63ad9b37d1771f89ff0\", \"recovery_checked_at\": 1791887174.3846986, \"resume_progress\": {\"bundle\": \"780-1.json\", \"sha256\": \"7e6a43b5b951090f98c99d3a72e88e93b11717bde74b740b6f4b8ea58d787214\", \"base\": \"993a793007d479a047ab9875b01863e1ba5093da\", \"phase\": \"review\"}, \"submission_repaired\": {\"at\": 1791887175.0110412, \"repair\": \"optional_broad_check\", \"attempt\": 1}}"
       },
       {
         "key": "followup:task:780",
@@ -15500,6 +15400,126 @@
       {
         "key": "recovery_audit:808",
         "value": "{\"at\": 1791887179.5872195, \"safe\": true, \"reason\": \"Current PR head must match the retained base\", \"repair\": \"unnecessary_main_merge\"}"
+      },
+      {
+        "key": "task:44",
+        "value": "{\"recovery_checked_at\": 1791887181.6548352}"
+      },
+      {
+        "key": "recovery_audit:44",
+        "value": "{\"at\": 1791887183.02042, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:45",
+        "value": "{\"recovery_checked_at\": 1791887183.184545}"
+      },
+      {
+        "key": "recovery_audit:45",
+        "value": "{\"at\": 1791887184.441638, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:54",
+        "value": "{\"recovery_checked_at\": 1791887184.5085566}"
+      },
+      {
+        "key": "recovery_audit:54",
+        "value": "{\"at\": 1791887185.6705499, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:55",
+        "value": "{\"recovery_checked_at\": 1791887185.6742268}"
+      },
+      {
+        "key": "recovery_audit:55",
+        "value": "{\"at\": 1791887186.777254, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:57",
+        "value": "{\"recovery_checked_at\": 1791887186.7791114}"
+      },
+      {
+        "key": "recovery_audit:57",
+        "value": "{\"at\": 1791887187.811938, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:58",
+        "value": "{\"recovery_checked_at\": 1791887187.8136322}"
+      },
+      {
+        "key": "recovery_audit:58",
+        "value": "{\"at\": 1791887188.8380873, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:60",
+        "value": "{\"recovery_checked_at\": 1791887188.8397343}"
+      },
+      {
+        "key": "recovery_audit:60",
+        "value": "{\"at\": 1791887189.7240765, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:61",
+        "value": "{\"recovery_checked_at\": 1791887189.725753}"
+      },
+      {
+        "key": "recovery_audit:61",
+        "value": "{\"at\": 1791887190.8529663, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791887191.9202209"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791887191.9331162"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791887191.9588022"
+      },
+      {
+        "key": "prwatch_heartbeat",
+        "value": "1791887191.9675417"
+      },
+      {
+        "key": "task:166",
+        "value": "{\"recovery_checked_at\": 1791887192.176738}"
+      },
+      {
+        "key": "recovery_audit:166",
+        "value": "{\"at\": 1791887193.2069933, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:167",
+        "value": "{\"recovery_checked_at\": 1791887193.2088015}"
+      },
+      {
+        "key": "recovery_audit:167",
+        "value": "{\"at\": 1791887194.1759317, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:171",
+        "value": "{\"recovery_checked_at\": 1791887194.1801705}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1791887194.2153509, \"windows\": [{\"name\": \"primary\", \"used_percent\": 11, \"resets_at\": 1792473656}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791887194.2187965, \"source\": \"authenticated probe\"}"
+      },
+      {
+        "key": "pause",
+        "value": "{}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791887194.2414126, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791883730.8727388, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791879389.830517, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791793672.2339332, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:780",
+        "value": "{\"started\": 1791887194.2415566, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"review\", \"finished\": 1791854068.387993, \"generation_started\": 1791852293.471084, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791854005.8157623, \"patch_digest\": \"74fc439213efc0a050950ab8e0cea6511f164c224021f63ad9b37d1771f89ff0\", \"recovery_checked_at\": 1791887174.3846986, \"resume_progress\": {\"bundle\": \"780-1.json\", \"sha256\": \"7e6a43b5b951090f98c99d3a72e88e93b11717bde74b740b6f4b8ea58d787214\", \"base\": \"993a793007d479a047ab9875b01863e1ba5093da\", \"phase\": \"review\"}, \"submission_repaired\": {\"at\": 1791887175.0110412, \"repair\": \"optional_broad_check\", \"attempt\": 1}}"
       }
     ],
     "calls": [
