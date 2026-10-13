@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791860673.0751014,
+  "saved_at": 1791860682.022965,
   "tables": {
     "tasks": [
       {
@@ -10709,11 +10709,11 @@
         "repo": "openclaw",
         "number": 169764,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1791796342.6409361,
-        "updated": 1791798832.5748556,
+        "updated": 1791860681.9623618,
         "result": "screening budget reached; retain pending work",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 825,
@@ -10722,7 +10722,7 @@
         "repo": "openclaw",
         "number": 169780,
         "note": "",
-        "status": "triage_wait",
+        "status": "queued",
         "created": 1791797754.9668925,
         "updated": 1791798844.9230452,
         "result": "screening budget reached; retain pending work",
@@ -14746,10 +14746,6 @@
         "value": "{\"at\": 1791852102.0301483, \"calls\": 6}"
       },
       {
-        "key": "task:824",
-        "value": "{\"started\": 1791798828.344185, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/824/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791798832.573331}"
-      },
-      {
         "key": "task:825",
         "value": "{\"started\": 1791798840.6466274, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/825/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791798844.9215968}"
       },
@@ -14868,18 +14864,6 @@
       {
         "key": "task:831",
         "value": "{\"started\": 1791858255.9162388, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/831/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"06c67806bcb36789a1e8e1278c6a764b389ff858\", \"generation_started\": 1791858266.0771837, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791858268.6082344, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1791858301.2462428}"
-      },
-      {
-        "key": "task:219",
-        "value": "{\"recovery_checked_at\": 1791859750.726755}"
-      },
-      {
-        "key": "recovery_audit:219",
-        "value": "{\"at\": 1791859751.8661282, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:222",
-        "value": "{\"recovery_checked_at\": 1791859751.8676813}"
       },
       {
         "key": "recovery_audit:222",
@@ -15134,24 +15118,40 @@
         "value": "1791860669.225475"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1791860669.2963529"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791860669.4589934, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791852393.735594, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791852324.0317657, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791793672.2339332, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791860671.393857"
-      },
-      {
         "key": "codex_review_leases",
         "value": "{}"
       },
       {
         "key": "task:823",
         "value": "{\"started\": 1791860669.4590812, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"skipped\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1791860673.065357}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791860679.2965941"
+      },
+      {
+        "key": "task:219",
+        "value": "{\"recovery_checked_at\": 1791860679.799793}"
+      },
+      {
+        "key": "recovery_audit:219",
+        "value": "{\"at\": 1791860680.984752, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:222",
+        "value": "{\"recovery_checked_at\": 1791860680.9863586}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791860681.1342006"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791860681.9623015, \"comfyui\": 1791858255.9139607, \"hermes\": 1791629598.7424486, \"langfuse\": 1791852393.735594, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791852324.0317657, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791793672.2339332, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791639060.2150433}}"
+      },
+      {
+        "key": "task:824",
+        "value": "{\"started\": 1791860681.9623888, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1791798832.573331}"
       }
     ],
     "calls": [
