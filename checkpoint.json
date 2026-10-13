@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791890698.703069,
+  "saved_at": 1791891135.0873787,
   "tables": {
     "tasks": [
       {
@@ -15236,14 +15236,6 @@
         "value": "{\"at\": 1791884747.743212, \"error\": \"Command '['gh', 'api', 'graphql', '-f', 'query={ rateLimit { cost remaining } r0: repository(owner:\\\"google\\\", name:\\\"adk-python\\\") {  issues(first:5, states:OPEN,         orderBy:{field:CREATED_AT, direction:DESC}) {    nodes { number title url createdAt body author{login}             assignees(first:20){ totalCount nodes{login} }             comments { totalCount }             labels(first:20){ nodes { name } } }  }} r1: repository(owner:\\\"langfuse\\\", name:\\\"langfuse\\\") {  issues(first:5, states:OPEN,\"}"
       },
       {
-        "key": "runner_failure",
-        "value": "{\"at\": 1791884882.7647552, \"type\": \"TimeoutExpired\", \"reason\": \"Command '['gh', 'api', 'repos/chelsealong/oss-pipeline/actions/variables/CODEX_CLOUD_ENABLED', '--jq', '.value']' timed out after 90 seconds\"}"
-      },
-      {
-        "key": "codex_quota_read",
-        "value": "{\"at\": 1791885045.4010801, \"status\": \"unavailable\"}"
-      },
-      {
         "key": "runner_restarts",
         "value": "[1791885133.1722605]"
       },
@@ -15580,12 +15572,24 @@
         "value": "{\"started\": 1791889871.29659, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/780/attempt-3\", \"attempt\": 3, \"phase\": \"blocked\", \"base\": \"a13cbdf8c197616054868198f447c473605f3333\", \"last_execution_phase\": \"review\", \"finished\": 1791890421.0363855, \"generation_started\": 1791852293.471084, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791890295.0463898, \"patch_digest\": \"fbc31809435fc501d8b4e4ce7b016f5545ab0bf77bbd167f0b26f5cb69453159\", \"recovery_checked_at\": 1791889863.7004118, \"resume_progress\": {\"bundle\": \"780-2.json\", \"sha256\": \"73bd9bc9a9d40f0852950e16ce0c722da408f7479ef664e5b8feda1f78f51050\", \"base\": \"548999bd426ab03ec75e43e406f737a29d9a1f97\", \"phase\": \"review\"}, \"submission_repaired\": {\"at\": 1791887175.0110412, \"repair\": \"optional_broad_check\", \"attempt\": 1}, \"progress_restored\": true, \"restored_from\": \"780-2.json\"}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791890688.749888"
+        "key": "codex_quota_read",
+        "value": "{\"at\": 1791891075.9785252, \"status\": \"unavailable\"}"
+      },
+      {
+        "key": "runner_failure",
+        "value": "{\"at\": 1791891106.5249133, \"type\": \"TimeoutExpired\", \"reason\": \"Command '['git', 'push', 'origin', 'HEAD:refs/heads/codex-state']' timed out after 90 seconds\"}"
+      },
+      {
+        "key": "usage:842:3:validation",
+        "value": "{\"task\": 842, \"repo\": \"langfuse\", \"attempt\": 3, \"phase\": \"validation\", \"at\": 1791891118.5733018, \"seconds\": 943.222, \"tokens\": {\"totalTokens\": 1456177, \"inputTokens\": 1452621, \"cachedInputTokens\": 1381888, \"cacheWriteInputTokens\": 0, \"outputTokens\": 3556, \"reasoningOutputTokens\": 837}, \"first_event_ms\": 1791890185165, \"last_event_ms\": 1791890860765, \"model\": \"gpt-6-sol\", \"complete\": false, \"usage_available\": true}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1791890693.432203, \"windows\": [{\"name\": \"primary\", \"used_percent\": 27, \"resets_at\": 1792473656}]}"
+        "value": "{\"at\": 1791891127.311889, \"windows\": [{\"name\": \"primary\", \"used_percent\": 28, \"resets_at\": 1792473656}]}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791891127.8292952"
       }
     ],
     "calls": [
