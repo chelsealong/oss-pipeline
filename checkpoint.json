@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791909082.1733804,
+  "saved_at": 1791909120.3588917,
   "tables": {
     "tasks": [
       {
@@ -11117,6 +11117,19 @@
         "updated": 1791908289.8469439,
         "result": "",
         "attempts": 0
+      },
+      {
+        "id": 856,
+        "identity": "fix:openclaw:171106:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 171106,
+        "note": "",
+        "status": "queued",
+        "created": 1791909107.5538518,
+        "updated": 1791909107.5538518,
+        "result": "",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -15633,10 +15646,6 @@
         "value": "{\"at\": 1791905166.481962, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"langfuse_static_memory\"}"
       },
       {
-        "key": "followup:task:842",
-        "value": "{\"status\": \"resumed\", \"task\": 842}"
-      },
-      {
         "key": "usage:796:4:generation",
         "value": "{\"task\": 796, \"repo\": \"openclaw\", \"attempt\": 4, \"phase\": \"generation\", \"at\": 1791905974.7288573, \"seconds\": 717.101, \"tokens\": {\"totalTokens\": 8648890, \"inputTokens\": 8634938, \"cachedInputTokens\": 8502144, \"cacheWriteInputTokens\": 0, \"outputTokens\": 13952, \"reasoningOutputTokens\": 4793}, \"first_event_ms\": 1791905264328, \"last_event_ms\": 1791905974714, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -15825,22 +15834,6 @@
         "value": "1791908913.373975"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1791909013.9929903, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 8, \"running_tasks\": 1, \"queued_tasks\": 7, \"codex_calls_5h\": 38, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1167.3486816883087, \"judge_tokens_spent_24h\": 66032, \"screening_calls_5h\": 0, \"screening_calls_24h\": 9, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7515\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7515\", \"title\": \"Workflow: node returning None in a later loop iteration leaves its previous output for JoinNode\", \"first_seen\": 1791852187.5247638, \"last_checked\": 1791855469.40007, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791907838.2685287, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791909013.9950302, \"tasks\": {\"fix\": {\"done\": 2, \"human_wait\": 1, \"queued\": 4, \"retry_wait\": 1, \"running\": 1, \"skipped\": 31, \"validation_wait\": 2}, \"respond\": {\"blocked\": 1, \"error\": 4, \"queued\": 2, \"skipped\": 1, \"validation_wait\": 2}}}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791909046.4436417"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1791909053.5411327, \"windows\": [{\"name\": \"primary\", \"used_percent\": 61, \"resets_at\": 1792473656}]}"
-      },
-      {
         "key": "usage:842:5:generation",
         "value": "{\"task\": 842, \"repo\": \"langfuse\", \"attempt\": 5, \"phase\": \"generation\", \"at\": 1791909053.5681155, \"seconds\": 1206.931, \"tokens\": {\"totalTokens\": 6757978, \"inputTokens\": 6747034, \"cachedInputTokens\": 6632192, \"cacheWriteInputTokens\": 0, \"outputTokens\": 10944, \"reasoningOutputTokens\": 2927}, \"first_event_ms\": 1791907853532, \"last_event_ms\": 1791909048126, \"model\": \"gpt-6-sol\", \"complete\": false, \"usage_available\": true}"
       },
@@ -15873,16 +15866,36 @@
         "value": "{\"started\": 1791909056.2947617, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/843/attempt-4\", \"attempt\": 4, \"phase\": \"generation\", \"base\": \"494d0838f042b45632f7ddb85b14c02aaecee976\", \"generation_started\": 1791881482.468881, \"dispatch_paid_date\": \"2026-10-13\", \"phase_started\": 1791909076.7872622, \"recovery_checked_at\": 1791907815.5140042, \"resume_progress\": {\"bundle\": \"843-3.json\", \"sha256\": \"c3e241fd4cdd4a0528c3e6ece38fcbb602978429fe847835ddde3a801a8820da\", \"base\": \"3fae8f9f9f9598e99de69c5b77862a3bea000b26\", \"phase\": \"validation\"}, \"progress_restored\": true, \"restored_from\": \"843-3.json\", \"progress_rebase_needed\": null, \"validation_bootstrap_version\": \"1\", \"patch_digest\": \"860371bccd4a7f0643f407ab15ff980c56248506c956891e3cba02e94c3f2302\", \"last_execution_phase\": \"validation\", \"finished\": 1791895226.2104638, \"validation_memory_repaired\": {\"at\": 1791907816.2102716, \"repair\": \"langfuse_static_memory\", \"attempt\": 3}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1791909078.108088"
+        "key": "admission_health",
+        "value": "{\"at\": 1791909082.1803026, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 7, \"running_tasks\": 1, \"queued_tasks\": 6, \"codex_calls_5h\": 39, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 13.371515274047852, \"judge_tokens_spent_24h\": 66032, \"screening_calls_5h\": 0, \"screening_calls_24h\": 9, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7515\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7515\", \"title\": \"Workflow: node returning None in a later loop iteration leaves its previous output for JoinNode\", \"first_seen\": 1791852187.5247638, \"last_checked\": 1791855469.40007, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791907838.2685287, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1791909079.682319"
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791909082.187587, \"tasks\": {\"fix\": {\"done\": 2, \"execution_wait\": 1, \"human_wait\": 1, \"queued\": 3, \"retry_wait\": 1, \"running\": 1, \"skipped\": 31, \"validation_wait\": 2}, \"respond\": {\"blocked\": 1, \"error\": 4, \"queued\": 2, \"skipped\": 1, \"validation_wait\": 2}}}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791909104.494472"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791909108.1663165"
       },
       {
         "key": "discovery_last_success",
-        "value": "1791909082.0083284"
+        "value": "1791909116.9073467"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1791909118.7484713, \"windows\": [{\"name\": \"primary\", \"used_percent\": 61, \"resets_at\": 1792473656}]}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791909119.6832628"
+      },
+      {
+        "key": "followup:task:842",
+        "value": "{\"status\": \"needs_human\", \"task\": 842, \"repo\": \"langfuse\", \"number\": 18675, \"reason\": \"Execution deadline reached; retained evidence needs inspection, no full regeneration.\", \"base\": \"7f09fc127e10b35548441710d52d45715103651b\", \"patch_digest\": \"9a8489a931b2c263ad33e15cac9d2c61dbae1549745c708dd61d3586f4b10737\", \"evidence_bundle\": \"842-5.json.enc\"}"
       }
     ],
     "calls": [
