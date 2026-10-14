@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792013547.0748658,
+  "saved_at": 1792013618.718279,
   "tables": {
     "tasks": [
       {
@@ -16823,46 +16823,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7247\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABcEZ3jg@2026-10-14T21:13:30Z\", \"author\": \"Samecho\", \"when\": \"2026-10-14T21:13:30Z\", \"kind\": \"comment\", \"assoc\": \"NONE\", \"body\": \"Could I take the remaining duplicate-text part of this issue? I reproduced it on main at `9b0ceec` with a2a-sdk 1.2.2 using the in-process `to_a2a()` / `RemoteA2aAgent` setup: the legacy path yields the answer twice, and `force_new_version=True` yields it once.\\n\\nI would keep the final artifact + COMPLETED contract and hold back only a complete text WORKING update until the next converted event or the end of the run. Earlier messages would still be sent in order; the final text would go out only in the artifact. Partial chunks and tool messages would continue immediately. This does delay a standalone complete narration until the next event, so is that acceptable for the legacy path, or would you prefer streaming artifacts instead?\\n\\nThe scope would stay separate from the confirmation fix in #7252, the negotiation fix in #7335, and artifact chunk IDs in #7396. I'll check plain replies, narration followed by tool use, identical text from distinct events, failure paths, and caller-session persistence on both supported A2A SDK lines.\\n\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
       {
-        "key": "task:172",
-        "value": "{\"recovery_checked_at\": 1792012704.910666}"
-      },
-      {
-        "key": "followup:task:172",
-        "value": "{\"status\": \"needs_human\", \"task\": 172, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:173",
-        "value": "{\"recovery_checked_at\": 1792012705.5783675}"
-      },
-      {
-        "key": "recovery_audit:173",
-        "value": "{\"at\": 1792012706.611024, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:174",
-        "value": "{\"recovery_checked_at\": 1792012706.6130462}"
-      },
-      {
-        "key": "recovery_audit:174",
-        "value": "{\"at\": 1792012707.6703749, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:176",
-        "value": "{\"recovery_checked_at\": 1792012707.6724012}"
-      },
-      {
-        "key": "recovery_audit:176",
-        "value": "{\"at\": 1792012708.6689546, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:177",
-        "value": "{\"recovery_checked_at\": 1792012708.6710587}"
-      },
-      {
-        "key": "recovery_audit:177",
-        "value": "{\"at\": 1792012709.8761015, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
         "key": "admission_warning_at",
         "value": "1792012838.6626062"
       },
@@ -16901,10 +16861,6 @@
       {
         "key": "task:897",
         "value": "{\"started\": 1792012909.6316051, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/897/attempt-1\", \"attempt\": 1, \"phase\": \"error\", \"base\": null, \"remote_base\": \"59a9a95e9cfa7b66b06c0fe0f369744564ddf84e\", \"last_execution_phase\": \"checkout\", \"finished\": 1792013032.0893517}"
-      },
-      {
-        "key": "prwatch_heartbeat",
-        "value": "1792013240.5772405"
       },
       {
         "key": "task:44",
@@ -16971,26 +16927,6 @@
         "value": "{\"at\": 1792013480.362018, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1792013482.9858336, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 4623.989736557007, \"judge_tokens_spent_24h\": 81636, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7527\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7527\", \"title\": \"InMemoryMemoryService does not call add_session_to_memory?\", \"first_seen\": 1791929710.3285713, \"last_checked\": 1791953224.6633916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791953227.1579466, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792013482.9872777, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"human_wait\": 2, \"skipped\": 21, \"validation_wait\": 3}, \"respond\": {\"error\": 3, \"skipped\": 1, \"validation_wait\": 6}}}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1792013533.3626938"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792013535.181068, \"windows\": [{\"name\": \"primary\", \"used_percent\": 73, \"resets_at\": 1792473656}]}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792013542.5183208"
-      },
-      {
         "key": "task:166",
         "value": "{\"recovery_checked_at\": 1792013543.3396327}"
       },
@@ -17011,24 +16947,88 @@
         "value": "{\"recovery_checked_at\": 1792013545.260942}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1792013545.6987903"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792013546.123256"
-      },
-      {
         "key": "recovery_audit:171",
         "value": "{\"at\": 1792013546.812676, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
+        "key": "admission_health",
+        "value": "{\"at\": 1792013549.29987, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 4690.30354475975, \"judge_tokens_spent_24h\": 81636, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7527\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7527\", \"title\": \"InMemoryMemoryService does not call add_session_to_memory?\", \"first_seen\": 1791929710.3285713, \"last_checked\": 1791953224.6633916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791953227.1579466, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792013549.301069, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"human_wait\": 2, \"skipped\": 21, \"validation_wait\": 3}, \"respond\": {\"error\": 3, \"skipped\": 1, \"validation_wait\": 6}}}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792013595.6274111, \"windows\": [{\"name\": \"primary\", \"used_percent\": 73, \"resets_at\": 1792473657}]}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792013606.1370416"
+      },
+      {
+        "key": "task:172",
+        "value": "{\"recovery_checked_at\": 1792013609.6863792}"
+      },
+      {
+        "key": "followup:task:172",
+        "value": "{\"status\": \"needs_human\", \"task\": 172, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:173",
+        "value": "{\"recovery_checked_at\": 1792013610.3129716}"
+      },
+      {
+        "key": "prwatch_heartbeat",
+        "value": "1792013611.088893"
+      },
+      {
+        "key": "recovery_audit:173",
+        "value": "{\"at\": 1792013612.3371964, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:174",
+        "value": "{\"recovery_checked_at\": 1792013612.339093}"
+      },
+      {
+        "key": "recovery_audit:174",
+        "value": "{\"at\": 1792013613.2349668, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:176",
+        "value": "{\"recovery_checked_at\": 1792013613.2369826}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792013616.041217"
+      },
+      {
+        "key": "recovery_audit:176",
+        "value": "{\"at\": 1792013616.3271997, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:177",
+        "value": "{\"recovery_checked_at\": 1792013616.328965}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792013617.7165759"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792013618.282822"
+      },
+      {
+        "key": "recovery_audit:177",
+        "value": "{\"at\": 1792013618.4670029, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
-        "value": "{\"at\": 1792013547.0644393, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+        "value": "{\"at\": 1792013618.7082798, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1792013547.0657508, \"disk_free_bytes\": 89248395264, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15324811264, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1792013618.709627, \"disk_free_bytes\": 89247854592, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15325827072, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       }
     ],
     "calls": [
