@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791940493.2908,
+  "saved_at": 1791940522.6992786,
   "tables": {
     "tasks": [
       {
@@ -11229,10 +11229,10 @@
         "repo": "comfyui",
         "number": 17010,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791940477.2028067,
-        "updated": 1791940479.3420372,
-        "result": "",
+        "updated": 1791940522.6909606,
+        "result": "Issue #17010 is labeled User Support. The report shows SaveImage receiving a 16-channel array that Pillow cannot save as PNG, but provides no workflow, traceback, or test with custom nodes disabled to identify where that array came from. No ComfyUI core defect can be established from the available evidence.",
         "attempts": 1
       }
     ],
@@ -15930,10 +15930,6 @@
         "value": "{\"status\": \"not_needed\", \"reason\": \"Existing linked PR; no coordination message should be sent.\", \"prs\": [\"closing-ref PR#7529(OPEN)\", \"xref PR#7529(OPEN)\"]}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791938698.6277072, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -16122,10 +16118,6 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791936004.205091, \"comfyui\": 1791940479.3418872, \"hermes\": 1791629598.7424486, \"langfuse\": 1791909805.9272788, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791910019.055757, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791924231.6036172, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791910136.7062314}}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1791940480.402945, \"windows\": [{\"name\": \"primary\", \"used_percent\": 63, \"resets_at\": 1792473656}]}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791940487.2191095"
       },
@@ -16142,16 +16134,8 @@
         "value": "{\"date\": \"2026-10-14\", \"used\": {\"comfyui\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"864\": {\"remaining\": 1, \"until\": 1791947687.705473}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1791924240.9393485, \"group\": \"new_fix\", \"task\": 863, \"phase\": \"generation\"}, {\"at\": 1791940487.705473, \"group\": \"new_fix\", \"task\": 864, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "task:864",
-        "value": "{\"started\": 1791940479.3420851, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/864/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"e0a32bce84f4603f2b61b16b50f8958e68fd6171\", \"generation_started\": 1791940487.7052517, \"dispatch_paid_date\": \"2026-10-14\", \"phase_started\": 1791940490.8723466}"
       },
       {
         "key": "detector_heartbeat",
@@ -16159,7 +16143,27 @@
       },
       {
         "key": "worker_heartbeat",
-        "value": "1791940492.8113995"
+        "value": "1791940507.813226"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1791940522.6299858, \"windows\": [{\"name\": \"primary\", \"used_percent\": 63, \"resets_at\": 1792473656}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791940522.6328473, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:864:1:generation",
+        "value": "{\"task\": 864, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1791940522.63681, \"seconds\": 34.933, \"tokens\": {\"totalTokens\": 244842, \"inputTokens\": 243451, \"cachedInputTokens\": 196992, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1391, \"reasoningOutputTokens\": 372}, \"first_event_ms\": 1791940493308, \"last_event_ms\": 1791940522630, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:864",
+        "value": "{\"started\": 1791940479.3420851, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/864/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"e0a32bce84f4603f2b61b16b50f8958e68fd6171\", \"generation_started\": 1791940487.7052517, \"dispatch_paid_date\": \"2026-10-14\", \"phase_started\": 1791940490.8723466, \"last_execution_phase\": \"generation\", \"finished\": 1791940522.6397274}"
       }
     ],
     "calls": [
