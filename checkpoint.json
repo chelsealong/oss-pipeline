@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792020637.315542,
+  "saved_at": 1792020639.5210407,
   "tables": {
     "tasks": [
       {
@@ -17009,14 +17009,6 @@
         "value": "{\"task\": 899, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792020182.5821571, \"seconds\": 602.31, \"tokens\": {\"totalTokens\": 5472115, \"inputTokens\": 5458666, \"cachedInputTokens\": 5349248, \"cacheWriteInputTokens\": 0, \"outputTokens\": 13449, \"reasoningOutputTokens\": 6508}, \"first_event_ms\": 1792019585586, \"last_event_ms\": 1792020182560, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"899\": {\"remaining\": 0, \"until\": 1792027384.5194056}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1792008858.990344, \"group\": \"new_fix\", \"task\": 455, \"phase\": \"generation\"}, {\"at\": 1792016717.6883678, \"group\": \"maintenance\", \"task\": 898, \"phase\": \"generation\"}, {\"at\": 1792016787.2041626, \"group\": \"maintenance\", \"task\": 898, \"phase\": \"reply-review\"}, {\"at\": 1792019580.2746127, \"group\": \"new_fix\", \"task\": 899, \"phase\": \"generation\"}, {\"at\": 1792020184.5194056, \"group\": \"new_fix\", \"task\": 899, \"phase\": \"review\"}]"
-      },
-      {
         "key": "task:899",
         "value": "{\"started\": 1792019569.6524715, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/899/attempt-1\", \"attempt\": 1, \"phase\": \"review\", \"base\": \"bc1ade0aacca75104bad934e92d70a454ec16e67\", \"generation_started\": 1792019580.274375, \"dispatch_paid_date\": \"2026-10-14\", \"phase_started\": 1792020187.1981957}"
       },
@@ -17061,10 +17053,6 @@
         "value": "{\"at\": 1792020589.355855, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"human_wait\": 2, \"running\": 1, \"skipped\": 21, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 3, \"skipped\": 1, \"validation_wait\": 6}}}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1792020634.2228875"
-      },
-      {
         "key": "detector_heartbeat",
         "value": "1792020635.8115425"
       },
@@ -17087,6 +17075,18 @@
       {
         "key": "usage:899:1:review",
         "value": "{\"task\": 899, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1792020637.2010312, \"seconds\": 452.684, \"tokens\": {\"totalTokens\": 1782654, \"inputTokens\": 1775805, \"cachedInputTokens\": 1698432, \"cacheWriteInputTokens\": 0, \"outputTokens\": 6849, \"reasoningOutputTokens\": 2893}, \"first_event_ms\": 1792020189763, \"last_event_ms\": 1792020637187, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792020639.2290425"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"899\": {\"remaining\": 1, \"until\": 1792027839.5118425}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1792008858.990344, \"group\": \"new_fix\", \"task\": 455, \"phase\": \"generation\"}, {\"at\": 1792016717.6883678, \"group\": \"maintenance\", \"task\": 898, \"phase\": \"generation\"}, {\"at\": 1792016787.2041626, \"group\": \"maintenance\", \"task\": 898, \"phase\": \"reply-review\"}, {\"at\": 1792019580.2746127, \"group\": \"new_fix\", \"task\": 899, \"phase\": \"generation\"}, {\"at\": 1792020184.5194056, \"group\": \"new_fix\", \"task\": 899, \"phase\": \"review\"}, {\"at\": 1792020639.5118425, \"group\": \"repair\", \"task\": 899, \"phase\": \"remediation\"}]"
       }
     ],
     "calls": [
@@ -23797,6 +23797,10 @@
       {
         "at": 1792020384.1766796,
         "kind": "judge"
+      },
+      {
+        "at": 1792020639.5125048,
+        "kind": "codex"
       }
     ]
   }
