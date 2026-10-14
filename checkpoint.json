@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791974847.1621714,
+  "saved_at": 1791974890.2769578,
   "tables": {
     "tasks": [
       {
@@ -11437,10 +11437,10 @@
         "repo": "openclaw",
         "number": 171853,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791962759.4562068,
-        "updated": 1791974789.1321862,
-        "result": "openclaw open PR cap (20)",
+        "updated": 1791974890.2711587,
+        "result": "The configured PR author, chelsealong, has 19 open OpenClaw PRs. The task’s repository policy says to abort at 18 or more. No files were changed.",
         "attempts": 1
       },
       {
@@ -16424,10 +16424,6 @@
         "value": "{\"at\": 1791973737.177131, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791973748.8340762, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -16596,16 +16592,8 @@
         "value": "{\"started\": 1791974778.8373384, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"skipped\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1791974782.5255303, \"recovery_checked_at\": 1791974777.0791395}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1791974786.782083, \"state\": \"stalled\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 0, \"queued_tasks\": 1, \"codex_calls_5h\": 10, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 4798.805259466171, \"judge_tokens_spent_24h\": 92584, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7527\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7527\", \"title\": \"InMemoryMemoryService does not call add_session_to_memory?\", \"first_seen\": 1791929710.3285713, \"last_checked\": 1791953224.6633916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791953227.1579466, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
-      },
-      {
         "key": "admission_warning_at",
         "value": "1791974786.7834322"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791974786.7845001, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 5, \"execution_wait\": 1, \"human_wait\": 1, \"queued\": 1, \"skipped\": 26, \"validation_wait\": 3}, \"respond\": {\"blocked\": 4, \"done\": 1, \"error\": 2, \"skipped\": 2, \"validation_wait\": 5}}}"
       },
       {
         "key": "scheduler",
@@ -16616,14 +16604,6 @@
         "value": "1791974815.4640205"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1791974831.7365751, \"windows\": [{\"name\": \"primary\", \"used_percent\": 68, \"resets_at\": 1792473656}]}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791974840.8457236"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"comfyui\", \"task\": 879, \"at\": 1791959083.0937552}, {\"repo\": \"comfyui\", \"task\": 881, \"at\": 1791964753.5296519}, {\"repo\": \"langfuse\", \"task\": 882, \"at\": 1791968643.7040112}, {\"repo\": \"langfuse\", \"task\": 768, \"at\": 1791969987.9729457}, {\"repo\": \"openclaw\", \"task\": 880, \"at\": 1791974842.2362707}]"
       },
@@ -16632,28 +16612,8 @@
         "value": "{\"date\": \"2026-10-14\", \"used\": {\"comfyui\": 4, \"openclaw\": 4, \"langfuse\": 2}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"880\": {\"remaining\": 1, \"until\": 1791982042.236437}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1791956911.0328176, \"group\": \"maintenance\", \"task\": 876, \"phase\": \"generation\"}, {\"at\": 1791958064.3038418, \"group\": \"maintenance\", \"task\": 876, \"phase\": \"reply-review\"}, {\"at\": 1791959083.0939581, \"group\": \"new_fix\", \"task\": 879, \"phase\": \"generation\"}, {\"at\": 1791964753.5299692, \"group\": \"new_fix\", \"task\": 881, \"phase\": \"generation\"}, {\"at\": 1791967365.1164286, \"group\": \"new_fix\", \"task\": 763, \"phase\": \"generation\"}, {\"at\": 1791968643.7042325, \"group\": \"new_fix\", \"task\": 882, \"phase\": \"generation\"}, {\"at\": 1791968880.7447202, \"group\": \"new_fix\", \"task\": 882, \"phase\": \"validation\"}, {\"at\": 1791969663.41789, \"group\": \"new_fix\", \"task\": 882, \"phase\": \"review\"}, {\"at\": 1791969925.8113706, \"group\": \"new_fix\", \"task\": 751, \"phase\": \"generation\"}, {\"at\": 1791969987.9731584, \"group\": \"new_fix\", \"task\": 768, \"phase\": \"generation\"}, {\"at\": 1791974842.236437, \"group\": \"new_fix\", \"task\": 880, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791974844.0255125"
-      },
-      {
-        "key": "task:880",
-        "value": "{\"started\": 1791974789.1322196, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/880/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"14edad159ba88e72faf8a227e9490b8a92568464\", \"last_execution_phase\": \"claimed\", \"finished\": 1791962767.0326858, \"recovery_checked_at\": 1791974778.2199876, \"generation_started\": 1791974842.2362711, \"dispatch_paid_date\": \"2026-10-14\", \"phase_started\": 1791974844.4329772}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791974844.43834"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791974845.550354"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
@@ -16662,6 +16622,50 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1791974847.1477401, \"disk_free_bytes\": 88234745856, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15182409728, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1791974849.9343255, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 11, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 7.694583892822266, \"judge_tokens_spent_24h\": 92584, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7527\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7527\", \"title\": \"InMemoryMemoryService does not call add_session_to_memory?\", \"first_seen\": 1791929710.3285713, \"last_checked\": 1791953224.6633916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791953227.1579466, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791974849.9354212, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 5, \"execution_wait\": 1, \"human_wait\": 1, \"running\": 1, \"skipped\": 26, \"validation_wait\": 3}, \"respond\": {\"blocked\": 4, \"done\": 1, \"error\": 2, \"skipped\": 2, \"validation_wait\": 5}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791974885.9141521"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791974886.1087143"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791974889.0264263"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1791974889.3666604, \"windows\": [{\"name\": \"primary\", \"used_percent\": 68, \"resets_at\": 1792473656}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791974889.3687773, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:880:1:generation",
+        "value": "{\"task\": 880, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1791974889.3714404, \"seconds\": 47.136, \"tokens\": {\"totalTokens\": 335774, \"inputTokens\": 333852, \"cachedInputTokens\": 219264, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1922, \"reasoningOutputTokens\": 437}, \"first_event_ms\": 1791974847235, \"last_event_ms\": 1791974889366, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:880",
+        "value": "{\"started\": 1791974789.1322196, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/880/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"14edad159ba88e72faf8a227e9490b8a92568464\", \"last_execution_phase\": \"generation\", \"finished\": 1791974889.3737705, \"recovery_checked_at\": 1791974778.2199876, \"generation_started\": 1791974842.2362711, \"dispatch_paid_date\": \"2026-10-14\", \"phase_started\": 1791974844.4329772}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791974889.5253117"
       }
     ],
     "calls": [
