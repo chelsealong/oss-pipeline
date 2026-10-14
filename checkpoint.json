@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791943630.4524531,
+  "saved_at": 1791943637.5960016,
   "tables": {
     "tasks": [
       {
@@ -15992,28 +15992,12 @@
         "value": "{}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"comfyui\", \"task\": 864, \"at\": 1791940487.7052507}, {\"repo\": \"openclaw\", \"task\": 865, \"at\": 1791942556.8612993}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-10-14\", \"used\": {\"comfyui\": 1, \"openclaw\": 1}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1791940487.705473, \"group\": \"new_fix\", \"task\": 864, \"phase\": \"generation\"}, {\"at\": 1791942556.8614383, \"group\": \"new_fix\", \"task\": 865, \"phase\": \"generation\"}]"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1791942589.7686346, \"source\": \"completed task phase\"}"
       },
       {
         "key": "usage:865:1:generation",
         "value": "{\"task\": 865, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1791942589.771709, \"seconds\": 32.911, \"tokens\": {\"totalTokens\": 231057, \"inputTokens\": 229569, \"cachedInputTokens\": 173824, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1488, \"reasoningOutputTokens\": 488}, \"first_event_ms\": 1791942560631, \"last_event_ms\": 1791942589766, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:865",
@@ -16196,16 +16180,8 @@
         "value": "{\"at\": 1791943619.1512635, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 3, \"execution_wait\": 1, \"human_wait\": 1, \"skipped\": 33, \"validation_wait\": 3}, \"respond\": {\"blocked\": 4, \"done\": 1, \"error\": 4, \"skipped\": 1, \"validation_wait\": 2}}}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1791943625.5459886"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1791943627.128585"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791943627.1817946"
       },
       {
         "key": "worker_heartbeat",
@@ -16216,19 +16192,35 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791942502.2377777, \"comfyui\": 1791943630.4462128, \"hermes\": 1791629598.7424486, \"langfuse\": 1791909805.9272788, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791910019.055757, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791924231.6036172, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791793191.746865, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791910136.7062314}}"
       },
       {
+        "key": "detector_heartbeat",
+        "value": "1791943635.546203"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791943637.239373"
+      },
+      {
         "key": "task:866",
-        "value": "{\"started\": 1791943630.4463985, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "value": "{\"started\": 1791943630.4463985, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/866/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"e0a32bce84f4603f2b61b16b50f8958e68fd6171\", \"generation_started\": 1791943637.5892491, \"dispatch_paid_date\": \"2026-10-14\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"comfyui\", \"task\": 864, \"at\": 1791940487.7052507}, {\"repo\": \"openclaw\", \"task\": 865, \"at\": 1791942556.8612993}, {\"repo\": \"comfyui\", \"task\": 866, \"at\": 1791943637.5892487}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-10-14\", \"used\": {\"comfyui\": 2, \"openclaw\": 1}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"866\": {\"remaining\": 1, \"until\": 1791950837.5894003}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1791940487.705473, \"group\": \"new_fix\", \"task\": 864, \"phase\": \"generation\"}, {\"at\": 1791942556.8614383, \"group\": \"new_fix\", \"task\": 865, \"phase\": \"generation\"}, {\"at\": 1791943637.5894003, \"group\": \"new_fix\", \"task\": 866, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1791337929.7816627,
-        "kind": "judge"
-      },
-      {
-        "at": 1791337934.8881047,
-        "kind": "judge"
-      },
       {
         "at": 1791340719.076263,
         "kind": "judge"
@@ -23283,6 +23275,10 @@
       },
       {
         "at": 1791942556.8617094,
+        "kind": "codex"
+      },
+      {
+        "at": 1791943637.5896971,
         "kind": "codex"
       }
     ]
