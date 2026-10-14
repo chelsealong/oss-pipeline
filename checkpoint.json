@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791943951.1483076,
+  "saved_at": 1791943952.961641,
   "tables": {
     "tasks": [
       {
@@ -16152,14 +16152,6 @@
         "value": "{\"task\": 866, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1791943823.3853862, \"seconds\": 185.797, \"tokens\": {\"totalTokens\": 1609537, \"inputTokens\": 1604500, \"cachedInputTokens\": 1539840, \"cacheWriteInputTokens\": 0, \"outputTokens\": 5037, \"reasoningOutputTokens\": 1462}, \"first_event_ms\": 1791943641478, \"last_event_ms\": 1791943823378, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"866\": {\"remaining\": 0, \"until\": 1791951024.894881}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1791940487.705473, \"group\": \"new_fix\", \"task\": 864, \"phase\": \"generation\"}, {\"at\": 1791942556.8614383, \"group\": \"new_fix\", \"task\": 865, \"phase\": \"generation\"}, {\"at\": 1791943637.5894003, \"group\": \"new_fix\", \"task\": 866, \"phase\": \"generation\"}, {\"at\": 1791943824.894881, \"group\": \"new_fix\", \"task\": 866, \"phase\": \"review\"}]"
-      },
-      {
         "key": "task:866",
         "value": "{\"started\": 1791943630.4463985, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/866/attempt-1\", \"attempt\": 1, \"phase\": \"review\", \"base\": \"e0a32bce84f4603f2b61b16b50f8958e68fd6171\", \"generation_started\": 1791943637.5892491, \"dispatch_paid_date\": \"2026-10-14\", \"phase_started\": 1791943826.773856}"
       },
@@ -16208,16 +16200,8 @@
         "value": "{\"at\": 1791943944.066599, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 3, \"execution_wait\": 1, \"human_wait\": 1, \"running\": 1, \"skipped\": 33, \"validation_wait\": 3}, \"respond\": {\"blocked\": 4, \"done\": 1, \"error\": 4, \"skipped\": 1, \"validation_wait\": 2}}}"
       },
       {
-        "key": "discovery_last_success",
-        "value": "1791943946.4455626"
-      },
-      {
         "key": "detector_heartbeat",
         "value": "1791943949.5106783"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1791943950.9288352, \"windows\": [{\"name\": \"primary\", \"used_percent\": 63, \"resets_at\": 1792473656}]}"
       },
       {
         "key": "health",
@@ -16226,6 +16210,22 @@
       {
         "key": "usage:866:1:review",
         "value": "{\"task\": 866, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1791943950.9339058, \"seconds\": 126.04, \"tokens\": {\"totalTokens\": 519722, \"inputTokens\": 514548, \"cachedInputTokens\": 467968, \"cacheWriteInputTokens\": 0, \"outputTokens\": 5174, \"reasoningOutputTokens\": 2962}, \"first_event_ms\": 1791943828633, \"last_event_ms\": 1791943950928, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791943951.3749866"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1791943951.698935, \"windows\": [{\"name\": \"primary\", \"used_percent\": 63, \"resets_at\": 1792473656}]}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"866\": {\"remaining\": 1, \"until\": 1791951152.9551713}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1791940487.705473, \"group\": \"new_fix\", \"task\": 864, \"phase\": \"generation\"}, {\"at\": 1791942556.8614383, \"group\": \"new_fix\", \"task\": 865, \"phase\": \"generation\"}, {\"at\": 1791943637.5894003, \"group\": \"new_fix\", \"task\": 866, \"phase\": \"generation\"}, {\"at\": 1791943824.894881, \"group\": \"new_fix\", \"task\": 866, \"phase\": \"review\"}, {\"at\": 1791943952.9551713, \"group\": \"repair\", \"task\": 866, \"phase\": \"remediation\"}]"
       }
     ],
     "calls": [
@@ -23291,6 +23291,10 @@
       },
       {
         "at": 1791943824.8952003,
+        "kind": "codex"
+      },
+      {
+        "at": 1791943952.9554975,
         "kind": "codex"
       }
     ]
