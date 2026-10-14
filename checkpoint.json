@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791968579.902627,
+  "saved_at": 1791968633.5505984,
   "tables": {
     "tasks": [
       {
@@ -11455,6 +11455,19 @@
         "updated": 1791964779.8726962,
         "result": "Issue #17017 is labeled User Support and asks what a Windows startup warning means. The warning is intentional: it limits visibility to CUDA device 0 by default. The report provides no error or reproducible ComfyUI defect linking that warning to the reported slowdown, so there is no justified code fix.",
         "attempts": 1
+      },
+      {
+        "id": 882,
+        "identity": "fix:langfuse:18780:",
+        "kind": "fix",
+        "repo": "langfuse",
+        "number": 18780,
+        "note": "",
+        "status": "running",
+        "created": 1791968631.6251924,
+        "updated": 1791968633.542031,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -16387,10 +16400,6 @@
         "value": "1791966715.4227152"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791962762.3469713, \"comfyui\": 1791964747.0473197, \"hermes\": 1791629598.7424486, \"langfuse\": 1791909805.9272788, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791910019.055757, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791924231.6036172, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791967347.6192079, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791910136.7062314}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1791951497.8859425, \"group\": \"maintenance\", \"task\": 869, \"phase\": \"generation\"}, {\"at\": 1791952414.7277436, \"group\": \"new_fix\", \"task\": 870, \"phase\": \"generation\"}, {\"at\": 1791952747.4878702, \"group\": \"new_fix\", \"task\": 870, \"phase\": \"review\"}, {\"at\": 1791953613.6172917, \"group\": \"maintenance\", \"task\": 871, \"phase\": \"generation\"}, {\"at\": 1791953736.2015164, \"group\": \"new_fix\", \"task\": 872, \"phase\": \"generation\"}, {\"at\": 1791954854.1504605, \"group\": \"new_fix\", \"task\": 872, \"phase\": \"review\"}, {\"at\": 1791955237.159756, \"group\": \"maintenance\", \"task\": 873, \"phase\": \"generation\"}, {\"at\": 1791955372.5267947, \"group\": \"maintenance\", \"task\": 874, \"phase\": \"generation\"}, {\"at\": 1791955824.195642, \"group\": \"maintenance\", \"task\": 875, \"phase\": \"generation\"}, {\"at\": 1791956758.5374453, \"group\": \"maintenance\", \"task\": 875, \"phase\": \"reply-review\"}, {\"at\": 1791956911.0328176, \"group\": \"maintenance\", \"task\": 876, \"phase\": \"generation\"}, {\"at\": 1791958064.3038418, \"group\": \"maintenance\", \"task\": 876, \"phase\": \"reply-review\"}, {\"at\": 1791959083.0939581, \"group\": \"new_fix\", \"task\": 879, \"phase\": \"generation\"}, {\"at\": 1791964753.5299692, \"group\": \"new_fix\", \"task\": 881, \"phase\": \"generation\"}, {\"at\": 1791967365.1164286, \"group\": \"new_fix\", \"task\": 763, \"phase\": \"generation\"}]"
       },
@@ -16571,40 +16580,48 @@
         "value": "{\"started\": 1791962762.3471558, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1791962767.0326858, \"recovery_checked_at\": 1791968327.5238616}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1791968519.370509, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 15, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1154.248560667038, \"judge_tokens_spent_24h\": 91930, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7527\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7527\", \"title\": \"InMemoryMemoryService does not call add_session_to_memory?\", \"first_seen\": 1791929710.3285713, \"last_checked\": 1791953224.6633916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791953227.1579466, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791968519.3718305, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 3, \"done\": 5, \"execution_wait\": 1, \"human_wait\": 1, \"skipped\": 22, \"validation_wait\": 2}, \"respond\": {\"blocked\": 4, \"done\": 1, \"error\": 2, \"skipped\": 2, \"validation_wait\": 5}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1791968528.4572928, \"windows\": [{\"name\": \"primary\", \"used_percent\": 67, \"resets_at\": 1792473656}]}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791968566.902874"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791968575.3711174"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791968577.4514894"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791968577.5819461"
-      },
-      {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
         "value": "{\"at\": 1791968579.892871, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
       },
       {
         "key": "runner_resources",
         "value": "{\"at\": 1791968579.8941658, \"disk_free_bytes\": 89299034112, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15340613632, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1791968582.05748, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 15, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1216.9354922771454, \"judge_tokens_spent_24h\": 91930, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7527\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7527\", \"title\": \"InMemoryMemoryService does not call add_session_to_memory?\", \"first_seen\": 1791929710.3285713, \"last_checked\": 1791953224.6633916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791953227.1579466, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791968582.0585108, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 3, \"done\": 5, \"execution_wait\": 1, \"human_wait\": 1, \"skipped\": 22, \"validation_wait\": 2}, \"respond\": {\"blocked\": 4, \"done\": 1, \"error\": 2, \"skipped\": 2, \"validation_wait\": 5}}}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1791968588.717349, \"windows\": [{\"name\": \"primary\", \"used_percent\": 67, \"resets_at\": 1792473656}]}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791968626.909133"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791968630.2861137"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791968630.372392"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791968631.7410774"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1791962762.3469713, \"comfyui\": 1791964747.0473197, \"hermes\": 1791629598.7424486, \"langfuse\": 1791968633.5418453, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1791910019.055757, \"langfuse-python\": 1791688453.383655, \"spec-kit\": 1791924231.6036172, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791967347.6192079, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791910136.7062314}}"
+      },
+      {
+        "key": "task:882",
+        "value": "{\"started\": 1791968633.5420723, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       }
     ],
     "calls": [
