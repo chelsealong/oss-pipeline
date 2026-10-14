@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1791944317.3388276,
+  "saved_at": 1791944364.4885402,
   "tables": {
     "tasks": [
       {
@@ -11255,10 +11255,10 @@
         "repo": "comfyui",
         "number": 17012,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1791943622.1188211,
-        "updated": 1791943630.446372,
-        "result": "",
+        "updated": 1791944364.4730358,
+        "result": "review: The original full-range-copy objection is resolved. The focused tests pass (3 passed), and repository-wide Ruff passes. The proposed PR body needs correction: it says broader suite dependency errors are “described below,” but gives no details, and the execution suite failure observed here is a refused server connection rather than a demonstrated dependency error. The full unit suite stops during collection because urllib3 is missing.",
         "attempts": 1
       }
     ],
@@ -16172,56 +16172,16 @@
         "value": "{\"task\": 866, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1791943950.9339058, \"seconds\": 126.04, \"tokens\": {\"totalTokens\": 519722, \"inputTokens\": 514548, \"cachedInputTokens\": 467968, \"cacheWriteInputTokens\": 0, \"outputTokens\": 5174, \"reasoningOutputTokens\": 2962}, \"first_event_ms\": 1791943828633, \"last_event_ms\": 1791943950928, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1791944187.8981407, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:866:1:remediation",
         "value": "{\"task\": 866, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"remediation\", \"at\": 1791944187.9035816, \"seconds\": 234.95, \"tokens\": {\"totalTokens\": 548694, \"inputTokens\": 544946, \"cachedInputTokens\": 486784, \"cacheWriteInputTokens\": 0, \"outputTokens\": 3748, \"reasoningOutputTokens\": 1315}, \"first_event_ms\": 1791943956813, \"last_event_ms\": 1791944187896, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"866\": {\"remaining\": 0, \"until\": 1791951388.1068802}}"
       },
       {
         "key": "codex_allocations",
         "value": "[{\"at\": 1791940487.705473, \"group\": \"new_fix\", \"task\": 864, \"phase\": \"generation\"}, {\"at\": 1791942556.8614383, \"group\": \"new_fix\", \"task\": 865, \"phase\": \"generation\"}, {\"at\": 1791943637.5894003, \"group\": \"new_fix\", \"task\": 866, \"phase\": \"generation\"}, {\"at\": 1791943824.894881, \"group\": \"new_fix\", \"task\": 866, \"phase\": \"review\"}, {\"at\": 1791943952.9551713, \"group\": \"repair\", \"task\": 866, \"phase\": \"remediation\"}, {\"at\": 1791944188.1068802, \"group\": \"repair\", \"task\": 866, \"phase\": \"rereview\"}]"
       },
       {
-        "key": "task:866",
-        "value": "{\"started\": 1791943630.4463985, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/866/attempt-1\", \"attempt\": 1, \"phase\": \"rereview\", \"base\": \"e0a32bce84f4603f2b61b16b50f8958e68fd6171\", \"generation_started\": 1791943637.5892491, \"dispatch_paid_date\": \"2026-10-14\", \"phase_started\": 1791944190.1599863}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1791944205.533234"
-      },
-      {
-        "key": "admission_health",
-        "value": "{\"at\": 1791944256.9455488, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 6, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 68.83537459373474, \"judge_tokens_spent_24h\": 57163, \"screening_calls_5h\": 0, \"screening_calls_24h\": 7, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7527\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7527\", \"title\": \"InMemoryMemoryService does not call add_session_to_memory?\", \"first_seen\": 1791929710.3285713, \"last_checked\": 1791943502.6898174, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791943505.2136269, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1791944256.9465997, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 3, \"execution_wait\": 1, \"human_wait\": 1, \"running\": 1, \"skipped\": 33, \"validation_wait\": 3}, \"respond\": {\"blocked\": 4, \"done\": 1, \"error\": 4, \"skipped\": 1, \"validation_wait\": 2}}}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1791944287.4638684"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1791944314.5185518"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1791944314.9816012, \"windows\": [{\"name\": \"primary\", \"used_percent\": 64, \"resets_at\": 1792473656}]}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1791944316.3119636"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1791944317.2670317"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
@@ -16230,6 +16190,50 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1791944317.3324697, \"disk_free_bytes\": 87044169728, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15263604736, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1791944319.4577057, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 6, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 131.34758639335632, \"judge_tokens_spent_24h\": 57163, \"screening_calls_5h\": 0, \"screening_calls_24h\": 7, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7527\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7527\", \"title\": \"InMemoryMemoryService does not call add_session_to_memory?\", \"first_seen\": 1791929710.3285713, \"last_checked\": 1791943502.6898174, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791943505.2136269, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1791944319.458757, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 3, \"execution_wait\": 1, \"human_wait\": 1, \"running\": 1, \"skipped\": 33, \"validation_wait\": 3}, \"respond\": {\"blocked\": 4, \"done\": 1, \"error\": 4, \"skipped\": 1, \"validation_wait\": 2}}}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1791944359.5193849"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1791944360.1648378"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1791944360.8373184"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1791944362.3734205"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1791944364.1687467, \"windows\": [{\"name\": \"primary\", \"used_percent\": 64, \"resets_at\": 1792473657}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1791944364.170739, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:866:1:rereview",
+        "value": "{\"task\": 866, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"rereview\", \"at\": 1791944364.1734223, \"seconds\": 176.068, \"tokens\": {\"totalTokens\": 804373, \"inputTokens\": 798817, \"cachedInputTokens\": 727552, \"cacheWriteInputTokens\": 0, \"outputTokens\": 5556, \"reasoningOutputTokens\": 2897}, \"first_event_ms\": 1791944192150, \"last_event_ms\": 1791944364168, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:866",
+        "value": "{\"started\": 1791943630.4463985, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/866/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"e0a32bce84f4603f2b61b16b50f8958e68fd6171\", \"generation_started\": 1791943637.5892491, \"dispatch_paid_date\": \"2026-10-14\", \"phase_started\": 1791944190.1599863, \"patch_digest\": \"dcd5addf27b263f49d2acd635d8c4e0e6b0567cff3b51ce6ca81220d528a7326\", \"last_execution_phase\": \"rereview\", \"finished\": 1791944364.368371}"
       }
     ],
     "calls": [
