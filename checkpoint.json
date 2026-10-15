@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792026498.8501384,
+  "saved_at": 1792026527.8492825,
   "tables": {
     "tasks": [
       {
@@ -11775,10 +11775,10 @@
         "repo": "openclaw",
         "number": 172651,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1792026429.3830128,
-        "updated": 1792026437.4110014,
-        "result": "",
+        "updated": 1792026527.840414,
+        "result": "PR_CAP: chelsealong has 18 open OpenClaw PRs. The supplied assignment policy requires stopping new fixes at 18.",
         "attempts": 1
       },
       {
@@ -17029,10 +17029,6 @@
         "value": "{\"started\": 1792023560.1210685, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/902/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"69d500b410f5d2f6ad169b9852f4d2c28cc720e0\", \"generation_started\": 1792023618.905862, \"dispatch_paid_date\": \"2026-10-15\", \"phase_started\": 1792023621.1606112, \"last_execution_phase\": \"generation\", \"finished\": 1792023649.817748}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792025314.448613, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:905:1:generation",
         "value": "{\"task\": 905, \"repo\": \"spec-kit\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792025314.450959, \"seconds\": 19.311, \"tokens\": {\"totalTokens\": 83593, \"inputTokens\": 82891, \"cachedInputTokens\": 58112, \"cacheWriteInputTokens\": 0, \"outputTokens\": 702, \"reasoningOutputTokens\": 206}, \"first_event_ms\": 1792025302714, \"last_event_ms\": 1792025314446, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -17047,18 +17043,6 @@
       {
         "key": "coordination:google/adk-python#7540",
         "value": "{\"status\": \"not_needed\", \"reason\": \"Existing linked PR; no coordination message should be sent.\", \"prs\": [\"closing-ref PR#7541(OPEN)\", \"xref PR#7541(OPEN)\"]}"
-      },
-      {
-        "key": "task:176",
-        "value": "{\"recovery_checked_at\": 1792025562.8851848}"
-      },
-      {
-        "key": "recovery_audit:176",
-        "value": "{\"at\": 1792025563.8586817, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:177",
-        "value": "{\"recovery_checked_at\": 1792025563.8604681}"
       },
       {
         "key": "recovery_audit:177",
@@ -17197,10 +17181,6 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792026437.410848, \"comfyui\": 1792023468.181078, \"hermes\": 1791629598.7424486, \"langfuse\": 1792022192.2824502, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792021844.7879212, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1792025287.6173902, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791986066.4826849, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791910136.7062314}}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792026457.1734872, \"windows\": [{\"name\": \"primary\", \"used_percent\": 75, \"resets_at\": 1792473656}]}"
-      },
-      {
         "key": "task:174",
         "value": "{\"recovery_checked_at\": 1792026461.929256}"
       },
@@ -17225,22 +17205,6 @@
         "value": "{\"at\": 1792026465.8420186, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 2, \"execution_wait\": 1, \"human_wait\": 2, \"queued\": 1, \"running\": 1, \"skipped\": 25, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 3, \"skipped\": 1, \"validation_wait\": 6}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1792026489.0817945"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1792026494.1917439"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792026494.7065609"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792026496.4658291"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"langfuse\", \"task\": 899, \"at\": 1792019580.2743742}, {\"repo\": \"llama-index\", \"task\": 900, \"at\": 1792021881.5563183}, {\"repo\": \"comfyui\", \"task\": 903, \"at\": 1792023424.7038112}, {\"repo\": \"comfyui\", \"task\": 904, \"at\": 1792023476.098019}, {\"repo\": \"openclaw\", \"task\": 901, \"at\": 1792023519.177699}, {\"repo\": \"openclaw\", \"task\": 902, \"at\": 1792023618.9058616}, {\"repo\": \"spec-kit\", \"task\": 905, \"at\": 1792025295.141435}, {\"repo\": \"openclaw\", \"task\": 906, \"at\": 1792026496.5890393}]"
       },
@@ -17249,16 +17213,56 @@
         "value": "{\"date\": \"2026-10-15\", \"used\": {\"comfyui\": 2, \"openclaw\": 3, \"spec-kit\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"906\": {\"remaining\": 1, \"until\": 1792033696.5892782}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792008858.990344, \"group\": \"new_fix\", \"task\": 455, \"phase\": \"generation\"}, {\"at\": 1792016717.6883678, \"group\": \"maintenance\", \"task\": 898, \"phase\": \"generation\"}, {\"at\": 1792016787.2041626, \"group\": \"maintenance\", \"task\": 898, \"phase\": \"reply-review\"}, {\"at\": 1792019580.2746127, \"group\": \"new_fix\", \"task\": 899, \"phase\": \"generation\"}, {\"at\": 1792020184.5194056, \"group\": \"new_fix\", \"task\": 899, \"phase\": \"review\"}, {\"at\": 1792020639.5118425, \"group\": \"repair\", \"task\": 899, \"phase\": \"remediation\"}, {\"at\": 1792021881.5567858, \"group\": \"new_fix\", \"task\": 900, \"phase\": \"generation\"}, {\"at\": 1792022203.1033845, \"group\": \"new_fix\", \"task\": 899, \"phase\": \"generation\"}, {\"at\": 1792023424.7040749, \"group\": \"new_fix\", \"task\": 903, \"phase\": \"generation\"}, {\"at\": 1792023476.0982237, \"group\": \"new_fix\", \"task\": 904, \"phase\": \"generation\"}, {\"at\": 1792023519.177928, \"group\": \"new_fix\", \"task\": 901, \"phase\": \"generation\"}, {\"at\": 1792023618.9060657, \"group\": \"new_fix\", \"task\": 902, \"phase\": \"generation\"}, {\"at\": 1792025295.141654, \"group\": \"new_fix\", \"task\": 905, \"phase\": \"generation\"}, {\"at\": 1792026496.5892782, \"group\": \"new_fix\", \"task\": 906, \"phase\": \"generation\"}]"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1792026519.0852292"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792026524.2467234"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792026524.7070954"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792026525.0620222, \"windows\": [{\"name\": \"primary\", \"used_percent\": 75, \"resets_at\": 1792473657}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792026525.0658116, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:906:1:generation",
+        "value": "{\"task\": 906, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792026525.0704699, \"seconds\": 28.483, \"tokens\": {\"totalTokens\": 235151, \"inputTokens\": 234293, \"cachedInputTokens\": 173184, \"cacheWriteInputTokens\": 0, \"outputTokens\": 858, \"reasoningOutputTokens\": 244}, \"first_event_ms\": 1792026502381, \"last_event_ms\": 1792026525062, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "task:176",
+        "value": "{\"recovery_checked_at\": 1792026526.2409422}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792026526.3098977"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
         "key": "task:906",
-        "value": "{\"started\": 1792026437.4110405, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/906/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"c94f47ea885ba1bb8eb80ed9f5434b43678f66f3\", \"generation_started\": 1792026496.5890396, \"dispatch_paid_date\": \"2026-10-15\", \"phase_started\": 1792026498.8405187}"
+        "value": "{\"started\": 1792026437.4110405, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/906/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"c94f47ea885ba1bb8eb80ed9f5434b43678f66f3\", \"generation_started\": 1792026496.5890396, \"dispatch_paid_date\": \"2026-10-15\", \"phase_started\": 1792026498.8405187, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1792026526.4890842}"
+      },
+      {
+        "key": "recovery_audit:176",
+        "value": "{\"at\": 1792026527.3607664, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:177",
+        "value": "{\"recovery_checked_at\": 1792026527.3626745}"
       }
     ],
     "calls": [
