@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792036266.866562,
+  "saved_at": 1792036332.475615,
   "tables": {
     "tasks": [
       {
@@ -11853,10 +11853,10 @@
         "repo": "langfuse",
         "number": 18836,
         "note": "",
-        "status": "running",
+        "status": "execution_wait",
         "created": 1792033832.387537,
-        "updated": 1792033833.8542209,
-        "result": "",
+        "updated": 1792036332.4423032,
+        "result": "Command 'Codex remediation' timed out after 1200 seconds",
         "attempts": 1
       },
       {
@@ -17212,16 +17212,8 @@
         "value": "{\"task\": 912, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1792035122.0445743, \"seconds\": 478.989, \"tokens\": {\"totalTokens\": 4468426, \"inputTokens\": 4459023, \"cachedInputTokens\": 4364800, \"cacheWriteInputTokens\": 0, \"outputTokens\": 9403, \"reasoningOutputTokens\": 3253}, \"first_event_ms\": 1792034647746, \"last_event_ms\": 1792035122028, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"912\": {\"remaining\": 1, \"until\": 1792042325.2884922}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792019580.2746127, \"group\": \"new_fix\", \"task\": 899, \"phase\": \"generation\"}, {\"at\": 1792020184.5194056, \"group\": \"new_fix\", \"task\": 899, \"phase\": \"review\"}, {\"at\": 1792020639.5118425, \"group\": \"repair\", \"task\": 899, \"phase\": \"remediation\"}, {\"at\": 1792021881.5567858, \"group\": \"new_fix\", \"task\": 900, \"phase\": \"generation\"}, {\"at\": 1792022203.1033845, \"group\": \"new_fix\", \"task\": 899, \"phase\": \"generation\"}, {\"at\": 1792023424.7040749, \"group\": \"new_fix\", \"task\": 903, \"phase\": \"generation\"}, {\"at\": 1792023476.0982237, \"group\": \"new_fix\", \"task\": 904, \"phase\": \"generation\"}, {\"at\": 1792023519.177928, \"group\": \"new_fix\", \"task\": 901, \"phase\": \"generation\"}, {\"at\": 1792023618.9060657, \"group\": \"new_fix\", \"task\": 902, \"phase\": \"generation\"}, {\"at\": 1792025295.141654, \"group\": \"new_fix\", \"task\": 905, \"phase\": \"generation\"}, {\"at\": 1792026496.5892782, \"group\": \"new_fix\", \"task\": 906, \"phase\": \"generation\"}, {\"at\": 1792026590.8605072, \"group\": \"new_fix\", \"task\": 907, \"phase\": \"generation\"}, {\"at\": 1792027114.3477206, \"group\": \"new_fix\", \"task\": 908, \"phase\": \"generation\"}, {\"at\": 1792028392.5057862, \"group\": \"new_fix\", \"task\": 909, \"phase\": \"generation\"}, {\"at\": 1792028539.4519272, \"group\": \"new_fix\", \"task\": 909, \"phase\": \"review\"}, {\"at\": 1792031666.1325176, \"group\": \"new_fix\", \"task\": 910, \"phase\": \"generation\"}, {\"at\": 1792032985.97936, \"group\": \"new_fix\", \"task\": 911, \"phase\": \"generation\"}, {\"at\": 1792033839.9966276, \"group\": \"screening\", \"task\": 912, \"phase\": \"screening-b2805fae41c85685639b\"}, {\"at\": 1792033857.2008524, \"group\": \"new_fix\", \"task\": 912, \"phase\": \"generation\"}, {\"at\": 1792034643.0581656, \"group\": \"new_fix\", \"task\": 912, \"phase\": \"review\"}, {\"at\": 1792035125.2884922, \"group\": \"repair\", \"task\": 912, \"phase\": \"remediation\"}]"
-      },
-      {
-        "key": "task:912",
-        "value": "{\"started\": 1792033833.854256, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/912/attempt-1\", \"attempt\": 1, \"phase\": \"remediation\", \"base\": \"bc1ade0aacca75104bad934e92d70a454ec16e67\", \"phase_started\": 1792035128.5546389, \"screening_requests\": {\"b2805fae41c85685639b\": 1792033848.5203984}, \"generation_started\": 1792033857.200647, \"dispatch_paid_date\": \"2026-10-15\"}"
       },
       {
         "key": "coordination:google/adk-python#7543",
@@ -17380,40 +17372,52 @@
         "value": "1792036166.0502136"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1792036204.5995548, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 21, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1079.2918872833252, \"judge_tokens_spent_24h\": 95749, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7527\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7527\", \"title\": \"InMemoryMemoryService does not call add_session_to_memory?\", \"first_seen\": 1791929710.3285713, \"last_checked\": 1791953224.6633916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791953227.1579466, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792036204.6010063, \"tasks\": {\"fix\": {\"blocked\": 7, \"done\": 3, \"execution_wait\": 1, \"human_wait\": 2, \"queued\": 2, \"running\": 1, \"skipped\": 23, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 3, \"skipped\": 1, \"validation_wait\": 6}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792036242.1753638, \"windows\": [{\"name\": \"primary\", \"used_percent\": 77, \"resets_at\": 1792473656}]}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792036252.7517192"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1792036253.7719812"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792036261.8164642"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792036265.1665246"
-      },
-      {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
         "value": "{\"at\": 1792036266.6101294, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
       },
       {
         "key": "runner_resources",
         "value": "{\"at\": 1792036266.8028665, \"disk_free_bytes\": 70803288064, \"memory_bytes\": {\"MemTotal\": 16766410752, \"MemAvailable\": 8738295808, \"SwapTotal\": 3221221376, \"SwapFree\": 2998333440}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1792036271.5095341, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 21, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1146.1904077529907, \"judge_tokens_spent_24h\": 95749, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7527\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7527\", \"title\": \"InMemoryMemoryService does not call add_session_to_memory?\", \"first_seen\": 1791929710.3285713, \"last_checked\": 1791953224.6633916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791953227.1579466, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792036271.5121863, \"tasks\": {\"fix\": {\"blocked\": 7, \"done\": 3, \"execution_wait\": 1, \"human_wait\": 2, \"queued\": 2, \"running\": 1, \"skipped\": 23, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 3, \"skipped\": 1, \"validation_wait\": 6}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792036327.9298918"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792036330.1779313"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792036330.2930923"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792036332.1868234, \"windows\": [{\"name\": \"primary\", \"used_percent\": 77, \"resets_at\": 1792473656}]}"
+      },
+      {
+        "key": "usage:912:1:remediation",
+        "value": "{\"task\": 912, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"remediation\", \"at\": 1792036332.224345, \"seconds\": 1206.938, \"tokens\": {\"totalTokens\": 4275356, \"inputTokens\": 4266422, \"cachedInputTokens\": 4190720, \"cacheWriteInputTokens\": 0, \"outputTokens\": 8934, \"reasoningOutputTokens\": 2923}, \"first_event_ms\": 1792035132171, \"last_event_ms\": 1792036306739, \"model\": \"gpt-6-sol\", \"complete\": false, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:912",
+        "value": "{\"started\": 1792033833.854256, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/912/attempt-1\", \"attempt\": 1, \"phase\": \"execution_wait\", \"base\": \"bc1ade0aacca75104bad934e92d70a454ec16e67\", \"phase_started\": 1792035128.5546389, \"screening_requests\": {\"b2805fae41c85685639b\": 1792033848.5203984}, \"generation_started\": 1792033857.200647, \"dispatch_paid_date\": \"2026-10-15\", \"last_execution_phase\": \"remediation\", \"finished\": 1792036332.2319288}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792036332.327569"
       }
     ],
     "calls": [
