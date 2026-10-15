@@ -150,6 +150,9 @@ read-only retries; a mismatching blob remains a hard failure. The identified
 unpublished readback failure may resume once only after remote image hashes and
 retained patch evidence are verified, followed by fresh tests and independent
 review. A successful upload alone is not evidence that a PR was published.
+The cloud concurrency lock belongs to the admitted runtime job. A disabled
+scheduled/live job must skip without replacing a pending deployment canary;
+all admitted jobs still share one authentication/state owner group.
 
 The 2026-10-05 repair charges repository dispatch budgets only when an eligible
 task starts generation, not for precheck skips. Existing daily PR caps and

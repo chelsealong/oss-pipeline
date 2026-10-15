@@ -17,17 +17,17 @@ on:
   schedule:
     - cron: '17,47 * * * *'
 
-# Single owner of credentials, durable state and task execution. No concurrent
-# runners may refresh the same subscription login or spend the same budget.
-concurrency:
-  group: codex-cloud-pipeline
-  cancel-in-progress: false
 permissions:
   contents: read
 
 jobs:
   runtime:
     if: ${{ (github.event_name == 'workflow_dispatch' && inputs.mode != 'live') || vars.CODEX_CLOUD_ENABLED == 'true' }}
+    # Acquire the single-auth-owner lock only for an admitted job. A scheduled
+    # run while production is off must skip without replacing a pending canary.
+    concurrency:
+      group: codex-cloud-pipeline
+      cancel-in-progress: false
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     env:
