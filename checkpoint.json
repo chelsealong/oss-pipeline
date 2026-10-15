@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792074761.303171,
+  "saved_at": 1792074786.4739177,
   "tables": {
     "tasks": [
       {
@@ -11975,6 +11975,19 @@
         "updated": 1792072969.353573,
         "result": "daily PR cap",
         "attempts": 0
+      },
+      {
+        "id": 922,
+        "identity": "fix:comfyui:17063:",
+        "kind": "fix",
+        "repo": "comfyui",
+        "number": 17063,
+        "note": "",
+        "status": "running",
+        "created": 1792074781.8604603,
+        "updated": 1792074786.4661584,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -17531,10 +17544,6 @@
         "value": "{\"recovery_checked_at\": 1792074426.1341732}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792074426.250858, \"comfyui\": 1792049240.791171, \"hermes\": 1791629598.7424486, \"langfuse\": 1792072965.7700202, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792021844.7879212, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1792054042.4091728, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792054000.971541, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791910136.7062314}}"
-      },
-      {
         "key": "recovery_audit:45",
         "value": "{\"at\": 1792074427.2437656, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -17683,18 +17692,6 @@
         "value": "1792074650.4385552"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1792074700.892176, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 18, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 2403.0543892383575, \"judge_tokens_spent_24h\": 71861, \"screening_calls_5h\": 0, \"screening_calls_24h\": 2, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7548\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7548\", \"title\": \"MCP tool discovery and invocation apply opposite precedence to auth and provider headers\", \"first_seen\": 1792050130.9533427, \"last_checked\": 1792057212.6418724, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792074700.8937147, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 1, \"done\": 4, \"execution_wait\": 1, \"human_wait\": 1, \"skipped\": 22, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 1, \"validation_wait\": 1}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792074726.4404094, \"windows\": [{\"name\": \"primary\", \"used_percent\": 6, \"resets_at\": 1792650245}]}"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1792074726.4436882, \"source\": \"authenticated probe\"}"
       },
@@ -17703,28 +17700,48 @@
         "value": "{}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1792074759.6163418"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1792074759.7303724"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792074760.9037118"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792074761.2319596"
-      },
-      {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
         "value": "{\"at\": 1792074761.295141, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
       },
       {
         "key": "runner_resources",
         "value": "{\"at\": 1792074761.2968297, \"disk_free_bytes\": 87653568512, \"memory_bytes\": {\"MemTotal\": 16765378560, \"MemAvailable\": 13019357184, \"SwapTotal\": 3221221376, \"SwapFree\": 3061338112}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1792074763.6939144, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 18, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 2465.8561522960663, \"judge_tokens_spent_24h\": 71861, \"screening_calls_5h\": 0, \"screening_calls_24h\": 2, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7548\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7548\", \"title\": \"MCP tool discovery and invocation apply opposite precedence to auth and provider headers\", \"first_seen\": 1792050130.9533427, \"last_checked\": 1792057212.6418724, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792074763.6955502, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 1, \"done\": 4, \"execution_wait\": 1, \"human_wait\": 1, \"skipped\": 22, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 1, \"validation_wait\": 1}}}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792074766.739996, \"windows\": [{\"name\": \"primary\", \"used_percent\": 6, \"resets_at\": 1792650245}]}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792074775.9061267"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792074780.3962824"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792074784.6167774"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792074786.3407462"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792074426.250858, \"comfyui\": 1792074786.4660304, \"hermes\": 1791629598.7424486, \"langfuse\": 1792072965.7700202, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792021844.7879212, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1792054042.4091728, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792054000.971541, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791910136.7062314}}"
+      },
+      {
+        "key": "task:922",
+        "value": "{\"started\": 1792074786.4661858, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       }
     ],
     "calls": [
