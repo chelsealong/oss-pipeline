@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792028334.279527,
+  "saved_at": 1792028385.1324003,
   "tables": {
     "tasks": [
       {
@@ -11806,6 +11806,19 @@
         "updated": 1792027148.3505473,
         "result": "PR_CAP: chelsealong currently has 18 open OpenClaw PRs. The supplied pipeline policy requires stopping new fixes at 18. No files were changed or published.",
         "attempts": 1
+      },
+      {
+        "id": 909,
+        "identity": "fix:comfyui:17055:",
+        "kind": "fix",
+        "repo": "comfyui",
+        "number": 17055,
+        "note": "",
+        "status": "running",
+        "created": 1792028378.291553,
+        "updated": 1792028385.1232436,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -17078,10 +17091,6 @@
         "value": "{\"status\": \"not_needed\", \"reason\": \"Existing linked PR; no coordination message should be sent.\", \"prs\": [\"closing-ref PR#7541(OPEN)\", \"xref PR#7541(OPEN)\"]}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792027057.5172515, \"comfyui\": 1792023468.181078, \"hermes\": 1791629598.7424486, \"langfuse\": 1792022192.2824502, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792021844.7879212, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1792025287.6173902, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791986066.4826849, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791910136.7062314}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"langfuse\", \"task\": 899, \"at\": 1792019580.2743742}, {\"repo\": \"llama-index\", \"task\": 900, \"at\": 1792021881.5563183}, {\"repo\": \"comfyui\", \"task\": 903, \"at\": 1792023424.7038112}, {\"repo\": \"comfyui\", \"task\": 904, \"at\": 1792023476.098019}, {\"repo\": \"openclaw\", \"task\": 901, \"at\": 1792023519.177699}, {\"repo\": \"openclaw\", \"task\": 902, \"at\": 1792023618.9058616}, {\"repo\": \"spec-kit\", \"task\": 905, \"at\": 1792025295.141435}, {\"repo\": \"openclaw\", \"task\": 906, \"at\": 1792026496.5890393}, {\"repo\": \"openclaw\", \"task\": 907, \"at\": 1792026590.8602574}, {\"repo\": \"openclaw\", \"task\": 908, \"at\": 1792027114.3475163}]"
       },
@@ -17242,32 +17251,8 @@
         "value": "{\"at\": 1792028267.429721, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1792028270.6425452, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 15, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1156.289047241211, \"judge_tokens_spent_24h\": 90398, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7527\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7527\", \"title\": \"InMemoryMemoryService does not call add_session_to_memory?\", \"first_seen\": 1791929710.3285713, \"last_checked\": 1791953224.6633916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791953227.1579466, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7543\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7543\", \"title\": \"Dev UI graph: edges to tools/nodes with \\\":\\\" in the name attach to a phantom node\", \"first_seen\": 1792021875.0086637, \"last_checked\": 1792027040.1906998, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792028270.6437364, \"tasks\": {\"fix\": {\"blocked\": 6, \"done\": 2, \"execution_wait\": 1, \"human_wait\": 2, \"skipped\": 25, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 3, \"skipped\": 1, \"validation_wait\": 6}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792028277.8017838, \"windows\": [{\"name\": \"primary\", \"used_percent\": 75, \"resets_at\": 1792473656}]}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792028319.3717337"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792028329.7384596"
-      },
-      {
         "key": "task:176",
         "value": "{\"recovery_checked_at\": 1792028330.9685233}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792028331.463866"
       },
       {
         "key": "recovery_audit:176",
@@ -17276,10 +17261,6 @@
       {
         "key": "task:177",
         "value": "{\"recovery_checked_at\": 1792028331.9593647}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1792028331.9787822"
       },
       {
         "key": "recovery_audit:177",
@@ -17292,6 +17273,42 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1792028334.2702177, \"disk_free_bytes\": 85693939712, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 10513084416, \"SwapTotal\": 3221221376, \"SwapFree\": 2953846784}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1792028336.54246, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 15, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1222.1888973712921, \"judge_tokens_spent_24h\": 90398, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7527\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7527\", \"title\": \"InMemoryMemoryService does not call add_session_to_memory?\", \"first_seen\": 1791929710.3285713, \"last_checked\": 1791953224.6633916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791953227.1579466, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7543\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7543\", \"title\": \"Dev UI graph: edges to tools/nodes with \\\":\\\" in the name attach to a phantom node\", \"first_seen\": 1792021875.0086637, \"last_checked\": 1792027040.1906998, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792028336.5437214, \"tasks\": {\"fix\": {\"blocked\": 6, \"done\": 2, \"execution_wait\": 1, \"human_wait\": 2, \"skipped\": 25, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 3, \"skipped\": 1, \"validation_wait\": 6}}}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792028338.0687153, \"windows\": [{\"name\": \"primary\", \"used_percent\": 75, \"resets_at\": 1792473656}]}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792028379.3811622"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792028381.071803"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792028383.3014448"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792028384.7411904"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792027057.5172515, \"comfyui\": 1792028385.1230934, \"hermes\": 1791629598.7424486, \"langfuse\": 1792022192.2824502, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792021844.7879212, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1792025287.6173902, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791986066.4826849, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791910136.7062314}}"
+      },
+      {
+        "key": "task:909",
+        "value": "{\"started\": 1792028385.1233037, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       }
     ],
     "calls": [
