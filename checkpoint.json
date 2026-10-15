@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792084643.391421,
+  "saved_at": 1792084650.3422549,
   "tables": {
     "tasks": [
       {
@@ -17629,20 +17629,12 @@
         "value": "{\"date\": \"2026-10-15\", \"used\": {\"comfyui\": 6, \"openclaw\": 10, \"spec-kit\": 2, \"langfuse\": 5, \"autogpt\": 2}}"
       },
       {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1792062893.0492558, \"group\": \"new_fix\", \"task\": 919, \"phase\": \"generation\"}, {\"at\": 1792065152.6800022, \"group\": \"new_fix\", \"task\": 920, \"phase\": \"generation\"}, {\"at\": 1792065819.352556, \"group\": \"new_fix\", \"task\": 920, \"phase\": \"validation\"}, {\"at\": 1792066325.5629966, \"group\": \"new_fix\", \"task\": 920, \"phase\": \"review\"}, {\"at\": 1792067142.0973861, \"group\": \"repair\", \"task\": 920, \"phase\": \"remediation\"}, {\"at\": 1792068086.057803, \"group\": \"repair\", \"task\": 920, \"phase\": \"rereview\"}, {\"at\": 1792069545.000698, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1792069545.0413098, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1792069549.3733015, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1792069549.5783803, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1792069579.4792721, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1792069587.0352244, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1792069833.689454, \"group\": \"new_fix\", \"task\": 917, \"phase\": \"generation\"}, {\"at\": 1792070974.7532222, \"group\": \"new_fix\", \"task\": 917, \"phase\": \"review\"}, {\"at\": 1792071238.771368, \"group\": \"new_fix\", \"task\": 920, \"phase\": \"generation\"}, {\"at\": 1792072297.8336346, \"group\": \"new_fix\", \"task\": 920, \"phase\": \"review\"}, {\"at\": 1792074794.9332342, \"group\": \"new_fix\", \"task\": 922, \"phase\": \"generation\"}, {\"at\": 1792075905.7876945, \"group\": \"new_fix\", \"task\": 923, \"phase\": \"generation\"}, {\"at\": 1792077038.6571267, \"group\": \"new_fix\", \"task\": 924, \"phase\": \"generation\"}, {\"at\": 1792078149.4527974, \"group\": \"new_fix\", \"task\": 925, \"phase\": \"generation\"}, {\"at\": 1792078975.9893012, \"group\": \"screening\", \"task\": 926, \"phase\": \"screening-298d2a96987ba434bcd7\"}, {\"at\": 1792078987.5860922, \"group\": \"new_fix\", \"task\": 926, \"phase\": \"generation\"}]"
-      },
-      {
         "key": "usage:926:1:generation",
         "value": "{\"task\": 926, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792079018.3797848, \"seconds\": 30.795, \"tokens\": {\"totalTokens\": 143738, \"inputTokens\": 142611, \"cachedInputTokens\": 98560, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1127, \"reasoningOutputTokens\": 355}, \"first_event_ms\": 1792078993605, \"last_event_ms\": 1792079018373, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "followup:task:926",
         "value": "{\"status\": \"needs_human\", \"task\": 926, \"repo\": \"comfyui\", \"number\": 17066, \"reason\": \"VALIDATION_ENVIRONMENT: Issue #17066 reports a CUDA-only failure on a Windows GeForce 930MX while loading a Qwen3VL text encoder. This checkout has no NVIDIA GPU, and the report has no usable workflow or synchronous CUDA trace. I cannot identify and validate a CPU-verifiable ComfyUI defect from the available evidence.\", \"base\": \"20b46065ef7f34fa21e8abebe8d0cca90a904d6d\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"926-1.json.enc\"}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:926",
@@ -17761,18 +17753,6 @@
         "value": "{\"at\": 1792084568.0078704, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1792084571.5903466, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 18, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 5583.998011112213, \"judge_tokens_spent_24h\": 74713, \"screening_calls_5h\": 1, \"screening_calls_24h\": 3, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7548\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7548\", \"title\": \"MCP tool discovery and invocation apply opposite precedence to auth and provider headers\", \"first_seen\": 1792050130.9533427, \"last_checked\": 1792057212.6418724, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7553\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7553\", \"title\": \"ModelArmorPlugin fails with UNAUTHENTICATED under Agent Identity (Agent Runtime, Cloud Run): hard-coded non-mTLS regional endpoint\", \"first_seen\": 1792079087.2010655, \"last_checked\": 1792083869.147169, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792084571.5927815, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 1, \"done\": 4, \"execution_wait\": 1, \"human_wait\": 1, \"skipped\": 22, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 1, \"validation_wait\": 1}}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792084629.7774777"
-      },
-      {
         "key": "task:166",
         "value": "{\"recovery_checked_at\": 1792084631.918293}"
       },
@@ -17829,10 +17809,6 @@
         "value": "{\"recovery_checked_at\": 1792084638.2125547}"
       },
       {
-        "key": "discovery_last_success",
-        "value": "1792084638.9960144"
-      },
-      {
         "key": "recovery_audit:176",
         "value": "{\"at\": 1792084639.069254, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -17843,10 +17819,6 @@
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1792074426.250858, \"comfyui\": 1792078970.6260552, \"hermes\": 1791629598.7424486, \"langfuse\": 1792084640.88242, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792021844.7879212, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1792075897.207243, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792054000.971541, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792078134.466868}}"
-      },
-      {
-        "key": "task:927",
-        "value": "{\"started\": 1792084640.8826683, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       },
       {
         "key": "recovery_audit:177",
@@ -17865,31 +17837,39 @@
         "value": "{\"at\": 1792084642.174998, \"windows\": [{\"name\": \"primary\", \"used_percent\": 6, \"resets_at\": 1792650245}]}"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1792084644.778774"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1792084645.396666, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 18, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 5657.804962396622, \"judge_tokens_spent_24h\": 75906, \"screening_calls_5h\": 1, \"screening_calls_24h\": 3, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7548\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7548\", \"title\": \"MCP tool discovery and invocation apply opposite precedence to auth and provider headers\", \"first_seen\": 1792050130.9533427, \"last_checked\": 1792057212.6418724, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7553\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7553\", \"title\": \"ModelArmorPlugin fails with UNAUTHENTICATED under Agent Identity (Agent Runtime, Cloud Run): hard-coded non-mTLS regional endpoint\", \"first_seen\": 1792079087.2010655, \"last_checked\": 1792083869.147169, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792084645.3982267, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 1, \"done\": 4, \"execution_wait\": 1, \"human_wait\": 1, \"skipped\": 22, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 1, \"running\": 1, \"validation_wait\": 1}}}"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1792084642.538738"
+        "value": "1792084647.5388691"
+      },
+      {
+        "key": "task:927",
+        "value": "{\"started\": 1792084640.8826683, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/927/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"de3e4921df4643ad098c0d4c97ba7c24af4600cf\", \"remote_base\": \"de3e4921df4643ad098c0d4c97ba7c24af4600cf\", \"base_update\": {\"original_head\": \"de3e4921df4643ad098c0d4c97ba7c24af4600cf\", \"base\": \"de3e4921df4643ad098c0d4c97ba7c24af4600cf\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792084648.9558544"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"927\": {\"remaining\": 1, \"until\": 1792091850.3330126}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1792067142.0973861, \"group\": \"repair\", \"task\": 920, \"phase\": \"remediation\"}, {\"at\": 1792068086.057803, \"group\": \"repair\", \"task\": 920, \"phase\": \"rereview\"}, {\"at\": 1792069545.000698, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1792069545.0413098, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1792069549.3733015, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1792069549.5783803, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1792069579.4792721, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1792069587.0352244, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1792069833.689454, \"group\": \"new_fix\", \"task\": 917, \"phase\": \"generation\"}, {\"at\": 1792070974.7532222, \"group\": \"new_fix\", \"task\": 917, \"phase\": \"review\"}, {\"at\": 1792071238.771368, \"group\": \"new_fix\", \"task\": 920, \"phase\": \"generation\"}, {\"at\": 1792072297.8336346, \"group\": \"new_fix\", \"task\": 920, \"phase\": \"review\"}, {\"at\": 1792074794.9332342, \"group\": \"new_fix\", \"task\": 922, \"phase\": \"generation\"}, {\"at\": 1792075905.7876945, \"group\": \"new_fix\", \"task\": 923, \"phase\": \"generation\"}, {\"at\": 1792077038.6571267, \"group\": \"new_fix\", \"task\": 924, \"phase\": \"generation\"}, {\"at\": 1792078149.4527974, \"group\": \"new_fix\", \"task\": 925, \"phase\": \"generation\"}, {\"at\": 1792078975.9893012, \"group\": \"screening\", \"task\": 926, \"phase\": \"screening-298d2a96987ba434bcd7\"}, {\"at\": 1792078987.5860922, \"group\": \"new_fix\", \"task\": 926, \"phase\": \"generation\"}, {\"at\": 1792084650.3330126, \"group\": \"maintenance\", \"task\": 927, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1791475401.7425864,
-        "kind": "judge"
-      },
-      {
-        "at": 1791477208.6579921,
-        "kind": "judge"
-      },
-      {
-        "at": 1791477231.3144085,
-        "kind": "codex"
-      },
-      {
-        "at": 1791477261.8670647,
-        "kind": "codex"
-      },
-      {
-        "at": 1791479146.165736,
-        "kind": "judge"
-      },
       {
         "at": 1791480954.919518,
         "kind": "judge"
@@ -23909,6 +23889,10 @@
       {
         "at": 1792084625.6510046,
         "kind": "judge"
+      },
+      {
+        "at": 1792084650.3336525,
+        "kind": "codex"
       }
     ]
   }
