@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792072934.4833336,
+  "saved_at": 1792072946.8320596,
   "tables": {
     "tasks": [
       {
@@ -11957,10 +11957,10 @@
         "repo": "langfuse",
         "number": 18861,
         "note": "",
-        "status": "running",
+        "status": "done",
         "created": 1792065136.7969885,
-        "updated": 1792071227.453272,
-        "result": "Command 'Codex rereview' timed out after 1200 seconds",
+        "updated": 1792072946.816849,
+        "result": "https://github.com/langfuse/langfuse/pull/18879",
         "attempts": 2
       },
       {
@@ -17459,10 +17459,6 @@
         "value": "{\"task\": 920, \"repo\": \"langfuse\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1792072296.2049131, \"seconds\": 1057.435, \"tokens\": {\"totalTokens\": 4503949, \"inputTokens\": 4493815, \"cachedInputTokens\": 4392064, \"cacheWriteInputTokens\": 0, \"outputTokens\": 10134, \"reasoningOutputTokens\": 2601}, \"first_event_ms\": 1792071243615, \"last_event_ms\": 1792072296192, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"920\": {\"remaining\": 0, \"until\": 1792079497.8336346}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792057690.0908475, \"group\": \"new_fix\", \"task\": 918, \"phase\": \"generation\"}, {\"at\": 1792058618.1442604, \"group\": \"new_fix\", \"task\": 918, \"phase\": \"review\"}, {\"at\": 1792062893.0492558, \"group\": \"new_fix\", \"task\": 919, \"phase\": \"generation\"}, {\"at\": 1792065152.6800022, \"group\": \"new_fix\", \"task\": 920, \"phase\": \"generation\"}, {\"at\": 1792065819.352556, \"group\": \"new_fix\", \"task\": 920, \"phase\": \"validation\"}, {\"at\": 1792066325.5629966, \"group\": \"new_fix\", \"task\": 920, \"phase\": \"review\"}, {\"at\": 1792067142.0973861, \"group\": \"repair\", \"task\": 920, \"phase\": \"remediation\"}, {\"at\": 1792068086.057803, \"group\": \"repair\", \"task\": 920, \"phase\": \"rereview\"}, {\"at\": 1792069545.000698, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1792069545.0413098, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1792069549.3733015, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1792069549.5783803, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1792069579.4792721, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1792069587.0352244, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1792069833.689454, \"group\": \"new_fix\", \"task\": 917, \"phase\": \"generation\"}, {\"at\": 1792070974.7532222, \"group\": \"new_fix\", \"task\": 917, \"phase\": \"review\"}, {\"at\": 1792071238.771368, \"group\": \"new_fix\", \"task\": 920, \"phase\": \"generation\"}, {\"at\": 1792072297.8336346, \"group\": \"new_fix\", \"task\": 920, \"phase\": \"review\"}]"
       },
@@ -17683,24 +17679,28 @@
         "value": "{\"at\": 1792072923.6648786, \"tasks\": {\"fix\": {\"blocked\": 6, \"done\": 3, \"execution_wait\": 1, \"human_wait\": 1, \"queued\": 4, \"running\": 1, \"skipped\": 14, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 1, \"validation_wait\": 1}}}"
       },
       {
+        "key": "detector_heartbeat",
+        "value": "1792072943.8724194"
+      },
+      {
         "key": "discovery_last_success",
-        "value": "1792072930.4299753"
+        "value": "1792072945.4248705"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1792072930.450456"
+        "value": "1792072945.4521968"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1792072931.2947524"
+        "value": "1792072946.3130965"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1792072933.8722296"
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:920",
-        "value": "{\"started\": 1792071227.4533179, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/920/attempt-2\", \"attempt\": 2, \"phase\": \"publishing\", \"base\": \"747daf9a57f7f73a1f748f9eccc5e1cc391908ca\", \"generation_started\": 1792065152.6797836, \"dispatch_paid_date\": \"2026-10-15\", \"phase_started\": 1792072300.2005916, \"validation_bootstrap_version\": \"1\", \"last_execution_phase\": \"rereview\", \"finished\": 1792069300.5083153, \"resume_progress\": {\"bundle\": \"920-1.json\", \"sha256\": \"65448c74e9b532cd49849eca33d5e2438e132d692c7fbd3b4b399c6cf45582e2\", \"base\": \"b526ee2a35f6cbc37604d3bc45531deac6ef4dbb\", \"phase\": \"rereview\"}, \"timeout_continuations\": 1, \"progress_rebase_needed\": null, \"progress_restored\": true, \"restored_from\": \"920-1.json\", \"reviewed_screenshots\": [{\"path\": \"/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/920/attempt-2/tool-cache/pr-evidence/before.png\", \"sha256\": \"ecd63a8392eadf6a74310383ac5ee89b20f1654344610a9cbfda921d26905702\", \"size\": 98636, \"asset\": \"screenshots/ecd63a8392eadf6a74310383ac5ee89b20f1654344610a9cbfda921d26905702.png\", \"blob\": \"cd250259968f49367d682d2be8ec6318ea292190\", \"url\": \"https://raw.githubusercontent.com/chelsealong/oss-pipeline/pr-assets/screenshots/ecd63a8392eadf6a74310383ac5ee89b20f1654344610a9cbfda921d26905702.png\", \"label\": \"Before\"}, {\"path\": \"/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/920/attempt-2/tool-cache/pr-evidence/after.png\", \"sha256\": \"5863fb21deb806d43a881984b23d8503353171615f7075ab81d3514f0010af04\", \"size\": 98685, \"asset\": \"screenshots/5863fb21deb806d43a881984b23d8503353171615f7075ab81d3514f0010af04.png\", \"blob\": \"17364f9bf6bc987512b8e735bf1eb14e2735a6a8\", \"url\": \"https://raw.githubusercontent.com/chelsealong/oss-pipeline/pr-assets/screenshots/5863fb21deb806d43a881984b23d8503353171615f7075ab81d3514f0010af04.png\", \"label\": \"After\"}], \"publication_started\": true, \"branch\": \"fix/codex-langfuse-18861\", \"head\": \"0d1d5fba369c4a71ef0d603d0c77a56b091914f9\"}"
+        "value": "{\"started\": 1792071227.4533179, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/920/attempt-2\", \"attempt\": 2, \"phase\": \"done\", \"base\": \"747daf9a57f7f73a1f748f9eccc5e1cc391908ca\", \"generation_started\": 1792065152.6797836, \"dispatch_paid_date\": \"2026-10-15\", \"phase_started\": 1792072300.2005916, \"validation_bootstrap_version\": \"1\", \"last_execution_phase\": \"publishing\", \"finished\": 1792072946.7732356, \"resume_progress\": {\"bundle\": \"920-1.json\", \"sha256\": \"65448c74e9b532cd49849eca33d5e2438e132d692c7fbd3b4b399c6cf45582e2\", \"base\": \"b526ee2a35f6cbc37604d3bc45531deac6ef4dbb\", \"phase\": \"rereview\"}, \"timeout_continuations\": 1, \"progress_rebase_needed\": null, \"progress_restored\": true, \"restored_from\": \"920-1.json\", \"reviewed_screenshots\": [{\"path\": \"/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/920/attempt-2/tool-cache/pr-evidence/before.png\", \"sha256\": \"ecd63a8392eadf6a74310383ac5ee89b20f1654344610a9cbfda921d26905702\", \"size\": 98636, \"asset\": \"screenshots/ecd63a8392eadf6a74310383ac5ee89b20f1654344610a9cbfda921d26905702.png\", \"blob\": \"cd250259968f49367d682d2be8ec6318ea292190\", \"url\": \"https://raw.githubusercontent.com/chelsealong/oss-pipeline/pr-assets/screenshots/ecd63a8392eadf6a74310383ac5ee89b20f1654344610a9cbfda921d26905702.png\", \"label\": \"Before\"}, {\"path\": \"/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/920/attempt-2/tool-cache/pr-evidence/after.png\", \"sha256\": \"5863fb21deb806d43a881984b23d8503353171615f7075ab81d3514f0010af04\", \"size\": 98685, \"asset\": \"screenshots/5863fb21deb806d43a881984b23d8503353171615f7075ab81d3514f0010af04.png\", \"blob\": \"17364f9bf6bc987512b8e735bf1eb14e2735a6a8\", \"url\": \"https://raw.githubusercontent.com/chelsealong/oss-pipeline/pr-assets/screenshots/5863fb21deb806d43a881984b23d8503353171615f7075ab81d3514f0010af04.png\", \"label\": \"After\"}], \"publication_started\": true, \"branch\": \"fix/codex-langfuse-18861\", \"head\": \"0d1d5fba369c4a71ef0d603d0c77a56b091914f9\", \"published_at\": 1792072946.7696736, \"publication_outcome\": \"created\"}"
       }
     ],
     "calls": [
