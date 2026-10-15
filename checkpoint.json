@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792036410.7052927,
+  "saved_at": 1792036413.492419,
   "tables": {
     "tasks": [
       {
@@ -11853,7 +11853,7 @@
         "repo": "langfuse",
         "number": 18836,
         "note": "",
-        "status": "execution_wait",
+        "status": "retry_wait",
         "created": 1792033832.387537,
         "updated": 1792036332.4423032,
         "result": "Command 'Codex remediation' timed out after 1200 seconds",
@@ -17200,22 +17200,6 @@
         "value": "{\"status\": \"not_needed\", \"reason\": \"Existing linked PR; no coordination message should be sent.\", \"prs\": [\"closing-ref PR#7541(OPEN)\", \"xref PR#7541(OPEN)\"]}"
       },
       {
-        "key": "recovery_audit:171",
-        "value": "{\"at\": 1792035470.0230443, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:172",
-        "value": "{\"recovery_checked_at\": 1792035470.0257611}"
-      },
-      {
-        "key": "followup:task:172",
-        "value": "{\"status\": \"needs_human\", \"task\": 172, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:173",
-        "value": "{\"recovery_checked_at\": 1792035470.8145828}"
-      },
-      {
         "key": "recovery_audit:173",
         "value": "{\"at\": 1792035472.1564653, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -17266,10 +17250,6 @@
       {
         "key": "usage:912:1:remediation",
         "value": "{\"task\": 912, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"remediation\", \"at\": 1792036332.224345, \"seconds\": 1206.938, \"tokens\": {\"totalTokens\": 4275356, \"inputTokens\": 4266422, \"cachedInputTokens\": 4190720, \"cacheWriteInputTokens\": 0, \"outputTokens\": 8934, \"reasoningOutputTokens\": 2923}, \"first_event_ms\": 1792035132171, \"last_event_ms\": 1792036306739, \"model\": \"gpt-6-sol\", \"complete\": false, \"usage_available\": true}"
-      },
-      {
-        "key": "task:912",
-        "value": "{\"started\": 1792033833.854256, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/912/attempt-1\", \"attempt\": 1, \"phase\": \"execution_wait\", \"base\": \"bc1ade0aacca75104bad934e92d70a454ec16e67\", \"phase_started\": 1792035128.5546389, \"screening_requests\": {\"b2805fae41c85685639b\": 1792033848.5203984}, \"generation_started\": 1792033857.200647, \"dispatch_paid_date\": \"2026-10-15\", \"last_execution_phase\": \"remediation\", \"finished\": 1792036332.2319288}"
       },
       {
         "key": "task:44",
@@ -17376,14 +17356,6 @@
         "value": "1792036403.274892"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1792036405.8697548"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792036407.1288328"
-      },
-      {
         "key": "task:166",
         "value": "{\"recovery_checked_at\": 1792036407.827935}"
       },
@@ -17408,10 +17380,6 @@
         "value": "{\"recovery_checked_at\": 1792036410.4312215}"
       },
       {
-        "key": "task:913",
-        "value": "{\"started\": 1792036340.4660912, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/913/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"c182e273a28ac8a3f3fa01845877a9755f604b46\", \"phase_started\": 1792036349.582423, \"screening_requests\": {\"f13f8099ea55d1e74b77\": 1792036355.3144145}, \"generation_started\": 1792036410.64971, \"dispatch_paid_date\": \"2026-10-15\"}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"langfuse\", \"task\": 899, \"at\": 1792019580.2743742}, {\"repo\": \"llama-index\", \"task\": 900, \"at\": 1792021881.5563183}, {\"repo\": \"comfyui\", \"task\": 903, \"at\": 1792023424.7038112}, {\"repo\": \"comfyui\", \"task\": 904, \"at\": 1792023476.098019}, {\"repo\": \"openclaw\", \"task\": 901, \"at\": 1792023519.177699}, {\"repo\": \"openclaw\", \"task\": 902, \"at\": 1792023618.9058616}, {\"repo\": \"spec-kit\", \"task\": 905, \"at\": 1792025295.141435}, {\"repo\": \"openclaw\", \"task\": 906, \"at\": 1792026496.5890393}, {\"repo\": \"openclaw\", \"task\": 907, \"at\": 1792026590.8602574}, {\"repo\": \"openclaw\", \"task\": 908, \"at\": 1792027114.3475163}, {\"repo\": \"comfyui\", \"task\": 909, \"at\": 1792028392.5055287}, {\"repo\": \"openclaw\", \"task\": 910, \"at\": 1792031666.132324}, {\"repo\": \"openclaw\", \"task\": 911, \"at\": 1792032985.979173}, {\"repo\": \"langfuse\", \"task\": 912, \"at\": 1792033857.2006466}, {\"repo\": \"openclaw\", \"task\": 913, \"at\": 1792036410.6497083}]"
       },
@@ -17426,6 +17394,38 @@
       {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792019580.2746127, \"group\": \"new_fix\", \"task\": 899, \"phase\": \"generation\"}, {\"at\": 1792020184.5194056, \"group\": \"new_fix\", \"task\": 899, \"phase\": \"review\"}, {\"at\": 1792020639.5118425, \"group\": \"repair\", \"task\": 899, \"phase\": \"remediation\"}, {\"at\": 1792021881.5567858, \"group\": \"new_fix\", \"task\": 900, \"phase\": \"generation\"}, {\"at\": 1792022203.1033845, \"group\": \"new_fix\", \"task\": 899, \"phase\": \"generation\"}, {\"at\": 1792023424.7040749, \"group\": \"new_fix\", \"task\": 903, \"phase\": \"generation\"}, {\"at\": 1792023476.0982237, \"group\": \"new_fix\", \"task\": 904, \"phase\": \"generation\"}, {\"at\": 1792023519.177928, \"group\": \"new_fix\", \"task\": 901, \"phase\": \"generation\"}, {\"at\": 1792023618.9060657, \"group\": \"new_fix\", \"task\": 902, \"phase\": \"generation\"}, {\"at\": 1792025295.141654, \"group\": \"new_fix\", \"task\": 905, \"phase\": \"generation\"}, {\"at\": 1792026496.5892782, \"group\": \"new_fix\", \"task\": 906, \"phase\": \"generation\"}, {\"at\": 1792026590.8605072, \"group\": \"new_fix\", \"task\": 907, \"phase\": \"generation\"}, {\"at\": 1792027114.3477206, \"group\": \"new_fix\", \"task\": 908, \"phase\": \"generation\"}, {\"at\": 1792028392.5057862, \"group\": \"new_fix\", \"task\": 909, \"phase\": \"generation\"}, {\"at\": 1792028539.4519272, \"group\": \"new_fix\", \"task\": 909, \"phase\": \"review\"}, {\"at\": 1792031666.1325176, \"group\": \"new_fix\", \"task\": 910, \"phase\": \"generation\"}, {\"at\": 1792032985.97936, \"group\": \"new_fix\", \"task\": 911, \"phase\": \"generation\"}, {\"at\": 1792033839.9966276, \"group\": \"screening\", \"task\": 912, \"phase\": \"screening-b2805fae41c85685639b\"}, {\"at\": 1792033857.2008524, \"group\": \"new_fix\", \"task\": 912, \"phase\": \"generation\"}, {\"at\": 1792034643.0581656, \"group\": \"new_fix\", \"task\": 912, \"phase\": \"review\"}, {\"at\": 1792035125.2884922, \"group\": \"repair\", \"task\": 912, \"phase\": \"remediation\"}, {\"at\": 1792036346.5637748, \"group\": \"screening\", \"task\": 913, \"phase\": \"screening-f13f8099ea55d1e74b77\"}, {\"at\": 1792036410.649941, \"group\": \"new_fix\", \"task\": 913, \"phase\": \"generation\"}]"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792036410.9344811"
+      },
+      {
+        "key": "recovery_audit:171",
+        "value": "{\"at\": 1792036411.826429, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:172",
+        "value": "{\"recovery_checked_at\": 1792036411.9114008}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792036412.2248747"
+      },
+      {
+        "key": "followup:task:172",
+        "value": "{\"status\": \"needs_human\", \"task\": 172, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:173",
+        "value": "{\"recovery_checked_at\": 1792036412.7153099}"
+      },
+      {
+        "key": "task:912",
+        "value": "{\"started\": 1792033833.854256, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1792036713.3129249, \"folder\": \"jobs/912/attempt-1\", \"attempt\": 1, \"phase\": \"execution_wait\", \"base\": \"bc1ade0aacca75104bad934e92d70a454ec16e67\", \"phase_started\": 1792035128.5546389, \"screening_requests\": {\"b2805fae41c85685639b\": 1792033848.5203984}, \"generation_started\": 1792033857.200647, \"dispatch_paid_date\": \"2026-10-15\", \"last_execution_phase\": \"remediation\", \"finished\": 1792036332.2319288, \"resume_progress\": {\"bundle\": \"912-1.json\", \"sha256\": \"27b87ee70f20442045fe41c17308790c3c989e0b8d54325ec05597febf46990a\", \"base\": \"bc1ade0aacca75104bad934e92d70a454ec16e67\", \"phase\": \"remediation\"}, \"timeout_continuations\": 1}"
+      },
+      {
+        "key": "task:913",
+        "value": "{\"started\": 1792036340.4660912, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/913/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"c182e273a28ac8a3f3fa01845877a9755f604b46\", \"phase_started\": 1792036413.4830437, \"screening_requests\": {\"f13f8099ea55d1e74b77\": 1792036355.3144145}, \"generation_started\": 1792036410.64971, \"dispatch_paid_date\": \"2026-10-15\"}"
       }
     ],
     "calls": [
