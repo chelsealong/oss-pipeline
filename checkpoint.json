@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792070578.63941,
+  "saved_at": 1792070641.7265685,
   "tables": {
     "tasks": [
       {
@@ -17643,14 +17643,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7247\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABcRvPjA@2026-10-15T12:58:18Z\", \"author\": \"surajksharma07\", \"when\": \"2026-10-15T12:58:18Z\", \"kind\": \"comment\", \"assoc\": \"COLLABORATOR\", \"body\": \"Thanks for taking the text half @Samecho. On today\\u2019s main (156f007ce) with a2a-sdk 1.2.2 the legacy path still gives 2 text / 2 confirmations so nothing has landed for it yet. #7542 on its own brings the text down to 1 including the answer after approval. Its tests pass on both 1.2.2 and 0.3.25 and 8 of them fail without the fix. The full tests/unittests/a2a suite is green on both SDKs.\\n\\nOne thing to sort out with @chelsealong: #7542 and #7252 conflict in the same for e in a2a_events loop. If the merge puts #7252\\u2019s long-running continue before your pending-text flush narration sent right before a LongRunningFunctionTool call is silently dropped. Got only call publish with the text gone. Flushing pending_text_event before diverting the long-running parts keeps it and then the issue\\u2019s repro gives 1 text / 1 confirmation. Whichever PR lands second should handle that ideally with a \\u201cnarration then long-running call\\u201d test.\\n\\nOn the timing question holding a complete text until the next event seems reasonable for the legacy path. Where it would actually show is a complete reply followed by a slow next step (e.g. a sub-agent handoff waiting on its next model call). The final call is for the maintainers though. @DeanChensj could you weigh in on this vs making v2 the default?\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1792070518.109074, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 5, \"running_tasks\": 1, \"queued_tasks\": 4, \"codex_calls_5h\": 18, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 684.4156413078308, \"judge_tokens_spent_24h\": 70115, \"screening_calls_5h\": 0, \"screening_calls_24h\": 2, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7548\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7548\", \"title\": \"MCP tool discovery and invocation apply opposite precedence to auth and provider headers\", \"first_seen\": 1792050130.9533427, \"last_checked\": 1792057212.6418724, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792070518.1105726, \"tasks\": {\"fix\": {\"blocked\": 7, \"done\": 2, \"execution_wait\": 1, \"human_wait\": 1, \"queued\": 3, \"retry_wait\": 1, \"running\": 1, \"skipped\": 16, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 1, \"validation_wait\": 1}}}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1792070528.6440747"
       },
@@ -17659,28 +17651,36 @@
         "value": "1792070538.8741305"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1792070574.6680505"
+        "key": "admission_health",
+        "value": "{\"at\": 1792070581.252468, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 5, \"running_tasks\": 1, \"queued_tasks\": 4, \"codex_calls_5h\": 18, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 747.5583035945892, \"judge_tokens_spent_24h\": 70115, \"screening_calls_5h\": 0, \"screening_calls_24h\": 2, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7548\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7548\", \"title\": \"MCP tool discovery and invocation apply opposite precedence to auth and provider headers\", \"first_seen\": 1792050130.9533427, \"last_checked\": 1792057212.6418724, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
-        "key": "discovery_last_success",
-        "value": "1792070575.061876"
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792070581.2545912, \"tasks\": {\"fix\": {\"blocked\": 7, \"done\": 2, \"execution_wait\": 1, \"human_wait\": 1, \"queued\": 3, \"retry_wait\": 1, \"running\": 1, \"skipped\": 16, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 1, \"validation_wait\": 1}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792070634.6835241"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1792070576.427659, \"windows\": [{\"name\": \"primary\", \"used_percent\": 5, \"resets_at\": 1792650245}]}"
+        "value": "{\"at\": 1792070636.0451968, \"windows\": [{\"name\": \"primary\", \"used_percent\": 5, \"resets_at\": 1792650245}]}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1792070578.4620364"
+        "value": "1792070638.4631646"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792070640.3180125"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
-        "value": "{\"at\": 1792070578.6243482, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+        "value": "{\"at\": 1792070641.7171378, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1792070578.6264014, \"disk_free_bytes\": 78264016896, \"memory_bytes\": {\"MemTotal\": 16765378560, \"MemAvailable\": 7780413440, \"SwapTotal\": 3221221376, \"SwapFree\": 3221155840}, \"memory_events\": null}"
+        "value": "{\"at\": 1792070641.7189548, \"disk_free_bytes\": 78248091648, \"memory_bytes\": {\"MemTotal\": 16765378560, \"MemAvailable\": 7005626368, \"SwapTotal\": 3221221376, \"SwapFree\": 3221155840}, \"memory_events\": null}"
       }
     ],
     "calls": [
