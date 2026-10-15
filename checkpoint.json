@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792022450.0820749,
+  "saved_at": 1792022514.0912466,
   "tables": {
     "tasks": [
       {
@@ -11702,6 +11702,32 @@
         "updated": 1792021921.7828944,
         "result": "The bug is in llama-index-workflows, whose Context implementation lives in run-llama/llama-agents. This llama_index checkout only imports that implementation, so there is no source fix to make here. A dependency change is outside the task scope.",
         "attempts": 1
+      },
+      {
+        "id": 901,
+        "identity": "fix:openclaw:172604:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 172604,
+        "note": "",
+        "status": "queued",
+        "created": 1792022456.5923285,
+        "updated": 1792022456.5923285,
+        "result": "",
+        "attempts": 0
+      },
+      {
+        "id": 902,
+        "identity": "fix:openclaw:172576:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 172576,
+        "note": "",
+        "status": "queued",
+        "created": 1792022459.1304543,
+        "updated": 1792022459.1304543,
+        "result": "",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -17062,10 +17088,6 @@
         "value": "{\"at\": 1792022069.6577342, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "prwatch_heartbeat",
-        "value": "1792022085.2178082"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792016631.7735515, \"comfyui\": 1791996224.371104, \"hermes\": 1791629598.7424486, \"langfuse\": 1792022192.2824502, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792021844.7879212, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1791997225.50107, \"crawl4ai\": 1791353431.2624507, \"dify\": 1791986066.4826849, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1791910136.7062314}}"
       },
@@ -17083,39 +17105,43 @@
       },
       {
         "key": "admission_health",
-        "value": "{\"at\": 1792022389.049098, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 8, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 185.93997263908386, \"judge_tokens_spent_24h\": 89838, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7527\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7527\", \"title\": \"InMemoryMemoryService does not call add_session_to_memory?\", \"first_seen\": 1791929710.3285713, \"last_checked\": 1791953224.6633916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791953227.1579466, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7543\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7543\", \"title\": \"Dev UI graph: edges to tools/nodes with \\\":\\\" in the name attach to a phantom node\", \"first_seen\": 1792021875.0086637, \"last_checked\": 1792021875.0086641, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+        "value": "{\"at\": 1792022453.1513245, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 8, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 250.02853679656982, \"judge_tokens_spent_24h\": 89838, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7527\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7527\", \"title\": \"InMemoryMemoryService does not call add_session_to_memory?\", \"first_seen\": 1791929710.3285713, \"last_checked\": 1791953224.6633916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7520\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7520\", \"title\": \"[Feature] Deterministic pre-execution tool validation: reference recipe for before_tool_callback\", \"first_seen\": 1791891981.9739456, \"last_checked\": 1791953227.1579466, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7543\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7543\", \"title\": \"Dev UI graph: edges to tools/nodes with \\\":\\\" in the name attach to a phantom node\", \"first_seen\": 1792021875.0086637, \"last_checked\": 1792021875.0086641, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1792022389.0503414, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"human_wait\": 2, \"running\": 1, \"skipped\": 22, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 3, \"skipped\": 1, \"validation_wait\": 6}}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792022438.153548"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792022444.3098483, \"windows\": [{\"name\": \"primary\", \"used_percent\": 75, \"resets_at\": 1792473656}]}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792022446.3737354"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792022447.879901"
+        "value": "{\"at\": 1792022453.1531212, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"human_wait\": 2, \"running\": 1, \"skipped\": 21, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 3, \"skipped\": 1, \"validation_wait\": 6}}}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1792022449.4293084"
+        "value": "1792022454.4481535"
+      },
+      {
+        "key": "prwatch_heartbeat",
+        "value": "1792022456.526736"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792022508.9378288, \"windows\": [{\"name\": \"primary\", \"used_percent\": 75, \"resets_at\": 1792473656}]}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792022511.3939261"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792022513.0933998"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792022513.4968646"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
-        "value": "{\"at\": 1792022450.0481274, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+        "value": "{\"at\": 1792022514.079627, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1792022450.051883, \"disk_free_bytes\": 77203640320, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 11855224832, \"SwapTotal\": 3221221376, \"SwapFree\": 2808655872}, \"memory_events\": null}"
+        "value": "{\"at\": 1792022514.081531, \"disk_free_bytes\": 76892016640, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 7602663424, \"SwapTotal\": 3221221376, \"SwapFree\": 2808864768}, \"memory_events\": null}"
       }
     ],
     "calls": [
