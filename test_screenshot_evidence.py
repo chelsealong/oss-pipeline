@@ -93,6 +93,44 @@ class ScreenshotEvidenceTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,'does not match'):images.publish(manifest)
         self.assertEqual(api.call_count,1)
 
+    def test_successful_upload_with_temporarily_missing_readback_writes_only_once(self):
+        task,folder,work,base,result,manifest=self.evidence();writes=[];reads=[]
+        def api(path,method='GET',data=None):
+            if method=='PUT':writes.append(path);return {'content':{'sha':manifest[0]['blob']}}
+            reads.append(path)
+            if len(reads)<=3:raise RuntimeError('HTTP 404 not visible yet')
+            return {'sha':manifest[0]['blob']}
+        with patch.object(images,'api',side_effect=api),patch.object(images,'ensure_branch'),patch.object(images.time,'sleep') as sleep:
+            images.publish(manifest)
+        self.assertEqual(len(writes),1);self.assertEqual(sleep.call_count,2)
+
+    def test_readback_timeout_is_bounded_and_distinct_from_content_mismatch(self):
+        task,folder,work,base,result,manifest=self.evidence()
+        with patch.object(images,'optional',return_value=None) as read,patch.object(images.time,'sleep'):
+            with self.assertRaisesRegex(RuntimeError,'not yet readable'):images.read_uploaded(manifest[0])
+        self.assertEqual(read.call_count,4)
+
+    def test_readback_recovery_requires_matching_remote_images_and_new_review(self):
+        task,folder,work,base,result,manifest=self.evidence()
+        (work/'value.py').write_text('value = 2\n')
+        reason='Published screenshot content does not match independent review'
+        rt.task_state(task['id'],phase='error',last_execution_phase='review',reviewed_screenshots=manifest)
+        with rt.db() as db:db.execute("UPDATE tasks SET status='error',result=? WHERE id=?",(reason,task['id']))
+        work_evidence.capture(task['id'])
+        with patch.object(images,'read_uploaded',side_effect=RuntimeError('mismatch')),patch.object(recovery,'audited_unpublished') as audit:
+            self.assertEqual(recovery.recover_submission_regressions(),[]);audit.assert_not_called()
+        rt.task_state(task['id'],recovery_checked_at=0)
+        with patch.object(images,'read_uploaded',return_value={'sha':manifest[0]['blob']}),patch.object(recovery,'audited_unpublished',return_value=(True,'no remote branch or PR')):
+            self.assertEqual(recovery.recover_submission_regressions(),[task['id']])
+        state=rt.task_state(task['id'])
+        self.assertIn('resume_progress',state);self.assertIn('screenshot_readback_repaired',state)
+        self.assertEqual(state['phase'],'queued');self.assertFalse(state.get('human_review'))
+        with rt.db() as db:
+            self.assertEqual(db.execute('SELECT attempts FROM tasks WHERE id=?',(task['id'],)).fetchone()[0],1)
+            db.execute("UPDATE tasks SET status='error' WHERE id=?",(task['id'],))
+        rt.task_state(task['id'],recovery_checked_at=0)
+        self.assertEqual(recovery.recover_submission_regressions(),[])
+
     def test_encrypted_bundle_retains_only_named_images_and_text_resume_omits_them(self):
         task,folder,work,base,result,manifest=self.evidence()
         (folder/'tool-cache'/'private-cache').write_text('must not retain')

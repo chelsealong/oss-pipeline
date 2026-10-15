@@ -52,8 +52,9 @@ tried.
 
 ## Repo-specific gates
 
-* Abort the run if the author already has ≥18 open PRs: the bot applies
-  `r: too-many-prs` at 20 and then auto-closes **all** of that author's PRs.
+* PR capacity is enforced by the controller using the current user limits and
+  checked again before publication. Read current upstream CONTRIBUTING.md for
+  its PR limit; do not infer a lower threshold from historical pipeline outcomes.
 * Skip anything labelled `clawsweeper:no-new-fix-pr` — their own triage agent
   decided not to queue a fix, and ~83% of issues carry it.
 * Never submit refactor-only, test-only, CI-only or docs-only changes; those are

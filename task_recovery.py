@@ -19,6 +19,18 @@ def submission_regression(task,state):
     phase=state.get('last_execution_phase',state.get('phase'))
     reason=task.get('result','')
     failure=rt.getmeta('runner_failure',{})
+    if (task['kind']=='fix' and task['repo']=='openclaw' and task['status']=='blocked'
+            and phase=='generation' and task['attempts']<3 and state.get('base')
+            and not state.get('stale_cap_repaired') and reason.startswith('PR_CAP:')
+            and re.search(r'\b18\b',reason) and re.search(r'supplied|assignment',reason,re.I)
+            and not re.search(r'\balso\b|lacks|unavailable|permission|CONTRIBUTING|https?://',reason,re.I)):
+        return 'stale_prompt_cap'
+    if (task['kind']=='fix' and task['status']=='error' and phase in ('review','rereview')
+            and task['attempts']<3 and state.get('base') and state.get('reviewed_screenshots')
+            and not state.get('screenshot_readback_repaired')
+            and reason in ('Published screenshot content does not match independent review',
+                           'Published screenshot is not yet readable after bounded reconciliation')):
+        return 'screenshot_readback'
     if (task['status']=='validation_wait' and task['repo']=='openclaw' and task['attempts']<=3
             and state.get('base') and not state.get('browser_config_repaired')
             and 'Both system and Playwright Chromium aborted before rendering' in reason):
@@ -68,7 +80,7 @@ def recover_submission_regressions():
         if not path:continue
         payload=json.loads(path.read_text())
         if payload['execution'].get('attempt')!=task['attempts']:continue
-        if repair in ('optional_broad_check','ui_screenshot_delivery','checkpoint_resource_failure','langfuse_static_memory','browser_config_directory') and not retained_progress(task):continue
+        if repair in ('optional_broad_check','ui_screenshot_delivery','checkpoint_resource_failure','langfuse_static_memory','browser_config_directory','screenshot_readback') and not retained_progress(task):continue
         if repair=='unnecessary_main_merge':
             if payload.get('diff') or payload.get('untracked') or payload.get('files') or payload['execution'].get('base'):continue
             with rt.db() as db:
@@ -76,6 +88,14 @@ def recover_submission_regressions():
                               ('respond',task['repo'],task['number'],task['id'])).fetchone():continue
         rt.task_state(task['id'],recovery_checked_at=time.time())
         try:
+            if repair=='stale_prompt_cap':
+                import codex_worker as worker
+                key,cfg=worker.configs(task)
+                if not worker.cap_ok(key,cfg.get('implements_in') or cfg['upstream'])[0]:continue
+            if repair=='screenshot_readback':
+                import screenshot_evidence
+                for item in state['reviewed_screenshots']:
+                    screenshot_evidence.read_uploaded(item)
             ok,why=audited_unpublished(task)
             rt.setmeta(f"recovery_audit:{task['id']}",{'at':time.time(),'safe':ok,'reason':why,'repair':repair})
             if ok and requeue(task,repair=repair):resumed.append(task['id'])
@@ -366,7 +386,9 @@ def requeue(task,repair=None):
         if repair:
             marker={'ui_screenshot_delivery':'ui_evidence_repaired','checkpoint_resource_failure':'checkpoint_repaired',
                     'langfuse_static_memory':'validation_memory_repaired',
-                    'browser_config_directory':'browser_config_repaired'}.get(repair,'submission_repaired')
+                    'browser_config_directory':'browser_config_repaired',
+                    'stale_prompt_cap':'stale_cap_repaired',
+                    'screenshot_readback':'screenshot_readback_repaired'}.get(repair,'submission_repaired')
             state[marker]={'at':time.time(),'repair':repair,'attempt':current['attempts']}
         rt._putmeta(db,f"task:{task['id']}",state)
         db.execute("UPDATE tasks SET status='queued',updated=? WHERE id=?",(time.time(),task['id']))

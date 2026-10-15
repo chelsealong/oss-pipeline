@@ -24,6 +24,19 @@ def disabled(repo):
     return bool(repo and repo.lower() in DISABLED_NAMES)
 
 
+def executor_policy(repo):
+    """Use the same limits in model instructions and controller admission."""
+    maximum=OPEN_PR_CAPS.get(repo)
+    concurrent=(f'{maximum} simultaneously open PRs, including drafts'
+                if maximum is not None else 'no additional pipeline concurrency cap')
+    return (f'Current pipeline PR limits for {repo}: {PR_CAPS.get(repo,DEFAULT_PR_CAP)} new PRs '
+        f'per UTC day; {concurrent}. The controller checks these before generation and again '
+        'before publication. These current settings supersede historical lessons and earlier '
+        'PR_CAP outcomes. Do not stop at an older or invented safety threshold. Existing-PR '
+        'maintenance does not use new-PR capacity. Follow any stricter CURRENT upstream '
+        'requirement, citing its exact source when it prevents submission.')
+
+
 def hold_pending(db):
     """Retain disabled work without queue occupancy, attempts or model spending."""
     import time

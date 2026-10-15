@@ -58,6 +58,34 @@ class ProductionReliabilityTests(unittest.TestCase):
             worker.process_one(task)
         self.assertEqual(self.status(task),'skipped');cleanup.assert_not_called()
         with rt.db() as db:self.assertEqual(db.execute('SELECT result FROM tasks WHERE id=?',(task['id'],)).fetchone()[0],'issue closed')
+
+    def test_stale_cap_recovers_once_with_remote_and_capacity_checks_preserving_spend(self):
+        task=self.task();folder,work,base=self.checkout(task)
+        self.assertTrue(rt.reserve_call('codex',task=task,phase='generation')[0])
+        budget=rt.getmeta('dispatch_budget')
+        reason='PR_CAP: chelsealong has 18 open OpenClaw PRs. The supplied pipeline policy requires stopping new fixes at 18.'
+        rt.task_state(task['id'],phase='blocked',last_execution_phase='generation')
+        with rt.db() as db:db.execute("UPDATE tasks SET status='blocked',result=? WHERE id=?",(reason,task['id']))
+        work_evidence.capture(task['id'])
+        with patch.object(worker,'cap_ok',return_value=(False,'open PR cap')),patch.object(task_recovery,'audited_unpublished') as audit:
+            self.assertEqual(task_recovery.recover_submission_regressions(),[]);audit.assert_not_called()
+        rt.task_state(task['id'],recovery_checked_at=0)
+        with patch.object(worker,'cap_ok',return_value=(True,'')),patch.object(task_recovery,'audited_unpublished',return_value=(False,'remote branch exists')):
+            self.assertEqual(task_recovery.recover_submission_regressions(),[])
+        rt.task_state(task['id'],recovery_checked_at=0)
+        with patch.object(worker,'cap_ok',return_value=(True,'')),patch.object(task_recovery,'audited_unpublished',return_value=(True,'no remote publication')):
+            self.assertEqual(task_recovery.recover_submission_regressions(),[task['id']])
+        self.assertEqual(rt.getmeta('dispatch_budget'),budget)
+        state=rt.task_state(task['id']);self.assertIn('stale_cap_repaired',state)
+        with rt.db() as db:
+            self.assertEqual(db.execute('SELECT attempts FROM tasks').fetchone()[0],1)
+            self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],1)
+            db.execute("UPDATE tasks SET status='blocked'")
+            task=dict(db.execute('SELECT * FROM tasks').fetchone())
+        self.assertIsNone(task_recovery.submission_regression(task,state))
+        state.pop('stale_cap_repaired')
+        self.assertIsNone(task_recovery.submission_regression(task|{'result':reason+' Also lacks a reproduction.'},state))
+        self.assertIsNone(task_recovery.submission_regression(task,state|{'publication_started':True}))
     def test_checkpoint_git_bounds_pack_without_changing_push_target(self):
         import cloud_store
         result=subprocess.CompletedProcess([],0,'saved\n','')

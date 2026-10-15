@@ -87,6 +87,31 @@ class RepoLimitTests(unittest.TestCase):
             query=read.call_args.args[0]
             self.assertEqual(query[query.index('--state')+1],'open')
             self.assertNotIn('--draft',query)
+
+    def test_generation_receives_current_caps_and_no_obsolete_lesson_threshold(self):
+        source=Path(__file__).parent
+        (self.root/'lessons').mkdir()
+        (self.root/'lessons/openclaw.md').write_text((source/'lessons/openclaw.md').read_text())
+        self.assertTrue(rt.enqueue('fix','openclaw',901))
+        with rt.db() as db:task=dict(db.execute('SELECT * FROM tasks').fetchone())
+        task['attempts']=1
+        class PromptCaptured(Exception):pass
+        def agent(prompt,*args,**kwargs):
+            self.assertIn('5 new PRs per UTC day; 20 simultaneously open PRs, including drafts',prompt)
+            self.assertNotIn('≥18 open PRs',prompt)
+            self.assertIn('stricter CURRENT upstream requirement',prompt)
+            raise PromptCaptured
+        def api(path):
+            if path.endswith('/forks'):return {'clone_url':'https://example.invalid/fork.git'}
+            return {'clone_url':'https://example.invalid/fork.git','default_branch':'main','state':'open',
+                    'parent':{'full_name':'openclaw/openclaw'}}
+        with patch.object(worker,'cap_ok',return_value=(True,'')), \
+             patch.object(worker,'fix_eligible',return_value=(True,'')), \
+             patch.object(worker,'api',side_effect=api), \
+             patch.object(worker,'run',return_value='[]'), \
+             patch.object(worker,'git',side_effect=lambda work,*args:'' if args[0]=='ls-remote' else 'a'*40), \
+             patch.object(worker,'agent',side_effect=agent):
+            with self.assertRaises(PromptCaptured):worker.process_one(task)
     def test_last_daily_task_slot_keeps_review_and_retry_available(self):
         today=time.strftime('%Y-%m-%d',time.gmtime())
         for key in scan.REPOS:

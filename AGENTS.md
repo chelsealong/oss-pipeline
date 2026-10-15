@@ -139,6 +139,18 @@ is a historical snapshot and must not be used as the current queue.
 
 ## Recovery and validation
 
+The October 15 audit found an obsolete 18-open-PR stop in OpenClaw's historical
+lessons despite the controller's authoritative 20-PR cap. Executor instructions
+now render limits from repo_limits.py. Never restore that historical buffer.
+Pure pre-publication PR_CAP failures from that supplied threshold may resume
+once after current capacity and remote branch/PR reconciliation; preserve all
+spending and attempt counters. Mixed reasons still need separate investigation.
+Screenshot uploads now reconcile temporarily missing readbacks with bounded
+read-only retries; a mismatching blob remains a hard failure. The identified
+unpublished readback failure may resume once only after remote image hashes and
+retained patch evidence are verified, followed by fresh tests and independent
+review. A successful upload alone is not evidence that a PR was published.
+
 The 2026-10-05 repair charges repository dispatch budgets only when an eligible
 task starts generation, not for precheck skips. Existing daily PR caps and
 repository shares remain in force. Feedback event identity includes the PR

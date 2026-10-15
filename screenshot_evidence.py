@@ -7,6 +7,7 @@ from pathlib import Path
 import re
 import struct
 import tempfile
+import time
 import runtime as rt
 
 REPOSITORY='chelsealong/oss-pipeline'
@@ -79,6 +80,19 @@ def ensure_branch():
         if not optional('git/ref/heads/'+BRANCH):raise
 
 
+def read_uploaded(item):
+    """Bounded read-after-write reconciliation; never repeat an upload."""
+    path='contents/'+item['asset']+'?ref='+BRANCH
+    for delay in (0,1,2,4):
+        if delay:time.sleep(delay)
+        existing=optional(path)
+        if existing:
+            if existing.get('sha')!=item['blob']:
+                raise RuntimeError('Published screenshot content does not match independent review')
+            return existing
+    raise RuntimeError('Published screenshot is not yet readable after bounded reconciliation')
+
+
 def publish(manifest):
     if not manifest:return
     verify(manifest)
@@ -99,8 +113,8 @@ def publish(manifest):
                 except Exception:
                     # Never blindly replay a write. Matching immutable content
                     # positively reconciles an ambiguous response.
-                    existing=optional(path)
-                    if not existing or existing.get('sha')!=item['blob']:raise
-                existing=optional(path)
+                    existing=read_uploaded(item)
+                else:
+                    existing=read_uploaded(item)
             if not existing or existing.get('sha')!=item['blob']:
                 raise RuntimeError('Published screenshot content does not match independent review')
