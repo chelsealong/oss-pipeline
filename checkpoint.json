@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792108826.2945106,
+  "saved_at": 1792108843.3796258,
   "tables": {
     "tasks": [
       {
@@ -12066,6 +12066,19 @@
         "updated": 1792084896.8722067,
         "result": "The maintainer’s concern about dropped repeat `updated` webhooks was already answered in the PR’s latest comment. The guard still needs a design change, but the reviewer has not settled an approach; another reply would duplicate the existing response.",
         "attempts": 1
+      },
+      {
+        "id": 929,
+        "identity": "fix:comfyui:17076:",
+        "kind": "fix",
+        "repo": "comfyui",
+        "number": 17076,
+        "note": "",
+        "status": "running",
+        "created": 1792108838.2842689,
+        "updated": 1792108843.367439,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -17678,10 +17691,6 @@
         "value": "{\"at\": 1792084835.2453575, \"previous_task\": 927, \"head\": \"de3e4921df4643ad098c0d4c97ba7c24af4600cf\"}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1792074426.250858, \"comfyui\": 1792078970.6260552, \"hermes\": 1791629598.7424486, \"langfuse\": 1792084839.5266933, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792021844.7879212, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1792075897.207243, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792054000.971541, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792078134.466868}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792067142.0973861, \"group\": \"repair\", \"task\": 920, \"phase\": \"remediation\"}, {\"at\": 1792068086.057803, \"group\": \"repair\", \"task\": 920, \"phase\": \"rereview\"}, {\"at\": 1792069545.000698, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1792069545.0413098, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1792069549.3733015, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1792069549.5783803, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1792069579.4792721, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1792069587.0352244, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1792069833.689454, \"group\": \"new_fix\", \"task\": 917, \"phase\": \"generation\"}, {\"at\": 1792070974.7532222, \"group\": \"new_fix\", \"task\": 917, \"phase\": \"review\"}, {\"at\": 1792071238.771368, \"group\": \"new_fix\", \"task\": 920, \"phase\": \"generation\"}, {\"at\": 1792072297.8336346, \"group\": \"new_fix\", \"task\": 920, \"phase\": \"review\"}, {\"at\": 1792074794.9332342, \"group\": \"new_fix\", \"task\": 922, \"phase\": \"generation\"}, {\"at\": 1792075905.7876945, \"group\": \"new_fix\", \"task\": 923, \"phase\": \"generation\"}, {\"at\": 1792077038.6571267, \"group\": \"new_fix\", \"task\": 924, \"phase\": \"generation\"}, {\"at\": 1792078149.4527974, \"group\": \"new_fix\", \"task\": 925, \"phase\": \"generation\"}, {\"at\": 1792078975.9893012, \"group\": \"screening\", \"task\": 926, \"phase\": \"screening-298d2a96987ba434bcd7\"}, {\"at\": 1792078987.5860922, \"group\": \"new_fix\", \"task\": 926, \"phase\": \"generation\"}, {\"at\": 1792084650.3330126, \"group\": \"maintenance\", \"task\": 927, \"phase\": \"generation\"}, {\"at\": 1792084760.2962563, \"group\": \"maintenance\", \"task\": 927, \"phase\": \"reply-review\"}, {\"at\": 1792084850.2781885, \"group\": \"maintenance\", \"task\": 928, \"phase\": \"generation\"}]"
       },
@@ -17882,14 +17891,6 @@
         "value": "{\"started\": 1792072965.7701578, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792072969.3514988, \"recovery_checked_at\": 1792108574.210506}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1792108765.735758, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 0, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 23915.452429533005, \"judge_tokens_spent_24h\": 53965, \"screening_calls_5h\": 0, \"screening_calls_24h\": 3, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7548\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7548\", \"title\": \"MCP tool discovery and invocation apply opposite precedence to auth and provider headers\", \"first_seen\": 1792050130.9533427, \"last_checked\": 1792057212.6418724, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7564\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7564\", \"title\": \"Allow customizing reflection guidance in ReflectAndRetryToolPlugin\", \"first_seen\": 1792107691.4049923, \"last_checked\": 1792107691.4049926, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792108765.736831, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 1, \"done\": 4, \"execution_wait\": 1, \"human_wait\": 1, \"skipped\": 20, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"skipped\": 1}}}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1792108770.6827226"
       },
@@ -17898,24 +17899,40 @@
         "value": "{\"at\": 1792108804.777369, \"windows\": [{\"name\": \"primary\", \"used_percent\": 7, \"resets_at\": 1792650245}]}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1792108819.220428"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792108821.8468716"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792108825.0878894"
-      },
-      {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
         "value": "{\"at\": 1792108826.2857425, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
       },
       {
         "key": "runner_resources",
         "value": "{\"at\": 1792108826.2871625, \"disk_free_bytes\": 89909846016, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15390785536, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1792108828.502705, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 0, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 23978.219332933426, \"judge_tokens_spent_24h\": 53965, \"screening_calls_5h\": 0, \"screening_calls_24h\": 3, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7548\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7548\", \"title\": \"MCP tool discovery and invocation apply opposite precedence to auth and provider headers\", \"first_seen\": 1792050130.9533427, \"last_checked\": 1792057212.6418724, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7564\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7564\", \"title\": \"Allow customizing reflection guidance in ReflectAndRetryToolPlugin\", \"first_seen\": 1792107691.4049923, \"last_checked\": 1792107691.4049926, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792108828.5040543, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 1, \"done\": 4, \"execution_wait\": 1, \"human_wait\": 1, \"skipped\": 20, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"skipped\": 1}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792108834.259085"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792108840.0882375"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792108841.5490577"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792074426.250858, \"comfyui\": 1792108843.3672872, \"hermes\": 1791629598.7424486, \"langfuse\": 1792084839.5266933, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792021844.7879212, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1792075897.207243, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792054000.971541, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792078134.466868}}"
+      },
+      {
+        "key": "task:929",
+        "value": "{\"started\": 1792108843.367481, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       }
     ],
     "calls": [
