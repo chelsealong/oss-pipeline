@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792154578.6543899,
+  "saved_at": 1792154628.504899,
   "tables": {
     "tasks": [
       {
@@ -12287,6 +12287,19 @@
         "updated": 1792148172.2467642,
         "result": "VALIDATION_ENVIRONMENT: This macOS case-insensitive filesystem regression requires an isolated macOS host to verify Doctor repair and Telegram offset migration. This runner is Linux, and no macOS validation host is available. No files were changed.",
         "attempts": 1
+      },
+      {
+        "id": 946,
+        "identity": "fix:openclaw:174190:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 174190,
+        "note": "",
+        "status": "running",
+        "created": 1792154625.208159,
+        "updated": 1792154628.4966311,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -18119,10 +18132,6 @@
         "value": "[]"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792148018.5635645, \"comfyui\": 1792139850.876669, \"hermes\": 1791629598.7424486, \"langfuse\": 1792140837.0003438, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792138928.47278, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1792075897.207243, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792054000.971541, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792078134.466868}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"openclaw\", \"task\": 936, \"at\": 1792134866.4080787}, {\"repo\": \"comfyui\", \"task\": 937, \"at\": 1792135797.893922}, {\"repo\": \"openclaw\", \"task\": 938, \"at\": 1792138349.1310935}, {\"repo\": \"langfuse\", \"task\": 941, \"at\": 1792140042.3189185}, {\"repo\": \"langfuse\", \"task\": 942, \"at\": 1792140272.9440885}, {\"repo\": \"langfuse\", \"task\": 943, \"at\": 1792140847.1503124}, {\"repo\": \"openclaw\", \"task\": 944, \"at\": 1792146889.3843517}, {\"repo\": \"openclaw\", \"task\": 945, \"at\": 1792148078.7488742}]"
       },
@@ -18339,40 +18348,48 @@
         "value": "1792154390.267644"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1792154517.9733605, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 10, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 6439.2181050777435, \"judge_tokens_spent_24h\": 43441, \"screening_calls_5h\": 0, \"screening_calls_24h\": 1, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7569\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7569\", \"title\": \"HITL tool confirmation forgery (#6461) is still present on main and in v2.12.0: fix 9e9eaa6 was reverted in 9a32eba\", \"first_seen\": 1792119223.2774737, \"last_checked\": 1792119223.2774742, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7564\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7564\", \"title\": \"Allow customizing reflection guidance in ReflectAndRetryToolPlugin\", \"first_seen\": 1792107691.4049923, \"last_checked\": 1792119943.3967648, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7578\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7578\", \"title\": \"Expose the /run_sse event serialization as a public function and allow an optional SSE keep-alive\", \"first_seen\": 1792143553.2231722, \"last_checked\": 1792153580.3865638, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792153582.795367, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792153585.3167849, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792154517.974627, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 3, \"human_wait\": 1, \"skipped\": 21, \"validation_wait\": 5}, \"respond\": {\"done\": 2, \"skipped\": 2}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792154566.1679225, \"windows\": [{\"name\": \"primary\", \"used_percent\": 16, \"resets_at\": 1792650245}]}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1792154573.7127538"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792154574.7578518"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792154576.9096286"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792154577.5945497"
-      },
-      {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
         "value": "{\"at\": 1792154578.6446629, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
       },
       {
         "key": "runner_resources",
         "value": "{\"at\": 1792154578.6461325, \"disk_free_bytes\": 89844862976, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15343333376, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1792154581.2438548, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 10, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 6502.4886384010315, \"judge_tokens_spent_24h\": 43441, \"screening_calls_5h\": 0, \"screening_calls_24h\": 1, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7569\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7569\", \"title\": \"HITL tool confirmation forgery (#6461) is still present on main and in v2.12.0: fix 9e9eaa6 was reverted in 9a32eba\", \"first_seen\": 1792119223.2774737, \"last_checked\": 1792119223.2774742, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7564\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7564\", \"title\": \"Allow customizing reflection guidance in ReflectAndRetryToolPlugin\", \"first_seen\": 1792107691.4049923, \"last_checked\": 1792119943.3967648, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7578\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7578\", \"title\": \"Expose the /run_sse event serialization as a public function and allow an optional SSE keep-alive\", \"first_seen\": 1792143553.2231722, \"last_checked\": 1792153580.3865638, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792153582.795367, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792153585.3167849, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792154581.2452242, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 3, \"human_wait\": 1, \"skipped\": 21, \"validation_wait\": 5}, \"respond\": {\"done\": 2, \"skipped\": 2}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792154621.914504"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792154623.7790658"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792154624.1088407"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792154626.4194944, \"windows\": [{\"name\": \"primary\", \"used_percent\": 16, \"resets_at\": 1792650245}]}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792154627.5957518"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792154628.4964867, \"comfyui\": 1792139850.876669, \"hermes\": 1791629598.7424486, \"langfuse\": 1792140837.0003438, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792138928.47278, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1792075897.207243, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792054000.971541, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792078134.466868}}"
+      },
+      {
+        "key": "task:946",
+        "value": "{\"started\": 1792154628.4966722, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       }
     ],
     "calls": [
