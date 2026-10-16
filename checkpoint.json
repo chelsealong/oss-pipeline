@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792116257.3556702,
+  "saved_at": 1792116280.39275,
   "tables": {
     "tasks": [
       {
@@ -12126,10 +12126,10 @@
         "repo": "comfyui",
         "number": 17082,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1792116247.617052,
-        "updated": 1792116247.6291232,
-        "result": "",
+        "updated": 1792116280.3864632,
+        "result": "VALIDATION_ENVIRONMENT: Issue #17082 requires AMD gfx1151 with ROCm 10.1 to reproduce and verify the GPU crash. This checkout has no PyTorch installation or access to that platform. No source files were changed.",
         "attempts": 1
       }
     ],
@@ -17967,20 +17967,12 @@
         "value": "1792116105.1201694"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792116122.9593005, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:932:1:review",
         "value": "{\"task\": 932, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1792116122.963091, \"seconds\": 132.784, \"tokens\": {\"totalTokens\": 928713, \"inputTokens\": 924058, \"cachedInputTokens\": 865408, \"cacheWriteInputTokens\": 0, \"outputTokens\": 4655, \"reasoningOutputTokens\": 1817}, \"first_event_ms\": 1792115994442, \"last_event_ms\": 1792116122957, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "task:932",
         "value": "{\"started\": 1792115765.2132509, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/932/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"5a665890ded5020c282f63c4ea2dd9e083e025ff\", \"generation_started\": 1792115772.9677172, \"dispatch_paid_date\": \"2026-10-16\", \"phase_started\": 1792115992.2903216, \"reviewed_screenshots\": [], \"last_execution_phase\": \"review\", \"finished\": 1792116124.5939202}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792116224.3732967, \"windows\": [{\"name\": \"primary\", \"used_percent\": 8, \"resets_at\": 1792650245}]}"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
@@ -18007,18 +17999,6 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792115194.3297033, \"comfyui\": 1792116247.6290247, \"hermes\": 1791629598.7424486, \"langfuse\": 1792109484.2015731, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792021844.7879212, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1792075897.207243, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792054000.971541, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792078134.466868}}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1792116252.629206"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792116253.1037858"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792116254.4131923"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"comfyui\", \"task\": 929, \"at\": 1792108852.6881144}, {\"repo\": \"langfuse\", \"task\": 921, \"at\": 1792109496.2451243}, {\"repo\": \"openclaw\", \"task\": 930, \"at\": 1792111497.8656576}, {\"repo\": \"openclaw\", \"task\": 931, \"at\": 1792115250.2896302}, {\"repo\": \"comfyui\", \"task\": 932, \"at\": 1792115772.967716}, {\"repo\": \"comfyui\", \"task\": 933, \"at\": 1792116255.2881153}]"
       },
@@ -18027,20 +18007,48 @@
         "value": "{\"date\": \"2026-10-16\", \"used\": {\"comfyui\": 3, \"langfuse\": 1, \"openclaw\": 2}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"933\": {\"remaining\": 1, \"until\": 1792123455.2882946}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792108852.6883054, \"group\": \"new_fix\", \"task\": 929, \"phase\": \"generation\"}, {\"at\": 1792109086.34987, \"group\": \"new_fix\", \"task\": 929, \"phase\": \"review\"}, {\"at\": 1792109496.2453535, \"group\": \"new_fix\", \"task\": 921, \"phase\": \"generation\"}, {\"at\": 1792111497.865838, \"group\": \"new_fix\", \"task\": 930, \"phase\": \"generation\"}, {\"at\": 1792115250.2897768, \"group\": \"new_fix\", \"task\": 931, \"phase\": \"generation\"}, {\"at\": 1792115772.9679391, \"group\": \"new_fix\", \"task\": 932, \"phase\": \"generation\"}, {\"at\": 1792115990.180168, \"group\": \"new_fix\", \"task\": 932, \"phase\": \"review\"}, {\"at\": 1792116255.2882946, \"group\": \"new_fix\", \"task\": 933, \"phase\": \"generation\"}]"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1792116255.9187512"
+        "value": "1792116270.9204361"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792116278.0625086"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792116278.1042826"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792116279.9181225"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792116280.1773546, \"windows\": [{\"name\": \"primary\", \"used_percent\": 8, \"resets_at\": 1792650245}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792116280.1791806, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:933:1:generation",
+        "value": "{\"task\": 933, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792116280.1813102, \"seconds\": 24.894, \"tokens\": {\"totalTokens\": 128683, \"inputTokens\": 127483, \"cachedInputTokens\": 99968, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1200, \"reasoningOutputTokens\": 342}, \"first_event_ms\": 1792116259414, \"last_event_ms\": 1792116280177, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:933",
+        "value": "{\"status\": \"needs_human\", \"task\": 933, \"repo\": \"comfyui\", \"number\": 17082, \"reason\": \"VALIDATION_ENVIRONMENT: Issue #17082 requires AMD gfx1151 with ROCm 10.1 to reproduce and verify the GPU crash. This checkout has no PyTorch installation or access to that platform. No source files were changed.\", \"base\": \"5a665890ded5020c282f63c4ea2dd9e083e025ff\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"933-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:933",
-        "value": "{\"started\": 1792116247.6291492, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/933/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"5a665890ded5020c282f63c4ea2dd9e083e025ff\", \"generation_started\": 1792116255.2881157, \"dispatch_paid_date\": \"2026-10-16\", \"phase_started\": 1792116257.348935}"
+        "value": "{\"started\": 1792116247.6291492, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/933/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"5a665890ded5020c282f63c4ea2dd9e083e025ff\", \"generation_started\": 1792116255.2881157, \"dispatch_paid_date\": \"2026-10-16\", \"phase_started\": 1792116257.348935, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1792116280.2841184}"
       }
     ],
     "calls": [
