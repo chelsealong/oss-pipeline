@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792135815.4485023,
+  "saved_at": 1792135836.2996514,
   "tables": {
     "tasks": [
       {
@@ -12178,10 +12178,10 @@
         "repo": "comfyui",
         "number": 17086,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1792135780.5420392,
-        "updated": 1792135788.3091269,
-        "result": "",
+        "updated": 1792135836.2844596,
+        "result": "Issue #17086 concerns a malformed request from ComfyUI-Manager’s install UI. The reported /customnode/install/git_url endpoint and UI code are outside this ComfyUI checkout; core has no code path to fix. The issue remains open with no comments, and no code was changed.",
         "attempts": 1
       }
     ],
@@ -17927,10 +17927,6 @@
         "value": "1792131570.2985687"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792133242.942572, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -18119,16 +18115,8 @@
         "value": "{\"date\": \"2026-10-16\", \"used\": {\"comfyui\": 4, \"langfuse\": 1, \"openclaw\": 5}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"936\": {\"remaining\": 1, \"until\": 1792142066.4084687}, \"937\": {\"remaining\": 1, \"until\": 1792142997.8941824}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792119909.0196085, \"group\": \"new_fix\", \"task\": 934, \"phase\": \"generation\"}, {\"at\": 1792120653.089828, \"group\": \"new_fix\", \"task\": 934, \"phase\": \"review\"}, {\"at\": 1792125659.7985768, \"group\": \"new_fix\", \"task\": 935, \"phase\": \"generation\"}, {\"at\": 1792126891.0931847, \"group\": \"new_fix\", \"task\": 935, \"phase\": \"review\"}, {\"at\": 1792127116.316731, \"group\": \"repair\", \"task\": 935, \"phase\": \"remediation\"}, {\"at\": 1792127610.2077851, \"group\": \"repair\", \"task\": 935, \"phase\": \"rereview\"}, {\"at\": 1792134866.4084687, \"group\": \"new_fix\", \"task\": 936, \"phase\": \"generation\"}, {\"at\": 1792135797.8941824, \"group\": \"new_fix\", \"task\": 937, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "task:937",
-        "value": "{\"started\": 1792135788.3091755, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/937/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"bdc63e72f5ab29fde448c161db3057827148c0ef\", \"generation_started\": 1792135797.893923, \"dispatch_paid_date\": \"2026-10-16\", \"phase_started\": 1792135803.0298424}"
       },
       {
         "key": "watch_heartbeat",
@@ -18139,16 +18127,32 @@
         "value": "1792135812.0597265"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792135813.4519138, \"windows\": [{\"name\": \"primary\", \"used_percent\": 14, \"resets_at\": 1792650245}]}"
-      },
-      {
         "key": "discovery_last_success",
         "value": "1792135813.8501546"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1792135815.33527"
+        "value": "1792135830.3368664"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792135836.000584, \"windows\": [{\"name\": \"primary\", \"used_percent\": 14, \"resets_at\": 1792650245}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792135836.0038745, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:937:1:generation",
+        "value": "{\"task\": 937, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792135836.0072253, \"seconds\": 38.116, \"tokens\": {\"totalTokens\": 172819, \"inputTokens\": 171658, \"cachedInputTokens\": 130944, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1161, \"reasoningOutputTokens\": 323}, \"first_event_ms\": 1792135807479, \"last_event_ms\": 1792135836000, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"936\": {\"remaining\": 1, \"until\": 1792142066.4084687}}"
+      },
+      {
+        "key": "task:937",
+        "value": "{\"started\": 1792135788.3091755, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/937/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"bdc63e72f5ab29fde448c161db3057827148c0ef\", \"generation_started\": 1792135797.893923, \"dispatch_paid_date\": \"2026-10-16\", \"phase_started\": 1792135803.0298424, \"last_execution_phase\": \"generation\", \"finished\": 1792135836.010276}"
       }
     ],
     "calls": [
