@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792281346.4768531,
+  "saved_at": 1792281373.4360783,
   "tables": {
     "tasks": [
       {
@@ -11697,10 +11697,10 @@
         "repo": "llama-index",
         "number": 23515,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1792021375.430138,
-        "updated": 1792281316.0789375,
-        "result": "The bug is in llama-index-workflows, whose Context implementation lives in run-llama/llama-agents. This llama_index checkout only imports that implementation, so there is no source fix to make here. A dependency change is outside the task scope.",
+        "updated": 1792281373.3746443,
+        "result": "The bug is in `llama-index-workflows`, which this checkout imports. An [open PR in run-llama/llama-agents](https://github.com/run-llama/llama-agents/pull/808) already changes the workflow runner and adds a regression test for this issue. There is no source fix to make in this repository.",
         "attempts": 2
       },
       {
@@ -19322,10 +19322,6 @@
         "value": "[]"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792280672.62918, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -19372,10 +19368,6 @@
       {
         "key": "coordination:google/adk-python#7574",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792280705.8533604, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
-      },
-      {
-        "key": "prwatch_heartbeat",
-        "value": "1792280970.8787103"
       },
       {
         "key": "task:44",
@@ -19542,36 +19534,48 @@
         "value": "{\"at\": 1792281316.7035685, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 4, \"running\": 1, \"skipped\": 15, \"validation_wait\": 6}, \"respond\": {\"done\": 2, \"skipped\": 2, \"validation_wait\": 4}}}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792281333.986002, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1792874467}]}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792281342.4723527"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1792281343.652307"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"900\": {\"remaining\": 1, \"until\": 1792288543.900789}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792267378.2000208, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"generation\"}, {\"at\": 1792267879.914442, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"review\"}, {\"at\": 1792268129.6713936, \"group\": \"repair\", \"task\": 988, \"phase\": \"remediation\"}, {\"at\": 1792269674.557346, \"group\": \"new_fix\", \"task\": 455, \"phase\": \"generation\"}, {\"at\": 1792269778.984801, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"generation\"}, {\"at\": 1792270376.9845192, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"review\"}, {\"at\": 1792270709.13654, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"generation\"}, {\"at\": 1792270912.3943384, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"validation\"}, {\"at\": 1792281343.900789, \"group\": \"new_fix\", \"task\": 900, \"phase\": \"generation\"}]"
       },
       {
-        "key": "discovery_last_success",
-        "value": "1792281344.1239665"
+        "key": "prwatch_heartbeat",
+        "value": "1792281347.6100144"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1792281345.864871"
+        "value": "1792281360.8668272"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792281368.6897447"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792281368.9632301"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792281372.473043"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792281372.7845175, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1792874467}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792281372.7867022, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:900:2:generation",
+        "value": "{\"task\": 900, \"repo\": \"llama-index\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1792281372.7906775, \"seconds\": 28.892, \"tokens\": {\"totalTokens\": 155932, \"inputTokens\": 154698, \"cachedInputTokens\": 116096, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1234, \"reasoningOutputTokens\": 189}, \"first_event_ms\": 1792281349437, \"last_event_ms\": 1792281372784, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:900",
-        "value": "{\"started\": 1792281316.0789945, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/900/attempt-2\", \"attempt\": 2, \"phase\": \"generation\", \"base\": \"619d74664e8404612038bc15a1a40c686037277c\", \"generation_started\": 1792021881.5563192, \"dispatch_paid_date\": \"2026-10-14\", \"phase_started\": 1792281346.467809, \"last_execution_phase\": \"generation\", \"finished\": 1792021920.7081497}"
+        "value": "{\"started\": 1792281316.0789945, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/900/attempt-2\", \"attempt\": 2, \"phase\": \"skipped\", \"base\": \"619d74664e8404612038bc15a1a40c686037277c\", \"generation_started\": 1792021881.5563192, \"dispatch_paid_date\": \"2026-10-14\", \"phase_started\": 1792281346.467809, \"last_execution_phase\": \"generation\", \"finished\": 1792281372.7937157}"
       }
     ],
     "calls": [
