@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792268127.485909,
+  "saved_at": 1792268129.6800046,
   "tables": {
     "tasks": [
       {
@@ -19426,14 +19426,6 @@
         "value": "{\"task\": 988, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792267878.3345299, \"seconds\": 500.136, \"tokens\": {\"totalTokens\": 8102308, \"inputTokens\": 8091123, \"cachedInputTokens\": 7973888, \"cacheWriteInputTokens\": 0, \"outputTokens\": 11185, \"reasoningOutputTokens\": 2688}, \"first_event_ms\": 1792267385518, \"last_event_ms\": 1792267878286, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"988\": {\"remaining\": 0, \"until\": 1792275079.914442}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1792267378.2000208, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"generation\"}, {\"at\": 1792267879.914442, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"review\"}]"
-      },
-      {
         "key": "task:988",
         "value": "{\"started\": 1792267367.7488315, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/988/attempt-1\", \"attempt\": 1, \"phase\": \"review\", \"base\": \"e3a2bee2a2c048adf29b8d8a18b29bd4a8bf8ac3\", \"generation_started\": 1792267378.1999109, \"dispatch_paid_date\": \"2026-10-17\", \"phase_started\": 1792267882.3013785}"
       },
@@ -19522,10 +19514,6 @@
         "value": "1792268115.750129"
       },
       {
-        "key": "discovery_last_success",
-        "value": "1792268122.8469002"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1792268125.2958024"
       },
@@ -19544,6 +19532,18 @@
       {
         "key": "usage:988:1:review",
         "value": "{\"task\": 988, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1792268127.4191103, \"seconds\": 247.51, \"tokens\": {\"totalTokens\": 979652, \"inputTokens\": 973912, \"cachedInputTokens\": 907008, \"cacheWriteInputTokens\": 0, \"outputTokens\": 5740, \"reasoningOutputTokens\": 2749}, \"first_event_ms\": 1792267884604, \"last_event_ms\": 1792268127411, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792268127.7577043"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"988\": {\"remaining\": 1, \"until\": 1792275329.6713936}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1792267378.2000208, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"generation\"}, {\"at\": 1792267879.914442, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"review\"}, {\"at\": 1792268129.6713936, \"group\": \"repair\", \"task\": 988, \"phase\": \"remediation\"}]"
       }
     ],
     "calls": [
@@ -22781,6 +22781,10 @@
       },
       {
         "at": 1792267879.91596,
+        "kind": "codex"
+      },
+      {
+        "at": 1792268129.6717005,
         "kind": "codex"
       }
     ]
