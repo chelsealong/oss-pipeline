@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792269301.626443,
+  "saved_at": 1792269335.0630388,
   "tables": {
     "tasks": [
       {
@@ -12841,10 +12841,10 @@
         "repo": "langfuse",
         "number": 18987,
         "note": "",
-        "status": "running",
+        "status": "execution_wait",
         "created": 1792267365.2256637,
-        "updated": 1792267367.748808,
-        "result": "",
+        "updated": 1792269334.8794072,
+        "result": "Command 'Codex remediation' timed out after 1200 seconds",
         "attempts": 1
       }
     ],
@@ -19346,16 +19346,8 @@
         "value": "{\"task\": 988, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1792268127.4191103, \"seconds\": 247.51, \"tokens\": {\"totalTokens\": 979652, \"inputTokens\": 973912, \"cachedInputTokens\": 907008, \"cacheWriteInputTokens\": 0, \"outputTokens\": 5740, \"reasoningOutputTokens\": 2749}, \"first_event_ms\": 1792267884604, \"last_event_ms\": 1792268127411, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"988\": {\"remaining\": 1, \"until\": 1792275329.6713936}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792267378.2000208, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"generation\"}, {\"at\": 1792267879.914442, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"review\"}, {\"at\": 1792268129.6713936, \"group\": \"repair\", \"task\": 988, \"phase\": \"remediation\"}]"
-      },
-      {
-        "key": "task:988",
-        "value": "{\"started\": 1792267367.7488315, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/988/attempt-1\", \"attempt\": 1, \"phase\": \"remediation\", \"base\": \"e3a2bee2a2c048adf29b8d8a18b29bd4a8bf8ac3\", \"generation_started\": 1792267378.1999109, \"dispatch_paid_date\": \"2026-10-17\", \"phase_started\": 1792268131.711564}"
       },
       {
         "key": "task:219",
@@ -19539,11 +19531,23 @@
       },
       {
         "key": "worker_heartbeat",
-        "value": "1792269287.1017547"
+        "value": "1792269332.297396"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1792269297.798197, \"windows\": [{\"name\": \"primary\", \"used_percent\": 32, \"resets_at\": 1792650245}]}"
+        "value": "{\"at\": 1792269333.8662581, \"windows\": [{\"name\": \"primary\", \"used_percent\": 32, \"resets_at\": 1792650245}]}"
+      },
+      {
+        "key": "usage:988:1:remediation",
+        "value": "{\"task\": 988, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"remediation\", \"at\": 1792269334.1726303, \"seconds\": 1204.502, \"tokens\": {\"totalTokens\": 6668669, \"inputTokens\": 6658700, \"cachedInputTokens\": 6477952, \"cacheWriteInputTokens\": 0, \"outputTokens\": 9969, \"reasoningOutputTokens\": 1998}, \"first_event_ms\": 1792268133801, \"last_event_ms\": 1792269330708, \"model\": \"gpt-6-sol\", \"complete\": false, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:988",
+        "value": "{\"started\": 1792267367.7488315, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/988/attempt-1\", \"attempt\": 1, \"phase\": \"execution_wait\", \"base\": \"e3a2bee2a2c048adf29b8d8a18b29bd4a8bf8ac3\", \"generation_started\": 1792267378.1999109, \"dispatch_paid_date\": \"2026-10-17\", \"phase_started\": 1792268131.711564, \"last_execution_phase\": \"remediation\", \"finished\": 1792269334.2272706}"
       }
     ],
     "calls": [
