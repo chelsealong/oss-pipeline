@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792270559.40513,
+  "saved_at": 1792270598.5540042,
   "tables": {
     "tasks": [
       {
@@ -12841,10 +12841,10 @@
         "repo": "langfuse",
         "number": 18987,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1792267365.2256637,
-        "updated": 1792269770.0289528,
-        "result": "Command 'Codex remediation' timed out after 1200 seconds",
+        "updated": 1792270598.5467148,
+        "result": "review: VALIDATION_ENVIRONMENT: The focused regression passed (`Tests 66 passed (66)`), as did forced lint and typecheck, knip, and targeted web and worker checks. A before/after reproduction confirmed the old lookup misses `user.name`. However, [CONTRIBUTING.md](https://github.com/langfuse/langfuse/blob/main/CONTRIBUTING.md) lists `pnpm run test` as a PR gate. The full suite could not run here because PostgreSQL, Redis, and ClickHouse are unavailable. The patch therefore cannot be approved on the verified checks alone. No applicable rule required a named human attestation before submission.",
         "attempts": 2
       }
     ],
@@ -19502,52 +19502,12 @@
         "value": "1792270342.7854838"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792270375.753811, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:988:2:generation",
         "value": "{\"task\": 988, \"repo\": \"langfuse\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1792270375.768658, \"seconds\": 596.786, \"tokens\": {\"totalTokens\": 15225952, \"inputTokens\": 15213290, \"cachedInputTokens\": 15092864, \"cacheWriteInputTokens\": 0, \"outputTokens\": 12662, \"reasoningOutputTokens\": 2052}, \"first_event_ms\": 1792269783179, \"last_event_ms\": 1792270375750, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"988\": {\"remaining\": 0, \"until\": 1792277576.9845192}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792267378.2000208, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"generation\"}, {\"at\": 1792267879.914442, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"review\"}, {\"at\": 1792268129.6713936, \"group\": \"repair\", \"task\": 988, \"phase\": \"remediation\"}, {\"at\": 1792269674.557346, \"group\": \"new_fix\", \"task\": 455, \"phase\": \"generation\"}, {\"at\": 1792269778.984801, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"generation\"}, {\"at\": 1792270376.9845192, \"group\": \"new_fix\", \"task\": 988, \"phase\": \"review\"}]"
-      },
-      {
-        "key": "task:988",
-        "value": "{\"started\": 1792269770.0289946, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/988/attempt-2\", \"attempt\": 2, \"phase\": \"review\", \"base\": \"e3a2bee2a2c048adf29b8d8a18b29bd4a8bf8ac3\", \"generation_started\": 1792267378.1999109, \"dispatch_paid_date\": \"2026-10-17\", \"phase_started\": 1792270379.0757463, \"last_execution_phase\": \"remediation\", \"finished\": 1792269334.2272706, \"resume_progress\": {\"bundle\": \"988-1.json\", \"sha256\": \"814df442ef29c1baf7bfe44479c2c08c70168e6c7a2f1e94878ccb54d515bfb3\", \"base\": \"e3a2bee2a2c048adf29b8d8a18b29bd4a8bf8ac3\", \"phase\": \"remediation\"}, \"timeout_continuations\": 1, \"progress_rebase_needed\": null, \"progress_restored\": true, \"restored_from\": \"988-1.json\"}"
-      },
-      {
-        "key": "admission_health",
-        "value": "{\"at\": 1792270498.7701263, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 6, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 121.78014612197876, \"judge_tokens_spent_24h\": 61362, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7600\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7600\", \"title\": \"Dev UI graph: McpToolset renders as one opaque node; tools inside it are not shown and never highlight when called\", \"first_seen\": 1792258430.0774596, \"last_checked\": 1792269688.3295622, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7597\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7597\", \"title\": \"Feature request: OKF (Open Knowledge Format) bundle support for ADK\", \"first_seen\": 1792239748.3288977, \"last_checked\": 1792269690.6051261, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7589\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7589\", \"title\": \"RemoteA2aAgent as a Workflow node: streaming output is None on a2a-sdk 0.3 and an intermediate text on 1.x\", \"first_seen\": 1792211059.1069243, \"last_checked\": 1792269693.1124437, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792269695.8854551, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792269698.3520818, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792269700.6278567, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792270498.8081138, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 4, \"running\": 1, \"skipped\": 15, \"validation_wait\": 5}, \"respond\": {\"done\": 2, \"skipped\": 2, \"validation_wait\": 6}}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792270552.201397"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792270554.8397214"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792270555.3088777, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1792874467}]}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1792270556.1394773"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792270558.6415555"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
@@ -19556,6 +19516,54 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1792270559.3357127, \"disk_free_bytes\": 79777665024, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15175303168, \"SwapTotal\": 3221221376, \"SwapFree\": 3174518784}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1792270562.6944141, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 6, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 185.70177817344666, \"judge_tokens_spent_24h\": 61362, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7600\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7600\", \"title\": \"Dev UI graph: McpToolset renders as one opaque node; tools inside it are not shown and never highlight when called\", \"first_seen\": 1792258430.0774596, \"last_checked\": 1792269688.3295622, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7597\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7597\", \"title\": \"Feature request: OKF (Open Knowledge Format) bundle support for ADK\", \"first_seen\": 1792239748.3288977, \"last_checked\": 1792269690.6051261, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7589\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7589\", \"title\": \"RemoteA2aAgent as a Workflow node: streaming output is None on a2a-sdk 0.3 and an intermediate text on 1.x\", \"first_seen\": 1792211059.1069243, \"last_checked\": 1792269693.1124437, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792269695.8854551, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792269698.3520818, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792269700.6278567, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792270562.6958742, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 4, \"running\": 1, \"skipped\": 15, \"validation_wait\": 5}, \"respond\": {\"done\": 2, \"skipped\": 2, \"validation_wait\": 6}}}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792270593.6422791"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792270594.8264017"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792270596.2776418"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792270597.2066982"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792270598.2714922, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1792874470}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792270598.2732449, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:988:2:review",
+        "value": "{\"task\": 988, \"repo\": \"langfuse\", \"attempt\": 2, \"phase\": \"review\", \"at\": 1792270598.2781146, \"seconds\": 221.295, \"tokens\": {\"totalTokens\": 1347690, \"inputTokens\": 1339526, \"cachedInputTokens\": 1260928, \"cacheWriteInputTokens\": 0, \"outputTokens\": 8164, \"reasoningOutputTokens\": 3375}, \"first_event_ms\": 1792270381511, \"last_event_ms\": 1792270598271, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:988",
+        "value": "{\"status\": \"needs_human\", \"task\": 988, \"repo\": \"langfuse\", \"number\": 18987, \"reason\": \"review: VALIDATION_ENVIRONMENT: The focused regression passed (`Tests 66 passed (66)`), as did forced lint and typecheck, knip, and targeted web and worker checks. A before/after reproduction confirmed the old lookup misses `user.name`. However, [CONTRIBUTING.md](https://github.com/langfuse/langfuse/blob/main/CONTRIBUTING.md) lists `pnpm run test` as a PR gate. The full suite could not run here because PostgreSQL, Redis, and ClickHouse are unavailable. The patch therefore cannot be approved on the verified checks alone. No applicable rule required a named human attestation before submission.\", \"base\": \"e3a2bee2a2c048adf29b8d8a18b29bd4a8bf8ac3\", \"patch_digest\": \"17f4eb9652a218a066224ab7dfb888ba67aaf29323bc9c902ffef524e796d0f2\", \"evidence_bundle\": \"988-2.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:988",
+        "value": "{\"started\": 1792269770.0289946, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/988/attempt-2\", \"attempt\": 2, \"phase\": \"validation_wait\", \"base\": \"e3a2bee2a2c048adf29b8d8a18b29bd4a8bf8ac3\", \"generation_started\": 1792267378.1999109, \"dispatch_paid_date\": \"2026-10-17\", \"phase_started\": 1792270379.0757463, \"last_execution_phase\": \"review\", \"finished\": 1792270598.4941819, \"resume_progress\": {\"bundle\": \"988-1.json\", \"sha256\": \"814df442ef29c1baf7bfe44479c2c08c70168e6c7a2f1e94878ccb54d515bfb3\", \"base\": \"e3a2bee2a2c048adf29b8d8a18b29bd4a8bf8ac3\", \"phase\": \"remediation\"}, \"timeout_continuations\": 1, \"progress_rebase_needed\": null, \"progress_restored\": true, \"restored_from\": \"988-1.json\", \"patch_digest\": \"17f4eb9652a218a066224ab7dfb888ba67aaf29323bc9c902ffef524e796d0f2\"}"
       }
     ],
     "calls": [
