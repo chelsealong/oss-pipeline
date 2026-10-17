@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792197726.9874947,
+  "saved_at": 1792197734.9939826,
   "tables": {
     "tasks": [
       {
@@ -18760,10 +18760,6 @@
         "value": "{\"date\": \"2026-10-17\", \"used\": {\"comfyui\": 2, \"openclaw\": 4}}"
       },
       {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1792184982.1283343, \"group\": \"maintenance\", \"task\": 959, \"phase\": \"generation\"}, {\"at\": 1792194526.2618663, \"group\": \"maintenance\", \"task\": 960, \"phase\": \"generation\"}, {\"at\": 1792194550.1114955, \"group\": \"maintenance\", \"task\": 960, \"phase\": \"reply-review\"}, {\"at\": 1792195529.523953, \"group\": \"new_fix\", \"task\": 964, \"phase\": \"generation\"}, {\"at\": 1792195569.7159219, \"group\": \"new_fix\", \"task\": 961, \"phase\": \"generation\"}, {\"at\": 1792195682.2050698, \"group\": \"new_fix\", \"task\": 962, \"phase\": \"generation\"}, {\"at\": 1792195823.2037234, \"group\": \"new_fix\", \"task\": 963, \"phase\": \"generation\"}, {\"at\": 1792195998.955601, \"group\": \"new_fix\", \"task\": 964, \"phase\": \"review\"}, {\"at\": 1792196208.1123085, \"group\": \"repair\", \"task\": 964, \"phase\": \"remediation\"}, {\"at\": 1792197012.132921, \"group\": \"new_fix\", \"task\": 966, \"phase\": \"generation\"}, {\"at\": 1792197429.393032, \"group\": \"new_fix\", \"task\": 965, \"phase\": \"generation\"}]"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1792197443.9792256, \"source\": \"completed task phase\"}"
       },
@@ -18774,10 +18770,6 @@
       {
         "key": "followup:task:965",
         "value": "{\"status\": \"needs_human\", \"task\": 965, \"repo\": \"comfyui\", \"number\": 17098, \"reason\": \"VALIDATION_ENVIRONMENT: Issue #17098 requires an RTX 5060 Ti (sm_120), the affected quantized model weights, and output comparison to verify a fix. This checkout has no NVIDIA GPU available (`nvidia-smi` is unavailable). The required behavior cannot be reproduced or validated here.\", \"base\": \"fc04da91b2ab12f99e4716371a7e4f98ac982597\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"965-1.json.enc\"}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:965",
@@ -18868,51 +18860,43 @@
         "value": "{\"at\": 1792197705.9570882, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 1, \"retry_wait\": 1, \"skipped\": 21, \"validation_wait\": 5}, \"respond\": {\"done\": 1, \"skipped\": 1, \"validation_wait\": 5}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1792197714.7437701"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1792197720.6830752, \"windows\": [{\"name\": \"primary\", \"used_percent\": 23, \"resets_at\": 1792650245}]}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792197722.3746614"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792197723.7028105"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1792197726.7685702"
       },
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792196950.414059, \"comfyui\": 1792197726.9784844, \"hermes\": 1791629598.7424486, \"langfuse\": 1792178073.9465575, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792173919.8232858, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1792173802.0909364, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792054000.971541, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792170781.431687}}"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1792197729.7454414"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792197731.7749462"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792197732.3748622"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792197734.1099734"
+      },
+      {
         "key": "task:964",
-        "value": "{\"started\": 1792197726.9787536, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"claimed\", \"base\": null, \"generation_started\": 1792195529.5237594, \"dispatch_paid_date\": \"2026-10-17\", \"phase_started\": 1792196210.4578705, \"last_execution_phase\": \"remediation\", \"finished\": 1792197412.8602004, \"resume_progress\": {\"bundle\": \"964-1.json\", \"sha256\": \"20e99d38f91ac5fcb2ddeeb8f3e59a56f1d2992591ff0d09427d2e57602b1169\", \"base\": \"fc04da91b2ab12f99e4716371a7e4f98ac982597\", \"phase\": \"remediation\"}, \"timeout_continuations\": 1}"
+        "value": "{\"started\": 1792197726.9787536, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/964/attempt-2\", \"attempt\": 2, \"phase\": \"checkout\", \"base\": \"fc04da91b2ab12f99e4716371a7e4f98ac982597\", \"generation_started\": 1792195529.5237594, \"dispatch_paid_date\": \"2026-10-17\", \"phase_started\": 1792196210.4578705, \"last_execution_phase\": \"remediation\", \"finished\": 1792197412.8602004, \"resume_progress\": {\"bundle\": \"964-1.json\", \"sha256\": \"20e99d38f91ac5fcb2ddeeb8f3e59a56f1d2992591ff0d09427d2e57602b1169\", \"base\": \"fc04da91b2ab12f99e4716371a7e4f98ac982597\", \"phase\": \"remediation\"}, \"timeout_continuations\": 1, \"progress_rebase_needed\": null, \"progress_restored\": true, \"restored_from\": \"964-1.json\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"964\": {\"remaining\": 1, \"until\": 1792204934.9834807}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1792184982.1283343, \"group\": \"maintenance\", \"task\": 959, \"phase\": \"generation\"}, {\"at\": 1792194526.2618663, \"group\": \"maintenance\", \"task\": 960, \"phase\": \"generation\"}, {\"at\": 1792194550.1114955, \"group\": \"maintenance\", \"task\": 960, \"phase\": \"reply-review\"}, {\"at\": 1792195529.523953, \"group\": \"new_fix\", \"task\": 964, \"phase\": \"generation\"}, {\"at\": 1792195569.7159219, \"group\": \"new_fix\", \"task\": 961, \"phase\": \"generation\"}, {\"at\": 1792195682.2050698, \"group\": \"new_fix\", \"task\": 962, \"phase\": \"generation\"}, {\"at\": 1792195823.2037234, \"group\": \"new_fix\", \"task\": 963, \"phase\": \"generation\"}, {\"at\": 1792195998.955601, \"group\": \"new_fix\", \"task\": 964, \"phase\": \"review\"}, {\"at\": 1792196208.1123085, \"group\": \"repair\", \"task\": 964, \"phase\": \"remediation\"}, {\"at\": 1792197012.132921, \"group\": \"new_fix\", \"task\": 966, \"phase\": \"generation\"}, {\"at\": 1792197429.393032, \"group\": \"new_fix\", \"task\": 965, \"phase\": \"generation\"}, {\"at\": 1792197734.9834807, \"group\": \"new_fix\", \"task\": 964, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1791592728.8302608,
-        "kind": "judge"
-      },
-      {
-        "at": 1791592776.6132007,
-        "kind": "judge"
-      },
-      {
-        "at": 1791592786.7825325,
-        "kind": "judge"
-      },
-      {
-        "at": 1791592798.2486372,
-        "kind": "codex"
-      },
       {
         "at": 1791595615.8580241,
         "kind": "codex"
@@ -22439,6 +22423,10 @@
       },
       {
         "at": 1792197429.3934913,
+        "kind": "codex"
+      },
+      {
+        "at": 1792197734.9841137,
         "kind": "codex"
       }
     ]
