@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792209041.8720806,
+  "saved_at": 1792209086.3016512,
   "tables": {
     "tasks": [
       {
@@ -9513,11 +9513,11 @@
         "repo": "dify",
         "number": 41214,
         "note": "",
-        "status": "skipped",
+        "status": "running",
         "created": 1791688459.9880683,
-        "updated": 1791949123.6211028,
+        "updated": 1792209086.2927618,
         "result": "The cause of [#41214](https://github.com/langgenius/dify/issues/41214) remains unconfirmed. The reporter supplied `*/10 * * * *` but no stored schedule values after the interval changes. Current code calculates each next run from the stored cron expression; changing the poller or schedule sync without knowing whether that value changed would be speculative. No open PR claims this issue.",
-        "attempts": 2
+        "attempts": 3
       },
       {
         "id": 733,
@@ -17430,10 +17430,6 @@
         "value": "{\"task\": 732, \"repo\": \"dify\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1791949123.4582524, \"seconds\": 66.373, \"tokens\": {\"totalTokens\": 325947, \"inputTokens\": 323544, \"cachedInputTokens\": 269440, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2403, \"reasoningOutputTokens\": 715}, \"first_event_ms\": 1791949061626, \"last_event_ms\": 1791949123454, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "task:732",
-        "value": "{\"started\": 1791949042.3304806, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/732/attempt-2\", \"attempt\": 2, \"phase\": \"skipped\", \"base\": \"c64d9061ce336070167a62fecec2cff1be616533\", \"phase_started\": 1791949059.6276226, \"screening_requests\": {\"b059ff5001c0747ea461\": 1791688494.3159165}, \"generation_started\": 1791688506.4592543, \"dispatch_paid_date\": \"2026-10-11\", \"last_execution_phase\": \"generation\", \"finished\": 1791949123.4606075}"
-      },
-      {
         "key": "task:867",
         "value": "{\"started\": 1791950317.7036254, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/867/attempt-1\", \"attempt\": 1, \"phase\": \"error\", \"base\": null, \"remote_base\": \"573c0c00726a1a87079ee7436bcb8d9a568a60d6\", \"last_execution_phase\": \"checkout\", \"finished\": 1791950412.0322542}"
       },
@@ -19090,10 +19086,6 @@
         "value": "{}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792208437.9020736, \"comfyui\": 1792203852.0442436, \"hermes\": 1791629598.7424486, \"langfuse\": 1792178073.9465575, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792173919.8232858, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1792173802.0909364, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792054000.971541, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792170781.431687}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"comfyui\", \"task\": 964, \"at\": 1792195529.5237586}, {\"repo\": \"openclaw\", \"task\": 961, \"at\": 1792195569.7156343}, {\"repo\": \"openclaw\", \"task\": 962, \"at\": 1792195682.2048507}, {\"repo\": \"openclaw\", \"task\": 963, \"at\": 1792195823.2034798}, {\"repo\": \"openclaw\", \"task\": 966, \"at\": 1792197012.1325295}, {\"repo\": \"comfyui\", \"task\": 965, \"at\": 1792197429.3928018}, {\"repo\": \"openclaw\", \"task\": 970, \"at\": 1792200334.9572544}, {\"repo\": \"openclaw\", \"task\": 971, \"at\": 1792200996.002653}, {\"repo\": \"comfyui\", \"task\": 973, \"at\": 1792202367.6241581}, {\"repo\": \"openclaw\", \"task\": 972, \"at\": 1792203253.2567103}, {\"repo\": \"openclaw\", \"task\": 978, \"at\": 1792206012.187914}, {\"repo\": \"openclaw\", \"task\": 980, \"at\": 1792208494.0806143}]"
       },
@@ -19270,40 +19262,48 @@
         "value": "{\"at\": 1792208916.1976836, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1792208981.2540395, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 36, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 487.1666564941406, \"judge_tokens_spent_24h\": 57847, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7580\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7580\", \"title\": \"integrations: gcs, secret_manager and parameter_manager import google-cloud clients at module level, violating the lazy-import contract\", \"first_seen\": 1792175037.8113418, \"last_checked\": 1792175037.811342, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7581\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7581\", \"title\": \"integrations: gcs, secret_manager and parameter_manager import google-cloud clients at module level, violating the lazy-import contract\", \"first_seen\": 1792175066.5535512, \"last_checked\": 1792183539.515831, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792207834.164998, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7578\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7578\", \"title\": \"Expose the /run_sse event serialization as a public function and allow an optional SSE keep-alive\", \"first_seen\": 1792143553.2231722, \"last_checked\": 1792207836.5975828, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792207838.9658244, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792207841.4391446, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792208981.257542, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 4, \"skipped\": 21, \"validation_wait\": 5}, \"respond\": {\"done\": 3, \"skipped\": 3, \"validation_wait\": 9}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792208994.1563568, \"windows\": [{\"name\": \"primary\", \"used_percent\": 29, \"resets_at\": 1792650245}]}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792209030.8713355"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1792209032.214702"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792209037.7593951"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792209041.4341493"
-      },
-      {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
         "value": "{\"at\": 1792209041.8614457, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
       },
       {
         "key": "runner_resources",
         "value": "{\"at\": 1792209041.8627503, \"disk_free_bytes\": 89694154752, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15476563968, \"SwapTotal\": 3221221376, \"SwapFree\": 2960928768}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1792209044.0299122, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 36, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 549.9426383972168, \"judge_tokens_spent_24h\": 57847, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7580\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7580\", \"title\": \"integrations: gcs, secret_manager and parameter_manager import google-cloud clients at module level, violating the lazy-import contract\", \"first_seen\": 1792175037.8113418, \"last_checked\": 1792175037.811342, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7581\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7581\", \"title\": \"integrations: gcs, secret_manager and parameter_manager import google-cloud clients at module level, violating the lazy-import contract\", \"first_seen\": 1792175066.5535512, \"last_checked\": 1792183539.515831, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792207834.164998, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7578\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7578\", \"title\": \"Expose the /run_sse event serialization as a public function and allow an optional SSE keep-alive\", \"first_seen\": 1792143553.2231722, \"last_checked\": 1792207836.5975828, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792207838.9658244, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792207841.4391446, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792209044.0310652, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 4, \"skipped\": 21, \"validation_wait\": 5}, \"respond\": {\"done\": 3, \"skipped\": 3, \"validation_wait\": 9}}}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792209054.477612, \"windows\": [{\"name\": \"primary\", \"used_percent\": 29, \"resets_at\": 1792650245}]}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792209075.876704"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792209078.402747"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792209081.435154"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792209082.6236608"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792208437.9020736, \"comfyui\": 1792203852.0442436, \"hermes\": 1791629598.7424486, \"langfuse\": 1792178073.9465575, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792173919.8232858, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1792173802.0909364, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792209086.2926166, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792170781.431687}}"
+      },
+      {
+        "key": "task:732",
+        "value": "{\"started\": 1792209086.2928164, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 3, \"phase\": \"claimed\", \"base\": null, \"phase_started\": 1791949059.6276226, \"screening_requests\": {\"b059ff5001c0747ea461\": 1791688494.3159165}, \"generation_started\": 1791688506.4592543, \"dispatch_paid_date\": \"2026-10-11\", \"last_execution_phase\": \"generation\", \"finished\": 1791949123.4606075}"
       }
     ],
     "calls": [
