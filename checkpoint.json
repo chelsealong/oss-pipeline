@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792209105.5509162,
+  "saved_at": 1792209139.33563,
   "tables": {
     "tasks": [
       {
@@ -9513,10 +9513,10 @@
         "repo": "dify",
         "number": 41214,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1791688459.9880683,
-        "updated": 1792209086.2927618,
-        "result": "The cause of [#41214](https://github.com/langgenius/dify/issues/41214) remains unconfirmed. The reporter supplied `*/10 * * * *` but no stored schedule values after the interval changes. Current code calculates each next run from the stored cron expression; changing the poller or schedule sync without knowing whether that value changed would be speculative. No open PR claims this issue.",
+        "updated": 1792209139.3268886,
+        "result": "Issue #41214 remains open, but the cause is unconfirmed. The reporter confirmed cron mode with `*/10 * * * *` but has not provided the stored cron expression or next run time after the interval changes. Current code calculates each next run from the stored expression, so changing the scheduler or publish sync would be speculative. No competing open PR was found.",
         "attempts": 3
       },
       {
@@ -19094,10 +19094,6 @@
         "value": "{\"date\": \"2026-10-17\", \"used\": {\"comfyui\": 3, \"openclaw\": 9}}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792208537.1705701, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:980:1:generation",
         "value": "{\"task\": 980, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792208537.1744912, \"seconds\": 43.096, \"tokens\": {\"totalTokens\": 348742, \"inputTokens\": 346551, \"cachedInputTokens\": 284544, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2191, \"reasoningOutputTokens\": 498}, \"first_event_ms\": 1792208499539, \"last_event_ms\": 1792208537161, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -19254,18 +19250,6 @@
         "value": "{\"at\": 1792208916.1976836, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1792209044.0299122, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 36, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 549.9426383972168, \"judge_tokens_spent_24h\": 57847, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7580\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7580\", \"title\": \"integrations: gcs, secret_manager and parameter_manager import google-cloud clients at module level, violating the lazy-import contract\", \"first_seen\": 1792175037.8113418, \"last_checked\": 1792175037.811342, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7581\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7581\", \"title\": \"integrations: gcs, secret_manager and parameter_manager import google-cloud clients at module level, violating the lazy-import contract\", \"first_seen\": 1792175066.5535512, \"last_checked\": 1792183539.515831, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792207834.164998, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7578\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7578\", \"title\": \"Expose the /run_sse event serialization as a public function and allow an optional SSE keep-alive\", \"first_seen\": 1792143553.2231722, \"last_checked\": 1792207836.5975828, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792207838.9658244, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792207841.4391446, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792209044.0310652, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 4, \"skipped\": 21, \"validation_wait\": 5}, \"respond\": {\"done\": 3, \"skipped\": 3, \"validation_wait\": 9}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792209054.477612, \"windows\": [{\"name\": \"primary\", \"used_percent\": 29, \"resets_at\": 1792650245}]}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1792209078.402747"
       },
@@ -19274,28 +19258,8 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792208437.9020736, \"comfyui\": 1792203852.0442436, \"hermes\": 1791629598.7424486, \"langfuse\": 1792178073.9465575, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792173919.8232858, \"langfuse-python\": 1792008851.128935, \"spec-kit\": 1792173802.0909364, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792209086.2926166, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792170781.431687}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1792209090.8779087"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"732\": {\"remaining\": 1, \"until\": 1792216300.9825516}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792194526.2618663, \"group\": \"maintenance\", \"task\": 960, \"phase\": \"generation\"}, {\"at\": 1792194550.1114955, \"group\": \"maintenance\", \"task\": 960, \"phase\": \"reply-review\"}, {\"at\": 1792195529.523953, \"group\": \"new_fix\", \"task\": 964, \"phase\": \"generation\"}, {\"at\": 1792195569.7159219, \"group\": \"new_fix\", \"task\": 961, \"phase\": \"generation\"}, {\"at\": 1792195682.2050698, \"group\": \"new_fix\", \"task\": 962, \"phase\": \"generation\"}, {\"at\": 1792195823.2037234, \"group\": \"new_fix\", \"task\": 963, \"phase\": \"generation\"}, {\"at\": 1792195998.955601, \"group\": \"new_fix\", \"task\": 964, \"phase\": \"review\"}, {\"at\": 1792196208.1123085, \"group\": \"repair\", \"task\": 964, \"phase\": \"remediation\"}, {\"at\": 1792197012.132921, \"group\": \"new_fix\", \"task\": 966, \"phase\": \"generation\"}, {\"at\": 1792197429.393032, \"group\": \"new_fix\", \"task\": 965, \"phase\": \"generation\"}, {\"at\": 1792197734.9834807, \"group\": \"new_fix\", \"task\": 964, \"phase\": \"generation\"}, {\"at\": 1792198064.6469424, \"group\": \"new_fix\", \"task\": 964, \"phase\": \"review\"}, {\"at\": 1792198559.7004921, \"group\": \"maintenance\", \"task\": 967, \"phase\": \"generation\"}, {\"at\": 1792198591.7929392, \"group\": \"maintenance\", \"task\": 967, \"phase\": \"reply-review\"}, {\"at\": 1792198674.2589035, \"group\": \"maintenance\", \"task\": 968, \"phase\": \"generation\"}, {\"at\": 1792199294.5724552, \"group\": \"maintenance\", \"task\": 969, \"phase\": \"generation\"}, {\"at\": 1792199358.6563945, \"group\": \"maintenance\", \"task\": 969, \"phase\": \"reply-review\"}, {\"at\": 1792200334.957499, \"group\": \"new_fix\", \"task\": 970, \"phase\": \"generation\"}, {\"at\": 1792200996.0028965, \"group\": \"new_fix\", \"task\": 971, \"phase\": \"generation\"}, {\"at\": 1792202191.0548263, \"group\": \"new_fix\", \"task\": 971, \"phase\": \"review\"}, {\"at\": 1792202367.624443, \"group\": \"new_fix\", \"task\": 973, \"phase\": \"generation\"}, {\"at\": 1792202560.6928723, \"group\": \"new_fix\", \"task\": 973, \"phase\": \"review\"}, {\"at\": 1792203253.2569497, \"group\": \"new_fix\", \"task\": 972, \"phase\": \"generation\"}, {\"at\": 1792203577.2658143, \"group\": \"maintenance\", \"task\": 975, \"phase\": \"generation\"}, {\"at\": 1792203718.2154794, \"group\": \"maintenance\", \"task\": 975, \"phase\": \"review\"}, {\"at\": 1792203859.3019245, \"group\": \"maintenance\", \"task\": 976, \"phase\": \"generation\"}, {\"at\": 1792203913.1216085, \"group\": \"new_fix\", \"task\": 972, \"phase\": \"review\"}, {\"at\": 1792204043.9672658, \"group\": \"repair\", \"task\": 972, \"phase\": \"remediation\"}, {\"at\": 1792204520.9431372, \"group\": \"repair\", \"task\": 972, \"phase\": \"rereview\"}, {\"at\": 1792204737.2861006, \"group\": \"maintenance\", \"task\": 974, \"phase\": \"generation\"}, {\"at\": 1792204867.0859666, \"group\": \"maintenance\", \"task\": 977, \"phase\": \"generation\"}, {\"at\": 1792205910.8888826, \"group\": \"maintenance\", \"task\": 977, \"phase\": \"reply-review\"}, {\"at\": 1792206012.1881735, \"group\": \"new_fix\", \"task\": 978, \"phase\": \"generation\"}, {\"at\": 1792206135.3918133, \"group\": \"maintenance\", \"task\": 979, \"phase\": \"generation\"}, {\"at\": 1792206225.2011173, \"group\": \"maintenance\", \"task\": 979, \"phase\": \"reply-review\"}, {\"at\": 1792208494.08087, \"group\": \"new_fix\", \"task\": 980, \"phase\": \"generation\"}, {\"at\": 1792209100.9825516, \"group\": \"new_fix\", \"task\": 732, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792209101.4356647"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792209102.5211275"
-      },
-      {
-        "key": "task:732",
-        "value": "{\"started\": 1792209086.2928164, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/732/attempt-3\", \"attempt\": 3, \"phase\": \"generation\", \"base\": \"17cff2d80a4b31870c3c4af6375cc3ed44144a7a\", \"phase_started\": 1792209103.1631083, \"screening_requests\": {\"b059ff5001c0747ea461\": 1791688494.3159165}, \"generation_started\": 1791688506.4592543, \"dispatch_paid_date\": \"2026-10-11\", \"last_execution_phase\": \"generation\", \"finished\": 1791949123.4606075}"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
@@ -19304,6 +19268,46 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1792209104.684663, \"disk_free_bytes\": 89469390848, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15370772480, \"SwapTotal\": 3221221376, \"SwapFree\": 2960949248}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1792209108.0018203, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 37, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 7.012323617935181, \"judge_tokens_spent_24h\": 57847, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7580\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7580\", \"title\": \"integrations: gcs, secret_manager and parameter_manager import google-cloud clients at module level, violating the lazy-import contract\", \"first_seen\": 1792175037.8113418, \"last_checked\": 1792175037.811342, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7581\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7581\", \"title\": \"integrations: gcs, secret_manager and parameter_manager import google-cloud clients at module level, violating the lazy-import contract\", \"first_seen\": 1792175066.5535512, \"last_checked\": 1792183539.515831, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792207834.164998, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7578\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7578\", \"title\": \"Expose the /run_sse event serialization as a public function and allow an optional SSE keep-alive\", \"first_seen\": 1792143553.2231722, \"last_checked\": 1792207836.5975828, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792207838.9658244, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792207841.4391446, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792209108.0030901, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 4, \"running\": 1, \"skipped\": 21, \"validation_wait\": 5}, \"respond\": {\"done\": 3, \"skipped\": 3, \"validation_wait\": 9}}}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792209132.5905406"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792209135.8841026"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792209136.4366336"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792209139.1017294, \"windows\": [{\"name\": \"primary\", \"used_percent\": 29, \"resets_at\": 1792650245}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792209139.1040263, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:732:3:generation",
+        "value": "{\"task\": 732, \"repo\": \"dify\", \"attempt\": 3, \"phase\": \"generation\", \"at\": 1792209139.107455, \"seconds\": 38.127, \"tokens\": {\"totalTokens\": 302819, \"inputTokens\": 300527, \"cachedInputTokens\": 250240, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2292, \"reasoningOutputTokens\": 534}, \"first_event_ms\": 1792209105584, \"last_event_ms\": 1792209139101, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:732",
+        "value": "{\"started\": 1792209086.2928164, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/732/attempt-3\", \"attempt\": 3, \"phase\": \"skipped\", \"base\": \"17cff2d80a4b31870c3c4af6375cc3ed44144a7a\", \"phase_started\": 1792209103.1631083, \"screening_requests\": {\"b059ff5001c0747ea461\": 1791688494.3159165}, \"generation_started\": 1791688506.4592543, \"dispatch_paid_date\": \"2026-10-11\", \"last_execution_phase\": \"generation\", \"finished\": 1792209139.10997}"
       }
     ],
     "calls": [
