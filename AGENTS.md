@@ -139,6 +139,21 @@ is a historical snapshot and must not be used as the current queue.
 
 ## Recovery and validation
 
+The October 18 audit found that the one-time PR reply migration also re-offered
+new feedback already processed under the current reply policy. Restrict that
+migration to tasks created before the October 8 implementation; new feedback
+continues through the normal event/head watcher. Do not reinterpret a platform
+validation wait as permission to rerun the same event or waive the check.
+An empty queue must still expose exhausted repository task-start budgets and
+recent human/validation handoffs. Process/auth health and spare model capacity
+do not prove that new PR production is active. Preserve actual spent task starts.
+OpenClaw's 40-minute age wait is for untriaged issues. Its current queueable-fix
+and source-repro labels end that wait; exclusion labels, claims, competing PRs,
+scope, validation and all budgets still apply. Discovery notices that label
+transition on already-seen issues and wakes normal fresh admission once, using
+the existing GraphQL response without model calls. Admission clears the older
+deferred entry so it does not replay the same discovery after 40 minutes.
+
 The October 15 audit found an obsolete 18-open-PR stop in OpenClaw's historical
 lessons despite the controller's authoritative 20-PR cap. Executor instructions
 now render limits from repo_limits.py. Never restore that historical buffer.

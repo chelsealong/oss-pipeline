@@ -748,6 +748,8 @@ def recheck_pending_vet(keys: list[str], limit: int = 4) -> int:
             if not NO_TRIGGER:trigger_fix(key,int(number))
         elif MIN_AGE_MARK in why:
             defer(key,int(number),issue['created_at'])
+        if MIN_AGE_MARK not in why:
+            undefer(key,int(number))
         del rows[key][number]
     save_pending_vet(rows,before)
     return accepted
@@ -790,8 +792,22 @@ def sweep(keys: list[str], seen: dict[str, list[int]], per_repo: int,
         if not repo:
             continue
         known = set(seen.get(key, []))
+        # Discovery already receives labels. Notice a positive triage transition
+        # on a known issue without another API/model call or a second writer of
+        # deferred.json. Admission re-reads the issue and all normal gates.
+        ready_key='discovery_triage_ready:'+key
+        track_ready=not vetting and rt.local() and bool(scan.REPOS[key].get('triage_ready_labels'))
+        ready_seen=rt.getmeta(ready_key,{}) if track_ready else {}
         for node in (repo.get("issues") or {}).get("nodes", []):
             num = node["number"]
+            if track_ready:
+                ready=scan.triage_ready(scan.REPOS[key],{l['name'] for l in node['labels']['nodes']})
+                if ready:
+                    if num in known and not bootstrap and not ready_seen.get(str(num)):
+                        retain_for_vetting(key,node)
+                    ready_seen[str(num)]=True
+                else:
+                    ready_seen.pop(str(num),None)
             if num in known:
                 continue
             known.add(num)
@@ -842,6 +858,8 @@ def sweep(keys: list[str], seen: dict[str, list[int]], per_repo: int,
             else:
                 log(f"  rejected [{key}] #{num} ({lag:.0f}s old) — {why[:70]}")
         seen[key] = sorted(known)
+        if track_ready:
+            rt.setmeta(ready_key,{n:ready_seen[n] for n in sorted(ready_seen,key=int)[-400:]})
 
     return new_count, accepted
 
@@ -870,6 +888,15 @@ def _load_deferred() -> dict:
 def defer(key: str, num: int, created_at: str) -> None:
     d = _load_deferred()
     d.setdefault(key, {})[str(num)] = created_at
+    DEFERRED.write_text(json.dumps(d, indent=1, sort_keys=True) + "\n")
+
+
+def undefer(key: str, num: int) -> None:
+    """Admission owns this file; early triage must not trigger a later replay."""
+    d=_load_deferred()
+    if str(num) not in d.get(key,{}):return
+    del d[key][str(num)]
+    if not d[key]:del d[key]
     DEFERRED.write_text(json.dumps(d, indent=1, sort_keys=True) + "\n")
 
 

@@ -264,6 +264,7 @@ REPOS: dict[str, dict] = {
         # Wait past ClawSweeper's p90 triage latency (36 min) before taking an
         # untriaged issue, so its verdict is visible rather than raced.
         "min_age_minutes": 40,
+        "triage_ready_labels": {"clawsweeper:queueable-fix", "clawsweeper:source-repro"},
         "exclude_labels": {
             "clawsweeper:no-new-fix-pr",
             "clawsweeper:linked-pr-open",
@@ -1018,6 +1019,12 @@ def coordination_allowed(upstream, issue):
         'draft':'May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.'})
     return False
 
+def triage_ready(cfg, labels):
+    """Positive upstream triage ends only the age wait, never eligibility checks."""
+    required=cfg.get('triage_ready_labels',set())
+    return bool(required and set(required)<=labels and not labels & cfg.get('exclude_labels',set()))
+
+
 def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
     # First, and before any API call. A paused repo is one we have established
     # cannot accept our work — spending a scan on it, let alone a session, is
@@ -1053,7 +1060,7 @@ def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
     # 00:10, and cost a full session to conclude "already fixed on main", which
     # is what ClawSweeper's `not-repro-on-main` would have said for free.
     # Speed is only an advantage where nobody else is deciding.
-    if mins := cfg.get("min_age_minutes"):
+    if (mins := cfg.get("min_age_minutes")) and not triage_ready(cfg,labels):
         created = issue.get("created_at") or issue.get("createdAt") or ""
         if created:
             try:

@@ -74,7 +74,8 @@ class ReplyTests(unittest.TestCase):
             post.assert_not_called()
     def test_new_policy_reoffers_old_block_once_without_replaying_push(self):
         self.assertTrue(rt.enqueue('respond','langfuse/langfuse',17876,'{"events":["old"]}',only_new=True))
-        with rt.db() as db:db.execute("UPDATE tasks SET status='blocked',result='Draft reply',attempts=3")
+        with rt.db() as db:db.execute("UPDATE tasks SET status='blocked',result='Draft reply',attempts=3,created=?",
+                                     (replies.LEGACY_BACKLOG_BEFORE-1,))
         with patch.object(worker,'configs',return_value=('langfuse',{})),patch.object(worker,'response_context',return_value=self.context):
             self.assertEqual(replies.recover_backlog(),['langfuse/langfuse#17876'])
             self.assertEqual(replies.recover_backlog(),[])
@@ -83,6 +84,21 @@ class ReplyTests(unittest.TestCase):
         self.assertEqual(rows[0]['status'],'blocked');self.assertEqual(rows[1]['status'],'queued')
         note=json.loads(rows[1]['note']);self.assertEqual(note['events'],['old']);self.assertEqual(note['head'],'a'*40)
         self.assertNotIn('publication_started',rt.task_state(rows[1]['id']))
+    def test_current_feedback_is_not_replayed_by_legacy_migration(self):
+        # Live task 999 was created after the reply feature already existed.
+        # The migration offered the same event again as task 1000 on the same
+        # current head, spending another generation/reply-review on a known
+        # unavailable Windows check. New real feedback must still be admitted.
+        note=json.dumps({'events':['review@date'],'head':'a'*40})
+        self.assertTrue(rt.enqueue('respond','langfuse/langfuse',17876,note,only_new=True))
+        for status in ('validation_wait','human_wait','blocked','done'):
+            with rt.db() as db:db.execute('UPDATE tasks SET status=?',(status,))
+            with patch.object(worker,'response_context') as read:
+                self.assertEqual(replies.recover_backlog(),[])
+                read.assert_not_called()
+        changed=json.dumps({'events':['new-review@date'],'head':'a'*40})
+        self.assertTrue(rt.enqueue('respond','langfuse/langfuse',17876,changed,only_new=True))
+        with rt.db() as db:self.assertEqual(db.execute('SELECT count(*) FROM tasks').fetchone()[0],2)
     def test_creation_only_pause_does_not_block_existing_pr_maintenance(self):
         self.assertFalse(replies.response_paused({'paused':'cannot create PRs','respond_when_paused':True}))
         self.assertTrue(replies.response_paused({'paused':'upstream disallows autonomous work'}))

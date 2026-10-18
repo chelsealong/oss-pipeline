@@ -9,6 +9,9 @@ import time
 import runtime as rt
 
 POLICY_VERSION = '2026-10-08-replies-v1'
+# This migration restores tasks from before reviewed replies were implemented
+# (commit 27e7d245). It must not manufacture a second event for new PR feedback.
+LEGACY_BACKLOG_BEFORE = 1791437219
 
 
 def response_paused(cfg):
@@ -126,6 +129,8 @@ def recover_backlog(limit=3):
     admitted = []
     checked = 0
     for (repo, number), task in latest.items():
+        if task['created'] >= LEGACY_BACKLOG_BEFORE:
+            continue
         if checked >= limit or not rt.room('respond')[0]:
             break
         key = f'pr_followup_upgrade:{repo}#{number}'

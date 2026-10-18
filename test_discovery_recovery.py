@@ -15,6 +15,7 @@ class DiscoveryRecoveryTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.root=Path(self.temp.name)
         self.patches=[patch.object(watch,'PENDING_VET',self.root/'pending.json'),
+                      patch.object(watch,'DEFERRED',self.root/'deferred.json'),
                       patch.object(watch,'log'),patch.object(watch,'NO_TRIGGER',True),
                       patch.object(rt,'ROOT',self.root),patch.object(rt,'DATA',self.root/'data'),
                       patch.object(rt,'CONFIG',self.root/'runtime.json'),patch.object(rt,'checkpoint')]
@@ -97,6 +98,27 @@ class DiscoveryRecoveryTests(unittest.TestCase):
             self.assertEqual(vet.call_args.args[2]['title'],'Updated live title')
             self.assertEqual(append.call_args.args[1]['number'],123)
         self.assertEqual(watch.pending_vet()['adk'],{})
+
+    def test_known_issue_triage_transition_wakes_admission_once_without_model(self):
+        seen={'openclaw':[123]}
+        cfg=watch.scan.REPOS['openclaw']
+        self.node['labels']['nodes']=[{'name':name} for name in cfg['triage_ready_labels']]
+        response=json.dumps({'data':{'r0':{'issues':{'nodes':[self.node]}}}})
+        watch.defer('openclaw',123,self.node['createdAt'])
+        with patch.object(rt,'local',return_value=True),patch.object(watch.scan,'gh',return_value=response),\
+             patch.object(watch.scan,'vet',side_effect=AssertionError('Discovery must not judge')):
+            self.assertEqual(watch.sweep(['openclaw'],seen,5,False,vetting=False),(0,0))
+            self.assertIn('123',watch.pending_vet()['openclaw'])
+            # Even after admission removes it, unchanged labels cannot replay it.
+            watch.save_pending_vet({})
+            watch.sweep(['openclaw'],seen,5,False,vetting=False)
+            self.assertEqual(watch.pending_vet(),{})
+        issue=watch.to_rest_shape(self.node);issue['state']='open'
+        watch.retain_for_vetting('openclaw',self.node)
+        with patch.object(rt,'ready',return_value=(True,'')),patch.object(watch.scan,'gh',return_value=json.dumps(issue)),\
+             patch.object(watch.scan,'vet_candidate',return_value=(False,'claimed by another contributor',{})):
+            self.assertEqual(watch.recheck_pending_vet(['openclaw']),0)
+        self.assertNotIn('openclaw',watch._load_deferred())
 
 
 if __name__=='__main__':unittest.main()

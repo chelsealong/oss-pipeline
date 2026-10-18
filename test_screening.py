@@ -35,6 +35,7 @@ class ScreeningTests(unittest.TestCase):
             self.stack.enter_context(patch.object(target,name,value))
         self.stack.enter_context(patch.object(rt,'config',return_value=self.cfg))
         self.stack.enter_context(patch.object(rt,'checkpoint'))
+        self.stack.enter_context(patch.object(watch,'DEFERRED',self.root/'deferred.json'))
         self.stack.enter_context(patch.object(intent,'_load_key',return_value='fixture'))
         self.http=self.stack.enter_context(patch.object(intent.urllib.request,'urlopen',side_effect=AssertionError('No provider request allowed')))
         self.stack.enter_context(patch.object(watch,'log'))
@@ -97,6 +98,22 @@ class ScreeningTests(unittest.TestCase):
         with patch.object(scan,'linked_prs',return_value=['closing-ref PR#2(OPEN)']):
             self.assertFalse(self.eligible()[0])
         self.agent.assert_not_called()
+
+    def test_positive_upstream_triage_ends_age_wait_but_preserves_claim_and_pr_checks(self):
+        cfg=scan.REPOS['openclaw']
+        self.issue['labels']=[{'name':name} for name in cfg['triage_ready_labels']]
+        self.cfg['judge_issue_triage']=False
+        with patch.object(scan,'age_hours',return_value=8/60),patch.object(intent,'is_claim',return_value=(False,'')):
+            self.assertTrue(scan.vet(cfg,cfg['upstream'],self.issue)[0])
+            with patch.object(scan,'linked_prs',return_value=['PR#2']):
+                self.assertIn('already has PR',scan.vet(cfg,cfg['upstream'],self.issue)[1])
+            with patch.object(scan,'claimants',return_value=['another-contributor']):
+                self.assertIn('claimed by',scan.vet(cfg,cfg['upstream'],self.issue)[1])
+            self.issue['labels'].append({'name':'clawsweeper:no-new-fix-pr'})
+            self.assertIn('excluded label',scan.vet(cfg,cfg['upstream'],self.issue)[1])
+            self.issue['labels']=[]
+            self.assertIn(watch.MIN_AGE_MARK,scan.vet(cfg,cfg['upstream'],self.issue)[1])
+        self.agent.assert_not_called();self.http.assert_not_called()
 
     def test_bot_discussion_does_not_inflate_or_invalidate_author_claim_check(self):
         self.cfg['judge_issue_triage']=False
@@ -208,6 +225,24 @@ class ScreeningTests(unittest.TestCase):
             health=admission_health.status()
         self.assertEqual(health['state'],'budget_wait');self.assertEqual(health['running_tasks'],0)
         self.assertGreater(health['queued_tasks'],0);self.assertEqual(health['codex_calls_5h'],44)
+
+    def test_empty_queue_exposes_exhausted_repo_budget_without_spending_or_reset(self):
+        with rt.db() as db:db.execute("UPDATE tasks SET status='skipped'")
+        budget={'date':time.strftime('%Y-%m-%d',time.gmtime()),'used':{'openclaw':10,'hermes':16}}
+        rt.setmeta('dispatch_budget',budget)
+        health=admission_health.status()
+        self.assertEqual(health['state'],'waiting');self.assertEqual(health['running_tasks'],0)
+        self.assertEqual(health['task_start_limits_reached'],{'openclaw':{'used':10,'limit':10}})
+        self.assertTrue(health['warning']);self.assertEqual(rt.getmeta('dispatch_budget'),budget)
+        self.agent.assert_not_called();self.http.assert_not_called()
+
+    def test_unresolved_recent_handoff_is_visible_with_empty_queue(self):
+        with rt.db() as db:db.execute("UPDATE tasks SET status='validation_wait'")
+        health=admission_health.status()
+        self.assertEqual(health['state'],'waiting')
+        self.assertEqual(health['recent_wait_tasks_24h'],{'validation_wait':1})
+        with rt.db() as db:db.execute("UPDATE tasks SET repo='hermes'")
+        self.assertEqual(admission_health.status()['state'],'idle')
 
     def test_adk_duplicate_does_not_generate_coordination_request(self):
         with patch.object(scan,'linked_prs',return_value=['PR#2']),patch.object(scan,'coordination_allowed') as coordinate:

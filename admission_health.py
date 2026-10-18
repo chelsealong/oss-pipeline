@@ -41,18 +41,32 @@ def status():
         screening=rt._meta(db,'codex_screening_calls',[])
         screenings_5h=sum(x['at']>now-18000 for x in screening)
         screenings_day=sum(x['at']>now-86400 for x in screening)
+        dispatch=rt._dispatch_budget(db)
+        task_limits={key:{'used':dispatch['used'].get(key,0),
+                          'limit':watch.DISPATCH_BUDGET.get(key,watch.DEFAULT_BUDGET)}
+                     for key,cfg in scan.REPOS.items()
+                     if not repo_limits.disabled(key) and not cfg.get('paused')
+                     and dispatch['used'].get(key,0)>=watch.DISPATCH_BUDGET.get(key,watch.DEFAULT_BUDGET)}
+        waits_24h=collections.Counter(row['status'] for row in db.execute(
+            "SELECT repo,status FROM tasks WHERE updated>? AND status IN "
+            "('human_wait','validation_wait','execution_wait','capacity_wait','publication_wait')",
+            (now-86400,)) if not repo_limits.disabled(row['repo']))
     idle_seconds=max(0,now-latest) if latest else None
     waiting=sum(by_repo.values())+waits
     stalled=bool((waiting or queued) and not running and not budget_wait and (idle_seconds is None or idle_seconds>1800))
-    return {'state':'budget_wait' if budget_wait else 'stalled' if stalled else 'active' if running else 'queued' if queued else 'idle',
+    held_idle=bool(not running and not queued and (task_limits or waits_24h or coordination))
+    warning=('Candidates are waiting but no work is active; inspect admission budgets and handoffs.' if stalled else
+             'No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.' if held_idle else '')
+    return {'state':'budget_wait' if budget_wait else 'stalled' if stalled else 'active' if running else 'queued' if queued else 'waiting' if held_idle else 'idle',
             'pending_candidates':sum(by_repo.values()),'pending_by_repo':by_repo,
             'pending_reasons':dict(reasons),'screening_wait_tasks':waits,'active_tasks':active,
             'running_tasks':running,'queued_tasks':len(queued),'codex_calls_5h':calls_5h,
             'codex_call_limit':rt.config().get('codex_sessions_per_5h',45),
             'seconds_since_codex_call':idle_seconds,'judge_tokens_spent_24h':spent,
             'screening_calls_5h':screenings_5h,'screening_calls_24h':screenings_day,
+            'task_start_limits_reached':task_limits,'recent_wait_tasks_24h':dict(waits_24h),
             'coordination_requests':coordination,
-            'warning':'Candidates are waiting but no work is active; inspect admission budgets and handoffs.' if stalled else ''}
+            'warning':warning}
 
 
 def report(value):
