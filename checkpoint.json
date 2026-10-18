@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792352421.0880516,
+  "saved_at": 1792352447.7943974,
   "tables": {
     "tasks": [
       {
@@ -20246,32 +20246,12 @@
         "value": "1792352066.8020518"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"comfyui\", \"task\": 1010, \"at\": 1792338502.3252368}, {\"repo\": \"comfyui\", \"task\": 1011, \"at\": 1792344997.2382457}, {\"repo\": \"langfuse\", \"task\": 1012, \"at\": 1792345152.4148738}, {\"repo\": \"comfyui\", \"task\": 1014, \"at\": 1792348894.760003}, {\"repo\": \"llama-index\", \"task\": 1015, \"at\": 1792350819.2195237}, {\"repo\": \"llama-index\", \"task\": 1018, \"at\": 1792351987.5959022}, {\"repo\": \"llama-index\", \"task\": 1019, \"at\": 1792352333.9289622}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-10-18\", \"used\": {\"openclaw\": 10, \"llama-index\": 5, \"comfyui\": 6, \"langfuse\": 2}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1792338502.325477, \"group\": \"new_fix\", \"task\": 1010, \"phase\": \"generation\"}, {\"at\": 1792338596.4746933, \"group\": \"new_fix\", \"task\": 1010, \"phase\": \"review\"}, {\"at\": 1792338695.242571, \"group\": \"repair\", \"task\": 1010, \"phase\": \"remediation\"}, {\"at\": 1792339206.2255754, \"group\": \"repair\", \"task\": 1010, \"phase\": \"rereview\"}, {\"at\": 1792344997.2384255, \"group\": \"new_fix\", \"task\": 1011, \"phase\": \"generation\"}, {\"at\": 1792345152.4151142, \"group\": \"new_fix\", \"task\": 1012, \"phase\": \"generation\"}, {\"at\": 1792346098.4801803, \"group\": \"new_fix\", \"task\": 1012, \"phase\": \"review\"}, {\"at\": 1792346231.7725987, \"group\": \"repair\", \"task\": 1012, \"phase\": \"remediation\"}, {\"at\": 1792346579.100824, \"group\": \"repair\", \"task\": 1012, \"phase\": \"rereview\"}, {\"at\": 1792346884.05137, \"group\": \"maintenance\", \"task\": 1013, \"phase\": \"generation\"}, {\"at\": 1792346917.543611, \"group\": \"maintenance\", \"task\": 1013, \"phase\": \"reply-review\"}, {\"at\": 1792346975.6058514, \"group\": \"new_fix\", \"task\": 1012, \"phase\": \"generation\"}, {\"at\": 1792347181.8787673, \"group\": \"new_fix\", \"task\": 1012, \"phase\": \"validation\"}, {\"at\": 1792348894.760204, \"group\": \"new_fix\", \"task\": 1014, \"phase\": \"generation\"}, {\"at\": 1792350819.2197347, \"group\": \"new_fix\", \"task\": 1015, \"phase\": \"generation\"}, {\"at\": 1792351987.5960908, \"group\": \"new_fix\", \"task\": 1018, \"phase\": \"generation\"}, {\"at\": 1792352333.9291208, \"group\": \"new_fix\", \"task\": 1019, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792352377.4851553, \"windows\": [{\"name\": \"primary\", \"used_percent\": 13, \"resets_at\": 1792874467}]}"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1792352377.4873424, \"source\": \"completed task phase\"}"
       },
       {
         "key": "usage:1019:1:generation",
         "value": "{\"task\": 1019, \"repo\": \"llama-index\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792352377.4910443, \"seconds\": 43.563, \"tokens\": {\"totalTokens\": 178599, \"inputTokens\": 176910, \"cachedInputTokens\": 155264, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1689, \"reasoningOutputTokens\": 405}, \"first_event_ms\": 1792352341882, \"last_event_ms\": 1792352377485, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:1019",
@@ -20358,12 +20338,24 @@
         "value": "{\"at\": 1792352405.8726134, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 2, \"error\": 1, \"human_wait\": 3, \"skipped\": 18, \"validation_wait\": 5}, \"respond\": {\"blocked\": 1, \"done\": 1, \"validation_wait\": 3}}}"
       },
       {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792324376.4305868, \"comfyui\": 1792348884.2222593, \"hermes\": 1791629598.7424486, \"langfuse\": 1792346960.6266007, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792352421.078723, \"langfuse-python\": 1792269667.6802466, \"spec-kit\": 1792284674.9552817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792245562.1506376, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792170781.431687}}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792352437.7657356, \"windows\": [{\"name\": \"primary\", \"used_percent\": 13, \"resets_at\": 1792874467}]}"
+      },
+      {
         "key": "watch_heartbeat",
-        "value": "1792352416.300596"
+        "value": "1792352443.1193328"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792352445.1658275"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1792352416.4297006"
+        "value": "1792352446.4327838"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -20371,19 +20363,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1792352416.8215344"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792352420.1653225"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792324376.4305868, \"comfyui\": 1792348884.2222593, \"hermes\": 1791629598.7424486, \"langfuse\": 1792346960.6266007, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792352421.078723, \"langfuse-python\": 1792269667.6802466, \"spec-kit\": 1792284674.9552817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792245562.1506376, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792170781.431687}}"
+        "value": "1792352446.7984653"
       },
       {
         "key": "task:1020",
-        "value": "{\"started\": 1792352421.0789359, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "value": "{\"started\": 1792352421.0789359, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1020/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"619d74664e8404612038bc15a1a40c686037277c\", \"generation_started\": 1792352447.783797, \"dispatch_paid_date\": \"2026-10-18\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"comfyui\", \"task\": 1010, \"at\": 1792338502.3252368}, {\"repo\": \"comfyui\", \"task\": 1011, \"at\": 1792344997.2382457}, {\"repo\": \"langfuse\", \"task\": 1012, \"at\": 1792345152.4148738}, {\"repo\": \"comfyui\", \"task\": 1014, \"at\": 1792348894.760003}, {\"repo\": \"llama-index\", \"task\": 1015, \"at\": 1792350819.2195237}, {\"repo\": \"llama-index\", \"task\": 1018, \"at\": 1792351987.5959022}, {\"repo\": \"llama-index\", \"task\": 1019, \"at\": 1792352333.9289622}, {\"repo\": \"llama-index\", \"task\": 1020, \"at\": 1792352447.7837965}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-10-18\", \"used\": {\"openclaw\": 10, \"llama-index\": 6, \"comfyui\": 6, \"langfuse\": 2}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"1020\": {\"remaining\": 1, \"until\": 1792359647.7839909}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1792338502.325477, \"group\": \"new_fix\", \"task\": 1010, \"phase\": \"generation\"}, {\"at\": 1792338596.4746933, \"group\": \"new_fix\", \"task\": 1010, \"phase\": \"review\"}, {\"at\": 1792338695.242571, \"group\": \"repair\", \"task\": 1010, \"phase\": \"remediation\"}, {\"at\": 1792339206.2255754, \"group\": \"repair\", \"task\": 1010, \"phase\": \"rereview\"}, {\"at\": 1792344997.2384255, \"group\": \"new_fix\", \"task\": 1011, \"phase\": \"generation\"}, {\"at\": 1792345152.4151142, \"group\": \"new_fix\", \"task\": 1012, \"phase\": \"generation\"}, {\"at\": 1792346098.4801803, \"group\": \"new_fix\", \"task\": 1012, \"phase\": \"review\"}, {\"at\": 1792346231.7725987, \"group\": \"repair\", \"task\": 1012, \"phase\": \"remediation\"}, {\"at\": 1792346579.100824, \"group\": \"repair\", \"task\": 1012, \"phase\": \"rereview\"}, {\"at\": 1792346884.05137, \"group\": \"maintenance\", \"task\": 1013, \"phase\": \"generation\"}, {\"at\": 1792346917.543611, \"group\": \"maintenance\", \"task\": 1013, \"phase\": \"reply-review\"}, {\"at\": 1792346975.6058514, \"group\": \"new_fix\", \"task\": 1012, \"phase\": \"generation\"}, {\"at\": 1792347181.8787673, \"group\": \"new_fix\", \"task\": 1012, \"phase\": \"validation\"}, {\"at\": 1792348894.760204, \"group\": \"new_fix\", \"task\": 1014, \"phase\": \"generation\"}, {\"at\": 1792350819.2197347, \"group\": \"new_fix\", \"task\": 1015, \"phase\": \"generation\"}, {\"at\": 1792351987.5960908, \"group\": \"new_fix\", \"task\": 1018, \"phase\": \"generation\"}, {\"at\": 1792352333.9291208, \"group\": \"new_fix\", \"task\": 1019, \"phase\": \"generation\"}, {\"at\": 1792352447.7839909, \"group\": \"new_fix\", \"task\": 1020, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
@@ -23577,6 +23577,10 @@
       },
       {
         "at": 1792352333.9295628,
+        "kind": "codex"
+      },
+      {
+        "at": 1792352447.7845392,
         "kind": "codex"
       }
     ]
