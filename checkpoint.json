@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792318036.5948362,
+  "saved_at": 1792318039.6996663,
   "tables": {
     "tasks": [
       {
@@ -13075,10 +13075,10 @@
         "repo": "comfyui",
         "number": 17151,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1792317965.431947,
-        "updated": 1792317969.000521,
-        "result": "",
+        "updated": 1792318039.4608996,
+        "result": "Open PR #16126 already changes the exact LSCM solve path to use the CPU on ROCm and includes a regression test. The issue’s additional Turing/CUDA claim lacks a reproducible case here; this checkout has no PyTorch or GPU for validation.",
         "attempts": 1
       }
     ],
@@ -19816,10 +19816,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792316853.2785149, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792316865.9409952, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1005:1:generation",
         "value": "{\"task\": 1005, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792316865.9454067, \"seconds\": 38.033, \"tokens\": {\"totalTokens\": 298583, \"inputTokens\": 296991, \"cachedInputTokens\": 252672, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1592, \"reasoningOutputTokens\": 267}, \"first_event_ms\": 1792316833539, \"last_event_ms\": 1792316865937, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -19980,28 +19976,12 @@
         "value": "{\"date\": \"2026-10-18\", \"used\": {\"openclaw\": 9, \"llama-index\": 1, \"comfyui\": 3}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1006\": {\"remaining\": 1, \"until\": 1792325178.427126}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792300292.683321, \"group\": \"new_fix\", \"task\": 995, \"phase\": \"generation\"}, {\"at\": 1792300397.073144, \"group\": \"new_fix\", \"task\": 996, \"phase\": \"generation\"}, {\"at\": 1792301841.8866022, \"group\": \"new_fix\", \"task\": 996, \"phase\": \"review\"}, {\"at\": 1792302031.763129, \"group\": \"repair\", \"task\": 996, \"phase\": \"remediation\"}, {\"at\": 1792303988.354681, \"group\": \"new_fix\", \"task\": 996, \"phase\": \"generation\"}, {\"at\": 1792304428.9297504, \"group\": \"new_fix\", \"task\": 996, \"phase\": \"review\"}, {\"at\": 1792305442.038841, \"group\": \"maintenance\", \"task\": 998, \"phase\": \"generation\"}, {\"at\": 1792306102.3672853, \"group\": \"maintenance\", \"task\": 998, \"phase\": \"review\"}, {\"at\": 1792306374.5508826, \"group\": \"maintenance\", \"task\": 999, \"phase\": \"generation\"}, {\"at\": 1792306539.13722, \"group\": \"maintenance\", \"task\": 1000, \"phase\": \"generation\"}, {\"at\": 1792306603.5749378, \"group\": \"maintenance\", \"task\": 1000, \"phase\": \"reply-review\"}, {\"at\": 1792306728.0724113, \"group\": \"maintenance\", \"task\": 1001, \"phase\": \"generation\"}, {\"at\": 1792307945.8350024, \"group\": \"new_fix\", \"task\": 1002, \"phase\": \"generation\"}, {\"at\": 1792309371.5403984, \"group\": \"new_fix\", \"task\": 1003, \"phase\": \"generation\"}, {\"at\": 1792312688.5608304, \"group\": \"new_fix\", \"task\": 1004, \"phase\": \"generation\"}, {\"at\": 1792316827.9136121, \"group\": \"new_fix\", \"task\": 1005, \"phase\": \"generation\"}, {\"at\": 1792317978.427126, \"group\": \"new_fix\", \"task\": 1006, \"phase\": \"generation\"}]"
       },
       {
-        "key": "task:1006",
-        "value": "{\"started\": 1792317969.0005548, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1006/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"c06bf5f569d268b80076e5f44126f87cdf835869\", \"generation_started\": 1792317978.4268763, \"dispatch_paid_date\": \"2026-10-18\", \"phase_started\": 1792317981.9487073}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792318023.6636322, \"windows\": [{\"name\": \"primary\", \"used_percent\": 10, \"resets_at\": 1792874467}]}"
-      },
-      {
         "key": "worker_heartbeat",
         "value": "1792318028.8490343"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792318034.5091314"
       },
       {
         "key": "task:219",
@@ -20034,6 +20014,30 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1792318036.5848126, \"disk_free_bytes\": 89602613248, \"memory_bytes\": {\"MemTotal\": 16765378560, \"MemAvailable\": 15292944384, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792318039.2971406, \"windows\": [{\"name\": \"primary\", \"used_percent\": 10, \"resets_at\": 1792874467}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792318039.30157, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1006:1:generation",
+        "value": "{\"task\": 1006, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792318039.305936, \"seconds\": 60.88, \"tokens\": {\"totalTokens\": 278608, \"inputTokens\": 276962, \"cachedInputTokens\": 219648, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1646, \"reasoningOutputTokens\": 368}, \"first_event_ms\": 1792317984759, \"last_event_ms\": 1792318039297, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1006",
+        "value": "{\"started\": 1792317969.0005548, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1006/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"c06bf5f569d268b80076e5f44126f87cdf835869\", \"generation_started\": 1792317978.4268763, \"dispatch_paid_date\": \"2026-10-18\", \"phase_started\": 1792317981.9487073, \"last_execution_phase\": \"generation\", \"finished\": 1792318039.3103402}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792318039.5092435"
       }
     ],
     "calls": [
