@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792324349.5751808,
+  "saved_at": 1792324374.0070415,
   "tables": {
     "tasks": [
       {
@@ -13101,10 +13101,10 @@
         "repo": "langfuse",
         "number": 18995,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1792324328.8189056,
-        "updated": 1792324334.6729357,
-        "result": "",
+        "updated": 1792324373.9971151,
+        "result": "The reported Stop-hook bug is in the separate langfuse/codex-observability-plugin repository; this isolated langfuse/langfuse checkout has no affected implementation. Open PRs #107 and #112 in the plugin repository already modify plugins/tracing/src/trace.ts to address long-rollout memory use, so this work is taken.",
         "attempts": 1
       },
       {
@@ -19871,10 +19871,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792323058.1092966, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792323095.9605522, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -20027,10 +20023,6 @@
         "value": "1792324220.7380133"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792324297.1306398, \"windows\": [{\"name\": \"primary\", \"used_percent\": 10, \"resets_at\": 1792874467}]}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1792324313.68391"
       },
@@ -20063,18 +20055,6 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792312632.4171817, \"comfyui\": 1792317969.0003622, \"hermes\": 1791629598.7424486, \"langfuse\": 1792324334.6726942, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792319292.2821548, \"langfuse-python\": 1792269667.6802466, \"spec-kit\": 1792284674.9552817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792245562.1506376, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792170781.431687}}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1792324344.6980426"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792324345.2524714"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792324346.124491"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"openclaw\", \"task\": 1002, \"at\": 1792307945.8347511}, {\"repo\": \"openclaw\", \"task\": 1003, \"at\": 1792309371.5401695}, {\"repo\": \"openclaw\", \"task\": 1004, \"at\": 1792312688.5606337}, {\"repo\": \"comfyui\", \"task\": 1005, \"at\": 1792316827.913402}, {\"repo\": \"comfyui\", \"task\": 1006, \"at\": 1792317978.4268754}, {\"repo\": \"llama-index\", \"task\": 1007, \"at\": 1792319319.4638836}, {\"repo\": \"langfuse\", \"task\": 1008, \"at\": 1792324346.3719482}]"
       },
@@ -20083,16 +20063,40 @@
         "value": "{\"date\": \"2026-10-18\", \"used\": {\"openclaw\": 9, \"llama-index\": 2, \"comfyui\": 3, \"langfuse\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1008\": {\"remaining\": 1, \"until\": 1792331546.3722181}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792306374.5508826, \"group\": \"maintenance\", \"task\": 999, \"phase\": \"generation\"}, {\"at\": 1792306539.13722, \"group\": \"maintenance\", \"task\": 1000, \"phase\": \"generation\"}, {\"at\": 1792306603.5749378, \"group\": \"maintenance\", \"task\": 1000, \"phase\": \"reply-review\"}, {\"at\": 1792306728.0724113, \"group\": \"maintenance\", \"task\": 1001, \"phase\": \"generation\"}, {\"at\": 1792307945.8350024, \"group\": \"new_fix\", \"task\": 1002, \"phase\": \"generation\"}, {\"at\": 1792309371.5403984, \"group\": \"new_fix\", \"task\": 1003, \"phase\": \"generation\"}, {\"at\": 1792312688.5608304, \"group\": \"new_fix\", \"task\": 1004, \"phase\": \"generation\"}, {\"at\": 1792316827.9136121, \"group\": \"new_fix\", \"task\": 1005, \"phase\": \"generation\"}, {\"at\": 1792317978.427126, \"group\": \"new_fix\", \"task\": 1006, \"phase\": \"generation\"}, {\"at\": 1792319319.464175, \"group\": \"new_fix\", \"task\": 1007, \"phase\": \"generation\"}, {\"at\": 1792324346.3722181, \"group\": \"new_fix\", \"task\": 1008, \"phase\": \"generation\"}]"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1792324360.271111"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792324369.698536"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792324372.1470606"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792324373.7396717, \"windows\": [{\"name\": \"primary\", \"used_percent\": 10, \"resets_at\": 1792874467}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792324373.7453544, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1008:1:generation",
+        "value": "{\"task\": 1008, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792324373.749206, \"seconds\": 27.378, \"tokens\": {\"totalTokens\": 164758, \"inputTokens\": 163685, \"cachedInputTokens\": 127232, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1073, \"reasoningOutputTokens\": 244}, \"first_event_ms\": 1792324352467, \"last_event_ms\": 1792324373739, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
         "key": "task:1008",
-        "value": "{\"started\": 1792324334.6730173, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1008/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"564f800fb5301a1edf68ed8c0498fd880880bcd5\", \"generation_started\": 1792324346.371949, \"dispatch_paid_date\": \"2026-10-18\", \"phase_started\": 1792324349.5617537}"
+        "value": "{\"started\": 1792324334.6730173, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1008/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"564f800fb5301a1edf68ed8c0498fd880880bcd5\", \"generation_started\": 1792324346.371949, \"dispatch_paid_date\": \"2026-10-18\", \"phase_started\": 1792324349.5617537, \"last_execution_phase\": \"generation\", \"finished\": 1792324373.7533636}"
       }
     ],
     "calls": [
