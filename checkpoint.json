@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792345070.5480063,
+  "saved_at": 1792345099.176822,
   "tables": {
     "tasks": [
       {
@@ -13140,10 +13140,10 @@
         "repo": "comfyui",
         "number": 17164,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1792344986.789657,
-        "updated": 1792344987.0821884,
-        "result": "",
+        "updated": 1792345099.1680322,
+        "result": "Before expensive validation: already has PR(s): ['closing-ref PR#17165(OPEN)', 'xref PR#17165(OPEN)']",
         "attempts": 1
       }
     ],
@@ -19893,10 +19893,6 @@
         "value": "[]"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792344106.6982124, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -20117,48 +20113,8 @@
         "value": "{\"date\": \"2026-10-18\", \"used\": {\"openclaw\": 10, \"llama-index\": 2, \"comfyui\": 5, \"langfuse\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1011\": {\"remaining\": 1, \"until\": 1792352197.2384255}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792332866.5588295, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1792332866.5983367, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1792332871.2092428, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1792332871.763829, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1792332894.8101609, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1792332900.6834419, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1792338502.325477, \"group\": \"new_fix\", \"task\": 1010, \"phase\": \"generation\"}, {\"at\": 1792338596.4746933, \"group\": \"new_fix\", \"task\": 1010, \"phase\": \"review\"}, {\"at\": 1792338695.242571, \"group\": \"repair\", \"task\": 1010, \"phase\": \"remediation\"}, {\"at\": 1792339206.2255754, \"group\": \"repair\", \"task\": 1010, \"phase\": \"rereview\"}, {\"at\": 1792344997.2384255, \"group\": \"new_fix\", \"task\": 1011, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "task:1011",
-        "value": "{\"started\": 1792344987.0822237, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1011/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"ce42de5f64ac1d421e304ab7b6c0b3d2f0dde1f6\", \"generation_started\": 1792344997.2382464, \"dispatch_paid_date\": \"2026-10-18\", \"phase_started\": 1792345000.465868}"
-      },
-      {
-        "key": "admission_health",
-        "value": "{\"at\": 1792345010.040039, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 11, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 12.796433448791504, \"judge_tokens_spent_24h\": 47558, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 7, \"human_wait\": 3}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7600\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7600\", \"title\": \"Dev UI graph: McpToolset renders as one opaque node; tools inside it are not shown and never highlight when called\", \"first_seen\": 1792258430.0774596, \"last_checked\": 1792344128.4481936, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7597\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7597\", \"title\": \"Feature request: OKF (Open Knowledge Format) bundle support for ADK\", \"first_seen\": 1792239748.3288977, \"last_checked\": 1792344130.6152582, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792344133.9367828, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792344136.1121283, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792344138.215629, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792345010.0413995, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 2, \"human_wait\": 3, \"running\": 1, \"skipped\": 12, \"validation_wait\": 4}, \"respond\": {\"done\": 1, \"validation_wait\": 3}}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792345064.509186"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1792345067.3152835"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792345068.6106632"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792345070.1589634, \"windows\": [{\"name\": \"primary\", \"used_percent\": 11, \"resets_at\": 1792874468}]}"
-      },
-      {
-        "key": "discovery_triage_ready:openclaw",
-        "value": "{\"175500\": true, \"175505\": true, \"175540\": true, \"175597\": true, \"175599\": true, \"175665\": true, \"175700\": true, \"175701\": true, \"175734\": true, \"175736\": true, \"175801\": true, \"175950\": true, \"176027\": true, \"176028\": true, \"176062\": true, \"176098\": true, \"176115\": true, \"176138\": true, \"176179\": true, \"176208\": true, \"176220\": true, \"176223\": true, \"176224\": true, \"176229\": true, \"176235\": true, \"176236\": true, \"176237\": true, \"176238\": true, \"176239\": true, \"176242\": true, \"176244\": true, \"176250\": true, \"176268\": true}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792345070.3671644"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
@@ -20167,6 +20123,54 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1792345070.5398388, \"disk_free_bytes\": 89579810816, \"memory_bytes\": {\"MemTotal\": 16765378560, \"MemAvailable\": 15316488192, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1792345073.4858453, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 11, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 76.24204540252686, \"judge_tokens_spent_24h\": 47558, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 7, \"human_wait\": 3}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7600\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7600\", \"title\": \"Dev UI graph: McpToolset renders as one opaque node; tools inside it are not shown and never highlight when called\", \"first_seen\": 1792258430.0774596, \"last_checked\": 1792344128.4481936, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7597\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7597\", \"title\": \"Feature request: OKF (Open Knowledge Format) bundle support for ADK\", \"first_seen\": 1792239748.3288977, \"last_checked\": 1792344130.6152582, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792344133.9367828, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792344136.1121283, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792344138.215629, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792345073.4872622, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 2, \"human_wait\": 3, \"running\": 1, \"skipped\": 12, \"validation_wait\": 4}, \"respond\": {\"done\": 1, \"validation_wait\": 3}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792345094.5131633"
+      },
+      {
+        "key": "discovery_triage_ready:openclaw",
+        "value": "{\"175500\": true, \"175505\": true, \"175540\": true, \"175597\": true, \"175599\": true, \"175665\": true, \"175700\": true, \"175701\": true, \"175734\": true, \"175736\": true, \"175801\": true, \"175950\": true, \"176027\": true, \"176028\": true, \"176062\": true, \"176098\": true, \"176115\": true, \"176138\": true, \"176179\": true, \"176208\": true, \"176220\": true, \"176223\": true, \"176224\": true, \"176229\": true, \"176235\": true, \"176236\": true, \"176237\": true, \"176238\": true, \"176239\": true, \"176242\": true, \"176244\": true, \"176250\": true, \"176268\": true}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792345095.1816123"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792345095.7289214"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792345097.763363, \"windows\": [{\"name\": \"primary\", \"used_percent\": 11, \"resets_at\": 1792874467}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792345097.7655752, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1011:1:generation",
+        "value": "{\"task\": 1011, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792345097.772965, \"seconds\": 100.536, \"tokens\": {\"totalTokens\": 1024438, \"inputTokens\": 1019875, \"cachedInputTokens\": 957824, \"cacheWriteInputTokens\": 0, \"outputTokens\": 4563, \"reasoningOutputTokens\": 1339}, \"first_event_ms\": 1792345003233, \"last_event_ms\": 1792345097763, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792345098.6112895"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1011",
+        "value": "{\"started\": 1792344987.0822237, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1011/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"ce42de5f64ac1d421e304ab7b6c0b3d2f0dde1f6\", \"generation_started\": 1792344997.2382464, \"dispatch_paid_date\": \"2026-10-18\", \"phase_started\": 1792345000.465868, \"last_execution_phase\": \"generation\", \"finished\": 1792345098.9995801}"
       }
     ],
     "calls": [
