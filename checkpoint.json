@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792317898.8441484,
+  "saved_at": 1792317969.0126188,
   "tables": {
     "tasks": [
       {
@@ -13067,6 +13067,19 @@
         "updated": 1792316866.0683706,
         "result": "Open PR #14838 already changes the exact attention_split divisibility guard reported in issue #17150 to ceiling-based chunk sizing. A second fix would duplicate that work.",
         "attempts": 1
+      },
+      {
+        "id": 1006,
+        "identity": "fix:comfyui:17151:",
+        "kind": "fix",
+        "repo": "comfyui",
+        "number": 17151,
+        "note": "",
+        "status": "running",
+        "created": 1792317965.431947,
+        "updated": 1792317969.000521,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -19751,10 +19764,6 @@
         "value": "{}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792312632.4171817, \"comfyui\": 1792316818.1609588, \"hermes\": 1791629598.7424486, \"langfuse\": 1792270693.7784882, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792285773.1564713, \"langfuse-python\": 1792269667.6802466, \"spec-kit\": 1792284674.9552817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792245562.1506376, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792170781.431687}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"openclaw\", \"task\": 995, \"at\": 1792300292.683145}, {\"repo\": \"openclaw\", \"task\": 996, \"at\": 1792300397.0729573}, {\"repo\": \"openclaw\", \"task\": 1002, \"at\": 1792307945.8347511}, {\"repo\": \"openclaw\", \"task\": 1003, \"at\": 1792309371.5401695}, {\"repo\": \"openclaw\", \"task\": 1004, \"at\": 1792312688.5606337}, {\"repo\": \"comfyui\", \"task\": 1005, \"at\": 1792316827.913402}]"
       },
@@ -19835,66 +19844,6 @@
         "value": "{\"started\": 1792316818.1612055, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1005/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"c06bf5f569d268b80076e5f44126f87cdf835869\", \"generation_started\": 1792316827.9134035, \"dispatch_paid_date\": \"2026-10-18\", \"phase_started\": 1792316830.7560403, \"last_execution_phase\": \"generation\", \"finished\": 1792316865.9495726}"
       },
       {
-        "key": "task:166",
-        "value": "{\"recovery_checked_at\": 1792317061.4133024}"
-      },
-      {
-        "key": "followup:task:166",
-        "value": "{\"status\": \"needs_human\", \"task\": 166, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:167",
-        "value": "{\"recovery_checked_at\": 1792317061.9120557}"
-      },
-      {
-        "key": "recovery_audit:167",
-        "value": "{\"at\": 1792317062.8227148, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:171",
-        "value": "{\"recovery_checked_at\": 1792317062.825948}"
-      },
-      {
-        "key": "recovery_audit:171",
-        "value": "{\"at\": 1792317064.473872, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:172",
-        "value": "{\"recovery_checked_at\": 1792317064.4765882}"
-      },
-      {
-        "key": "followup:task:172",
-        "value": "{\"status\": \"needs_human\", \"task\": 172, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:173",
-        "value": "{\"recovery_checked_at\": 1792317065.0001805}"
-      },
-      {
-        "key": "recovery_audit:173",
-        "value": "{\"at\": 1792317066.6365883, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:174",
-        "value": "{\"recovery_checked_at\": 1792317066.6394827}"
-      },
-      {
-        "key": "recovery_audit:174",
-        "value": "{\"at\": 1792317067.5593498, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:176",
-        "value": "{\"recovery_checked_at\": 1792317067.5624523}"
-      },
-      {
-        "key": "followup:task:176",
-        "value": "{\"status\": \"needs_human\", \"task\": 176, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:177",
-        "value": "{\"recovery_checked_at\": 1792317068.0336847}"
-      },
-      {
         "key": "recovery_audit:177",
         "value": "{\"at\": 1792317068.9536555, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -19915,24 +19864,12 @@
         "value": "{\"at\": 1792317134.1464238, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1792317832.0238216, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 16, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1004.1050062179565, \"judge_tokens_spent_24h\": 43079, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7600\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7600\", \"title\": \"Dev UI graph: McpToolset renders as one opaque node; tools inside it are not shown and never highlight when called\", \"first_seen\": 1792258430.0774596, \"last_checked\": 1792316843.6967533, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7597\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7597\", \"title\": \"Feature request: OKF (Open Knowledge Format) bundle support for ADK\", \"first_seen\": 1792239748.3288977, \"last_checked\": 1792316845.8108327, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792316848.6775956, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792316851.224239, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792316853.2785149, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792317832.0256717, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 2, \"human_wait\": 2, \"skipped\": 14, \"validation_wait\": 4}, \"respond\": {\"done\": 1, \"validation_wait\": 3}}}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1792317846.0316684"
       },
       {
         "key": "task:44",
         "value": "{\"recovery_checked_at\": 1792317892.380779}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792317892.41447, \"windows\": [{\"name\": \"primary\", \"used_percent\": 10, \"resets_at\": 1792874467}]}"
       },
       {
         "key": "followup:task:44",
@@ -19943,24 +19880,12 @@
         "value": "{\"recovery_checked_at\": 1792317892.8826466}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1792317893.4268253"
-      },
-      {
         "key": "recovery_audit:45",
         "value": "{\"at\": 1792317893.784824, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
         "key": "task:54",
         "value": "{\"recovery_checked_at\": 1792317893.7884002}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792317893.824354"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792317894.5050678"
       },
       {
         "key": "recovery_audit:54",
@@ -19977,10 +19902,6 @@
       {
         "key": "task:57",
         "value": "{\"recovery_checked_at\": 1792317895.2125423}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792317896.0947933"
       },
       {
         "key": "recovery_audit:57",
@@ -20017,6 +19938,102 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1792317898.8334465, \"disk_free_bytes\": 89673134080, \"memory_bytes\": {\"MemTotal\": 16765378560, \"MemAvailable\": 15301533696, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1792317901.3616498, \"state\": \"idle\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 16, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1073.4427700042725, \"judge_tokens_spent_24h\": 43079, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7600\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7600\", \"title\": \"Dev UI graph: McpToolset renders as one opaque node; tools inside it are not shown and never highlight when called\", \"first_seen\": 1792258430.0774596, \"last_checked\": 1792316843.6967533, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7597\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7597\", \"title\": \"Feature request: OKF (Open Knowledge Format) bundle support for ADK\", \"first_seen\": 1792239748.3288977, \"last_checked\": 1792316845.8108327, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792316848.6775956, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792316851.224239, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792316853.2785149, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792317901.363439, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 2, \"human_wait\": 2, \"skipped\": 14, \"validation_wait\": 4}, \"respond\": {\"done\": 1, \"validation_wait\": 3}}}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792317952.8523178, \"windows\": [{\"name\": \"primary\", \"used_percent\": 10, \"resets_at\": 1792874467}]}"
+      },
+      {
+        "key": "task:166",
+        "value": "{\"recovery_checked_at\": 1792317961.7088964}"
+      },
+      {
+        "key": "followup:task:166",
+        "value": "{\"status\": \"needs_human\", \"task\": 166, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:167",
+        "value": "{\"recovery_checked_at\": 1792317962.2670233}"
+      },
+      {
+        "key": "recovery_audit:167",
+        "value": "{\"at\": 1792317963.1226647, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:171",
+        "value": "{\"recovery_checked_at\": 1792317963.125725}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792317963.9155014"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792317964.5071964"
+      },
+      {
+        "key": "recovery_audit:171",
+        "value": "{\"at\": 1792317964.76734, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:172",
+        "value": "{\"recovery_checked_at\": 1792317964.7699313}"
+      },
+      {
+        "key": "followup:task:172",
+        "value": "{\"status\": \"needs_human\", \"task\": 172, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:173",
+        "value": "{\"recovery_checked_at\": 1792317965.266728}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792317965.7944875"
+      },
+      {
+        "key": "recovery_audit:173",
+        "value": "{\"at\": 1792317966.8235059, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:174",
+        "value": "{\"recovery_checked_at\": 1792317966.826131}"
+      },
+      {
+        "key": "recovery_audit:174",
+        "value": "{\"at\": 1792317967.663702, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:176",
+        "value": "{\"recovery_checked_at\": 1792317967.6664126}"
+      },
+      {
+        "key": "followup:task:176",
+        "value": "{\"status\": \"needs_human\", \"task\": 176, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:177",
+        "value": "{\"recovery_checked_at\": 1792317968.1591797}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792317968.8378143"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792312632.4171817, \"comfyui\": 1792317969.0003622, \"hermes\": 1791629598.7424486, \"langfuse\": 1792270693.7784882, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792285773.1564713, \"langfuse-python\": 1792269667.6802466, \"spec-kit\": 1792284674.9552817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792245562.1506376, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792170781.431687}}"
+      },
+      {
+        "key": "task:1006",
+        "value": "{\"started\": 1792317969.0005548, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       }
     ],
     "calls": [
