@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792346960.4727798,
+  "saved_at": 1792346963.3000655,
   "tables": {
     "tasks": [
       {
@@ -13153,11 +13153,11 @@
         "repo": "langfuse",
         "number": 18999,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1792345137.365609,
-        "updated": 1792346903.0436025,
+        "updated": 1792346960.6268823,
         "result": "review: The remediation resolves the original evaluator preview objection, but the evaluator editor still marks `{{ input }}` invalid. In `PromptVariableEditor.tsx:73-83`, the highlighter validates the untrimmed capture `\" input \"` and never looks up the normalized `input` mapping. The PR body’s claim of consistent recognition is therefore premature. Add a regression to the existing editor suite and normalize that lookup. Verified: shared `Tests 34 passed (34)`, web `Tests 12 passed (12)`, worker `Tests 1 passed (1)`; forced lint `Tasks: 9 successful, 9 total`, `Cached: 0 cached`; forced typecheck `Tasks: 10 successful, 10 total`, `Cached: 0 cached`; knip, Prettier, and `git diff --check` passed. VALIDATION_ENVIRONMENT: the repaired exact patch has no browser verification; the local app was stopped.",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 1013,
@@ -20159,14 +20159,6 @@
         "value": "{\"task\": 1012, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"rereview\", \"at\": 1792346866.3203833, \"seconds\": 287.225, \"tokens\": {\"totalTokens\": 2584228, \"inputTokens\": 2576622, \"cachedInputTokens\": 2501376, \"cacheWriteInputTokens\": 0, \"outputTokens\": 7606, \"reasoningOutputTokens\": 3477}, \"first_event_ms\": 1792346585025, \"last_event_ms\": 1792346866313, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1792324376.4305868, \"comfyui\": 1792346873.087439, \"hermes\": 1791629598.7424486, \"langfuse\": 1792345139.825235, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792319292.2821548, \"langfuse-python\": 1792269667.6802466, \"spec-kit\": 1792284674.9552817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792245562.1506376, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792170781.431687}}"
-      },
-      {
-        "key": "task:1012",
-        "value": "{\"started\": 1792345139.8253882, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1012/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"564f800fb5301a1edf68ed8c0498fd880880bcd5\", \"generation_started\": 1792345152.4148748, \"dispatch_paid_date\": \"2026-10-18\", \"phase_started\": 1792346582.2681725, \"patch_digest\": \"738872525f7f8b5ec7878a740365f503d06ac3795263950b8ef362f082520f47\", \"last_execution_phase\": \"rereview\", \"finished\": 1792346866.398969, \"recovery_checked_at\": 1792346903.0237515, \"resume_progress\": {\"bundle\": \"1012-1.json\", \"sha256\": \"2f140a9713148685e225953b74d43c194adc9c0fbda15806a3c5c0b6f7803a53\", \"base\": \"564f800fb5301a1edf68ed8c0498fd880880bcd5\", \"phase\": \"rereview\"}}"
-      },
-      {
         "key": "followup:task:1012",
         "value": "{\"status\": \"resumed\", \"task\": 1012}"
       },
@@ -20203,14 +20195,6 @@
         "value": "1792346954.996608"
       },
       {
-        "key": "discovery_triage_ready:openclaw",
-        "value": "{\"175500\": true, \"175505\": true, \"175540\": true, \"175597\": true, \"175599\": true, \"175665\": true, \"175700\": true, \"175701\": true, \"175734\": true, \"175736\": true, \"175801\": true, \"175950\": true, \"176027\": true, \"176028\": true, \"176062\": true, \"176098\": true, \"176115\": true, \"176138\": true, \"176179\": true, \"176208\": true, \"176220\": true, \"176223\": true, \"176224\": true, \"176229\": true, \"176235\": true, \"176236\": true, \"176237\": true, \"176238\": true, \"176239\": true, \"176242\": true, \"176244\": true, \"176250\": true, \"176268\": true}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792346956.6376534"
-      },
-      {
         "key": "detector_heartbeat",
         "value": "1792346959.769842"
       },
@@ -20237,6 +20221,22 @@
       {
         "key": "task:1013",
         "value": "{\"started\": 1792346873.0884705, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1013/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"3ae18356c88a2febcee86ff5855f009936f60c5b\", \"remote_base\": \"3ae18356c88a2febcee86ff5855f009936f60c5b\", \"base_update\": {\"original_head\": \"3ae18356c88a2febcee86ff5855f009936f60c5b\", \"base\": \"3ae18356c88a2febcee86ff5855f009936f60c5b\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1792346920.2789035, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1792346960.4482236}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792324376.4305868, \"comfyui\": 1792346873.087439, \"hermes\": 1791629598.7424486, \"langfuse\": 1792346960.6266007, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792319292.2821548, \"langfuse-python\": 1792269667.6802466, \"spec-kit\": 1792284674.9552817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792245562.1506376, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792170781.431687}}"
+      },
+      {
+        "key": "task:1012",
+        "value": "{\"started\": 1792346960.6269531, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"claimed\", \"base\": null, \"generation_started\": 1792345152.4148748, \"dispatch_paid_date\": \"2026-10-18\", \"phase_started\": 1792346582.2681725, \"patch_digest\": \"738872525f7f8b5ec7878a740365f503d06ac3795263950b8ef362f082520f47\", \"last_execution_phase\": \"rereview\", \"finished\": 1792346866.398969, \"recovery_checked_at\": 1792346903.0237515, \"resume_progress\": {\"bundle\": \"1012-1.json\", \"sha256\": \"2f140a9713148685e225953b74d43c194adc9c0fbda15806a3c5c0b6f7803a53\", \"base\": \"564f800fb5301a1edf68ed8c0498fd880880bcd5\", \"phase\": \"rereview\"}}"
+      },
+      {
+        "key": "discovery_triage_ready:openclaw",
+        "value": "{\"175500\": true, \"175505\": true, \"175540\": true, \"175597\": true, \"175599\": true, \"175665\": true, \"175700\": true, \"175701\": true, \"175734\": true, \"175736\": true, \"175801\": true, \"175950\": true, \"176027\": true, \"176028\": true, \"176062\": true, \"176098\": true, \"176115\": true, \"176138\": true, \"176179\": true, \"176208\": true, \"176220\": true, \"176223\": true, \"176224\": true, \"176229\": true, \"176235\": true, \"176236\": true, \"176237\": true, \"176238\": true, \"176239\": true, \"176242\": true, \"176244\": true, \"176250\": true, \"176268\": true}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792346961.2133327"
       }
     ],
     "calls": [
