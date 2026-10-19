@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792385323.2232006,
+  "saved_at": 1792385346.1445327,
   "tables": {
     "tasks": [
       {
@@ -13413,10 +13413,10 @@
         "repo": "comfyui",
         "number": 17187,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1792385301.374772,
-        "updated": 1792385305.0602458,
-        "result": "",
+        "updated": 1792385346.131423,
+        "result": "VALIDATION_ENVIRONMENT: The reported bug is intermittent silent output corruption during CUDA dynamic-VRAM staging with specific Qwen model weights. This runner has no NVIDIA device, PyTorch, or model weights, so I cannot reproduce the failure or verify a behavioral fix. The cause is still unconfirmed; the related open [PR #17177](https://github.com/Comfy-Org/ComfyUI/pull/17177) changes prefetch cleanup, while [PR #17180](https://github.com/Comfy-Org/ComfyUI/pull/17180) addresses a different cleanup crash.",
         "attempts": 1
       }
     ],
@@ -20534,10 +20534,6 @@
         "value": "1792385240.2872806"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792385245.430871, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1031:1:generation",
         "value": "{\"task\": 1031, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792385245.4349384, \"seconds\": 50.277, \"tokens\": {\"totalTokens\": 331808, \"inputTokens\": 329611, \"cachedInputTokens\": 260608, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2197, \"reasoningOutputTokens\": 932}, \"first_event_ms\": 1792385201305, \"last_event_ms\": 1792385245428, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -20548,14 +20544,6 @@
       {
         "key": "task:1031",
         "value": "{\"started\": 1792385137.0677056, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1031/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"2fc8899e8b522eb8af291da574a784ef73aa8b0e\", \"generation_started\": 1792385195.1600392, \"dispatch_paid_date\": \"2026-10-19\", \"phase_started\": 1792385197.9286602, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1792385246.442518}"
-      },
-      {
-        "key": "admission_health",
-        "value": "{\"at\": 1792385258.3647292, \"state\": \"waiting\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 14, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 63.19746422767639, \"judge_tokens_spent_24h\": 44231, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 10, \"human_wait\": 2}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7610\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7610\", \"title\": \"DatabaseSessionService stores non-ASCII text as \\\\uXXXX escapes in TEXT JSON columns\", \"first_seen\": 1792371661.309024, \"last_checked\": 1792381776.5600185, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7609\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7609\", \"title\": \"A dynamic node that reuses its interrupt id across loop iterations: the later answer re-runs the earlier, completed run\", \"first_seen\": 1792356658.263334, \"last_checked\": 1792381779.3694227, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792381791.531688, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7600\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7600\", \"title\": \"Dev UI graph: McpToolset renders as one opaque node; tools inside it are not shown and never highlight when called\", \"first_seen\": 1792258430.0774596, \"last_checked\": 1792384791.7198348, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7597\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7597\", \"title\": \"Feature request: OKF (Open Knowledge Format) bundle support for ADK\", \"first_seen\": 1792239748.3288977, \"last_checked\": 1792384793.9597898, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792384796.6544755, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792384799.1975253, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792385258.3666089, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 3, \"error\": 1, \"human_wait\": 2, \"skipped\": 17, \"validation_wait\": 7}, \"respond\": {\"blocked\": 1, \"done\": 1, \"validation_wait\": 3}}}"
       },
       {
         "key": "judge_usage",
@@ -20574,24 +20562,12 @@
         "value": "{\"date\": \"2026-10-19\", \"used\": {\"openclaw\": 9, \"comfyui\": 2}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1032\": {\"remaining\": 1, \"until\": 1792392511.9582775}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792368255.2462928, \"group\": \"new_fix\", \"task\": 1021, \"phase\": \"generation\"}, {\"at\": 1792368604.0727253, \"group\": \"new_fix\", \"task\": 1022, \"phase\": \"generation\"}, {\"at\": 1792368794.3059256, \"group\": \"new_fix\", \"task\": 1022, \"phase\": \"review\"}, {\"at\": 1792369411.1296837, \"group\": \"new_fix\", \"task\": 1023, \"phase\": \"generation\"}, {\"at\": 1792370822.5208719, \"group\": \"new_fix\", \"task\": 1024, \"phase\": \"generation\"}, {\"at\": 1792373056.9439013, \"group\": \"new_fix\", \"task\": 1025, \"phase\": \"generation\"}, {\"at\": 1792374214.5064316, \"group\": \"new_fix\", \"task\": 1025, \"phase\": \"review\"}, {\"at\": 1792374520.4972744, \"group\": \"repair\", \"task\": 1025, \"phase\": \"remediation\"}, {\"at\": 1792374831.0622506, \"group\": \"new_fix\", \"task\": 1028, \"phase\": \"generation\"}, {\"at\": 1792375081.4336543, \"group\": \"repair\", \"task\": 1025, \"phase\": \"rereview\"}, {\"at\": 1792375422.1690075, \"group\": \"new_fix\", \"task\": 1026, \"phase\": \"generation\"}, {\"at\": 1792381854.1983578, \"group\": \"new_fix\", \"task\": 1029, \"phase\": \"generation\"}, {\"at\": 1792383377.1308675, \"group\": \"new_fix\", \"task\": 1030, \"phase\": \"generation\"}, {\"at\": 1792385195.160296, \"group\": \"new_fix\", \"task\": 1031, \"phase\": \"generation\"}, {\"at\": 1792385311.9582775, \"group\": \"new_fix\", \"task\": 1032, \"phase\": \"generation\"}]"
       },
       {
-        "key": "task:1032",
-        "value": "{\"started\": 1792385305.0602884, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1032/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"8f04fd6ecf4a548937971e840af2a985529fab76\", \"generation_started\": 1792385311.9580197, \"dispatch_paid_date\": \"2026-10-19\", \"phase_started\": 1792385314.173121}"
-      },
-      {
         "key": "task:44",
         "value": "{\"recovery_checked_at\": 1792385318.6585162}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792385318.7677336"
       },
       {
         "key": "followup:task:44",
@@ -20610,14 +20586,6 @@
         "value": "{\"recovery_checked_at\": 1792385319.6260097}"
       },
       {
-        "key": "discovery_triage_ready:openclaw",
-        "value": "{\"175500\": true, \"175505\": true, \"175540\": true, \"175597\": true, \"175599\": true, \"175665\": true, \"175700\": true, \"175701\": true, \"175734\": true, \"175736\": true, \"175801\": true, \"175950\": true, \"176027\": true, \"176028\": true, \"176062\": true, \"176098\": true, \"176115\": true, \"176138\": true, \"176179\": true, \"176208\": true, \"176220\": true, \"176223\": true, \"176224\": true, \"176229\": true, \"176235\": true, \"176236\": true, \"176237\": true, \"176238\": true, \"176239\": true, \"176242\": true, \"176244\": true, \"176250\": true, \"176268\": true, \"176353\": true, \"176472\": true, \"176649\": true, \"176659\": true, \"176740\": true, \"176743\": true, \"176750\": true, \"176778\": true, \"176872\": true, \"176889\": true, \"176922\": true}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792385320.168489"
-      },
-      {
         "key": "recovery_audit:54",
         "value": "{\"at\": 1792385320.3241785, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -20634,10 +20602,6 @@
         "value": "{\"recovery_checked_at\": 1792385320.6844044}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792385321.3346293, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1792874467}]}"
-      },
-      {
         "key": "recovery_audit:57",
         "value": "{\"at\": 1792385321.3467994, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -20646,20 +20610,12 @@
         "value": "{\"recovery_checked_at\": 1792385321.34831}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1792385321.408598"
-      },
-      {
         "key": "recovery_audit:58",
         "value": "{\"at\": 1792385322.0121562, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
         "key": "task:60",
         "value": "{\"recovery_checked_at\": 1792385322.0140505}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792385322.2217736"
       },
       {
         "key": "followup:task:60",
@@ -20680,6 +20636,58 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1792385323.214113, \"disk_free_bytes\": 89517817856, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15293067264, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1792385325.7653604, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 15, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 13.800793647766113, \"judge_tokens_spent_24h\": 46762, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 10, \"human_wait\": 2}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7610\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7610\", \"title\": \"DatabaseSessionService stores non-ASCII text as \\\\uXXXX escapes in TEXT JSON columns\", \"first_seen\": 1792371661.309024, \"last_checked\": 1792381776.5600185, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7609\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7609\", \"title\": \"A dynamic node that reuses its interrupt id across loop iterations: the later answer re-runs the earlier, completed run\", \"first_seen\": 1792356658.263334, \"last_checked\": 1792381779.3694227, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792381791.531688, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7600\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7600\", \"title\": \"Dev UI graph: McpToolset renders as one opaque node; tools inside it are not shown and never highlight when called\", \"first_seen\": 1792258430.0774596, \"last_checked\": 1792384791.7198348, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7597\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7597\", \"title\": \"Feature request: OKF (Open Knowledge Format) bundle support for ADK\", \"first_seen\": 1792239748.3288977, \"last_checked\": 1792384793.9597898, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792384796.6544755, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792384799.1975253, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792385325.7667506, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 3, \"error\": 1, \"human_wait\": 2, \"running\": 1, \"skipped\": 17, \"validation_wait\": 7}, \"respond\": {\"blocked\": 1, \"done\": 1, \"validation_wait\": 3}}}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792385336.4291234"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792385337.223084"
+      },
+      {
+        "key": "discovery_triage_ready:openclaw",
+        "value": "{\"175500\": true, \"175505\": true, \"175540\": true, \"175597\": true, \"175599\": true, \"175665\": true, \"175700\": true, \"175701\": true, \"175734\": true, \"175736\": true, \"175801\": true, \"175950\": true, \"176027\": true, \"176028\": true, \"176062\": true, \"176098\": true, \"176115\": true, \"176138\": true, \"176179\": true, \"176208\": true, \"176220\": true, \"176223\": true, \"176224\": true, \"176229\": true, \"176235\": true, \"176236\": true, \"176237\": true, \"176238\": true, \"176239\": true, \"176242\": true, \"176244\": true, \"176250\": true, \"176268\": true, \"176353\": true, \"176472\": true, \"176649\": true, \"176659\": true, \"176740\": true, \"176743\": true, \"176750\": true, \"176778\": true, \"176872\": true, \"176889\": true, \"176922\": true}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792385340.5364308"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792385343.7684314"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792385345.7953153, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1792874467}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792385345.7975764, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1032:1:generation",
+        "value": "{\"task\": 1032, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792385345.8006577, \"seconds\": 33.844, \"tokens\": {\"totalTokens\": 229596, \"inputTokens\": 228273, \"cachedInputTokens\": 180096, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1323, \"reasoningOutputTokens\": 444}, \"first_event_ms\": 1792385316572, \"last_event_ms\": 1792385345795, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:1032",
+        "value": "{\"status\": \"needs_human\", \"task\": 1032, \"repo\": \"comfyui\", \"number\": 17187, \"reason\": \"VALIDATION_ENVIRONMENT: The reported bug is intermittent silent output corruption during CUDA dynamic-VRAM staging with specific Qwen model weights. This runner has no NVIDIA device, PyTorch, or model weights, so I cannot reproduce the failure or verify a behavioral fix. The cause is still unconfirmed; the related open [PR #17177](https://github.com/Comfy-Org/ComfyUI/pull/17177) changes prefetch cleanup, while [PR #17180](https://github.com/Comfy-Org/ComfyUI/pull/17180) addresses a different cleanup crash.\", \"base\": \"8f04fd6ecf4a548937971e840af2a985529fab76\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"1032-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1032",
+        "value": "{\"started\": 1792385305.0602884, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1032/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"8f04fd6ecf4a548937971e840af2a985529fab76\", \"generation_started\": 1792385311.9580197, \"dispatch_paid_date\": \"2026-10-19\", \"phase_started\": 1792385314.173121, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1792385345.9620194}"
       }
     ],
     "calls": [
