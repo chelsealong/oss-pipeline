@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792386597.5397677,
+  "saved_at": 1792386647.6190047,
   "tables": {
     "tasks": [
       {
@@ -20447,18 +20447,6 @@
         "value": "{\"started\": 1792385137.0677056, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1031/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"2fc8899e8b522eb8af291da574a784ef73aa8b0e\", \"generation_started\": 1792385195.1600392, \"dispatch_paid_date\": \"2026-10-19\", \"phase_started\": 1792385197.9286602, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1792385246.442518}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"openclaw\", \"task\": 1021, \"at\": 1792368255.2460341}, {\"repo\": \"openclaw\", \"task\": 1022, \"at\": 1792368604.0725038}, {\"repo\": \"openclaw\", \"task\": 1023, \"at\": 1792369411.1294503}, {\"repo\": \"openclaw\", \"task\": 1024, \"at\": 1792370822.5206397}, {\"repo\": \"openclaw\", \"task\": 1025, \"at\": 1792373056.9436939}, {\"repo\": \"comfyui\", \"task\": 1028, \"at\": 1792374831.0568554}, {\"repo\": \"openclaw\", \"task\": 1026, \"at\": 1792375422.1687684}, {\"repo\": \"openclaw\", \"task\": 1029, \"at\": 1792381854.1980753}, {\"repo\": \"openclaw\", \"task\": 1030, \"at\": 1792383377.130622}, {\"repo\": \"openclaw\", \"task\": 1031, \"at\": 1792385195.1600387}, {\"repo\": \"comfyui\", \"task\": 1032, \"at\": 1792385311.9580193}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-10-19\", \"used\": {\"openclaw\": 9, \"comfyui\": 2}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1792368255.2462928, \"group\": \"new_fix\", \"task\": 1021, \"phase\": \"generation\"}, {\"at\": 1792368604.0727253, \"group\": \"new_fix\", \"task\": 1022, \"phase\": \"generation\"}, {\"at\": 1792368794.3059256, \"group\": \"new_fix\", \"task\": 1022, \"phase\": \"review\"}, {\"at\": 1792369411.1296837, \"group\": \"new_fix\", \"task\": 1023, \"phase\": \"generation\"}, {\"at\": 1792370822.5208719, \"group\": \"new_fix\", \"task\": 1024, \"phase\": \"generation\"}, {\"at\": 1792373056.9439013, \"group\": \"new_fix\", \"task\": 1025, \"phase\": \"generation\"}, {\"at\": 1792374214.5064316, \"group\": \"new_fix\", \"task\": 1025, \"phase\": \"review\"}, {\"at\": 1792374520.4972744, \"group\": \"repair\", \"task\": 1025, \"phase\": \"remediation\"}, {\"at\": 1792374831.0622506, \"group\": \"new_fix\", \"task\": 1028, \"phase\": \"generation\"}, {\"at\": 1792375081.4336543, \"group\": \"repair\", \"task\": 1025, \"phase\": \"rereview\"}, {\"at\": 1792375422.1690075, \"group\": \"new_fix\", \"task\": 1026, \"phase\": \"generation\"}, {\"at\": 1792381854.1983578, \"group\": \"new_fix\", \"task\": 1029, \"phase\": \"generation\"}, {\"at\": 1792383377.1308675, \"group\": \"new_fix\", \"task\": 1030, \"phase\": \"generation\"}, {\"at\": 1792385195.160296, \"group\": \"new_fix\", \"task\": 1031, \"phase\": \"generation\"}, {\"at\": 1792385311.9582775, \"group\": \"new_fix\", \"task\": 1032, \"phase\": \"generation\"}]"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1792385345.7975764, \"source\": \"completed task phase\"}"
       },
@@ -20469,10 +20457,6 @@
       {
         "key": "followup:task:1032",
         "value": "{\"status\": \"needs_human\", \"task\": 1032, \"repo\": \"comfyui\", \"number\": 17187, \"reason\": \"VALIDATION_ENVIRONMENT: The reported bug is intermittent silent output corruption during CUDA dynamic-VRAM staging with specific Qwen model weights. This runner has no NVIDIA device, PyTorch, or model weights, so I cannot reproduce the failure or verify a behavioral fix. The cause is still unconfirmed; the related open [PR #17177](https://github.com/Comfy-Org/ComfyUI/pull/17177) changes prefetch cleanup, while [PR #17180](https://github.com/Comfy-Org/ComfyUI/pull/17180) addresses a different cleanup crash.\", \"base\": \"8f04fd6ecf4a548937971e840af2a985529fab76\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"1032-1.json.enc\"}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:1032",
@@ -20655,48 +20639,12 @@
         "value": "{\"at\": 1792386472.0191236, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1792386537.0239942, \"state\": \"waiting\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 14, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1225.0594999790192, \"judge_tokens_spent_24h\": 47198, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 11, \"human_wait\": 2}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7610\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7610\", \"title\": \"DatabaseSessionService stores non-ASCII text as \\\\uXXXX escapes in TEXT JSON columns\", \"first_seen\": 1792371661.309024, \"last_checked\": 1792381776.5600185, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7609\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7609\", \"title\": \"A dynamic node that reuses its interrupt id across loop iterations: the later answer re-runs the earlier, completed run\", \"first_seen\": 1792356658.263334, \"last_checked\": 1792381779.3694227, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792381791.531688, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7600\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7600\", \"title\": \"Dev UI graph: McpToolset renders as one opaque node; tools inside it are not shown and never highlight when called\", \"first_seen\": 1792258430.0774596, \"last_checked\": 1792386319.6284056, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7597\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7597\", \"title\": \"Feature request: OKF (Open Knowledge Format) bundle support for ADK\", \"first_seen\": 1792239748.3288977, \"last_checked\": 1792386321.8609934, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792386324.6594305, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792386327.130119, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
-      },
-      {
         "key": "admission_warning_at",
         "value": "1792386537.025731"
       },
       {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792386537.026842, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 3, \"error\": 1, \"human_wait\": 2, \"skipped\": 17, \"validation_wait\": 8}, \"respond\": {\"blocked\": 1, \"done\": 1, \"validation_wait\": 3}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792386552.028396, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1792874468}]}"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792386589.6630652, \"comfyui\": 1792385305.0600674, \"hermes\": 1791629598.7424486, \"langfuse\": 1792346960.6266007, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792352421.078723, \"langfuse-python\": 1792269667.6802466, \"spec-kit\": 1792284674.9552817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792245562.1506376, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792170781.431687}}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1792386591.5479567"
-      },
-      {
-        "key": "task:1033",
-        "value": "{\"started\": 1792386589.663266, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1033/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": null}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792386594.3443644"
-      },
-      {
-        "key": "discovery_triage_ready:openclaw",
-        "value": "{\"175500\": true, \"175505\": true, \"175540\": true, \"175597\": true, \"175599\": true, \"175665\": true, \"175700\": true, \"175701\": true, \"175734\": true, \"175736\": true, \"175801\": true, \"175950\": true, \"176027\": true, \"176028\": true, \"176062\": true, \"176098\": true, \"176115\": true, \"176138\": true, \"176179\": true, \"176208\": true, \"176220\": true, \"176223\": true, \"176224\": true, \"176229\": true, \"176235\": true, \"176236\": true, \"176237\": true, \"176238\": true, \"176239\": true, \"176242\": true, \"176244\": true, \"176250\": true, \"176268\": true, \"176353\": true, \"176472\": true, \"176649\": true, \"176659\": true, \"176740\": true, \"176743\": true, \"176750\": true, \"176778\": true, \"176872\": true, \"176889\": true, \"176922\": true, \"176944\": true}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1792386595.6836963"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792386597.3784091"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
@@ -20705,6 +20653,58 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1792386597.531038, \"disk_free_bytes\": 89571491840, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15308513280, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1792386600.3625169, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 14, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1288.3947257995605, \"judge_tokens_spent_24h\": 47198, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 11, \"human_wait\": 2}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7610\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7610\", \"title\": \"DatabaseSessionService stores non-ASCII text as \\\\uXXXX escapes in TEXT JSON columns\", \"first_seen\": 1792371661.309024, \"last_checked\": 1792381776.5600185, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7609\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7609\", \"title\": \"A dynamic node that reuses its interrupt id across loop iterations: the later answer re-runs the earlier, completed run\", \"first_seen\": 1792356658.263334, \"last_checked\": 1792381779.3694227, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7574\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7574\", \"title\": \"Cross-SDK divergence: unhandled tool exception aborts run and emits duplicate non-Event SSE error frame\", \"first_seen\": 1792136327.437269, \"last_checked\": 1792381791.531688, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7600\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7600\", \"title\": \"Dev UI graph: McpToolset renders as one opaque node; tools inside it are not shown and never highlight when called\", \"first_seen\": 1792258430.0774596, \"last_checked\": 1792386319.6284056, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7597\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7597\", \"title\": \"Feature request: OKF (Open Knowledge Format) bundle support for ADK\", \"first_seen\": 1792239748.3288977, \"last_checked\": 1792386321.8609934, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792386324.6594305, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792386327.130119, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792386600.3657482, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 3, \"error\": 1, \"human_wait\": 2, \"running\": 1, \"skipped\": 17, \"validation_wait\": 8}, \"respond\": {\"blocked\": 1, \"done\": 1, \"validation_wait\": 3}}}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792386612.3211658, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1792874467}]}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792386642.3931615"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792386644.345472"
+      },
+      {
+        "key": "discovery_triage_ready:openclaw",
+        "value": "{\"175500\": true, \"175505\": true, \"175540\": true, \"175597\": true, \"175599\": true, \"175665\": true, \"175700\": true, \"175701\": true, \"175734\": true, \"175736\": true, \"175801\": true, \"175950\": true, \"176027\": true, \"176028\": true, \"176062\": true, \"176098\": true, \"176115\": true, \"176138\": true, \"176179\": true, \"176208\": true, \"176220\": true, \"176223\": true, \"176224\": true, \"176229\": true, \"176235\": true, \"176236\": true, \"176237\": true, \"176238\": true, \"176239\": true, \"176242\": true, \"176244\": true, \"176250\": true, \"176268\": true, \"176353\": true, \"176472\": true, \"176649\": true, \"176659\": true, \"176740\": true, \"176743\": true, \"176750\": true, \"176778\": true, \"176872\": true, \"176889\": true, \"176922\": true, \"176944\": true}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1792386645.7676952"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792386646.3728237"
+      },
+      {
+        "key": "task:1033",
+        "value": "{\"started\": 1792386589.663266, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1033/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"94af1785528cd648a383ec180ce645c03469ab6f\", \"generation_started\": 1792386647.6093812, \"dispatch_paid_date\": \"2026-10-19\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"openclaw\", \"task\": 1023, \"at\": 1792369411.1294503}, {\"repo\": \"openclaw\", \"task\": 1024, \"at\": 1792370822.5206397}, {\"repo\": \"openclaw\", \"task\": 1025, \"at\": 1792373056.9436939}, {\"repo\": \"comfyui\", \"task\": 1028, \"at\": 1792374831.0568554}, {\"repo\": \"openclaw\", \"task\": 1026, \"at\": 1792375422.1687684}, {\"repo\": \"openclaw\", \"task\": 1029, \"at\": 1792381854.1980753}, {\"repo\": \"openclaw\", \"task\": 1030, \"at\": 1792383377.130622}, {\"repo\": \"openclaw\", \"task\": 1031, \"at\": 1792385195.1600387}, {\"repo\": \"comfyui\", \"task\": 1032, \"at\": 1792385311.9580193}, {\"repo\": \"openclaw\", \"task\": 1033, \"at\": 1792386647.6093807}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-10-19\", \"used\": {\"openclaw\": 10, \"comfyui\": 2}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"1033\": {\"remaining\": 1, \"until\": 1792393847.6096115}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1792368794.3059256, \"group\": \"new_fix\", \"task\": 1022, \"phase\": \"review\"}, {\"at\": 1792369411.1296837, \"group\": \"new_fix\", \"task\": 1023, \"phase\": \"generation\"}, {\"at\": 1792370822.5208719, \"group\": \"new_fix\", \"task\": 1024, \"phase\": \"generation\"}, {\"at\": 1792373056.9439013, \"group\": \"new_fix\", \"task\": 1025, \"phase\": \"generation\"}, {\"at\": 1792374214.5064316, \"group\": \"new_fix\", \"task\": 1025, \"phase\": \"review\"}, {\"at\": 1792374520.4972744, \"group\": \"repair\", \"task\": 1025, \"phase\": \"remediation\"}, {\"at\": 1792374831.0622506, \"group\": \"new_fix\", \"task\": 1028, \"phase\": \"generation\"}, {\"at\": 1792375081.4336543, \"group\": \"repair\", \"task\": 1025, \"phase\": \"rereview\"}, {\"at\": 1792375422.1690075, \"group\": \"new_fix\", \"task\": 1026, \"phase\": \"generation\"}, {\"at\": 1792381854.1983578, \"group\": \"new_fix\", \"task\": 1029, \"phase\": \"generation\"}, {\"at\": 1792383377.1308675, \"group\": \"new_fix\", \"task\": 1030, \"phase\": \"generation\"}, {\"at\": 1792385195.160296, \"group\": \"new_fix\", \"task\": 1031, \"phase\": \"generation\"}, {\"at\": 1792385311.9582775, \"group\": \"new_fix\", \"task\": 1032, \"phase\": \"generation\"}, {\"at\": 1792386647.6096115, \"group\": \"new_fix\", \"task\": 1033, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
@@ -23967,6 +23967,10 @@
       {
         "at": 1792385730.4188044,
         "kind": "judge"
+      },
+      {
+        "at": 1792386647.6100903,
+        "kind": "codex"
       }
     ]
   }
