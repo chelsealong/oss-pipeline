@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792400437.0853834,
+  "saved_at": 1792400442.0374885,
   "tables": {
     "tasks": [
       {
@@ -12243,10 +12243,10 @@
         "repo": "langfuse",
         "number": 18925,
         "note": "",
-        "status": "running",
+        "status": "retry_wait",
         "created": 1792140259.0714116,
-        "updated": 1792400423.8452845,
-        "result": "The bug is still present: the MCP route accepts a client-supplied tool allowlist header. Fixing that authorization boundary requires editing security/authentication paths, which this task explicitly excludes. No source changes were made.",
+        "updated": 1792400442.0283492,
+        "result": "Codex: {'message': 'Selected model is at capacity. Please try a different model.', 'codexErrorInfo': 'serverOverloaded', 'additionalDetails': None, 'misalignment': None}",
         "attempts": 2
       },
       {
@@ -20567,10 +20567,6 @@
         "value": "[]"
       },
       {
-        "key": "pause",
-        "value": "{}"
-      },
-      {
         "key": "coordination:google/adk-python#7597",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7597\", \"title\": \"Feature request: OKF (Open Knowledge Format) bundle support for ADK\", \"first_seen\": 1792239748.3288977, \"last_checked\": 1792399727.2652962, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
@@ -20779,20 +20775,12 @@
         "value": "1792400428.6020186"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792400432.1682615, \"windows\": [{\"name\": \"primary\", \"used_percent\": 23, \"resets_at\": 1792874467}]}"
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1792383377.1308675, \"group\": \"new_fix\", \"task\": 1030, \"phase\": \"generation\"}, {\"at\": 1792385195.160296, \"group\": \"new_fix\", \"task\": 1031, \"phase\": \"generation\"}, {\"at\": 1792385311.9582775, \"group\": \"new_fix\", \"task\": 1032, \"phase\": \"generation\"}, {\"at\": 1792386647.6096115, \"group\": \"new_fix\", \"task\": 1033, \"phase\": \"generation\"}, {\"at\": 1792388710.3103986, \"group\": \"new_fix\", \"task\": 1034, \"phase\": \"generation\"}, {\"at\": 1792390555.2189014, \"group\": \"screening\", \"task\": 1035, \"phase\": \"screening-b0d1dadf5c319d684773\"}, {\"at\": 1792390570.9836607, \"group\": \"new_fix\", \"task\": 1035, \"phase\": \"generation\"}, {\"at\": 1792391092.635095, \"group\": \"new_fix\", \"task\": 1036, \"phase\": \"generation\"}, {\"at\": 1792396629.9534812, \"group\": \"new_fix\", \"task\": 1037, \"phase\": \"generation\"}, {\"at\": 1792400355.092201, \"group\": \"new_fix\", \"task\": 941, \"phase\": \"generation\"}, {\"at\": 1792400434.4333832, \"group\": \"new_fix\", \"task\": 942, \"phase\": \"generation\"}]"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1792400433.3797965"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"942\": {\"remaining\": 1, \"until\": 1792407634.4333832}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1792383377.1308675, \"group\": \"new_fix\", \"task\": 1030, \"phase\": \"generation\"}, {\"at\": 1792385195.160296, \"group\": \"new_fix\", \"task\": 1031, \"phase\": \"generation\"}, {\"at\": 1792385311.9582775, \"group\": \"new_fix\", \"task\": 1032, \"phase\": \"generation\"}, {\"at\": 1792386647.6096115, \"group\": \"new_fix\", \"task\": 1033, \"phase\": \"generation\"}, {\"at\": 1792388710.3103986, \"group\": \"new_fix\", \"task\": 1034, \"phase\": \"generation\"}, {\"at\": 1792390555.2189014, \"group\": \"screening\", \"task\": 1035, \"phase\": \"screening-b0d1dadf5c319d684773\"}, {\"at\": 1792390570.9836607, \"group\": \"new_fix\", \"task\": 1035, \"phase\": \"generation\"}, {\"at\": 1792391092.635095, \"group\": \"new_fix\", \"task\": 1036, \"phase\": \"generation\"}, {\"at\": 1792396629.9534812, \"group\": \"new_fix\", \"task\": 1037, \"phase\": \"generation\"}, {\"at\": 1792400355.092201, \"group\": \"new_fix\", \"task\": 941, \"phase\": \"generation\"}, {\"at\": 1792400434.4333832, \"group\": \"new_fix\", \"task\": 942, \"phase\": \"generation\"}]"
+        "value": "1792400438.3798802"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -20800,11 +20788,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1792400436.098943"
+        "value": "1792400440.2019663"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792400441.7456276, \"windows\": [{\"name\": \"primary\", \"used_percent\": 23, \"resets_at\": 1792874467}]}"
+      },
+      {
+        "key": "usage:942:2:generation",
+        "value": "{\"task\": 942, \"repo\": \"langfuse\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1792400441.748347, \"seconds\": 7.317, \"tokens\": null, \"first_event_ms\": 1792400440009, \"last_event_ms\": 1792400441745, \"model\": \"gpt-6-sol\", \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "pause",
+        "value": "{\"until\": 1792402241.7503932, \"reason\": \"Codex: {'message': 'Selected model is at capacity. Please try a different model.', 'codexErrorInfo': 'serverOverloaded', 'additionalDetails': None, 'misalignment': None}\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:942",
-        "value": "{\"started\": 1792400423.8453426, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/942/attempt-2\", \"attempt\": 2, \"phase\": \"generation\", \"base\": \"42985d194e496db2fe1c8c7773a3b75d6d83d479\", \"generation_started\": 1792140272.944089, \"dispatch_paid_date\": \"2026-10-16\", \"phase_started\": 1792400437.075362, \"last_execution_phase\": \"generation\", \"finished\": 1792140313.6132908}"
+        "value": "{\"started\": 1792400423.8453426, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1792402241.751699, \"folder\": \"jobs/942/attempt-2\", \"attempt\": 2, \"phase\": \"retry_wait\", \"base\": \"42985d194e496db2fe1c8c7773a3b75d6d83d479\", \"generation_started\": 1792140272.944089, \"dispatch_paid_date\": \"2026-10-16\", \"phase_started\": 1792400437.075362, \"last_execution_phase\": \"generation\", \"finished\": 1792400441.7541032}"
       }
     ],
     "calls": [
