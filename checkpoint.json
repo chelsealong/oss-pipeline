@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792374517.433418,
+  "saved_at": 1792374520.5072148,
   "tables": {
     "tasks": [
       {
@@ -20465,14 +20465,6 @@
         "value": "{\"task\": 1025, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792374212.1809478, \"seconds\": 1155.239, \"tokens\": {\"totalTokens\": 18549734, \"inputTokens\": 18531646, \"cachedInputTokens\": 18239616, \"cacheWriteInputTokens\": 0, \"outputTokens\": 18088, \"reasoningOutputTokens\": 5275}, \"first_event_ms\": 1792373062969, \"last_event_ms\": 1792374212134, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1025\": {\"remaining\": 0, \"until\": 1792381414.5064316}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1792368255.2462928, \"group\": \"new_fix\", \"task\": 1021, \"phase\": \"generation\"}, {\"at\": 1792368604.0727253, \"group\": \"new_fix\", \"task\": 1022, \"phase\": \"generation\"}, {\"at\": 1792368794.3059256, \"group\": \"new_fix\", \"task\": 1022, \"phase\": \"review\"}, {\"at\": 1792369411.1296837, \"group\": \"new_fix\", \"task\": 1023, \"phase\": \"generation\"}, {\"at\": 1792370822.5208719, \"group\": \"new_fix\", \"task\": 1024, \"phase\": \"generation\"}, {\"at\": 1792373056.9439013, \"group\": \"new_fix\", \"task\": 1025, \"phase\": \"generation\"}, {\"at\": 1792374214.5064316, \"group\": \"new_fix\", \"task\": 1025, \"phase\": \"review\"}]"
-      },
-      {
         "key": "task:219",
         "value": "{\"recovery_checked_at\": 1792374217.6465652}"
       },
@@ -20513,14 +20505,6 @@
         "value": "{\"at\": 1792374479.9603727, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 3, \"error\": 1, \"human_wait\": 2, \"queued\": 2, \"running\": 1, \"skipped\": 17, \"validation_wait\": 3}, \"respond\": {\"blocked\": 1, \"done\": 1, \"validation_wait\": 3}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1792374505.10604"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1792374513.619963"
-      },
-      {
         "key": "detector_heartbeat",
         "value": "1792374515.9773016"
       },
@@ -20543,6 +20527,22 @@
       {
         "key": "discovery_last_success",
         "value": "1792374517.3124936"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792374518.626538"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792374520.107569"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"1025\": {\"remaining\": 1, \"until\": 1792381720.4972744}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1792368255.2462928, \"group\": \"new_fix\", \"task\": 1021, \"phase\": \"generation\"}, {\"at\": 1792368604.0727253, \"group\": \"new_fix\", \"task\": 1022, \"phase\": \"generation\"}, {\"at\": 1792368794.3059256, \"group\": \"new_fix\", \"task\": 1022, \"phase\": \"review\"}, {\"at\": 1792369411.1296837, \"group\": \"new_fix\", \"task\": 1023, \"phase\": \"generation\"}, {\"at\": 1792370822.5208719, \"group\": \"new_fix\", \"task\": 1024, \"phase\": \"generation\"}, {\"at\": 1792373056.9439013, \"group\": \"new_fix\", \"task\": 1025, \"phase\": \"generation\"}, {\"at\": 1792374214.5064316, \"group\": \"new_fix\", \"task\": 1025, \"phase\": \"review\"}, {\"at\": 1792374520.4972744, \"group\": \"repair\", \"task\": 1025, \"phase\": \"remediation\"}]"
       }
     ],
     "calls": [
@@ -23800,6 +23800,10 @@
       },
       {
         "at": 1792374214.5083199,
+        "kind": "codex"
+      },
+      {
+        "at": 1792374520.4980695,
         "kind": "codex"
       }
     ]
