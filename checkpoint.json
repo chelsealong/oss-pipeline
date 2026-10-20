@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792503046.8484616,
+  "saved_at": 1792503115.5117133,
   "tables": {
     "tasks": [
       {
@@ -21360,70 +21360,6 @@
         "value": "[{\"at\": 1792484562.7452483, \"group\": \"new_fix\", \"task\": 1062, \"phase\": \"generation\"}, {\"at\": 1792484892.9840617, \"group\": \"new_fix\", \"task\": 1062, \"phase\": \"review\"}, {\"at\": 1792485379.4916568, \"group\": \"new_fix\", \"task\": 1061, \"phase\": \"generation\"}, {\"at\": 1792486450.0492442, \"group\": \"new_fix\", \"task\": 1061, \"phase\": \"review\"}, {\"at\": 1792486837.9880722, \"group\": \"repair\", \"task\": 1061, \"phase\": \"remediation\"}, {\"at\": 1792487284.1700945, \"group\": \"repair\", \"task\": 1061, \"phase\": \"rereview\"}, {\"at\": 1792487811.627504, \"group\": \"maintenance\", \"task\": 1065, \"phase\": \"generation\"}, {\"at\": 1792488143.7592492, \"group\": \"maintenance\", \"task\": 1065, \"phase\": \"review\"}, {\"at\": 1792488431.891692, \"group\": \"new_fix\", \"task\": 1063, \"phase\": \"generation\"}, {\"at\": 1792488503.2319613, \"group\": \"new_fix\", \"task\": 1064, \"phase\": \"generation\"}, {\"at\": 1792489331.9467986, \"group\": \"maintenance\", \"task\": 1066, \"phase\": \"generation\"}, {\"at\": 1792490254.8020058, \"group\": \"maintenance\", \"task\": 1066, \"phase\": \"reply-review\"}, {\"at\": 1792502123.4227378, \"group\": \"new_fix\", \"task\": 885, \"phase\": \"generation\"}]"
       },
       {
-        "key": "task:44",
-        "value": "{\"recovery_checked_at\": 1792502153.3318331}"
-      },
-      {
-        "key": "followup:task:44",
-        "value": "{\"status\": \"needs_human\", \"task\": 44, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:45",
-        "value": "{\"recovery_checked_at\": 1792502153.7673}"
-      },
-      {
-        "key": "recovery_audit:45",
-        "value": "{\"at\": 1792502154.6624165, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:54",
-        "value": "{\"recovery_checked_at\": 1792502154.6648405}"
-      },
-      {
-        "key": "recovery_audit:54",
-        "value": "{\"at\": 1792502155.5555637, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:55",
-        "value": "{\"recovery_checked_at\": 1792502155.557158}"
-      },
-      {
-        "key": "followup:task:55",
-        "value": "{\"status\": \"needs_human\", \"task\": 55, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:57",
-        "value": "{\"recovery_checked_at\": 1792502155.9695938}"
-      },
-      {
-        "key": "recovery_audit:57",
-        "value": "{\"at\": 1792502156.9822044, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:58",
-        "value": "{\"recovery_checked_at\": 1792502156.983827}"
-      },
-      {
-        "key": "recovery_audit:58",
-        "value": "{\"at\": 1792502157.877878, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:60",
-        "value": "{\"recovery_checked_at\": 1792502157.87928}"
-      },
-      {
-        "key": "followup:task:60",
-        "value": "{\"status\": \"needs_human\", \"task\": 60, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:61",
-        "value": "{\"recovery_checked_at\": 1792502158.3254437}"
-      },
-      {
-        "key": "recovery_audit:61",
-        "value": "{\"at\": 1792502159.2636936, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1792502173.0544405, \"source\": \"completed task phase\"}"
       },
@@ -21525,27 +21461,87 @@
       },
       {
         "key": "admission_health",
-        "value": "{\"at\": 1792502986.4684253, \"state\": \"waiting\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 11, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 863.0416502952576, \"judge_tokens_spent_24h\": 79074, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"human_wait\": 2, \"validation_wait\": 3}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7625\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7625\", \"title\": \"Model spans include downstream tool time after yielding the final response\", \"first_seen\": 1792500974.0285392, \"last_checked\": 1792501897.7238505, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7618\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7618\", \"title\": \"`Workflow(max_concurrency=1)` fails on resume with \\\"Replay divergence detected: Timed out waiting for sequence key\\\": a replayed node waits for its turn while holding the only concurrency slot\", \"first_seen\": 1792461183.4663424, \"last_checked\": 1792501900.5752702, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7597\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7597\", \"title\": \"Feature request: OKF (Open Knowledge Format) bundle support for ADK\", \"first_seen\": 1792239748.3288977, \"last_checked\": 1792501902.7695093, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792501905.5529087, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792501908.0677369, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
+        "value": "{\"at\": 1792503049.0880253, \"state\": \"waiting\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 11, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 925.6614556312561, \"judge_tokens_spent_24h\": 79074, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"human_wait\": 2, \"validation_wait\": 3}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7625\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7625\", \"title\": \"Model spans include downstream tool time after yielding the final response\", \"first_seen\": 1792500974.0285392, \"last_checked\": 1792501897.7238505, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7618\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7618\", \"title\": \"`Workflow(max_concurrency=1)` fails on resume with \\\"Replay divergence detected: Timed out waiting for sequence key\\\": a replayed node waits for its turn while holding the only concurrency slot\", \"first_seen\": 1792461183.4663424, \"last_checked\": 1792501900.5752702, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7597\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7597\", \"title\": \"Feature request: OKF (Open Knowledge Format) bundle support for ADK\", \"first_seen\": 1792239748.3288977, \"last_checked\": 1792501902.7695093, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7582\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7582\", \"title\": \"samples: add Secret Manager and Parameter Manager integration samples\", \"first_seen\": 1792175063.839597, \"last_checked\": 1792501905.5529087, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7575\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7575\", \"title\": \"Give proxies a supported way to know which request fields are client-controlled (and reject them) in the built-in API server\", \"first_seen\": 1792139961.225308, \"last_checked\": 1792501908.0677369, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1792502986.469737, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 3, \"skipped\": 15, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"human_wait\": 2, \"skipped\": 1}}}"
+        "value": "{\"at\": 1792503049.0894089, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 3, \"skipped\": 15, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"human_wait\": 2, \"skipped\": 1}}}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1792503019.2339249, \"windows\": [{\"name\": \"primary\", \"used_percent\": 7, \"resets_at\": 1793082769}]}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792503034.5426333"
+        "value": "{\"at\": 1792503079.8340073, \"windows\": [{\"name\": \"primary\", \"used_percent\": 7, \"resets_at\": 1793082769}]}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1792503042.7941651"
+        "value": "1792503102.863145"
+      },
+      {
+        "key": "task:44",
+        "value": "{\"recovery_checked_at\": 1792503109.4323962}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792503109.5506332"
+      },
+      {
+        "key": "followup:task:44",
+        "value": "{\"status\": \"needs_human\", \"task\": 44, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:45",
+        "value": "{\"recovery_checked_at\": 1792503109.8973339}"
+      },
+      {
+        "key": "recovery_audit:45",
+        "value": "{\"at\": 1792503110.7725184, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:54",
+        "value": "{\"recovery_checked_at\": 1792503110.7748764}"
+      },
+      {
+        "key": "recovery_audit:54",
+        "value": "{\"at\": 1792503111.6673949, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:55",
+        "value": "{\"recovery_checked_at\": 1792503111.6690345}"
+      },
+      {
+        "key": "followup:task:55",
+        "value": "{\"status\": \"needs_human\", \"task\": 55, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:57",
+        "value": "{\"recovery_checked_at\": 1792503112.1180549}"
+      },
+      {
+        "key": "recovery_audit:57",
+        "value": "{\"at\": 1792503113.1645064, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:58",
+        "value": "{\"recovery_checked_at\": 1792503113.1660838}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1792503043.4571419"
+        "value": "1792503113.45876"
+      },
+      {
+        "key": "recovery_audit:58",
+        "value": "{\"at\": 1792503114.0675821, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:60",
+        "value": "{\"recovery_checked_at\": 1792503114.0692606}"
+      },
+      {
+        "key": "followup:task:60",
+        "value": "{\"status\": \"needs_human\", \"task\": 60, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:61",
+        "value": "{\"recovery_checked_at\": 1792503114.5333095}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -21553,15 +21549,19 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1792503044.8494747"
+        "value": "1792503115.1271994"
+      },
+      {
+        "key": "recovery_audit:61",
+        "value": "{\"at\": 1792503115.4152222, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
-        "value": "{\"at\": 1792503046.8379893, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+        "value": "{\"at\": 1792503115.5043247, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1792503046.8393245, \"disk_free_bytes\": 89496502272, \"memory_bytes\": {\"MemTotal\": 16766410752, \"MemAvailable\": 15377768448, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1792503115.5054543, \"disk_free_bytes\": 89495846912, \"memory_bytes\": {\"MemTotal\": 16766410752, \"MemAvailable\": 15337336832, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       }
     ],
     "calls": [
