@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792549262.909216,
+  "saved_at": 1792549267.3143315,
   "tables": {
     "tasks": [
       {
@@ -14050,10 +14050,10 @@
         "repo": "openclaw/openclaw",
         "number": 178932,
         "note": "{\"authors\": \"ci, clawsweeper\", \"events\": [\"IC_kwDOQb6kR88AAAABd-Fieg@2026-10-21T02:06:55Z\", \"standing:needs proof:6c2a6f48770b\"], \"screening_events\": [], \"is_issue\": false, \"head\": \"6c2a6f48770bdbee13d28bf178609a4cd4de0e8a\"}",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1792548813.2268,
-        "updated": 1792548815.7993038,
-        "result": "",
+        "updated": 1792549267.2985287,
+        "result": "VALIDATION_ENVIRONMENT: ClawSweeper requires a live nested-owner Gateway maintenance trace and proof that unrelated or revoked owners cannot reach the final deletion and unsubscribe effects. This runner has no systemd user bus, so OpenClaw’s runtime publication check cannot verify that an isolated Gateway is offline. The reviewed patch remains unchanged. Reply: https://github.com/openclaw/openclaw/pull/178932#issuecomment-6306403840",
         "attempts": 1
       }
     ],
@@ -21879,10 +21879,6 @@
         "value": "{\"task\": 1081, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792549209.9955053, \"seconds\": 328.593, \"tokens\": {\"totalTokens\": 3729986, \"inputTokens\": 3721778, \"cachedInputTokens\": 3526656, \"cacheWriteInputTokens\": 0, \"outputTokens\": 8208, \"reasoningOutputTokens\": 3691}, \"first_event_ms\": 1792548886527, \"last_event_ms\": 1792549209985, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1081\": {\"remaining\": 0, \"until\": 1792556410.7088761}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792540612.0557742, \"group\": \"new_fix\", \"task\": 900, \"phase\": \"generation\"}, {\"at\": 1792541258.0332053, \"group\": \"new_fix\", \"task\": 1074, \"phase\": \"generation\"}, {\"at\": 1792542276.5889826, \"group\": \"new_fix\", \"task\": 1075, \"phase\": \"generation\"}, {\"at\": 1792545815.3668017, \"group\": \"new_fix\", \"task\": 1076, \"phase\": \"generation\"}, {\"at\": 1792545934.666005, \"group\": \"new_fix\", \"task\": 1077, \"phase\": \"generation\"}, {\"at\": 1792546595.2422252, \"group\": \"new_fix\", \"task\": 1077, \"phase\": \"review\"}, {\"at\": 1792547276.6561642, \"group\": \"new_fix\", \"task\": 1078, \"phase\": \"generation\"}, {\"at\": 1792547420.3469357, \"group\": \"new_fix\", \"task\": 1079, \"phase\": \"generation\"}, {\"at\": 1792547637.9084022, \"group\": \"new_fix\", \"task\": 1080, \"phase\": \"generation\"}, {\"at\": 1792548881.4038134, \"group\": \"maintenance\", \"task\": 1081, \"phase\": \"generation\"}, {\"at\": 1792549210.7088761, \"group\": \"maintenance\", \"task\": 1081, \"phase\": \"reply-review\"}]"
       },
@@ -21903,10 +21899,6 @@
         "value": "{\"at\": 1792549248.3474996, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 3, \"skipped\": 14, \"validation_wait\": 5}, \"respond\": {\"done\": 1, \"human_wait\": 1, \"running\": 1, \"skipped\": 1}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1792549249.8978221"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1792549256.3292766, \"windows\": [{\"name\": \"primary\", \"used_percent\": 11, \"resets_at\": 1793082769}]}"
       },
@@ -21923,12 +21915,32 @@
         "value": "[{\"repo\": \"Comfy-Org/ComfyUI\", \"number\": 17218, \"at\": 1792488411.7975144, \"key\": \"pr_reply:9a0a7b5effa3822fde2d085d\"}, {\"repo\": \"openclaw/openclaw\", \"number\": 178932, \"at\": 1792549258.9030948, \"key\": \"pr_reply:ccbe311cb3208efbe4a64775\"}]"
       },
       {
+        "key": "pr_reply:ccbe311cb3208efbe4a64775",
+        "value": "{\"status\": \"sent\", \"task\": 1081, \"at\": 1792549262.899759, \"url\": \"https://github.com/openclaw/openclaw/pull/178932#issuecomment-6306403840\"}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792549264.8993073"
+      },
+      {
         "key": "watch_heartbeat",
-        "value": "1792549260.14692"
+        "value": "1792549265.152117"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1792549260.2079651"
+        "value": "1792549265.2080455"
+      },
+      {
+        "key": "followup:task:1081",
+        "value": "{\"status\": \"needs_human\", \"task\": 1081, \"repo\": \"openclaw/openclaw\", \"number\": 178932, \"reason\": \"VALIDATION_ENVIRONMENT: ClawSweeper requires a live nested-owner Gateway maintenance trace and proof that unrelated or revoked owners cannot reach the final deletion and unsubscribe effects. This runner has no systemd user bus, so OpenClaw\\u2019s runtime publication check cannot verify that an isolated Gateway is offline. The reviewed patch remains unchanged. Reply: https://github.com/openclaw/openclaw/pull/178932#issuecomment-6306403840\", \"base\": \"6c2a6f48770bdbee13d28bf178609a4cd4de0e8a\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"1081-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1081",
+        "value": "{\"started\": 1792548815.7993336, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1081/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"6c2a6f48770bdbee13d28bf178609a4cd4de0e8a\", \"remote_base\": \"6c2a6f48770bdbee13d28bf178609a4cd4de0e8a\", \"base_update\": {\"original_head\": \"6c2a6f48770bdbee13d28bf178609a4cd4de0e8a\", \"base\": \"6c2a6f48770bdbee13d28bf178609a4cd4de0e8a\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1792549213.785681, \"replied_at\": 1792549262.9010417, \"reply_url\": \"https://github.com/openclaw/openclaw/pull/178932#issuecomment-6306403840\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1792549266.562451}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -21936,15 +21948,7 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1792549261.8816063"
-      },
-      {
-        "key": "pr_reply:ccbe311cb3208efbe4a64775",
-        "value": "{\"status\": \"sent\", \"task\": 1081, \"at\": 1792549262.899759, \"url\": \"https://github.com/openclaw/openclaw/pull/178932#issuecomment-6306403840\"}"
-      },
-      {
-        "key": "task:1081",
-        "value": "{\"started\": 1792548815.7993336, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1081/attempt-1\", \"attempt\": 1, \"phase\": \"reply-review\", \"base\": \"6c2a6f48770bdbee13d28bf178609a4cd4de0e8a\", \"remote_base\": \"6c2a6f48770bdbee13d28bf178609a4cd4de0e8a\", \"base_update\": {\"original_head\": \"6c2a6f48770bdbee13d28bf178609a4cd4de0e8a\", \"base\": \"6c2a6f48770bdbee13d28bf178609a4cd4de0e8a\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1792549213.785681, \"replied_at\": 1792549262.9010417, \"reply_url\": \"https://github.com/openclaw/openclaw/pull/178932#issuecomment-6306403840\"}"
+        "value": "1792549266.955895"
       }
     ],
     "calls": [
