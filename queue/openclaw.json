@@ -3,7 +3,7 @@
   "upstream": "openclaw/openclaw",
   "implements_in": "openclaw/openclaw",
   "needs_assignment": false,
-  "scanned_at": "2026-10-21T16:06:03+00:00",
+  "scanned_at": "2026-10-21T16:31:50+00:00",
   "partial": false,
   "errors": [],
   "candidates": [
@@ -12,7 +12,7 @@
       "title": "[Feature]: Buzz channel \u2014 support reactions natively, starting with ack reactions (messages.ackReaction)",
       "url": "https://github.com/openclaw/openclaw/issues/179628",
       "created_at": "2026-10-21T15:22:56Z",
-      "age_hours": 0.7,
+      "age_hours": 1.1,
       "reason": "clear",
       "labels": [
         "clawsweeper:intake:feature"
@@ -25,7 +25,7 @@
       "title": "[Bug]: Persisted-but-unadmitted user turn is dropped, not replayed, after a transcript-change admission race",
       "url": "https://github.com/openclaw/openclaw/issues/179562",
       "created_at": "2026-10-21T14:29:14Z",
-      "age_hours": 1.6,
+      "age_hours": 2.0,
       "reason": "clear",
       "labels": [
         "clawsweeper:intake:bug",
@@ -38,19 +38,51 @@
   ],
   "rejected": [
     {
+      "number": 179698,
+      "title": "[Bug]: Since 2026.10.1, isolated cron rollovers are pinned by usageFamilySessionIds, so maxDiskBytes can never reclaim cron history",
+      "url": "https://github.com/openclaw/openclaw/issues/179698",
+      "created_at": "2026-10-21T16:27:14Z",
+      "age_hours": 0.1,
+      "reason": "only 5 min old; waiting 40 min for the repo's own triage"
+    },
+    {
+      "number": 179685,
+      "title": "[Feature]: IMAP durable processing handoff and inspectable per-message outcomes",
+      "url": "https://github.com/openclaw/openclaw/issues/179685",
+      "created_at": "2026-10-21T16:16:25Z",
+      "age_hours": 0.3,
+      "reason": "only 15 min old; waiting 40 min for the repo's own triage"
+    },
+    {
+      "number": 179678,
+      "title": "[Bug]: PixVerse and Kie video status polls skip the private-network policy without a proxy override",
+      "url": "https://github.com/openclaw/openclaw/issues/179678",
+      "created_at": "2026-10-21T16:11:05Z",
+      "age_hours": 0.3,
+      "reason": "only 21 min old; waiting 40 min for the repo's own triage"
+    },
+    {
+      "number": 179676,
+      "title": "[Bug]: Control UI pasted text (>1,000 chars) only reaches the model on the turn it is sent; later turns lose it",
+      "url": "https://github.com/openclaw/openclaw/issues/179676",
+      "created_at": "2026-10-21T16:08:36Z",
+      "age_hours": 0.4,
+      "reason": "only 23 min old; waiting 40 min for the repo's own triage"
+    },
+    {
       "number": 179665,
       "title": "[Bug]: web_search never uses Brave: a search-only provider plugin is never loaded in the agent runtime",
       "url": "https://github.com/openclaw/openclaw/issues/179665",
       "created_at": "2026-10-21T15:55:01Z",
-      "age_hours": 0.2,
-      "reason": "only 11 min old; waiting 40 min for the repo's own triage"
+      "age_hours": 0.6,
+      "reason": "only 37 min old; waiting 40 min for the repo's own triage"
     },
     {
       "number": 179601,
       "title": "[Bug]: Ollama, LM Studio, oMLX, llama.cpp and Copilot Proxy setup appends a typed base URL to the prefilled default",
       "url": "https://github.com/openclaw/openclaw/issues/179601",
       "created_at": "2026-10-21T15:05:22Z",
-      "age_hours": 1.0,
+      "age_hours": 1.4,
       "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -58,7 +90,7 @@
       "title": "[Bug]: npm git-source pack leaks its temp directory when the step runner throws",
       "url": "https://github.com/openclaw/openclaw/issues/179563",
       "created_at": "2026-10-21T14:29:36Z",
-      "age_hours": 1.6,
+      "age_hours": 2.0,
       "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -66,7 +98,7 @@
       "title": "[Bug]: Claude CLI skills plugin leaks its temp directory when mkdir or the manifest write fails",
       "url": "https://github.com/openclaw/openclaw/issues/179557",
       "created_at": "2026-10-21T14:20:14Z",
-      "age_hours": 1.8,
+      "age_hours": 2.2,
       "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -74,23 +106,15 @@
       "title": "[Bug]: A failed mcp.json write leaks a temp directory containing the resolved header credential",
       "url": "https://github.com/openclaw/openclaw/issues/179555",
       "created_at": "2026-10-21T14:18:20Z",
-      "age_hours": 1.8,
+      "age_hours": 2.2,
       "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:linked-pr-open', 'clawsweeper:needs-security-review', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 179529,
-      "title": "[Feature]: Telegram per-group/topic transcript echo override without disabling audio understanding",
-      "url": "https://github.com/openclaw/openclaw/issues/179529",
-      "created_at": "2026-10-21T13:47:03Z",
-      "age_hours": 2.3,
-      "reason": "issue author dankarization offers to implement"
     },
     {
       "number": 179441,
       "title": "[Bug]: Matrix tags every inbound message as CommandSource \"text\", so authorized senders' plain room messages become required command turns (NO_REPLY \u2192 error not",
       "url": "https://github.com/openclaw/openclaw/issues/179441",
       "created_at": "2026-10-21T11:53:43Z",
-      "age_hours": 4.2,
+      "age_hours": 4.6,
       "reason": "already has PR(s): ['closing-ref PR#179506(OPEN)', 'xref PR#179506(OPEN)']"
     },
     {
@@ -98,7 +122,7 @@
       "title": "[Bug]: `models list --refresh` without a Gateway ignores SecretRef credentials that `infer model run --local` resolves",
       "url": "https://github.com/openclaw/openclaw/issues/179411",
       "created_at": "2026-10-21T11:10:11Z",
-      "age_hours": 4.9,
+      "age_hours": 5.4,
       "reason": "already has PR(s): ['closing-ref PR#179446(OPEN)', 'xref PR#179446(OPEN)']"
     },
     {
@@ -106,7 +130,7 @@
       "title": "Discord voice: agent-proxy consults fail with \"Discord runtime not initialized\" (realtime callbacks run in the openai plugin instance)",
       "url": "https://github.com/openclaw/openclaw/issues/179398",
       "created_at": "2026-10-21T10:53:45Z",
-      "age_hours": 5.2,
+      "age_hours": 5.6,
       "reason": "already has PR(s): ['closing-ref PR#179462(OPEN)', 'xref PR#179462(OPEN)']"
     },
     {
@@ -114,32 +138,8 @@
       "title": "[Bug]: Never-executed unknown tool calls falsely veto configured model fallback after provider failure",
       "url": "https://github.com/openclaw/openclaw/issues/179396",
       "created_at": "2026-10-21T10:51:53Z",
-      "age_hours": 5.2,
+      "age_hours": 5.7,
       "reason": "already has PR(s): ['closing-ref PR#179450(OPEN)', 'xref PR#179450(OPEN)']"
-    },
-    {
-      "number": 179344,
-      "title": "Docs: how an external channel plugin declares its SecretRef targets (secret-contract-api) is undocumented",
-      "url": "https://github.com/openclaw/openclaw/issues/179344",
-      "created_at": "2026-10-21T09:48:22Z",
-      "age_hours": 6.3,
-      "reason": "already has PR(s): ['closing-ref PR#179420(OPEN)', 'xref PR#179420(OPEN)']"
-    },
-    {
-      "number": 179290,
-      "title": "Model fallback tries every model for \"Session capability metadata changed\", a pre-provider coordination error",
-      "url": "https://github.com/openclaw/openclaw/issues/179290",
-      "created_at": "2026-10-21T08:51:47Z",
-      "age_hours": 7.2,
-      "reason": "already has PR(s): ['closing-ref PR#179312(OPEN)', 'xref PR#179312(OPEN)']"
-    },
-    {
-      "number": 178997,
-      "title": "[Bug]: crabbox run timeout accepts non-decimal numeric forms",
-      "url": "https://github.com/openclaw/openclaw/issues/178997",
-      "created_at": "2026-10-21T03:50:53Z",
-      "age_hours": 12.3,
-      "reason": "excluded label ['clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
     }
   ]
 }
