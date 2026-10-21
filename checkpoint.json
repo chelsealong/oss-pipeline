@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792575538.911744,
+  "saved_at": 1792575541.6920936,
   "tables": {
     "tasks": [
       {
@@ -14154,10 +14154,10 @@
         "repo": "openclaw/openclaw",
         "number": 179312,
         "note": "{\"authors\": \"ci\", \"events\": [\"check:e95b09852b3c:checks-node-changed-compact-large-11\"], \"screening_events\": [], \"is_issue\": false, \"head\": \"e95b09852b3c510146631ee1d055f3d28b2980d6\"}",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1792574931.655953,
-        "updated": 1792574931.953722,
-        "result": "",
+        "updated": 1792575541.67219,
+        "result": "VALIDATION_ENVIRONMENT: ClawSweeper requires an after-fix trace from a real Gateway showing that capability invalidation stops model fallback. This checkout has no configured Gateway or model credentials, so that proof remains unavailable. Reply: https://github.com/openclaw/openclaw/pull/179312#issuecomment-6312847646",
         "attempts": 1
       }
     ],
@@ -22095,10 +22095,6 @@
         "value": "{\"task\": 1089, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792575403.0274003, \"seconds\": 404.468, \"tokens\": {\"totalTokens\": 5146631, \"inputTokens\": 5137182, \"cachedInputTokens\": 5016960, \"cacheWriteInputTokens\": 0, \"outputTokens\": 9449, \"reasoningOutputTokens\": 3644}, \"first_event_ms\": 1792575003705, \"last_event_ms\": 1792575403018, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1089\": {\"remaining\": 0, \"until\": 1792582603.136267}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792565264.219237, \"group\": \"new_fix\", \"task\": 1083, \"phase\": \"generation\"}, {\"at\": 1792565942.6617053, \"group\": \"new_fix\", \"task\": 1085, \"phase\": \"generation\"}, {\"at\": 1792570351.7970304, \"group\": \"new_fix\", \"task\": 1086, \"phase\": \"generation\"}, {\"at\": 1792571919.616766, \"group\": \"new_fix\", \"task\": 1087, \"phase\": \"generation\"}, {\"at\": 1792573451.6995537, \"group\": \"new_fix\", \"task\": 1088, \"phase\": \"generation\"}, {\"at\": 1792574010.5578494, \"group\": \"new_fix\", \"task\": 1088, \"phase\": \"review\"}, {\"at\": 1792574998.5598488, \"group\": \"maintenance\", \"task\": 1089, \"phase\": \"generation\"}, {\"at\": 1792575403.136267, \"group\": \"maintenance\", \"task\": 1089, \"phase\": \"reply-review\"}]"
       },
@@ -22109,10 +22105,6 @@
       {
         "key": "usage:1089:1:reply-review",
         "value": "{\"task\": 1089, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"reply-review\", \"at\": 1792575524.4943473, \"seconds\": 121.359, \"tokens\": {\"totalTokens\": 716048, \"inputTokens\": 711980, \"cachedInputTokens\": 649600, \"cacheWriteInputTokens\": 0, \"outputTokens\": 4068, \"reasoningOutputTokens\": 1073}, \"first_event_ms\": 1792575408004, \"last_event_ms\": 1792575524485, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792575525.0477562"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
@@ -22139,12 +22131,20 @@
         "value": "{\"status\": \"sent\", \"task\": 1089, \"at\": 1792575532.8811452}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1792575534.6011975"
-      },
-      {
         "key": "pr_reply_ledger",
         "value": "[{\"repo\": \"openclaw/openclaw\", \"number\": 178932, \"at\": 1792549258.9030948, \"key\": \"pr_reply:ccbe311cb3208efbe4a64775\"}, {\"repo\": \"openclaw/openclaw\", \"number\": 179312, \"at\": 1792575535.3888865, \"key\": \"pr_reply:ae4a9a1b174a9e736fc0dfb3\"}]"
+      },
+      {
+        "key": "pr_reply:ae4a9a1b174a9e736fc0dfb3",
+        "value": "{\"status\": \"sent\", \"task\": 1089, \"at\": 1792575538.9032958, \"url\": \"https://github.com/openclaw/openclaw/pull/179312#issuecomment-6312847646\"}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792575539.6012766"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792575540.0494113"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -22152,19 +22152,23 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1792575536.4517348"
+        "value": "1792575540.9950633"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1792575536.5863829"
+        "key": "followup:task:1089",
+        "value": "{\"status\": \"needs_human\", \"task\": 1089, \"repo\": \"openclaw/openclaw\", \"number\": 179312, \"reason\": \"VALIDATION_ENVIRONMENT: ClawSweeper requires an after-fix trace from a real Gateway showing that capability invalidation stops model fallback. This checkout has no configured Gateway or model credentials, so that proof remains unavailable. Reply: https://github.com/openclaw/openclaw/pull/179312#issuecomment-6312847646\", \"base\": \"e95b09852b3c510146631ee1d055f3d28b2980d6\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"1089-1.json.enc\"}"
       },
       {
-        "key": "pr_reply:ae4a9a1b174a9e736fc0dfb3",
-        "value": "{\"status\": \"sent\", \"task\": 1089, \"at\": 1792575538.9032958, \"url\": \"https://github.com/openclaw/openclaw/pull/179312#issuecomment-6312847646\"}"
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:1089",
-        "value": "{\"started\": 1792574931.9537532, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1089/attempt-1\", \"attempt\": 1, \"phase\": \"reply-review\", \"base\": \"e95b09852b3c510146631ee1d055f3d28b2980d6\", \"remote_base\": \"e95b09852b3c510146631ee1d055f3d28b2980d6\", \"base_update\": {\"original_head\": \"e95b09852b3c510146631ee1d055f3d28b2980d6\", \"base\": \"e95b09852b3c510146631ee1d055f3d28b2980d6\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1792575405.6409242, \"replied_at\": 1792575538.904705, \"reply_url\": \"https://github.com/openclaw/openclaw/pull/179312#issuecomment-6312847646\"}"
+        "value": "{\"started\": 1792574931.9537532, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1089/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"e95b09852b3c510146631ee1d055f3d28b2980d6\", \"remote_base\": \"e95b09852b3c510146631ee1d055f3d28b2980d6\", \"base_update\": {\"original_head\": \"e95b09852b3c510146631ee1d055f3d28b2980d6\", \"base\": \"e95b09852b3c510146631ee1d055f3d28b2980d6\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1792575405.6409242, \"replied_at\": 1792575538.904705, \"reply_url\": \"https://github.com/openclaw/openclaw/pull/179312#issuecomment-6312847646\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1792575541.5359027}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792575541.5931735"
       }
     ],
     "calls": [
