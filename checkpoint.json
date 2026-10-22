@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792654908.574885,
+  "saved_at": 1792654915.8908272,
   "tables": {
     "tasks": [
       {
@@ -14414,10 +14414,10 @@
         "repo": "openclaw",
         "number": 180350,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1792650621.8671768,
-        "updated": 1792650627.596434,
-        "result": "",
+        "updated": 1792654915.8785353,
+        "result": "review: The remediation keeps changed field names ahead of plugin IDs, but the saved failure fact still truncates the message to 200 characters. With three valid 48-character plugin IDs, `current=` disappears entirely, so the patch does not reliably provide the expected/current diagnostics requested in #180350. The proposed PR body also omits the required User Impact and Why This Change Was Made sections in CONTRIBUTING.md. I independently ran both touched suites (29 infra and 14 Doctor tests passed), targeted typechecks, lint, format, and `git diff --check`; passing tests do not cover this remaining truncation case.",
         "attempts": 1
       },
       {
@@ -22680,32 +22680,36 @@
         "value": "{\"task\": 1109, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1792653499.6469476, \"seconds\": 668.966, \"tokens\": {\"totalTokens\": 6961123, \"inputTokens\": 6952222, \"cachedInputTokens\": 6847872, \"cacheWriteInputTokens\": 0, \"outputTokens\": 8901, \"reasoningOutputTokens\": 2251}, \"first_event_ms\": 1792652836469, \"last_event_ms\": 1792653499634, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792654177.869378, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1109:1:remediation",
         "value": "{\"task\": 1109, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"remediation\", \"at\": 1792654177.8805156, \"seconds\": 675.051, \"tokens\": {\"totalTokens\": 4459482, \"inputTokens\": 4446944, \"cachedInputTokens\": 4354944, \"cacheWriteInputTokens\": 0, \"outputTokens\": 12538, \"reasoningOutputTokens\": 5842}, \"first_event_ms\": 1792653508227, \"last_event_ms\": 1792654177866, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"1109\": {\"remaining\": 0, \"until\": 1792661378.2136014}}"
       },
       {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792637752.028481, \"group\": \"new_fix\", \"task\": 1104, \"phase\": \"generation\"}, {\"at\": 1792638877.6709948, \"group\": \"new_fix\", \"task\": 1105, \"phase\": \"generation\"}, {\"at\": 1792644941.6131847, \"group\": \"new_fix\", \"task\": 1106, \"phase\": \"generation\"}, {\"at\": 1792645162.735228, \"group\": \"new_fix\", \"task\": 1107, \"phase\": \"generation\"}, {\"at\": 1792648593.2479649, \"group\": \"new_fix\", \"task\": 1034, \"phase\": \"generation\"}, {\"at\": 1792648830.7065115, \"group\": \"new_fix\", \"task\": 1108, \"phase\": \"generation\"}, {\"at\": 1792650685.3350255, \"group\": \"new_fix\", \"task\": 1109, \"phase\": \"generation\"}, {\"at\": 1792652830.6834853, \"group\": \"new_fix\", \"task\": 1109, \"phase\": \"review\"}, {\"at\": 1792653502.832081, \"group\": \"repair\", \"task\": 1109, \"phase\": \"remediation\"}, {\"at\": 1792654178.2136014, \"group\": \"repair\", \"task\": 1109, \"phase\": \"rereview\"}]"
       },
       {
-        "key": "task:1109",
-        "value": "{\"started\": 1792650627.5964775, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1109/attempt-1\", \"attempt\": 1, \"phase\": \"rereview\", \"base\": \"e8cde7518c558f1b4e44cb8139a149289b9719ad\", \"generation_started\": 1792650685.334752, \"dispatch_paid_date\": \"2026-10-22\", \"phase_started\": 1792654181.0568805}"
-      },
-      {
         "key": "worker_heartbeat",
-        "value": "1792654895.2758036"
+        "value": "1792654910.2779062"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1792654901.6163993, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1793082769}]}"
+        "value": "{\"at\": 1792654915.3276935, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1793082769}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792654915.3319836, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1109:1:rereview",
+        "value": "{\"task\": 1109, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"rereview\", \"at\": 1792654915.3404377, \"seconds\": 737.129, \"tokens\": {\"totalTokens\": 1946706, \"inputTokens\": 1940869, \"cachedInputTokens\": 1863808, \"cacheWriteInputTokens\": 0, \"outputTokens\": 5837, \"reasoningOutputTokens\": 2282}, \"first_event_ms\": 1792654186817, \"last_event_ms\": 1792654915330, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1109",
+        "value": "{\"started\": 1792650627.5964775, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1109/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"e8cde7518c558f1b4e44cb8139a149289b9719ad\", \"generation_started\": 1792650685.334752, \"dispatch_paid_date\": \"2026-10-22\", \"phase_started\": 1792654181.0568805, \"patch_digest\": \"cede276ca1b980f49b34f2bad5eb78c8b93ee54cb7132126dd07004b52526852\", \"last_execution_phase\": \"rereview\", \"finished\": 1792654915.6637726}"
       }
     ],
     "calls": [
