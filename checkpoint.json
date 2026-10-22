@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792681135.1458406,
+  "saved_at": 1792681189.8166037,
   "tables": {
     "tasks": [
       {
@@ -14648,10 +14648,10 @@
         "repo": "openclaw/openclaw",
         "number": 180692,
         "note": "{\"authors\": \"ci, clawsweeper\", \"events\": [\"IC_kwDOQb6kR88AAAABehubVg@2026-10-22T14:45:23Z\", \"check:06e3861670ef:check-test-types\", \"standing:needs proof:06e3861670ef\"], \"screening_events\": [], \"is_issue\": false, \"head\": \"06e3861670ef8de62f39022f0f78df0337c06ed4\"}",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1792680930.9779322,
-        "updated": 1792680936.1091485,
-        "result": "",
+        "updated": 1792681189.8068476,
+        "result": "VALIDATION_ENVIRONMENT: The requested shipped Gateway or CLI Dreaming trace cannot be produced in this isolated checkout: it has no installed dependencies, configured local model, or provider credentials. The existing regression remains test-harness proof, so the review’s proof requirement is unresolved.",
         "attempts": 1
       }
     ],
@@ -22865,14 +22865,6 @@
         "value": "{\"date\": \"2026-10-22\", \"used\": {\"comfyui\": 6, \"langfuse\": 4, \"openclaw\": 9, \"spec-kit\": 1, \"llama-index\": 1, \"autogpt\": 2}}"
       },
       {
-        "key": "task:1122",
-        "value": "{\"started\": 1792680202.977956, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792680211.7307723, \"recovery_checked_at\": 1792680262.075823}"
-      },
-      {
-        "key": "task:1123",
-        "value": "{\"started\": 1792680224.5525665, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792680232.0062606, \"recovery_checked_at\": 1792680266.4667358}"
-      },
-      {
         "key": "usage:1126:1:generation",
         "value": "{\"task\": 1126, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792680312.1677632, \"seconds\": 53.459, \"tokens\": {\"totalTokens\": 226752, \"inputTokens\": 224747, \"cachedInputTokens\": 164352, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2005, \"reasoningOutputTokens\": 962}, \"first_event_ms\": 1792680264753, \"last_event_ms\": 1792680312162, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -23061,24 +23053,8 @@
         "value": "{\"at\": 1792681126.1257854, \"tasks\": {\"fix\": {\"blocked\": 3, \"capacity_wait\": 3, \"done\": 2, \"human_wait\": 2, \"skipped\": 17, \"validation_wait\": 4}, \"respond\": {\"done\": 1, \"running\": 1}}}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792681131.7018576, \"windows\": [{\"name\": \"primary\", \"used_percent\": 28, \"resets_at\": 1793082769}]}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792681131.7039478, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1127:1:generation",
         "value": "{\"task\": 1127, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792681131.7099657, \"seconds\": 121.638, \"tokens\": {\"totalTokens\": 1091147, \"inputTokens\": 1086733, \"cachedInputTokens\": 996992, \"cacheWriteInputTokens\": 0, \"outputTokens\": 4414, \"reasoningOutputTokens\": 2002}, \"first_event_ms\": 1792681016091, \"last_event_ms\": 1792681131701, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1792681131.8951595"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"1127\": {\"remaining\": 0, \"until\": 1792688332.0980504}}"
       },
       {
         "key": "codex_allocations",
@@ -23086,11 +23062,7 @@
       },
       {
         "key": "worker_heartbeat",
-        "value": "1792681132.8107727"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792681133.1425698"
+        "value": "1792681177.817"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -23098,11 +23070,51 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1792681135.0401216"
+        "value": "1792681185.052117"
+      },
+      {
+        "key": "task:1122",
+        "value": "{\"started\": 1792680202.977956, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792680211.7307723, \"recovery_checked_at\": 1792681186.7518413}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792681186.9751585"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792681188.1439345"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792681188.6081998, \"windows\": [{\"name\": \"primary\", \"used_percent\": 28, \"resets_at\": 1793082769}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792681188.610062, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1127:1:reply-review",
+        "value": "{\"task\": 1127, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"reply-review\", \"at\": 1792681188.61477, \"seconds\": 56.519, \"tokens\": {\"totalTokens\": 187769, \"inputTokens\": 186046, \"cachedInputTokens\": 144512, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1723, \"reasoningOutputTokens\": 559}, \"first_event_ms\": 1792681139309, \"last_event_ms\": 1792681188608, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "task:1123",
+        "value": "{\"started\": 1792680224.5525665, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792680232.0062606, \"recovery_checked_at\": 1792681188.7311304}"
+      },
+      {
+        "key": "followup:reply:1127",
+        "value": "{\"status\": \"needs_human\", \"reason\": \"The CI failure and upstream Twitch repair are supported by the job evidence, but the reply does not provide the requested Gateway or CLI Dreaming proof. It is mainly a status update, and the proposed PR body is empty despite contributor policy requiring evidence updates there.\"}"
+      },
+      {
+        "key": "followup:task:1127",
+        "value": "{\"status\": \"needs_human\", \"task\": 1127, \"repo\": \"openclaw/openclaw\", \"number\": 180692, \"reason\": \"VALIDATION_ENVIRONMENT: The requested shipped Gateway or CLI Dreaming trace cannot be produced in this isolated checkout: it has no installed dependencies, configured local model, or provider credentials. The existing regression remains test-harness proof, so the review\\u2019s proof requirement is unresolved.\", \"base\": \"06e3861670ef8de62f39022f0f78df0337c06ed4\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"1127-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:1127",
-        "value": "{\"started\": 1792680936.109187, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1127/attempt-1\", \"attempt\": 1, \"phase\": \"reply-review\", \"base\": \"06e3861670ef8de62f39022f0f78df0337c06ed4\", \"remote_base\": \"06e3861670ef8de62f39022f0f78df0337c06ed4\", \"base_update\": {\"original_head\": \"06e3861670ef8de62f39022f0f78df0337c06ed4\", \"base\": \"06e3861670ef8de62f39022f0f78df0337c06ed4\", \"merged\": false, \"mergeable\": null, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1792681135.135715}"
+        "value": "{\"started\": 1792680936.109187, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1127/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"06e3861670ef8de62f39022f0f78df0337c06ed4\", \"remote_base\": \"06e3861670ef8de62f39022f0f78df0337c06ed4\", \"base_update\": {\"original_head\": \"06e3861670ef8de62f39022f0f78df0337c06ed4\", \"base\": \"06e3861670ef8de62f39022f0f78df0337c06ed4\", \"merged\": false, \"mergeable\": null, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1792681135.135715, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1792681189.413253}"
       }
     ],
     "calls": [
