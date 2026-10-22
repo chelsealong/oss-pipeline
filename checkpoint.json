@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792678053.2157848,
+  "saved_at": 1792678112.9839609,
   "tables": {
     "tasks": [
       {
@@ -22777,10 +22777,6 @@
         "value": "{\"task\": 1120, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-965934c1bc63df7dbb16\", \"at\": 1792676245.964655, \"seconds\": 10.885, \"tokens\": {\"totalTokens\": 21408, \"inputTokens\": 21347, \"cachedInputTokens\": 0, \"cacheWriteInputTokens\": 0, \"outputTokens\": 61, \"reasoningOutputTokens\": 33}, \"first_event_ms\": 1792676242291, \"last_event_ms\": 1792676245961, \"model\": null, \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792676274.996431, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1120:1:generation",
         "value": "{\"task\": 1120, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792676274.9990437, \"seconds\": 24.527, \"tokens\": {\"totalTokens\": 140607, \"inputTokens\": 139803, \"cachedInputTokens\": 110592, \"cacheWriteInputTokens\": 0, \"outputTokens\": 804, \"reasoningOutputTokens\": 235}, \"first_event_ms\": 1792676256007, \"last_event_ms\": 1792676274994, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -22799,14 +22795,6 @@
       {
         "key": "dispatch_budget",
         "value": "{\"date\": \"2026-10-22\", \"used\": {\"comfyui\": 6, \"langfuse\": 2, \"openclaw\": 9, \"spec-kit\": 1, \"llama-index\": 1, \"autogpt\": 2}}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"1121\": {\"remaining\": 1, \"until\": 1792684236.9317532}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1792662116.1305888, \"group\": \"new_fix\", \"task\": 1113, \"phase\": \"generation\"}, {\"at\": 1792663166.5662076, \"group\": \"new_fix\", \"task\": 1113, \"phase\": \"review\"}, {\"at\": 1792663604.8071694, \"group\": \"repair\", \"task\": 1113, \"phase\": \"remediation\"}, {\"at\": 1792672433.6596665, \"group\": \"new_fix\", \"task\": 1114, \"phase\": \"generation\"}, {\"at\": 1792672433.8286493, \"group\": \"new_fix\", \"task\": 1115, \"phase\": \"generation\"}, {\"at\": 1792672594.5032444, \"group\": \"new_fix\", \"task\": 1117, \"phase\": \"generation\"}, {\"at\": 1792672628.8189383, \"group\": \"new_fix\", \"task\": 1118, \"phase\": \"generation\"}, {\"at\": 1792673379.3698037, \"group\": \"new_fix\", \"task\": 1118, \"phase\": \"review\"}, {\"at\": 1792673792.5407248, \"group\": \"new_fix\", \"task\": 1116, \"phase\": \"generation\"}, {\"at\": 1792673981.2177799, \"group\": \"new_fix\", \"task\": 1119, \"phase\": \"generation\"}, {\"at\": 1792676235.0823185, \"group\": \"screening\", \"task\": 1120, \"phase\": \"screening-965934c1bc63df7dbb16\"}, {\"at\": 1792676250.4742095, \"group\": \"new_fix\", \"task\": 1120, \"phase\": \"generation\"}, {\"at\": 1792677036.9317532, \"group\": \"new_fix\", \"task\": 1121, \"phase\": \"generation\"}]"
       },
       {
         "key": "task:1121",
@@ -22965,16 +22953,28 @@
         "value": "{\"at\": 1792677989.1257408, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
+        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
+        "value": "{\"at\": 1792678053.2037315, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+      },
+      {
+        "key": "runner_resources",
+        "value": "{\"at\": 1792678053.2052407, \"disk_free_bytes\": 80487956480, \"memory_bytes\": {\"MemTotal\": 16766406656, \"MemAvailable\": 11145154560, \"SwapTotal\": 3221221376, \"SwapFree\": 3043966976}, \"memory_events\": null}"
+      },
+      {
         "key": "admission_health",
-        "value": "{\"at\": 1792677992.4868593, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 13, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 955.5484583377838, \"judge_tokens_spent_24h\": 59537, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {\"comfyui\": {\"used\": 6, \"limit\": 6}}, \"recent_wait_tasks_24h\": {\"human_wait\": 2, \"validation_wait\": 4}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7629\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7629\", \"title\": \"RemoteA2aAgent fetches the agent card and creates a new httpx client on every turn\", \"first_seen\": 1792516159.4597957, \"last_checked\": 1792611996.2231863, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7630\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7630\", \"title\": \"LiteLlm with SSE streaming records the answer twice in gen_ai.output.messages\", \"first_seen\": 1792517055.6213582, \"last_checked\": 1792621475.0741827, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7666\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7666\", \"title\": \"Workflow: a node that returns None runs again when the workflow resumes after RequestInput\", \"first_seen\": 1792639150.677527, \"last_checked\": 1792645003.1953173, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7661\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7661\", \"title\": \"Parallel tool calls: a dict state key removed by a later call comes back in the persisted state\", \"first_seen\": 1792638797.8276505, \"last_checked\": 1792645005.5370839, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7660\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7660\", \"title\": \"AnthropicLlm leaves error_code empty when Claude refuses or hits max_tokens with no content\", \"first_seen\": 1792634455.9082274, \"last_checked\": 1792651354.0400386, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7659\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7659\", \"title\": \"Duplicate rubric verdicts let one judge sample outvote two independent samples\", \"first_seen\": 1792622311.1665187, \"last_checked\": 1792651356.9077706, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7657\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7657\", \"title\": \"BigQueryAgentAnalyticsPlugin: log token usage for live (run_live) sessions\", \"first_seen\": 1792612047.2850416, \"last_checked\": 1792651358.9992104, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7654\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7654\", \"title\": \"ApigeeLlm: streamed responses drop reasoning tokens and cached prompt tokens from usage_metadata\", \"first_seen\": 1792608007.3418486, \"last_checked\": 1792651361.6639278, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7650\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7650\", \"title\": \"After a tool confirmation resumes a `Workflow`, an `LlmAgent` node's model receives the workflow's user message instead of the node's input\", \"first_seen\": 1792575938.7208335, \"last_checked\": 1792651364.3036819, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7649\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7649\", \"title\": \"Evaluation judge and user simulator default to gemini-2.5-flash, which is no longer available to new users\", \"first_seen\": 1792568135.6067047, \"last_checked\": 1792651366.5459206, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7648\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7648\", \"title\": \"ApigeeLlm raises ValueError instead of reporting MAX_TOKENS when streamed tool arguments are cut off\", \"first_seen\": 1792565732.726466, \"last_checked\": 1792651369.3618166, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7644\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7644\", \"title\": \"ModelArmorPlugin fails with \\\"Event loop is closed\\\" after one sync Runner.run() call: its client is not cached per event loop\", \"first_seen\": 1792555192.0867312, \"last_checked\": 1792651371.8120358, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+        "value": "{\"at\": 1792678056.4390287, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 13, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1019.5003855228424, \"judge_tokens_spent_24h\": 59537, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {\"comfyui\": {\"used\": 6, \"limit\": 6}}, \"recent_wait_tasks_24h\": {\"human_wait\": 2, \"validation_wait\": 4}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7629\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7629\", \"title\": \"RemoteA2aAgent fetches the agent card and creates a new httpx client on every turn\", \"first_seen\": 1792516159.4597957, \"last_checked\": 1792611996.2231863, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7630\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7630\", \"title\": \"LiteLlm with SSE streaming records the answer twice in gen_ai.output.messages\", \"first_seen\": 1792517055.6213582, \"last_checked\": 1792621475.0741827, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7666\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7666\", \"title\": \"Workflow: a node that returns None runs again when the workflow resumes after RequestInput\", \"first_seen\": 1792639150.677527, \"last_checked\": 1792645003.1953173, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7661\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7661\", \"title\": \"Parallel tool calls: a dict state key removed by a later call comes back in the persisted state\", \"first_seen\": 1792638797.8276505, \"last_checked\": 1792645005.5370839, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7660\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7660\", \"title\": \"AnthropicLlm leaves error_code empty when Claude refuses or hits max_tokens with no content\", \"first_seen\": 1792634455.9082274, \"last_checked\": 1792651354.0400386, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7659\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7659\", \"title\": \"Duplicate rubric verdicts let one judge sample outvote two independent samples\", \"first_seen\": 1792622311.1665187, \"last_checked\": 1792651356.9077706, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7657\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7657\", \"title\": \"BigQueryAgentAnalyticsPlugin: log token usage for live (run_live) sessions\", \"first_seen\": 1792612047.2850416, \"last_checked\": 1792651358.9992104, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7654\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7654\", \"title\": \"ApigeeLlm: streamed responses drop reasoning tokens and cached prompt tokens from usage_metadata\", \"first_seen\": 1792608007.3418486, \"last_checked\": 1792651361.6639278, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7650\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7650\", \"title\": \"After a tool confirmation resumes a `Workflow`, an `LlmAgent` node's model receives the workflow's user message instead of the node's input\", \"first_seen\": 1792575938.7208335, \"last_checked\": 1792651364.3036819, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7649\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7649\", \"title\": \"Evaluation judge and user simulator default to gemini-2.5-flash, which is no longer available to new users\", \"first_seen\": 1792568135.6067047, \"last_checked\": 1792651366.5459206, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7648\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7648\", \"title\": \"ApigeeLlm raises ValueError instead of reporting MAX_TOKENS when streamed tool arguments are cut off\", \"first_seen\": 1792565732.726466, \"last_checked\": 1792651369.3618166, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7644\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7644\", \"title\": \"ModelArmorPlugin fails with \\\"Event loop is closed\\\" after one sync Runner.run() call: its client is not cached per event loop\", \"first_seen\": 1792555192.0867312, \"last_checked\": 1792651371.8120358, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1792677992.4882307, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"human_wait\": 2, \"queued\": 2, \"running\": 1, \"skipped\": 17, \"validation_wait\": 4}, \"respond\": {\"done\": 1}}}"
+        "value": "{\"at\": 1792678056.4407666, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"human_wait\": 2, \"queued\": 2, \"running\": 1, \"skipped\": 17, \"validation_wait\": 4}, \"respond\": {\"done\": 1}}}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1792678042.1622121"
+        "value": "1792678102.170698"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792678108.9204276"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -22982,54 +22982,34 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1792678049.077157"
+        "value": "1792678109.056517"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1792678051.0300922, \"windows\": [{\"name\": \"primary\", \"used_percent\": 27, \"resets_at\": 1793082769}]}"
+        "value": "{\"at\": 1792678110.584496, \"windows\": [{\"name\": \"primary\", \"used_percent\": 27, \"resets_at\": 1793082769}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792678110.5866933, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1121:1:generation",
+        "value": "{\"task\": 1121, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792678110.6010613, \"seconds\": 1073.671, \"tokens\": {\"totalTokens\": 19177689, \"inputTokens\": 19158883, \"cachedInputTokens\": 18988288, \"cacheWriteInputTokens\": 0, \"outputTokens\": 18806, \"reasoningOutputTokens\": 6529}, \"first_event_ms\": 1792677043735, \"last_event_ms\": 1792678110584, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1792678052.3225272"
+        "value": "1792678112.3257842"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1792678052.955387"
+        "key": "codex_review_leases",
+        "value": "{\"1121\": {\"remaining\": 0, \"until\": 1792685312.9736478}}"
       },
       {
-        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
-        "value": "{\"at\": 1792678053.2037315, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
-      },
-      {
-        "key": "runner_resources",
-        "value": "{\"at\": 1792678053.2052407, \"disk_free_bytes\": 80487956480, \"memory_bytes\": {\"MemTotal\": 16766406656, \"MemAvailable\": 11145154560, \"SwapTotal\": 3221221376, \"SwapFree\": 3043966976}, \"memory_events\": null}"
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1792662116.1305888, \"group\": \"new_fix\", \"task\": 1113, \"phase\": \"generation\"}, {\"at\": 1792663166.5662076, \"group\": \"new_fix\", \"task\": 1113, \"phase\": \"review\"}, {\"at\": 1792663604.8071694, \"group\": \"repair\", \"task\": 1113, \"phase\": \"remediation\"}, {\"at\": 1792672433.6596665, \"group\": \"new_fix\", \"task\": 1114, \"phase\": \"generation\"}, {\"at\": 1792672433.8286493, \"group\": \"new_fix\", \"task\": 1115, \"phase\": \"generation\"}, {\"at\": 1792672594.5032444, \"group\": \"new_fix\", \"task\": 1117, \"phase\": \"generation\"}, {\"at\": 1792672628.8189383, \"group\": \"new_fix\", \"task\": 1118, \"phase\": \"generation\"}, {\"at\": 1792673379.3698037, \"group\": \"new_fix\", \"task\": 1118, \"phase\": \"review\"}, {\"at\": 1792673792.5407248, \"group\": \"new_fix\", \"task\": 1116, \"phase\": \"generation\"}, {\"at\": 1792673981.2177799, \"group\": \"new_fix\", \"task\": 1119, \"phase\": \"generation\"}, {\"at\": 1792676235.0823185, \"group\": \"screening\", \"task\": 1120, \"phase\": \"screening-965934c1bc63df7dbb16\"}, {\"at\": 1792676250.4742095, \"group\": \"new_fix\", \"task\": 1120, \"phase\": \"generation\"}, {\"at\": 1792677036.9317532, \"group\": \"new_fix\", \"task\": 1121, \"phase\": \"generation\"}, {\"at\": 1792678112.9736478, \"group\": \"new_fix\", \"task\": 1121, \"phase\": \"review\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1792072273.5795689,
-        "kind": "judge"
-      },
-      {
-        "at": 1792072297.8341258,
-        "kind": "codex"
-      },
-      {
-        "at": 1792073129.5993555,
-        "kind": "judge"
-      },
-      {
-        "at": 1792073208.8502185,
-        "kind": "judge"
-      },
-      {
-        "at": 1792073218.260503,
-        "kind": "judge"
-      },
-      {
-        "at": 1792073230.7187319,
-        "kind": "judge"
-      },
       {
         "at": 1792074794.933676,
         "kind": "codex"
@@ -25805,6 +25785,10 @@
       {
         "at": 1792677112.3385305,
         "kind": "judge"
+      },
+      {
+        "at": 1792678112.9742212,
+        "kind": "codex"
       }
     ]
   }
