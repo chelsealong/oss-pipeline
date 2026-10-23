@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792732209.5968475,
+  "saved_at": 1792732257.6326153,
   "tables": {
     "tasks": [
       {
@@ -14908,11 +14908,24 @@
         "repo": "openclaw",
         "number": 181345,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1792732140.328915,
-        "updated": 1792732146.5744154,
-        "result": "",
+        "updated": 1792732257.617213,
+        "result": "VALIDATION_ENVIRONMENT: The required end-to-end voice-call replay needs a telephony service, Google Live, and a non-OpenAI model account. None is configured in this isolated runner. The task instructions require reporting this blocker before editing.",
         "attempts": 1
+      },
+      {
+        "id": 1148,
+        "identity": "fix:comfyui:17315:",
+        "kind": "fix",
+        "repo": "comfyui",
+        "number": 17315,
+        "note": "",
+        "status": "queued",
+        "created": 1792732255.3256407,
+        "updated": 1792732255.3256407,
+        "result": "",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -23401,10 +23414,6 @@
         "value": "{\"started\": 1792730449.155953, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"skipped\", \"base\": null, \"generation_started\": 1792720234.7091835, \"dispatch_paid_date\": \"2026-10-23\", \"phase_started\": 1792721255.2667694, \"last_execution_phase\": \"claimed\", \"finished\": 1792730454.7109916, \"resume_progress\": {\"bundle\": \"1139-1.json\", \"sha256\": \"52166afffa7d44ed5bc8310e3a3f1682248169ed64f02cd13de8cf40af908ef7\", \"base\": \"20e3d75601d5f1282570362634ecb5372c71224c\", \"phase\": \"review\"}, \"timeout_continuations\": 1, \"recovery_checked_at\": 1792730445.9694004}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792730759.413837, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -23577,10 +23586,6 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792732146.574265, \"comfyui\": 1792724687.904811, \"hermes\": 1791629598.7424486, \"langfuse\": 1792680244.825231, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792723956.27311, \"langfuse-python\": 1792269667.6802466, \"spec-kit\": 1792644933.6826746, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792502104.625562, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792672579.3959703}}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792732154.1709485, \"windows\": [{\"name\": \"primary\", \"used_percent\": 9, \"resets_at\": 1793295360}]}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1792732191.4395485"
       },
@@ -23601,10 +23606,6 @@
         "value": "{\"at\": 1792732200.853838, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 3, \"running\": 1, \"skipped\": 23, \"validation_wait\": 8}, \"respond\": {\"blocked\": 1, \"validation_wait\": 2}}}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1792732205.97382"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"openclaw\", \"task\": 1132, \"at\": 1792718105.235863}, {\"repo\": \"llama-index\", \"task\": 1138, \"at\": 1792718152.683404}, {\"repo\": \"openclaw\", \"task\": 1136, \"at\": 1792718226.918875}, {\"repo\": \"openclaw\", \"task\": 1137, \"at\": 1792718384.2175837}, {\"repo\": \"openclaw\", \"task\": 1139, \"at\": 1792720234.709183}, {\"repo\": \"comfyui\", \"task\": 1140, \"at\": 1792720892.9099493}, {\"repo\": \"llama-index\", \"task\": 1141, \"at\": 1792722581.5068}, {\"repo\": \"openclaw\", \"task\": 1142, \"at\": 1792722792.3144202}, {\"repo\": \"comfyui\", \"task\": 1144, \"at\": 1792724698.8842752}, {\"repo\": \"openclaw\", \"task\": 1147, \"at\": 1792732206.6213388}]"
       },
@@ -23613,12 +23614,40 @@
         "value": "{\"date\": \"2026-10-23\", \"used\": {\"openclaw\": 7, \"comfyui\": 5, \"llama-index\": 2}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1147\": {\"remaining\": 1, \"until\": 1792739406.6215491}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792715715.9524417, \"group\": \"new_fix\", \"task\": 1123, \"phase\": \"review\"}, {\"at\": 1792716184.7003272, \"group\": \"repair\", \"task\": 1123, \"phase\": \"remediation\"}, {\"at\": 1792716442.3694034, \"group\": \"repair\", \"task\": 1123, \"phase\": \"rereview\"}, {\"at\": 1792718105.2360938, \"group\": \"new_fix\", \"task\": 1132, \"phase\": \"generation\"}, {\"at\": 1792718152.6836405, \"group\": \"new_fix\", \"task\": 1138, \"phase\": \"generation\"}, {\"at\": 1792718226.9191136, \"group\": \"new_fix\", \"task\": 1136, \"phase\": \"generation\"}, {\"at\": 1792718384.217823, \"group\": \"new_fix\", \"task\": 1137, \"phase\": \"generation\"}, {\"at\": 1792720234.709387, \"group\": \"new_fix\", \"task\": 1139, \"phase\": \"generation\"}, {\"at\": 1792720892.91019, \"group\": \"new_fix\", \"task\": 1140, \"phase\": \"generation\"}, {\"at\": 1792721250.0635638, \"group\": \"new_fix\", \"task\": 1139, \"phase\": \"review\"}, {\"at\": 1792722581.507106, \"group\": \"new_fix\", \"task\": 1141, \"phase\": \"generation\"}, {\"at\": 1792722792.314669, \"group\": \"new_fix\", \"task\": 1142, \"phase\": \"generation\"}, {\"at\": 1792723985.824626, \"group\": \"new_fix\", \"task\": 1056, \"phase\": \"generation\"}, {\"at\": 1792724030.5095356, \"group\": \"new_fix\", \"task\": 1142, \"phase\": \"review\"}, {\"at\": 1792724511.5202847, \"group\": \"repair\", \"task\": 1142, \"phase\": \"remediation\"}, {\"at\": 1792724698.8844929, \"group\": \"new_fix\", \"task\": 1144, \"phase\": \"generation\"}, {\"at\": 1792725339.698892, \"group\": \"repair\", \"task\": 1142, \"phase\": \"rereview\"}, {\"at\": 1792725901.1996276, \"group\": \"maintenance\", \"task\": 1143, \"phase\": \"generation\"}, {\"at\": 1792727188.2411866, \"group\": \"maintenance\", \"task\": 1146, \"phase\": \"generation\"}, {\"at\": 1792727968.3333547, \"group\": \"maintenance\", \"task\": 1146, \"phase\": \"reply-review\"}, {\"at\": 1792732206.6215491, \"group\": \"new_fix\", \"task\": 1147, \"phase\": \"generation\"}]"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1792732253.8389807"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792732254.924451, \"windows\": [{\"name\": \"primary\", \"used_percent\": 9, \"resets_at\": 1793295360}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792732254.9265034, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1147:1:generation",
+        "value": "{\"task\": 1147, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792732254.9319334, \"seconds\": 48.312, \"tokens\": {\"totalTokens\": 253682, \"inputTokens\": 251319, \"cachedInputTokens\": 186112, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2363, \"reasoningOutputTokens\": 1265}, \"first_event_ms\": 1792732213787, \"last_event_ms\": 1792732254924, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792732255.9749746"
+      },
+      {
+        "key": "followup:task:1147",
+        "value": "{\"status\": \"needs_human\", \"task\": 1147, \"repo\": \"openclaw\", \"number\": 181345, \"reason\": \"VALIDATION_ENVIRONMENT: The required end-to-end voice-call replay needs a telephony service, Google Live, and a non-OpenAI model account. None is configured in this isolated runner. The task instructions require reporting this blocker before editing.\", \"base\": \"e68d50a406680879e3961067b34a0068b8c53f0f\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"1147-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1147",
+        "value": "{\"started\": 1792732146.5744548, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1147/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"e68d50a406680879e3961067b34a0068b8c53f0f\", \"generation_started\": 1792732206.6213396, \"dispatch_paid_date\": \"2026-10-23\", \"phase_started\": 1792732209.5867357, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1792732256.2951832}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -23626,15 +23655,7 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1792732207.8407838"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1792732208.8340065"
-      },
-      {
-        "key": "task:1147",
-        "value": "{\"started\": 1792732146.5744548, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1147/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"e68d50a406680879e3961067b34a0068b8c53f0f\", \"generation_started\": 1792732206.6213396, \"dispatch_paid_date\": \"2026-10-23\", \"phase_started\": 1792732209.5867357}"
+        "value": "1792732257.3136995"
       }
     ],
     "calls": [
