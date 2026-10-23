@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792714148.921285,
+  "saved_at": 1792714153.909014,
   "tables": {
     "tasks": [
       {
@@ -14739,10 +14739,10 @@
         "repo": "comfyui",
         "number": 17305,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1792714070.0935254,
-        "updated": 1792714118.3673744,
-        "result": "",
+        "updated": 1792714150.6901782,
+        "result": "VALIDATION_ENVIRONMENT: The reported failure occurs during YuE2 generation on macOS MPS with large model weights. This checkout runs on Linux, so I cannot reproduce the memory failure or validate a fix. The report also notes a similar 88 GB peak on its known-good revision, leaving the root cause unconfirmed.",
         "attempts": 1
       },
       {
@@ -23213,10 +23213,6 @@
         "value": "1792714089.7127972"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792714105.4289432, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1133:1:generation",
         "value": "{\"task\": 1133, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792714105.430844, \"seconds\": 22.973, \"tokens\": {\"totalTokens\": 93819, \"inputTokens\": 92996, \"cachedInputTokens\": 54400, \"cacheWriteInputTokens\": 0, \"outputTokens\": 823, \"reasoningOutputTokens\": 324}, \"first_event_ms\": 1792714090974, \"last_event_ms\": 1792714105427, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -23241,16 +23237,8 @@
         "value": "{\"date\": \"2026-10-23\", \"used\": {\"openclaw\": 1, \"comfyui\": 2}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1123\": {\"remaining\": 1, \"until\": 1792721212.007534}, \"1134\": {\"remaining\": 1, \"until\": 1792721326.6160104}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792714012.007534, \"group\": \"new_fix\", \"task\": 1123, \"phase\": \"generation\"}, {\"at\": 1792714082.459715, \"group\": \"new_fix\", \"task\": 1133, \"phase\": \"generation\"}, {\"at\": 1792714126.6160104, \"group\": \"new_fix\", \"task\": 1134, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "task:1134",
-        "value": "{\"started\": 1792714118.3674147, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1134/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"6cbc3862d5c3ceffa9e31ea38b3fe66681bbd6ab\", \"generation_started\": 1792714126.6158664, \"dispatch_paid_date\": \"2026-10-23\", \"phase_started\": 1792714129.4352007}"
       },
       {
         "key": "worker_heartbeat",
@@ -23261,8 +23249,36 @@
         "value": "1792714143.3820775"
       },
       {
+        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
+        "value": "{\"at\": 1792714148.6551719, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+      },
+      {
+        "key": "runner_resources",
+        "value": "{\"at\": 1792714148.848342, \"disk_free_bytes\": 85685592064, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 14482948096, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1792714143.9342418"
+        "value": "1792714148.9364793"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792714149.7995818, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1134:1:generation",
+        "value": "{\"task\": 1134, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792714149.8632562, \"seconds\": 23.248, \"tokens\": {\"totalTokens\": 94057, \"inputTokens\": 93380, \"cachedInputTokens\": 56320, \"cacheWriteInputTokens\": 0, \"outputTokens\": 677, \"reasoningOutputTokens\": 288}, \"first_event_ms\": 1792714132412, \"last_event_ms\": 1792714149650, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:1134",
+        "value": "{\"status\": \"needs_human\", \"task\": 1134, \"repo\": \"comfyui\", \"number\": 17305, \"reason\": \"VALIDATION_ENVIRONMENT: The reported failure occurs during YuE2 generation on macOS MPS with large model weights. This checkout runs on Linux, so I cannot reproduce the memory failure or validate a fix. The report also notes a similar 88 GB peak on its known-good revision, leaving the root cause unconfirmed.\", \"base\": \"6cbc3862d5c3ceffa9e31ea38b3fe66681bbd6ab\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"1134-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"1123\": {\"remaining\": 1, \"until\": 1792721212.007534}}"
+      },
+      {
+        "key": "task:1134",
+        "value": "{\"started\": 1792714118.3674147, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1134/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"6cbc3862d5c3ceffa9e31ea38b3fe66681bbd6ab\", \"generation_started\": 1792714126.6158664, \"dispatch_paid_date\": \"2026-10-23\", \"phase_started\": 1792714129.4352007, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1792714150.3978236}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -23270,19 +23286,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1792714146.067431"
+        "value": "1792714150.538709"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1792714147.1734169, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1793295360}]}"
-      },
-      {
-        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
-        "value": "{\"at\": 1792714148.6551719, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
-      },
-      {
-        "key": "runner_resources",
-        "value": "{\"at\": 1792714148.848342, \"disk_free_bytes\": 85685592064, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 14482948096, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1792714153.754956, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1793295360}]}"
       }
     ],
     "calls": [
