@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792717599.7893527,
+  "saved_at": 1792717625.6477256,
   "tables": {
     "tasks": [
       {
@@ -14596,10 +14596,10 @@
         "repo": "openclaw",
         "number": 180658,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1792677123.0153155,
-        "updated": 1792713953.390936,
-        "result": "openclaw open PR cap (20)",
+        "updated": 1792717625.6225767,
+        "result": "review: The remediation resolves the reported post-abort ingestion write, and focused tests, typechecks, lint, formatting, Docs MDX, and the build passed on supported Node 24.22.1. The proposed PR body in remediation.json omits the CLI hook change and the required User Impact and Why This Change Was Made sections. Update it to describe the full patch and current evidence, as required by CONTRIBUTING.md’s Before You PR section. No applicable pre-submission human-review requirement was found.",
         "attempts": 1
       },
       {
@@ -23289,32 +23289,36 @@
         "value": "{\"task\": 1123, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1792716182.0848708, \"seconds\": 466.137, \"tokens\": {\"totalTokens\": 3002681, \"inputTokens\": 2995148, \"cachedInputTokens\": 2900608, \"cacheWriteInputTokens\": 0, \"outputTokens\": 7533, \"reasoningOutputTokens\": 3417}, \"first_event_ms\": 1792715720966, \"last_event_ms\": 1792716182078, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792716442.1312025, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1123:1:remediation",
         "value": "{\"task\": 1123, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"remediation\", \"at\": 1792716442.138931, \"seconds\": 257.44, \"tokens\": {\"totalTokens\": 2761414, \"inputTokens\": 2754655, \"cachedInputTokens\": 2666112, \"cacheWriteInputTokens\": 0, \"outputTokens\": 6759, \"reasoningOutputTokens\": 1856}, \"first_event_ms\": 1792716189260, \"last_event_ms\": 1792716442129, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"1123\": {\"remaining\": 0, \"until\": 1792723642.3694034}}"
       },
       {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792714012.007534, \"group\": \"new_fix\", \"task\": 1123, \"phase\": \"generation\"}, {\"at\": 1792714082.459715, \"group\": \"new_fix\", \"task\": 1133, \"phase\": \"generation\"}, {\"at\": 1792714126.6160104, \"group\": \"new_fix\", \"task\": 1134, \"phase\": \"generation\"}, {\"at\": 1792714180.499339, \"group\": \"new_fix\", \"task\": 1135, \"phase\": \"generation\"}, {\"at\": 1792715715.9524417, \"group\": \"new_fix\", \"task\": 1123, \"phase\": \"review\"}, {\"at\": 1792716184.7003272, \"group\": \"repair\", \"task\": 1123, \"phase\": \"remediation\"}, {\"at\": 1792716442.3694034, \"group\": \"repair\", \"task\": 1123, \"phase\": \"rereview\"}]"
       },
       {
-        "key": "task:1123",
-        "value": "{\"started\": 1792713953.3909698, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1123/attempt-1\", \"attempt\": 1, \"phase\": \"rereview\", \"base\": \"d27218a53551f051c69e2b926b3a96d8e9aea05c\", \"last_execution_phase\": \"claimed\", \"finished\": 1792680232.0062606, \"recovery_checked_at\": 1792713949.5983758, \"generation_started\": 1792714012.0073884, \"dispatch_paid_date\": \"2026-10-23\", \"phase_started\": 1792716444.9431226}"
+        "key": "worker_heartbeat",
+        "value": "1792717624.8389947"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1792717591.477598, \"windows\": [{\"name\": \"primary\", \"used_percent\": 4, \"resets_at\": 1793295360}]}"
+        "value": "{\"at\": 1792717625.218112, \"windows\": [{\"name\": \"primary\", \"used_percent\": 4, \"resets_at\": 1793295360}]}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1792717594.8352864"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792717625.2208245, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1123:1:rereview",
+        "value": "{\"task\": 1123, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"rereview\", \"at\": 1792717625.228558, \"seconds\": 1182.861, \"tokens\": {\"totalTokens\": 10255989, \"inputTokens\": 10244408, \"cachedInputTokens\": 10109824, \"cacheWriteInputTokens\": 0, \"outputTokens\": 11581, \"reasoningOutputTokens\": 3550}, \"first_event_ms\": 1792716447477, \"last_event_ms\": 1792717625218, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1123",
+        "value": "{\"started\": 1792713953.3909698, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1123/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"d27218a53551f051c69e2b926b3a96d8e9aea05c\", \"last_execution_phase\": \"rereview\", \"finished\": 1792717625.4477313, \"recovery_checked_at\": 1792713949.5983758, \"generation_started\": 1792714012.0073884, \"dispatch_paid_date\": \"2026-10-23\", \"phase_started\": 1792716444.9431226, \"patch_digest\": \"5ee717fc9832dcc26d8d157cc0c0590c8ec55e0533c1c3dc4ea99ac51ab306ec\"}"
       }
     ],
     "calls": [
