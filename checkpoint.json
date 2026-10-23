@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792714118.3742974,
+  "saved_at": 1792714126.6234746,
   "tables": {
     "tasks": [
       {
@@ -23197,18 +23197,6 @@
         "value": "{\"recovery_checked_at\": 1792714081.6966403}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"openclaw\", \"task\": 1123, \"at\": 1792714012.007388}, {\"repo\": \"comfyui\", \"task\": 1133, \"at\": 1792714082.459536}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-10-23\", \"used\": {\"openclaw\": 1, \"comfyui\": 1}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1792714012.007534, \"group\": \"new_fix\", \"task\": 1123, \"phase\": \"generation\"}, {\"at\": 1792714082.459715, \"group\": \"new_fix\", \"task\": 1133, \"phase\": \"generation\"}]"
-      },
-      {
         "key": "recovery_audit:222",
         "value": "{\"at\": 1792714082.5328481, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -23245,24 +23233,28 @@
         "value": "{\"status\": \"needs_human\", \"task\": 1133, \"repo\": \"comfyui\", \"number\": 17309, \"reason\": \"VALIDATION_ENVIRONMENT: Issue #17309 reports an MPS-only FLUX.3 allocation failure. This checkout runs on Linux without Apple Silicon/MPS, and PyTorch is not installed, so I cannot reproduce the failure or validate a behavioral fix. The reported image-conditioning code is still present; its role in the failure is unproven.\", \"base\": \"6cbc3862d5c3ceffa9e31ea38b3fe66681bbd6ab\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"1133-1.json.enc\"}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1123\": {\"remaining\": 1, \"until\": 1792721212.007534}}"
-      },
-      {
         "key": "task:1133",
         "value": "{\"started\": 1792714074.006356, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1133/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"6cbc3862d5c3ceffa9e31ea38b3fe66681bbd6ab\", \"generation_started\": 1792714082.4595377, \"dispatch_paid_date\": \"2026-10-23\", \"phase_started\": 1792714085.282557, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1792714105.5325851}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792714107.899864, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1793295360}]}"
       },
       {
         "key": "worker_heartbeat",
         "value": "1792714112.3204885"
       },
       {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792713953.390786, \"comfyui\": 1792714118.3671842, \"hermes\": 1791629598.7424486, \"langfuse\": 1792680244.825231, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792648804.6220903, \"langfuse-python\": 1792269667.6802466, \"spec-kit\": 1792644933.6826746, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792502104.625562, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792672579.3959703}}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792714123.0296192"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1792714113.9337769"
+        "value": "1792714123.933926"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792714124.5923169, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1793295360}]}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -23270,19 +23262,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1792714115.1892407"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1792714118.0215912"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1792713953.390786, \"comfyui\": 1792714118.3671842, \"hermes\": 1791629598.7424486, \"langfuse\": 1792680244.825231, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1792648804.6220903, \"langfuse-python\": 1792269667.6802466, \"spec-kit\": 1792644933.6826746, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792502104.625562, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792672579.3959703}}"
+        "value": "1792714125.2973597"
       },
       {
         "key": "task:1134",
-        "value": "{\"started\": 1792714118.3674147, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "value": "{\"started\": 1792714118.3674147, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1134/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"6cbc3862d5c3ceffa9e31ea38b3fe66681bbd6ab\", \"generation_started\": 1792714126.6158664, \"dispatch_paid_date\": \"2026-10-23\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"openclaw\", \"task\": 1123, \"at\": 1792714012.007388}, {\"repo\": \"comfyui\", \"task\": 1133, \"at\": 1792714082.459536}, {\"repo\": \"comfyui\", \"task\": 1134, \"at\": 1792714126.615866}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-10-23\", \"used\": {\"openclaw\": 1, \"comfyui\": 2}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"1123\": {\"remaining\": 1, \"until\": 1792721212.007534}, \"1134\": {\"remaining\": 1, \"until\": 1792721326.6160104}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1792714012.007534, \"group\": \"new_fix\", \"task\": 1123, \"phase\": \"generation\"}, {\"at\": 1792714082.459715, \"group\": \"new_fix\", \"task\": 1133, \"phase\": \"generation\"}, {\"at\": 1792714126.6160104, \"group\": \"new_fix\", \"task\": 1134, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
@@ -26128,6 +26128,10 @@
       },
       {
         "at": 1792714082.4601614,
+        "kind": "codex"
+      },
+      {
+        "at": 1792714126.61636,
         "kind": "codex"
       }
     ]
