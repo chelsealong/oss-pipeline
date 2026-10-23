@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792715679.740249,
+  "saved_at": 1792715715.9803312,
   "tables": {
     "tasks": [
       {
@@ -23073,24 +23073,12 @@
         "value": "{\"date\": \"2026-10-23\", \"used\": {\"openclaw\": 1, \"comfyui\": 3}}"
       },
       {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1792714012.007534, \"group\": \"new_fix\", \"task\": 1123, \"phase\": \"generation\"}, {\"at\": 1792714082.459715, \"group\": \"new_fix\", \"task\": 1133, \"phase\": \"generation\"}, {\"at\": 1792714126.6160104, \"group\": \"new_fix\", \"task\": 1134, \"phase\": \"generation\"}, {\"at\": 1792714180.499339, \"group\": \"new_fix\", \"task\": 1135, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792714205.788987, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1135:1:generation",
         "value": "{\"task\": 1135, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792714205.7928443, \"seconds\": 25.295, \"tokens\": {\"totalTokens\": 169418, \"inputTokens\": 168214, \"cachedInputTokens\": 126336, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1204, \"reasoningOutputTokens\": 281}, \"first_event_ms\": 1792714186750, \"last_event_ms\": 1792714205786, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "followup:task:1135",
         "value": "{\"status\": \"needs_human\", \"task\": 1135, \"repo\": \"comfyui\", \"number\": 17302, \"reason\": \"VALIDATION_ENVIRONMENT: #17302 is an Intel XPU numerical failure with a Pixal3D INT8 ConvRot checkpoint. This checkout has no PyTorch installation or model weights, so I cannot reproduce the NaN latent or verify a fix. The task requires CPU-verifiable ComfyUI fixes and says to stop when required hardware or validation is unavailable.\", \"base\": \"6cbc3862d5c3ceffa9e31ea38b3fe66681bbd6ab\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"1135-1.json.enc\"}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"1123\": {\"remaining\": 1, \"until\": 1792721212.007534}}"
       },
       {
         "key": "task:1135",
@@ -23265,16 +23253,44 @@
         "value": "1792715493.2754104"
       },
       {
+        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
+        "value": "{\"at\": 1792715679.7324088, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+      },
+      {
+        "key": "runner_resources",
+        "value": "{\"at\": 1792715679.7336204, \"disk_free_bytes\": 80579309568, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15346130944, \"SwapTotal\": 3221221376, \"SwapFree\": 2964754432}, \"memory_events\": null}"
+      },
+      {
         "key": "admission_health",
-        "value": "{\"at\": 1792715619.3408604, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1438.835132598877, \"judge_tokens_spent_24h\": 54033, \"screening_calls_5h\": 0, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 8, \"human_wait\": 1, \"capacity_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7666\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7666\", \"title\": \"Workflow: a node that returns None runs again when the workflow resumes after RequestInput\", \"first_seen\": 1792639150.677527, \"last_checked\": 1792645003.1953173, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7661\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7661\", \"title\": \"Parallel tool calls: a dict state key removed by a later call comes back in the persisted state\", \"first_seen\": 1792638797.8276505, \"last_checked\": 1792645005.5370839, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7660\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7660\", \"title\": \"AnthropicLlm leaves error_code empty when Claude refuses or hits max_tokens with no content\", \"first_seen\": 1792634455.9082274, \"last_checked\": 1792651354.0400386, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7659\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7659\", \"title\": \"Duplicate rubric verdicts let one judge sample outvote two independent samples\", \"first_seen\": 1792622311.1665187, \"last_checked\": 1792651356.9077706, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7657\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7657\", \"title\": \"BigQueryAgentAnalyticsPlugin: log token usage for live (run_live) sessions\", \"first_seen\": 1792612047.2850416, \"last_checked\": 1792651358.9992104, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7654\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7654\", \"title\": \"ApigeeLlm: streamed responses drop reasoning tokens and cached prompt tokens from usage_metadata\", \"first_seen\": 1792608007.3418486, \"last_checked\": 1792651361.6639278, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7650\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7650\", \"title\": \"After a tool confirmation resumes a `Workflow`, an `LlmAgent` node's model receives the workflow's user message instead of the node's input\", \"first_seen\": 1792575938.7208335, \"last_checked\": 1792651364.3036819, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7649\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7649\", \"title\": \"Evaluation judge and user simulator default to gemini-2.5-flash, which is no longer available to new users\", \"first_seen\": 1792568135.6067047, \"last_checked\": 1792651366.5459206, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7648\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7648\", \"title\": \"ApigeeLlm raises ValueError instead of reporting MAX_TOKENS when streamed tool arguments are cut off\", \"first_seen\": 1792565732.726466, \"last_checked\": 1792651369.3618166, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7644\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7644\", \"title\": \"ModelArmorPlugin fails with \\\"Event loop is closed\\\" after one sync Runner.run() call: its client is not cached per event loop\", \"first_seen\": 1792555192.0867312, \"last_checked\": 1792651371.8120358, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7685\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7685\", \"title\": \"Confirming the tool calls of two parallel `LlmAgent` nodes in one message runs only one tool; the other agent's model gets \\\"This tool call requires confirmation\\\"\", \"first_seen\": 1792694873.334146, \"last_checked\": 1792714771.6470385, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7684\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7684\", \"title\": \"A `Workflow` `LlmAgent` node with two pending tool confirmations does not keep waiting when only one is answered; the next node runs too early\", \"first_seen\": 1792694875.803679, \"last_checked\": 1792714774.4072907, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+        "value": "{\"at\": 1792715682.1013405, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1501.5979645252228, \"judge_tokens_spent_24h\": 54033, \"screening_calls_5h\": 0, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 8, \"human_wait\": 1, \"capacity_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7666\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7666\", \"title\": \"Workflow: a node that returns None runs again when the workflow resumes after RequestInput\", \"first_seen\": 1792639150.677527, \"last_checked\": 1792645003.1953173, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7661\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7661\", \"title\": \"Parallel tool calls: a dict state key removed by a later call comes back in the persisted state\", \"first_seen\": 1792638797.8276505, \"last_checked\": 1792645005.5370839, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7660\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7660\", \"title\": \"AnthropicLlm leaves error_code empty when Claude refuses or hits max_tokens with no content\", \"first_seen\": 1792634455.9082274, \"last_checked\": 1792651354.0400386, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7659\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7659\", \"title\": \"Duplicate rubric verdicts let one judge sample outvote two independent samples\", \"first_seen\": 1792622311.1665187, \"last_checked\": 1792651356.9077706, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7657\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7657\", \"title\": \"BigQueryAgentAnalyticsPlugin: log token usage for live (run_live) sessions\", \"first_seen\": 1792612047.2850416, \"last_checked\": 1792651358.9992104, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7654\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7654\", \"title\": \"ApigeeLlm: streamed responses drop reasoning tokens and cached prompt tokens from usage_metadata\", \"first_seen\": 1792608007.3418486, \"last_checked\": 1792651361.6639278, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7650\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7650\", \"title\": \"After a tool confirmation resumes a `Workflow`, an `LlmAgent` node's model receives the workflow's user message instead of the node's input\", \"first_seen\": 1792575938.7208335, \"last_checked\": 1792651364.3036819, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7649\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7649\", \"title\": \"Evaluation judge and user simulator default to gemini-2.5-flash, which is no longer available to new users\", \"first_seen\": 1792568135.6067047, \"last_checked\": 1792651366.5459206, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7648\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7648\", \"title\": \"ApigeeLlm raises ValueError instead of reporting MAX_TOKENS when streamed tool arguments are cut off\", \"first_seen\": 1792565732.726466, \"last_checked\": 1792651369.3618166, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7644\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7644\", \"title\": \"ModelArmorPlugin fails with \\\"Event loop is closed\\\" after one sync Runner.run() call: its client is not cached per event loop\", \"first_seen\": 1792555192.0867312, \"last_checked\": 1792651371.8120358, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7685\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7685\", \"title\": \"Confirming the tool calls of two parallel `LlmAgent` nodes in one message runs only one tool; the other agent's model gets \\\"This tool call requires confirmation\\\"\", \"first_seen\": 1792694873.334146, \"last_checked\": 1792714771.6470385, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7684\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7684\", \"title\": \"A `Workflow` `LlmAgent` node with two pending tool confirmations does not keep waiting when only one is answered; the next node runs too early\", \"first_seen\": 1792694875.803679, \"last_checked\": 1792714774.4072907, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1792715619.3426237, \"tasks\": {\"fix\": {\"blocked\": 3, \"capacity_wait\": 1, \"done\": 2, \"human_wait\": 1, \"queued\": 2, \"running\": 1, \"skipped\": 18, \"validation_wait\": 7}, \"respond\": {\"validation_wait\": 1}}}"
+        "value": "{\"at\": 1792715682.1024146, \"tasks\": {\"fix\": {\"blocked\": 3, \"capacity_wait\": 1, \"done\": 2, \"human_wait\": 1, \"queued\": 2, \"running\": 1, \"skipped\": 18, \"validation_wait\": 7}, \"respond\": {\"validation_wait\": 1}}}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1792715674.3331044"
+        "value": "1792715704.3362107"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792715711.7345483"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1792715713.981978"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792715714.2548654, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1793295360}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792715714.2715929, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1123:1:generation",
+        "value": "{\"task\": 1123, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792715714.3092186, \"seconds\": 1702.303, \"tokens\": {\"totalTokens\": 79787365, \"inputTokens\": 79729573, \"cachedInputTokens\": 79423616, \"cacheWriteInputTokens\": 0, \"outputTokens\": 57792, \"reasoningOutputTokens\": 26991}, \"first_event_ms\": 1792714017732, \"last_event_ms\": 1792715714260, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -23282,38 +23298,18 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1792715675.7185297"
+        "value": "1792715715.3940642"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792715675.9349666, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1793295360}]}"
+        "key": "codex_review_leases",
+        "value": "{\"1123\": {\"remaining\": 0, \"until\": 1792722915.9524417}}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1792715676.7007785"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1792715678.981302"
-      },
-      {
-        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
-        "value": "{\"at\": 1792715679.7324088, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
-      },
-      {
-        "key": "runner_resources",
-        "value": "{\"at\": 1792715679.7336204, \"disk_free_bytes\": 80579309568, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15346130944, \"SwapTotal\": 3221221376, \"SwapFree\": 2964754432}, \"memory_events\": null}"
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1792714012.007534, \"group\": \"new_fix\", \"task\": 1123, \"phase\": \"generation\"}, {\"at\": 1792714082.459715, \"group\": \"new_fix\", \"task\": 1133, \"phase\": \"generation\"}, {\"at\": 1792714126.6160104, \"group\": \"new_fix\", \"task\": 1134, \"phase\": \"generation\"}, {\"at\": 1792714180.499339, \"group\": \"new_fix\", \"task\": 1135, \"phase\": \"generation\"}, {\"at\": 1792715715.9524417, \"group\": \"new_fix\", \"task\": 1123, \"phase\": \"review\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1792109496.2456934,
-        "kind": "codex"
-      },
-      {
-        "at": 1792109665.2369251,
-        "kind": "judge"
-      },
       {
         "at": 1792111423.0226595,
         "kind": "judge"
@@ -26161,6 +26157,10 @@
       {
         "at": 1792714366.4950342,
         "kind": "judge"
+      },
+      {
+        "at": 1792715715.9540172,
+        "kind": "codex"
       }
     ]
   }
