@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1792943480.907017,
+  "saved_at": 1792943509.927413,
   "tables": {
     "tasks": [
       {
@@ -15883,10 +15883,10 @@
         "repo": "comfyui",
         "number": 17345,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1792943461.6091716,
-        "updated": 1792943464.9273365,
-        "result": "",
+        "updated": 1792943509.9167926,
+        "result": "VALIDATION_ENVIRONMENT: Issue #17345 requires a CUDA INT8 quantized model path to reproduce and verify the torch.compile failure. This checkout has no CUDA device, PyTorch, or comfy-kitchen installed. The task limits ComfyUI fixes to CPU-verifiable issues, so the required regression proof is unavailable. No files were changed.",
         "attempts": 1
       }
     ],
@@ -25260,20 +25260,8 @@
         "value": "{\"started\": 1792928443.2585404, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792928447.2338946, \"recovery_checked_at\": 1792943276.596333}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1792943354.8654366, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
-      },
-      {
-        "key": "admission_health",
-        "value": "{\"at\": 1792943407.7947695, \"state\": \"waiting\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 5, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1959.209361076355, \"judge_tokens_spent_24h\": 61076, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 3, \"validation_wait\": 6, \"capacity_wait\": 19}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7721\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7721\", \"title\": \"Please support openai compatiblity natively for adk python\", \"first_seen\": 1792905398.5678468, \"last_checked\": 1792906379.7141256, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7719\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7719\", \"title\": \"Resumable Workflow skips an interrupted ordinary tool call; direct Agent root replays it\", \"first_seen\": 1792889602.239672, \"last_checked\": 1792906382.6058934, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7711\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7711\", \"title\": \"InMemoryMemoryService loses sessionless memories when a session ID equals its fallback bucket name\", \"first_seen\": 1792862456.0088136, \"last_checked\": 1792906385.358918, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7722\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7722\", \"title\": \"InMemorySessionService keeps empty user maps after sessions are deleted\", \"first_seen\": 1792925267.3365555, \"last_checked\": 1792925267.336556, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1792943407.7973423, \"tasks\": {\"fix\": {\"capacity_wait\": 19, \"done\": 2, \"human_wait\": 3, \"skipped\": 9, \"validation_wait\": 5}, \"respond\": {\"done\": 1, \"validation_wait\": 1}}}"
       },
       {
         "key": "judge_usage",
@@ -25294,10 +25282,6 @@
       {
         "key": "task:45",
         "value": "{\"recovery_checked_at\": 1792943468.7570977}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1792943468.985022, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1793513773}]}"
       },
       {
         "key": "recovery_audit:45",
@@ -25360,10 +25344,6 @@
         "value": "{\"date\": \"2026-10-25\", \"used\": {\"llama-index\": 2, \"openclaw\": 5, \"spec-kit\": 3, \"comfyui\": 3, \"langfuse\": 3}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1222\": {\"remaining\": 1, \"until\": 1792950675.0366945}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1792926790.1589227, \"group\": \"new_fix\", \"task\": 1214, \"phase\": \"generation\"}, {\"at\": 1792929272.323187, \"group\": \"new_fix\", \"task\": 1218, \"phase\": \"generation\"}, {\"at\": 1792939663.7339654, \"group\": \"new_fix\", \"task\": 1221, \"phase\": \"generation\"}, {\"at\": 1792940071.3239527, \"group\": \"new_fix\", \"task\": 1126, \"phase\": \"generation\"}, {\"at\": 1792941448.578144, \"group\": \"new_fix\", \"task\": 1104, \"phase\": \"generation\"}, {\"at\": 1792943475.0366945, \"group\": \"new_fix\", \"task\": 1222, \"phase\": \"generation\"}]"
       },
@@ -25376,20 +25356,24 @@
         "value": "{\"at\": 1792943475.0974162, \"disk_free_bytes\": 86116184064, \"memory_bytes\": {\"MemTotal\": 16766410752, \"MemAvailable\": 15168790528, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1792943476.635785"
+        "key": "admission_health",
+        "value": "{\"at\": 1792943480.9260652, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 6, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 5.881597518920898, \"judge_tokens_spent_24h\": 62907, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 3, \"validation_wait\": 6, \"capacity_wait\": 19}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7721\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7721\", \"title\": \"Please support openai compatiblity natively for adk python\", \"first_seen\": 1792905398.5678468, \"last_checked\": 1792906379.7141256, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7719\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7719\", \"title\": \"Resumable Workflow skips an interrupted ordinary tool call; direct Agent root replays it\", \"first_seen\": 1792889602.239672, \"last_checked\": 1792906382.6058934, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7711\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7711\", \"title\": \"InMemoryMemoryService loses sessionless memories when a session ID equals its fallback bucket name\", \"first_seen\": 1792862456.0088136, \"last_checked\": 1792906385.358918, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7722\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7722\", \"title\": \"InMemorySessionService keeps empty user maps after sessions are deleted\", \"first_seen\": 1792925267.3365555, \"last_checked\": 1792925267.336556, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1792943480.9274547, \"tasks\": {\"fix\": {\"capacity_wait\": 19, \"done\": 2, \"human_wait\": 3, \"running\": 1, \"skipped\": 9, \"validation_wait\": 5}, \"respond\": {\"done\": 1, \"validation_wait\": 1}}}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1792943477.3797936"
-      },
-      {
-        "key": "task:1222",
-        "value": "{\"started\": 1792943464.927376, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1222/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"19ae172bff6c9e4c738e7f2e00fe087f5b5b46ab\", \"generation_started\": 1792943475.03634, \"dispatch_paid_date\": \"2026-10-25\", \"phase_started\": 1792943477.8690915}"
+        "value": "1792943507.3834512"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1792943478.023067"
+        "value": "1792943508.023799"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1792943508.931443"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -25397,7 +25381,31 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1792943479.6136198"
+        "value": "1792943509.4563277"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1792943509.5944307, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1793513773}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1792943509.5964725, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1222:1:generation",
+        "value": "{\"task\": 1222, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1792943509.5993345, \"seconds\": 34.566, \"tokens\": {\"totalTokens\": 209730, \"inputTokens\": 208364, \"cachedInputTokens\": 158464, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1366, \"reasoningOutputTokens\": 379}, \"first_event_ms\": 1792943483768, \"last_event_ms\": 1792943509594, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:1222",
+        "value": "{\"status\": \"needs_human\", \"task\": 1222, \"repo\": \"comfyui\", \"number\": 17345, \"reason\": \"VALIDATION_ENVIRONMENT: Issue #17345 requires a CUDA INT8 quantized model path to reproduce and verify the torch.compile failure. This checkout has no CUDA device, PyTorch, or comfy-kitchen installed. The task limits ComfyUI fixes to CPU-verifiable issues, so the required regression proof is unavailable. No files were changed.\", \"base\": \"19ae172bff6c9e4c738e7f2e00fe087f5b5b46ab\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"1222-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1222",
+        "value": "{\"started\": 1792943464.927376, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1222/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"19ae172bff6c9e4c738e7f2e00fe087f5b5b46ab\", \"generation_started\": 1792943475.03634, \"dispatch_paid_date\": \"2026-10-25\", \"phase_started\": 1792943477.8690915, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1792943509.7601805}"
       }
     ],
     "calls": [
