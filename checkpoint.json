@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793041103.0202115,
+  "saved_at": 1793041106.9445124,
   "tables": {
     "tasks": [
       {
@@ -16650,11 +16650,11 @@
         "repo": "openclaw",
         "number": 184867,
         "note": "",
-        "status": "running",
+        "status": "capacity_wait",
         "created": 1793041096.8178468,
-        "updated": 1793041103.0093234,
-        "result": "",
-        "attempts": 1
+        "updated": 1793041106.9295106,
+        "result": "openclaw open PR cap (20)",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -26171,24 +26171,8 @@
         "value": "{\"task\": 1280, \"repo\": \"llama-index\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793040089.4528878, \"seconds\": 24.426, \"tokens\": {\"totalTokens\": 89155, \"inputTokens\": 88245, \"cachedInputTokens\": 60288, \"cacheWriteInputTokens\": 0, \"outputTokens\": 910, \"reasoningOutputTokens\": 195}, \"first_event_ms\": 1793040071425, \"last_event_ms\": 1793040089448, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:1280",
         "value": "{\"started\": 1793040038.6885803, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1280/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"619d74664e8404612038bc15a1a40c686037277c\", \"generation_started\": 1793040065.0280838, \"dispatch_paid_date\": \"2026-10-26\", \"phase_started\": 1793040068.1284733, \"last_execution_phase\": \"generation\", \"finished\": 1793040089.4555285}"
-      },
-      {
-        "key": "task:1215",
-        "value": "{\"started\": 1792927739.0652864, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792927742.3952496, \"recovery_checked_at\": 1793040146.5045476}"
-      },
-      {
-        "key": "task:1216",
-        "value": "{\"started\": 1792928410.4056547, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792928414.4148908, \"recovery_checked_at\": 1793040147.6268246}"
-      },
-      {
-        "key": "task:1217",
-        "value": "{\"started\": 1792928443.2585404, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792928447.2338946, \"recovery_checked_at\": 1793040148.5847044}"
       },
       {
         "key": "task:1219",
@@ -26591,16 +26575,28 @@
         "value": "{\"at\": 1793041067.5910525, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1793600007}]}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1793041090.9301705"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793041103.0091555, \"comfyui\": 1792989607.9976022, \"hermes\": 1791629598.7424486, \"langfuse\": 1793030867.5202909, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793040038.6883664, \"langfuse-python\": 1792269667.6802466, \"spec-kit\": 1793028834.729, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792737380.7311516, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792672579.3959703}}"
+      },
+      {
+        "key": "task:1215",
+        "value": "{\"started\": 1792927739.0652864, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792927742.3952496, \"recovery_checked_at\": 1793041104.5427415}"
+      },
+      {
+        "key": "task:1216",
+        "value": "{\"started\": 1792928410.4056547, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792928414.4148908, \"recovery_checked_at\": 1793041105.4448917}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1793041100.507156"
+        "value": "1793041105.507237"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1793041101.828603"
+        "key": "worker_heartbeat",
+        "value": "1793041105.9314322"
+      },
+      {
+        "key": "task:1217",
+        "value": "{\"started\": 1792928443.2585404, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792928447.2338946, \"recovery_checked_at\": 1793041106.3801177}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -26608,15 +26604,19 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793041102.1219277"
+        "value": "1793041106.7996402"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793041103.0091555, \"comfyui\": 1792989607.9976022, \"hermes\": 1791629598.7424486, \"langfuse\": 1793030867.5202909, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793040038.6883664, \"langfuse-python\": 1792269667.6802466, \"spec-kit\": 1793028834.729, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792737380.7311516, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792672579.3959703}}"
+        "key": "watch_heartbeat",
+        "value": "1793041106.8349626"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:1281",
-        "value": "{\"started\": 1793041103.0093634, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "value": "{\"started\": 1793041103.0093634, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793041106.9279714}"
       }
     ],
     "calls": [
