@@ -3,25 +3,101 @@
   "upstream": "openclaw/openclaw",
   "implements_in": "openclaw/openclaw",
   "needs_assignment": false,
-  "scanned_at": "2026-10-26T05:53:27+00:00",
+  "scanned_at": "2026-10-26T05:59:14+00:00",
   "partial": false,
   "errors": [],
-  "candidates": [],
-  "rejected": [
+  "candidates": [
+    {
+      "number": 184242,
+      "title": "[Bug]: ACP session/load replay omits ContentChunk.messageId, so consecutive user messages merge",
+      "url": "https://github.com/openclaw/openclaw/issues/184242",
+      "created_at": "2026-10-26T05:17:50Z",
+      "age_hours": 0.7,
+      "reason": "clear",
+      "labels": [
+        "P2",
+        "clawsweeper:fix-shape-clear",
+        "clawsweeper:queueable-fix",
+        "clawsweeper:source-repro",
+        "impact:session-state",
+        "issue-rating: \ud83e\udd9e diamond lobster",
+        "no-stale"
+      ],
+      "comments": 1,
+      "self_claimed": false
+    },
     {
       "number": 184237,
       "title": "[Bug]: Buffered command results omit native cleanup uncertainty",
       "url": "https://github.com/openclaw/openclaw/issues/184237",
       "created_at": "2026-10-26T05:12:17Z",
-      "age_hours": 0.3,
-      "reason": "only 21 min old; waiting 40 min for the repo's own triage"
+      "age_hours": 0.8,
+      "reason": "clear",
+      "labels": [
+        "P2",
+        "clawsweeper:source-repro",
+        "impact:other",
+        "issue-rating: \ud83e\udd9e diamond lobster"
+      ],
+      "comments": 1,
+      "self_claimed": false
+    },
+    {
+      "number": 184115,
+      "title": "[Bug]: Sandboxed sessions cannot start when the generated-skills mountpoint is left root-owned (\"path alias escape blocked\")",
+      "url": "https://github.com/openclaw/openclaw/issues/184115",
+      "created_at": "2026-10-26T02:36:58Z",
+      "age_hours": 3.4,
+      "reason": "clear",
+      "labels": [
+        "P1",
+        "clawsweeper:source-repro",
+        "impact:other",
+        "issue-rating: \ud83e\udd9e diamond lobster"
+      ],
+      "comments": 1,
+      "self_claimed": false
+    }
+  ],
+  "rejected": [
+    {
+      "number": 184266,
+      "title": "[Bug]: Worker-scoped store write downgrades `reentrant: true` writes and self-deadlocks on the same SQLite store path",
+      "url": "https://github.com/openclaw/openclaw/issues/184266",
+      "created_at": "2026-10-26T05:57:08Z",
+      "age_hours": 0.0,
+      "reason": "only 2 min old; waiting 40 min for the repo's own triage"
+    },
+    {
+      "number": 184263,
+      "title": "[Bug]: Browser Talk consult omits spoken question from history and leaves final answer text-only",
+      "url": "https://github.com/openclaw/openclaw/issues/184263",
+      "created_at": "2026-10-26T05:51:40Z",
+      "age_hours": 0.1,
+      "reason": "only 7 min old; waiting 40 min for the repo's own triage"
+    },
+    {
+      "number": 184260,
+      "title": "[Bug]: Windows Talk stale-session recovery fails with DataCloneError on each call start",
+      "url": "https://github.com/openclaw/openclaw/issues/184260",
+      "created_at": "2026-10-26T05:50:37Z",
+      "age_hours": 0.1,
+      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr', 'clawsweeper:not-repro-on-main']"
+    },
+    {
+      "number": 184254,
+      "title": "Update failure: gateway-recovery-verification (2026.10.6)",
+      "url": "https://github.com/openclaw/openclaw/issues/184254",
+      "created_at": "2026-10-26T05:34:25Z",
+      "age_hours": 0.4,
+      "reason": "only 25 min old; waiting 40 min for the repo's own triage"
     },
     {
       "number": 184207,
       "title": "Bug: xAI Talk disconnects when a VAD successor arrives without the interrupted terminal",
       "url": "https://github.com/openclaw/openclaw/issues/184207",
       "created_at": "2026-10-26T04:38:02Z",
-      "age_hours": 0.9,
+      "age_hours": 1.4,
       "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -29,7 +105,7 @@
       "title": "Feature: opt-in post-authorization inbound-media staging hook",
       "url": "https://github.com/openclaw/openclaw/issues/184199",
       "created_at": "2026-10-26T04:30:13Z",
-      "age_hours": 1.0,
+      "age_hours": 1.5,
       "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -37,7 +113,7 @@
       "title": "Git cancellation can hide uncertain native cleanup",
       "url": "https://github.com/openclaw/openclaw/issues/184197",
       "created_at": "2026-10-26T04:29:01Z",
-      "age_hours": 1.1,
+      "age_hours": 1.5,
       "reason": "already has PR(s): ['closing-ref PR#184226(OPEN)', 'xref PR#184226(OPEN)']"
     },
     {
@@ -45,7 +121,7 @@
       "title": "[Bug]: PostHog native MCP plugin sends literal header environment placeholders",
       "url": "https://github.com/openclaw/openclaw/issues/184192",
       "created_at": "2026-10-26T04:26:57Z",
-      "age_hours": 1.1,
+      "age_hours": 1.5,
       "reason": "excluded label ['clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -53,7 +129,7 @@
       "title": "[Feature]: Home tab (main agent session): add the session context menu (preserving its current right-click) and message indicators (thinking, new message)",
       "url": "https://github.com/openclaw/openclaw/issues/184170",
       "created_at": "2026-10-26T03:47:29Z",
-      "age_hours": 1.8,
+      "age_hours": 2.2,
       "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -61,7 +137,7 @@
       "title": "Reply dispatchers that never markComplete() stay in activeReplyDispatchers forever (heap leak)",
       "url": "https://github.com/openclaw/openclaw/issues/184140",
       "created_at": "2026-10-26T03:11:12Z",
-      "age_hours": 2.4,
+      "age_hours": 2.8,
       "reason": "excluded label ['clawsweeper:needs-live-repro', 'clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -69,7 +145,7 @@
       "title": "[Bug]: Completion install hides the missing-cache recovery command",
       "url": "https://github.com/openclaw/openclaw/issues/184135",
       "created_at": "2026-10-26T03:04:16Z",
-      "age_hours": 2.5,
+      "age_hours": 2.9,
       "reason": "already has PR(s): ['closing-ref PR#184191(OPEN)', 'xref PR#184191(OPEN)']"
     },
     {
@@ -77,40 +153,8 @@
       "title": "[Bug]: Linux desktop companion \u2014 Ctrl+V images never reach the composer (WebKitGTK: paste payload empty, clipboard API denied)",
       "url": "https://github.com/openclaw/openclaw/issues/184123",
       "created_at": "2026-10-26T02:49:54Z",
-      "age_hours": 2.7,
+      "age_hours": 3.2,
       "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 184111,
-      "title": "[Bug]: worktree creation fails when another request cancels a shared default fetch",
-      "url": "https://github.com/openclaw/openclaw/issues/184111",
-      "created_at": "2026-10-26T02:34:13Z",
-      "age_hours": 3.0,
-      "reason": "excluded label ['clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 184095,
-      "title": "[Feature]: Read Discord scheduled-event subscribers through the message tool",
-      "url": "https://github.com/openclaw/openclaw/issues/184095",
-      "created_at": "2026-10-26T02:14:12Z",
-      "age_hours": 3.3,
-      "reason": "excluded label ['clawsweeper:bulk-filed']"
-    },
-    {
-      "number": 184068,
-      "title": "[Bug]: Skills prompt says to call `skills_read` directly, but default Tool Search does not send it to the model, so the call fails",
-      "url": "https://github.com/openclaw/openclaw/issues/184068",
-      "created_at": "2026-10-26T01:46:03Z",
-      "age_hours": 3.8,
-      "reason": "already has PR(s): ['closing-ref PR#184133(OPEN)', 'xref PR#184133(OPEN)']"
-    },
-    {
-      "number": 184067,
-      "title": "[Bug]: macOS bundled Bun Gateway retains 3.9\u20134.5 GB after tool work and config reloads",
-      "url": "https://github.com/openclaw/openclaw/issues/184067",
-      "created_at": "2026-10-26T01:45:00Z",
-      "age_hours": 3.8,
-      "reason": "excluded label ['clawsweeper:needs-info', 'clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
     }
   ]
 }
