@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793016034.7642689,
+  "saved_at": 1793016061.9803212,
   "tables": {
     "tasks": [
       {
@@ -14986,10 +14986,10 @@
         "repo": "llama-index",
         "number": 23667,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1792747776.1268377,
-        "updated": 1793016002.987343,
-        "result": "The bug is still present, but open PR #22407 already changes infer_torch_device() to detect XPU and adds a regression test. The issue explicitly asks maintainers to approve that PR; a second fix would duplicate it.",
+        "updated": 1793016061.873205,
+        "result": "The bug remains in the clean checkout, but open PR #22407 already adds XPU detection to infer_torch_device() and a regression test. Issue #23667 explicitly asks maintainers to approve that PR, so another fix would duplicate it.",
         "attempts": 2
       },
       {
@@ -25721,10 +25721,6 @@
         "value": "{\"started\": 1793012651.9538734, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1256/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"311afd44d17755a04ca77174c222debf95c39927\", \"generation_started\": 1793012665.1955965, \"dispatch_paid_date\": \"2026-10-26\", \"phase_started\": 1793012667.9477794, \"last_execution_phase\": \"generation\", \"finished\": 1793012727.1251464}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1793014531.1333303, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -26065,10 +26061,6 @@
         "value": "1793015949.1631892"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1793015979.8929486, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1793600007}]}"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793015837.6699853, \"comfyui\": 1792989607.9976022, \"hermes\": 1791629598.7424486, \"langfuse\": 1793012651.9536889, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793016002.9872015, \"langfuse-python\": 1792269667.6802466, \"spec-kit\": 1792983303.1806269, \"crawl4ai\": 1791353431.2624507, \"dify\": 1792737380.7311516, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1792672579.3959703}}"
       },
@@ -26093,8 +26085,20 @@
         "value": "{\"at\": 1793016013.1191595, \"tasks\": {\"fix\": {\"capacity_wait\": 29, \"done\": 1, \"human_wait\": 1, \"running\": 1, \"skipped\": 11, \"validation_wait\": 1}, \"respond\": {\"blocked\": 1}}}"
       },
       {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1793004571.056725, \"group\": \"new_fix\", \"task\": 1254, \"phase\": \"generation\"}, {\"at\": 1793012665.1957495, \"group\": \"new_fix\", \"task\": 1256, \"phase\": \"generation\"}, {\"at\": 1793016032.2321658, \"group\": \"new_fix\", \"task\": 1153, \"phase\": \"generation\"}]"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1793016021.4247453"
+        "value": "1793016051.4284"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793016057.0709891"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1793016058.4402983"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -26102,27 +26106,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793016031.2831495"
+        "value": "1793016059.9666579"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1793016032.0468283"
+        "key": "codex_quota",
+        "value": "{\"at\": 1793016061.212697, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1793600007}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1793016061.3021746, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1153:2:generation",
+        "value": "{\"task\": 1153, \"repo\": \"llama-index\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1793016061.353943, \"seconds\": 29.123, \"tokens\": {\"totalTokens\": 91090, \"inputTokens\": 89944, \"cachedInputTokens\": 61568, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1146, \"reasoningOutputTokens\": 259}, \"first_event_ms\": 1793016037494, \"last_event_ms\": 1793016061212, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "codex_review_leases",
-        "value": "{\"1153\": {\"remaining\": 1, \"until\": 1793023232.2321658}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1793004571.056725, \"group\": \"new_fix\", \"task\": 1254, \"phase\": \"generation\"}, {\"at\": 1793012665.1957495, \"group\": \"new_fix\", \"task\": 1256, \"phase\": \"generation\"}, {\"at\": 1793016032.2321658, \"group\": \"new_fix\", \"task\": 1153, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1793016033.439845"
+        "value": "{}"
       },
       {
         "key": "task:1153",
-        "value": "{\"started\": 1793016002.9873762, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1153/attempt-2\", \"attempt\": 2, \"phase\": \"generation\", \"base\": \"619d74664e8404612038bc15a1a40c686037277c\", \"generation_started\": 1792747802.4024613, \"dispatch_paid_date\": \"2026-10-23\", \"phase_started\": 1793016034.7564523, \"last_execution_phase\": \"generation\", \"finished\": 1792747844.1368833}"
+        "value": "{\"started\": 1793016002.9873762, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1153/attempt-2\", \"attempt\": 2, \"phase\": \"skipped\", \"base\": \"619d74664e8404612038bc15a1a40c686037277c\", \"generation_started\": 1792747802.4024613, \"dispatch_paid_date\": \"2026-10-23\", \"phase_started\": 1793016034.7564523, \"last_execution_phase\": \"generation\", \"finished\": 1793016061.4526525}"
       }
     ],
     "calls": [
