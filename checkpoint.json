@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793230607.9581532,
+  "saved_at": 1793230610.9676623,
   "tables": {
     "tasks": [
       {
@@ -18080,10 +18080,10 @@
         "repo": "langfuse",
         "number": 19452,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1793230557.4306128,
-        "updated": 1793230557.6396928,
-        "result": "",
+        "updated": 1793230610.4210505,
+        "result": "The reported double count originates in the Python SDK’s CallbackHandler, which is outside this checkout. A server-side change would overlap open PR #19447, which is already modifying the same usage normalizer and cache-write attribution. Its patch does not cover the reported `cache_creation_ephemeral_*` keys, so the bug remains unresolved, but a separate change here would compete with that work.",
         "attempts": 1
       },
       {
@@ -28118,10 +28118,6 @@
         "value": "{\"started\": 1793229178.0095665, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793229181.9834607}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1793229458.5467982, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -28618,16 +28614,8 @@
         "value": "{\"date\": \"2026-10-28\", \"used\": {\"comfyui\": 6, \"dify\": 1, \"llama-index\": 1, \"langfuse\": 3, \"langfuse-python\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1391\": {\"remaining\": 1, \"until\": 1793237768.0839806}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1793216201.0354826, \"group\": \"new_fix\", \"task\": 1384, \"phase\": \"generation\"}, {\"at\": 1793220484.6197534, \"group\": \"new_fix\", \"task\": 1386, \"phase\": \"generation\"}, {\"at\": 1793230568.0839806, \"group\": \"new_fix\", \"task\": 1391, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "task:1391",
-        "value": "{\"started\": 1793230557.639731, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1391/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"b1067f3a8c7deb449893f7f84d2e2699a4405656\", \"generation_started\": 1793230568.0836844, \"dispatch_paid_date\": \"2026-10-28\", \"phase_started\": 1793230571.2701893}"
       },
       {
         "key": "prwatch_heartbeat",
@@ -28654,24 +28642,12 @@
         "value": "{\"started\": 1792966797.533795, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792966801.00237, \"recovery_checked_at\": 1793230603.1607385}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1793230603.7124474"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1793230604.232439, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1793774604}]}"
-      },
-      {
         "key": "task:1233",
         "value": "{\"started\": 1792969304.766246, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792969308.2827768, \"recovery_checked_at\": 1793230604.3274107}"
       },
       {
         "key": "task:1234",
         "value": "{\"started\": 1792969558.076903, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792969561.579904, \"recovery_checked_at\": 1793230605.1702523}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1793230605.8422372"
       },
       {
         "key": "task:1235",
@@ -28696,6 +28672,34 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1793230607.9446592, \"disk_free_bytes\": 88249098240, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15313780736, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793230608.7217956"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1793230610.1281812, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1793774604}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1793230610.130431, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1391:1:generation",
+        "value": "{\"task\": 1391, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793230610.1358104, \"seconds\": 42.054, \"tokens\": {\"totalTokens\": 364310, \"inputTokens\": 362422, \"cachedInputTokens\": 296576, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1888, \"reasoningOutputTokens\": 599}, \"first_event_ms\": 1793230574374, \"last_event_ms\": 1793230610128, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1391",
+        "value": "{\"started\": 1793230557.639731, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1391/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"b1067f3a8c7deb449893f7f84d2e2699a4405656\", \"generation_started\": 1793230568.0836844, \"dispatch_paid_date\": \"2026-10-28\", \"phase_started\": 1793230571.2701893, \"last_execution_phase\": \"generation\", \"finished\": 1793230610.1386583}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1793230610.842313"
       }
     ],
     "calls": [
