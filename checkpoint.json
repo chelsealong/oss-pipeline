@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793204003.0599513,
+  "saved_at": 1793204019.4114323,
   "tables": {
     "tasks": [
       {
@@ -17911,10 +17911,10 @@
         "repo": "langfuse",
         "number": 19446,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1793203919.7819173,
-        "updated": 1793203920.0198236,
-        "result": "",
+        "updated": 1793204019.400367,
+        "result": "Open PR #19136 already fixes the exact reported keys, input_ephemeral_5m_input_tokens and input_ephemeral_1h_input_tokens, in Claude model pricing. A second fix would duplicate active work.",
         "attempts": 1
       }
     ],
@@ -27904,10 +27904,6 @@
         "value": "{\"started\": 1793093232.3430626, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793093235.7738829, \"recovery_checked_at\": 1793202570.598625}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1793202927.5438397, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -28352,14 +28348,6 @@
         "value": "{\"started\": 1793041870.1331267, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793041873.815708, \"recovery_checked_at\": 1793203925.99281}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1793203931.9319828, \"state\": \"active\", \"pending_candidates\": 2, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 1, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 2}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 5, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 2868.101900100708, \"judge_tokens_spent_24h\": 82572, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 3, \"capacity_wait\": 41}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7778\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7778\", \"title\": \"test_agent_engine_environment.py: 13 tests fail on macOS (GNU-only stat -c / base64 -d <file> in the local bash)\", \"first_seen\": 1793151559.2918348, \"last_checked\": 1793154923.1203034, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7775\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7775\", \"title\": \"Google Cloud Model Armor requires at least Python 3.12 but _dockerfile_template.py#L100-L149 hardcode to python 3.11\", \"first_seen\": 1793124914.008172, \"last_checked\": 1793154925.6166549, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7770\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7770\", \"title\": \"Proposal: `ProvenanceGatePlugin` \\u2014 deterministic runtime check that cited IDs were returned by a tool in the current invocation\", \"first_seen\": 1793107860.2632258, \"last_checked\": 1793154928.0717506, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7782\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7782\", \"title\": \"Workflow: LlmAgent with sub_agents/transfer loses ctx.output for downstream edges\", \"first_seen\": 1793155516.5794964, \"last_checked\": 1793155516.5794966, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1793203931.9334502, \"tasks\": {\"fix\": {\"capacity_wait\": 41, \"done\": 1, \"running\": 1, \"skipped\": 8, \"validation_wait\": 3}, \"respond\": {\"error\": 1}}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"dify\", \"task\": 1359, \"at\": 1793186135.214685}, {\"repo\": \"comfyui\", \"task\": 1370, \"at\": 1793198930.008425}, {\"repo\": \"comfyui\", \"task\": 1372, \"at\": 1793199282.4038494}, {\"repo\": \"llama-index\", \"task\": 1374, \"at\": 1793201063.8219151}, {\"repo\": \"langfuse\", \"task\": 1378, \"at\": 1793203935.971181}]"
       },
@@ -28368,24 +28356,8 @@
         "value": "{\"date\": \"2026-10-28\", \"used\": {\"comfyui\": 5, \"dify\": 1, \"llama-index\": 1, \"langfuse\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1378\": {\"remaining\": 1, \"until\": 1793211135.971467}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1793186135.2149322, \"group\": \"new_fix\", \"task\": 1359, \"phase\": \"generation\"}, {\"at\": 1793198930.0086558, \"group\": \"new_fix\", \"task\": 1370, \"phase\": \"generation\"}, {\"at\": 1793199282.4040525, \"group\": \"new_fix\", \"task\": 1372, \"phase\": \"generation\"}, {\"at\": 1793199911.4558148, \"group\": \"new_fix\", \"task\": 1126, \"phase\": \"generation\"}, {\"at\": 1793201063.8221211, \"group\": \"new_fix\", \"task\": 1374, \"phase\": \"generation\"}, {\"at\": 1793203935.971467, \"group\": \"new_fix\", \"task\": 1378, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "task:1378",
-        "value": "{\"started\": 1793203920.0198708, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1378/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"b51b3966b29efb5baacf3cd77821e7fd08e270d2\", \"generation_started\": 1793203935.9711814, \"dispatch_paid_date\": \"2026-10-28\", \"phase_started\": 1793203939.762032}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1793203988.853324"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1793203990.835415, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1793774604}]}"
       },
       {
         "key": "task:1298",
@@ -28412,24 +28384,8 @@
         "value": "{\"started\": 1793077607.0191748, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793077610.747493, \"recovery_checked_at\": 1793203999.4677975}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1793203999.779543"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1793203999.910963"
-      },
-      {
         "key": "task:1305",
         "value": "{\"started\": 1793078942.6787984, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793078946.7180667, \"recovery_checked_at\": 1793204000.5975869}"
-      },
-      {
-        "key": "discovery_triage_ready:openclaw",
-        "value": "{\"175500\": true, \"175505\": true, \"175540\": true, \"175597\": true, \"175599\": true, \"175665\": true, \"175700\": true, \"175701\": true, \"175734\": true, \"175736\": true, \"175801\": true, \"175950\": true, \"176027\": true, \"176028\": true, \"176062\": true, \"176098\": true, \"176115\": true, \"176138\": true, \"176179\": true, \"176208\": true, \"176220\": true, \"176223\": true, \"176224\": true, \"176229\": true, \"176235\": true, \"176236\": true, \"176237\": true, \"176238\": true, \"176239\": true, \"176242\": true, \"176244\": true, \"176250\": true, \"176268\": true, \"176353\": true, \"176472\": true, \"176649\": true, \"176659\": true, \"176740\": true, \"176743\": true, \"176750\": true, \"176778\": true, \"176872\": true, \"176889\": true, \"176922\": true, \"176944\": true, \"176966\": true, \"176994\": true, \"177056\": true, \"177057\": true, \"177065\": true, \"177068\": true, \"177093\": true, \"177094\": true, \"177157\": true, \"177275\": true, \"177311\": true, \"177341\": true, \"177352\": true, \"177358\": true, \"177440\": true, \"177531\": true, \"177576\": true, \"177622\": true, \"177686\": true, \"177697\": true, \"177739\": true, \"177849\": true, \"177854\": true, \"177870\": true, \"177876\": true, \"177909\": true, \"177993\": true, \"178010\": true, \"178032\": true, \"178059\": true, \"178085\": true, \"178121\": true, \"178122\": true, \"178133\": true, \"178235\": true, \"178310\": true, \"178387\": true, \"178395\": true, \"178398\": true, \"178404\": true, \"178421\": true, \"178471\": true, \"178481\": true, \"178499\": true, \"178502\": true, \"178507\": true, \"178513\": true, \"178539\": true, \"178548\": true, \"178549\": true, \"178565\": true, \"178589\": true, \"178809\": true, \"178908\": true, \"178912\": true, \"178913\": true, \"178923\": true, \"178960\": true, \"178989\": true, \"179153\": true, \"179242\": true, \"179258\": true, \"179290\": true, \"179295\": true, \"179318\": true, \"179344\": true, \"179396\": true, \"179398\": true, \"179411\": true, \"179441\": true, \"179923\": true, \"179979\": true, \"179980\": true, \"179989\": true, \"179994\": true, \"180311\": true, \"180379\": true, \"180411\": true, \"180426\": true, \"180508\": true, \"180510\": true, \"180514\": true, \"180524\": true, \"180530\": true, \"180577\": true, \"180655\": true, \"180657\": true, \"180658\": true, \"180719\": true, \"180720\": true, \"180739\": true, \"180757\": true, \"180814\": true, \"180815\": true, \"180845\": true, \"180856\": true, \"180942\": true, \"180960\": true, \"180969\": true, \"181020\": true, \"181070\": true, \"181100\": true, \"181107\": true, \"181165\": true, \"181175\": true, \"181210\": true, \"181212\": true, \"181254\": true, \"181345\": true, \"181361\": true, \"181442\": true, \"181493\": true, \"181514\": true, \"181557\": true, \"181583\": true, \"181595\": true, \"181682\": true, \"181686\": true, \"181722\": true, \"181772\": true, \"181805\": true, \"181818\": true, \"181858\": true, \"181945\": true, \"181950\": true, \"181952\": true, \"181956\": true, \"181968\": true, \"181976\": true, \"181980\": true, \"182060\": true, \"182077\": true, \"182087\": true, \"182174\": true, \"182175\": true, \"182177\": true, \"182179\": true, \"182183\": true, \"182206\": true, \"182297\": true, \"182315\": true, \"182326\": true, \"182474\": true, \"182518\": true, \"182526\": true, \"182527\": true, \"182549\": true, \"182555\": true, \"182562\": true, \"182638\": true, \"182688\": true, \"182694\": true, \"182761\": true, \"182769\": true, \"182771\": true, \"182773\": true, \"182798\": true, \"182805\": true, \"182808\": true, \"182950\": true, \"183031\": true, \"183056\": true, \"183085\": true, \"183088\": true, \"183091\": true, \"183096\": true, \"183138\": true, \"183154\": true, \"183273\": true, \"183275\": true, \"183307\": true, \"183363\": true, \"183389\": true, \"183416\": true, \"183425\": true, \"183556\": true, \"183562\": true, \"183589\": true, \"183682\": true, \"183700\": true, \"183709\": true, \"183723\": true, \"183747\": true, \"183805\": true, \"183848\": true, \"183856\": true, \"183894\": true, \"183925\": true, \"183926\": true, \"183927\": true, \"183928\": true, \"183929\": true, \"184060\": true, \"184068\": true, \"184135\": true, \"184242\": true, \"184272\": true, \"184320\": true, \"184339\": true, \"184362\": true, \"184473\": true, \"184538\": true, \"184580\": true, \"184585\": true, \"184654\": true, \"184730\": true, \"184790\": true, \"184828\": true, \"184867\": true, \"184887\": true, \"184888\": true, \"184889\": true, \"184891\": true, \"184893\": true, \"185079\": true, \"185225\": true, \"185286\": true, \"185298\": true, \"185317\": true, \"185447\": true, \"185534\": true, \"185552\": true, \"185616\": true, \"185678\": true, \"185712\": true, \"185720\": true, \"185726\": true, \"185792\": true, \"185807\": true, \"185844\": true, \"185889\": true, \"185902\": true, \"185942\": true, \"185946\": true, \"186001\": true, \"186011\": true, \"186014\": true, \"186022\": true, \"186026\": true, \"186144\": true, \"186191\": true, \"186215\": true, \"186235\": true, \"186244\": true, \"186255\": true, \"186358\": true, \"186365\": true, \"186392\": true, \"186396\": true, \"186454\": true, \"186478\": true, \"186494\": true, \"186522\": true, \"186527\": true, \"186542\": true, \"186545\": true, \"186565\": true, \"186570\": true, \"186613\": true, \"186634\": true, \"186650\": true, \"186705\": true, \"186719\": true, \"186753\": true, \"186774\": true, \"186775\": true, \"186777\": true, \"186781\": true, \"186796\": true, \"186814\": true, \"186824\": true, \"186832\": true, \"186842\": true, \"186843\": true, \"186873\": true, \"186875\": true}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1793204001.5866396"
       },
       {
         "key": "task:1306",
@@ -28442,6 +28398,54 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1793204003.0486336, \"disk_free_bytes\": 88938246144, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15288356864, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1793204009.0477622, \"state\": \"active\", \"pending_candidates\": 2, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 1, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 2}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 6, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 73.06463575363159, \"judge_tokens_spent_24h\": 82572, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 3, \"capacity_wait\": 41}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7778\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7778\", \"title\": \"test_agent_engine_environment.py: 13 tests fail on macOS (GNU-only stat -c / base64 -d <file> in the local bash)\", \"first_seen\": 1793151559.2918348, \"last_checked\": 1793154923.1203034, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7775\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7775\", \"title\": \"Google Cloud Model Armor requires at least Python 3.12 but _dockerfile_template.py#L100-L149 hardcode to python 3.11\", \"first_seen\": 1793124914.008172, \"last_checked\": 1793154925.6166549, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7770\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7770\", \"title\": \"Proposal: `ProvenanceGatePlugin` \\u2014 deterministic runtime check that cited IDs were returned by a tool in the current invocation\", \"first_seen\": 1793107860.2632258, \"last_checked\": 1793154928.0717506, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7782\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7782\", \"title\": \"Workflow: LlmAgent with sub_agents/transfer loses ctx.output for downstream edges\", \"first_seen\": 1793155516.5794964, \"last_checked\": 1793155516.5794966, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1793204009.050155, \"tasks\": {\"fix\": {\"capacity_wait\": 41, \"done\": 1, \"running\": 1, \"skipped\": 8, \"validation_wait\": 3}, \"respond\": {\"error\": 1}}}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1793204014.7799175"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793204014.929768"
+      },
+      {
+        "key": "discovery_triage_ready:openclaw",
+        "value": "{\"175500\": true, \"175505\": true, \"175540\": true, \"175597\": true, \"175599\": true, \"175665\": true, \"175700\": true, \"175701\": true, \"175734\": true, \"175736\": true, \"175801\": true, \"175950\": true, \"176027\": true, \"176028\": true, \"176062\": true, \"176098\": true, \"176115\": true, \"176138\": true, \"176179\": true, \"176208\": true, \"176220\": true, \"176223\": true, \"176224\": true, \"176229\": true, \"176235\": true, \"176236\": true, \"176237\": true, \"176238\": true, \"176239\": true, \"176242\": true, \"176244\": true, \"176250\": true, \"176268\": true, \"176353\": true, \"176472\": true, \"176649\": true, \"176659\": true, \"176740\": true, \"176743\": true, \"176750\": true, \"176778\": true, \"176872\": true, \"176889\": true, \"176922\": true, \"176944\": true, \"176966\": true, \"176994\": true, \"177056\": true, \"177057\": true, \"177065\": true, \"177068\": true, \"177093\": true, \"177094\": true, \"177157\": true, \"177275\": true, \"177311\": true, \"177341\": true, \"177352\": true, \"177358\": true, \"177440\": true, \"177531\": true, \"177576\": true, \"177622\": true, \"177686\": true, \"177697\": true, \"177739\": true, \"177849\": true, \"177854\": true, \"177870\": true, \"177876\": true, \"177909\": true, \"177993\": true, \"178010\": true, \"178032\": true, \"178059\": true, \"178085\": true, \"178121\": true, \"178122\": true, \"178133\": true, \"178235\": true, \"178310\": true, \"178387\": true, \"178395\": true, \"178398\": true, \"178404\": true, \"178421\": true, \"178471\": true, \"178481\": true, \"178499\": true, \"178502\": true, \"178507\": true, \"178513\": true, \"178539\": true, \"178548\": true, \"178549\": true, \"178565\": true, \"178589\": true, \"178809\": true, \"178908\": true, \"178912\": true, \"178913\": true, \"178923\": true, \"178960\": true, \"178989\": true, \"179153\": true, \"179242\": true, \"179258\": true, \"179290\": true, \"179295\": true, \"179318\": true, \"179344\": true, \"179396\": true, \"179398\": true, \"179411\": true, \"179441\": true, \"179923\": true, \"179979\": true, \"179980\": true, \"179989\": true, \"179994\": true, \"180311\": true, \"180379\": true, \"180411\": true, \"180426\": true, \"180508\": true, \"180510\": true, \"180514\": true, \"180524\": true, \"180530\": true, \"180577\": true, \"180655\": true, \"180657\": true, \"180658\": true, \"180719\": true, \"180720\": true, \"180739\": true, \"180757\": true, \"180814\": true, \"180815\": true, \"180845\": true, \"180856\": true, \"180942\": true, \"180960\": true, \"180969\": true, \"181020\": true, \"181070\": true, \"181100\": true, \"181107\": true, \"181165\": true, \"181175\": true, \"181210\": true, \"181212\": true, \"181254\": true, \"181345\": true, \"181361\": true, \"181442\": true, \"181493\": true, \"181514\": true, \"181557\": true, \"181583\": true, \"181595\": true, \"181682\": true, \"181686\": true, \"181722\": true, \"181772\": true, \"181805\": true, \"181818\": true, \"181858\": true, \"181945\": true, \"181950\": true, \"181952\": true, \"181956\": true, \"181968\": true, \"181976\": true, \"181980\": true, \"182060\": true, \"182077\": true, \"182087\": true, \"182174\": true, \"182175\": true, \"182177\": true, \"182179\": true, \"182183\": true, \"182206\": true, \"182297\": true, \"182315\": true, \"182326\": true, \"182474\": true, \"182518\": true, \"182526\": true, \"182527\": true, \"182549\": true, \"182555\": true, \"182562\": true, \"182638\": true, \"182688\": true, \"182694\": true, \"182761\": true, \"182769\": true, \"182771\": true, \"182773\": true, \"182798\": true, \"182805\": true, \"182808\": true, \"182950\": true, \"183031\": true, \"183056\": true, \"183085\": true, \"183088\": true, \"183091\": true, \"183096\": true, \"183138\": true, \"183154\": true, \"183273\": true, \"183275\": true, \"183307\": true, \"183363\": true, \"183389\": true, \"183416\": true, \"183425\": true, \"183556\": true, \"183562\": true, \"183589\": true, \"183682\": true, \"183700\": true, \"183709\": true, \"183723\": true, \"183747\": true, \"183805\": true, \"183848\": true, \"183856\": true, \"183894\": true, \"183925\": true, \"183926\": true, \"183927\": true, \"183928\": true, \"183929\": true, \"184060\": true, \"184068\": true, \"184135\": true, \"184242\": true, \"184272\": true, \"184320\": true, \"184339\": true, \"184362\": true, \"184473\": true, \"184538\": true, \"184580\": true, \"184585\": true, \"184654\": true, \"184730\": true, \"184790\": true, \"184828\": true, \"184867\": true, \"184887\": true, \"184888\": true, \"184889\": true, \"184891\": true, \"184893\": true, \"185079\": true, \"185225\": true, \"185286\": true, \"185298\": true, \"185317\": true, \"185447\": true, \"185534\": true, \"185552\": true, \"185616\": true, \"185678\": true, \"185712\": true, \"185720\": true, \"185726\": true, \"185792\": true, \"185807\": true, \"185844\": true, \"185889\": true, \"185902\": true, \"185942\": true, \"185946\": true, \"186001\": true, \"186011\": true, \"186014\": true, \"186022\": true, \"186026\": true, \"186144\": true, \"186191\": true, \"186215\": true, \"186235\": true, \"186244\": true, \"186255\": true, \"186358\": true, \"186365\": true, \"186392\": true, \"186396\": true, \"186454\": true, \"186478\": true, \"186494\": true, \"186522\": true, \"186527\": true, \"186542\": true, \"186545\": true, \"186565\": true, \"186570\": true, \"186613\": true, \"186634\": true, \"186650\": true, \"186705\": true, \"186719\": true, \"186753\": true, \"186774\": true, \"186775\": true, \"186777\": true, \"186781\": true, \"186796\": true, \"186814\": true, \"186824\": true, \"186832\": true, \"186842\": true, \"186843\": true, \"186873\": true, \"186875\": true}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1793204016.6661882"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1793204018.8564508"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1793204019.3173501, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1793774604}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1793204019.3193092, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1378:1:generation",
+        "value": "{\"task\": 1378, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793204019.322507, \"seconds\": 83.353, \"tokens\": {\"totalTokens\": 390401, \"inputTokens\": 388019, \"cachedInputTokens\": 330752, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2382, \"reasoningOutputTokens\": 715}, \"first_event_ms\": 1793203944266, \"last_event_ms\": 1793204019317, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1378",
+        "value": "{\"started\": 1793203920.0198708, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1378/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"b51b3966b29efb5baacf3cd77821e7fd08e270d2\", \"generation_started\": 1793203935.9711814, \"dispatch_paid_date\": \"2026-10-28\", \"phase_started\": 1793203939.762032, \"last_execution_phase\": \"generation\", \"finished\": 1793204019.3249276}"
       }
     ],
     "calls": [
