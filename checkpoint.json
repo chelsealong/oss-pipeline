@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793198934.8705564,
+  "saved_at": 1793198963.644976,
   "tables": {
     "tasks": [
       {
@@ -17807,10 +17807,10 @@
         "repo": "comfyui",
         "number": 17416,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1793198915.5655828,
-        "updated": 1793198917.0845296,
-        "result": "",
+        "updated": 1793198963.6286728,
+        "result": "VALIDATION_ENVIRONMENT: Issue #17416 requires reproducing a Windows ROCm pinned-memory eviction failure during MiniMax H3 dynamic VRAM use. This checkout runs on Linux and has neither PyTorch nor comfy-aimdo installed. The reported failure occurs inside HostBuffer.truncate, so a CPU test here cannot verify a fix.",
         "attempts": 1
       }
     ],
@@ -27836,10 +27836,6 @@
         "value": "{\"started\": 1793041870.1331267, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793041873.815708, \"recovery_checked_at\": 1793198163.9657524}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1793198206.7474816, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -28248,16 +28244,16 @@
         "value": "{\"date\": \"2026-10-28\", \"used\": {\"comfyui\": 4, \"dify\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1370\": {\"remaining\": 1, \"until\": 1793206130.0086558}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1793186135.2149322, \"group\": \"new_fix\", \"task\": 1359, \"phase\": \"generation\"}, {\"at\": 1793198930.0086558, \"group\": \"new_fix\", \"task\": 1370, \"phase\": \"generation\"}]"
       },
       {
+        "key": "detector_heartbeat",
+        "value": "1793198958.8744915"
+      },
+      {
         "key": "watch_heartbeat",
-        "value": "1793198930.5932992"
+        "value": "1793198960.632572"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -28265,23 +28261,35 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793198931.176369"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1793198932.4359348, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1793774604}]}"
+        "value": "1793198960.7214077"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1793198933.2292328"
+        "value": "1793198963.2330503"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1793198933.8739479"
+        "key": "codex_quota",
+        "value": "{\"at\": 1793198963.444433, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1793774604}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1793198963.4463894, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1370:1:generation",
+        "value": "{\"task\": 1370, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793198963.4491394, \"seconds\": 33.442, \"tokens\": {\"totalTokens\": 135388, \"inputTokens\": 134461, \"cachedInputTokens\": 94208, \"cacheWriteInputTokens\": 0, \"outputTokens\": 927, \"reasoningOutputTokens\": 208}, \"first_event_ms\": 1793198938554, \"last_event_ms\": 1793198963444, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:1370",
+        "value": "{\"status\": \"needs_human\", \"task\": 1370, \"repo\": \"comfyui\", \"number\": 17416, \"reason\": \"VALIDATION_ENVIRONMENT: Issue #17416 requires reproducing a Windows ROCm pinned-memory eviction failure during MiniMax H3 dynamic VRAM use. This checkout runs on Linux and has neither PyTorch nor comfy-aimdo installed. The reported failure occurs inside HostBuffer.truncate, so a CPU test here cannot verify a fix.\", \"base\": \"4845e7a3ffc48a6961f15824239e9042cc7d4ad1\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"1370-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:1370",
-        "value": "{\"started\": 1793198917.084577, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1370/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"4845e7a3ffc48a6961f15824239e9042cc7d4ad1\", \"generation_started\": 1793198930.0084257, \"dispatch_paid_date\": \"2026-10-28\", \"phase_started\": 1793198934.8588626}"
+        "value": "{\"started\": 1793198917.084577, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1370/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"4845e7a3ffc48a6961f15824239e9042cc7d4ad1\", \"generation_started\": 1793198930.0084257, \"dispatch_paid_date\": \"2026-10-28\", \"phase_started\": 1793198934.8588626, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1793198963.5438874}"
       }
     ],
     "calls": [
