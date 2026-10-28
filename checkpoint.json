@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793199289.0074492,
+  "saved_at": 1793199321.3369577,
   "tables": {
     "tasks": [
       {
@@ -17833,10 +17833,10 @@
         "repo": "comfyui",
         "number": 17415,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1793199271.2046115,
-        "updated": 1793199271.394778,
-        "result": "",
+        "updated": 1793199321.325801,
+        "result": "VALIDATION_ENVIRONMENT: The reported HostBuffer.truncate failure occurs during Windows ROCm pin eviction. This runner is Linux and has no ROCm GPU, torch, or comfy-aimdo, so the failure and any fix cannot be validated here. The reported failing call is inside comfy-aimdo’s HostBuffer implementation.",
         "attempts": 1
       }
     ],
@@ -28038,10 +28038,6 @@
         "value": "1793198923.7720933"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1793198963.4463894, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1370:1:generation",
         "value": "{\"task\": 1370, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793198963.4491394, \"seconds\": 33.442, \"tokens\": {\"totalTokens\": 135388, \"inputTokens\": 134461, \"cachedInputTokens\": 94208, \"cacheWriteInputTokens\": 0, \"outputTokens\": 927, \"reasoningOutputTokens\": 208}, \"first_event_ms\": 1793198938554, \"last_event_ms\": 1793198963444, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -28222,18 +28218,6 @@
         "value": "{\"started\": 1793081138.7689319, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793081142.8913603, \"recovery_checked_at\": 1793199209.5641642}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1793199213.7844543, \"state\": \"waiting\", \"pending_candidates\": 2, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 1, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 2}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 2, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 283.76797318458557, \"judge_tokens_spent_24h\": 73136, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 39, \"validation_wait\": 2}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7778\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7778\", \"title\": \"test_agent_engine_environment.py: 13 tests fail on macOS (GNU-only stat -c / base64 -d <file> in the local bash)\", \"first_seen\": 1793151559.2918348, \"last_checked\": 1793154923.1203034, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7775\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7775\", \"title\": \"Google Cloud Model Armor requires at least Python 3.12 but _dockerfile_template.py#L100-L149 hardcode to python 3.11\", \"first_seen\": 1793124914.008172, \"last_checked\": 1793154925.6166549, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7770\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7770\", \"title\": \"Proposal: `ProvenanceGatePlugin` \\u2014 deterministic runtime check that cited IDs were returned by a tool in the current invocation\", \"first_seen\": 1793107860.2632258, \"last_checked\": 1793154928.0717506, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7782\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7782\", \"title\": \"Workflow: LlmAgent with sub_agents/transfer loses ctx.output for downstream edges\", \"first_seen\": 1793155516.5794964, \"last_checked\": 1793155516.5794966, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1793199213.7859821, \"tasks\": {\"fix\": {\"capacity_wait\": 39, \"done\": 1, \"skipped\": 7, \"validation_wait\": 2}, \"respond\": {\"error\": 1}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1793199234.3098907, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1793774604}]}"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793199087.2078426, \"comfyui\": 1793199271.3945727, \"hermes\": 1791629598.7424486, \"langfuse\": 1793053811.4906762, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793167932.863474, \"langfuse-python\": 1792269667.6802466, \"spec-kit\": 1793118265.797735, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793186117.0383925, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793119431.8644822}}"
       },
@@ -28262,10 +28246,6 @@
         "value": "{\"started\": 1792966797.533795, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792966801.00237, \"recovery_checked_at\": 1793199277.9083843}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1793199278.269319"
-      },
-      {
         "key": "task:1233",
         "value": "{\"started\": 1792969304.766246, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792969308.2827768, \"recovery_checked_at\": 1793199279.0702403}"
       },
@@ -28286,10 +28266,6 @@
         "value": "{\"date\": \"2026-10-28\", \"used\": {\"comfyui\": 5, \"dify\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1372\": {\"remaining\": 1, \"until\": 1793206482.4040525}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1793186135.2149322, \"group\": \"new_fix\", \"task\": 1359, \"phase\": \"generation\"}, {\"at\": 1793198930.0086558, \"group\": \"new_fix\", \"task\": 1370, \"phase\": \"generation\"}, {\"at\": 1793199282.4040525, \"group\": \"new_fix\", \"task\": 1372, \"phase\": \"generation\"}]"
       },
@@ -28306,8 +28282,24 @@
         "value": "{\"at\": 1793199284.119779, \"disk_free_bytes\": 89037918208, \"memory_bytes\": {\"MemTotal\": 16766414848, \"MemAvailable\": 15209095168, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
       {
-        "key": "task:1372",
-        "value": "{\"started\": 1793199271.394838, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1372/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"4845e7a3ffc48a6961f15824239e9042cc7d4ad1\", \"generation_started\": 1793199282.40385, \"dispatch_paid_date\": \"2026-10-28\", \"phase_started\": 1793199285.4677296}"
+        "key": "admission_health",
+        "value": "{\"at\": 1793199289.0321145, \"state\": \"active\", \"pending_candidates\": 2, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 1, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 2}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 3, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 6.6203649044036865, \"judge_tokens_spent_24h\": 73136, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 39, \"validation_wait\": 2}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7778\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7778\", \"title\": \"test_agent_engine_environment.py: 13 tests fail on macOS (GNU-only stat -c / base64 -d <file> in the local bash)\", \"first_seen\": 1793151559.2918348, \"last_checked\": 1793154923.1203034, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7775\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7775\", \"title\": \"Google Cloud Model Armor requires at least Python 3.12 but _dockerfile_template.py#L100-L149 hardcode to python 3.11\", \"first_seen\": 1793124914.008172, \"last_checked\": 1793154925.6166549, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7770\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7770\", \"title\": \"Proposal: `ProvenanceGatePlugin` \\u2014 deterministic runtime check that cited IDs were returned by a tool in the current invocation\", \"first_seen\": 1793107860.2632258, \"last_checked\": 1793154928.0717506, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7782\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7782\", \"title\": \"Workflow: LlmAgent with sub_agents/transfer loses ctx.output for downstream edges\", \"first_seen\": 1793155516.5794964, \"last_checked\": 1793155516.5794966, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1793199289.0334272, \"tasks\": {\"fix\": {\"capacity_wait\": 39, \"done\": 1, \"running\": 1, \"skipped\": 7, \"validation_wait\": 2}, \"respond\": {\"error\": 1}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1793199308.273122"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1793199318.8822165"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793199318.9478614"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -28315,15 +28307,31 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793199286.0204263"
+        "value": "1793199320.793462"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1793199288.4053862"
+        "key": "codex_quota",
+        "value": "{\"at\": 1793199321.0083516, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1793774604}]}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1793199288.8815045"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1793199321.010194, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1372:1:generation",
+        "value": "{\"task\": 1372, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793199321.0128005, \"seconds\": 38.611, \"tokens\": {\"totalTokens\": 135556, \"inputTokens\": 134428, \"cachedInputTokens\": 94464, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1128, \"reasoningOutputTokens\": 346}, \"first_event_ms\": 1793199292361, \"last_event_ms\": 1793199321005, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:1372",
+        "value": "{\"status\": \"needs_human\", \"task\": 1372, \"repo\": \"comfyui\", \"number\": 17415, \"reason\": \"VALIDATION_ENVIRONMENT: The reported HostBuffer.truncate failure occurs during Windows ROCm pin eviction. This runner is Linux and has no ROCm GPU, torch, or comfy-aimdo, so the failure and any fix cannot be validated here. The reported failing call is inside comfy-aimdo\\u2019s HostBuffer implementation.\", \"base\": \"4845e7a3ffc48a6961f15824239e9042cc7d4ad1\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"1372-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1372",
+        "value": "{\"started\": 1793199271.394838, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1372/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"4845e7a3ffc48a6961f15824239e9042cc7d4ad1\", \"generation_started\": 1793199282.40385, \"dispatch_paid_date\": \"2026-10-28\", \"phase_started\": 1793199285.4677296, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1793199321.1683702}"
       }
     ],
     "calls": [
