@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793244397.0751674,
+  "saved_at": 1793244438.7764168,
   "tables": {
     "tasks": [
       {
@@ -16156,11 +16156,11 @@
         "repo": "spec-kit",
         "number": 5121,
         "note": "",
-        "status": "retry_wait",
+        "status": "running",
         "created": 1792983300.7315989,
-        "updated": 1793242637.3108556,
+        "updated": 1793244438.7614543,
         "result": "Codex: {'message': 'Selected model is at capacity. Please try a different model.', 'codexErrorInfo': 'serverOverloaded', 'additionalDetails': None, 'misalignment': None}",
-        "attempts": 2
+        "attempts": 3
       },
       {
         "id": 1244,
@@ -28272,10 +28272,6 @@
         "value": "{\"at\": 1793242602.153338, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793241645.6987092, \"comfyui\": 1793216181.492334, \"hermes\": 1791629598.7424486, \"langfuse\": 1793230557.6395228, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793201033.8465118, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793242616.8426023, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793186117.0383925, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793119431.8644822}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1793230568.0839806, \"group\": \"new_fix\", \"task\": 1391, \"phase\": \"generation\"}, {\"at\": 1793231508.7371318, \"group\": \"new_fix\", \"task\": 1394, \"phase\": \"generation\"}, {\"at\": 1793231678.0309207, \"group\": \"new_fix\", \"task\": 1394, \"phase\": \"review\"}, {\"at\": 1793242628.479123, \"group\": \"new_fix\", \"task\": 1243, \"phase\": \"generation\"}]"
       },
@@ -28290,10 +28286,6 @@
       {
         "key": "codex_review_leases",
         "value": "{}"
-      },
-      {
-        "key": "task:1243",
-        "value": "{\"started\": 1793242616.842874, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1793244437.1680844, \"folder\": \"jobs/1243/attempt-2\", \"attempt\": 2, \"phase\": \"retry_wait\", \"base\": \"99e047e9b48c3ecbbc5c3e530fb45bed671960bc\", \"generation_started\": 1792983310.8430946, \"dispatch_paid_date\": \"2026-10-26\", \"phase_started\": 1793242631.9114604, \"last_execution_phase\": \"generation\", \"finished\": 1793242637.1703835}"
       },
       {
         "key": "task:1284",
@@ -28656,10 +28648,6 @@
         "value": "{\"at\": 1793244091.2075508, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "prwatch_heartbeat",
-        "value": "1793244137.5315177"
-      },
-      {
         "key": "task:1219",
         "value": "{\"started\": 1792931540.8861287, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792931544.8426158, \"recovery_checked_at\": 1793244155.7138667}"
       },
@@ -28756,20 +28744,8 @@
         "value": "{\"started\": 1793093232.3430626, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793093235.7738829, \"recovery_checked_at\": 1793244319.6817477}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1793244325.600599, \"state\": \"queued\", \"pending_candidates\": 3, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 3, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 3}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 0, \"queued_tasks\": 1, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1697.1131982803345, \"judge_tokens_spent_24h\": 74869, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 43, \"validation_wait\": 3}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7800\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7800\", \"title\": \"FirestoreSessionService does not validate identity components, so a user_id/session_id with '/' injects into the document path and nests one identity's session under another\", \"first_seen\": 1793242430.0280778, \"last_checked\": 1793242430.0280783, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1793244325.6021018, \"tasks\": {\"fix\": {\"capacity_wait\": 43, \"done\": 2, \"retry_wait\": 1, \"skipped\": 9, \"validation_wait\": 3}, \"respond\": {\"error\": 1}}}"
-      },
-      {
         "key": "task:1275",
         "value": "{\"started\": 1793035459.759681, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793035464.8560894, \"recovery_checked_at\": 1793244386.3908925}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1793244387.420552"
       },
       {
         "key": "task:1276",
@@ -28792,28 +28768,12 @@
         "value": "{\"started\": 1793039900.64699, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793039906.0643983, \"recovery_checked_at\": 1793244392.1807048}"
       },
       {
-        "key": "discovery_triage_ready:openclaw",
-        "value": "{\"175500\": true, \"175505\": true, \"175540\": true, \"175597\": true, \"175599\": true, \"175665\": true, \"175700\": true, \"175701\": true, \"175734\": true, \"175736\": true, \"175801\": true, \"175950\": true, \"176027\": true, \"176028\": true, \"176062\": true, \"176098\": true, \"176115\": true, \"176138\": true, \"176179\": true, \"176208\": true, \"176220\": true, \"176223\": true, \"176224\": true, \"176229\": true, \"176235\": true, \"176236\": true, \"176237\": true, \"176238\": true, \"176239\": true, \"176242\": true, \"176244\": true, \"176250\": true, \"176268\": true, \"176353\": true, \"176472\": true, \"176649\": true, \"176659\": true, \"176740\": true, \"176743\": true, \"176750\": true, \"176778\": true, \"176872\": true, \"176889\": true, \"176922\": true, \"176944\": true, \"176966\": true, \"176994\": true, \"177056\": true, \"177057\": true, \"177065\": true, \"177068\": true, \"177093\": true, \"177094\": true, \"177157\": true, \"177275\": true, \"177311\": true, \"177341\": true, \"177352\": true, \"177358\": true, \"177440\": true, \"177531\": true, \"177576\": true, \"177622\": true, \"177686\": true, \"177697\": true, \"177739\": true, \"177849\": true, \"177854\": true, \"177870\": true, \"177876\": true, \"177909\": true, \"177993\": true, \"178010\": true, \"178032\": true, \"178059\": true, \"178085\": true, \"178121\": true, \"178122\": true, \"178133\": true, \"178235\": true, \"178310\": true, \"178387\": true, \"178395\": true, \"178398\": true, \"178404\": true, \"178421\": true, \"178471\": true, \"178481\": true, \"178499\": true, \"178502\": true, \"178507\": true, \"178513\": true, \"178539\": true, \"178548\": true, \"178549\": true, \"178565\": true, \"178589\": true, \"178809\": true, \"178908\": true, \"178912\": true, \"178913\": true, \"178923\": true, \"178960\": true, \"178989\": true, \"179153\": true, \"179242\": true, \"179258\": true, \"179290\": true, \"179295\": true, \"179318\": true, \"179344\": true, \"179396\": true, \"179398\": true, \"179411\": true, \"179441\": true, \"179923\": true, \"179979\": true, \"179980\": true, \"179989\": true, \"179994\": true, \"180311\": true, \"180379\": true, \"180411\": true, \"180426\": true, \"180508\": true, \"180510\": true, \"180514\": true, \"180524\": true, \"180530\": true, \"180577\": true, \"180655\": true, \"180657\": true, \"180658\": true, \"180719\": true, \"180720\": true, \"180739\": true, \"180757\": true, \"180814\": true, \"180815\": true, \"180845\": true, \"180856\": true, \"180942\": true, \"180960\": true, \"180969\": true, \"181020\": true, \"181070\": true, \"181100\": true, \"181107\": true, \"181165\": true, \"181175\": true, \"181210\": true, \"181212\": true, \"181254\": true, \"181345\": true, \"181361\": true, \"181442\": true, \"181493\": true, \"181514\": true, \"181557\": true, \"181583\": true, \"181595\": true, \"181682\": true, \"181686\": true, \"181722\": true, \"181772\": true, \"181805\": true, \"181818\": true, \"181858\": true, \"181945\": true, \"181950\": true, \"181952\": true, \"181956\": true, \"181968\": true, \"181976\": true, \"181980\": true, \"182060\": true, \"182077\": true, \"182087\": true, \"182174\": true, \"182175\": true, \"182177\": true, \"182179\": true, \"182183\": true, \"182206\": true, \"182297\": true, \"182315\": true, \"182326\": true, \"182474\": true, \"182518\": true, \"182526\": true, \"182527\": true, \"182549\": true, \"182555\": true, \"182562\": true, \"182638\": true, \"182688\": true, \"182694\": true, \"182761\": true, \"182769\": true, \"182771\": true, \"182773\": true, \"182798\": true, \"182805\": true, \"182808\": true, \"182950\": true, \"183031\": true, \"183056\": true, \"183085\": true, \"183088\": true, \"183091\": true, \"183096\": true, \"183138\": true, \"183154\": true, \"183273\": true, \"183275\": true, \"183307\": true, \"183363\": true, \"183389\": true, \"183416\": true, \"183425\": true, \"183556\": true, \"183562\": true, \"183589\": true, \"183682\": true, \"183700\": true, \"183709\": true, \"183723\": true, \"183747\": true, \"183805\": true, \"183848\": true, \"183856\": true, \"183894\": true, \"183925\": true, \"183926\": true, \"183927\": true, \"183928\": true, \"183929\": true, \"184060\": true, \"184068\": true, \"184135\": true, \"184242\": true, \"184272\": true, \"184320\": true, \"184339\": true, \"184362\": true, \"184473\": true, \"184538\": true, \"184580\": true, \"184585\": true, \"184654\": true, \"184730\": true, \"184790\": true, \"184828\": true, \"184867\": true, \"184887\": true, \"184888\": true, \"184889\": true, \"184891\": true, \"184893\": true, \"185079\": true, \"185225\": true, \"185286\": true, \"185298\": true, \"185317\": true, \"185447\": true, \"185534\": true, \"185552\": true, \"185616\": true, \"185678\": true, \"185712\": true, \"185720\": true, \"185726\": true, \"185792\": true, \"185807\": true, \"185844\": true, \"185889\": true, \"185902\": true, \"185942\": true, \"185946\": true, \"186001\": true, \"186011\": true, \"186014\": true, \"186022\": true, \"186026\": true, \"186144\": true, \"186191\": true, \"186215\": true, \"186235\": true, \"186244\": true, \"186255\": true, \"186358\": true, \"186365\": true, \"186392\": true, \"186396\": true, \"186454\": true, \"186478\": true, \"186494\": true, \"186522\": true, \"186527\": true, \"186542\": true, \"186545\": true, \"186565\": true, \"186570\": true, \"186613\": true, \"186634\": true, \"186650\": true, \"186705\": true, \"186719\": true, \"186753\": true, \"186774\": true, \"186775\": true, \"186777\": true, \"186781\": true, \"186796\": true, \"186814\": true, \"186824\": true, \"186832\": true, \"186842\": true, \"186843\": true, \"186873\": true, \"186875\": true, \"186914\": true, \"186949\": true, \"186974\": true, \"186999\": true, \"187031\": true, \"187073\": true, \"187079\": true, \"187080\": true, \"187088\": true, \"187091\": true, \"187119\": true, \"187122\": true, \"187153\": true, \"187154\": true, \"187185\": true, \"187200\": true}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1793244392.9739"
-      },
-      {
         "key": "task:1281",
         "value": "{\"started\": 1793041103.0093634, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793041106.9279714, \"recovery_checked_at\": 1793244393.3023064}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1793244393.5518582"
-      },
-      {
         "key": "task:1282",
         "value": "{\"started\": 1793041854.2590024, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793041860.4673998, \"recovery_checked_at\": 1793244394.5027473}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1793244395.5371456"
       },
       {
         "key": "task:1283",
@@ -28822,6 +28782,46 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1793244397.0632582, \"disk_free_bytes\": 88341798912, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15434653696, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1793244404.3852217, \"state\": \"queued\", \"pending_candidates\": 3, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 3, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 3}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 0, \"queued_tasks\": 1, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1775.8978791236877, \"judge_tokens_spent_24h\": 74869, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 43, \"validation_wait\": 3}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7800\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7800\", \"title\": \"FirestoreSessionService does not validate identity components, so a user_id/session_id with '/' injects into the document path and nests one identity's session under another\", \"first_seen\": 1793242430.0280778, \"last_checked\": 1793242430.0280783, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1793244404.386436, \"tasks\": {\"fix\": {\"capacity_wait\": 43, \"done\": 2, \"retry_wait\": 1, \"skipped\": 9, \"validation_wait\": 3}, \"respond\": {\"error\": 1}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1793244432.4254606"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1793244435.5382574"
+      },
+      {
+        "key": "discovery_triage_ready:openclaw",
+        "value": "{\"175500\": true, \"175505\": true, \"175540\": true, \"175597\": true, \"175599\": true, \"175665\": true, \"175700\": true, \"175701\": true, \"175734\": true, \"175736\": true, \"175801\": true, \"175950\": true, \"176027\": true, \"176028\": true, \"176062\": true, \"176098\": true, \"176115\": true, \"176138\": true, \"176179\": true, \"176208\": true, \"176220\": true, \"176223\": true, \"176224\": true, \"176229\": true, \"176235\": true, \"176236\": true, \"176237\": true, \"176238\": true, \"176239\": true, \"176242\": true, \"176244\": true, \"176250\": true, \"176268\": true, \"176353\": true, \"176472\": true, \"176649\": true, \"176659\": true, \"176740\": true, \"176743\": true, \"176750\": true, \"176778\": true, \"176872\": true, \"176889\": true, \"176922\": true, \"176944\": true, \"176966\": true, \"176994\": true, \"177056\": true, \"177057\": true, \"177065\": true, \"177068\": true, \"177093\": true, \"177094\": true, \"177157\": true, \"177275\": true, \"177311\": true, \"177341\": true, \"177352\": true, \"177358\": true, \"177440\": true, \"177531\": true, \"177576\": true, \"177622\": true, \"177686\": true, \"177697\": true, \"177739\": true, \"177849\": true, \"177854\": true, \"177870\": true, \"177876\": true, \"177909\": true, \"177993\": true, \"178010\": true, \"178032\": true, \"178059\": true, \"178085\": true, \"178121\": true, \"178122\": true, \"178133\": true, \"178235\": true, \"178310\": true, \"178387\": true, \"178395\": true, \"178398\": true, \"178404\": true, \"178421\": true, \"178471\": true, \"178481\": true, \"178499\": true, \"178502\": true, \"178507\": true, \"178513\": true, \"178539\": true, \"178548\": true, \"178549\": true, \"178565\": true, \"178589\": true, \"178809\": true, \"178908\": true, \"178912\": true, \"178913\": true, \"178923\": true, \"178960\": true, \"178989\": true, \"179153\": true, \"179242\": true, \"179258\": true, \"179290\": true, \"179295\": true, \"179318\": true, \"179344\": true, \"179396\": true, \"179398\": true, \"179411\": true, \"179441\": true, \"179923\": true, \"179979\": true, \"179980\": true, \"179989\": true, \"179994\": true, \"180311\": true, \"180379\": true, \"180411\": true, \"180426\": true, \"180508\": true, \"180510\": true, \"180514\": true, \"180524\": true, \"180530\": true, \"180577\": true, \"180655\": true, \"180657\": true, \"180658\": true, \"180719\": true, \"180720\": true, \"180739\": true, \"180757\": true, \"180814\": true, \"180815\": true, \"180845\": true, \"180856\": true, \"180942\": true, \"180960\": true, \"180969\": true, \"181020\": true, \"181070\": true, \"181100\": true, \"181107\": true, \"181165\": true, \"181175\": true, \"181210\": true, \"181212\": true, \"181254\": true, \"181345\": true, \"181361\": true, \"181442\": true, \"181493\": true, \"181514\": true, \"181557\": true, \"181583\": true, \"181595\": true, \"181682\": true, \"181686\": true, \"181722\": true, \"181772\": true, \"181805\": true, \"181818\": true, \"181858\": true, \"181945\": true, \"181950\": true, \"181952\": true, \"181956\": true, \"181968\": true, \"181976\": true, \"181980\": true, \"182060\": true, \"182077\": true, \"182087\": true, \"182174\": true, \"182175\": true, \"182177\": true, \"182179\": true, \"182183\": true, \"182206\": true, \"182297\": true, \"182315\": true, \"182326\": true, \"182474\": true, \"182518\": true, \"182526\": true, \"182527\": true, \"182549\": true, \"182555\": true, \"182562\": true, \"182638\": true, \"182688\": true, \"182694\": true, \"182761\": true, \"182769\": true, \"182771\": true, \"182773\": true, \"182798\": true, \"182805\": true, \"182808\": true, \"182950\": true, \"183031\": true, \"183056\": true, \"183085\": true, \"183088\": true, \"183091\": true, \"183096\": true, \"183138\": true, \"183154\": true, \"183273\": true, \"183275\": true, \"183307\": true, \"183363\": true, \"183389\": true, \"183416\": true, \"183425\": true, \"183556\": true, \"183562\": true, \"183589\": true, \"183682\": true, \"183700\": true, \"183709\": true, \"183723\": true, \"183747\": true, \"183805\": true, \"183848\": true, \"183856\": true, \"183894\": true, \"183925\": true, \"183926\": true, \"183927\": true, \"183928\": true, \"183929\": true, \"184060\": true, \"184068\": true, \"184135\": true, \"184242\": true, \"184272\": true, \"184320\": true, \"184339\": true, \"184362\": true, \"184473\": true, \"184538\": true, \"184580\": true, \"184585\": true, \"184654\": true, \"184730\": true, \"184790\": true, \"184828\": true, \"184867\": true, \"184887\": true, \"184888\": true, \"184889\": true, \"184891\": true, \"184893\": true, \"185079\": true, \"185225\": true, \"185286\": true, \"185298\": true, \"185317\": true, \"185447\": true, \"185534\": true, \"185552\": true, \"185616\": true, \"185678\": true, \"185712\": true, \"185720\": true, \"185726\": true, \"185792\": true, \"185807\": true, \"185844\": true, \"185889\": true, \"185902\": true, \"185942\": true, \"185946\": true, \"186001\": true, \"186011\": true, \"186014\": true, \"186022\": true, \"186026\": true, \"186144\": true, \"186191\": true, \"186215\": true, \"186235\": true, \"186244\": true, \"186255\": true, \"186358\": true, \"186365\": true, \"186392\": true, \"186396\": true, \"186454\": true, \"186478\": true, \"186494\": true, \"186522\": true, \"186527\": true, \"186542\": true, \"186545\": true, \"186565\": true, \"186570\": true, \"186613\": true, \"186634\": true, \"186650\": true, \"186705\": true, \"186719\": true, \"186753\": true, \"186774\": true, \"186775\": true, \"186777\": true, \"186781\": true, \"186796\": true, \"186814\": true, \"186824\": true, \"186832\": true, \"186842\": true, \"186843\": true, \"186873\": true, \"186875\": true, \"186914\": true, \"186949\": true, \"186974\": true, \"186999\": true, \"187031\": true, \"187073\": true, \"187079\": true, \"187080\": true, \"187088\": true, \"187091\": true, \"187119\": true, \"187122\": true, \"187153\": true, \"187154\": true, \"187185\": true, \"187200\": true}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1793244437.236222"
+      },
+      {
+        "key": "prwatch_heartbeat",
+        "value": "1793244437.533758"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793244438.5722604"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793241645.6987092, \"comfyui\": 1793216181.492334, \"hermes\": 1791629598.7424486, \"langfuse\": 1793230557.6395228, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793201033.8465118, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793244438.761288, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793186117.0383925, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793119431.8644822}}"
+      },
+      {
+        "key": "task:1243",
+        "value": "{\"started\": 1793244438.7615144, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 3, \"phase\": \"claimed\", \"base\": null, \"generation_started\": 1792983310.8430946, \"dispatch_paid_date\": \"2026-10-26\", \"phase_started\": 1793242631.9114604, \"last_execution_phase\": \"generation\", \"finished\": 1793242637.1703835}"
       }
     ],
     "calls": [
