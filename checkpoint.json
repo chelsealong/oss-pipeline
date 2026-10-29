@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793265137.8613303,
+  "saved_at": 1793265160.7914896,
   "tables": {
     "tasks": [
       {
@@ -28466,14 +28466,6 @@
         "value": "{\"started\": 1793231124.7233825, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793231128.449204}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"comfyui\", \"task\": 1384, \"at\": 1793216201.0353036}, {\"repo\": \"langfuse\", \"task\": 1386, \"at\": 1793220484.6194754}, {\"repo\": \"langfuse\", \"task\": 1391, \"at\": 1793230568.0836835}, {\"repo\": \"langfuse-python\", \"task\": 1394, \"at\": 1793231508.7368855}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-10-28\", \"used\": {\"comfyui\": 6, \"dify\": 1, \"llama-index\": 1, \"langfuse\": 3, \"langfuse-python\": 2}}"
-      },
-      {
         "key": "usage:1394:1:generation",
         "value": "{\"task\": 1394, \"repo\": \"langfuse-python\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793231676.5321822, \"seconds\": 167.797, \"tokens\": {\"totalTokens\": 1735151, \"inputTokens\": 1728551, \"cachedInputTokens\": 1666176, \"cacheWriteInputTokens\": 0, \"outputTokens\": 6600, \"reasoningOutputTokens\": 1803}, \"first_event_ms\": 1793231515242, \"last_event_ms\": 1793231676522, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -28504,10 +28496,6 @@
       {
         "key": "usage:1243:2:generation",
         "value": "{\"task\": 1243, \"repo\": \"spec-kit\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1793242637.164737, \"seconds\": 8.687, \"tokens\": null, \"first_event_ms\": 1793242635470, \"last_event_ms\": 1793242637161, \"model\": \"gpt-6-sol\", \"complete\": false, \"usage_available\": false}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1793230568.0839806, \"group\": \"new_fix\", \"task\": 1391, \"phase\": \"generation\"}, {\"at\": 1793231508.7371318, \"group\": \"new_fix\", \"task\": 1394, \"phase\": \"generation\"}, {\"at\": 1793231678.0309207, \"group\": \"new_fix\", \"task\": 1394, \"phase\": \"review\"}, {\"at\": 1793242628.479123, \"group\": \"new_fix\", \"task\": 1243, \"phase\": \"generation\"}, {\"at\": 1793244450.6255162, \"group\": \"new_fix\", \"task\": 1243, \"phase\": \"generation\"}]"
       },
       {
         "key": "usage:1243:3:generation",
@@ -29054,10 +29042,6 @@
         "value": "{\"at\": 1793264916.343995, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:1419",
         "value": "{\"started\": 1793264954.389277, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793264958.9045858}"
       },
@@ -29126,18 +29110,6 @@
         "value": "{\"started\": 1792995298.5201008, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1792995305.2284827, \"recovery_checked_at\": 1793265060.6729655}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1793265065.1837502, \"state\": \"stalled\", \"pending_candidates\": 1, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 1, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 1}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 0, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 20614.54961824417, \"judge_tokens_spent_24h\": 67564, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 52, \"validation_wait\": 3}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7802\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7802\", \"title\": \"LiteLlm raises out of response parsing on some unusable tool call arguments instead of reporting MALFORMED_FUNCTION_CALL\", \"first_seen\": 1793251460.3392286, \"last_checked\": 1793251460.339229, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7804\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7804\", \"title\": \"fix(mcp): McpToolset.get_tools ignores tools/list pagination nextCursor\", \"first_seen\": 1793255302.6323326, \"last_checked\": 1793255302.6323328, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1793265065.185693, \"tasks\": {\"fix\": {\"capacity_wait\": 52, \"done\": 1, \"skipped\": 8, \"validation_wait\": 3}, \"respond\": {\"error\": 1}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1793265086.0586472, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1793774604}]}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1793265086.7211642"
       },
@@ -29186,16 +29158,24 @@
         "value": "{\"at\": 1793265134.3141012, \"disk_free_bytes\": 88336556032, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15352045568, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1793265134.5600393"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793264954.3890507, \"comfyui\": 1793216181.492334, \"hermes\": 1791629598.7424486, \"langfuse\": 1793230557.6395228, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793201033.8465118, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793244438.761288, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793265136.6943474, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793119431.8644822}}"
       },
       {
-        "key": "task:1420",
-        "value": "{\"started\": 1793265136.6945477, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "key": "admission_health",
+        "value": "{\"at\": 1793265137.884948, \"state\": \"active\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 0, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 20687.25136089325, \"judge_tokens_spent_24h\": 67564, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 52, \"validation_wait\": 3}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7802\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7802\", \"title\": \"LiteLlm raises out of response parsing on some unusable tool call arguments instead of reporting MALFORMED_FUNCTION_CALL\", \"first_seen\": 1793251460.3392286, \"last_checked\": 1793251460.339229, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7804\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7804\", \"title\": \"fix(mcp): McpToolset.get_tools ignores tools/list pagination nextCursor\", \"first_seen\": 1793255302.6323326, \"last_checked\": 1793255302.6323328, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1793265137.8864608, \"tasks\": {\"fix\": {\"capacity_wait\": 52, \"done\": 1, \"running\": 1, \"skipped\": 8, \"validation_wait\": 3}, \"respond\": {\"error\": 1}}}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1793265146.5493352, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1793774604}]}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1793265152.3049192"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -29203,94 +29183,34 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793265137.0368295"
+        "value": "1793265156.2871163"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1793265137.303399"
+        "key": "detector_heartbeat",
+        "value": "1793265159.5606017"
+      },
+      {
+        "key": "task:1420",
+        "value": "{\"started\": 1793265136.6945477, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1420/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"a141540ea8e1152f78ee5c498bafd8bc6e28bbea\", \"generation_started\": 1793265160.7776916, \"dispatch_paid_date\": \"2026-10-29\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"dify\", \"task\": 1420, \"at\": 1793265160.777691}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-10-29\", \"used\": {\"dify\": 1}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"1420\": {\"remaining\": 1, \"until\": 1793272360.778014}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1793265160.778014, \"group\": \"new_fix\", \"task\": 1420, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1792639739.9350424,
-        "kind": "judge"
-      },
-      {
-        "at": 1792644941.6137948,
-        "kind": "codex"
-      },
-      {
-        "at": 1792645092.8500338,
-        "kind": "judge"
-      },
-      {
-        "at": 1792645162.7358272,
-        "kind": "codex"
-      },
-      {
-        "at": 1792648593.2486157,
-        "kind": "codex"
-      },
-      {
-        "at": 1792648776.9056492,
-        "kind": "judge"
-      },
-      {
-        "at": 1792648830.7070725,
-        "kind": "codex"
-      },
-      {
-        "at": 1792649976.1423721,
-        "kind": "judge"
-      },
-      {
-        "at": 1792650337.8356295,
-        "kind": "judge"
-      },
-      {
-        "at": 1792650685.3356895,
-        "kind": "codex"
-      },
-      {
-        "at": 1792652830.6841466,
-        "kind": "codex"
-      },
-      {
-        "at": 1792653502.8327522,
-        "kind": "codex"
-      },
-      {
-        "at": 1792654178.2142184,
-        "kind": "codex"
-      },
-      {
-        "at": 1792655212.381443,
-        "kind": "codex"
-      },
-      {
-        "at": 1792655230.6141238,
-        "kind": "judge"
-      },
-      {
-        "at": 1792655942.984064,
-        "kind": "judge"
-      },
-      {
-        "at": 1792656212.2367034,
-        "kind": "judge"
-      },
-      {
-        "at": 1792656355.0849032,
-        "kind": "codex"
-      },
-      {
-        "at": 1792656663.7960672,
-        "kind": "codex"
-      },
-      {
-        "at": 1792659248.4818354,
-        "kind": "judge"
-      },
       {
         "at": 1792660685.4016523,
         "kind": "judge"
@@ -31938,6 +31858,10 @@
       {
         "at": 1793264754.1679962,
         "kind": "judge"
+      },
+      {
+        "at": 1793265160.7785702,
+        "kind": "codex"
       }
     ]
   }
