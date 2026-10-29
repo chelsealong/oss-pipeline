@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793242616.8553486,
+  "saved_at": 1793242628.491115,
   "tables": {
     "tasks": [
       {
@@ -28224,10 +28224,6 @@
         "value": "{\"task\": 1394, \"repo\": \"langfuse-python\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793231676.5321822, \"seconds\": 167.797, \"tokens\": {\"totalTokens\": 1735151, \"inputTokens\": 1728551, \"cachedInputTokens\": 1666176, \"cacheWriteInputTokens\": 0, \"outputTokens\": 6600, \"reasoningOutputTokens\": 1803}, \"first_event_ms\": 1793231515242, \"last_event_ms\": 1793231676522, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1793216201.0354826, \"group\": \"new_fix\", \"task\": 1384, \"phase\": \"generation\"}, {\"at\": 1793220484.6197534, \"group\": \"new_fix\", \"task\": 1386, \"phase\": \"generation\"}, {\"at\": 1793230568.0839806, \"group\": \"new_fix\", \"task\": 1391, \"phase\": \"generation\"}, {\"at\": 1793231508.7371318, \"group\": \"new_fix\", \"task\": 1394, \"phase\": \"generation\"}, {\"at\": 1793231678.0309207, \"group\": \"new_fix\", \"task\": 1394, \"phase\": \"review\"}]"
-      },
-      {
         "key": "usage:1394:1:review",
         "value": "{\"task\": 1394, \"repo\": \"langfuse-python\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1793231775.6626396, \"seconds\": 97.634, \"tokens\": {\"totalTokens\": 957932, \"inputTokens\": 953667, \"cachedInputTokens\": 884352, \"cacheWriteInputTokens\": 0, \"outputTokens\": 4265, \"reasoningOutputTokens\": 1396}, \"first_event_ms\": 1793231683748, \"last_event_ms\": 1793231775655, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -28258,10 +28254,6 @@
       {
         "key": "admission_warning_at",
         "value": "1793241042.8405788"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:1398",
@@ -28784,10 +28776,6 @@
         "value": "{\"at\": 1793242602.1549687, \"disk_free_bytes\": 88366043136, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15429275648, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1793242602.2043672"
-      },
-      {
         "key": "admission_health",
         "value": "{\"at\": 1793242605.4337082, \"state\": \"stalled\", \"pending_candidates\": 2, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 2, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 2}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 3, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 10927.394877195358, \"judge_tokens_spent_24h\": 76015, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 43, \"validation_wait\": 3}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7800\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7800\", \"title\": \"FirestoreSessionService does not validate identity components, so a user_id/session_id with '/' injects into the document path and nests one identity's session under another\", \"first_seen\": 1793242430.0280778, \"last_checked\": 1793242430.0280783, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
       },
@@ -28796,8 +28784,16 @@
         "value": "{\"at\": 1793242605.4352636, \"tasks\": {\"fix\": {\"capacity_wait\": 43, \"done\": 2, \"skipped\": 10, \"validation_wait\": 3}, \"respond\": {\"error\": 1}}}"
       },
       {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793241645.6987092, \"comfyui\": 1793216181.492334, \"hermes\": 1791629598.7424486, \"langfuse\": 1793230557.6395228, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793201033.8465118, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793242616.8426023, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793186117.0383925, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793119431.8644822}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1793242617.2083178"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1793242614.6074543"
+        "value": "1793242624.6076717"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -28805,58 +28801,26 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793242616.662361"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1793242616.693793"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793241645.6987092, \"comfyui\": 1793216181.492334, \"hermes\": 1791629598.7424486, \"langfuse\": 1793230557.6395228, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793201033.8465118, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793242616.8426023, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793186117.0383925, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793119431.8644822}}"
+        "value": "1793242626.3271866"
       },
       {
         "key": "task:1243",
-        "value": "{\"started\": 1793242616.842874, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"claimed\", \"base\": null, \"generation_started\": 1792983310.8430946, \"dispatch_paid_date\": \"2026-10-26\", \"phase_started\": 1792983313.7026668, \"last_execution_phase\": \"generation\", \"finished\": 1792983331.0500698}"
+        "value": "{\"started\": 1793242616.842874, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1243/attempt-2\", \"attempt\": 2, \"phase\": \"checkout\", \"base\": \"99e047e9b48c3ecbbc5c3e530fb45bed671960bc\", \"generation_started\": 1792983310.8430946, \"dispatch_paid_date\": \"2026-10-26\", \"phase_started\": 1792983313.7026668, \"last_execution_phase\": \"generation\", \"finished\": 1792983331.0500698}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793242627.7317553"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"1243\": {\"remaining\": 1, \"until\": 1793249828.479123}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1793230568.0839806, \"group\": \"new_fix\", \"task\": 1391, \"phase\": \"generation\"}, {\"at\": 1793231508.7371318, \"group\": \"new_fix\", \"task\": 1394, \"phase\": \"generation\"}, {\"at\": 1793231678.0309207, \"group\": \"new_fix\", \"task\": 1394, \"phase\": \"review\"}, {\"at\": 1793242628.479123, \"group\": \"new_fix\", \"task\": 1243, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1792631209.5524144,
-        "kind": "judge"
-      },
-      {
-        "at": 1792631237.9643106,
-        "kind": "judge"
-      },
-      {
-        "at": 1792632319.4554682,
-        "kind": "judge"
-      },
-      {
-        "at": 1792633110.5901046,
-        "kind": "judge"
-      },
-      {
-        "at": 1792633129.956285,
-        "kind": "codex"
-      },
-      {
-        "at": 1792633503.2736452,
-        "kind": "codex"
-      },
-      {
-        "at": 1792634899.2455447,
-        "kind": "judge"
-      },
-      {
-        "at": 1792634922.503315,
-        "kind": "codex"
-      },
-      {
-        "at": 1792637752.0288804,
-        "kind": "codex"
-      },
       {
         "at": 1792638800.3222346,
         "kind": "judge"
@@ -31504,6 +31468,10 @@
       {
         "at": 1793237826.718181,
         "kind": "judge"
+      },
+      {
+        "at": 1793242628.4797935,
+        "kind": "codex"
       }
     ]
   }
