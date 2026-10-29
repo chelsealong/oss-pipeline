@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793299851.9553716,
+  "saved_at": 1793299854.950887,
   "tables": {
     "tasks": [
       {
@@ -17469,11 +17469,11 @@
         "repo": "openclaw",
         "number": 186494,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1793159111.1407285,
-        "updated": 1793299836.1117744,
+        "updated": 1793299853.2087471,
         "result": "openclaw open PR cap (20)",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 1345,
@@ -29747,24 +29747,12 @@
         "value": "{\"at\": 1793299769.1669888, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1793299772.424014, \"state\": \"waiting\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 11, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 90.03231644630432, \"judge_tokens_spent_24h\": 38662, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 2, \"capacity_wait\": 40, \"human_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7802\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7802\", \"title\": \"LiteLlm raises out of response parsing on some unusable tool call arguments instead of reporting MALFORMED_FUNCTION_CALL\", \"first_seen\": 1793251460.3392286, \"last_checked\": 1793251460.339229, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7804\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7804\", \"title\": \"fix(mcp): McpToolset.get_tools ignores tools/list pagination nextCursor\", \"first_seen\": 1793255302.6323326, \"last_checked\": 1793255302.6323328, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7811\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7811\", \"title\": \"RemoteA2aAgent never follows an interrupted peer task (A2A spec 7.6.2): a peer resumed out-of-band leaves the caller stuck\", \"first_seen\": 1793291692.842067, \"last_checked\": 1793299662.0104315, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1793299772.4259777, \"tasks\": {\"fix\": {\"capacity_wait\": 40, \"done\": 1, \"human_wait\": 1, \"skipped\": 88, \"validation_wait\": 2}, \"respond\": {\"error\": 1}}}"
-      },
-      {
         "key": "followup:task:1306",
         "value": "{\"status\": \"resumed\", \"task\": 1306}"
       },
       {
         "key": "followup:task:1343",
         "value": "{\"status\": \"resumed\", \"task\": 1343}"
-      },
-      {
-        "key": "task:1344",
-        "value": "{\"started\": 1793159111.1643105, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"queued\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793159115.276268, \"recovery_checked_at\": 1793299834.9657588}"
       },
       {
         "key": "followup:task:1344",
@@ -29799,10 +29787,6 @@
         "value": "{\"status\": \"resumed\", \"task\": 1377}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793299843.0875113, \"comfyui\": 1793266593.7806463, \"hermes\": 1791629598.7424486, \"langfuse\": 1793277507.403101, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793283014.7081578, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793244438.761288, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793265136.6943474, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793119431.8644822}}"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1793299844.9794366, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1793774604}]}"
       },
@@ -29817,10 +29801,6 @@
       {
         "key": "worker_heartbeat",
         "value": "1793299848.6585476"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1793299848.8001592"
       },
       {
         "key": "watch_heartbeat",
@@ -29841,6 +29821,26 @@
       {
         "key": "discovery_last_success",
         "value": "1793299850.340013"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1793299851.9800453, \"state\": \"queued\", \"pending_candidates\": 0, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {}, \"screening_wait_tasks\": 0, \"active_tasks\": 2, \"running_tasks\": 0, \"queued_tasks\": 2, \"codex_calls_5h\": 11, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 169.58544516563416, \"judge_tokens_spent_24h\": 38662, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 2, \"capacity_wait\": 40, \"human_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7802\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7802\", \"title\": \"LiteLlm raises out of response parsing on some unusable tool call arguments instead of reporting MALFORMED_FUNCTION_CALL\", \"first_seen\": 1793251460.3392286, \"last_checked\": 1793251460.339229, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7804\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7804\", \"title\": \"fix(mcp): McpToolset.get_tools ignores tools/list pagination nextCursor\", \"first_seen\": 1793255302.6323326, \"last_checked\": 1793255302.6323328, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7811\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7811\", \"title\": \"RemoteA2aAgent never follows an interrupted peer task (A2A spec 7.6.2): a peer resumed out-of-band leaves the caller stuck\", \"first_seen\": 1793291692.842067, \"last_checked\": 1793299662.0104315, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1793299851.981605, \"tasks\": {\"fix\": {\"capacity_wait\": 40, \"done\": 1, \"human_wait\": 1, \"queued\": 2, \"skipped\": 90, \"validation_wait\": 2}, \"respond\": {\"error\": 1}}}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793299853.2085829, \"comfyui\": 1793266593.7806463, \"hermes\": 1791629598.7424486, \"langfuse\": 1793277507.403101, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793283014.7081578, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793244438.761288, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793265136.6943474, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793119431.8644822}}"
+      },
+      {
+        "key": "task:1344",
+        "value": "{\"started\": 1793299853.2088146, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793159115.276268, \"recovery_checked_at\": 1793299834.9657588}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1793299853.8002846"
       }
     ],
     "calls": [
