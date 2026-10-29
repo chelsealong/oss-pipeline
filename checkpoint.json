@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793242631.923729,
+  "saved_at": 1793242637.3223224,
   "tables": {
     "tasks": [
       {
@@ -16156,10 +16156,10 @@
         "repo": "spec-kit",
         "number": 5121,
         "note": "",
-        "status": "running",
+        "status": "retry_wait",
         "created": 1792983300.7315989,
-        "updated": 1793242616.842811,
-        "result": "Issue #5121 is a third-party report announcement. The live issue has no comments, reported defect, or requested Spec Kit change, so there is no fix to make.",
+        "updated": 1793242637.3108556,
+        "result": "Codex: {'message': 'Selected model is at capacity. Please try a different model.', 'codexErrorInfo': 'serverOverloaded', 'additionalDetails': None, 'misalignment': None}",
         "attempts": 2
       },
       {
@@ -28592,10 +28592,6 @@
         "value": "{\"ok\": true, \"at\": 1793242266.6664622, \"source\": \"authenticated probe\"}"
       },
       {
-        "key": "pause",
-        "value": "{}"
-      },
-      {
         "key": "task:1260",
         "value": "{\"started\": 1793016384.3131385, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793016387.754216, \"recovery_checked_at\": 1793242291.5341346}"
       },
@@ -28728,10 +28724,6 @@
         "value": "{\"started\": 1793064461.2105415, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793064464.7647412, \"recovery_checked_at\": 1793242525.7663455}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1793242574.683719, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1793774604}]}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1793242582.8321726"
       },
@@ -28788,24 +28780,20 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793241645.6987092, \"comfyui\": 1793216181.492334, \"hermes\": 1791629598.7424486, \"langfuse\": 1793230557.6395228, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793201033.8465118, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793242616.8426023, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793186117.0383925, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793119431.8644822}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1793242617.2083178"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1793242627.7317553"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"1243\": {\"remaining\": 1, \"until\": 1793249828.479123}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1793230568.0839806, \"group\": \"new_fix\", \"task\": 1391, \"phase\": \"generation\"}, {\"at\": 1793231508.7371318, \"group\": \"new_fix\", \"task\": 1394, \"phase\": \"generation\"}, {\"at\": 1793231678.0309207, \"group\": \"new_fix\", \"task\": 1394, \"phase\": \"review\"}, {\"at\": 1793242628.479123, \"group\": \"new_fix\", \"task\": 1243, \"phase\": \"generation\"}]"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1793242632.2105196"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793242632.7385685"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1793242629.6077907"
+        "value": "1793242634.6078749"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -28813,11 +28801,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793242631.7634623"
+        "value": "1793242636.561049"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1793242637.1620789, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1793774604}]}"
+      },
+      {
+        "key": "usage:1243:2:generation",
+        "value": "{\"task\": 1243, \"repo\": \"spec-kit\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1793242637.164737, \"seconds\": 8.687, \"tokens\": null, \"first_event_ms\": 1793242635470, \"last_event_ms\": 1793242637161, \"model\": \"gpt-6-sol\", \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "pause",
+        "value": "{\"until\": 1793244437.16681, \"reason\": \"Codex: {'message': 'Selected model is at capacity. Please try a different model.', 'codexErrorInfo': 'serverOverloaded', 'additionalDetails': None, 'misalignment': None}\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:1243",
-        "value": "{\"started\": 1793242616.842874, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1243/attempt-2\", \"attempt\": 2, \"phase\": \"generation\", \"base\": \"99e047e9b48c3ecbbc5c3e530fb45bed671960bc\", \"generation_started\": 1792983310.8430946, \"dispatch_paid_date\": \"2026-10-26\", \"phase_started\": 1793242631.9114604, \"last_execution_phase\": \"generation\", \"finished\": 1792983331.0500698}"
+        "value": "{\"started\": 1793242616.842874, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1793244437.1680844, \"folder\": \"jobs/1243/attempt-2\", \"attempt\": 2, \"phase\": \"retry_wait\", \"base\": \"99e047e9b48c3ecbbc5c3e530fb45bed671960bc\", \"generation_started\": 1792983310.8430946, \"dispatch_paid_date\": \"2026-10-26\", \"phase_started\": 1793242631.9114604, \"last_execution_phase\": \"generation\", \"finished\": 1793242637.1703835}"
       }
     ],
     "calls": [
