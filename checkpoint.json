@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793379565.2012389,
+  "saved_at": 1793379585.663009,
   "tables": {
     "tasks": [
       {
@@ -30474,16 +30474,8 @@
         "value": "{\"date\": \"2026-10-30\", \"used\": {\"comfyui\": 3, \"openclaw\": 10, \"llama-index\": 6, \"spec-kit\": 2, \"langfuse\": 1, \"dify\": 1}}"
       },
       {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1793360715.4465718, \"group\": \"new_fix\", \"task\": 1450, \"phase\": \"generation\"}, {\"at\": 1793369781.494125, \"group\": \"new_fix\", \"task\": 1451, \"phase\": \"generation\"}, {\"at\": 1793377143.5414817, \"group\": \"new_fix\", \"task\": 1452, \"phase\": \"generation\"}]"
-      },
-      {
         "key": "usage:1452:1:generation",
         "value": "{\"task\": 1452, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793377184.0735059, \"seconds\": 40.533, \"tokens\": {\"totalTokens\": 321782, \"inputTokens\": 320613, \"cachedInputTokens\": 273024, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1169, \"reasoningOutputTokens\": 236}, \"first_event_ms\": 1793377150413, \"last_event_ms\": 1793377184067, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:1452",
@@ -30710,12 +30702,20 @@
         "value": "{\"at\": 1793379540.6538682, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"human_wait\": 5, \"queued\": 3, \"skipped\": 167, \"validation_wait\": 10}, \"respond\": {}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1793379558.4828622"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1793379558.6700559, \"windows\": [{\"name\": \"primary\", \"used_percent\": 5, \"resets_at\": 1793774604}]}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793323036.8439345, \"comfyui\": 1793377133.6803315, \"hermes\": 1791629598.7424486, \"langfuse\": 1793338220.8501897, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793353780.2271543, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793327081.2827866, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793369760.7731597, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793379565.1838753}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1793379573.4851007"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1793379580.1238785"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -30723,26 +30723,22 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793379561.916602"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1793379565.1235135"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793323036.8439345, \"comfyui\": 1793377133.6803315, \"hermes\": 1791629598.7424486, \"langfuse\": 1793338220.8501897, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793353780.2271543, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793327081.2827866, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793369760.7731597, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793379565.1838753}}"
+        "value": "1793379582.1159034"
       },
       {
         "key": "task:1328",
-        "value": "{\"started\": 1793379565.184041, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"claimed\", \"base\": null, \"generation_started\": 1793119449.9011738, \"dispatch_paid_date\": \"2026-10-27\", \"phase_started\": 1793119453.1516213, \"last_execution_phase\": \"generation\", \"finished\": 1793119486.268745}"
+        "value": "{\"started\": 1793379565.184041, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1328/attempt-2\", \"attempt\": 2, \"phase\": \"checkout\", \"base\": \"07212df377c4ea0ac5ed6a7c9c8ff72203564650\", \"generation_started\": 1793119449.9011738, \"dispatch_paid_date\": \"2026-10-27\", \"phase_started\": 1793119453.1516213, \"last_execution_phase\": \"generation\", \"finished\": 1793119486.268745}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"1328\": {\"remaining\": 1, \"until\": 1793386785.1147203}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1793369781.494125, \"group\": \"new_fix\", \"task\": 1451, \"phase\": \"generation\"}, {\"at\": 1793377143.5414817, \"group\": \"new_fix\", \"task\": 1452, \"phase\": \"generation\"}, {\"at\": 1793379585.1147203, \"group\": \"new_fix\", \"task\": 1328, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1792773717.833464,
-        "kind": "judge"
-      },
       {
         "at": 1792775355.8260078,
         "kind": "judge"
@@ -33281,6 +33277,10 @@
       },
       {
         "at": 1793377143.5419686,
+        "kind": "codex"
+      },
+      {
+        "at": 1793379585.1152518,
         "kind": "codex"
       }
     ]
