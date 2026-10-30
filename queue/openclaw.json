@@ -3,7 +3,7 @@
   "upstream": "openclaw/openclaw",
   "implements_in": "openclaw/openclaw",
   "needs_assignment": false,
-  "scanned_at": "2026-10-30T21:58:39+00:00",
+  "scanned_at": "2026-10-30T22:04:40+00:00",
   "partial": false,
   "errors": [],
   "candidates": [
@@ -12,11 +12,13 @@
       "title": "[Bug]: Matrix final reply is dropped after a 60s send stall, with no retry and no user-visible feedback",
       "url": "https://github.com/openclaw/openclaw/issues/188741",
       "created_at": "2026-10-30T21:51:24Z",
+      "age_hours": 0.2,
       "reason": "clear",
-      "age_hours": 0.12094386388888889,
       "labels": [
         "P1",
         "clawsweeper:fix-shape-clear",
+        "clawsweeper:intake:bug",
+        "clawsweeper:intake:needs-repro",
         "clawsweeper:queueable-fix",
         "clawsweeper:source-repro",
         "impact:message-loss",
@@ -24,7 +26,7 @@
         "issue-rating: \ud83e\udd9e diamond lobster",
         "no-stale"
       ],
-      "comments": 1,
+      "comments": 2,
       "self_claimed": false
     },
     {
@@ -32,7 +34,7 @@
       "title": "[Bug]: Model fallback can finish silently before dispatching the backup",
       "url": "https://github.com/openclaw/openclaw/issues/188647",
       "created_at": "2026-10-30T19:35:36Z",
-      "age_hours": 2.1,
+      "age_hours": 2.5,
       "reason": "clear",
       "labels": [
         "P1",
@@ -42,42 +44,47 @@
       ],
       "comments": 2,
       "self_claimed": false
-    },
-    {
-      "number": 188563,
-      "title": "[Bug]: macOS app recovery unloads Gateway then fails moving LaunchAgent to Trash (EPERM, no FDA)",
-      "url": "https://github.com/openclaw/openclaw/issues/188563",
-      "created_at": "2026-10-30T17:25:16Z",
-      "age_hours": 4.2,
-      "reason": "clear",
-      "labels": [
-        "P0",
-        "clawsweeper:fix-shape-clear",
-        "clawsweeper:queueable-fix",
-        "clawsweeper:source-repro",
-        "impact:ux-release-blocker",
-        "issue-rating: \ud83e\udd9e diamond lobster",
-        "no-stale"
-      ],
-      "comments": 1,
-      "self_claimed": false
     }
   ],
   "rejected": [
+    {
+      "number": 188751,
+      "title": "[Bug]: prepare_pr rejects a clean newer published project base",
+      "url": "https://github.com/openclaw/openclaw/issues/188751",
+      "created_at": "2026-10-30T22:03:50Z",
+      "age_hours": 0.0,
+      "reason": "only 1 min old; waiting 40 min for the repo's own triage"
+    },
+    {
+      "number": 188740,
+      "title": "Clarify prompt delivery equivalence, request modes, and delegation intent",
+      "url": "https://github.com/openclaw/openclaw/issues/188740",
+      "created_at": "2026-10-30T21:49:04Z",
+      "age_hours": 0.3,
+      "reason": "excluded label ['clawsweeper:needs-info', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
+      "number": 188737,
+      "title": "Scheduled pinned-only show_widget is unavailable when the target session uses an OpenAI model",
+      "url": "https://github.com/openclaw/openclaw/issues/188737",
+      "created_at": "2026-10-30T21:47:14Z",
+      "age_hours": 0.3,
+      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
+    },
     {
       "number": 188732,
       "title": "voice-call: allow `realtime` overrides (instructions + speakerVoice) in per-number routes",
       "url": "https://github.com/openclaw/openclaw/issues/188732",
       "created_at": "2026-10-30T21:36:37Z",
-      "age_hours": 0.0,
-      "reason": "only 3 min old; waiting 40 min for the repo's own triage"
+      "age_hours": 0.5,
+      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
     },
     {
       "number": 188721,
       "title": "Proposal: revocable native invocation identity and current-source receipt for plugin tool hooks",
       "url": "https://github.com/openclaw/openclaw/issues/188721",
       "created_at": "2026-10-30T21:24:33Z",
-      "age_hours": 0.2,
+      "age_hours": 0.7,
       "reason": "excluded label ['clawsweeper:needs-product-decision', 'clawsweeper:needs-security-review', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -85,7 +92,7 @@
       "title": "[Bug]: Codex app-server subprocess chains spawned via a plugin generation outlive that generation and are not covered by mcp.sessionIdleTtlMs",
       "url": "https://github.com/openclaw/openclaw/issues/188712",
       "created_at": "2026-10-30T21:17:53Z",
-      "age_hours": 0.4,
+      "age_hours": 0.8,
       "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -93,7 +100,7 @@
       "title": "[Bug]: openclaw gateway auth-token --show takes 16\u201319 s on a loaded host",
       "url": "https://github.com/openclaw/openclaw/issues/188707",
       "created_at": "2026-10-30T21:11:42Z",
-      "age_hours": 0.5,
+      "age_hours": 0.9,
       "reason": "excluded label ['clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -101,7 +108,7 @@
       "title": "Update failure: invalid-config (2026.10.9)",
       "url": "https://github.com/openclaw/openclaw/issues/188694",
       "created_at": "2026-10-30T20:51:49Z",
-      "age_hours": 0.8,
+      "age_hours": 1.2,
       "reason": "excluded label ['clawsweeper:needs-info']"
     },
     {
@@ -109,7 +116,7 @@
       "title": "Scheduled requester-command occurrences keep running after the requester is removed from `commands.allowFrom`",
       "url": "https://github.com/openclaw/openclaw/issues/188664",
       "created_at": "2026-10-30T20:01:36Z",
-      "age_hours": 1.6,
+      "age_hours": 2.1,
       "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:linked-pr-open', 'clawsweeper:needs-security-review', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -117,7 +124,7 @@
       "title": "Custom openai-responses providers drop runtime-context carriers each turn (docs say they're retained), breaking prefix-cache reuse",
       "url": "https://github.com/openclaw/openclaw/issues/188657",
       "created_at": "2026-10-30T19:52:18Z",
-      "age_hours": 1.8,
+      "age_hours": 2.2,
       "reason": "already has PR(s): ['closing-ref PR#188666(OPEN)', 'xref PR#188666(OPEN)']"
     },
     {
@@ -125,7 +132,7 @@
       "title": "Control UI: a browser reload or tab close silently discards unsaved Raw config edits",
       "url": "https://github.com/openclaw/openclaw/issues/188629",
       "created_at": "2026-10-30T19:08:01Z",
-      "age_hours": 2.5,
+      "age_hours": 2.9,
       "reason": "excluded label ['clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -133,7 +140,7 @@
       "title": "[Bug]: Paused Goal Resume stays unconfirmed while same-session work is active",
       "url": "https://github.com/openclaw/openclaw/issues/188618",
       "created_at": "2026-10-30T18:50:47Z",
-      "age_hours": 2.8,
+      "age_hours": 3.2,
       "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -141,32 +148,8 @@
       "title": "[Bug]: sessions.usage / usage-cost double-count rotated sessions that share a transcript prefix",
       "url": "https://github.com/openclaw/openclaw/issues/188613",
       "created_at": "2026-10-30T18:39:43Z",
-      "age_hours": 3.0,
+      "age_hours": 3.4,
       "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 188593,
-      "title": "[Bug]: SQLite snapshot reclamation never reclaims anything - \"Unrecognized snapshot artifact\" every ~15 min with an empty payload",
-      "url": "https://github.com/openclaw/openclaw/issues/188593",
-      "created_at": "2026-10-30T17:58:30Z",
-      "age_hours": 3.7,
-      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 188586,
-      "title": "[Bug]: Main-thread session-sqlite maintenance/reclamation commits block the event loop up to 477 s and destroy cron failure alerts",
-      "url": "https://github.com/openclaw/openclaw/issues/188586",
-      "created_at": "2026-10-30T17:48:25Z",
-      "age_hours": 3.8,
-      "reason": "excluded label ['clawsweeper:needs-info', 'clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 188582,
-      "title": "[Bug]: Chat images become unavailable after switching session stores",
-      "url": "https://github.com/openclaw/openclaw/issues/188582",
-      "created_at": "2026-10-30T17:43:35Z",
-      "age_hours": 3.9,
-      "reason": "excluded label ['clawsweeper:linked-pr-open', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
     }
   ]
 }
