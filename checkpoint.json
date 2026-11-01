@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793573624.692621,
+  "saved_at": 1793573668.6939285,
   "tables": {
     "tasks": [
       {
@@ -19411,6 +19411,19 @@
         "updated": 1793561973.4475076,
         "result": "https://github.com/Comfy-Org/ComfyUI/pull/17485",
         "attempts": 1
+      },
+      {
+        "id": 1494,
+        "identity": "fix:langfuse:19546:",
+        "kind": "fix",
+        "repo": "langfuse",
+        "number": 19546,
+        "note": "",
+        "status": "running",
+        "created": 1793573662.8254454,
+        "updated": 1793573668.678494,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -31523,10 +31536,6 @@
         "value": "{\"started\": 1793552580.6547225, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1492/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"a9ba0f1a7e16a13d5a3d8d993951c642a6e2b010\", \"generation_started\": 1793552588.7045991, \"dispatch_paid_date\": \"2026-11-01\", \"phase_started\": 1793552592.0681672, \"last_execution_phase\": \"generation\", \"finished\": 1793552663.0925744}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793547541.815114, \"comfyui\": 1793560340.7135787, \"hermes\": 1791629598.7424486, \"langfuse\": 1793433619.4094124, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793544824.5733957, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793379565.1838753}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"llama-index\", \"task\": 1490, \"at\": 1793544851.45797}, {\"repo\": \"openclaw\", \"task\": 1491, \"at\": 1793547603.4706209}, {\"repo\": \"comfyui\", \"task\": 1492, \"at\": 1793552588.7045982}, {\"repo\": \"comfyui\", \"task\": 1493, \"at\": 1793560349.371694}]"
       },
@@ -31803,28 +31812,36 @@
         "value": "1793573465.420186"
       },
       {
+        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
+        "value": "{\"at\": 1793573624.6791704, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+      },
+      {
+        "key": "runner_resources",
+        "value": "{\"at\": 1793573624.68049, \"disk_free_bytes\": 88201789440, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15456092160, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
         "key": "admission_health",
-        "value": "{\"at\": 1793573564.0378485, \"state\": \"stalled\", \"pending_candidates\": 2, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 2, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 2}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 12235.836089134216, \"judge_tokens_spent_24h\": 66916, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {\"llama-index\": {\"used\": 6, \"limit\": 6}, \"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 5, \"human_wait\": 2}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7923\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7923\", \"title\": \"Ahmed\", \"first_seen\": 1793566369.7598567, \"last_checked\": 1793573264.6768517, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7906\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7906\", \"title\": \"ContainerCodeExecutor drops output files that are hard links\", \"first_seen\": 1793456952.4756057, \"last_checked\": 1793573267.3578808, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7905\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7905\", \"title\": \"Resuming a workflow re-runs the earlier no-output runs of a wait_for_output node, so its side effects happen twice\", \"first_seen\": 1793456954.948521, \"last_checked\": 1793573269.5979376, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+        "value": "{\"at\": 1793573627.3554113, \"state\": \"stalled\", \"pending_candidates\": 2, \"pending_by_repo\": {\"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 2, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 2}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 12299.153528213501, \"judge_tokens_spent_24h\": 65520, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {\"llama-index\": {\"used\": 6, \"limit\": 6}, \"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 5, \"human_wait\": 2}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7923\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7923\", \"title\": \"Ahmed\", \"first_seen\": 1793566369.7598567, \"last_checked\": 1793573264.6768517, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7906\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7906\", \"title\": \"ContainerCodeExecutor drops output files that are hard links\", \"first_seen\": 1793456952.4756057, \"last_checked\": 1793573267.3578808, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7905\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7905\", \"title\": \"Resuming a workflow re-runs the earlier no-output runs of a wait_for_output node, so its side effects happen twice\", \"first_seen\": 1793456954.948521, \"last_checked\": 1793573269.5979376, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1793573564.039815, \"tasks\": {\"fix\": {\"done\": 3, \"human_wait\": 2, \"skipped\": 16, \"validation_wait\": 5}, \"respond\": {\"done\": 1, \"skipped\": 1}}}"
+        "value": "{\"at\": 1793573627.3570905, \"tasks\": {\"fix\": {\"done\": 3, \"human_wait\": 2, \"skipped\": 16, \"validation_wait\": 5}, \"respond\": {\"done\": 1, \"skipped\": 1}}}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1793573589.4999828, \"windows\": [{\"name\": \"primary\", \"used_percent\": 15, \"resets_at\": 1793774604}]}"
+        "value": "{\"at\": 1793573649.7913651, \"windows\": [{\"name\": \"primary\", \"used_percent\": 15, \"resets_at\": 1793774604}]}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1793573616.3510408"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1793573620.7890542"
+        "value": "1793573661.3583522"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1793573621.4074621"
+        "value": "1793573661.459199"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1793573665.7901301"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -31832,15 +31849,15 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793573621.8834963"
+        "value": "1793573667.359128"
       },
       {
-        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
-        "value": "{\"at\": 1793573624.6791704, \"reason\": \"repository quota disabled by user on 2026-10-10\"}"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793547541.815114, \"comfyui\": 1793560340.7135787, \"hermes\": 1791629598.7424486, \"langfuse\": 1793573668.6783564, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793544824.5733957, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793379565.1838753}}"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1793573624.68049, \"disk_free_bytes\": 88201789440, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15456092160, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "key": "task:1494",
+        "value": "{\"started\": 1793573668.678534, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       }
     ],
     "calls": [
