@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793524981.5498796,
+  "saved_at": 1793525020.797786,
   "tables": {
     "tasks": [
       {
@@ -18457,10 +18457,10 @@
         "repo": "dify",
         "number": 18752,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1793265134.9266658,
-        "updated": 1793524956.166189,
-        "result": "The bug remains open, but the requested lowercase proxy fallback belongs in langgenius/dify-plugin-daemon, outside this isolated Dify checkout. Its current config still reads only uppercase proxy variables. A Docker Compose change here would not fix lowercase variables set directly on the plugin_daemon service. The linked fixes, dify-plugin-daemon#562 and dify#40829, were both closed without merging.",
+        "updated": 1793525020.785651,
+        "result": "Already fixed upstream: [dify-plugin-daemon#767](https://github.com/langgenius/dify-plugin-daemon/pull/767) merged the requested lowercase proxy fallback, and the fix shipped in daemon 0.6.4. This checkout uses 0.6.11-local. Issue #18752 remains open, but there is no code fix to make here.",
         "attempts": 2
       },
       {
@@ -31317,10 +31317,6 @@
         "value": "[]"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1793523675.4939845, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -31537,14 +31533,6 @@
         "value": "1793524717.8914742"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1793524933.0692625"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1793524938.2243695, \"windows\": [{\"name\": \"primary\", \"used_percent\": 11, \"resets_at\": 1793774604}]}"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793515789.1131964, \"comfyui\": 1793514737.7572415, \"hermes\": 1791629598.7424486, \"langfuse\": 1793433619.4094124, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793522971.3016887, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793495460.1705146, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793379565.1838753}}"
       },
@@ -31565,20 +31553,20 @@
         "value": "{\"at\": 1793524971.5798013, \"tasks\": {\"fix\": {\"done\": 2, \"human_wait\": 2, \"running\": 1, \"skipped\": 8, \"validation_wait\": 6}, \"respond\": {\"done\": 1}}}"
       },
       {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1793508909.7963884, \"group\": \"new_fix\", \"task\": 1479, \"phase\": \"generation\"}, {\"at\": 1793514746.4743938, \"group\": \"new_fix\", \"task\": 1480, \"phase\": \"generation\"}, {\"at\": 1793515851.7182648, \"group\": \"new_fix\", \"task\": 1481, \"phase\": \"generation\"}, {\"at\": 1793522716.9879167, \"group\": \"new_fix\", \"task\": 1482, \"phase\": \"generation\"}, {\"at\": 1793522997.940044, \"group\": \"new_fix\", \"task\": 1483, \"phase\": \"generation\"}, {\"at\": 1793524978.526545, \"group\": \"new_fix\", \"task\": 1420, \"phase\": \"generation\"}]"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1793524977.0007455"
+        "value": "1793525007.0259273"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793525016.8280911"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1793524977.69824"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"1420\": {\"remaining\": 1, \"until\": 1793532178.526545}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1793508909.7963884, \"group\": \"new_fix\", \"task\": 1479, \"phase\": \"generation\"}, {\"at\": 1793514746.4743938, \"group\": \"new_fix\", \"task\": 1480, \"phase\": \"generation\"}, {\"at\": 1793515851.7182648, \"group\": \"new_fix\", \"task\": 1481, \"phase\": \"generation\"}, {\"at\": 1793522716.9879167, \"group\": \"new_fix\", \"task\": 1482, \"phase\": \"generation\"}, {\"at\": 1793522997.940044, \"group\": \"new_fix\", \"task\": 1483, \"phase\": \"generation\"}, {\"at\": 1793524978.526545, \"group\": \"new_fix\", \"task\": 1420, \"phase\": \"generation\"}]"
+        "value": "1793525017.6993384"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -31586,11 +31574,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793524979.3902209"
+        "value": "1793525019.034665"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1793525020.4045224, \"windows\": [{\"name\": \"primary\", \"used_percent\": 11, \"resets_at\": 1793774604}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1793525020.407107, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1420:2:generation",
+        "value": "{\"task\": 1420, \"repo\": \"dify\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1793525020.4110975, \"seconds\": 41.887, \"tokens\": {\"totalTokens\": 317197, \"inputTokens\": 315988, \"cachedInputTokens\": 272384, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1209, \"reasoningOutputTokens\": 230}, \"first_event_ms\": 1793524985016, \"last_event_ms\": 1793525020404, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:1420",
-        "value": "{\"started\": 1793524956.1662543, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1420/attempt-2\", \"attempt\": 2, \"phase\": \"generation\", \"base\": \"f5d755bbbb0c1b37d14195ab0e7d586f04548aca\", \"generation_started\": 1793265160.7776916, \"dispatch_paid_date\": \"2026-10-29\", \"phase_started\": 1793524981.5370278, \"last_execution_phase\": \"generation\", \"finished\": 1793265230.385359}"
+        "value": "{\"started\": 1793524956.1662543, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1420/attempt-2\", \"attempt\": 2, \"phase\": \"skipped\", \"base\": \"f5d755bbbb0c1b37d14195ab0e7d586f04548aca\", \"generation_started\": 1793265160.7776916, \"dispatch_paid_date\": \"2026-10-29\", \"phase_started\": 1793524981.5370278, \"last_execution_phase\": \"generation\", \"finished\": 1793525020.4145086}"
       }
     ],
     "calls": [
