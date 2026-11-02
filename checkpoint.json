@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793623206.8340776,
+  "saved_at": 1793623239.6033854,
   "tables": {
     "tasks": [
       {
@@ -19627,10 +19627,10 @@
         "repo": "llama-index",
         "number": 23890,
         "note": "",
-        "status": "running",
+        "status": "human_wait",
         "created": 1793622898.9771724,
-        "updated": 1793622899.2467082,
-        "result": "",
+        "updated": 1793623239.590997,
+        "result": "HUMAN_REVIEW_REQUIRED: CONTRIBUTING.md requires human oversight for every contribution, and context.json contains no human_review attestation.",
         "attempts": 1
       }
     ],
@@ -32056,10 +32056,6 @@
         "value": "{\"at\": 1793622027.8549216, \"denied_at\": 1791347936.1261988, \"status\": \"held\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1793622589.0897038, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -32076,16 +32072,8 @@
         "value": "{\"date\": \"2026-11-02\", \"used\": {\"openclaw\": 10, \"langfuse\": 2, \"llama-index\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1510\": {\"remaining\": 1, \"until\": 1793630124.196949}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1793605078.6668422, \"group\": \"new_fix\", \"task\": 1505, \"phase\": \"generation\"}, {\"at\": 1793605769.4576752, \"group\": \"new_fix\", \"task\": 1506, \"phase\": \"generation\"}, {\"at\": 1793609606.4888496, \"group\": \"new_fix\", \"task\": 1507, \"phase\": \"generation\"}, {\"at\": 1793610324.2216227, \"group\": \"new_fix\", \"task\": 1507, \"phase\": \"review\"}, {\"at\": 1793611855.781983, \"group\": \"maintenance\", \"task\": 1508, \"phase\": \"generation\"}, {\"at\": 1793614570.7315102, \"group\": \"new_fix\", \"task\": 1509, \"phase\": \"generation\"}, {\"at\": 1793617330.9531226, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1793617330.9880118, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1793617336.3315928, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1793617336.3958418, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1793617362.7701657, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1793617372.4824831, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1793617538.0744834, \"group\": \"maintenance\", \"task\": 724, \"phase\": \"generation\"}, {\"at\": 1793617904.7138197, \"group\": \"maintenance\", \"task\": 724, \"phase\": \"review\"}, {\"at\": 1793618534.5405946, \"group\": \"repair\", \"task\": 724, \"phase\": \"remediation\"}, {\"at\": 1793618944.675365, \"group\": \"repair\", \"task\": 724, \"phase\": \"rereview\"}, {\"at\": 1793620752.4746158, \"group\": \"new_fix\", \"task\": 1450, \"phase\": \"generation\"}, {\"at\": 1793622924.196949, \"group\": \"new_fix\", \"task\": 1510, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "task:1510",
-        "value": "{\"started\": 1793622899.2467487, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1510/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"619d74664e8404612038bc15a1a40c686037277c\", \"generation_started\": 1793622924.1967518, \"dispatch_paid_date\": \"2026-11-02\", \"phase_started\": 1793622927.5348206}"
       },
       {
         "key": "task:44",
@@ -32248,16 +32236,40 @@
         "value": "{\"at\": 1793623076.5547407, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
+        "key": "runner_resources",
+        "value": "{\"at\": 1793623206.8209126, \"disk_free_bytes\": 86840659968, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 14791688192, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
         "key": "admission_health",
-        "value": "{\"at\": 1793623146.0550883, \"state\": \"active\", \"pending_candidates\": 364, \"pending_by_repo\": {\"hermes\": 364, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 364}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 17, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 221.8500189781189, \"judge_tokens_spent_24h\": 93256, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"human_wait\": 7, \"validation_wait\": 6}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7923\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7923\", \"title\": \"Ahmed\", \"first_seen\": 1793566369.7598567, \"last_checked\": 1793592148.4491594, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7905\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7905\", \"title\": \"Resuming a workflow re-runs the earlier no-output runs of a wait_for_output node, so its side effects happen twice\", \"first_seen\": 1793456954.948521, \"last_checked\": 1793592150.842602, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7935\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7935\", \"title\": \"`LlmAgent(mode=\\\"task\\\")` with a raw dict `output_schema` fails at construction with `SchemaError: Unknown schema type: \\\"object\\\"`\", \"first_seen\": 1793604455.1784396, \"last_checked\": 1793614086.4048533, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+        "value": "{\"at\": 1793623212.2715101, \"state\": \"active\", \"pending_candidates\": 364, \"pending_by_repo\": {\"hermes\": 364, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 364}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 17, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 288.0664403438568, \"judge_tokens_spent_24h\": 93256, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"human_wait\": 7, \"validation_wait\": 6}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7923\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7923\", \"title\": \"Ahmed\", \"first_seen\": 1793566369.7598567, \"last_checked\": 1793592148.4491594, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7905\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7905\", \"title\": \"Resuming a workflow re-runs the earlier no-output runs of a wait_for_output node, so its side effects happen twice\", \"first_seen\": 1793456954.948521, \"last_checked\": 1793592150.842602, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7935\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7935\", \"title\": \"`LlmAgent(mode=\\\"task\\\")` with a raw dict `output_schema` fails at construction with `SchemaError: Unknown schema type: \\\"object\\\"`\", \"first_seen\": 1793604455.1784396, \"last_checked\": 1793614086.4048533, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1793623146.0564132, \"tasks\": {\"fix\": {\"done\": 3, \"human_wait\": 6, \"running\": 1, \"skipped\": 17, \"validation_wait\": 3}, \"respond\": {\"blocked\": 1, \"error\": 1, \"human_wait\": 1, \"skipped\": 1, \"validation_wait\": 3}}}"
+        "value": "{\"at\": 1793623212.272964, \"tasks\": {\"fix\": {\"done\": 3, \"human_wait\": 6, \"running\": 1, \"skipped\": 17, \"validation_wait\": 3}, \"respond\": {\"blocked\": 1, \"error\": 1, \"human_wait\": 1, \"skipped\": 1, \"validation_wait\": 3}}}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793623212.8838577"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1793623195.511616"
+        "value": "1793623225.5183089"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1793623235.886776"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1793623237.1829474, \"windows\": [{\"name\": \"primary\", \"used_percent\": 19, \"resets_at\": 1793774604}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1793623237.1850312, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1510:1:generation",
+        "value": "{\"task\": 1510, \"repo\": \"llama-index\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793623237.196616, \"seconds\": 313.002, \"tokens\": {\"totalTokens\": 2323295, \"inputTokens\": 2313125, \"cachedInputTokens\": 2226816, \"cacheWriteInputTokens\": 0, \"outputTokens\": 10170, \"reasoningOutputTokens\": 3824}, \"first_event_ms\": 1793622931513, \"last_event_ms\": 1793623237183, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -32265,23 +32277,19 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793623202.6065118"
+        "value": "1793623237.371293"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1793623202.8643308"
+        "key": "followup:task:1510",
+        "value": "{\"status\": \"needs_human\", \"task\": 1510, \"repo\": \"llama-index\", \"number\": 23890, \"reason\": \"HUMAN_REVIEW_REQUIRED: CONTRIBUTING.md requires human oversight for every contribution, and context.json contains no human_review attestation.\", \"base\": \"619d74664e8404612038bc15a1a40c686037277c\", \"patch_digest\": \"0fd0270d6143c141515ab0379a6bdbc9e32c98823a8368cc3613e77860a71bfe\", \"evidence_bundle\": \"1510-1.json.enc\"}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1793623205.8861117"
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1793623206.0928388, \"windows\": [{\"name\": \"primary\", \"used_percent\": 19, \"resets_at\": 1793774604}]}"
-      },
-      {
-        "key": "runner_resources",
-        "value": "{\"at\": 1793623206.8209126, \"disk_free_bytes\": 86840659968, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 14791688192, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "key": "task:1510",
+        "value": "{\"started\": 1793622899.2467487, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1510/attempt-1\", \"attempt\": 1, \"phase\": \"human_wait\", \"base\": \"619d74664e8404612038bc15a1a40c686037277c\", \"generation_started\": 1793622924.1967518, \"dispatch_paid_date\": \"2026-11-02\", \"phase_started\": 1793622927.5348206, \"patch_digest\": \"0fd0270d6143c141515ab0379a6bdbc9e32c98823a8368cc3613e77860a71bfe\", \"last_execution_phase\": \"generation\", \"finished\": 1793623238.3693182}"
       }
     ],
     "calls": [
