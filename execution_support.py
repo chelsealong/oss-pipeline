@@ -195,6 +195,12 @@ def checkout_response(work, upstream_url, fork_url, default, pr, pr_number):
                 '--no-checkout',upstream_url,str(work)],timeout=900)
     worker.git(work,'remote','rename','origin','upstream')
     worker.git(work,'remote','add','origin',fork_url)
+    # A fork PR can contain blobs that the upstream upload-pack will not serve
+    # by object ID. Keep both object sources: upstream remains authoritative for
+    # main, while the owning fork can hydrate its own PR-only objects. Git tries
+    # this named promisor before the original partial-clone remote.
+    worker.git(work,'config','remote.origin.promisor','true')
+    worker.git(work,'config','remote.origin.partialclonefilter','blob:none')
     target='refs/remotes/upstream/response-head'
     worker.run(['git','fetch','--no-tags','--filter=blob:none','upstream',
                 f'refs/pull/{pr_number}/head:{target}'],cwd=work,timeout=900)

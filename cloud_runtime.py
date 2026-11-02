@@ -250,9 +250,11 @@ def run(mode,seconds):
             cloud_store.restore()
             restored=True
             import repo_limits
+            creation_holds=rt.publication_holds()
             with rt.db() as db:
                 db.execute('BEGIN IMMEDIATE')
                 repo_limits.hold_pending(db)
+                repo_limits.restore_enabled_pending(db,creation_holds)
             migrate_accounting()
             task_recovery.migrate_model_retries()
             task_recovery.recover_shallow_merge_errors()

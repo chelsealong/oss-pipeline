@@ -34,7 +34,7 @@ def rehearse(number):
 
 
 def main():
-    results=[rehearse(number) for number in (158915,159036)]
+    results=[rehearse(number) for number in (154033,158915,159036)]
     (rt.DATA/'response-rehearsal/result.json').write_text(json.dumps(results,indent=2)+'\n')
 
 

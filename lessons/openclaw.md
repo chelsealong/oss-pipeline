@@ -2,7 +2,7 @@
 
 ## Bring real runtime evidence in the PR body from the first push
 
-openclaw gates external PRs on *real behavior proof*, and its reviewer bot
+Historical examples below concern *real behavior proof*, and its reviewer bot
 (`clawsweeper`) distinguishes sharply between "the tests pass" and "here is the
 command I ran and what it printed". Two of our PRs prove the difference — same
 repo, same reviewer, same week:
@@ -16,11 +16,14 @@ The reviewer's own wording on #116260: *"it runs through a synthetic Vitest
 request seam rather than a real Codex app-server setup; add a redacted real
 round-trip transcript or runtime log before merge."*
 
-**So: before opening a PR here, actually run the affected command or code path
-and paste the redacted output.** Not the test output — the real thing. Redact
-private endpoints, IPs, keys and identifiers first; the reviewer asks for this
-explicitly. Adding it up front costs one command; adding it after a `needs
-proof` verdict costs a full review cycle and leaves the PR sitting.
+Current CONTRIBUTING.md's Before You PR section accepts focused tests, CI
+results, screenshots, terminal output and live observations as useful evidence.
+Run focused tests and applicable targeted checks for submission; PR CI supplies
+the broader suite. These old examples do not require a live authenticated
+provider, messaging account or production Gateway for every change. Run direct
+local behavior checks when applicable and available. A specific outstanding
+maintainer request or a path-specific required check still applies; disclose any
+unavailable evidence honestly. Redact private data from all published output.
 
 ## The PR body is machine-checked
 
@@ -57,8 +60,9 @@ tried.
   its PR limit; do not infer a lower threshold from historical pipeline outcomes.
 * Skip anything labelled `clawsweeper:no-new-fix-pr` — their own triage agent
   decided not to queue a fix, and ~83% of issues carry it.
-* Never submit refactor-only, test-only, CI-only or docs-only changes; those are
-  closed on sight.
+* Do not submit unsolicited refactor-only changes or test/CI-only changes that
+  merely chase known red main checks. Consult current contribution policy for
+  documentation fixes; historical outcomes do not impose a docs-only ban.
 * Duplicate saturation is high. Run the file/symbol search, not just the
   issue-number search — a competing PR often describes the same fix in different
   words and never references the issue.

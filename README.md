@@ -1,3 +1,10 @@
+Current update (November 2): Hermes discovery and existing-PR maintenance are
+re-enabled at 8 new PRs/day and 16 task starts/day. Its earlier ordinary-PR
+creation denial still blocks new coding until positive clearance; the seven
+other user-disabled repositories remain off. Current upstream submission policy
+supersedes historical live-service proof examples. See AGENTS.md for recovery
+conditions and validation records.
+
 # OSS pipeline — managed Codex runtime
 
 Production runs on GitHub-hosted Ubuntu runners after the 2026-10-02 cloud

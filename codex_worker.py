@@ -534,8 +534,8 @@ def process_one(task):
     else:
         branch=pr['head']['ref']
         default=api('repos/'+impl)['default_branch']
-        execution.checkout_response(work,'https://github.com/'+impl+'.git',fork['clone_url'],default,pr,num)
         rt.task_state(task['id'],remote_base=pr['head']['sha'])
+        execution.checkout_response(work,'https://github.com/'+impl+'.git',fork['clone_url'],default,pr,num)
         merged=execution.prepare_response_base(work,default,pr,num)
         rt.task_state(task['id'],remote_base=pr['head']['sha'],base_update=merged)
     base=git(work,'rev-parse','HEAD')
@@ -633,7 +633,7 @@ a replacement PR description. State actual validation and disclose Codex assista
 Do not assert personal human validation.
 '''
     schema=RESPONSE_SCHEMA if kind=='respond' else GEN_SCHEMA
-    prompt+='\nBefore editing, identify required hardware, platform and external services. If unavailable, return the specific validation blocker immediately. If upstream explicitly requires human oversight, retain a minimal tested draft for the exact-patch human review workflow and return BLOCKED with reason beginning HUMAN_REVIEW_REQUIRED: before publication review; do not invent approval. Generic optional attestations are not a gate.\n'
+    prompt+='\nBefore editing, identify validation needed for this exact change from CURRENT upstream contribution instructions. Historical outcomes are examples, not additional mandatory gates. Focused tests and direct local behavior checks can be sufficient for submission; do not infer a universal requirement for a live provider, authenticated messaging account, system service, or production deployment. Do not make paid API calls or use personal credentials for validation. If an explicit applicable upstream check or the actual affected behavior needs unavailable hardware/platform/services, cite that requirement and return the specific validation blocker. If upstream explicitly requires human oversight, retain a minimal tested draft for the exact-patch human review workflow and return BLOCKED with reason beginning HUMAN_REVIEW_REQUIRED: before publication review; do not invent approval. Generic optional attestations are not a gate.\n'
     if kind=='respond':
         prompt+='\nHEAD is the validation base; context.json includes the original remote PR. The controller preserves the branch unless GitHub reports an actual merge conflict. Do not rebase/commit yourself or refresh main merely because it advanced. Any approved update must be a fast-forward from the original PR head. Identify any concrete base-related blocker explicitly.\n'
     if continued:

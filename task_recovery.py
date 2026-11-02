@@ -19,6 +19,15 @@ def submission_regression(task,state):
     phase=state.get('last_execution_phase',state.get('phase'))
     reason=task.get('result','')
     failure=rt.getmeta('runner_failure',{})
+    if (task['kind']=='fix' and task['repo']=='openclaw' and task['status']=='validation_wait'
+            and phase=='generation' and task['attempts']<3 and state.get('base')
+            and not state.get('submission_proof_rechecked')
+            and (reason.startswith('VALIDATION_ENVIRONMENT: The isolated runner has no available model credentials or endpoint, so the repository-required live Gateway and model proof')
+                 or reason.startswith('VALIDATION_ENVIRONMENT: The isolated CLI proof could not run. `pnpm openclaw sessions cleanup --dry-run --fix-dm-scope --json` stopped during runtime artifact publication because this runner has no systemd user bus.'))):
+        # Reassess these precise historical universal-proof assumptions, not
+        # actual hardware/signoff requirements. No approval or passing check is
+        # inferred; retained patch, eligibility, tests and new review still apply.
+        return 'submission_proof_policy'
     if (task['kind']=='fix' and task['repo']=='openclaw' and task['status']=='blocked'
             and phase=='generation' and task['attempts']<3 and state.get('base')
             and not state.get('stale_cap_repaired') and reason.startswith('PR_CAP:')
@@ -80,7 +89,7 @@ def recover_submission_regressions():
         if not path:continue
         payload=json.loads(path.read_text())
         if payload['execution'].get('attempt')!=task['attempts']:continue
-        if repair in ('optional_broad_check','ui_screenshot_delivery','checkpoint_resource_failure','langfuse_static_memory','browser_config_directory','screenshot_readback') and not retained_progress(task):continue
+        if repair in ('optional_broad_check','ui_screenshot_delivery','checkpoint_resource_failure','langfuse_static_memory','browser_config_directory','screenshot_readback','submission_proof_policy') and not retained_progress(task):continue
         if repair=='unnecessary_main_merge':
             if payload.get('diff') or payload.get('untracked') or payload.get('files') or payload['execution'].get('base'):continue
             with rt.db() as db:
@@ -228,6 +237,11 @@ def repaired_infrastructure(task,state):
             and attestation_only_gate(task.get('result',''))):return True
     reason=task.get('result','')
     phase=state.get('last_execution_phase',state.get('phase'))
+    if (task['kind']=='respond' and phase=='checkout' and state.get('remote_base')
+            and not state.get('base') and not state.get('response_promisor_repaired')
+            and 'could not fetch' in reason and 'from promisor remote' in reason
+            and 'upload-pack: not our ref' in reason):
+        return True
     if (task['kind']=='fix' and phase=='checkout' and state.get('base') and state.get('resume_progress')
             and reason.startswith('git failed (1): error:')
             and re.search(r'No such file or directory|patch does not apply|patch failed|already exists',reason)):
@@ -388,6 +402,8 @@ def requeue(task,repair=None):
                     'langfuse_static_memory':'validation_memory_repaired',
                     'browser_config_directory':'browser_config_repaired',
                     'stale_prompt_cap':'stale_cap_repaired',
+                    'response_promisor':'response_promisor_repaired',
+                    'submission_proof_policy':'submission_proof_rechecked',
                     'screenshot_readback':'screenshot_readback_repaired'}.get(repair,'submission_repaired')
             state[marker]={'at':time.time(),'repair':repair,'attempt':current['attempts']}
         rt._putmeta(db,f"task:{task['id']}",state)
@@ -446,7 +462,9 @@ def reconcile(limit=8):
                 ok,why=audited_unpublished(task)
                 rt.setmeta(f"recovery_audit:{task['id']}",{'at':time.time(),'safe':ok,'reason':why})
                 if not ok:continue
-            if requeue(task):resumed.append(task['id'])
+            repair=('response_promisor' if repaired and task['kind']=='respond'
+                    and 'from promisor remote' in reason else None)
+            if requeue(task,repair=repair):resumed.append(task['id'])
         except Exception as error:
             rt.setmeta(f"followup:task:{task['id']}",{'status':'needs_human','task':task['id'],
                 'reason':'Recovery check failed: '+str(error)[:350]})

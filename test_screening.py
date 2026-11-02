@@ -187,8 +187,8 @@ class ScreeningTests(unittest.TestCase):
         with rt.db() as db:self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],1)
 
     def test_disabled_repo_cannot_spend_fallback_calls(self):
-        self.task['repo']='hermes'
-        with screening.worker(self.task,'hermes'):
+        self.task['repo']='firecrawl'
+        with screening.worker(self.task,'firecrawl'):
             with self.assertRaisesRegex(rt.JudgeDeferred,'quota disabled'):
                 screening.ask(intent.SYSTEM,'I am working on the fix',rt.JudgeDeferred('judge token budget reached'))
         with rt.db() as db:self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],0)
@@ -232,7 +232,8 @@ class ScreeningTests(unittest.TestCase):
         rt.setmeta('dispatch_budget',budget)
         health=admission_health.status()
         self.assertEqual(health['state'],'waiting');self.assertEqual(health['running_tasks'],0)
-        self.assertEqual(health['task_start_limits_reached'],{'openclaw':{'used':10,'limit':10}})
+        self.assertEqual(health['task_start_limits_reached'],
+                         {'openclaw':{'used':10,'limit':10},'hermes':{'used':16,'limit':16}})
         self.assertTrue(health['warning']);self.assertEqual(rt.getmeta('dispatch_budget'),budget)
         self.agent.assert_not_called();self.http.assert_not_called()
 
@@ -241,7 +242,7 @@ class ScreeningTests(unittest.TestCase):
         health=admission_health.status()
         self.assertEqual(health['state'],'waiting')
         self.assertEqual(health['recent_wait_tasks_24h'],{'validation_wait':1})
-        with rt.db() as db:db.execute("UPDATE tasks SET repo='hermes'")
+        with rt.db() as db:db.execute("UPDATE tasks SET repo='firecrawl'")
         self.assertEqual(admission_health.status()['state'],'idle')
 
     def test_adk_duplicate_does_not_generate_coordination_request(self):

@@ -137,6 +137,28 @@ Four cloud canary coding sessions were added to the retained spending ledger.
 The live queue and budgets are now in GitHub branch `codex-state`; the local DB
 is a historical snapshot and must not be used as the current queue.
 
+## November 2 recovery update
+
+The user's November 2 request to recover Hermes supersedes the October 10 full
+Hermes pause. Restore its 8 new PRs/day and 16 first-generation task starts/day,
+issue discovery and existing-PR replies/maintenance. Preserve the seven other
+zero-quota repositories, all spending and existing exact-patch human gates.
+The historical Hermes ordinary-PR creation denial remains held until the
+existing read-only clearance proves a newer ordinary PR; draft success and
+repository read permissions are insufficient. Do not spend coding calls on new
+Hermes fixes while that hold remains. Restored quota-wait work retains its prior
+human/validation waits; it is not automatically approved.
+
+The OpenClaw runtime is now pinned to Node 24.22.1, matching current upstream
+requirements. Historical live-service examples are not a universal submission
+requirement: determine exact checks from current upstream policy and the touched
+path, preserve real hardware/live-evidence requirements and disclose gaps. Two
+precisely identified retained proof-policy waits may be reassessed once after
+remote reconciliation; no old approval is reused. Response partial clones now
+use both upstream and the owning fork as blob sources. Positively identified
+pre-model promisor failures may resume once after the unchanged PR head is
+verified and no newer response task/publication exists.
+
 ## Recovery and validation
 
 The October 18 audit found that the one-time PR reply migration also re-offered

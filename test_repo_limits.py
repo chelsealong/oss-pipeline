@@ -46,8 +46,8 @@ class RepoLimitTests(unittest.TestCase):
         with patch.object(worker,'run',side_effect=AssertionError('unnecessary GitHub read')):
             for key,upstream in limits.DISABLED_REPOS.items():
                 self.assertFalse(worker.cap_ok(key,upstream)[0])
-    def test_disabled_hermes_is_not_polled_for_permission_clearance(self):
-        with patch.object(rt,'publication_holds',return_value={'hermes':time.time()+86400}), \
+    def test_disabled_repo_is_not_polled_for_permission_clearance(self):
+        with patch.object(rt,'publication_holds',return_value={'litellm':time.time()+86400}), \
              patch.object(worker,'run',side_effect=AssertionError('disabled repo was polled')):
             self.assertEqual(task_recovery.refresh_publication_holds(),[])
     def test_historical_backlog_held_without_losing_evidence_or_call_history(self):
@@ -56,7 +56,7 @@ class RepoLimitTests(unittest.TestCase):
             db.executemany('INSERT INTO tasks(id,kind,repo,number,status,created,updated,attempts) VALUES (?,?,?,?,?,?,?,?)',[
                 (1,'fix','firecrawl',100,'queued',now,now,2),
                 (2,'respond','BerriAI/litellm',200,'retry_wait',now,now,1),
-                (3,'respond','NousResearch/hermes-agent',201,'validation_wait',now,now,2)])
+                (3,'respond','firecrawl/firecrawl',201,'validation_wait',now,now,2)])
             db.execute('INSERT INTO calls VALUES (?,?)',(now,'codex'))
         rt.task_state(1,folder='retained',patch_digest='exact-patch')
         self.assertTrue(rt.enqueue('fix','spec-kit',300))
@@ -150,7 +150,7 @@ class RepoLimitTests(unittest.TestCase):
     def test_disabled_pr_feedback_never_reaches_judge(self):
         spec=importlib.util.spec_from_file_location('quota_prwatch',Path(__file__).with_name('watch-prs.py'))
         watcher=importlib.util.module_from_spec(spec);spec.loader.exec_module(watcher)
-        self.assertNotIn('NousResearch/hermes-agent',watcher.upstreams())
+        self.assertIn('NousResearch/hermes-agent',watcher.upstreams())
         self.assertIn('openclaw/openclaw',watcher.upstreams())
         with patch.object(watcher,'upstreams',return_value=[]), \
              patch.object(watcher.scan,'gh',side_effect=AssertionError('unscoped feedback scan')):
