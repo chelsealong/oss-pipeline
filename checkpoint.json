@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793642684.1686735,
+  "saved_at": 1793642715.5730226,
   "tables": {
     "tasks": [
       {
@@ -19731,11 +19731,11 @@
         "repo": "NousResearch/hermes-agent",
         "number": 81204,
         "note": "{\"authors\": \"amisepa\", \"events\": [\"IC_kwDOPRF1G88AAAABgNkrkw@2026-10-27T23:59:11Z\"], \"screening_events\": [\"IC_kwDOPRF1G88AAAABgNkrkw@2026-10-27T23:59:11Z\"], \"is_issue\": false, \"head\": \"d8f4449f95cd7a2da17996cddbc66fe484e69909\"}",
-        "status": "triage_wait",
+        "status": "running",
         "created": 1793629077.50438,
-        "updated": 1793641812.1165166,
+        "updated": 1793642715.5604792,
         "result": "judge unavailable after bounded attempts; retain pending work",
-        "attempts": 0
+        "attempts": 1
       }
     ],
     "meta": [
@@ -32332,16 +32332,8 @@
         "value": "{}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1793625862.067022, \"comfyui\": 1793625891.8105845, \"hermes\": 1793641807.7741923, \"langfuse\": 1793605067.4628398, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
-      },
-      {
         "key": "codex_review_leases",
         "value": "{}"
-      },
-      {
-        "key": "task:1518",
-        "value": "{\"started\": 1793641807.7743504, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1793642712.111587, \"folder\": null, \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793641812.1150327}"
       },
       {
         "key": "admission_warning_at",
@@ -32508,24 +32500,28 @@
         "value": "1793642521.6615784"
       },
       {
+        "key": "runner_resources",
+        "value": "{\"at\": 1793642684.15615, \"disk_free_bytes\": 88650317824, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15404470272, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
         "key": "admission_health",
-        "value": "{\"at\": 1793642623.337413, \"state\": \"stalled\", \"pending_candidates\": 403, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 3, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 403}, \"screening_wait_tasks\": 1, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 18, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 3624.7878193855286, \"judge_tokens_spent_24h\": 85658, \"screening_calls_5h\": 6, \"screening_calls_24h\": 6, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"human_wait\": 8, \"validation_wait\": 9}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7923\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7923\", \"title\": \"Ahmed\", \"first_seen\": 1793566369.7598567, \"last_checked\": 1793592148.4491594, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7905\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7905\", \"title\": \"Resuming a workflow re-runs the earlier no-output runs of a wait_for_output node, so its side effects happen twice\", \"first_seen\": 1793456954.948521, \"last_checked\": 1793592150.842602, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7935\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7935\", \"title\": \"`LlmAgent(mode=\\\"task\\\")` with a raw dict `output_schema` fails at construction with `SchemaError: Unknown schema type: \\\"object\\\"`\", \"first_seen\": 1793604455.1784396, \"last_checked\": 1793614086.4048533, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7943\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7943\", \"title\": \"Expose a replay indicator on Context\", \"first_seen\": 1793633622.9571166, \"last_checked\": 1793633622.957117, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7944\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7944\", \"title\": \"A scoped `single_turn` LlmAgent node gets the workflow's user message as its first turn, before its node input\", \"first_seen\": 1793634019.3771703, \"last_checked\": 1793634019.377171, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+        "value": "{\"at\": 1793642687.5253098, \"state\": \"stalled\", \"pending_candidates\": 403, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 3, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 403}, \"screening_wait_tasks\": 1, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 18, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 3688.9757685661316, \"judge_tokens_spent_24h\": 85658, \"screening_calls_5h\": 6, \"screening_calls_24h\": 6, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"human_wait\": 8, \"validation_wait\": 9}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7923\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7923\", \"title\": \"Ahmed\", \"first_seen\": 1793566369.7598567, \"last_checked\": 1793592148.4491594, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7905\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7905\", \"title\": \"Resuming a workflow re-runs the earlier no-output runs of a wait_for_output node, so its side effects happen twice\", \"first_seen\": 1793456954.948521, \"last_checked\": 1793592150.842602, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7935\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7935\", \"title\": \"`LlmAgent(mode=\\\"task\\\")` with a raw dict `output_schema` fails at construction with `SchemaError: Unknown schema type: \\\"object\\\"`\", \"first_seen\": 1793604455.1784396, \"last_checked\": 1793614086.4048533, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7943\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7943\", \"title\": \"Expose a replay indicator on Context\", \"first_seen\": 1793633622.9571166, \"last_checked\": 1793633622.957117, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7944\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7944\", \"title\": \"A scoped `single_turn` LlmAgent node gets the workflow's user message as its first turn, before its node input\", \"first_seen\": 1793634019.3771703, \"last_checked\": 1793634019.377171, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1793642623.3391416, \"tasks\": {\"fix\": {\"done\": 3, \"human_wait\": 7, \"skipped\": 14, \"validation_wait\": 3}, \"respond\": {\"blocked\": 2, \"done\": 1, \"error\": 1, \"human_wait\": 1, \"skipped\": 1, \"triage_wait\": 1, \"validation_wait\": 6}}}"
+        "value": "{\"at\": 1793642687.5268865, \"tasks\": {\"fix\": {\"done\": 3, \"human_wait\": 7, \"skipped\": 14, \"validation_wait\": 3}, \"respond\": {\"blocked\": 2, \"done\": 1, \"error\": 1, \"human_wait\": 1, \"skipped\": 1, \"triage_wait\": 1, \"validation_wait\": 6}}}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1793642631.3210287, \"windows\": [{\"name\": \"primary\", \"used_percent\": 19, \"resets_at\": 1793774604}]}"
+        "value": "{\"at\": 1793642691.7137191, \"windows\": [{\"name\": \"primary\", \"used_percent\": 19, \"resets_at\": 1793774604}]}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1793642674.2620134"
+        "value": "1793642704.2659156"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1793642680.5948987"
+        "value": "1793642710.5955935"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -32533,15 +32529,19 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793642682.2575054"
+        "value": "1793642712.6249254"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1793642683.1739957"
+        "value": "1793642713.217685"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1793642684.15615, \"disk_free_bytes\": 88650317824, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15404470272, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1793625862.067022, \"comfyui\": 1793625891.8105845, \"hermes\": 1793642715.5604033, \"langfuse\": 1793605067.4628398, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
+        "key": "task:1518",
+        "value": "{\"started\": 1793642715.5605178, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793641812.1150327}"
       }
     ],
     "calls": [
