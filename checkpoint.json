@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793626245.5931897,
+  "saved_at": 1793626253.771554,
   "tables": {
     "tasks": [
       {
@@ -19653,10 +19653,10 @@
         "repo": "openclaw/openclaw",
         "number": 190917,
         "note": "{\"authors\": \"clawsweeper\", \"events\": [\"IC_kwDOQb6kR88AAAABh6gLsA@2026-11-02T06:44:22Z\"], \"screening_events\": [\"IC_kwDOQb6kR88AAAABh6gLsA@2026-11-02T06:44:22Z\"], \"is_issue\": false, \"head\": \"7c997d9bf1af3f7511252e202141d08766dd9d82\"}",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1793625548.8016868,
-        "updated": 1793625862.0672822,
-        "result": "",
+        "updated": 1793626253.758806,
+        "result": "VALIDATION_ENVIRONMENT: ClawSweeper requires a shipped CLI or Gateway trace showing zero warm filesystem probes and refusal after revocation. This isolated checkout has no configured Gateway flow for that proof. The passing in-process test does not satisfy the request. PR head and source are unchanged.",
         "attempts": 1
       },
       {
@@ -32336,16 +32336,8 @@
         "value": "[{\"at\": 1793609606.4888496, \"group\": \"new_fix\", \"task\": 1507, \"phase\": \"generation\"}, {\"at\": 1793610324.2216227, \"group\": \"new_fix\", \"task\": 1507, \"phase\": \"review\"}, {\"at\": 1793611855.781983, \"group\": \"maintenance\", \"task\": 1508, \"phase\": \"generation\"}, {\"at\": 1793614570.7315102, \"group\": \"new_fix\", \"task\": 1509, \"phase\": \"generation\"}, {\"at\": 1793617330.9531226, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1793617330.9880118, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1793617336.3315928, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1793617336.3958418, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1793617362.7701657, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1793617372.4824831, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1793617538.0744834, \"group\": \"maintenance\", \"task\": 724, \"phase\": \"generation\"}, {\"at\": 1793617904.7138197, \"group\": \"maintenance\", \"task\": 724, \"phase\": \"review\"}, {\"at\": 1793618534.5405946, \"group\": \"repair\", \"task\": 724, \"phase\": \"remediation\"}, {\"at\": 1793618944.675365, \"group\": \"repair\", \"task\": 724, \"phase\": \"rereview\"}, {\"at\": 1793620752.4746158, \"group\": \"new_fix\", \"task\": 1450, \"phase\": \"generation\"}, {\"at\": 1793622924.196949, \"group\": \"new_fix\", \"task\": 1510, \"phase\": \"generation\"}, {\"at\": 1793625554.0919108, \"group\": \"screening\", \"task\": 1511, \"phase\": \"screening-431e6c722738db525777\"}, {\"at\": 1793625601.931112, \"group\": \"maintenance\", \"task\": 1513, \"phase\": \"generation\"}, {\"at\": 1793625645.5595965, \"group\": \"maintenance\", \"task\": 1511, \"phase\": \"generation\"}, {\"at\": 1793625779.3048723, \"group\": \"maintenance\", \"task\": 1511, \"phase\": \"reply-review\"}, {\"at\": 1793625867.996756, \"group\": \"screening\", \"task\": 1512, \"phase\": \"screening-8203cfca4101ed43c978\"}, {\"at\": 1793625896.4810762, \"group\": \"screening\", \"task\": 1514, \"phase\": \"screening-e4bf7630e408a5ea9db2\"}, {\"at\": 1793625909.0949516, \"group\": \"new_fix\", \"task\": 1514, \"phase\": \"generation\"}, {\"at\": 1793625952.2530172, \"group\": \"maintenance\", \"task\": 1512, \"phase\": \"generation\"}]"
       },
       {
-        "key": "task:1512",
-        "value": "{\"started\": 1793625862.0673609, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1512/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"7c997d9bf1af3f7511252e202141d08766dd9d82\", \"phase_started\": 1793625955.1364975, \"screening_requests\": {\"8203cfca4101ed43c978\": 1793625877.6532667}, \"remote_base\": \"7c997d9bf1af3f7511252e202141d08766dd9d82\", \"base_update\": {\"original_head\": \"7c997d9bf1af3f7511252e202141d08766dd9d82\", \"base\": \"7c997d9bf1af3f7511252e202141d08766dd9d82\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1793625968.5629237"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1793626070.9009168, \"source\": \"completed task phase\"}"
       },
       {
         "key": "usage:1514:1:generation",
@@ -32356,28 +32348,32 @@
         "value": "{\"status\": \"needs_human\", \"task\": 1514, \"repo\": \"comfyui\", \"number\": 17489, \"reason\": \"VALIDATION_ENVIRONMENT: The patch and regression test are complete, but this Linux runner cannot verify the reported Windows filesystem failure or confirm that Windows accepts the subsequent file-sizing call.\", \"base\": \"bb878b9ee35274e67931634ba9e8c338f8c06035\", \"patch_digest\": \"870bef9f0e956cbe6432e4904107f443da273c33674f0acdfff9085807c6fab8\", \"evidence_bundle\": \"1514-1.json.enc\"}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1512\": {\"remaining\": 1, \"until\": 1793633152.2530172}}"
-      },
-      {
         "key": "task:1514",
         "value": "{\"started\": 1793625891.8108268, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1514/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"bb878b9ee35274e67931634ba9e8c338f8c06035\", \"phase_started\": 1793625911.988833, \"screening_requests\": {\"e4bf7630e408a5ea9db2\": 1793625905.4118102}, \"generation_started\": 1793625909.0947104, \"dispatch_paid_date\": \"2026-11-02\", \"patch_digest\": \"870bef9f0e956cbe6432e4904107f443da273c33674f0acdfff9085807c6fab8\", \"last_execution_phase\": \"generation\", \"finished\": 1793626071.4154158}"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1793626240.965226"
+      },
+      {
+        "key": "runner_resources",
+        "value": "{\"at\": 1793626245.58006, \"disk_free_bytes\": 80536281088, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15212863488, \"SwapTotal\": 3221221376, \"SwapFree\": 3221155840}, \"memory_events\": null}"
+      },
+      {
         "key": "admission_health",
-        "value": "{\"at\": 1793626184.8056338, \"state\": \"active\", \"pending_candidates\": 368, \"pending_by_repo\": {\"hermes\": 368, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 368}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 24, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 232.5432162284851, \"judge_tokens_spent_24h\": 97954, \"screening_calls_5h\": 3, \"screening_calls_24h\": 3, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"human_wait\": 8, \"validation_wait\": 8}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7923\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7923\", \"title\": \"Ahmed\", \"first_seen\": 1793566369.7598567, \"last_checked\": 1793592148.4491594, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7905\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7905\", \"title\": \"Resuming a workflow re-runs the earlier no-output runs of a wait_for_output node, so its side effects happen twice\", \"first_seen\": 1793456954.948521, \"last_checked\": 1793592150.842602, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7935\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7935\", \"title\": \"`LlmAgent(mode=\\\"task\\\")` with a raw dict `output_schema` fails at construction with `SchemaError: Unknown schema type: \\\"object\\\"`\", \"first_seen\": 1793604455.1784396, \"last_checked\": 1793614086.4048533, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+        "value": "{\"at\": 1793626248.675066, \"state\": \"active\", \"pending_candidates\": 368, \"pending_by_repo\": {\"hermes\": 368, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 368}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 24, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 296.4136998653412, \"judge_tokens_spent_24h\": 97954, \"screening_calls_5h\": 3, \"screening_calls_24h\": 3, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"human_wait\": 8, \"validation_wait\": 8}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7923\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7923\", \"title\": \"Ahmed\", \"first_seen\": 1793566369.7598567, \"last_checked\": 1793592148.4491594, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7905\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7905\", \"title\": \"Resuming a workflow re-runs the earlier no-output runs of a wait_for_output node, so its side effects happen twice\", \"first_seen\": 1793456954.948521, \"last_checked\": 1793592150.842602, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7935\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7935\", \"title\": \"`LlmAgent(mode=\\\"task\\\")` with a raw dict `output_schema` fails at construction with `SchemaError: Unknown schema type: \\\"object\\\"`\", \"first_seen\": 1793604455.1784396, \"last_checked\": 1793614086.4048533, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1793626184.8077226, \"tasks\": {\"fix\": {\"done\": 3, \"human_wait\": 7, \"skipped\": 17, \"validation_wait\": 4}, \"respond\": {\"blocked\": 1, \"error\": 1, \"human_wait\": 1, \"running\": 1, \"skipped\": 2, \"validation_wait\": 4}}}"
+        "value": "{\"at\": 1793626248.676312, \"tasks\": {\"fix\": {\"done\": 3, \"human_wait\": 7, \"skipped\": 17, \"validation_wait\": 4}, \"respond\": {\"blocked\": 1, \"error\": 1, \"human_wait\": 1, \"running\": 1, \"skipped\": 2, \"validation_wait\": 4}}}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793626250.4291303"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1793626240.9639213"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1793626240.965226"
+        "value": "1793626250.9641364"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -32385,19 +32381,31 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793626242.6815324"
+        "value": "1793626252.2930765"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1793626243.2920833, \"windows\": [{\"name\": \"primary\", \"used_percent\": 19, \"resets_at\": 1793774604}]}"
+        "value": "{\"at\": 1793626253.2803726, \"windows\": [{\"name\": \"primary\", \"used_percent\": 19, \"resets_at\": 1793774604}]}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1793626245.4171355"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1793626253.2827365, \"source\": \"completed task phase\"}"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1793626245.58006, \"disk_free_bytes\": 80536281088, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15212863488, \"SwapTotal\": 3221221376, \"SwapFree\": 3221155840}, \"memory_events\": null}"
+        "key": "usage:1512:1:generation",
+        "value": "{\"task\": 1512, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793626253.2908862, \"seconds\": 301.039, \"tokens\": {\"totalTokens\": 5829079, \"inputTokens\": 5821792, \"cachedInputTokens\": 5721600, \"cacheWriteInputTokens\": 0, \"outputTokens\": 7287, \"reasoningOutputTokens\": 2569}, \"first_event_ms\": 1793625958366, \"last_event_ms\": 1793626253281, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:1512",
+        "value": "{\"status\": \"needs_human\", \"task\": 1512, \"repo\": \"openclaw/openclaw\", \"number\": 190917, \"reason\": \"VALIDATION_ENVIRONMENT: ClawSweeper requires a shipped CLI or Gateway trace showing zero warm filesystem probes and refusal after revocation. This isolated checkout has no configured Gateway flow for that proof. The passing in-process test does not satisfy the request. PR head and source are unchanged.\", \"base\": \"7c997d9bf1af3f7511252e202141d08766dd9d82\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"1512-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1512",
+        "value": "{\"started\": 1793625862.0673609, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1512/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"7c997d9bf1af3f7511252e202141d08766dd9d82\", \"phase_started\": 1793625955.1364975, \"screening_requests\": {\"8203cfca4101ed43c978\": 1793625877.6532667}, \"remote_base\": \"7c997d9bf1af3f7511252e202141d08766dd9d82\", \"base_update\": {\"original_head\": \"7c997d9bf1af3f7511252e202141d08766dd9d82\", \"base\": \"7c997d9bf1af3f7511252e202141d08766dd9d82\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1793626253.5211039}"
       }
     ],
     "calls": [
