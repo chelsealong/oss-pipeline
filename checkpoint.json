@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793720527.3412359,
+  "saved_at": 1793720550.778295,
   "tables": {
     "tasks": [
       {
@@ -19731,11 +19731,11 @@
         "repo": "NousResearch/hermes-agent",
         "number": 81204,
         "note": "{\"authors\": \"amisepa\", \"events\": [\"IC_kwDOPRF1G88AAAABgNkrkw@2026-10-27T23:59:11Z\"], \"screening_events\": [\"IC_kwDOPRF1G88AAAABgNkrkw@2026-10-27T23:59:11Z\"], \"is_issue\": false, \"head\": \"d8f4449f95cd7a2da17996cddbc66fe484e69909\"}",
-        "status": "triage_wait",
+        "status": "running",
         "created": 1793629077.50438,
-        "updated": 1793719650.568817,
+        "updated": 1793720550.7700822,
         "result": "judge unavailable after bounded attempts; retain pending work",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 1519,
@@ -32875,16 +32875,8 @@
         "value": "{}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1793699705.7976213, \"comfyui\": 1793625891.8105845, \"hermes\": 1793719646.1221416, \"langfuse\": 1793700150.174155, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
-      },
-      {
         "key": "codex_review_leases",
         "value": "{}"
-      },
-      {
-        "key": "task:1518",
-        "value": "{\"started\": 1793719646.1222382, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1793720550.564411, \"folder\": null, \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793719650.5675192}"
       },
       {
         "key": "task:44",
@@ -33047,24 +33039,28 @@
         "value": "1793720153.7336981"
       },
       {
+        "key": "runner_resources",
+        "value": "{\"at\": 1793720527.333279, \"disk_free_bytes\": 88263491584, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15373463552, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
         "key": "admission_health",
-        "value": "{\"at\": 1793720466.7794707, \"state\": \"stalled\", \"pending_candidates\": 410, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 2, \"comfyui\": 5, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 2, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 410}, \"screening_wait_tasks\": 1, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 8, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 8724.607301473618, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 4, \"execution_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7951\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7951\", \"title\": \"WHY GOOGLE WILL FAIL IF YOU DO NOT CHANGE COURSE\", \"first_seen\": 1793668470.5589728, \"last_checked\": 1793676572.9097226, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7958\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7958\", \"title\": \"Aborting during parallel tool calls records tools that already finished as \\\"aborted\\\" and drops their state changes\", \"first_seen\": 1793684080.138197, \"last_checked\": 1793684993.5823565, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7959\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7959\", \"title\": \"SqliteMemoryService with FTS5 finds nothing for a Chinese or Japanese keyword inside a sentence\", \"first_seen\": 1793685210.0322576, \"last_checked\": 1793685210.032258, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+        "value": "{\"at\": 1793720530.1453178, \"state\": \"stalled\", \"pending_candidates\": 410, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 2, \"comfyui\": 5, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 1, \"spec-kit\": 0, \"openclaw\": 2, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 410}, \"screening_wait_tasks\": 1, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 8, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 8787.97327876091, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 4, \"execution_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7951\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7951\", \"title\": \"WHY GOOGLE WILL FAIL IF YOU DO NOT CHANGE COURSE\", \"first_seen\": 1793668470.5589728, \"last_checked\": 1793676572.9097226, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7958\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7958\", \"title\": \"Aborting during parallel tool calls records tools that already finished as \\\"aborted\\\" and drops their state changes\", \"first_seen\": 1793684080.138197, \"last_checked\": 1793684993.5823565, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7959\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7959\", \"title\": \"SqliteMemoryService with FTS5 finds nothing for a Chinese or Japanese keyword inside a sentence\", \"first_seen\": 1793685210.0322576, \"last_checked\": 1793685210.032258, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1793720466.7809467, \"tasks\": {\"fix\": {\"done\": 4, \"error\": 1, \"skipped\": 8}, \"respond\": {\"blocked\": 2, \"execution_wait\": 1, \"triage_wait\": 1, \"validation_wait\": 4}}}"
+        "value": "{\"at\": 1793720530.1464574, \"tasks\": {\"fix\": {\"done\": 4, \"error\": 1, \"skipped\": 8}, \"respond\": {\"blocked\": 2, \"execution_wait\": 1, \"triage_wait\": 1, \"validation_wait\": 4}}}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1793720483.2552795, \"windows\": [{\"name\": \"primary\", \"used_percent\": 28, \"resets_at\": 1793774604}]}"
+        "value": "{\"at\": 1793720543.5777235, \"windows\": [{\"name\": \"primary\", \"used_percent\": 28, \"resets_at\": 1793774604}]}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1793720515.0718756"
+        "value": "1793720545.0746338"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1793720521.4634435"
+        "key": "detector_heartbeat",
+        "value": "1793720546.955736"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -33072,15 +33068,19 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793720523.6611767"
+        "value": "1793720548.9169183"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1793720526.9553907"
+        "key": "watch_heartbeat",
+        "value": "1793720550.0211003"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1793720527.333279, \"disk_free_bytes\": 88263491584, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15373463552, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1793699705.7976213, \"comfyui\": 1793625891.8105845, \"hermes\": 1793720550.7700276, \"langfuse\": 1793700150.174155, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
+        "key": "task:1518",
+        "value": "{\"started\": 1793720550.7700999, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793719650.5675192}"
       }
     ],
     "calls": [
