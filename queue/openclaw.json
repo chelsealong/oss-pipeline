@@ -3,130 +3,139 @@
   "upstream": "openclaw/openclaw",
   "implements_in": "openclaw/openclaw",
   "needs_assignment": false,
-  "scanned_at": "2026-11-03T16:45:47+00:00",
+  "scanned_at": "2026-11-03T17:37:37+00:00",
   "partial": false,
   "errors": [],
-  "candidates": [],
-  "rejected": [
+  "candidates": [
     {
       "number": 192041,
       "title": "fix(sandbox): remote-shell file paths are trimmed, addressing literal files as their siblings",
       "url": "https://github.com/openclaw/openclaw/issues/192041",
       "created_at": "2026-11-03T15:56:03Z",
+      "age_hours": 1.7,
+      "reason": "clear",
+      "labels": [
+        "P2",
+        "clawsweeper:source-repro",
+        "impact:data-loss",
+        "issue-rating: \ud83e\udd9e diamond lobster"
+      ],
+      "comments": 1,
+      "self_claimed": false
+    }
+  ],
+  "rejected": [
+    {
+      "number": 192124,
+      "title": "[Bug]: Manual /compact of a large claude-cli session is killed at the 180 s compaction window although Claude Code finishes in ~226 s (766k tokens) and emits no",
+      "url": "https://github.com/openclaw/openclaw/issues/192124",
+      "created_at": "2026-11-03T17:17:33Z",
       "age_hours": 0.3,
-      "reason": "only 18 min old; waiting 40 min for the repo's own triage"
+      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
+      "number": 192120,
+      "title": "cron: one-shot deleteAfterRun consumes the job even when every attempt dies on a provider transport error before the payload runs",
+      "url": "https://github.com/openclaw/openclaw/issues/192120",
+      "created_at": "2026-11-03T17:14:32Z",
+      "age_hours": 0.4,
+      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
+      "number": 192109,
+      "title": "[Bug]: v2026.10.10 omitted merged Microsoft TTS fix and still ships node-edge-tts 1.2.10",
+      "url": "https://github.com/openclaw/openclaw/issues/192109",
+      "created_at": "2026-11-03T16:57:34Z",
+      "age_hours": 0.7,
+      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
+      "number": 192105,
+      "title": "Control UI: Enter never submits in composer (only the send button works)",
+      "url": "https://github.com/openclaw/openclaw/issues/192105",
+      "created_at": "2026-11-03T16:54:50Z",
+      "age_hours": 0.7,
+      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
+      "number": 192090,
+      "title": "[Perf]: Gateway cold start on a used state directory spends ~10 s in `config.auth` and ~4 s in `sessions.admission` (vs ~4.5 s / 0.1 s on fresh state)",
+      "url": "https://github.com/openclaw/openclaw/issues/192090",
+      "created_at": "2026-11-03T16:37:50Z",
+      "age_hours": 1.0,
+      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
+      "number": 192089,
+      "title": "[Feature]: accept SecretRefs in `skills.entries.*.env` so provider keys can leave the config file and the process environment",
+      "url": "https://github.com/openclaw/openclaw/issues/192089",
+      "created_at": "2026-11-03T16:37:49Z",
+      "age_hours": 1.0,
+      "reason": "excluded label ['clawsweeper:needs-product-decision', 'clawsweeper:needs-security-review', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
+      "number": 192088,
+      "title": "[Bug]: editing `env.vars.*` through `config.patch` restarts the Gateway (no reload rule for `env`), and the answer does not tell the caller when the restart hap",
+      "url": "https://github.com/openclaw/openclaw/issues/192088",
+      "created_at": "2026-11-03T16:37:48Z",
+      "age_hours": 1.0,
+      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
+      "number": 192086,
+      "title": "[Bug]: diagnostics-otel delays Gateway shutdown by ~8 s when the OTLP collector is already gone",
+      "url": "https://github.com/openclaw/openclaw/issues/192086",
+      "created_at": "2026-11-03T16:37:15Z",
+      "age_hours": 1.0,
+      "reason": "already has PR(s): ['xref PR#192114(OPEN)']"
+    },
+    {
+      "number": 192071,
+      "title": "[Docs Bug]: releases index marks v2026.10.9 as (latest) while the page and npm both point at v2026.10.10",
+      "url": "https://github.com/openclaw/openclaw/issues/192071",
+      "created_at": "2026-11-03T16:26:13Z",
+      "age_hours": 1.2,
+      "reason": "already has PR(s): ['closing-ref PR#192095(OPEN)', 'xref PR#192095(OPEN)']"
+    },
+    {
+      "number": 192068,
+      "title": "[Bug]: Startup aborts on provider-scoped SecretRef failure of a non-required isolate owner (talk:realtime), contrary to secrets docs",
+      "url": "https://github.com/openclaw/openclaw/issues/192068",
+      "created_at": "2026-11-03T16:22:35Z",
+      "age_hours": 1.3,
+      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
+      "number": 192067,
+      "title": "[Bug]: Rehearsal Doctor copies voice-call realtime provider config (with its SecretRef) into talk.realtime",
+      "url": "https://github.com/openclaw/openclaw/issues/192067",
+      "created_at": "2026-11-03T16:22:33Z",
+      "age_hours": 1.3,
+      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
+      "number": 192066,
+      "title": "[Bug]: Update rehearsal omits credentials/, so exec SecretRef providers (1Password) fail at candidate-gateway-startup",
+      "url": "https://github.com/openclaw/openclaw/issues/192066",
+      "created_at": "2026-11-03T16:22:32Z",
+      "age_hours": 1.3,
+      "reason": "already has PR(s): ['closing-ref PR#192134(OPEN)', 'xref PR#192134(OPEN)']"
+    },
+    {
+      "number": 192061,
+      "title": "[Bug]: Image size mismatches go unreported when using OpenAI subscription auth",
+      "url": "https://github.com/openclaw/openclaw/issues/192061",
+      "created_at": "2026-11-03T16:21:27Z",
+      "age_hours": 1.3,
+      "reason": "excluded label ['clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
     },
     {
       "number": 192040,
       "title": "Feature: Gateway-owned incremental memory reindex without stopping the service",
       "url": "https://github.com/openclaw/openclaw/issues/192040",
       "created_at": "2026-11-03T15:55:59Z",
-      "age_hours": 0.3,
+      "age_hours": 1.7,
       "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 192031,
-      "title": "[Bug]: Sessions whose first message starts with \"/\" never get a title (pasted paths, commands with content)",
-      "url": "https://github.com/openclaw/openclaw/issues/192031",
-      "created_at": "2026-11-03T15:39:28Z",
-      "age_hours": 0.6,
-      "reason": "already has PR(s): ['closing-ref PR#192043(OPEN)', 'xref PR#192043(OPEN)']"
-    },
-    {
-      "number": 192025,
-      "title": "[Bug]: Windows: PowerShell console windows flash on the desktop from console-less helpers (Scheduled Task probe, exec)",
-      "url": "https://github.com/openclaw/openclaw/issues/192025",
-      "created_at": "2026-11-03T15:35:06Z",
-      "age_hours": 0.6,
-      "reason": "excluded label ['clawsweeper:needs-live-repro', 'clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 192021,
-      "title": "[Bug]: Agent DB admission-refusal error is replied to the inbound chat before session.sendPolicy is evaluated (leaks internal errors to denied/third-party chats",
-      "url": "https://github.com/openclaw/openclaw/issues/192021",
-      "created_at": "2026-11-03T15:27:42Z",
-      "age_hours": 0.8,
-      "reason": "excluded label ['clawsweeper:needs-product-decision', 'clawsweeper:needs-security-review', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 192009,
-      "title": "[Feature]: Explicitly authorize cross-provider cron fallback accounts",
-      "url": "https://github.com/openclaw/openclaw/issues/192009",
-      "created_at": "2026-11-03T15:20:51Z",
-      "age_hours": 0.9,
-      "reason": "excluded label ['clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 191989,
-      "title": "[UX][iOS] Make active-reply send behavior and \u201cSteer now / Queue next\u201d discoverable",
-      "url": "https://github.com/openclaw/openclaw/issues/191989",
-      "created_at": "2026-11-03T14:55:44Z",
-      "age_hours": 1.3,
-      "reason": "excluded label ['clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 191988,
-      "title": "[Feature]: Preserve trusted LAN endpoints so iOS can reconnect after a Gateway IP change",
-      "url": "https://github.com/openclaw/openclaw/issues/191988",
-      "created_at": "2026-11-03T14:51:59Z",
-      "age_hours": 1.4,
-      "reason": "excluded label ['clawsweeper:needs-product-decision', 'clawsweeper:needs-security-review', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 191987,
-      "title": "Feature: support Anthropic message threads (beta message-threads-2026-08-12) in the Anthropic provider",
-      "url": "https://github.com/openclaw/openclaw/issues/191987",
-      "created_at": "2026-11-03T14:51:36Z",
-      "age_hours": 1.4,
-      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 191975,
-      "title": "[Feature]: Host-exec restricts build tasks to 4.8 GiB on a 20 GB RAM / 28 GB swap server",
-      "url": "https://github.com/openclaw/openclaw/issues/191975",
-      "created_at": "2026-11-03T14:38:43Z",
-      "age_hours": 1.6,
-      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 191961,
-      "title": "[Bug]: Control UI: insertBefore DOMException on the session-less chat route (/chat/main/), also triggered by /new",
-      "url": "https://github.com/openclaw/openclaw/issues/191961",
-      "created_at": "2026-11-03T14:22:33Z",
-      "age_hours": 1.9,
-      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 191960,
-      "title": "[Bug]: tools.alsoAllow cannot enable the pdf tool: optional tool factories are gated by the bare profile policy",
-      "url": "https://github.com/openclaw/openclaw/issues/191960",
-      "created_at": "2026-11-03T14:21:25Z",
-      "age_hours": 1.9,
-      "reason": "excluded label ['clawsweeper:needs-info', 'clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 191949,
-      "title": "Docs: say whether archived-session deletion is limited to the creator, like archive",
-      "url": "https://github.com/openclaw/openclaw/issues/191949",
-      "created_at": "2026-11-03T13:57:00Z",
-      "age_hours": 2.3,
-      "reason": "already has PR(s): ['closing-ref PR#191954(OPEN)', 'xref PR#191954(OPEN)']"
-    },
-    {
-      "number": 191948,
-      "title": "Update failure: gateway-recovery-verification (2026.10.10)",
-      "url": "https://github.com/openclaw/openclaw/issues/191948",
-      "created_at": "2026-11-03T13:55:00Z",
-      "age_hours": 2.3,
-      "reason": "excluded label ['clawsweeper:needs-info', 'clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 191944,
-      "title": "[Bug]: gateway stop / stop --force both fail on macOS with \"Process ancestry could not be fully inspected\"",
-      "url": "https://github.com/openclaw/openclaw/issues/191944",
-      "created_at": "2026-11-03T13:44:55Z",
-      "age_hours": 2.5,
-      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
     }
   ]
 }
