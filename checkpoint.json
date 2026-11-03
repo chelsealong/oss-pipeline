@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793689496.8525674,
+  "saved_at": 1793689538.5181837,
   "tables": {
     "tasks": [
       {
@@ -19731,11 +19731,11 @@
         "repo": "NousResearch/hermes-agent",
         "number": 81204,
         "note": "{\"authors\": \"amisepa\", \"events\": [\"IC_kwDOPRF1G88AAAABgNkrkw@2026-10-27T23:59:11Z\"], \"screening_events\": [\"IC_kwDOPRF1G88AAAABgNkrkw@2026-10-27T23:59:11Z\"], \"is_issue\": false, \"head\": \"d8f4449f95cd7a2da17996cddbc66fe484e69909\"}",
-        "status": "triage_wait",
+        "status": "running",
         "created": 1793629077.50438,
-        "updated": 1793688630.9549694,
+        "updated": 1793689538.5035274,
         "result": "judge unavailable after bounded attempts; retain pending work",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 1519,
@@ -32603,10 +32603,6 @@
         "value": "{\"started\": 1793686982.9519105, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"skipped\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793686989.9924445}"
       },
       {
-        "key": "task:1518",
-        "value": "{\"started\": 1793688624.8489947, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1793689530.9440699, \"folder\": null, \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793688630.952467}"
-      },
-      {
         "key": "task:44",
         "value": "{\"recovery_checked_at\": 1793688711.324532}"
       },
@@ -32771,10 +32767,6 @@
         "value": "{\"started\": 1793687003.003943, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1528/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"0ce3b2dab182d40bd85716fda673aeba517210a9\", \"remote_base\": \"0ce3b2dab182d40bd85716fda673aeba517210a9\", \"base_update\": {\"original_head\": \"0ce3b2dab182d40bd85716fda673aeba517210a9\", \"base\": \"0ce3b2dab182d40bd85716fda673aeba517210a9\", \"merged\": false, \"mergeable\": null, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1793688754.582541, \"patch_digest\": \"77c73d6e573f16dad2f9aa893f54d21d9e7e28b31df087351af417b4a9f739cc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1793688827.2489626}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793688835.7753813, \"comfyui\": 1793625891.8105845, \"hermes\": 1793688624.8488681, \"langfuse\": 1793605067.4628398, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
-      },
-      {
         "key": "task:219",
         "value": "{\"recovery_checked_at\": 1793688850.9419107}"
       },
@@ -32811,28 +32803,36 @@
         "value": "{\"started\": 1793688835.7756324, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1529/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"0ad25113167c7c645429fa9db11b5cb3ad69a9ec\", \"generation_started\": 1793688895.8312664, \"dispatch_paid_date\": \"2026-11-03\", \"phase_started\": 1793688899.1765254}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1793689435.4475179, \"state\": \"active\", \"pending_candidates\": 406, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 1, \"comfyui\": 4, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 1, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 406}, \"screening_wait_tasks\": 1, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 15, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 539.6072602272034, \"judge_tokens_spent_24h\": 50792, \"screening_calls_5h\": 0, \"screening_calls_24h\": 6, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 8, \"validation_wait\": 8}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7935\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7935\", \"title\": \"`LlmAgent(mode=\\\"task\\\")` with a raw dict `output_schema` fails at construction with `SchemaError: Unknown schema type: \\\"object\\\"`\", \"first_seen\": 1793604455.1784396, \"last_checked\": 1793614086.4048533, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7943\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7943\", \"title\": \"Expose a replay indicator on Context\", \"first_seen\": 1793633622.9571166, \"last_checked\": 1793633622.957117, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7944\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7944\", \"title\": \"A scoped `single_turn` LlmAgent node gets the workflow's user message as its first turn, before its node input\", \"first_seen\": 1793634019.3771703, \"last_checked\": 1793634019.377171, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7951\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7951\", \"title\": \"WHY GOOGLE WILL FAIL IF YOU DO NOT CHANGE COURSE\", \"first_seen\": 1793668470.5589728, \"last_checked\": 1793676572.9097226, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7958\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7958\", \"title\": \"Aborting during parallel tool calls records tools that already finished as \\\"aborted\\\" and drops their state changes\", \"first_seen\": 1793684080.138197, \"last_checked\": 1793684993.5823565, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7959\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7959\", \"title\": \"SqliteMemoryService with FTS5 finds nothing for a Chinese or Japanese keyword inside a sentence\", \"first_seen\": 1793685210.0322576, \"last_checked\": 1793685210.032258, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1793689435.4488997, \"tasks\": {\"fix\": {\"done\": 3, \"human_wait\": 7, \"running\": 1, \"skipped\": 12, \"validation_wait\": 1}, \"respond\": {\"blocked\": 4, \"done\": 1, \"error\": 1, \"human_wait\": 1, \"skipped\": 1, \"triage_wait\": 1, \"validation_wait\": 7}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1793689466.7575343, \"windows\": [{\"name\": \"primary\", \"used_percent\": 23, \"resets_at\": 1793774604}]}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1793689472.0497844"
       },
       {
+        "key": "runner_resources",
+        "value": "{\"at\": 1793689496.8274906, \"disk_free_bytes\": 80832856064, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 11074977792, \"SwapTotal\": 3221221376, \"SwapFree\": 3123941376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1793689500.8300536, \"state\": \"active\", \"pending_candidates\": 406, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 1, \"comfyui\": 4, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 1, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 406}, \"screening_wait_tasks\": 1, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 15, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 604.9865989685059, \"judge_tokens_spent_24h\": 49437, \"screening_calls_5h\": 0, \"screening_calls_24h\": 6, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 8, \"validation_wait\": 8}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7935\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7935\", \"title\": \"`LlmAgent(mode=\\\"task\\\")` with a raw dict `output_schema` fails at construction with `SchemaError: Unknown schema type: \\\"object\\\"`\", \"first_seen\": 1793604455.1784396, \"last_checked\": 1793614086.4048533, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7943\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7943\", \"title\": \"Expose a replay indicator on Context\", \"first_seen\": 1793633622.9571166, \"last_checked\": 1793633622.957117, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7944\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7944\", \"title\": \"A scoped `single_turn` LlmAgent node gets the workflow's user message as its first turn, before its node input\", \"first_seen\": 1793634019.3771703, \"last_checked\": 1793634019.377171, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7951\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7951\", \"title\": \"WHY GOOGLE WILL FAIL IF YOU DO NOT CHANGE COURSE\", \"first_seen\": 1793668470.5589728, \"last_checked\": 1793676572.9097226, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7958\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7958\", \"title\": \"Aborting during parallel tool calls records tools that already finished as \\\"aborted\\\" and drops their state changes\", \"first_seen\": 1793684080.138197, \"last_checked\": 1793684993.5823565, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7959\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7959\", \"title\": \"SqliteMemoryService with FTS5 finds nothing for a Chinese or Japanese keyword inside a sentence\", \"first_seen\": 1793685210.0322576, \"last_checked\": 1793685210.032258, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1793689500.8314095, \"tasks\": {\"fix\": {\"done\": 3, \"human_wait\": 7, \"running\": 1, \"skipped\": 12, \"validation_wait\": 1}, \"respond\": {\"blocked\": 4, \"done\": 1, \"error\": 1, \"human_wait\": 1, \"skipped\": 1, \"triage_wait\": 1, \"validation_wait\": 7}}}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1793689488.3917058"
+        "value": "1793689533.3974836"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1793689493.9753485"
+        "value": "1793689533.980217"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1793689534.0814412, \"windows\": [{\"name\": \"primary\", \"used_percent\": 23, \"resets_at\": 1793774604}]}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793689535.1993587"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -32840,15 +32840,15 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793689495.48198"
+        "value": "1793689535.6571918"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1793689496.361845"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1793688835.7753813, \"comfyui\": 1793625891.8105845, \"hermes\": 1793689538.503419, \"langfuse\": 1793605067.4628398, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1793689496.8274906, \"disk_free_bytes\": 80832856064, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 11074977792, \"SwapTotal\": 3221221376, \"SwapFree\": 3123941376}, \"memory_events\": null}"
+        "key": "task:1518",
+        "value": "{\"started\": 1793689538.503566, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793688630.952467}"
       }
     ],
     "calls": [
