@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793710105.715177,
+  "saved_at": 1793710108.7352428,
   "tables": {
     "tasks": [
       {
@@ -19731,11 +19731,11 @@
         "repo": "NousResearch/hermes-agent",
         "number": 81204,
         "note": "{\"authors\": \"amisepa\", \"events\": [\"IC_kwDOPRF1G88AAAABgNkrkw@2026-10-27T23:59:11Z\"], \"screening_events\": [\"IC_kwDOPRF1G88AAAABgNkrkw@2026-10-27T23:59:11Z\"], \"is_issue\": false, \"head\": \"d8f4449f95cd7a2da17996cddbc66fe484e69909\"}",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1793629077.50438,
-        "updated": 1793710102.7468083,
+        "updated": 1793710106.8621128,
         "result": "judge unavailable after bounded attempts; retain pending work",
-        "attempts": 1
+        "attempts": 0
       },
       {
         "id": 1519,
@@ -32838,10 +32838,6 @@
         "value": "1793708995.9358728"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:166",
         "value": "{\"recovery_checked_at\": 1793709256.529705}"
       },
@@ -32942,10 +32938,6 @@
         "value": "{\"at\": 1793710035.6824143, \"tasks\": {\"fix\": {\"done\": 4, \"skipped\": 8, \"validation_wait\": 1}, \"respond\": {\"blocked\": 3, \"done\": 1, \"execution_wait\": 1, \"skipped\": 1, \"triage_wait\": 1, \"validation_wait\": 7}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1793710092.6443362"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1793710092.7303424, \"windows\": [{\"name\": \"primary\", \"used_percent\": 26, \"resets_at\": 1793774604}]}"
       },
@@ -33018,8 +33010,32 @@
         "value": "{\"recovery_checked_at\": 1793710100.8153224}"
       },
       {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1793699705.7976213, \"comfyui\": 1793625891.8105845, \"hermes\": 1793710102.7467163, \"langfuse\": 1793700150.174155, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
+        "key": "recovery_audit:61",
+        "value": "{\"at\": 1793710103.392871, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "runner_resources",
+        "value": "{\"at\": 1793710103.792334, \"disk_free_bytes\": 88579682304, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15414415360, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1793710100.9883263"
+        "value": "1793710105.9884355"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1518",
+        "value": "{\"started\": 1793710102.7468486, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1793711006.8524778, \"folder\": null, \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793710106.859402}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1793710107.6456146"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -33027,27 +33043,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793710102.650753"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1793699705.7976213, \"comfyui\": 1793625891.8105845, \"hermes\": 1793710102.7467163, \"langfuse\": 1793700150.174155, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
-      },
-      {
-        "key": "task:1518",
-        "value": "{\"started\": 1793710102.7468486, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793709194.4792495}"
-      },
-      {
-        "key": "recovery_audit:61",
-        "value": "{\"at\": 1793710103.392871, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+        "value": "1793710107.7763999"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1793710103.565002"
-      },
-      {
-        "key": "runner_resources",
-        "value": "{\"at\": 1793710103.792334, \"disk_free_bytes\": 88579682304, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15414415360, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "1793710108.5776742"
       }
     ],
     "calls": [
