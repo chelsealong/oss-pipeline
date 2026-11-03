@@ -5,7 +5,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [probe, canary, live]
+        options: [probe, canary, live, recover-hermes]
         default: probe
       run_seconds:
         description: Detection window before draining active work (60–10800 seconds)
@@ -14,6 +14,9 @@ on:
         description: Restore production only after this canary and same-commit preflight pass
         type: boolean
         default: false
+      recovery_issue:
+        description: Explicit user-requested real Hermes issue for one ordinary PR attempt
+        default: ''
   schedule:
     - cron: '17,47 * * * *'
 
@@ -67,7 +70,7 @@ jobs:
           git config --global user.name oss-pipeline
           git config --global user.email chelsealong@126.com
           gh auth setup-git
-          if [ "$MODE" = live ] || [ "$MODE" = canary ]; then
+          if [ "$MODE" = live ] || [ "$MODE" = canary ] || [ "$MODE" = recover-hermes ]; then
             git clone --single-branch --branch codex-state --depth=1 https://github.com/chelsealong/oss-pipeline.git "$OSS_CLOUD_STATE_DIR"
           fi
       - name: Run managed Codex services
@@ -80,6 +83,7 @@ jobs:
           OSS_ARTIFACT_KEY: ${{ secrets.OSS_ARTIFACT_KEY }}
           MODE: ${{ inputs.mode || 'live' }}
           RUN_SECONDS: ${{ inputs.run_seconds || '10800' }}
+          HERMES_RECOVERY_ISSUE: ${{ inputs.recovery_issue || '' }}
         run: |
           python -u runner_resources.py --output .runtime/runner-resources.log &
           oss_monitor_pid=$!

@@ -135,7 +135,7 @@ def wait_canary_capacity():
 
 def configure(mode):
     rt.CONFIG.parent.mkdir(exist_ok=True)
-    rt.CONFIG.write_text(json.dumps({'backend':'codex-cloud' if mode=='live' else 'codex-local',
+    rt.CONFIG.write_text(json.dumps({'backend':'codex-cloud' if mode in ('live','recover-hermes') else 'codex-local',
         'enabled':True,'cloud_environment':True,'model':'gpt-6-sol','max_pending':8,
         'response_slots':2,'fix_slots':1,'max_pending_per_repo':3,'workers':2,
         'public_pr_replies':True,'maintain_existing_prs':True,
@@ -232,7 +232,20 @@ def admission_enabled():
         return False
 
 
+def verified_creation_recovery():
+    """Real publication recovery requires this exact main's preflight and canary."""
+    expected=os.environ['GITHUB_SHA']
+    current=json.loads(gh(['api',f'repos/{REPOSITORY}/git/ref/heads/main']))['object']['sha']
+    if current!=expected:raise RuntimeError('Recovery candidate is not current main')
+    for workflow,title in [('codex-cloud-preflight.yml',None),('codex-cloud.yml','Codex cloud canary')]:
+        result=json.loads(gh(['api',f'repos/{REPOSITORY}/actions/workflows/{workflow}/runs?head_sha={expected}&per_page=20']))
+        if not any(r['head_sha']==expected and r['status']=='completed' and r['conclusion']=='success'
+                   and (title is None or r.get('display_title')==title) for r in result['workflow_runs']):
+            raise RuntimeError('No successful same-commit '+workflow+' validation for real PR recovery')
+
+
 def run(mode,seconds):
+    if mode=='recover-hermes':verified_creation_recovery()
     configure(mode)
     previous=hashlib.sha256(auth_file().read_bytes()).hexdigest()
     children=[];logs=[];restored=False;failed=False;canary_budget=False;started=time.time()
@@ -244,8 +257,8 @@ def run(mode,seconds):
         if mode=='canary':
             cloud_store.seed_canary_budget();canary_budget=True
             wait_canary_capacity()  # Before starting any authentication/model owner.
-        if mode=='live':
-            if not cloud_enabled():raise RuntimeError('Cloud production switch is off')
+        if mode in ('live','recover-hermes'):
+            if mode=='live' and not cloud_enabled():raise RuntimeError('Cloud production switch is off')
             work_evidence.key()  # Never run production without encrypted recovery.
             cloud_store.restore()
             restored=True
@@ -255,16 +268,20 @@ def run(mode,seconds):
                 db.execute('BEGIN IMMEDIATE')
                 repo_limits.hold_pending(db)
                 repo_limits.restore_enabled_pending(db,creation_holds)
+            if mode=='recover-hermes':
+                if cloud_enabled():raise RuntimeError('Drain ordinary production before the explicit recovery run')
             migrate_accounting()
-            task_recovery.migrate_model_retries()
-            task_recovery.recover_shallow_merge_errors()
-            task_recovery.recover_submission_regressions()
-            requeue_validation_repair()
+            if mode=='live':
+                task_recovery.migrate_model_retries()
+                task_recovery.recover_shallow_merge_errors()
+                task_recovery.recover_submission_regressions()
+                requeue_validation_repair()
             if rt.getmeta('runner_restart_after',0)>time.time():
                 print('Cloud restart circuit is cooling down; no work admitted.',flush=True)
                 return
-            task_recovery.reconcile()
-            pr_followup.recover_backlog()
+            if mode=='live':
+                task_recovery.reconcile()
+                pr_followup.recover_backlog()
         import codex_worker
         host=start('codex-host',['codex_host.py','--binary',codex_worker.binary()])
         for _ in range(120):
@@ -272,6 +289,10 @@ def run(mode,seconds):
             if host.poll() is not None:raise RuntimeError('Codex host startup failed')
             time.sleep(.5)
         else:raise RuntimeError('Codex host startup timed out')
+        if mode=='recover-hermes':
+            import creation_recovery
+            creation_recovery.run(int(os.environ.get('HERMES_RECOVERY_ISSUE','0')))
+            return
         if mode!='live':
             # No production state or upstream tasks are imported into canary.
             import codex_worker
@@ -334,7 +355,7 @@ def run(mode,seconds):
         for child in reversed(children):stop(child)
         for log in logs:log.close()
         try:
-            if mode=='live' and restored:
+            if mode in ('live','recover-hermes') and restored:
                 # Record task status and retained budgets even on a service failure.
                 cloud_store.save()
         finally:
@@ -348,7 +369,7 @@ def run(mode,seconds):
                 with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('continue=true\n')
 
 if __name__=='__main__':
-    ap=argparse.ArgumentParser();ap.add_argument('mode',choices=['install-auth','probe','canary','live'])
+    ap=argparse.ArgumentParser();ap.add_argument('mode',choices=['install-auth','probe','canary','live','recover-hermes'])
     ap.add_argument('--seconds',type=int,default=10800);args=ap.parse_args()
     if args.mode=='install-auth':install_auth()
     else:

@@ -139,6 +139,15 @@ is a historical snapshot and must not be used as the current queue.
 
 ## November 2 recovery update
 
+November 3: the user explicitly requested one real new Hermes PR for a current
+issue. `recover-hermes` is an isolated, manually dispatched attempt using the
+same cloud owner after ordinary production has drained. It imports and retains
+the live queue/budgets, runs exactly one new issue through the existing executor
+and independent reviewer, and preserves the historical creation hold until a
+real ordinary PR proves clearance. It does not restart normal workers/discovery,
+create temporary probe PRs, waive upstream rules or reset spending. A repeated
+run or an issue that already has a durable task requires reconciliation first.
+
 The user's November 2 request to recover Hermes supersedes the October 10 full
 Hermes pause. Restore its 8 new PRs/day and 16 first-generation task starts/day,
 issue discovery and existing-PR replies/maintenance. Preserve the seven other
