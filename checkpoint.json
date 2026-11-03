@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793681732.8127031,
+  "saved_at": 1793681738.7546723,
   "tables": {
     "tasks": [
       {
@@ -19731,11 +19731,11 @@
         "repo": "NousResearch/hermes-agent",
         "number": 81204,
         "note": "{\"authors\": \"amisepa\", \"events\": [\"IC_kwDOPRF1G88AAAABgNkrkw@2026-10-27T23:59:11Z\"], \"screening_events\": [\"IC_kwDOPRF1G88AAAABgNkrkw@2026-10-27T23:59:11Z\"], \"is_issue\": false, \"head\": \"d8f4449f95cd7a2da17996cddbc66fe484e69909\"}",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1793629077.50438,
-        "updated": 1793681732.776924,
+        "updated": 1793681738.690368,
         "result": "judge unavailable after bounded attempts; retain pending work",
-        "attempts": 1
+        "attempts": 0
       },
       {
         "id": 1519,
@@ -32679,10 +32679,6 @@
         "value": "{\"date\": \"2026-11-03\", \"used\": {\"openclaw\": 5}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1525\": {\"remaining\": 1, \"until\": 1793688844.59296}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1793664087.9912767, \"group\": \"new_fix\", \"task\": 1519, \"phase\": \"generation\"}, {\"at\": 1793664553.2548943, \"group\": \"new_fix\", \"task\": 1520, \"phase\": \"generation\"}, {\"at\": 1793671183.8769035, \"group\": \"new_fix\", \"task\": 1521, \"phase\": \"generation\"}, {\"at\": 1793672300.6895442, \"group\": \"new_fix\", \"task\": 1521, \"phase\": \"review\"}, {\"at\": 1793672622.5329988, \"group\": \"repair\", \"task\": 1521, \"phase\": \"remediation\"}, {\"at\": 1793673117.3510618, \"group\": \"repair\", \"task\": 1521, \"phase\": \"rereview\"}, {\"at\": 1793674007.994849, \"group\": \"maintenance\", \"task\": 1522, \"phase\": \"generation\"}, {\"at\": 1793674076.089689, \"group\": \"maintenance\", \"task\": 1522, \"phase\": \"reply-review\"}, {\"at\": 1793674853.2170858, \"group\": \"maintenance\", \"task\": 1523, \"phase\": \"generation\"}, {\"at\": 1793674919.270914, \"group\": \"maintenance\", \"task\": 1523, \"phase\": \"reply-review\"}, {\"at\": 1793678109.5364642, \"group\": \"new_fix\", \"task\": 1524, \"phase\": \"generation\"}, {\"at\": 1793681644.59296, \"group\": \"new_fix\", \"task\": 1525, \"phase\": \"generation\"}]"
       },
@@ -32711,12 +32707,12 @@
         "value": "1793681726.65196"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1793681727.9773796"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1793681586.3394191, \"comfyui\": 1793625891.8105845, \"hermes\": 1793681732.7768219, \"langfuse\": 1793605067.4628398, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1793681729.5280077, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1793774604}]}"
+        "value": "{\"at\": 1793681733.0903375, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1793774604}]}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -32724,15 +32720,19 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793681729.5400474"
+        "value": "1793681734.3322802"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1793681586.3394191, \"comfyui\": 1793625891.8105845, \"hermes\": 1793681732.7768219, \"langfuse\": 1793605067.4628398, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+        "key": "detector_heartbeat",
+        "value": "1793681737.9796848"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"1525\": {\"remaining\": 1, \"until\": 1793688844.59296}}"
       },
       {
         "key": "task:1518",
-        "value": "{\"started\": 1793681732.7769725, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793680823.2992833}"
+        "value": "{\"started\": 1793681732.7769725, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1793682638.593976, \"folder\": null, \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793681738.6793494}"
       }
     ],
     "calls": [
