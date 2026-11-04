@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793771848.130147,
+  "saved_at": 1793771853.4576762,
   "tables": {
     "tasks": [
       {
@@ -19731,11 +19731,11 @@
         "repo": "NousResearch/hermes-agent",
         "number": 81204,
         "note": "{\"authors\": \"amisepa\", \"events\": [\"IC_kwDOPRF1G88AAAABgNkrkw@2026-10-27T23:59:11Z\"], \"screening_events\": [\"IC_kwDOPRF1G88AAAABgNkrkw@2026-10-27T23:59:11Z\"], \"is_issue\": false, \"head\": \"d8f4449f95cd7a2da17996cddbc66fe484e69909\"}",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1793629077.50438,
-        "updated": 1793771848.1062312,
+        "updated": 1793771853.4347935,
         "result": "judge unavailable after bounded attempts; retain pending work",
-        "attempts": 1
+        "attempts": 0
       },
       {
         "id": 1519,
@@ -33079,10 +33079,6 @@
         "value": "{\"task\": 1541, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793771636.8206403, \"seconds\": 838.983, \"tokens\": {\"totalTokens\": 9671677, \"inputTokens\": 9655444, \"cachedInputTokens\": 9541888, \"cacheWriteInputTokens\": 0, \"outputTokens\": 16233, \"reasoningOutputTokens\": 6836}, \"first_event_ms\": 1793770804656, \"last_event_ms\": 1793771636800, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1541\": {\"remaining\": 0, \"until\": 1793778838.6775608}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1793757836.9634569, \"group\": \"new_fix\", \"task\": 1540, \"phase\": \"generation\"}, {\"at\": 1793770797.8385026, \"group\": \"new_fix\", \"task\": 1541, \"phase\": \"generation\"}, {\"at\": 1793771638.6775608, \"group\": \"new_fix\", \"task\": 1541, \"phase\": \"review\"}]"
       },
@@ -33101,10 +33097,6 @@
       {
         "key": "task:45",
         "value": "{\"recovery_checked_at\": 1793771827.969594}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1793771828.4302394"
       },
       {
         "key": "followup:task:45",
@@ -33187,8 +33179,16 @@
         "value": "1793771839.7401688"
       },
       {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1793770728.0256352, \"comfyui\": 1793741976.1900966, \"hermes\": 1793771848.1060812, \"langfuse\": 1793700150.174155, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1793771843.7202113"
+        "value": "1793771848.720314"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793771849.5700145"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -33196,15 +33196,15 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793771845.2133603"
+        "value": "1793771850.5171373"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1793770728.0256352, \"comfyui\": 1793741976.1900966, \"hermes\": 1793771848.1060812, \"langfuse\": 1793700150.174155, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+        "key": "codex_review_leases",
+        "value": "{\"1541\": {\"remaining\": 0, \"until\": 1793778838.6775608}}"
       },
       {
         "key": "task:1518",
-        "value": "{\"started\": 1793771848.1062877, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793770941.2289438}"
+        "value": "{\"started\": 1793771848.1062877, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1793772753.4253206, \"folder\": null, \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793771853.4321938}"
       }
     ],
     "calls": [
