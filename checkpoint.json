@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793782099.385903,
+  "saved_at": 1793782110.7290852,
   "tables": {
     "tasks": [
       {
@@ -20087,6 +20087,19 @@
         "updated": 1793780638.8232806,
         "result": "The reporter opened draft PR #192647 while this task was running. It fixes the same copy path and includes terminal persistence and chat-history coverage. The issue now has the linked-PR label, so a second fix would duplicate active work.",
         "attempts": 1
+      },
+      {
+        "id": 1546,
+        "identity": "fix:openclaw:192642:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 192642,
+        "note": "",
+        "status": "running",
+        "created": 1793782109.2893603,
+        "updated": 1793782110.7164001,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -33083,10 +33096,6 @@
         "value": "{}"
       },
       {
-        "key": "publication_check:hermes",
-        "value": "{\"at\": 1793780597.3792913, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1793780637.979977, \"source\": \"completed task phase\"}"
       },
@@ -33101,10 +33110,6 @@
       {
         "key": "admission_warning_at",
         "value": "1793781130.506043"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1793779786.9034367, \"comfyui\": 1793741976.1900966, \"hermes\": 1793781883.522455, \"langfuse\": 1793700150.174155, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
       {
         "key": "codex_review_leases",
@@ -33177,10 +33182,6 @@
       {
         "key": "recovery_audit:61",
         "value": "{\"at\": 1793781899.3585267, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1793781962.69486"
       },
       {
         "key": "task:166",
@@ -33275,20 +33276,32 @@
         "value": "{\"at\": 1793782035.0184386, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1793782099.2603922"
+      },
+      {
+        "key": "runner_resources",
+        "value": "{\"at\": 1793782099.3728569, \"disk_free_bytes\": 88515051520, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15317057536, \"SwapTotal\": 3221221376, \"SwapFree\": 3221135360}, \"memory_events\": null}"
+      },
+      {
         "key": "admission_health",
-        "value": "{\"at\": 1793782038.4661276, \"state\": \"stalled\", \"pending_candidates\": 415, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 2, \"comfyui\": 6, \"adk\": 0, \"langfuse\": 2, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 4, \"autogpt\": 1, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 415}, \"screening_wait_tasks\": 1, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 7, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 2190.365389108658, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"execution_wait\": 1, \"validation_wait\": 2, \"human_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7982\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7982\", \"title\": \"Feature request: MaritimeComputer, a BaseComputer backed by a Maritime cloud computer\", \"first_seen\": 1793758760.0631466, \"last_checked\": 1793763889.126157, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7973\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7973\", \"title\": \"Gemini sets error_code for a MAX_TOKENS response with content only when streaming\", \"first_seen\": 1793725861.0323899, \"last_checked\": 1793763891.9549716, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+        "value": "{\"at\": 1793782102.527446, \"state\": \"stalled\", \"pending_candidates\": 415, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 2, \"comfyui\": 6, \"adk\": 0, \"langfuse\": 2, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 4, \"autogpt\": 1, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 415}, \"screening_wait_tasks\": 1, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 7, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 2254.426471233368, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"execution_wait\": 1, \"validation_wait\": 2, \"human_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7982\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7982\", \"title\": \"Feature request: MaritimeComputer, a BaseComputer backed by a Maritime cloud computer\", \"first_seen\": 1793758760.0631466, \"last_checked\": 1793763889.126157, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7973\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7973\", \"title\": \"Gemini sets error_code for a MAX_TOKENS response with content only when streaming\", \"first_seen\": 1793725861.0323899, \"last_checked\": 1793763891.9549716, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1793782038.4677248, \"tasks\": {\"fix\": {\"done\": 2, \"error\": 1, \"human_wait\": 1, \"skipped\": 7}, \"respond\": {\"done\": 1, \"execution_wait\": 1, \"triage_wait\": 1, \"validation_wait\": 2}}}"
+        "value": "{\"at\": 1793782102.5289125, \"tasks\": {\"fix\": {\"done\": 2, \"error\": 1, \"human_wait\": 1, \"skipped\": 7}, \"respond\": {\"done\": 1, \"execution_wait\": 1, \"triage_wait\": 1, \"validation_wait\": 2}}}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1793782044.3351762, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1794380323}]}"
+        "value": "{\"at\": 1793782104.79385, \"windows\": [{\"name\": \"primary\", \"used_percent\": 0, \"resets_at\": 1794380323}]}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1793782095.5867732"
+        "key": "watch_heartbeat",
+        "value": "1793782104.8097894"
+      },
+      {
+        "key": "publication_check:hermes",
+        "value": "{\"at\": 1793782105.3264616, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -33296,15 +33309,19 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793782097.4558024"
+        "value": "1793782107.3757322"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1793782099.2603922"
+        "key": "detector_heartbeat",
+        "value": "1793782110.587116"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1793782099.3728569, \"disk_free_bytes\": 88515051520, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15317057536, \"SwapTotal\": 3221221376, \"SwapFree\": 3221135360}, \"memory_events\": null}"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793782110.7162516, \"comfyui\": 1793741976.1900966, \"hermes\": 1793781883.522455, \"langfuse\": 1793700150.174155, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
+        "key": "task:1546",
+        "value": "{\"started\": 1793782110.7164407, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       }
     ],
     "calls": [
