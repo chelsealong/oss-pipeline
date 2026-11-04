@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793773666.88824,
+  "saved_at": 1793773671.683624,
   "tables": {
     "tasks": [
       {
@@ -19731,11 +19731,11 @@
         "repo": "NousResearch/hermes-agent",
         "number": 81204,
         "note": "{\"authors\": \"amisepa\", \"events\": [\"IC_kwDOPRF1G88AAAABgNkrkw@2026-10-27T23:59:11Z\"], \"screening_events\": [\"IC_kwDOPRF1G88AAAABgNkrkw@2026-10-27T23:59:11Z\"], \"is_issue\": false, \"head\": \"d8f4449f95cd7a2da17996cddbc66fe484e69909\"}",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1793629077.50438,
-        "updated": 1793773666.1772077,
+        "updated": 1793773671.6569297,
         "result": "judge unavailable after bounded attempts; retain pending work",
-        "attempts": 1
+        "attempts": 0
       },
       {
         "id": 1519,
@@ -33117,14 +33117,6 @@
         "value": "1793773558.1264808"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1793773596.8245146, \"state\": \"active\", \"pending_candidates\": 412, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 1, \"comfyui\": 6, \"adk\": 0, \"langfuse\": 2, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 2, \"autogpt\": 1, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 412}, \"screening_wait_tasks\": 1, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 5, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 338.8354494571686, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 3, \"execution_wait\": 1, \"human_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7982\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7982\", \"title\": \"Feature request: MaritimeComputer, a BaseComputer backed by a Maritime cloud computer\", \"first_seen\": 1793758760.0631466, \"last_checked\": 1793763889.126157, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7973\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7973\", \"title\": \"Gemini sets error_code for a MAX_TOKENS response with content only when streaming\", \"first_seen\": 1793725861.0323899, \"last_checked\": 1793763891.9549716, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1793773596.8265631, \"tasks\": {\"fix\": {\"done\": 3, \"error\": 1, \"human_wait\": 1, \"skipped\": 6}, \"respond\": {\"execution_wait\": 1, \"running\": 1, \"triage_wait\": 1, \"validation_wait\": 3}}}"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1793773629.3481736, \"source\": \"completed task phase\"}"
       },
@@ -33133,28 +33125,12 @@
         "value": "{\"task\": 1543, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793773629.3605251, \"seconds\": 371.381, \"tokens\": {\"totalTokens\": 1961426, \"inputTokens\": 1954653, \"cachedInputTokens\": 1869056, \"cacheWriteInputTokens\": 0, \"outputTokens\": 6773, \"reasoningOutputTokens\": 2427}, \"first_event_ms\": 1793773266214, \"last_event_ms\": 1793773629345, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1543\": {\"remaining\": 0, \"until\": 1793780830.6526625}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1793757836.9634569, \"group\": \"new_fix\", \"task\": 1540, \"phase\": \"generation\"}, {\"at\": 1793770797.8385026, \"group\": \"new_fix\", \"task\": 1541, \"phase\": \"generation\"}, {\"at\": 1793771638.6775608, \"group\": \"new_fix\", \"task\": 1541, \"phase\": \"review\"}, {\"at\": 1793773118.9157143, \"group\": \"new_fix\", \"task\": 1542, \"phase\": \"generation\"}, {\"at\": 1793773257.9803073, \"group\": \"maintenance\", \"task\": 1543, \"phase\": \"generation\"}, {\"at\": 1793773630.6526625, \"group\": \"maintenance\", \"task\": 1543, \"phase\": \"reply-review\"}]"
       },
       {
         "key": "task:1543",
         "value": "{\"started\": 1793773168.1718652, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1543/attempt-1\", \"attempt\": 1, \"phase\": \"reply-review\", \"base\": \"0fb5a84f1d39092f1e8b16a133262208c1e9c628\", \"remote_base\": \"0fb5a84f1d39092f1e8b16a133262208c1e9c628\", \"base_update\": {\"original_head\": \"0fb5a84f1d39092f1e8b16a133262208c1e9c628\", \"base\": \"0fb5a84f1d39092f1e8b16a133262208c1e9c628\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1793773634.182383}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1793773640.8123093"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1793773649.628932, \"windows\": [{\"name\": \"primary\", \"used_percent\": 30, \"resets_at\": 1793774604}]}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1793773655.4390001"
       },
       {
         "key": "task:44",
@@ -33233,8 +33209,32 @@
         "value": "{\"at\": 1793773663.2123573, \"disk_free_bytes\": 80525463552, \"memory_bytes\": {\"MemTotal\": 16759308288, \"MemAvailable\": 14671581184, \"SwapTotal\": 3221221376, \"SwapFree\": 3221135360}, \"memory_events\": null}"
       },
       {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1793773168.1717, \"comfyui\": 1793741976.1900966, \"hermes\": 1793773666.177067, \"langfuse\": 1793700150.174155, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1793773666.9525733, \"state\": \"active\", \"pending_candidates\": 412, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 1, \"comfyui\": 6, \"adk\": 0, \"langfuse\": 2, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 2, \"autogpt\": 1, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 412}, \"screening_wait_tasks\": 0, \"active_tasks\": 2, \"running_tasks\": 2, \"queued_tasks\": 0, \"codex_calls_5h\": 6, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 36.28381872177124, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 3, \"execution_wait\": 1, \"human_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7982\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7982\", \"title\": \"Feature request: MaritimeComputer, a BaseComputer backed by a Maritime cloud computer\", \"first_seen\": 1793758760.0631466, \"last_checked\": 1793763889.126157, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7973\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7973\", \"title\": \"Gemini sets error_code for a MAX_TOKENS response with content only when streaming\", \"first_seen\": 1793725861.0323899, \"last_checked\": 1793763891.9549716, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1793773666.9575703, \"tasks\": {\"fix\": {\"done\": 3, \"error\": 1, \"human_wait\": 1, \"skipped\": 6}, \"respond\": {\"execution_wait\": 1, \"running\": 2, \"validation_wait\": 3}}}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1793773668.199191, \"windows\": [{\"name\": \"primary\", \"used_percent\": 30, \"resets_at\": 1793774604}]}"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1793773664.698432"
+        "value": "1793773669.6985388"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793773669.8492832"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1793773670.443054"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -33242,15 +33242,15 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793773666.081163"
+        "value": "1793773671.2211487"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1793773168.1717, \"comfyui\": 1793741976.1900966, \"hermes\": 1793773666.177067, \"langfuse\": 1793700150.174155, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+        "key": "codex_review_leases",
+        "value": "{\"1543\": {\"remaining\": 0, \"until\": 1793780830.6526625}}"
       },
       {
         "key": "task:1518",
-        "value": "{\"started\": 1793773666.1772506, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793772762.4837587}"
+        "value": "{\"started\": 1793773666.1772506, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1793774571.646416, \"folder\": null, \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793773671.6535053}"
       }
     ],
     "calls": [
