@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793787991.345804,
+  "saved_at": 1793788103.1700673,
   "tables": {
     "tasks": [
       {
@@ -20147,10 +20147,10 @@
         "repo": "openclaw/openclaw",
         "number": 192685,
         "note": "{\"authors\": \"ci\", \"events\": [\"standing:needs proof:0501b8f9fd9b\"], \"screening_events\": [], \"is_issue\": false, \"head\": \"0501b8f9fd9b15a64d8a4c15d942b6a6a9addfc6\"}",
-        "status": "running",
+        "status": "queued",
         "created": 1793785997.7084613,
-        "updated": 1793787814.8026278,
-        "result": "Claim checkpoint failed before execution; durable checkpoint required before retry",
+        "updated": 1793788103.1556747,
+        "result": "Previous runner ended during task; inspect remote before retry",
         "attempts": 2
       },
       {
@@ -33337,16 +33337,8 @@
         "value": "{\"started\": 1793784842.8756318, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793784847.1199565, \"recovery_checked_at\": 1793787755.1589873}"
       },
       {
-        "key": "prwatch_heartbeat",
-        "value": "1793787813.2252934"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1793787814.8024988, \"comfyui\": 1793741976.1900966, \"hermes\": 1793785510.5671682, \"langfuse\": 1793700150.174155, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793622899.2465622, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793524956.1660218, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1793787815.906143, \"source\": \"authenticated probe\"}"
       },
       {
         "key": "pause",
@@ -33377,10 +33369,6 @@
         "value": "{\"at\": 1793787923.4768922, \"disk_free_bytes\": 88018100224, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15280410624, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
       {
-        "key": "task:1550",
-        "value": "{\"started\": 1793787814.8026679, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1550/attempt-2\", \"attempt\": 2, \"phase\": \"checkout\", \"base\": \"0501b8f9fd9b15a64d8a4c15d942b6a6a9addfc6\", \"remote_base\": \"0501b8f9fd9b15a64d8a4c15d942b6a6a9addfc6\", \"base_update\": {\"original_head\": \"0501b8f9fd9b15a64d8a4c15d942b6a6a9addfc6\", \"base\": \"0501b8f9fd9b15a64d8a4c15d942b6a6a9addfc6\", \"merged\": false, \"mergeable\": null, \"reason\": \"No confirmed merge conflict\"}}"
-      },
-      {
         "key": "codex_review_leases",
         "value": "{\"1550\": {\"remaining\": 1, \"until\": 1793795143.0135145}}"
       },
@@ -33391,18 +33379,6 @@
       {
         "key": "codex_quota",
         "value": "{\"at\": 1793787954.3013089, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1794380323}]}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1793787955.5184093"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1793787959.1156669"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1793787959.3931336"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -33423,6 +33399,18 @@
       {
         "key": "runner_restarts",
         "value": "[1793785543.4219024, 1793787991.3148286]"
+      },
+      {
+        "key": "recovery_audit:1550",
+        "value": "{\"at\": 1793788103.1522508, \"safe\": true, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:1550",
+        "value": "{\"started\": 1793787814.8026679, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1550/attempt-2\", \"attempt\": 2, \"phase\": \"queued\", \"base\": \"0501b8f9fd9b15a64d8a4c15d942b6a6a9addfc6\", \"remote_base\": \"0501b8f9fd9b15a64d8a4c15d942b6a6a9addfc6\", \"base_update\": {\"original_head\": \"0501b8f9fd9b15a64d8a4c15d942b6a6a9addfc6\", \"base\": \"0501b8f9fd9b15a64d8a4c15d942b6a6a9addfc6\", \"merged\": false, \"mergeable\": null, \"reason\": \"No confirmed merge conflict\"}, \"recovery_checked_at\": 1793788102.490069}"
+      },
+      {
+        "key": "followup:task:1550",
+        "value": "{\"status\": \"resumed\", \"task\": 1550}"
       }
     ],
     "calls": [
