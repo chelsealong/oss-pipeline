@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793820265.511602,
+  "saved_at": 1793820279.9690173,
   "tables": {
     "tasks": [
       {
@@ -20225,11 +20225,11 @@
         "repo": "dify",
         "number": 45585,
         "note": "",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1793817074.0458946,
-        "updated": 1793820265.438299,
+        "updated": 1793820279.901833,
         "result": "judge unavailable after bounded attempts; retain pending work",
-        "attempts": 2
+        "attempts": 1
       }
     ],
     "meta": [
@@ -33358,10 +33358,6 @@
         "value": "{\"task\": 1556, \"repo\": \"dify\", \"attempt\": 1, \"phase\": \"rereview\", \"at\": 1793819044.7836046, \"seconds\": 294.154, \"tokens\": {\"totalTokens\": 805886, \"inputTokens\": 800634, \"cachedInputTokens\": 743424, \"cacheWriteInputTokens\": 0, \"outputTokens\": 5252, \"reasoningOutputTokens\": 1750}, \"first_event_ms\": 1793818790984, \"last_event_ms\": 1793819044753, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "admission_warning_at",
         "value": "1793819406.960493"
       },
@@ -33554,16 +33550,20 @@
         "value": "{\"at\": 1793820237.3480659, \"tasks\": {\"fix\": {\"capacity_wait\": 3, \"done\": 2, \"skipped\": 11, \"triage_wait\": 1}, \"respond\": {\"done\": 2, \"interrupted\": 1}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1793820257.681609"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1793820260.9591298"
       },
       {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793789398.7977812, \"comfyui\": 1793741976.1900966, \"hermes\": 1793785510.5671682, \"langfuse\": 1793816740.1799514, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793810158.7223778, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793820265.4376059, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1793820272.6885474"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1793820263.1558907"
+        "value": "1793820278.1572754"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -33571,15 +33571,15 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793820265.1661289"
+        "value": "1793820279.7767959"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793789398.7977812, \"comfyui\": 1793741976.1900966, \"hermes\": 1793785510.5671682, \"langfuse\": 1793816740.1799514, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793810158.7223778, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793540338.162932, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793820265.4376059, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:1556",
-        "value": "{\"started\": 1793820265.4384692, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"claimed\", \"base\": null, \"generation_started\": 1793817129.679715, \"dispatch_paid_date\": \"2026-11-04\", \"phase_started\": 1793818765.1940017, \"reviewed_screenshots\": [], \"last_execution_phase\": \"claimed\", \"finished\": 1793819363.6424623, \"resume_progress\": {\"bundle\": \"1556-1.json\", \"sha256\": \"f6d89b9b05b6e2faf786a2b5a63636adcdde23655dee3d0116d619884cb5465d\", \"base\": \"0d97e3685eb5ca0dc27bb5851f5e2de98b410ae5\", \"phase\": \"rereview\"}}"
+        "value": "{\"started\": 1793820265.4384692, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1793821179.876226, \"folder\": null, \"attempt\": 2, \"phase\": \"triage_wait\", \"base\": null, \"generation_started\": 1793817129.679715, \"dispatch_paid_date\": \"2026-11-04\", \"phase_started\": 1793818765.1940017, \"reviewed_screenshots\": [], \"last_execution_phase\": \"claimed\", \"finished\": 1793820279.8933985, \"resume_progress\": {\"bundle\": \"1556-1.json\", \"sha256\": \"f6d89b9b05b6e2faf786a2b5a63636adcdde23655dee3d0116d619884cb5465d\", \"base\": \"0d97e3685eb5ca0dc27bb5851f5e2de98b410ae5\", \"phase\": \"rereview\"}}"
       }
     ],
     "calls": [
