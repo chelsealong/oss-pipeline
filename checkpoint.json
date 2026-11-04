@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793818038.7876275,
+  "saved_at": 1793818081.306891,
   "tables": {
     "tasks": [
       {
@@ -33374,10 +33374,6 @@
         "value": "{\"started\": 1793789398.7979927, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793789414.6137471, \"recovery_checked_at\": 1793817172.9277172}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1793817842.4916499, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1556:1:generation",
         "value": "{\"task\": 1556, \"repo\": \"dify\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793817842.5690558, \"seconds\": 712.898, \"tokens\": {\"totalTokens\": 12473687, \"inputTokens\": 12458405, \"cachedInputTokens\": 12335488, \"cacheWriteInputTokens\": 0, \"outputTokens\": 15282, \"reasoningOutputTokens\": 4534}, \"first_event_ms\": 1793817153382, \"last_event_ms\": 1793817842480, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -33466,14 +33462,6 @@
         "value": "{\"at\": 1793817955.8913531, \"reason\": \"PR closed or not owned by our fork\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1793817967.1615539, \"state\": \"active\", \"pending_candidates\": 420, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 6, \"comfyui\": 6, \"adk\": 0, \"langfuse\": 2, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 5, \"autogpt\": 1, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 420}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 7, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 120.28527545928955, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 3}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7982\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7982\", \"title\": \"Feature request: MaritimeComputer, a BaseComputer backed by a Maritime cloud computer\", \"first_seen\": 1793758760.0631466, \"last_checked\": 1793763889.126157, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7973\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7973\", \"title\": \"Gemini sets error_code for a MAX_TOKENS response with content only when streaming\", \"first_seen\": 1793725861.0323899, \"last_checked\": 1793763891.9549716, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7987\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7987\", \"title\": \"human_in_loop samples: reimburse runs without an approval; the model can call it first or after a rejection\", \"first_seen\": 1793789749.2326624, \"last_checked\": 1793790121.8402083, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1793817967.1675835, \"tasks\": {\"fix\": {\"capacity_wait\": 3, \"done\": 2, \"running\": 1, \"skipped\": 11}, \"respond\": {\"done\": 2, \"interrupted\": 1}}}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1793817982.1410851"
       },
@@ -33514,10 +33502,6 @@
         "value": "{\"recovery_checked_at\": 1793818032.307535}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1793818032.5167756, \"windows\": [{\"name\": \"primary\", \"used_percent\": 2, \"resets_at\": 1794380323}]}"
-      },
-      {
         "key": "recovery_audit:173",
         "value": "{\"at\": 1793818033.6504097, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -33534,10 +33518,6 @@
         "value": "{\"recovery_checked_at\": 1793818034.9913986}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1793818035.299559"
-      },
-      {
         "key": "followup:task:176",
         "value": "{\"status\": \"needs_human\", \"task\": 176, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
       },
@@ -33546,8 +33526,44 @@
         "value": "{\"recovery_checked_at\": 1793818035.741522}"
       },
       {
+        "key": "recovery_audit:177",
+        "value": "{\"at\": 1793818037.147947, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "runner_resources",
+        "value": "{\"at\": 1793818038.7297206, \"disk_free_bytes\": 80031363072, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15237701632, \"SwapTotal\": 3221221376, \"SwapFree\": 3004411904}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1793818051.0171351, \"state\": \"active\", \"pending_candidates\": 420, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 6, \"comfyui\": 6, \"adk\": 0, \"langfuse\": 2, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 5, \"autogpt\": 1, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 420}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 7, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 204.1267387866974, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 3}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7982\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7982\", \"title\": \"Feature request: MaritimeComputer, a BaseComputer backed by a Maritime cloud computer\", \"first_seen\": 1793758760.0631466, \"last_checked\": 1793763889.126157, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7973\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7973\", \"title\": \"Gemini sets error_code for a MAX_TOKENS response with content only when streaming\", \"first_seen\": 1793725861.0323899, \"last_checked\": 1793763891.9549716, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#7987\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7987\", \"title\": \"human_in_loop samples: reimburse runs without an approval; the model can call it first or after a rejection\", \"first_seen\": 1793789749.2326624, \"last_checked\": 1793790121.8402083, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1793818051.0240211, \"tasks\": {\"fix\": {\"capacity_wait\": 3, \"done\": 2, \"running\": 1, \"skipped\": 11}, \"respond\": {\"done\": 2, \"interrupted\": 1}}}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1793818036.5117776"
+        "value": "1793818066.5243032"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1793818077.9994934"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793818078.787245"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1793818079.5756178, \"windows\": [{\"name\": \"primary\", \"used_percent\": 2, \"resets_at\": 1794380323}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1793818079.5868514, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1556:1:review",
+        "value": "{\"task\": 1556, \"repo\": \"dify\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1793818079.6157835, \"seconds\": 232.78, \"tokens\": {\"totalTokens\": 785181, \"inputTokens\": 781082, \"cachedInputTokens\": 698752, \"cacheWriteInputTokens\": 0, \"outputTokens\": 4099, \"reasoningOutputTokens\": 1530}, \"first_event_ms\": 1793817868562, \"last_event_ms\": 1793818079576, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -33555,19 +33571,7 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793818037.0550015"
-      },
-      {
-        "key": "recovery_audit:177",
-        "value": "{\"at\": 1793818037.147947, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1793818037.9978523"
-      },
-      {
-        "key": "runner_resources",
-        "value": "{\"at\": 1793818038.7297206, \"disk_free_bytes\": 80031363072, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15237701632, \"SwapTotal\": 3221221376, \"SwapFree\": 3004411904}, \"memory_events\": null}"
+        "value": "1793818079.9116619"
       }
     ],
     "calls": [
