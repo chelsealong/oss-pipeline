@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793963961.2916744,
+  "saved_at": 1793963979.4488907,
   "tables": {
     "tasks": [
       {
@@ -34041,18 +34041,6 @@
         "value": "{\"started\": 1793947115.593938, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1595/attempt-1\", \"attempt\": 1, \"phase\": \"human_wait\", \"base\": \"444fdf0684707de62ebb447d658dba137dd9cb99\", \"generation_started\": 1793947140.277502, \"dispatch_paid_date\": \"2026-11-06\", \"phase_started\": 1793947143.1057346, \"patch_digest\": \"30ac85518012eb1f453c4a6c2f1473ac3458af2c788b5aec4b5177341dd318e2\", \"last_execution_phase\": \"generation\", \"finished\": 1793947561.8333855}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"comfyui\", \"task\": 1590, \"at\": 1793942085.1769884}, {\"repo\": \"llama-index\", \"task\": 1591, \"at\": 1793945951.51039}, {\"repo\": \"llama-index\", \"task\": 1592, \"at\": 1793946261.3803792}, {\"repo\": \"llama-index\", \"task\": 1593, \"at\": 1793946521.550816}, {\"repo\": \"llama-index\", \"task\": 1594, \"at\": 1793946838.895204}, {\"repo\": \"llama-index\", \"task\": 1595, \"at\": 1793947140.2775013}, {\"repo\": \"spec-kit\", \"task\": 1597, \"at\": 1793948320.071802}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-11-06\", \"used\": {\"spec-kit\": 2, \"comfyui\": 1, \"llama-index\": 5}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1793942085.177187, \"group\": \"new_fix\", \"task\": 1590, \"phase\": \"generation\"}, {\"at\": 1793945951.5105896, \"group\": \"new_fix\", \"task\": 1591, \"phase\": \"generation\"}, {\"at\": 1793946261.3805869, \"group\": \"new_fix\", \"task\": 1592, \"phase\": \"generation\"}, {\"at\": 1793946521.5510604, \"group\": \"new_fix\", \"task\": 1593, \"phase\": \"generation\"}, {\"at\": 1793946838.8955083, \"group\": \"new_fix\", \"task\": 1594, \"phase\": \"generation\"}, {\"at\": 1793947140.2777035, \"group\": \"new_fix\", \"task\": 1595, \"phase\": \"generation\"}, {\"at\": 1793948320.0720105, \"group\": \"new_fix\", \"task\": 1597, \"phase\": \"generation\"}]"
-      },
-      {
         "key": "usage:1597:1:generation",
         "value": "{\"task\": 1597, \"repo\": \"spec-kit\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793948366.363673, \"seconds\": 46.294, \"tokens\": {\"totalTokens\": 164637, \"inputTokens\": 163355, \"cachedInputTokens\": 122880, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1282, \"reasoningOutputTokens\": 331}, \"first_event_ms\": 1793948330348, \"last_event_ms\": 1793948366356, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -34075,10 +34063,6 @@
       {
         "key": "admission_warning_at",
         "value": "1793962963.1571856"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:1584",
@@ -34361,24 +34345,36 @@
         "value": "{\"started\": 1793931968.4179385, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793931973.7217104, \"recovery_checked_at\": 1793963832.1157951}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1793963899.7444243, \"state\": \"stalled\", \"pending_candidates\": 441, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 12, \"comfyui\": 10, \"adk\": 0, \"langfuse\": 7, \"langfuse-python\": 0, \"llama-index\": 2, \"spec-kit\": 1, \"openclaw\": 8, \"autogpt\": 1, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 441}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 0, \"queued_tasks\": 1, \"codex_calls_5h\": 6, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 15579.665241718292, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 21, \"human_wait\": 6, \"validation_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7997\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7997\", \"title\": \"A tool confirmation resumes the sub-agent without its dispatcher, so the re-stamp from #6496 never runs\", \"first_seen\": 1793878954.2483184, \"last_checked\": 1793901788.325785, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8002\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8002\", \"title\": \"Regression of #3977 / #4054: `adk create` accepts hyphens in agent names, agent then fails to load\", \"first_seen\": 1793908330.4462464, \"last_checked\": 1793934530.4584427, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1793963899.7460506, \"tasks\": {\"fix\": {\"capacity_wait\": 21, \"human_wait\": 6, \"queued\": 1, \"skipped\": 6, \"validation_wait\": 1}, \"respond\": {}}}"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1793963940.3987515, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1794380324}]}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1793963947.5101373"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793962975.677866, \"comfyui\": 1793942076.9207895, \"hermes\": 1793785510.5671682, \"langfuse\": 1793915003.0715523, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793963953.444462, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793948313.0058217, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793858042.433465, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
+        "key": "task:1599",
+        "value": "{\"started\": 1793962975.6780322, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793962980.070746, \"recovery_checked_at\": 1793963960.4209766}"
+      },
+      {
+        "key": "runner_resources",
+        "value": "{\"at\": 1793963961.2801201, \"disk_free_bytes\": 88185069568, \"memory_bytes\": {\"MemTotal\": 16760348672, \"MemAvailable\": 15376011264, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1793963964.7387705, \"state\": \"active\", \"pending_candidates\": 441, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 12, \"comfyui\": 10, \"adk\": 0, \"langfuse\": 7, \"langfuse-python\": 0, \"llama-index\": 2, \"spec-kit\": 1, \"openclaw\": 8, \"autogpt\": 1, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 441}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 5, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 15644.659946203232, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 21, \"human_wait\": 6, \"validation_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7997\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7997\", \"title\": \"A tool confirmation resumes the sub-agent without its dispatcher, so the re-stamp from #6496 never runs\", \"first_seen\": 1793878954.2483184, \"last_checked\": 1793901788.325785, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8002\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8002\", \"title\": \"Regression of #3977 / #4054: `adk create` accepts hyphens in agent names, agent then fails to load\", \"first_seen\": 1793908330.4462464, \"last_checked\": 1793934530.4584427, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1793963964.7398913, \"tasks\": {\"fix\": {\"capacity_wait\": 21, \"human_wait\": 6, \"running\": 1, \"skipped\": 6, \"validation_wait\": 1}, \"respond\": {}}}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1793963975.012645"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793963976.19041"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -34386,86 +34382,34 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793963956.5430253"
+        "value": "1793963976.3637445"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1793963977.5131884"
       },
       {
         "key": "task:1596",
-        "value": "{\"started\": 1793963953.4446278, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1596/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": null}"
+        "value": "{\"started\": 1793963953.4446278, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1596/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"444fdf0684707de62ebb447d658dba137dd9cb99\", \"generation_started\": 1793963979.4369795, \"dispatch_paid_date\": \"2026-11-06\"}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1793963960.0123749"
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"llama-index\", \"task\": 1592, \"at\": 1793946261.3803792}, {\"repo\": \"llama-index\", \"task\": 1593, \"at\": 1793946521.550816}, {\"repo\": \"llama-index\", \"task\": 1594, \"at\": 1793946838.895204}, {\"repo\": \"llama-index\", \"task\": 1595, \"at\": 1793947140.2775013}, {\"repo\": \"spec-kit\", \"task\": 1597, \"at\": 1793948320.071802}, {\"repo\": \"llama-index\", \"task\": 1596, \"at\": 1793963979.436978}]"
       },
       {
-        "key": "task:1599",
-        "value": "{\"started\": 1793962975.6780322, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793962980.070746, \"recovery_checked_at\": 1793963960.4209766}"
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-11-06\", \"used\": {\"spec-kit\": 2, \"comfyui\": 1, \"llama-index\": 6}}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1793963961.1454954"
+        "key": "codex_review_leases",
+        "value": "{\"1596\": {\"remaining\": 1, \"until\": 1793971179.4371421}}"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1793963961.2801201, \"disk_free_bytes\": 88185069568, \"memory_bytes\": {\"MemTotal\": 16760348672, \"MemAvailable\": 15376011264, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1793946261.3805869, \"group\": \"new_fix\", \"task\": 1592, \"phase\": \"generation\"}, {\"at\": 1793946521.5510604, \"group\": \"new_fix\", \"task\": 1593, \"phase\": \"generation\"}, {\"at\": 1793946838.8955083, \"group\": \"new_fix\", \"task\": 1594, \"phase\": \"generation\"}, {\"at\": 1793947140.2777035, \"group\": \"new_fix\", \"task\": 1595, \"phase\": \"generation\"}, {\"at\": 1793948320.0720105, \"group\": \"new_fix\", \"task\": 1597, \"phase\": \"generation\"}, {\"at\": 1793963979.4371421, \"group\": \"new_fix\", \"task\": 1596, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1793344555.5381129,
-        "kind": "judge"
-      },
-      {
-        "at": 1793346380.0560756,
-        "kind": "judge"
-      },
-      {
-        "at": 1793351224.7631333,
-        "kind": "judge"
-      },
-      {
-        "at": 1793352053.2959719,
-        "kind": "judge"
-      },
-      {
-        "at": 1793352179.3012774,
-        "kind": "judge"
-      },
-      {
-        "at": 1793352472.0276532,
-        "kind": "codex"
-      },
-      {
-        "at": 1793353130.276039,
-        "kind": "codex"
-      },
-      {
-        "at": 1793353482.9333467,
-        "kind": "codex"
-      },
-      {
-        "at": 1793353626.927138,
-        "kind": "judge"
-      },
-      {
-        "at": 1793353760.7901552,
-        "kind": "judge"
-      },
-      {
-        "at": 1793353805.1055222,
-        "kind": "codex"
-      },
-      {
-        "at": 1793356933.9847527,
-        "kind": "judge"
-      },
-      {
-        "at": 1793357466.6002495,
-        "kind": "judge"
-      },
-      {
-        "at": 1793357852.6065936,
-        "kind": "judge"
-      },
       {
         "at": 1793360696.1306188,
         "kind": "judge"
@@ -36044,6 +35988,10 @@
       },
       {
         "at": 1793948320.0727334,
+        "kind": "codex"
+      },
+      {
+        "at": 1793963979.4377189,
         "kind": "codex"
       }
     ]
