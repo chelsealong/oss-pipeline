@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793924346.5216174,
+  "saved_at": 1793924399.2575386,
   "tables": {
     "tasks": [
       {
@@ -20568,6 +20568,19 @@
         "updated": 1793924126.3127508,
         "result": "openclaw open PR cap (20)",
         "attempts": 0
+      },
+      {
+        "id": 1583,
+        "identity": "fix:openclaw:193813:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 193813,
+        "note": "",
+        "status": "running",
+        "created": 1793924397.4520726,
+        "updated": 1793924399.2416914,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -33744,10 +33757,6 @@
         "value": "{}"
       },
       {
-        "key": "publication_check:hermes",
-        "value": "{\"at\": 1793922063.9714367, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"llama-index\", \"task\": 1572, \"at\": 1793910358.9301438}, {\"repo\": \"llama-index\", \"task\": 1573, \"at\": 1793912858.2203312}, {\"repo\": \"langfuse\", \"task\": 1574, \"at\": 1793915015.301735}, {\"repo\": \"llama-index\", \"task\": 1575, \"at\": 1793915246.321628}, {\"repo\": \"spec-kit\", \"task\": 1580, \"at\": 1793923361.2790601}]"
       },
@@ -33960,10 +33969,6 @@
         "value": "{\"started\": 1793852252.2381403, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793852257.51212, \"recovery_checked_at\": 1793924070.7984579}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793924122.0915208, \"comfyui\": 1793741976.1900966, \"hermes\": 1793785510.5671682, \"langfuse\": 1793915003.0715523, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793915215.6275973, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793923351.1227903, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793858042.433465, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
-      },
-      {
         "key": "codex_review_leases",
         "value": "{}"
       },
@@ -34036,24 +34041,32 @@
         "value": "{\"started\": 1793924122.0917091, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793924126.3112206, \"recovery_checked_at\": 1793924217.1282449}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1793924270.0394459"
+        "key": "runner_resources",
+        "value": "{\"at\": 1793924346.5090446, \"disk_free_bytes\": 88246738944, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15390187520, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
       {
         "key": "admission_health",
-        "value": "{\"at\": 1793924285.5496879, \"state\": \"waiting\", \"pending_candidates\": 438, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 10, \"comfyui\": 9, \"adk\": 0, \"langfuse\": 6, \"langfuse-python\": 0, \"llama-index\": 3, \"spec-kit\": 0, \"openclaw\": 9, \"autogpt\": 1, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 438}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 5, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 924.2621903419495, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 17, \"human_wait\": 1, \"validation_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7997\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7997\", \"title\": \"A tool confirmation resumes the sub-agent without its dispatcher, so the re-stamp from #6496 never runs\", \"first_seen\": 1793878954.2483184, \"last_checked\": 1793901788.325785, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8002\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8002\", \"title\": \"Regression of #3977 / #4054: `adk create` accepts hyphens in agent names, agent then fails to load\", \"first_seen\": 1793908330.4462464, \"last_checked\": 1793923573.0695105, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
+        "value": "{\"at\": 1793924349.695589, \"state\": \"waiting\", \"pending_candidates\": 439, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 10, \"comfyui\": 9, \"adk\": 0, \"langfuse\": 6, \"langfuse-python\": 0, \"llama-index\": 3, \"spec-kit\": 0, \"openclaw\": 10, \"autogpt\": 1, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 439}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 5, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 988.4081382751465, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 17, \"human_wait\": 1, \"validation_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7997\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7997\", \"title\": \"A tool confirmation resumes the sub-agent without its dispatcher, so the re-stamp from #6496 never runs\", \"first_seen\": 1793878954.2483184, \"last_checked\": 1793901788.325785, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8002\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8002\", \"title\": \"Regression of #3977 / #4054: `adk create` accepts hyphens in agent names, agent then fails to load\", \"first_seen\": 1793908330.4462464, \"last_checked\": 1793923573.0695105, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1793924285.5512679, \"tasks\": {\"fix\": {\"capacity_wait\": 17, \"human_wait\": 1, \"skipped\": 5, \"validation_wait\": 1}, \"respond\": {}}}"
+        "value": "{\"at\": 1793924349.6975408, \"tasks\": {\"fix\": {\"capacity_wait\": 17, \"human_wait\": 1, \"skipped\": 5, \"validation_wait\": 1}, \"respond\": {}}}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1793924294.6835842, \"windows\": [{\"name\": \"primary\", \"used_percent\": 2, \"resets_at\": 1794380323}]}"
+        "value": "{\"at\": 1793924355.1315286, \"windows\": [{\"name\": \"primary\", \"used_percent\": 2, \"resets_at\": 1794380323}]}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1793924338.4501636"
+        "key": "watch_heartbeat",
+        "value": "1793924394.8312967"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1793924395.186723"
+      },
+      {
+        "key": "publication_check:hermes",
+        "value": "{\"at\": 1793924395.2751935, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -34061,15 +34074,19 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793924341.660377"
+        "value": "1793924396.7499971"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1793924345.1854868"
+        "key": "worker_heartbeat",
+        "value": "1793924398.457508"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1793924346.5090446, \"disk_free_bytes\": 88246738944, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15390187520, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793924399.241544, \"comfyui\": 1793741976.1900966, \"hermes\": 1793785510.5671682, \"langfuse\": 1793915003.0715523, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793915215.6275973, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793923351.1227903, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793858042.433465, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
+        "key": "task:1583",
+        "value": "{\"started\": 1793924399.24173, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       }
     ],
     "calls": [
