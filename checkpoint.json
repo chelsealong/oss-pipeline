@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793948327.0125117,
+  "saved_at": 1793948366.5237408,
   "tables": {
     "tasks": [
       {
@@ -20758,10 +20758,10 @@
         "repo": "spec-kit",
         "number": 5284,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1793948312.7239566,
-        "updated": 1793948313.0059738,
-        "result": "",
+        "updated": 1793948366.5094512,
+        "result": "#5284 requests a new milestone tracking workflow, not a fix for a still-present bug. Its packaging choice remains open, and no maintainer has agreed on the design. [CONTRIBUTING.md](/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/1597/attempt-1/work/CONTRIBUTING.md) requires prior maintainer discussion and agreement for large changes of this kind. No open PR was found for #5284. I made no changes.",
         "attempts": 1
       }
     ],
@@ -34087,10 +34087,6 @@
         "value": "{\"started\": 1793889732.9882724, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793889737.3858745, \"recovery_checked_at\": 1793947532.295944}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1793947561.7405875, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1595:1:generation",
         "value": "{\"task\": 1595, \"repo\": \"llama-index\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793947561.748696, \"seconds\": 421.473, \"tokens\": {\"totalTokens\": 2749026, \"inputTokens\": 2737417, \"cachedInputTokens\": 2684928, \"cacheWriteInputTokens\": 0, \"outputTokens\": 11609, \"reasoningOutputTokens\": 4928}, \"first_event_ms\": 1793947147399, \"last_event_ms\": 1793947561738, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -34243,18 +34239,6 @@
         "value": "{\"at\": 1793948251.419434, \"reason\": \"PR closed or not owned by our fork\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1793948254.3780637, \"state\": \"queued\", \"pending_candidates\": 439, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 10, \"comfyui\": 10, \"adk\": 0, \"langfuse\": 6, \"langfuse-python\": 0, \"llama-index\": 4, \"spec-kit\": 0, \"openclaw\": 8, \"autogpt\": 1, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 439}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 0, \"queued_tasks\": 1, \"codex_calls_5h\": 6, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1114.091276884079, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 22, \"human_wait\": 6, \"validation_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7997\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7997\", \"title\": \"A tool confirmation resumes the sub-agent without its dispatcher, so the re-stamp from #6496 never runs\", \"first_seen\": 1793878954.2483184, \"last_checked\": 1793901788.325785, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8002\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8002\", \"title\": \"Regression of #3977 / #4054: `adk create` accepts hyphens in agent names, agent then fails to load\", \"first_seen\": 1793908330.4462464, \"last_checked\": 1793934530.4584427, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1793948254.3792937, \"tasks\": {\"fix\": {\"capacity_wait\": 22, \"human_wait\": 6, \"queued\": 1, \"skipped\": 5, \"validation_wait\": 1}, \"respond\": {}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1793948278.5783944, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1794380323}]}"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1793937536.3260887, \"comfyui\": 1793942076.9207895, \"hermes\": 1793785510.5671682, \"langfuse\": 1793915003.0715523, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793947115.5937562, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793948313.0058217, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793858042.433465, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
@@ -34311,10 +34295,6 @@
         "value": "{\"date\": \"2026-11-06\", \"used\": {\"spec-kit\": 2, \"comfyui\": 1, \"llama-index\": 5}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1597\": {\"remaining\": 1, \"until\": 1793955520.0720105}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1793942085.177187, \"group\": \"new_fix\", \"task\": 1590, \"phase\": \"generation\"}, {\"at\": 1793945951.5105896, \"group\": \"new_fix\", \"task\": 1591, \"phase\": \"generation\"}, {\"at\": 1793946261.3805869, \"group\": \"new_fix\", \"task\": 1592, \"phase\": \"generation\"}, {\"at\": 1793946521.5510604, \"group\": \"new_fix\", \"task\": 1593, \"phase\": \"generation\"}, {\"at\": 1793946838.8955083, \"group\": \"new_fix\", \"task\": 1594, \"phase\": \"generation\"}, {\"at\": 1793947140.2777035, \"group\": \"new_fix\", \"task\": 1595, \"phase\": \"generation\"}, {\"at\": 1793948320.0720105, \"group\": \"new_fix\", \"task\": 1597, \"phase\": \"generation\"}]"
       },
@@ -34343,8 +34323,24 @@
         "value": "{\"at\": 1793948321.4895954, \"disk_free_bytes\": 88183275520, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15307182080, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
       {
+        "key": "admission_health",
+        "value": "{\"at\": 1793948327.0389361, \"state\": \"active\", \"pending_candidates\": 439, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 10, \"comfyui\": 10, \"adk\": 0, \"langfuse\": 6, \"langfuse-python\": 0, \"llama-index\": 4, \"spec-kit\": 0, \"openclaw\": 8, \"autogpt\": 1, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 439}, \"screening_wait_tasks\": 0, \"active_tasks\": 2, \"running_tasks\": 1, \"queued_tasks\": 1, \"codex_calls_5h\": 7, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 6.958082914352417, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 22, \"human_wait\": 6, \"validation_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7997\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7997\", \"title\": \"A tool confirmation resumes the sub-agent without its dispatcher, so the re-stamp from #6496 never runs\", \"first_seen\": 1793878954.2483184, \"last_checked\": 1793901788.325785, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8002\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8002\", \"title\": \"Regression of #3977 / #4054: `adk create` accepts hyphens in agent names, agent then fails to load\", \"first_seen\": 1793908330.4462464, \"last_checked\": 1793934530.4584427, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1793948327.0402482, \"tasks\": {\"fix\": {\"capacity_wait\": 22, \"human_wait\": 6, \"queued\": 1, \"running\": 1, \"skipped\": 5, \"validation_wait\": 1}, \"respond\": {}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1793948356.4787781"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1793948361.608428"
+      },
+      {
         "key": "watch_heartbeat",
-        "value": "1793948322.743821"
+        "value": "1793948362.8103554"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -34352,19 +34348,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793948323.2712128"
+        "value": "1793948362.878088"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1793948366.3563452, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1794380323}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1793948366.3606367, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1597:1:generation",
+        "value": "{\"task\": 1597, \"repo\": \"spec-kit\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1793948366.363673, \"seconds\": 46.294, \"tokens\": {\"totalTokens\": 164637, \"inputTokens\": 163355, \"cachedInputTokens\": 122880, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1282, \"reasoningOutputTokens\": 331}, \"first_event_ms\": 1793948330348, \"last_event_ms\": 1793948366356, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:1597",
-        "value": "{\"started\": 1793948313.006014, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1597/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"3ca735b846afcbcf3304d571f296ec542464e08c\", \"generation_started\": 1793948320.0718024, \"dispatch_paid_date\": \"2026-11-06\", \"phase_started\": 1793948323.5083296}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1793948326.4752858"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1793948326.607487"
+        "value": "{\"started\": 1793948313.006014, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1597/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"3ca735b846afcbcf3304d571f296ec542464e08c\", \"generation_started\": 1793948320.0718024, \"dispatch_paid_date\": \"2026-11-06\", \"phase_started\": 1793948323.5083296, \"last_execution_phase\": \"generation\", \"finished\": 1793948366.3663616}"
       }
     ],
     "calls": [
