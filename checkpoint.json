@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1793964706.404963,
+  "saved_at": 1793964772.426427,
   "tables": {
     "tasks": [
       {
@@ -34074,14 +34074,6 @@
         "value": "1793962963.1571856"
       },
       {
-        "key": "task:1583",
-        "value": "{\"started\": 1793924399.24173, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793924404.087195, \"recovery_checked_at\": 1793963831.0806708}"
-      },
-      {
-        "key": "task:1586",
-        "value": "{\"started\": 1793931968.4179385, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793931973.7217104, \"recovery_checked_at\": 1793963832.1157951}"
-      },
-      {
         "key": "task:1599",
         "value": "{\"started\": 1793962975.6780322, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793962980.070746, \"recovery_checked_at\": 1793963960.4209766}"
       },
@@ -34386,28 +34378,44 @@
         "value": "{\"started\": 1793964454.9696195, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793964459.247636, \"recovery_checked_at\": 1793964641.6029456}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1793964645.620473, \"state\": \"waiting\", \"pending_candidates\": 441, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 12, \"comfyui\": 10, \"adk\": 0, \"langfuse\": 7, \"langfuse-python\": 0, \"llama-index\": 2, \"spec-kit\": 1, \"openclaw\": 8, \"autogpt\": 1, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 441}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 666.1765580177307, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {\"llama-index\": {\"used\": 6, \"limit\": 6}}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 21, \"human_wait\": 6, \"validation_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7997\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7997\", \"title\": \"A tool confirmation resumes the sub-agent without its dispatcher, so the re-stamp from #6496 never runs\", \"first_seen\": 1793878954.2483184, \"last_checked\": 1793901788.325785, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8002\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8002\", \"title\": \"Regression of #3977 / #4054: `adk create` accepts hyphens in agent names, agent then fails to load\", \"first_seen\": 1793908330.4462464, \"last_checked\": 1793934530.4584427, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1793964645.6760604, \"tasks\": {\"fix\": {\"capacity_wait\": 21, \"human_wait\": 6, \"skipped\": 7, \"validation_wait\": 1}, \"respond\": {}}}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1793964652.2476654"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1793964663.935098, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1794380323}]}"
       },
       {
         "key": "publication_check:hermes",
         "value": "{\"at\": 1793964690.7064834, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
+        "key": "admission_health",
+        "value": "{\"at\": 1793964709.3813753, \"state\": \"waiting\", \"pending_candidates\": 441, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 12, \"comfyui\": 10, \"adk\": 0, \"langfuse\": 7, \"langfuse-python\": 0, \"llama-index\": 2, \"spec-kit\": 1, \"openclaw\": 8, \"autogpt\": 1, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 441}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 729.9373006820679, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {\"llama-index\": {\"used\": 6, \"limit\": 6}}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 21, \"human_wait\": 6, \"validation_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#7997\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/7997\", \"title\": \"A tool confirmation resumes the sub-agent without its dispatcher, so the re-stamp from #6496 never runs\", \"first_seen\": 1793878954.2483184, \"last_checked\": 1793901788.325785, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8002\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8002\", \"title\": \"Regression of #3977 / #4054: `adk create` accepts hyphens in agent names, agent then fails to load\", \"first_seen\": 1793908330.4462464, \"last_checked\": 1793934530.4584427, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1793964709.3828866, \"tasks\": {\"fix\": {\"capacity_wait\": 21, \"human_wait\": 6, \"skipped\": 7, \"validation_wait\": 1}, \"respond\": {}}}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1793964724.2433126, \"windows\": [{\"name\": \"primary\", \"used_percent\": 3, \"resets_at\": 1794380323}]}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1793964698.3157501"
+        "value": "1793964758.44141"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1793964769.8142586"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1793964770.0292773"
+      },
+      {
+        "key": "task:1583",
+        "value": "{\"started\": 1793924399.24173, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793924404.087195, \"recovery_checked_at\": 1793964770.329014}"
+      },
+      {
+        "key": "task:1586",
+        "value": "{\"started\": 1793931968.4179385, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793931973.7217104, \"recovery_checked_at\": 1793964771.4025245}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -34415,19 +34423,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1793964701.7916875"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1793964701.9746614"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1793964705.0280719"
+        "value": "1793964772.0157804"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1793964706.323135, \"disk_free_bytes\": 88173039616, \"memory_bytes\": {\"MemTotal\": 16760348672, \"MemAvailable\": 15345451008, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1793964772.4151273, \"disk_free_bytes\": 88171728896, \"memory_bytes\": {\"MemTotal\": 16760348672, \"MemAvailable\": 15333470208, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       }
     ],
     "calls": [
