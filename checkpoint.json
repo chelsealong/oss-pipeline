@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794026867.1713896,
+  "saved_at": 1794026870.0575635,
   "tables": {
     "tasks": [
       {
@@ -20906,6 +20906,19 @@
         "updated": 1794018258.0945394,
         "result": "openclaw open PR cap (20)",
         "attempts": 0
+      },
+      {
+        "id": 1609,
+        "identity": "fix:openclaw:194447:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 194447,
+        "note": "",
+        "status": "running",
+        "created": 1794026868.0886695,
+        "updated": 1794026870.0463731,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -34202,10 +34215,6 @@
         "value": "{\"started\": 1793975956.5050688, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1604/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"2335676165d8f4f66ae276f7f187b44e43b26277\", \"generation_started\": 1793975969.7216601, \"dispatch_paid_date\": \"2026-11-06\", \"phase_started\": 1793975973.6693735, \"last_execution_phase\": \"generation\", \"finished\": 1793976597.3176517}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794018254.074058, \"comfyui\": 1793942076.9207895, \"hermes\": 1793785510.5671682, \"langfuse\": 1793975956.5048983, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793963953.444462, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793948313.0058217, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793858042.433465, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
-      },
-      {
         "key": "codex_review_leases",
         "value": "{}"
       },
@@ -34538,14 +34547,6 @@
         "value": "{\"started\": 1793924122.0917091, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793924126.3112206, \"recovery_checked_at\": 1794026800.6127543}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1794026803.9843886, \"state\": \"stalled\", \"pending_candidates\": 444, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 13, \"comfyui\": 11, \"adk\": 0, \"langfuse\": 7, \"langfuse-python\": 0, \"llama-index\": 2, \"spec-kit\": 1, \"openclaw\": 10, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 444}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 0, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 50834.25729894638, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 5, \"capacity_wait\": 9}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8009\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8009\", \"title\": \"Feature request: block unmocked tool calls in strict environment simulation\", \"first_seen\": 1793977232.2233472, \"last_checked\": 1794026545.9311323, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1794026803.9857275, \"tasks\": {\"fix\": {\"capacity_wait\": 9, \"human_wait\": 5, \"skipped\": 5}, \"respond\": {}}}"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1794026851.1712317, \"windows\": [{\"name\": \"primary\", \"used_percent\": 4, \"resets_at\": 1794380323}]}"
       },
@@ -34584,6 +34585,22 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1794026867.1629577, \"disk_free_bytes\": 88204296192, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15453560832, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1794026869.7228353, \"state\": \"stalled\", \"pending_candidates\": 444, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 13, \"comfyui\": 11, \"adk\": 0, \"langfuse\": 7, \"langfuse-python\": 0, \"llama-index\": 2, \"spec-kit\": 1, \"openclaw\": 10, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 444}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 0, \"queued_tasks\": 1, \"codex_calls_5h\": 0, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 50899.99532032013, \"judge_tokens_spent_24h\": 0, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 5, \"capacity_wait\": 9}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8009\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8009\", \"title\": \"Feature request: block unmocked tool calls in strict environment simulation\", \"first_seen\": 1793977232.2233472, \"last_checked\": 1794026545.9311323, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1794026869.7243156, \"tasks\": {\"fix\": {\"capacity_wait\": 9, \"human_wait\": 5, \"queued\": 1, \"skipped\": 5}, \"respond\": {}}}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794026870.0462449, \"comfyui\": 1793942076.9207895, \"hermes\": 1793785510.5671682, \"langfuse\": 1793975956.5048983, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1793963953.444462, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793948313.0058217, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793858042.433465, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
+        "key": "task:1609",
+        "value": "{\"started\": 1794026870.0463998, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       }
     ],
     "calls": [
