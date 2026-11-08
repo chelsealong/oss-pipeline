@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794150441.7602983,
+  "saved_at": 1794150445.893348,
   "tables": {
     "tasks": [
       {
@@ -21564,11 +21564,11 @@
         "repo": "openclaw",
         "number": 195269,
         "note": "",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1794150437.3823998,
-        "updated": 1794150441.7515507,
-        "result": "",
-        "attempts": 1
+        "updated": 1794150445.884938,
+        "result": "screening budget reached; retain pending work",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -35633,10 +35633,6 @@
         "value": "{\"task\": 1658, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-51c1910dd06759e43442\", \"at\": 1794150431.9546857, \"seconds\": 0.001, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:1658",
         "value": "{\"started\": 1794150427.6849327, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1794151331.9560287, \"folder\": \"jobs/1658/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1794150431.9587219}"
       },
@@ -35645,20 +35641,12 @@
         "value": "{\"at\": 1794150434.2606103, \"disk_free_bytes\": 88106041344, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15264477184, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1794150436.4475656"
-      },
-      {
         "key": "admission_health",
         "value": "{\"at\": 1794150436.9912584, \"state\": \"waiting\", \"pending_candidates\": 401, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 1, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 401}, \"screening_wait_tasks\": 11, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 27, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 248.8897008895874, \"judge_tokens_spent_24h\": 26673, \"screening_calls_5h\": 6, \"screening_calls_24h\": 6, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 17, \"validation_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8029\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8029\", \"title\": \"Responses adapter never sends OpenAI's async tool field \\u2014 async tool calling (GPT-6+) is unreachable\", \"first_seen\": 1794079411.2457757, \"last_checked\": 1794150264.8954532, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8009\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8009\", \"title\": \"Feature request: block unmocked tool calls in strict environment simulation\", \"first_seen\": 1793977232.2233472, \"last_checked\": 1794150267.7783504, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8037\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8037\", \"title\": \"OpenAPIToolset drops additionalProperties dictionary request bodies\", \"first_seen\": 1794150373.8710525, \"last_checked\": 1794150373.871053, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
       },
       {
         "key": "throughput_24h",
         "value": "{\"at\": 1794150436.9925988, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 17, \"done\": 1, \"skipped\": 10, \"triage_wait\": 5, \"validation_wait\": 1}, \"respond\": {\"blocked\": 1, \"done\": 2, \"skipped\": 1, \"triage_wait\": 6}}}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1794150439.7803931"
       },
       {
         "key": "worker_heartbeat",
@@ -35677,8 +35665,24 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794150441.7514355, \"comfyui\": 1794150121.6166282, \"hermes\": 1793785510.5671682, \"langfuse\": 1794150288.2348042, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794149418.8616278, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793948313.0058217, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
       {
+        "key": "watch_heartbeat",
+        "value": "1794150442.3898437"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1794150444.7805178"
+      },
+      {
+        "key": "usage:1659:1:screening-5029b0df74d0694817b7",
+        "value": "{\"task\": 1659, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-5029b0df74d0694817b7\", \"at\": 1794150445.8794205, \"seconds\": 0.001, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
         "key": "task:1659",
-        "value": "{\"started\": 1794150441.7515745, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "value": "{\"started\": 1794150441.7515745, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1794151345.8806994, \"folder\": \"jobs/1659/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1794150445.8834414}"
       }
     ],
     "calls": [
