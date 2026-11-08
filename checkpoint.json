@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794166506.2692862,
+  "saved_at": 1794166509.282248,
   "tables": {
     "tasks": [
       {
@@ -21408,11 +21408,11 @@
         "repo": "openclaw/openclaw",
         "number": 191797,
         "note": "{\"authors\": \"clawsweeper\", \"events\": [\"IC_kwDOQb6kR88AAAABiV-Wtw@2026-11-03T09:28:52Z\", \"IC_kwDOQb6kR88AAAABiWRmSA@2026-11-04T19:54:45Z\"], \"screening_events\": [\"IC_kwDOQb6kR88AAAABiV-Wtw@2026-11-03T09:28:52Z\", \"IC_kwDOQb6kR88AAAABiWRmSA@2026-11-04T19:54:45Z\"], \"is_issue\": false, \"head\": \"b60996ca87093e86bfd5d3004e932ec2b67e1668\"}",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1794149304.376767,
-        "updated": 1794166470.2038193,
-        "result": "screening budget reached; retain pending work",
-        "attempts": 1
+        "updated": 1794166509.2677824,
+        "result": "judge unavailable after bounded attempts; retain pending work",
+        "attempts": 0
       },
       {
         "id": 1648,
@@ -35822,10 +35822,6 @@
         "value": "{\"task\": 1672, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1794156686.995745, \"seconds\": 489.285, \"tokens\": {\"totalTokens\": 5968237, \"inputTokens\": 5955928, \"cachedInputTokens\": 5864192, \"cacheWriteInputTokens\": 0, \"outputTokens\": 12309, \"reasoningOutputTokens\": 5975}, \"first_event_ms\": 1794156203586, \"last_event_ms\": 1794156686988, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:1672",
         "value": "{\"started\": 1794155770.5654655, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1672/attempt-1\", \"attempt\": 1, \"phase\": \"error\", \"base\": \"438acf931a72fe3a4f1cc6662b44c2de5f075599\", \"remote_base\": \"438acf931a72fe3a4f1cc6662b44c2de5f075599\", \"base_update\": {\"original_head\": \"438acf931a72fe3a4f1cc6662b44c2de5f075599\", \"base\": \"438acf931a72fe3a4f1cc6662b44c2de5f075599\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794156200.745271, \"reviewed_screenshots\": [], \"publication_started\": true, \"branch\": \"fix/codex-openclaw-195294\", \"head\": \"696295c29239a40205362a120bf33a5771afebb3\", \"published_at\": 1794156692.8578498, \"publication_outcome\": \"updated\", \"last_execution_phase\": \"publishing\", \"finished\": 1794156696.4893098}"
       },
@@ -36070,20 +36066,12 @@
         "value": "{\"started\": 1793889732.9882724, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793889737.3858745, \"recovery_checked_at\": 1794166467.1126869}"
       },
       {
-        "key": "task:1652",
-        "value": "{\"started\": 1794166467.4812949, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1794155507.7416928}"
-      },
-      {
         "key": "runner_resources",
         "value": "{\"at\": 1794166468.0090091, \"disk_free_bytes\": 88143757312, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15416688640, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
       {
         "key": "scheduler",
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1794166470.203676, \"comfyui\": 1794166467.481149, \"hermes\": 1793785510.5671682, \"langfuse\": 1794150835.4813254, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794149418.8616278, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793948313.0058217, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
-      },
-      {
-        "key": "task:1647",
-        "value": "{\"started\": 1794166470.2038722, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1794155105.383657}"
       },
       {
         "key": "admission_health",
@@ -36168,6 +36156,18 @@
       {
         "key": "discovery_last_success",
         "value": "1794166506.203064"
+      },
+      {
+        "key": "task:1652",
+        "value": "{\"started\": 1794166467.4812949, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1652/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"00335469600a4b91958b8240716e03a81da3382c\", \"last_execution_phase\": \"screening\", \"finished\": 1794155507.7416928, \"remote_base\": \"00335469600a4b91958b8240716e03a81da3382c\", \"base_update\": {\"original_head\": \"00335469600a4b91958b8240716e03a81da3382c\", \"base\": \"00335469600a4b91958b8240716e03a81da3382c\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1647",
+        "value": "{\"started\": 1794166470.2038722, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1794167409.261656, \"folder\": null, \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1794166509.2656238}"
       }
     ],
     "calls": [
