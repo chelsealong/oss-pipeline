@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794126270.8967009,
+  "saved_at": 1794126279.7042198,
   "tables": {
     "tasks": [
       {
@@ -34582,18 +34582,6 @@
         "value": "{\"started\": 1794103220.7313204, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1626/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"bdb0816a292d221efeb6ec4ae41bcdff3f91fc86\", \"generation_started\": 1794103230.6625218, \"dispatch_paid_date\": \"2026-11-08\", \"phase_started\": 1794104062.845552, \"reviewed_screenshots\": [], \"last_execution_phase\": \"rereview\", \"finished\": 1794104603.6472962}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"comfyui\", \"task\": 1626, \"at\": 1794103230.6625211}, {\"repo\": \"llama-index\", \"task\": 1632, \"at\": 1794117881.3205676}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-11-08\", \"used\": {\"comfyui\": 1, \"llama-index\": 1}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1794103230.6626685, \"group\": \"new_fix\", \"task\": 1626, \"phase\": \"generation\"}, {\"at\": 1794103453.3266196, \"group\": \"new_fix\", \"task\": 1626, \"phase\": \"review\"}, {\"at\": 1794103565.5490398, \"group\": \"repair\", \"task\": 1626, \"phase\": \"remediation\"}, {\"at\": 1794104059.1664884, \"group\": \"repair\", \"task\": 1626, \"phase\": \"rereview\"}, {\"at\": 1794117881.3207605, \"group\": \"new_fix\", \"task\": 1632, \"phase\": \"generation\"}]"
-      },
-      {
         "key": "usage:1632:1:generation",
         "value": "{\"task\": 1632, \"repo\": \"llama-index\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794117920.8685338, \"seconds\": 39.55, \"tokens\": {\"totalTokens\": 119284, \"inputTokens\": 118289, \"cachedInputTokens\": 89856, \"cacheWriteInputTokens\": 0, \"outputTokens\": 995, \"reasoningOutputTokens\": 213}, \"first_event_ms\": 1794117888929, \"last_event_ms\": 1794117920861, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -34918,10 +34906,6 @@
         "value": "{\"at\": 1794125961.4174025, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1794125972.494973"
       },
@@ -35082,8 +35066,16 @@
         "value": "{\"at\": 1794126258.7400815, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 19, \"skipped\": 2}, \"respond\": {}}}"
       },
       {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794125963.5550942, \"comfyui\": 1794126270.883189, \"hermes\": 1793785510.5671682, \"langfuse\": 1793975956.5048983, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794117856.9598823, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793948313.0058217, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793858042.433465, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1794126260.284126"
+        "value": "1794126275.2854424"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1794126275.691818"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -35091,46 +35083,34 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794126267.2035263"
+        "value": "1794126277.0322194"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1794126267.9705467"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1794126270.691697"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794125963.5550942, \"comfyui\": 1794126270.883189, \"hermes\": 1793785510.5671682, \"langfuse\": 1793975956.5048983, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794117856.9598823, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793948313.0058217, \"crawl4ai\": 1791353431.2624507, \"dify\": 1793858042.433465, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+        "value": "1794126279.3047285"
       },
       {
         "key": "task:1636",
-        "value": "{\"started\": 1794126270.8834038, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "value": "{\"started\": 1794126270.8834038, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1636/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"c76e64fe5f9108af6946ac3a39ff4280142d6dcd\", \"generation_started\": 1794126279.6905656, \"dispatch_paid_date\": \"2026-11-08\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"llama-index\", \"task\": 1632, \"at\": 1794117881.3205676}, {\"repo\": \"comfyui\", \"task\": 1636, \"at\": 1794126279.6905644}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-11-08\", \"used\": {\"comfyui\": 2, \"llama-index\": 1}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"1636\": {\"remaining\": 1, \"until\": 1794133479.6907675}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1794117881.3207605, \"group\": \"new_fix\", \"task\": 1632, \"phase\": \"generation\"}, {\"at\": 1794126279.6907675, \"group\": \"new_fix\", \"task\": 1636, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1793514727.890001,
-        "kind": "judge"
-      },
-      {
-        "at": 1793514746.4751058,
-        "kind": "codex"
-      },
-      {
-        "at": 1793515778.9017794,
-        "kind": "judge"
-      },
-      {
-        "at": 1793515851.7192163,
-        "kind": "codex"
-      },
-      {
-        "at": 1793520925.289004,
-        "kind": "judge"
-      },
       {
         "at": 1793522673.8137467,
         "kind": "judge"
@@ -36161,6 +36141,10 @@
       },
       {
         "at": 1794117881.3214378,
+        "kind": "codex"
+      },
+      {
+        "at": 1794126279.6914356,
         "kind": "codex"
       }
     ]
