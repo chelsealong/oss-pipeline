@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794150648.2790961,
+  "saved_at": 1794150652.538408,
   "tables": {
     "tasks": [
       {
@@ -20160,10 +20160,10 @@
         "repo": "openclaw",
         "number": 192706,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1793787829.9124002,
-        "updated": 1794150644.546189,
-        "result": "openclaw open PR cap (20)",
+        "updated": 1794150652.5294628,
+        "result": "already has PR(s): ['closing-ref PR#192746(OPEN)', 'closing-ref PR#192768(OPEN)', 'xref PR#192746(OPEN)']",
         "attempts": 1
       },
       {
@@ -35601,14 +35601,6 @@
         "value": "{\"at\": 1794150569.3186753, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1794150571.881197, \"state\": \"waiting\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 12, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 27, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 383.7798957824707, \"judge_tokens_spent_24h\": 26673, \"screening_calls_5h\": 6, \"screening_calls_24h\": 6, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 17, \"validation_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8029\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8029\", \"title\": \"Responses adapter never sends OpenAI's async tool field \\u2014 async tool calling (GPT-6+) is unreachable\", \"first_seen\": 1794079411.2457757, \"last_checked\": 1794150264.8954532, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8009\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8009\", \"title\": \"Feature request: block unmocked tool calls in strict environment simulation\", \"first_seen\": 1793977232.2233472, \"last_checked\": 1794150267.7783504, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8037\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8037\", \"title\": \"OpenAPIToolset drops additionalProperties dictionary request bodies\", \"first_seen\": 1794150373.8710525, \"last_checked\": 1794150373.871053, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1794150571.8826976, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 17, \"done\": 1, \"skipped\": 10, \"triage_wait\": 6, \"validation_wait\": 1}, \"respond\": {\"blocked\": 1, \"done\": 2, \"skipped\": 1, \"triage_wait\": 6}}}"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1794150630.3101618, \"windows\": [{\"name\": \"primary\", \"used_percent\": 6, \"resets_at\": 1794380323}]}"
       },
@@ -35631,10 +35623,6 @@
       {
         "key": "followup:task:1549",
         "value": "{\"status\": \"resumed\", \"task\": 1549}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1794150635.0364058"
       },
       {
         "key": "followup:task:1551",
@@ -35661,10 +35649,6 @@
         "value": "{\"started\": 1793852252.2381403, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793852257.51212, \"recovery_checked_at\": 1794150638.6804967}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:1549",
         "value": "{\"started\": 1794150638.3623784, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"skipped\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1794150642.1092672, \"recovery_checked_at\": 1794150633.7245798}"
       },
@@ -35677,12 +35661,24 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794150644.54606, \"comfyui\": 1794150121.6166282, \"hermes\": 1793785510.5671682, \"langfuse\": 1794150288.2348042, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794149418.8616278, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793948313.0058217, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
       {
-        "key": "task:1551",
-        "value": "{\"started\": 1794150644.5462193, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793788195.5724378, \"recovery_checked_at\": 1794150634.646459}"
+        "key": "watch_heartbeat",
+        "value": "1794150648.2422915"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1794150648.2923791, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 12, \"active_tasks\": 2, \"running_tasks\": 1, \"queued_tasks\": 1, \"codex_calls_5h\": 27, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 460.19101762771606, \"judge_tokens_spent_24h\": 26673, \"screening_calls_5h\": 6, \"screening_calls_24h\": 6, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 17, \"validation_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8029\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8029\", \"title\": \"Responses adapter never sends OpenAI's async tool field \\u2014 async tool calling (GPT-6+) is unreachable\", \"first_seen\": 1794079411.2457757, \"last_checked\": 1794150264.8954532, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8009\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8009\", \"title\": \"Feature request: block unmocked tool calls in strict environment simulation\", \"first_seen\": 1793977232.2233472, \"last_checked\": 1794150267.7783504, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8037\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8037\", \"title\": \"OpenAPIToolset drops additionalProperties dictionary request bodies\", \"first_seen\": 1794150373.8710525, \"last_checked\": 1794150373.871053, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1794150648.293493, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 17, \"done\": 1, \"queued\": 1, \"running\": 1, \"skipped\": 11, \"triage_wait\": 6, \"validation_wait\": 1}, \"respond\": {\"blocked\": 1, \"done\": 2, \"skipped\": 1, \"triage_wait\": 6}}}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794150644.7844117"
+        "value": "1794150649.7845051"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1794150650.0379004"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -35690,11 +35686,15 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794150646.2480648"
+        "value": "1794150651.419561"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1794150648.2422915"
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1551",
+        "value": "{\"started\": 1794150644.5462193, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"skipped\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1794150652.5282311, \"recovery_checked_at\": 1794150634.646459}"
       }
     ],
     "calls": [
