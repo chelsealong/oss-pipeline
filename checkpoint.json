@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794153537.2528775,
+  "saved_at": 1794153549.6862698,
   "tables": {
     "tasks": [
       {
@@ -20329,11 +20329,11 @@
         "repo": "openclaw",
         "number": 193357,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1793872488.3411438,
-        "updated": 1794153523.5999503,
+        "updated": 1794153549.67775,
         "result": "openclaw open PR cap (20)",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 1565,
@@ -21577,7 +21577,7 @@
         "repo": "openclaw/openclaw",
         "number": 190917,
         "note": "{\"authors\": \"clawsweeper\", \"events\": [\"IC_kwDOQb6kR88AAAABh6gLsA@2026-11-03T18:00:10Z\"], \"screening_events\": [\"IC_kwDOQb6kR88AAAABh6gLsA@2026-11-03T18:00:10Z\"], \"is_issue\": false, \"head\": \"7c997d9bf1af3f7511252e202141d08766dd9d82\"}",
-        "status": "triage_wait",
+        "status": "queued",
         "created": 1794150703.252315,
         "updated": 1794152590.2024808,
         "result": "judge unavailable after bounded attempts; retain pending work",
@@ -35610,10 +35610,6 @@
         "value": "{\"started\": 1794125963.5553188, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1794125967.4993303, \"recovery_checked_at\": 1794153048.8612487}"
       },
       {
-        "key": "prwatch_heartbeat",
-        "value": "1794153170.0884764"
-      },
-      {
         "key": "usage:1665:1:generation",
         "value": "{\"task\": 1665, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794153230.8726053, \"seconds\": 547.697, \"tokens\": {\"totalTokens\": 7627255, \"inputTokens\": 7616601, \"cachedInputTokens\": 7519872, \"cacheWriteInputTokens\": 0, \"outputTokens\": 10654, \"reasoningOutputTokens\": 2527}, \"first_event_ms\": 1794152688976, \"last_event_ms\": 1794153230863, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -35902,10 +35898,6 @@
         "value": "{\"started\": 1794153516.8801882, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1794154421.2114186, \"folder\": null, \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1794153521.2143779}"
       },
       {
-        "key": "task:1564",
-        "value": "{\"started\": 1793872494.3494594, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"queued\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793872498.3482387, \"recovery_checked_at\": 1794153522.866106}"
-      },
-      {
         "key": "followup:task:1564",
         "value": "{\"status\": \"resumed\", \"task\": 1564}"
       },
@@ -35930,14 +35922,6 @@
         "value": "{\"at\": 1794153529.4719946, \"disk_free_bytes\": 84064546816, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15208312832, \"SwapTotal\": 3221221376, \"SwapFree\": 3221135360}, \"memory_events\": null}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1794153529.9268134, \"windows\": [{\"name\": \"primary\", \"used_percent\": 8, \"resets_at\": 1794380323}]}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1794153531.8921013"
-      },
-      {
         "key": "admission_health",
         "value": "{\"at\": 1794153532.0285048, \"state\": \"active\", \"pending_candidates\": 404, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 1, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 3, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400, \"judge_unavailable\": 4}, \"screening_wait_tasks\": 7, \"active_tasks\": 8, \"running_tasks\": 1, \"queued_tasks\": 7, \"codex_calls_5h\": 38, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 191.8344612121582, \"judge_tokens_spent_24h\": 60865, \"screening_calls_5h\": 6, \"screening_calls_24h\": 6, \"task_start_limits_reached\": {\"comfyui\": {\"used\": 6, \"limit\": 6}}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 13, \"validation_wait\": 2}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8029\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8029\", \"title\": \"Responses adapter never sends OpenAI's async tool field \\u2014 async tool calling (GPT-6+) is unreachable\", \"first_seen\": 1794079411.2457757, \"last_checked\": 1794153289.2646139, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8009\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8009\", \"title\": \"Feature request: block unmocked tool calls in strict environment simulation\", \"first_seen\": 1793977232.2233472, \"last_checked\": 1794153292.1229472, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
@@ -35946,16 +35930,24 @@
         "value": "{\"at\": 1794153532.0297806, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 13, \"done\": 1, \"queued\": 5, \"running\": 1, \"skipped\": 34, \"triage_wait\": 2, \"validation_wait\": 2}, \"respond\": {\"blocked\": 1, \"done\": 2, \"queued\": 2, \"skipped\": 1, \"triage_wait\": 5}}}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1794153533.7135036, \"comfyui\": 1794153276.8702338, \"hermes\": 1793785510.5671682, \"langfuse\": 1794150835.4813254, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794149418.8616278, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793948313.0058217, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+        "key": "codex_review_leases",
+        "value": "{\"1667\": {\"remaining\": 1, \"until\": 1794160484.2497492}}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1794153533.767711"
+        "key": "task:1656",
+        "value": "{\"started\": 1794153533.7136643, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1794154437.2398748, \"folder\": null, \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1794153537.243136}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1794153538.34179, \"windows\": [{\"name\": \"primary\", \"used_percent\": 8, \"resets_at\": 1794380323}]}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794153534.8650088"
+        "value": "1794153544.8651667"
+      },
+      {
+        "key": "prwatch_heartbeat",
+        "value": "1794153545.5249653"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -35963,15 +35955,23 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794153536.1940687"
+        "value": "1794153546.208294"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1667\": {\"remaining\": 1, \"until\": 1794160484.2497492}}"
+        "key": "worker_heartbeat",
+        "value": "1794153546.8935623"
       },
       {
-        "key": "task:1656",
-        "value": "{\"started\": 1794153533.7136643, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1794154437.2398748, \"folder\": null, \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1794153537.243136}"
+        "key": "watch_heartbeat",
+        "value": "1794153548.7852745"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794153549.6776965, \"comfyui\": 1794153276.8702338, \"hermes\": 1793785510.5671682, \"langfuse\": 1794150835.4813254, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794149418.8616278, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793948313.0058217, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
+        "key": "task:1564",
+        "value": "{\"started\": 1794153549.6777756, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1793872498.3482387, \"recovery_checked_at\": 1794153522.866106}"
       }
     ],
     "calls": [
