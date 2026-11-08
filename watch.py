@@ -678,6 +678,7 @@ def retain_for_vetting(key: str, node: dict) -> None:
 
 def migrate_screening_waits():
     migrate_issue_classification_waits()
+    migrate_free_quota_waits()
     if not rt.config().get('codex_screening_fallback') or rt.getmeta('screening_waits_v1'):return
     import screening
     rows=pending_vet();before=json.loads(json.dumps(rows))
@@ -688,6 +689,19 @@ def migrate_screening_waits():
                 item['retry_after']=0
     save_pending_vet(rows,before)
     rt.setmeta('screening_waits_v1',time.time())
+
+
+def migrate_free_quota_waits():
+    """Recheck the old generic judge outage once; never approve or replay work."""
+    if not rt.config().get('codex_screening_fallback') or rt.getmeta('free_quota_waits_v1'):return
+    rows=pending_vet();before=json.loads(json.dumps(rows));changed=0
+    for key,items in rows.items():
+        if repo_limits.disabled(key) or scan.REPOS.get(key,{}).get('paused'):continue
+        for item in items.values():
+            if item.get('reason')=='judge unavailable after bounded attempts; retain pending work':
+                item['retry_after']=0;changed+=1
+    save_pending_vet(rows,before)
+    rt.setmeta('free_quota_waits_v1',{'at':time.time(),'pending_rechecks':changed})
 
 
 def migrate_issue_classification_waits():

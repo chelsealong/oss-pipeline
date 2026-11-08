@@ -171,6 +171,58 @@ class ScreeningTests(unittest.TestCase):
             with self.assertRaises(rt.JudgeDeferred):self.eligible()
         self.agent.assert_not_called()
 
+    def test_provider_free_quota_exhaustion_requires_worker_screening_and_keeps_claims(self):
+        intent.RETIRED.write_text(json.dumps({'fixture':{
+            'retired':True,'why':'HTTP 403 Free quota exhausted'}}))
+        ok,_,extra=scan.vet_candidate({},'Comfy-Org/ComfyUI',self.issue)
+        self.assertTrue(ok);self.assertTrue(extra['screening_required'])
+        self.agent.assert_not_called();self.http.assert_not_called()
+        self.assertTrue(self.eligible()[0]);self.assertEqual(self.agent.call_count,1)
+        self.issue['body']+=' I have implemented the fix and will open a PR.'
+        self.assertFalse(self.eligible()[0]);self.assertEqual(self.agent.call_count,2)
+        self.http.assert_not_called()
+        self.assertFalse(rt.task_state(self.ident).get('generation_started'))
+
+    def test_other_retirement_and_missing_free_protection_do_not_enable_fallback(self):
+        for reason in ['HTTP 404 ModelNotFound','ValueError','HTTP 403 Free quota exhausted']:
+            intent.RETIRED.write_text(json.dumps({'fixture':{'retired':True,'why':reason}}))
+            with self.subTest(reason=reason):
+                protection=[] if 'Free quota' in reason else ['fixture']
+                with patch.object(model_budget,'free_models',return_value=protection):
+                    with self.assertRaises(rt.JudgeDeferred):self.eligible()
+        self.agent.assert_not_called();self.http.assert_not_called()
+
+    def test_provider_exhaustion_does_not_override_authentication_cooldown(self):
+        intent.RETIRED.write_text(json.dumps({'fixture':{
+            'retired':True,'why':'HTTP 403 Free quota exhausted'}}))
+        rt.setmeta('judge_auth_until',time.time()+900)
+        with self.assertRaisesRegex(rt.JudgeDeferred,'authentication cooldown'):self.eligible()
+        self.agent.assert_not_called();self.http.assert_not_called()
+
+    def test_old_generic_outage_rechecks_once_preserving_other_holds_and_spending(self):
+        old='judge unavailable after bounded attempts; retain pending work'
+        rows={'comfyui':{'1':{'reason':old,'retry_after':9999999999},
+                         '2':{'reason':'judge authentication unavailable','retry_after':9999999999}},
+              'firecrawl':{'3':{'reason':old,'retry_after':9999999999}}}
+        watch.save_pending_vet(rows)
+        with rt.db() as db:db.execute("INSERT INTO calls VALUES (?,'codex')",(time.time(),))
+        watch.migrate_free_quota_waits()
+        current=watch.pending_vet()
+        self.assertEqual(current['comfyui']['1']['retry_after'],0)
+        self.assertEqual(current['comfyui']['2'],rows['comfyui']['2'])
+        self.assertEqual(current['firecrawl'],rows['firecrawl'])
+        current['comfyui']['1']['retry_after']=12345;watch.save_pending_vet(current)
+        watch.migrate_free_quota_waits()
+        self.assertEqual(watch.pending_vet()['comfyui']['1']['retry_after'],12345)
+        with rt.db() as db:
+            self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],1)
+            self.assertEqual(db.execute('SELECT status FROM tasks').fetchone()[0],'running')
+
+    def test_unavailable_judge_is_visible_in_admission_health(self):
+        watch.save_pending_vet({'comfyui':{'1':{
+            'reason':'judge unavailable after bounded attempts; retain pending work'}}})
+        self.assertEqual(admission_health.status()['pending_reasons'],{'judge_unavailable':1})
+
     def test_screening_obeys_shared_and_own_budgets_without_charging_generation(self):
         self.cfg['codex_screening_per_5h']=1
         self.assertTrue(self.eligible()[0])

@@ -13,7 +13,8 @@ import runtime as rt
 _current = contextvars.ContextVar('screening_worker', default=None)
 RECOVERABLE = ('judge token budget reached', 'judge request budget reached',
                'judge daily request budget reached', 'judge call budget reached',
-               'judge input exceeds bounded context')
+               'judge input exceeds bounded context',
+               'judge free quota exhausted; use subscription screening')
 
 
 def eligible(error):

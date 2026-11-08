@@ -49,7 +49,13 @@ all current models. Require the `QWEN_FREE_ONLY_MODELS` allowlist; never enable
 paid spillover or infer remaining provider balance.
 On October 11 the user selected the two remaining free models for subsequent
 use: `qwen3.8-27b` first (expires November 17), then `deepseek-v4.1-flash`
-(expires December 13). Keep the deployment allowlist limited to these two;
+(expires December 13). The November 8 instruction adds `kimi-k3.1-pro` and
+`deepseek-v4.1-flash-1017` ahead of those two; the user explicitly confirmed
+provider-side free-quota-only protection for both new models. The deployment
+allowlist admits exactly these four. Preserve existing retirement and spending
+records. When all approved models have confirmed free-tier exhaustion, use the
+existing bounded read-only Codex subscription screening before coding. This
+does not waive authentication/configuration holds or upstream eligibility;
 model selection does not reset spending or waive answer validation.
 Enforce 30 requests/hour, 150/rolling 24h, 100,000 input+output tokens/rolling
 24h and two model attempts.

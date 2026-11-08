@@ -18,7 +18,8 @@ def status():
         by_repo[key]=len(items)
         for item in items.values():
             reason=item.get('reason','awaiting admission')
-            category=('judge_budget' if 'budget' in reason else 'long_context' if 'bounded context' in reason
+            category=('judge_unavailable' if 'judge unavailable' in reason or 'judge free quota exhausted' in reason
+                      else 'judge_budget' if 'budget' in reason else 'long_context' if 'bounded context' in reason
                       else 'provisional_triage' if 'triage pending' in reason else 'awaiting_admission')
             reasons[category]+=1
     with rt.db() as db:

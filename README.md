@@ -80,9 +80,10 @@ requests stay in the count; historical tokens are explicitly unknown.
 Only models in repository variable `QWEN_FREE_ONLY_MODELS` are admitted. The user
 confirmed the provider's free-quota-only switch on October 10; this allowlist
 records that confirmation, not an API check of provider settings or balances.
-The October 11 selection is `qwen3.8-27b` followed by `deepseek-v4.1-flash`,
-ordered by the confirmed November 17 and December 13 free-quota expiry dates.
-Both the source list and deployment allowlist use only these two models.
+The November 8 selection adds `kimi-k3.1-pro`, then `deepseek-v4.1-flash-1017`.
+The user confirmed free-quota-only protection for both. Historical
+`qwen3.8-27b` and `deepseek-v4.1-flash` remain in the allowlist and source list,
+with their exhausted retirement records and all spending preserved.
 Missing configuration fails closed. Quota/authentication errors retain work.
 Concurrent cache writes merge atomically and identical requests share a lock.
 Oversized, unavailable or uncertain judgments retain pending feedback/issues;
@@ -92,7 +93,8 @@ coding already assesses scope, and bot discussion churn must not block admission
 Full author-body and human-comment claim checks remain mandatory, as do competing
 PR, coordination and publication checks. Pending candidates rotate fairly.
 
-When the local Qwen request/token allowance or 12 KB input ceiling prevents a
+When all approved API models have confirmed free-tier exhaustion, or the local
+Qwen request/token allowance or 12 KB input ceiling prevents a
 judgement, discovery may queue a provisional candidate. An existing worker then
 performs full-text, read-only screening through the shared `gpt-6-sol` subscription
 host before checkout/coding. No claim, competing PR, coordination rule or publication
@@ -102,6 +104,10 @@ Content above 128 KB gets a visible manual handoff; it is never truncated.
 Failed identical screenings are not replayed indefinitely. Deferred PR feedback
 is refreshed and screened before its checkout as well. Free-only API protection
 and disabled repositories remain enforced.
+Authentication, configuration, model-access and transient transport failures
+remain separate holds. Adding models does not turn those errors into approvals.
+Previously deferred generic judge outages receive one fresh admission check;
+existing task attempts, patches, publication holds and budgets are preserved.
 
 `runtime.status().admission` distinguishes productive admission from authentication
 health, reports pending reasons and unsent coordination requests, and flags an

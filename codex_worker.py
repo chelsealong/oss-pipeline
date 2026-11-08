@@ -777,15 +777,20 @@ def canary(task):
         report=('The application reports a reproducible addition error.\n'*260+
                 ('I have implemented the fix and will open a PR.' if requires_human else
                  'I am only reporting this bug and cannot implement the fix.'))
+        # The two workers cover free-tier exhaustion and the existing long-input
+        # route with the same shared subscription host and unchanged call budget.
+        screening_reason=('judge input exceeds bounded context; retain for inspection'
+                          if requires_human else intent.FREE_QUOTA_EXHAUSTED)
         with screening.worker(task,'canary'):
             verdict=screening.ask(intent.ISSUE_SYSTEM,report,
-                rt.JudgeDeferred('judge input exceeds bounded context; retain for inspection'))
+                rt.JudgeDeferred(screening_reason))
         if verdict['claim']!=requires_human or verdict['kind']!='BUG':
             raise RuntimeError('canary read-only screening missed the full report or tail claim')
         if requires_human and verdict['evidence'] not in report:
             raise RuntimeError('canary screening lacks exact source evidence')
         (folder/'screening-verified.json').write_text(json.dumps({'full_bytes':len(report.encode()),
-            'tail_claim_verified':True,'verdict':verdict,'no_api_call':True}))
+            'tail_claim_verified':True,'verdict':verdict,'no_api_call':True,
+            'fallback_reason':screening_reason}))
     result=agent('This is a pipeline canary, no upstream repository or publishing. Read the two Python files. Fix sum_values to add its arguments. Do not change the tests. Create an ignored .venv with python3 -m venv --without-pip. Put a test-only module named oss_canary_dependency.py containing VALUE=42 in that virtual environment site-packages (locate it with .venv/bin/python and sysconfig.get_path("purelib")); do not put the module in the source directory. Run .venv/bin/python -m unittest -v and import that module using the same interpreter. Leave the ignored .venv in place for independent review. Also verify that RUSTUP_HOME and CARGO_HOME are writable by creating a small probe file in each supplied cache. Create an ignored node_modules/probe/index.js exporting 42, and verify node can require it from this checkout. Verify both dependency directories are ignored by git. Do not commit or use network tools. Return READY with actual test evidence and pr_body as an empty string in the required JSON. This also checks the production response schema without posting.',work,folder/'generation.json',RESPONSE_SCHEMA,timeout=240,task=task)
     if result['outcome']!='READY':raise RuntimeError('canary generation '+result['outcome']+': '+result['reason'][:1200])
     review=agent(f'''This is an independent canary review, with no upstream publication.

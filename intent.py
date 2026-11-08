@@ -60,13 +60,15 @@ ENDPOINT = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
 #   * A timeout or a network error is transient, so the model is skipped for
 #     COOLDOWN seconds and then re-entered from the top.
 #
-# User-selected remaining free models, confirmed 2026-10-11. Use the earlier
-# expiry first: qwen3.8-27b on November 17, deepseek-v4.1-flash on December 13.
-# The provider free-only switch is enabled for both; the deployment allowlist
-# must also admit them. Keep the existing budgets, two-attempt ceiling, answer
+# User confirmed free-only protection for the two new models on 2026-11-08.
+# Keep exhausted historical models retired; adding models never resets usage.
+# The deployment allowlist must also admit each model. Keep the existing budgets,
+# two-attempt ceiling, answer
 # validation and cooldowns. Qwen's historical partial-response result has not
 # been requalified by a new benchmark; do not treat listing as validation.
 MODELS = [
+    "kimi-k3.1-pro",
+    "deepseek-v4.1-flash-1017",
     "qwen3.8-27b",
     "deepseek-v4.1-flash",
 ]
@@ -145,6 +147,7 @@ _GONE = ("modelnotfound", "model_not_supported", "endpoint.accessdenied",
 # account that will not pay it is permanent, which is why it retires here.
 _SPENT = ("free quota exhausted", "freetieronly",
           "free tier of the model has been exhausted")
+FREE_QUOTA_EXHAUSTED = 'judge free quota exhausted; use subscription screening'
 _THROTTLE = ("throttling", "ratequota", "burstrate", "allocated quota exceeded",
              "requests rate limit", "try again later")
 
@@ -178,6 +181,16 @@ def classify_exc(exc: BaseException) -> str:
     if isinstance(exc, (TimeoutError, socket.timeout, urllib.error.URLError, OSError)):
         return V_COOLDOWN
     return V_STRIKE
+
+
+def free_quota_exhausted(allowed) -> bool:
+    """Only confirmed free-tier exhaustion permits this subscription fallback."""
+    models = [model for model in MODELS if allowed is not None and model in allowed]
+    retired = _retired()
+    return bool(models) and all(
+        retired.get(model, {}).get('retired') and
+        any(marker in retired[model].get('why', '').lower() for marker in _SPENT)
+        for model in models)
 
 
 def _strike(model: str, why: str, *, immediate: bool = False) -> None:
@@ -407,6 +420,8 @@ def _ask_remote(system: str, user: str, *, author: str = "?") -> dict | None:
         _log(f"NOKEY author={author} :: {user[:80]!r}")
         if rt.local():raise rt.JudgeDeferred('judge credentials unavailable; retain pending work')
         return None
+    if rt.local() and rt.getmeta('judge_auth_until', 0) > time.time():
+        raise rt.JudgeDeferred('judge authentication cooldown; retain pending work')
     import time as _time
     now = _time.monotonic()
     dead = dead_models()
@@ -452,7 +467,10 @@ def _ask_remote(system: str, user: str, *, author: str = "?") -> dict | None:
         if len(tried) > 1:
             _unstrike([m for m in tried if not _retired().get(m, {}).get("retired")])
         _log(f"ALLFAILED author={author} tried={tried}")
-    if rt.local():raise rt.JudgeDeferred('judge unavailable after bounded attempts; retain pending work')
+    if rt.local():
+        if free_quota_exhausted(allowed):
+            raise rt.JudgeDeferred(FREE_QUOTA_EXHAUSTED)
+        raise rt.JudgeDeferred('judge unavailable after bounded attempts; retain pending work')
     return None
 
 

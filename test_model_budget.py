@@ -83,6 +83,31 @@ class BudgetTests(unittest.TestCase):
         with patch.object(intent.urllib.request,'urlopen',side_effect=error) as http:
             with self.assertRaises(rt.JudgeDeferred):intent._ask('system','body')
         self.assertEqual(http.call_count,1)
+
+    def test_two_newly_exhausted_models_stop_http_and_offer_subscription_screening(self):
+        def exhausted(*args,**kwargs):
+            raise urllib.error.HTTPError('https://fixture.invalid',403,'free tier',{},
+                io.BytesIO(b'{"error":{"message":"Free quota exhausted"}}'))
+        with patch.object(intent.urllib.request,'urlopen',side_effect=exhausted) as http:
+            with self.assertRaisesRegex(rt.JudgeDeferred,'judge free quota exhausted'):
+                intent._ask_remote('system','body')
+        self.assertEqual(http.call_count,2)
+        before=budget.status()
+        with patch.object(intent.urllib.request,'urlopen',side_effect=AssertionError('exhausted model retried')):
+            with self.assertRaisesRegex(rt.JudgeDeferred,'judge free quota exhausted'):
+                intent._ask_remote('system','body')
+        self.assertEqual(budget.status()['judge_requests_24h'],before['judge_requests_24h'])
+        self.assertEqual(budget.status()['judge_charged_tokens_24h'],before['judge_charged_tokens_24h'])
+
+    def test_new_free_model_used_without_reviving_exhausted_model(self):
+        intent.RETIRED.write_text(json.dumps({'a':{'retired':True,'why':'HTTP 403 Free quota exhausted'}}))
+        def answer(request,**kwargs):
+            self.assertEqual(json.loads(request.data)['model'],'b')
+            return self.response()
+        with patch.object(intent.urllib.request,'urlopen',side_effect=answer) as http:
+            self.assertIsNotNone(intent._ask_remote('system','body'))
+        self.assertEqual(http.call_count,1)
+        self.assertTrue(intent._retired()['a']['retired'])
     def test_long_feedback_is_deferred_without_truncating_objection(self):
         with patch.object(intent.urllib.request,'urlopen',side_effect=AssertionError('network')):
             with self.assertRaises(rt.JudgeDeferred):intent.feedback_needs('x'*20000+' Fix this defect in the middle. '+'x'*20000)
