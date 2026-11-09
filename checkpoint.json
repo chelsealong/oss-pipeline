@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794226767.8795354,
+  "saved_at": 1794226772.6832616,
   "tables": {
     "tasks": [
       {
@@ -22240,11 +22240,11 @@
         "repo": "comfyui",
         "number": 17630,
         "note": "",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1794222221.7860606,
-        "updated": 1794226767.8667612,
+        "updated": 1794226772.6725702,
         "result": "screening budget reached; retain pending work",
-        "attempts": 1
+        "attempts": 0
       }
     ],
     "meta": [
@@ -37057,16 +37057,8 @@
         "value": "1794225048.3160512"
       },
       {
-        "key": "usage:1711:1:screening-9d6e908220fc4d8a651b",
-        "value": "{\"task\": 1711, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-9d6e908220fc4d8a651b\", \"at\": 1794225865.8819852, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
-      },
-      {
         "key": "usage:1709:1:screening-abd9cf0d2694664767d5",
         "value": "{\"task\": 1709, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-abd9cf0d2694664767d5\", \"at\": 1794225877.035504, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:1709",
@@ -37281,12 +37273,16 @@
         "value": "1794226760.2337525"
       },
       {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794193664.983716, \"comfyui\": 1794226767.866687, \"hermes\": 1793785510.5671682, \"langfuse\": 1794218349.8717194, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794211191.7894132, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1794218021.9867978, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
         "key": "watch_heartbeat",
-        "value": "1794226763.8114405"
+        "value": "1794226768.82067"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794226764.9053116"
+        "value": "1794226769.9054103"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -37294,15 +37290,19 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794226766.1902645"
+        "value": "1794226771.3834631"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794193664.983716, \"comfyui\": 1794226767.866687, \"hermes\": 1793785510.5671682, \"langfuse\": 1794218349.8717194, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794211191.7894132, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1794218021.9867978, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+        "key": "usage:1711:1:screening-9d6e908220fc4d8a651b",
+        "value": "{\"task\": 1711, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-9d6e908220fc4d8a651b\", \"at\": 1794226772.6647084, \"seconds\": 0.001, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:1711",
-        "value": "{\"started\": 1794226767.866784, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1794225865.8874218}"
+        "value": "{\"started\": 1794226767.866784, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1794227672.666711, \"folder\": \"jobs/1711/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1794226772.6708539}"
       }
     ],
     "calls": [
