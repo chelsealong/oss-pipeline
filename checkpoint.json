@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794192082.350728,
+  "saved_at": 1794192093.3840737,
   "tables": {
     "tasks": [
       {
@@ -22011,6 +22011,19 @@
         "updated": 1794191140.7099261,
         "result": "The issue author already owns this fix: they named their fix branch in the issue, and the branch contains an ACPX liveness change and regression test. Opening a competing patch would duplicate their work. The checkout is unchanged.",
         "attempts": 1
+      },
+      {
+        "id": 1694,
+        "identity": "fix:openclaw:195576:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 195576,
+        "note": "",
+        "status": "running",
+        "created": 1794192087.5867198,
+        "updated": 1794192093.3330169,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -36691,20 +36704,8 @@
         "value": "{\"at\": 1794192012.627351, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1794192016.071561, \"state\": \"waiting\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 8, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 31, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 916.9146749973297, \"judge_tokens_spent_24h\": 99447, \"screening_calls_5h\": 6, \"screening_calls_24h\": 13, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 5}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8029\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8029\", \"title\": \"Responses adapter never sends OpenAI's async tool field \\u2014 async tool calling (GPT-6+) is unreachable\", \"first_seen\": 1794079411.2457757, \"last_checked\": 1794191901.4298234, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1794192016.0743587, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 4, \"skipped\": 94, \"triage_wait\": 3, \"validation_wait\": 3}, \"respond\": {\"blocked\": 3, \"done\": 4, \"error\": 1, \"skipped\": 2, \"triage_wait\": 5, \"validation_wait\": 2}}}"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1794192053.236393, \"windows\": [{\"name\": \"primary\", \"used_percent\": 11, \"resets_at\": 1794380323}]}"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1794192057.6710153, \"comfyui\": 1794185089.1918907, \"hermes\": 1793785510.5671682, \"langfuse\": 1794187959.218708, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794191378.0443895, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1794191691.3184605, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
       {
         "key": "usage:1684:1:screening-2d9c91bbbbde925f35e7",
@@ -36721,10 +36722,6 @@
       {
         "key": "task:166",
         "value": "{\"recovery_checked_at\": 1794192076.523393}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1794192076.8714466"
       },
       {
         "key": "followup:task:166",
@@ -36767,10 +36764,6 @@
         "value": "{\"recovery_checked_at\": 1794192079.9689755}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1794192080.1354005"
-      },
-      {
         "key": "followup:task:174",
         "value": "{\"status\": \"needs_human\", \"task\": 174, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
       },
@@ -36787,12 +36780,24 @@
         "value": "{\"recovery_checked_at\": 1794192080.926132}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1794192081.0597122"
-      },
-      {
         "key": "recovery_audit:177",
         "value": "{\"at\": 1794192081.8676672, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "runner_resources",
+        "value": "{\"at\": 1794192082.3360338, \"disk_free_bytes\": 87778557952, \"memory_bytes\": {\"MemTotal\": 16760336384, \"MemAvailable\": 15470256128, \"SwapTotal\": 3221221376, \"SwapFree\": 3054587904}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1794192085.3358953, \"state\": \"waiting\", \"pending_candidates\": 401, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 1, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 401}, \"screening_wait_tasks\": 8, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 31, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 986.1788122653961, \"judge_tokens_spent_24h\": 99447, \"screening_calls_5h\": 6, \"screening_calls_24h\": 13, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 5}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8029\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8029\", \"title\": \"Responses adapter never sends OpenAI's async tool field \\u2014 async tool calling (GPT-6+) is unreachable\", \"first_seen\": 1794079411.2457757, \"last_checked\": 1794191901.4298234, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1794192085.3372493, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 4, \"skipped\": 94, \"triage_wait\": 3, \"validation_wait\": 3}, \"respond\": {\"blocked\": 3, \"done\": 4, \"error\": 1, \"skipped\": 2, \"triage_wait\": 5, \"validation_wait\": 2}}}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1794192090.1356237"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -36800,11 +36805,23 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794192082.039123"
+        "value": "1794192091.8166337"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1794192082.3360338, \"disk_free_bytes\": 87778557952, \"memory_bytes\": {\"MemTotal\": 16760336384, \"MemAvailable\": 15470256128, \"SwapTotal\": 3221221376, \"SwapFree\": 3054587904}, \"memory_events\": null}"
+        "key": "worker_heartbeat",
+        "value": "1794192091.8729613"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1794192092.5964484"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794192093.3328452, \"comfyui\": 1794185089.1918907, \"hermes\": 1793785510.5671682, \"langfuse\": 1794187959.218708, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794191378.0443895, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1794191691.3184605, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
+        "key": "task:1694",
+        "value": "{\"started\": 1794192093.3330462, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       }
     ],
     "calls": [
