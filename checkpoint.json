@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794222222.7276912,
+  "saved_at": 1794222228.0166292,
   "tables": {
     "tasks": [
       {
@@ -22240,11 +22240,11 @@
         "repo": "comfyui",
         "number": 17630,
         "note": "",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1794222221.7860606,
-        "updated": 1794222222.7131653,
-        "result": "",
-        "attempts": 1
+        "updated": 1794222228.00267,
+        "result": "screening budget reached; retain pending work",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -37061,26 +37061,6 @@
         "value": "{\"at\": 1794220948.177387, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
-        "key": "task:166",
-        "value": "{\"recovery_checked_at\": 1794221312.4561691}"
-      },
-      {
-        "key": "followup:task:166",
-        "value": "{\"status\": \"needs_human\", \"task\": 166, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:167",
-        "value": "{\"recovery_checked_at\": 1794221312.8234231}"
-      },
-      {
-        "key": "followup:task:167",
-        "value": "{\"status\": \"needs_human\", \"task\": 167, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:171",
-        "value": "{\"recovery_checked_at\": 1794221313.2699623}"
-      },
-      {
         "key": "recovery_audit:171",
         "value": "{\"at\": 1794221313.90048, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -37127,10 +37107,6 @@
       {
         "key": "usage:1709:1:screening-abd9cf0d2694664767d5",
         "value": "{\"task\": 1709, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-abd9cf0d2694664767d5\", \"at\": 1794221328.4208143, \"seconds\": 0.003, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:1709",
@@ -37265,16 +37241,32 @@
         "value": "{\"at\": 1794222186.683247, \"windows\": [{\"name\": \"primary\", \"used_percent\": 20, \"resets_at\": 1794380323}]}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1794222210.391365"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794193664.983716, \"comfyui\": 1794222222.7130094, \"hermes\": 1793785510.5671682, \"langfuse\": 1794218349.8717194, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794211191.7894132, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1794218021.9867978, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1794222220.389207"
+        "key": "worker_heartbeat",
+        "value": "1794222225.392532"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794222220.9304323"
+        "value": "1794222225.930523"
+      },
+      {
+        "key": "task:166",
+        "value": "{\"recovery_checked_at\": 1794222226.6793315}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1794222226.7985923"
+      },
+      {
+        "key": "followup:task:166",
+        "value": "{\"status\": \"needs_human\", \"task\": 166, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:167",
+        "value": "{\"recovery_checked_at\": 1794222227.1841047}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -37282,15 +37274,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794222222.5698795"
+        "value": "1794222227.62721"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794193664.983716, \"comfyui\": 1794222222.7130094, \"hermes\": 1793785510.5671682, \"langfuse\": 1794218349.8717194, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794211191.7894132, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1794218021.9867978, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+        "key": "followup:task:167",
+        "value": "{\"status\": \"needs_human\", \"task\": 167, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:171",
+        "value": "{\"recovery_checked_at\": 1794222227.7284412}"
+      },
+      {
+        "key": "usage:1711:1:screening-9d6e908220fc4d8a651b",
+        "value": "{\"task\": 1711, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-9d6e908220fc4d8a651b\", \"at\": 1794222227.9941063, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:1711",
-        "value": "{\"started\": 1794222222.7132072, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "value": "{\"started\": 1794222222.7132072, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1794223127.99603, \"folder\": \"jobs/1711/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1794222227.99987}"
       }
     ],
     "calls": [
