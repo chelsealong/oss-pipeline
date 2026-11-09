@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794193395.1607292,
+  "saved_at": 1794193398.3008387,
   "tables": {
     "tasks": [
       {
@@ -21863,11 +21863,11 @@
         "repo": "github/spec-kit",
         "number": 5322,
         "note": "{\"authors\": \"copilot-pull-request-reviewer\", \"events\": [\"PRRC_kwDOPiFCnc8AAAABDL0YEA@2026-11-09T01:30:20Z\", \"PRR_kwDOPiFCnc8AAAABWvED6w\"], \"screening_events\": [\"PRRC_kwDOPiFCnc8AAAABDL0YEA@2026-11-09T01:30:20Z\", \"PRR_kwDOPiFCnc8AAAABWvED6w\"], \"is_issue\": false, \"head\": \"e2937feba4c5c7949576b28a27f5d5f64c038e91\"}",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1794188047.383639,
-        "updated": 1794193391.8513575,
+        "updated": 1794193396.7213094,
         "result": "screening budget reached; retain pending work",
-        "attempts": 1
+        "attempts": 0
       },
       {
         "id": 1683,
@@ -36520,10 +36520,6 @@
         "value": "{\"started\": 1794191665.0809073, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"skipped\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1794191670.1498303}"
       },
       {
-        "key": "usage:1682:1:screening-0ecad9ad5eac377d45c4",
-        "value": "{\"task\": 1682, \"repo\": \"github/spec-kit\", \"attempt\": 1, \"phase\": \"screening-0ecad9ad5eac377d45c4\", \"at\": 1794191696.3571935, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
-      },
-      {
         "key": "coordination:google/adk-python#8040",
         "value": "{\"status\": \"not_needed\", \"reason\": \"Existing linked PR; no coordination message should be sent.\", \"prs\": [\"closing-ref PR#8041(OPEN)\", \"xref PR#8041(OPEN)\"]}"
       },
@@ -36638,10 +36634,6 @@
       {
         "key": "followup:task:1694",
         "value": "{\"status\": \"needs_human\", \"task\": 1694, \"repo\": \"openclaw\", \"number\": 195576, \"reason\": \"HUMAN_REVIEW_REQUIRED: The test-line ratchet fails on this patch. The base is already 59 lines over its ceiling; the 41-line regression has an allocation for exactly its own growth, but the gate still fails. The OpenClaw testing policy requires approval for a larger grant. The source and test patch is preserved in the checkout.\", \"base\": \"4bb2f1aeda6de77f7f931eabde9648fff38f6dfc\", \"patch_digest\": \"6141d4931bf082c2be45071648fb8b82e67dd1cbd4949673b5042cb8f3d8eac6\", \"evidence_bundle\": \"1694-1.json.enc\"}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:1694",
@@ -36772,10 +36764,6 @@
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1794192093.3328452, \"comfyui\": 1794185089.1918907, \"hermes\": 1793785510.5671682, \"langfuse\": 1794187959.218708, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794191378.0443895, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1794193391.8512745, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
       {
-        "key": "task:1682",
-        "value": "{\"started\": 1794193391.8513985, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1794191696.3612018}"
-      },
-      {
         "key": "followup:task:172",
         "value": "{\"status\": \"needs_human\", \"task\": 172, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
       },
@@ -36812,10 +36800,6 @@
         "value": "1794193394.6483605"
       },
       {
-        "key": "publication_check:hermes",
-        "value": "{\"at\": 1794193394.6634874, \"denied_at\": 1793711972.0665295, \"status\": \"checking\"}"
-      },
-      {
         "key": "recovery_audit:177",
         "value": "{\"at\": 1794193394.751136, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -36830,6 +36814,22 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1794193395.1448963, \"disk_free_bytes\": 88171134976, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15359561728, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "publication_check:hermes",
+        "value": "{\"at\": 1794193395.591835, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
+      },
+      {
+        "key": "usage:1682:1:screening-0ecad9ad5eac377d45c4",
+        "value": "{\"task\": 1682, \"repo\": \"github/spec-kit\", \"attempt\": 1, \"phase\": \"screening-0ecad9ad5eac377d45c4\", \"at\": 1794193396.712461, \"seconds\": 0.003, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1682",
+        "value": "{\"started\": 1794193391.8513985, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1794194296.7148147, \"folder\": \"jobs/1682/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1794193396.7189012}"
       }
     ],
     "calls": [
