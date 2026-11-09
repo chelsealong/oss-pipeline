@@ -3,36 +3,16 @@
   "upstream": "openclaw/openclaw",
   "implements_in": "openclaw/openclaw",
   "needs_assignment": false,
-  "scanned_at": "2026-11-09T17:16:14+00:00",
+  "scanned_at": "2026-11-09T17:42:01+00:00",
   "partial": false,
   "errors": [],
   "candidates": [
-    {
-      "number": 196132,
-      "title": "[Bug]: memory-index session export exhausts its 512 MB worker, and can abort the Gateway, once a session holds about 140 MB of message text",
-      "url": "https://github.com/openclaw/openclaw/issues/196132",
-      "created_at": "2026-11-09T16:51:43Z",
-      "age_hours": 0.4,
-      "reason": "clear",
-      "labels": [
-        "P1",
-        "clawsweeper:fix-shape-clear",
-        "clawsweeper:queueable-fix",
-        "clawsweeper:source-repro",
-        "impact:crash-loop",
-        "impact:session-state",
-        "issue-rating: \ud83e\udd9e diamond lobster",
-        "no-stale"
-      ],
-      "comments": 1,
-      "self_claimed": false
-    },
     {
       "number": 196122,
       "title": "[Bug]: contextInjection \"continuation-skip\" removes workspace files from the model's context on embedded runs; it does not dedupe them",
       "url": "https://github.com/openclaw/openclaw/issues/196122",
       "created_at": "2026-11-09T16:40:59Z",
-      "age_hours": 0.6,
+      "age_hours": 1.0,
       "reason": "clear",
       "labels": [
         "P2",
@@ -45,112 +25,128 @@
       ],
       "comments": 1,
       "self_claimed": false
-    }
-  ],
-  "rejected": [
-    {
-      "number": 196143,
-      "title": "`## Delegation` is not rendered when `sessions_spawn` is deferred by Tool Search",
-      "url": "https://github.com/openclaw/openclaw/issues/196143",
-      "created_at": "2026-11-09T17:12:01Z",
-      "age_hours": 0.1,
-      "reason": "only 4 min old; waiting 40 min for the repo's own triage"
-    },
-    {
-      "number": 196142,
-      "title": "[Bug]: OpenRouter catalog rows built right after Gateway start say reasoning:false, so every thinking level clamps to off and reasoning-mandatory models reject ",
-      "url": "https://github.com/openclaw/openclaw/issues/196142",
-      "created_at": "2026-11-09T17:12:00Z",
-      "age_hours": 0.1,
-      "reason": "only 4 min old; waiting 40 min for the repo's own triage"
-    },
-    {
-      "number": 196136,
-      "title": "Control UI: make personal, shared, and per-agent GitHub accounts clear in Settings",
-      "url": "https://github.com/openclaw/openclaw/issues/196136",
-      "created_at": "2026-11-09T16:57:47Z",
-      "age_hours": 0.3,
-      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 196126,
-      "title": "[Bug]: Gateway restart drain is capped at 315 s even when systemd's TimeoutStopSec is longer and the restart intent asks for more (wait_ms)",
-      "url": "https://github.com/openclaw/openclaw/issues/196126",
-      "created_at": "2026-11-09T16:46:57Z",
-      "age_hours": 0.5,
-      "reason": "excluded label ['clawsweeper:needs-live-repro', 'clawsweeper:needs-maintainer-review', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
     },
     {
       "number": 196120,
       "title": "Config env.vars values treated as volatile secrets, regenerated across Gateway restarts (breaks local tools needing a stable password, e.g. gogcli file keyring)",
       "url": "https://github.com/openclaw/openclaw/issues/196120",
       "created_at": "2026-11-09T16:38:45Z",
-      "age_hours": 0.6,
-      "reason": "only 37 min old; waiting 40 min for the repo's own triage"
+      "age_hours": 1.1,
+      "reason": "clear",
+      "labels": [
+        "P2",
+        "impact:data-loss",
+        "impact:security",
+        "issue-rating: \ud83e\uddaa silver shellfish"
+      ],
+      "comments": 1,
+      "self_claimed": false
+    }
+  ],
+  "rejected": [
+    {
+      "number": 196169,
+      "title": "[Bug]: before_agent_finalize never sees the settled-tool finalization answer, so an unfinished turn is delivered as done",
+      "url": "https://github.com/openclaw/openclaw/issues/196169",
+      "created_at": "2026-11-09T17:40:24Z",
+      "age_hours": 0.0,
+      "reason": "only 1 min old; waiting 40 min for the repo's own triage"
     },
     {
-      "number": 196112,
-      "title": "\ud83e\udd9e Lobby: a home for interactive tools created with your agent",
-      "url": "https://github.com/openclaw/openclaw/issues/196112",
-      "created_at": "2026-11-09T16:27:50Z",
-      "age_hours": 0.8,
+      "number": 196163,
+      "title": "Matrix: a reply over 4000 characters with a code block arrives split into broken blocks",
+      "url": "https://github.com/openclaw/openclaw/issues/196163",
+      "created_at": "2026-11-09T17:39:21Z",
+      "age_hours": 0.0,
+      "reason": "only 2 min old; waiting 40 min for the repo's own triage"
+    },
+    {
+      "number": 196162,
+      "title": "IRC: replies to messages arrive with raw Markdown (**bold**, [label](url), code fences)",
+      "url": "https://github.com/openclaw/openclaw/issues/196162",
+      "created_at": "2026-11-09T17:39:20Z",
+      "age_hours": 0.0,
+      "reason": "only 2 min old; waiting 40 min for the repo's own triage"
+    },
+    {
+      "number": 196161,
+      "title": "Cron: a one-shot \"at\" reminder created by the agent tool or cron.add ignores tz and fires at the UTC time",
+      "url": "https://github.com/openclaw/openclaw/issues/196161",
+      "created_at": "2026-11-09T17:39:19Z",
+      "age_hours": 0.0,
+      "reason": "only 2 min old; waiting 40 min for the repo's own triage"
+    },
+    {
+      "number": 196160,
+      "title": "openclaw status crashes with a stack trace when the gateway token is \"${VAR}\" and the variable is unset",
+      "url": "https://github.com/openclaw/openclaw/issues/196160",
+      "created_at": "2026-11-09T17:39:17Z",
+      "age_hours": 0.0,
+      "reason": "only 3 min old; waiting 40 min for the repo's own triage"
+    },
+    {
+      "number": 196156,
+      "title": "[Feature]: Keep store identity and Gateway state ownership in PostgreSQL on all-PostgreSQL installs, as a first step to no local SQLite files",
+      "url": "https://github.com/openclaw/openclaw/issues/196156",
+      "created_at": "2026-11-09T17:27:42Z",
+      "age_hours": 0.2,
       "reason": "excluded label ['clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
     },
     {
-      "number": 196105,
-      "title": "[Bug]: Post-turn memory maintenance inherits the completed foreground work scope",
-      "url": "https://github.com/openclaw/openclaw/issues/196105",
-      "created_at": "2026-11-09T16:19:42Z",
+      "number": 196155,
+      "title": "[Feature]: Keep PostgreSQL rollback and pre-migration captures in PostgreSQL instead of exporting them to SQLite",
+      "url": "https://github.com/openclaw/openclaw/issues/196155",
+      "created_at": "2026-11-09T17:27:38Z",
+      "age_hours": 0.2,
+      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
+      "number": 196154,
+      "title": "[Feature]: Update an all-PostgreSQL install while the Gateway serves, stopping it only for the swap, migrations and restart",
+      "url": "https://github.com/openclaw/openclaw/issues/196154",
+      "created_at": "2026-11-09T17:27:31Z",
+      "age_hours": 0.2,
+      "reason": "excluded label ['clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
+      "number": 196150,
+      "title": "[Bug]: Control UI file search skips the first match when Enter confirms IME input in Safari",
+      "url": "https://github.com/openclaw/openclaw/issues/196150",
+      "created_at": "2026-11-09T17:25:12Z",
+      "age_hours": 0.3,
+      "reason": "excluded label ['clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
+      "number": 196142,
+      "title": "[Bug]: OpenRouter catalog rows built right after Gateway start say reasoning:false, so every thinking level clamps to off and reasoning-mandatory models reject ",
+      "url": "https://github.com/openclaw/openclaw/issues/196142",
+      "created_at": "2026-11-09T17:12:00Z",
+      "age_hours": 0.5,
+      "reason": "excluded label ['clawsweeper:needs-info', 'clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
+      "number": 196136,
+      "title": "Control UI: make personal, shared, and per-agent GitHub accounts clear in Settings",
+      "url": "https://github.com/openclaw/openclaw/issues/196136",
+      "created_at": "2026-11-09T16:57:47Z",
+      "age_hours": 0.7,
+      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
+      "number": 196132,
+      "title": "[Bug]: memory-index session export exhausts its 512 MB worker, and can abort the Gateway, once a session holds about 140 MB of message text",
+      "url": "https://github.com/openclaw/openclaw/issues/196132",
+      "created_at": "2026-11-09T16:51:43Z",
+      "age_hours": 0.8,
+      "reason": "already has PR(s): ['closing-ref PR#196158(OPEN)', 'xref PR#196158(OPEN)']"
+    },
+    {
+      "number": 196126,
+      "title": "[Bug]: Gateway restart drain is capped at 315 s even when systemd's TimeoutStopSec is longer and the restart intent asks for more (wait_ms)",
+      "url": "https://github.com/openclaw/openclaw/issues/196126",
+      "created_at": "2026-11-09T16:46:57Z",
       "age_hours": 0.9,
-      "reason": "excluded label ['clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 196104,
-      "title": "[Docs Bug]: Retired HEARTBEAT.md guide omits intentional file retention",
-      "url": "https://github.com/openclaw/openclaw/issues/196104",
-      "created_at": "2026-11-09T16:19:04Z",
-      "age_hours": 1.0,
-      "reason": "excluded label ['clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 196102,
-      "title": "fix(android): retry Wear TextToSpeech initialization after transient startup failure",
-      "url": "https://github.com/openclaw/openclaw/issues/196102",
-      "created_at": "2026-11-09T16:16:14Z",
-      "age_hours": 1.0,
-      "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 196101,
-      "title": "fix(android): decode HTML entities in inline progress tag attributes",
-      "url": "https://github.com/openclaw/openclaw/issues/196101",
-      "created_at": "2026-11-09T16:16:07Z",
-      "age_hours": 1.0,
-      "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 196098,
-      "title": "config set writes null holes into arrays for out-of-range indexes",
-      "url": "https://github.com/openclaw/openclaw/issues/196098",
-      "created_at": "2026-11-09T16:12:48Z",
-      "age_hours": 1.1,
-      "reason": "excluded label ['clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 196091,
-      "title": "[Bug]: Graceful restart resumes idle main sessions that only held a run-less work admission (stable 2026.9.36 to 2026.11.2)",
-      "url": "https://github.com/openclaw/openclaw/issues/196091",
-      "created_at": "2026-11-09T16:02:17Z",
-      "age_hours": 1.2,
-      "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 196088,
-      "title": "fix(android): abandon Wear audio focus request on transient focus loss",
-      "url": "https://github.com/openclaw/openclaw/issues/196088",
-      "created_at": "2026-11-09T15:59:03Z",
-      "age_hours": 1.3,
-      "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:no-new-fix-pr']"
+      "reason": "excluded label ['clawsweeper:needs-live-repro', 'clawsweeper:needs-maintainer-review', 'clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
     }
   ]
 }
