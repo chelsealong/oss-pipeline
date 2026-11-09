@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794219616.7357292,
+  "saved_at": 1794219620.6086128,
   "tables": {
     "tasks": [
       {
@@ -22227,10 +22227,10 @@
         "repo": "comfyui",
         "number": 17624,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1794219546.9019904,
-        "updated": 1794219548.023948,
-        "result": "",
+        "updated": 1794219620.5908513,
+        "result": "The report identifies a native access violation during a PyTorch weight transfer on Windows ROCm, but does not isolate a ComfyUI defect. It also crashes with dynamic VRAM disabled, outside the reported partial-load path. A CPU-only change could not be shown to fix the affected behavior, and the required Windows ROCm hardware is unavailable.",
         "attempts": 1
       }
     ],
@@ -37168,10 +37168,6 @@
         "value": "{\"at\": 1794219483.4227521, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1794219494.6953201, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1705:2:generation",
         "value": "{\"task\": 1705, \"repo\": \"langfuse\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1794219494.7494333, \"seconds\": 1132.488, \"tokens\": {\"totalTokens\": 15531129, \"inputTokens\": 15516338, \"cachedInputTokens\": 15402752, \"cacheWriteInputTokens\": 0, \"outputTokens\": 14791, \"reasoningOutputTokens\": 3939}, \"first_event_ms\": 1794218369742, \"last_event_ms\": 1794219494687, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -37212,14 +37208,6 @@
         "value": "{\"at\": 1794219550.1561618, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1794219555.754989, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 7, \"active_tasks\": 6, \"running_tasks\": 1, \"queued_tasks\": 5, \"codex_calls_5h\": 29, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1193.482756137848, \"judge_tokens_spent_24h\": 99447, \"screening_calls_5h\": 3, \"screening_calls_24h\": 18, \"task_start_limits_reached\": {\"langfuse\": {\"used\": 6, \"limit\": 6}, \"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 6, \"human_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8029\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8029\", \"title\": \"Responses adapter never sends OpenAI's async tool field \\u2014 async tool calling (GPT-6+) is unreachable\", \"first_seen\": 1794079411.2457757, \"last_checked\": 1794196419.8732336, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1794219555.75631, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 5, \"human_wait\": 1, \"queued\": 5, \"running\": 1, \"skipped\": 98, \"triage_wait\": 3, \"validation_wait\": 4}, \"respond\": {\"blocked\": 4, \"done\": 5, \"error\": 1, \"skipped\": 3, \"triage_wait\": 4, \"validation_wait\": 2}}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"langfuse\", \"task\": 1701, \"at\": 1794201655.8171148}, {\"repo\": \"llama-index\", \"task\": 1704, \"at\": 1794211224.0921822}, {\"repo\": \"langfuse\", \"task\": 1705, \"at\": 1794215850.3768687}, {\"repo\": \"langfuse\", \"task\": 1707, \"at\": 1794218074.8311696}, {\"repo\": \"comfyui\", \"task\": 1710, \"at\": 1794219558.1163971}]"
       },
@@ -37228,24 +37216,20 @@
         "value": "{\"date\": \"2026-11-09\", \"used\": {\"langfuse\": 6, \"comfyui\": 5, \"openclaw\": 10, \"spec-kit\": 1, \"llama-index\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1710\": {\"remaining\": 1, \"until\": 1794226758.1166866}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1794201639.3856416, \"group\": \"screening\", \"task\": 1701, \"phase\": \"screening-a8eb332face72152e13d\"}, {\"at\": 1794201655.8173976, \"group\": \"new_fix\", \"task\": 1701, \"phase\": \"generation\"}, {\"at\": 1794201974.0976763, \"group\": \"new_fix\", \"task\": 1701, \"phase\": \"review\"}, {\"at\": 1794202543.305135, \"group\": \"repair\", \"task\": 1701, \"phase\": \"remediation\"}, {\"at\": 1794203759.4600606, \"group\": \"screening\", \"task\": 1702, \"phase\": \"screening-1e7b59015a816ae1e6d7\"}, {\"at\": 1794203779.1908555, \"group\": \"maintenance\", \"task\": 1702, \"phase\": \"generation\"}, {\"at\": 1794206003.3789995, \"group\": \"new_fix\", \"task\": 1701, \"phase\": \"generation\"}, {\"at\": 1794206582.561109, \"group\": \"new_fix\", \"task\": 1701, \"phase\": \"review\"}, {\"at\": 1794206888.000438, \"group\": \"repair\", \"task\": 1701, \"phase\": \"remediation\"}, {\"at\": 1794207618.7751956, \"group\": \"repair\", \"task\": 1701, \"phase\": \"rereview\"}, {\"at\": 1794208789.7905595, \"group\": \"maintenance\", \"task\": 1702, \"phase\": \"generation\"}, {\"at\": 1794209638.5310829, \"group\": \"maintenance\", \"task\": 1702, \"phase\": \"review\"}, {\"at\": 1794209979.0255966, \"group\": \"repair\", \"task\": 1702, \"phase\": \"remediation\"}, {\"at\": 1794211224.0928493, \"group\": \"new_fix\", \"task\": 1704, \"phase\": \"generation\"}, {\"at\": 1794211279.9515631, \"group\": \"screening\", \"task\": 1703, \"phase\": \"screening-e77adc3dfa3106fc2809\"}, {\"at\": 1794211297.635807, \"group\": \"maintenance\", \"task\": 1703, \"phase\": \"generation\"}, {\"at\": 1794211846.5415184, \"group\": \"maintenance\", \"task\": 1703, \"phase\": \"review\"}, {\"at\": 1794212138.4428432, \"group\": \"repair\", \"task\": 1703, \"phase\": \"remediation\"}, {\"at\": 1794213365.3860984, \"group\": \"maintenance\", \"task\": 1702, \"phase\": \"generation\"}, {\"at\": 1794213877.3606162, \"group\": \"maintenance\", \"task\": 1702, \"phase\": \"review\"}, {\"at\": 1794214534.0770772, \"group\": \"repair\", \"task\": 1702, \"phase\": \"remediation\"}, {\"at\": 1794215076.155069, \"group\": \"repair\", \"task\": 1702, \"phase\": \"rereview\"}, {\"at\": 1794215683.4101796, \"group\": \"maintenance\", \"task\": 1703, \"phase\": \"generation\"}, {\"at\": 1794215772.4693024, \"group\": \"new_fix\", \"task\": 1597, \"phase\": \"generation\"}, {\"at\": 1794215850.3771057, \"group\": \"new_fix\", \"task\": 1705, \"phase\": \"generation\"}, {\"at\": 1794216453.5099878, \"group\": \"new_fix\", \"task\": 1705, \"phase\": \"review\"}, {\"at\": 1794216807.075543, \"group\": \"repair\", \"task\": 1705, \"phase\": \"remediation\"}, {\"at\": 1794218074.8313963, \"group\": \"new_fix\", \"task\": 1707, \"phase\": \"generation\"}, {\"at\": 1794218362.2633617, \"group\": \"new_fix\", \"task\": 1705, \"phase\": \"generation\"}, {\"at\": 1794219558.1166866, \"group\": \"new_fix\", \"task\": 1710, \"phase\": \"generation\"}]"
       },
       {
-        "key": "task:1710",
-        "value": "{\"started\": 1794219548.024024, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1710/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"fca60fe70e5b84c5c6b058263653d15cb3401e44\", \"generation_started\": 1794219558.1163976, \"dispatch_paid_date\": \"2026-11-09\", \"phase_started\": 1794219561.8295383}"
+        "key": "worker_heartbeat",
+        "value": "1794219615.0529864"
+      },
+      {
+        "key": "runner_resources",
+        "value": "{\"at\": 1794219616.7205212, \"disk_free_bytes\": 80418328576, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 14557708288, \"SwapTotal\": 3221221376, \"SwapFree\": 2530324480}, \"memory_events\": null}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794219612.9140205"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1794219613.572667, \"windows\": [{\"name\": \"primary\", \"used_percent\": 17, \"resets_at\": 1794380323}]}"
+        "value": "1794219617.914119"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -37253,19 +37237,39 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794219614.4271317"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1794219615.0529864"
+        "value": "1794219619.6187348"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1794219615.1154373"
+        "value": "1794219620.12382"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1794219616.7205212, \"disk_free_bytes\": 80418328576, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 14557708288, \"SwapTotal\": 3221221376, \"SwapFree\": 2530324480}, \"memory_events\": null}"
+        "key": "codex_quota",
+        "value": "{\"at\": 1794219620.4019904, \"windows\": [{\"name\": \"primary\", \"used_percent\": 17, \"resets_at\": 1794380323}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1794219620.4041545, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1710:1:generation",
+        "value": "{\"task\": 1710, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794219620.4093995, \"seconds\": 62.295, \"tokens\": {\"totalTokens\": 288116, \"inputTokens\": 285962, \"cachedInputTokens\": 244992, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2154, \"reasoningOutputTokens\": 640}, \"first_event_ms\": 1794219565593, \"last_event_ms\": 1794219620402, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1710",
+        "value": "{\"started\": 1794219548.024024, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1710/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"fca60fe70e5b84c5c6b058263653d15cb3401e44\", \"generation_started\": 1794219558.1163976, \"dispatch_paid_date\": \"2026-11-09\", \"phase_started\": 1794219561.8295383, \"last_execution_phase\": \"generation\", \"finished\": 1794219620.4130187}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1794219620.5062196, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 7, \"active_tasks\": 6, \"running_tasks\": 1, \"queued_tasks\": 5, \"codex_calls_5h\": 30, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 62.38021993637085, \"judge_tokens_spent_24h\": 99447, \"screening_calls_5h\": 3, \"screening_calls_24h\": 18, \"task_start_limits_reached\": {\"langfuse\": {\"used\": 6, \"limit\": 6}, \"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 6, \"human_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8029\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8029\", \"title\": \"Responses adapter never sends OpenAI's async tool field \\u2014 async tool calling (GPT-6+) is unreachable\", \"first_seen\": 1794079411.2457757, \"last_checked\": 1794196419.8732336, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1794219620.5076993, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 5, \"human_wait\": 1, \"queued\": 5, \"running\": 1, \"skipped\": 98, \"triage_wait\": 3, \"validation_wait\": 4}, \"respond\": {\"blocked\": 4, \"done\": 5, \"error\": 1, \"skipped\": 3, \"triage_wait\": 4, \"validation_wait\": 2}}}"
       }
     ],
     "calls": [
