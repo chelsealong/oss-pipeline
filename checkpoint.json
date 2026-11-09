@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794182542.2551472,
+  "saved_at": 1794182545.5950444,
   "tables": {
     "tasks": [
       {
@@ -21408,10 +21408,10 @@
         "repo": "openclaw/openclaw",
         "number": 191797,
         "note": "{\"authors\": \"clawsweeper\", \"events\": [\"IC_kwDOQb6kR88AAAABiV-Wtw@2026-11-03T09:28:52Z\", \"IC_kwDOQb6kR88AAAABiWRmSA@2026-11-04T19:54:45Z\"], \"screening_events\": [\"IC_kwDOQb6kR88AAAABiV-Wtw@2026-11-03T09:28:52Z\", \"IC_kwDOQb6kR88AAAABiWRmSA@2026-11-04T19:54:45Z\"], \"is_issue\": false, \"head\": \"b60996ca87093e86bfd5d3004e932ec2b67e1668\"}",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1794149304.376767,
-        "updated": 1794182408.0395155,
-        "result": "judge unavailable after bounded attempts; retain pending work",
+        "updated": 1794182544.1638997,
+        "result": "VALIDATION_ENVIRONMENT: ClawSweeper requires a real OpenClaw send through SSH/SCP and imsg to a remote Messages Mac, with recipient filenames, matching bytes, and staging cleanup verified. This Linux checkout has no imsg or accessible remote Mac. The PR already discloses the missing live proof; repeating it in a public reply would add no evidence. No files were changed.",
         "attempts": 1
       },
       {
@@ -36168,10 +36168,6 @@
         "value": "[{\"at\": 1793625554.0919108, \"task\": 1511, \"phase\": \"screening-431e6c722738db525777\"}, {\"at\": 1793625867.996756, \"task\": 1512, \"phase\": \"screening-8203cfca4101ed43c978\"}, {\"at\": 1793625896.4810762, \"task\": 1514, \"phase\": \"screening-e4bf7630e408a5ea9db2\"}, {\"at\": 1793628217.6813047, \"task\": 1515, \"phase\": \"screening-118080861f6a986d29f1\"}, {\"at\": 1793628638.9459102, \"task\": 1516, \"phase\": \"screening-1d16e99bef5d94e46f87\"}, {\"at\": 1793628851.5122721, \"task\": 1517, \"phase\": \"screening-609e14945b15bee30ed5\"}, {\"at\": 1794148698.5222266, \"task\": 1638, \"phase\": \"screening-3aefe43c946f9685cd78\"}, {\"at\": 1794149069.6028147, \"task\": 1644, \"phase\": \"screening-592bef5fd48fab601986\"}, {\"at\": 1794149261.311612, \"task\": 1645, \"phase\": \"screening-90fe91cf98ae5f5eed95\"}, {\"at\": 1794149269.243162, \"task\": 1645, \"phase\": \"screening-984ddfd95fab9b21c4fb\"}, {\"at\": 1794149493.6369963, \"task\": 1648, \"phase\": \"screening-434ebf9c42b88eaa71e0\"}, {\"at\": 1794149732.0420086, \"task\": 1651, \"phase\": \"screening-65b63b8428abf7092b2c\"}, {\"at\": 1794169151.4755871, \"task\": 1674, \"phase\": \"screening-fd30c58f83eb19a33a81\"}, {\"at\": 1794182414.023398, \"task\": 1647, \"phase\": \"screening-dd63725fd01b49ed0942\"}]"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1794182425.1301863, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1647:1:screening-dd63725fd01b49ed0942",
         "value": "{\"task\": 1647, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"screening-dd63725fd01b49ed0942\", \"at\": 1794182425.1314933, \"seconds\": 11.109, \"tokens\": {\"totalTokens\": 19740, \"inputTokens\": 19652, \"cachedInputTokens\": 0, \"cacheWriteInputTokens\": 0, \"outputTokens\": 88, \"reasoningOutputTokens\": 61}, \"first_event_ms\": 1794182420694, \"last_event_ms\": 1794182425128, \"model\": null, \"complete\": true, \"usage_available\": true}"
       },
@@ -36200,32 +36196,12 @@
         "value": "{\"at\": 1794182481.500923, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 6, \"done\": 2, \"queued\": 6, \"skipped\": 58, \"validation_wait\": 3}, \"respond\": {\"blocked\": 1, \"done\": 4, \"error\": 1, \"running\": 1, \"skipped\": 2, \"triage_wait\": 5}}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1647\": {\"remaining\": 1, \"until\": 1794189697.741518}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1794166510.8029225, \"group\": \"maintenance\", \"task\": 1652, \"phase\": \"generation\"}, {\"at\": 1794166686.8141344, \"group\": \"maintenance\", \"task\": 1652, \"phase\": \"review\"}, {\"at\": 1794167235.5512128, \"group\": \"new_fix\", \"task\": 1649, \"phase\": \"generation\"}, {\"at\": 1794167334.5381134, \"group\": \"maintenance\", \"task\": 1673, \"phase\": \"generation\"}, {\"at\": 1794167421.2692468, \"group\": \"maintenance\", \"task\": 1673, \"phase\": \"review\"}, {\"at\": 1794169151.4755871, \"group\": \"screening\", \"task\": 1674, \"phase\": \"screening-fd30c58f83eb19a33a81\"}, {\"at\": 1794182414.023398, \"group\": \"screening\", \"task\": 1647, \"phase\": \"screening-dd63725fd01b49ed0942\"}, {\"at\": 1794182497.741518, \"group\": \"maintenance\", \"task\": 1647, \"phase\": \"generation\"}]"
       },
       {
-        "key": "task:1647",
-        "value": "{\"started\": 1794182408.0395439, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1647/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"b60996ca87093e86bfd5d3004e932ec2b67e1668\", \"last_execution_phase\": \"claimed\", \"finished\": 1794166509.2656238, \"phase_started\": 1794182500.6593204, \"screening_requests\": {\"dd63725fd01b49ed0942\": 1794182425.1334207}, \"remote_base\": \"b60996ca87093e86bfd5d3004e932ec2b67e1668\", \"base_update\": {\"original_head\": \"b60996ca87093e86bfd5d3004e932ec2b67e1668\", \"base\": \"b60996ca87093e86bfd5d3004e932ec2b67e1668\", \"merged\": false, \"mergeable\": null, \"reason\": \"No confirmed merge conflict\"}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1794182537.187871, \"windows\": [{\"name\": \"primary\", \"used_percent\": 9, \"resets_at\": 1794380323}]}"
-      },
-      {
         "key": "worker_heartbeat",
         "value": "1794182537.2228336"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1794182537.4682124"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1794182539.7628677"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -36238,6 +36214,38 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1794182542.243999, \"disk_free_bytes\": 86680895488, \"memory_bytes\": {\"MemTotal\": 16760336384, \"MemAvailable\": 15371153408, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1794182542.474302"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1794182543.4908826, \"windows\": [{\"name\": \"primary\", \"used_percent\": 9, \"resets_at\": 1794380323}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1794182543.4973757, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1647:1:generation",
+        "value": "{\"task\": 1647, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794182543.5013187, \"seconds\": 45.761, \"tokens\": {\"totalTokens\": 368168, \"inputTokens\": 366526, \"cachedInputTokens\": 301056, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1642, \"reasoningOutputTokens\": 664}, \"first_event_ms\": 1794182504049, \"last_event_ms\": 1794182543490, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:1647",
+        "value": "{\"status\": \"needs_human\", \"task\": 1647, \"repo\": \"openclaw/openclaw\", \"number\": 191797, \"reason\": \"VALIDATION_ENVIRONMENT: ClawSweeper requires a real OpenClaw send through SSH/SCP and imsg to a remote Messages Mac, with recipient filenames, matching bytes, and staging cleanup verified. This Linux checkout has no imsg or accessible remote Mac. The PR already discloses the missing live proof; repeating it in a public reply would add no evidence. No files were changed.\", \"base\": \"b60996ca87093e86bfd5d3004e932ec2b67e1668\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"1647-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1647",
+        "value": "{\"started\": 1794182408.0395439, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1647/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"b60996ca87093e86bfd5d3004e932ec2b67e1668\", \"last_execution_phase\": \"generation\", \"finished\": 1794182543.896018, \"phase_started\": 1794182500.6593204, \"screening_requests\": {\"dd63725fd01b49ed0942\": 1794182425.1334207}, \"remote_base\": \"b60996ca87093e86bfd5d3004e932ec2b67e1668\", \"base_update\": {\"original_head\": \"b60996ca87093e86bfd5d3004e932ec2b67e1668\", \"base\": \"b60996ca87093e86bfd5d3004e932ec2b67e1668\", \"merged\": false, \"mergeable\": null, \"reason\": \"No confirmed merge conflict\"}, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\"}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1794182544.7630002"
       }
     ],
     "calls": [
