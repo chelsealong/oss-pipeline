@@ -3,7 +3,7 @@
   "upstream": "openclaw/openclaw",
   "implements_in": "openclaw/openclaw",
   "needs_assignment": false,
-  "scanned_at": "2026-11-09T16:48:54+00:00",
+  "scanned_at": "2026-11-09T16:50:56+00:00",
   "partial": false,
   "errors": [],
   "candidates": [
@@ -12,30 +12,12 @@
       "title": "[Bug]: contextInjection \"continuation-skip\" removes workspace files from the model's context on embedded runs; it does not dedupe them",
       "url": "https://github.com/openclaw/openclaw/issues/196122",
       "created_at": "2026-11-09T16:40:59Z",
+      "age_hours": 0.2,
       "reason": "clear",
-      "age_hours": 0.132139385,
       "labels": [
         "P2",
         "clawsweeper:fix-shape-clear",
-        "clawsweeper:queueable-fix",
-        "clawsweeper:source-repro",
-        "impact:session-state",
-        "issue-rating: \ud83e\udd9e diamond lobster",
-        "no-stale"
-      ],
-      "comments": 1,
-      "self_claimed": false
-    },
-    {
-      "number": 196105,
-      "title": "[Bug]: Post-turn memory maintenance inherits the completed foreground work scope",
-      "url": "https://github.com/openclaw/openclaw/issues/196105",
-      "created_at": "2026-11-09T16:19:42Z",
-      "reason": "clear",
-      "age_hours": 0.13424929444444444,
-      "labels": [
-        "P2",
-        "clawsweeper:fix-shape-clear",
+        "clawsweeper:intake:bug",
         "clawsweeper:queueable-fix",
         "clawsweeper:source-repro",
         "impact:session-state",
@@ -50,7 +32,7 @@
       "title": "[Bug]: macOS Peekaboo generation changes on every descriptor read, forcing node reconnects",
       "url": "https://github.com/openclaw/openclaw/issues/196085",
       "created_at": "2026-11-09T15:58:01Z",
-      "age_hours": 0.5,
+      "age_hours": 0.9,
       "reason": "clear",
       "labels": [
         "P2",
@@ -67,27 +49,51 @@
   ],
   "rejected": [
     {
+      "number": 196126,
+      "title": "[Bug]: Gateway restart drain is capped at 315 s even when systemd's TimeoutStopSec is longer and the restart intent asks for more (wait_ms)",
+      "url": "https://github.com/openclaw/openclaw/issues/196126",
+      "created_at": "2026-11-09T16:46:57Z",
+      "age_hours": 0.1,
+      "reason": "only 4 min old; waiting 40 min for the repo's own triage"
+    },
+    {
+      "number": 196120,
+      "title": "Config env.vars values treated as volatile secrets, regenerated across Gateway restarts (breaks local tools needing a stable password, e.g. gogcli file keyring)",
+      "url": "https://github.com/openclaw/openclaw/issues/196120",
+      "created_at": "2026-11-09T16:38:45Z",
+      "age_hours": 0.2,
+      "reason": "only 12 min old; waiting 40 min for the repo's own triage"
+    },
+    {
+      "number": 196112,
+      "title": "\ud83e\udd9e Lobby: a home for interactive tools created with your agent",
+      "url": "https://github.com/openclaw/openclaw/issues/196112",
+      "created_at": "2026-11-09T16:27:50Z",
+      "age_hours": 0.4,
+      "reason": "excluded label ['clawsweeper:needs-product-decision', 'clawsweeper:no-new-fix-pr']"
+    },
+    {
       "number": 196105,
       "title": "[Bug]: Post-turn memory maintenance inherits the completed foreground work scope",
       "url": "https://github.com/openclaw/openclaw/issues/196105",
       "created_at": "2026-11-09T16:19:42Z",
-      "age_hours": 0.1,
-      "reason": "only 5 min old; waiting 40 min for the repo's own triage"
+      "age_hours": 0.5,
+      "reason": "excluded label ['clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
     },
     {
       "number": 196104,
       "title": "[Docs Bug]: Retired HEARTBEAT.md guide omits intentional file retention",
       "url": "https://github.com/openclaw/openclaw/issues/196104",
       "created_at": "2026-11-09T16:19:04Z",
-      "age_hours": 0.1,
-      "reason": "only 6 min old; waiting 40 min for the repo's own triage"
+      "age_hours": 0.5,
+      "reason": "excluded label ['clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
     },
     {
       "number": 196102,
       "title": "fix(android): retry Wear TextToSpeech initialization after transient startup failure",
       "url": "https://github.com/openclaw/openclaw/issues/196102",
       "created_at": "2026-11-09T16:16:14Z",
-      "age_hours": 0.1,
+      "age_hours": 0.6,
       "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -95,7 +101,7 @@
       "title": "fix(android): decode HTML entities in inline progress tag attributes",
       "url": "https://github.com/openclaw/openclaw/issues/196101",
       "created_at": "2026-11-09T16:16:07Z",
-      "age_hours": 0.1,
+      "age_hours": 0.6,
       "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -103,7 +109,7 @@
       "title": "config set writes null holes into arrays for out-of-range indexes",
       "url": "https://github.com/openclaw/openclaw/issues/196098",
       "created_at": "2026-11-09T16:12:48Z",
-      "age_hours": 0.2,
+      "age_hours": 0.6,
       "reason": "excluded label ['clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -111,7 +117,7 @@
       "title": "[Bug]: Graceful restart resumes idle main sessions that only held a run-less work admission (stable 2026.9.36 to 2026.11.2)",
       "url": "https://github.com/openclaw/openclaw/issues/196091",
       "created_at": "2026-11-09T16:02:17Z",
-      "age_hours": 0.4,
+      "age_hours": 0.8,
       "reason": "excluded label ['clawsweeper:needs-maintainer-review', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -119,7 +125,7 @@
       "title": "fix(android): abandon Wear audio focus request on transient focus loss",
       "url": "https://github.com/openclaw/openclaw/issues/196088",
       "created_at": "2026-11-09T15:59:03Z",
-      "age_hours": 0.4,
+      "age_hours": 0.9,
       "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -127,7 +133,7 @@
       "title": "fix(android): split fenced code language info string on any whitespace",
       "url": "https://github.com/openclaw/openclaw/issues/196087",
       "created_at": "2026-11-09T15:59:02Z",
-      "age_hours": 0.4,
+      "age_hours": 0.9,
       "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -135,7 +141,7 @@
       "title": "fix(android): preserve inline code text in markdown plain-text extraction",
       "url": "https://github.com/openclaw/openclaw/issues/196086",
       "created_at": "2026-11-09T15:59:01Z",
-      "age_hours": 0.4,
+      "age_hours": 0.9,
       "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:no-new-fix-pr']"
     },
     {
@@ -143,40 +149,8 @@
       "title": "[Bug]: Feishu attachment downloads truncate quoted filenames containing semicolons",
       "url": "https://github.com/openclaw/openclaw/issues/196075",
       "created_at": "2026-11-09T15:49:47Z",
-      "age_hours": 0.6,
+      "age_hours": 1.0,
       "reason": "already has PR(s): ['closing-ref PR#196097(OPEN)', 'xref PR#196097(OPEN)']"
-    },
-    {
-      "number": 196069,
-      "title": "fix(android): wrap chat turn recap duration and token summary on compact widths",
-      "url": "https://github.com/openclaw/openclaw/issues/196069",
-      "created_at": "2026-11-09T15:31:46Z",
-      "age_hours": 0.9,
-      "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 196068,
-      "title": "fix(android): show unavailable fallback when inline widget resolver is not ready",
-      "url": "https://github.com/openclaw/openclaw/issues/196068",
-      "created_at": "2026-11-09T15:31:08Z",
-      "age_hours": 0.9,
-      "reason": "excluded label ['clawsweeper:bulk-filed', 'clawsweeper:no-new-fix-pr']"
-    },
-    {
-      "number": 196066,
-      "title": "[Bug]: Upgrade to 2026.11.2 blocked: doctor --fix refuses cold transcripts whose session keys use a renamed agent's old id, and no gateway can restore them",
-      "url": "https://github.com/openclaw/openclaw/issues/196066",
-      "created_at": "2026-11-09T15:29:15Z",
-      "age_hours": 0.9,
-      "reason": "already has PR(s): ['closing-ref PR#196079(OPEN)', 'xref PR#196079(OPEN)']"
-    },
-    {
-      "number": 196061,
-      "title": "[Bug]: Running Codex tasks stall after silent pauses; follow-ups and helper results are rejected",
-      "url": "https://github.com/openclaw/openclaw/issues/196061",
-      "created_at": "2026-11-09T15:21:53Z",
-      "age_hours": 1.1,
-      "reason": "excluded label ['clawsweeper:linked-pr-open', 'clawsweeper:no-new-fix-pr']"
     }
   ]
 }
