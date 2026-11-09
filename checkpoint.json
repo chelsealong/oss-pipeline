@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794184300.2905807,
+  "saved_at": 1794184312.8636062,
   "tables": {
     "tasks": [
       {
@@ -21486,10 +21486,10 @@
         "repo": "langfuse",
         "number": 19760,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1794150045.807113,
-        "updated": 1794184231.9375775,
-        "result": "screening budget reached; retain pending work",
+        "updated": 1794184312.810921,
+        "result": "The bug is still present, but its fix belongs in langfuse/langfuse-js, outside the authorized isolated checkout. The integration’s current onLanguageModelCallEnd only delegates the event, while this repository already maps gen_ai.usage.reasoning.output_tokens when an SDK emits it. A change here would not recover the missing token split.",
         "attempts": 1
       },
       {
@@ -36230,10 +36230,6 @@
         "value": "{\"task\": 1655, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794184171.391799, \"seconds\": 1108.356, \"tokens\": {\"totalTokens\": 9254462, \"inputTokens\": 9240667, \"cachedInputTokens\": 9125248, \"cacheWriteInputTokens\": 0, \"outputTokens\": 13795, \"reasoningOutputTokens\": 6056}, \"first_event_ms\": 1794183070032, \"last_event_ms\": 1794184171335, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1794184223.8717968, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1655:1:reply-review",
         "value": "{\"task\": 1655, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"reply-review\", \"at\": 1794184223.875932, \"seconds\": 51.756, \"tokens\": {\"totalTokens\": 209087, \"inputTokens\": 207416, \"cachedInputTokens\": 160640, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1671, \"reasoningOutputTokens\": 418}, \"first_event_ms\": 1794184182327, \"last_event_ms\": 1794184223869, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -36254,14 +36250,6 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794182969.6861894, \"comfyui\": 1794182949.8417778, \"hermes\": 1793785510.5671682, \"langfuse\": 1794184231.937507, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794149418.8616278, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1793948313.0058217, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1794184239.3883784, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 2, \"active_tasks\": 7, \"running_tasks\": 1, \"queued_tasks\": 6, \"codex_calls_5h\": 16, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 67.25988793373108, \"judge_tokens_spent_24h\": 99447, \"screening_calls_5h\": 6, \"screening_calls_24h\": 12, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 6, \"validation_wait\": 5}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8029\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8029\", \"title\": \"Responses adapter never sends OpenAI's async tool field \\u2014 async tool calling (GPT-6+) is unreachable\", \"first_seen\": 1794079411.2457757, \"last_checked\": 1794183024.5151775, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1794184239.411437, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 6, \"done\": 2, \"queued\": 5, \"running\": 1, \"skipped\": 60, \"validation_wait\": 3}, \"respond\": {\"blocked\": 2, \"done\": 4, \"error\": 1, \"queued\": 1, \"skipped\": 2, \"triage_wait\": 2, \"validation_wait\": 2}}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"langfuse\", \"task\": 1649, \"at\": 1794167235.550877}, {\"repo\": \"langfuse\", \"task\": 1653, \"at\": 1794184244.8806033}]"
       },
@@ -36270,24 +36258,32 @@
         "value": "{\"date\": \"2026-11-09\", \"used\": {\"langfuse\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1653\": {\"remaining\": 1, \"until\": 1794191444.880787}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1794166510.8029225, \"group\": \"maintenance\", \"task\": 1652, \"phase\": \"generation\"}, {\"at\": 1794166686.8141344, \"group\": \"maintenance\", \"task\": 1652, \"phase\": \"review\"}, {\"at\": 1794167235.5512128, \"group\": \"new_fix\", \"task\": 1649, \"phase\": \"generation\"}, {\"at\": 1794167334.5381134, \"group\": \"maintenance\", \"task\": 1673, \"phase\": \"generation\"}, {\"at\": 1794167421.2692468, \"group\": \"maintenance\", \"task\": 1673, \"phase\": \"review\"}, {\"at\": 1794169151.4755871, \"group\": \"screening\", \"task\": 1674, \"phase\": \"screening-fd30c58f83eb19a33a81\"}, {\"at\": 1794182414.023398, \"group\": \"screening\", \"task\": 1647, \"phase\": \"screening-dd63725fd01b49ed0942\"}, {\"at\": 1794182497.741518, \"group\": \"maintenance\", \"task\": 1647, \"phase\": \"generation\"}, {\"at\": 1794182561.9252388, \"group\": \"new_fix\", \"task\": 1494, \"phase\": \"generation\"}, {\"at\": 1794182668.8539162, \"group\": \"screening\", \"task\": 1650, \"phase\": \"screening-f2824f826488ee30ee1b\"}, {\"at\": 1794182677.6151056, \"group\": \"screening\", \"task\": 1650, \"phase\": \"screening-f168b74292c0e968628b\"}, {\"at\": 1794182762.9074697, \"group\": \"maintenance\", \"task\": 1650, \"phase\": \"generation\"}, {\"at\": 1794182974.0888863, \"group\": \"screening\", \"task\": 1655, \"phase\": \"screening-14d2aa13c5f2d78e9eb5\"}, {\"at\": 1794182982.6696463, \"group\": \"screening\", \"task\": 1655, \"phase\": \"screening-b99c6a4af4425dd3d478\"}, {\"at\": 1794183063.036624, \"group\": \"maintenance\", \"task\": 1655, \"phase\": \"generation\"}, {\"at\": 1794184172.121845, \"group\": \"maintenance\", \"task\": 1655, \"phase\": \"reply-review\"}, {\"at\": 1794184244.880787, \"group\": \"new_fix\", \"task\": 1653, \"phase\": \"generation\"}]"
       },
       {
-        "key": "task:1653",
-        "value": "{\"started\": 1794184231.937606, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1653/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"762fcd7364352daf57b98e18babe0891c5c04962\", \"last_execution_phase\": \"screening\", \"finished\": 1794150115.6546156, \"generation_started\": 1794184244.880605, \"dispatch_paid_date\": \"2026-11-09\", \"phase_started\": 1794184248.072975}"
+        "key": "runner_resources",
+        "value": "{\"at\": 1794184300.2214923, \"disk_free_bytes\": 88014774272, \"memory_bytes\": {\"MemTotal\": 16760336384, \"MemAvailable\": 15270105088, \"SwapTotal\": 3221221376, \"SwapFree\": 3198914560}, \"memory_events\": null}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1794184293.4803784, \"windows\": [{\"name\": \"primary\", \"used_percent\": 10, \"resets_at\": 1794380323}]}"
+        "key": "admission_health",
+        "value": "{\"at\": 1794184303.3212373, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 2, \"active_tasks\": 7, \"running_tasks\": 1, \"queued_tasks\": 6, \"codex_calls_5h\": 17, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 58.43410539627075, \"judge_tokens_spent_24h\": 99447, \"screening_calls_5h\": 6, \"screening_calls_24h\": 12, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 6, \"validation_wait\": 5}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8029\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8029\", \"title\": \"Responses adapter never sends OpenAI's async tool field \\u2014 async tool calling (GPT-6+) is unreachable\", \"first_seen\": 1794079411.2457757, \"last_checked\": 1794183024.5151775, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1794184303.3227186, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 6, \"done\": 2, \"queued\": 5, \"running\": 1, \"skipped\": 60, \"validation_wait\": 3}, \"respond\": {\"blocked\": 2, \"done\": 4, \"error\": 1, \"queued\": 1, \"skipped\": 2, \"triage_wait\": 2, \"validation_wait\": 2}}}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1794184309.4770298"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1794184309.9278886"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1794184295.7717707"
+        "value": "1794184310.885915"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -36295,19 +36291,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794184296.941105"
+        "value": "1794184311.8742697"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1794184299.4620838"
+        "key": "codex_quota",
+        "value": "{\"at\": 1794184312.6409621, \"windows\": [{\"name\": \"primary\", \"used_percent\": 10, \"resets_at\": 1794380323}]}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1794184299.927652"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1794184312.7404895, \"source\": \"completed task phase\"}"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1794184300.2214923, \"disk_free_bytes\": 88014774272, \"memory_bytes\": {\"MemTotal\": 16760336384, \"MemAvailable\": 15270105088, \"SwapTotal\": 3221221376, \"SwapFree\": 3198914560}, \"memory_events\": null}"
+        "key": "usage:1653:1:generation",
+        "value": "{\"task\": 1653, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794184312.743326, \"seconds\": 67.864, \"tokens\": {\"totalTokens\": 480904, \"inputTokens\": 478372, \"cachedInputTokens\": 407680, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2532, \"reasoningOutputTokens\": 648}, \"first_event_ms\": 1794184251476, \"last_event_ms\": 1794184312641, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1653",
+        "value": "{\"started\": 1794184231.937606, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1653/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"762fcd7364352daf57b98e18babe0891c5c04962\", \"last_execution_phase\": \"generation\", \"finished\": 1794184312.7456844, \"generation_started\": 1794184244.880605, \"dispatch_paid_date\": \"2026-11-09\", \"phase_started\": 1794184248.072975}"
       }
     ],
     "calls": [
