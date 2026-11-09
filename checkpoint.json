@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794200597.133638,
+  "saved_at": 1794200670.591267,
   "tables": {
     "tasks": [
       {
@@ -21863,7 +21863,7 @@
         "repo": "github/spec-kit",
         "number": 5322,
         "note": "{\"authors\": \"copilot-pull-request-reviewer\", \"events\": [\"PRRC_kwDOPiFCnc8AAAABDL0YEA@2026-11-09T01:30:20Z\", \"PRR_kwDOPiFCnc8AAAABWvED6w\"], \"screening_events\": [\"PRRC_kwDOPiFCnc8AAAABDL0YEA@2026-11-09T01:30:20Z\", \"PRR_kwDOPiFCnc8AAAABWvED6w\"], \"is_issue\": false, \"head\": \"e2937feba4c5c7949576b28a27f5d5f64c038e91\"}",
-        "status": "triage_wait",
+        "status": "queued",
         "created": 1794188047.383639,
         "updated": 1794199752.2587528,
         "result": "screening budget reached; retain pending work",
@@ -36727,78 +36727,6 @@
         "value": "{\"started\": 1794199747.7128143, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1794200652.2532372, \"folder\": \"jobs/1682/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1794199752.2568476}"
       },
       {
-        "key": "task:44",
-        "value": "{\"recovery_checked_at\": 1794199752.5564077}"
-      },
-      {
-        "key": "followup:task:44",
-        "value": "{\"status\": \"needs_human\", \"task\": 44, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:45",
-        "value": "{\"recovery_checked_at\": 1794199752.9371233}"
-      },
-      {
-        "key": "followup:task:45",
-        "value": "{\"status\": \"needs_human\", \"task\": 45, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:54",
-        "value": "{\"recovery_checked_at\": 1794199753.3612504}"
-      },
-      {
-        "key": "recovery_audit:54",
-        "value": "{\"at\": 1794199754.1479318, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:55",
-        "value": "{\"recovery_checked_at\": 1794199754.1498926}"
-      },
-      {
-        "key": "followup:task:55",
-        "value": "{\"status\": \"needs_human\", \"task\": 55, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:57",
-        "value": "{\"recovery_checked_at\": 1794199754.5303636}"
-      },
-      {
-        "key": "recovery_audit:57",
-        "value": "{\"at\": 1794199755.9717689, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:58",
-        "value": "{\"recovery_checked_at\": 1794199755.9751549}"
-      },
-      {
-        "key": "followup:task:58",
-        "value": "{\"status\": \"needs_human\", \"task\": 58, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:60",
-        "value": "{\"recovery_checked_at\": 1794199756.3792312}"
-      },
-      {
-        "key": "followup:task:60",
-        "value": "{\"status\": \"needs_human\", \"task\": 60, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:61",
-        "value": "{\"recovery_checked_at\": 1794199756.748249}"
-      },
-      {
-        "key": "recovery_audit:61",
-        "value": "{\"at\": 1794199757.512988, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:checked",
-        "value": "1794199757.9958956"
-      },
-      {
-        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
-        "value": "{\"at\": 1794199758.387288, \"reason\": \"PR closed or not owned by our fork\"}"
-      },
-      {
         "key": "task:166",
         "value": "{\"recovery_checked_at\": 1794199821.9630811}"
       },
@@ -36932,19 +36860,91 @@
       },
       {
         "key": "admission_health",
-        "value": "{\"at\": 1794200536.2535245, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 8, \"active_tasks\": 5, \"running_tasks\": 1, \"queued_tasks\": 4, \"codex_calls_5h\": 34, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 32.24257564544678, \"judge_tokens_spent_24h\": 99447, \"screening_calls_5h\": 6, \"screening_calls_24h\": 14, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 5, \"human_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8029\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8029\", \"title\": \"Responses adapter never sends OpenAI's async tool field \\u2014 async tool calling (GPT-6+) is unreachable\", \"first_seen\": 1794079411.2457757, \"last_checked\": 1794196419.8732336, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8043\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8043\", \"title\": \"RestApiTool and Google credential tools still redeem the OAuth2 auth code on the event loop\", \"first_seen\": 1794197055.282702, \"last_checked\": 1794199349.073534, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+        "value": "{\"at\": 1794200600.5820153, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 8, \"active_tasks\": 5, \"running_tasks\": 1, \"queued_tasks\": 4, \"codex_calls_5h\": 33, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 96.57119846343994, \"judge_tokens_spent_24h\": 99447, \"screening_calls_5h\": 6, \"screening_calls_24h\": 14, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 5, \"human_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8029\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8029\", \"title\": \"Responses adapter never sends OpenAI's async tool field \\u2014 async tool calling (GPT-6+) is unreachable\", \"first_seen\": 1794079411.2457757, \"last_checked\": 1794196419.8732336, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8043\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8043\", \"title\": \"RestApiTool and Google credential tools still redeem the OAuth2 auth code on the event loop\", \"first_seen\": 1794197055.282702, \"last_checked\": 1794199349.073534, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1794200536.255181, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 4, \"human_wait\": 1, \"queued\": 4, \"running\": 1, \"skipped\": 96, \"triage_wait\": 3, \"validation_wait\": 3}, \"respond\": {\"blocked\": 3, \"done\": 4, \"error\": 1, \"skipped\": 2, \"triage_wait\": 5, \"validation_wait\": 2}}}"
+        "value": "{\"at\": 1794200600.5834115, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 4, \"human_wait\": 1, \"queued\": 4, \"running\": 1, \"skipped\": 96, \"triage_wait\": 3, \"validation_wait\": 3}, \"respond\": {\"blocked\": 3, \"done\": 4, \"error\": 1, \"skipped\": 2, \"triage_wait\": 5, \"validation_wait\": 2}}}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1794200659.1906195"
+      },
+      {
+        "key": "task:44",
+        "value": "{\"recovery_checked_at\": 1794200661.5585387}"
+      },
+      {
+        "key": "followup:task:44",
+        "value": "{\"status\": \"needs_human\", \"task\": 44, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:45",
+        "value": "{\"recovery_checked_at\": 1794200662.2648656}"
+      },
+      {
+        "key": "followup:task:45",
+        "value": "{\"status\": \"needs_human\", \"task\": 45, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:54",
+        "value": "{\"recovery_checked_at\": 1794200663.087574}"
+      },
+      {
+        "key": "recovery_audit:54",
+        "value": "{\"at\": 1794200664.2780664, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:55",
+        "value": "{\"recovery_checked_at\": 1794200664.5775318}"
+      },
+      {
+        "key": "followup:task:55",
+        "value": "{\"status\": \"needs_human\", \"task\": 55, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:57",
+        "value": "{\"recovery_checked_at\": 1794200665.0888622}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1794200590.4594486"
+        "value": "1794200665.4824116"
+      },
+      {
+        "key": "recovery_audit:57",
+        "value": "{\"at\": 1794200666.566096, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:58",
+        "value": "{\"recovery_checked_at\": 1794200666.8614454}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1794200666.6497486, \"windows\": [{\"name\": \"primary\", \"used_percent\": 12, \"resets_at\": 1794380324}]}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794200592.2917514"
+        "value": "1794200667.2967427"
+      },
+      {
+        "key": "followup:task:58",
+        "value": "{\"status\": \"needs_human\", \"task\": 58, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:60",
+        "value": "{\"recovery_checked_at\": 1794200667.365897}"
+      },
+      {
+        "key": "followup:task:60",
+        "value": "{\"status\": \"needs_human\", \"task\": 60, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:61",
+        "value": "{\"recovery_checked_at\": 1794200667.9919121}"
+      },
+      {
+        "key": "recovery_audit:61",
+        "value": "{\"at\": 1794200668.9259663, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -36952,19 +36952,19 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794200593.678085"
+        "value": "1794200669.1422443"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1794200593.975347"
+        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:checked",
+        "value": "1794200669.9836419"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1794200595.4221134, \"windows\": [{\"name\": \"primary\", \"used_percent\": 12, \"resets_at\": 1794380323}]}"
+        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
+        "value": "{\"at\": 1794200670.5604618, \"reason\": \"PR closed or not owned by our fork\"}"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1794200597.119741, \"disk_free_bytes\": 87940636672, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15368855552, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1794200670.5632496, \"disk_free_bytes\": 81196314624, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 13435748352, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       }
     ],
     "calls": [
