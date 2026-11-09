@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794194303.526212,
+  "saved_at": 1794194308.1903918,
   "tables": {
     "tasks": [
       {
@@ -21863,11 +21863,11 @@
         "repo": "github/spec-kit",
         "number": 5322,
         "note": "{\"authors\": \"copilot-pull-request-reviewer\", \"events\": [\"PRRC_kwDOPiFCnc8AAAABDL0YEA@2026-11-09T01:30:20Z\", \"PRR_kwDOPiFCnc8AAAABWvED6w\"], \"screening_events\": [\"PRRC_kwDOPiFCnc8AAAABDL0YEA@2026-11-09T01:30:20Z\", \"PRR_kwDOPiFCnc8AAAABWvED6w\"], \"is_issue\": false, \"head\": \"e2937feba4c5c7949576b28a27f5d5f64c038e91\"}",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1794188047.383639,
-        "updated": 1794194303.5125797,
+        "updated": 1794194308.1769075,
         "result": "screening budget reached; retain pending work",
-        "attempts": 1
+        "attempts": 0
       },
       {
         "id": 1683,
@@ -36657,10 +36657,6 @@
         "value": "{\"at\": 1794193395.591835, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
-        "key": "usage:1682:1:screening-0ecad9ad5eac377d45c4",
-        "value": "{\"task\": 1682, \"repo\": \"github/spec-kit\", \"attempt\": 1, \"phase\": \"screening-0ecad9ad5eac377d45c4\", \"at\": 1794193396.712461, \"seconds\": 0.003, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
-      },
-      {
         "key": "usage:1686:1:screening-771d26ecc50e9f272f27",
         "value": "{\"task\": 1686, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-771d26ecc50e9f272f27\", \"at\": 1794193409.4882293, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
@@ -36793,20 +36789,12 @@
         "value": "{\"task\": 1660, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"screening-d1ed2a1095308d0d9de2\", \"at\": 1794193671.3034089, \"seconds\": 0.004, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:1660",
         "value": "{\"started\": 1794193664.9838364, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1794194571.3061996, \"folder\": \"jobs/1660/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1794193671.3112671}"
       },
       {
         "key": "prwatch_heartbeat",
         "value": "1794194048.1093538"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1794194289.6920738"
       },
       {
         "key": "codex_quota",
@@ -36889,14 +36877,6 @@
         "value": "{\"at\": 1794194299.5172703, \"disk_free_bytes\": 88142237696, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15391866880, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1794194301.9286537"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1794194302.1305587"
-      },
-      {
         "key": "admission_health",
         "value": "{\"at\": 1794194302.591618, \"state\": \"queued\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 8, \"active_tasks\": 3, \"running_tasks\": 0, \"queued_tasks\": 3, \"codex_calls_5h\": 34, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 692.3535287380219, \"judge_tokens_spent_24h\": 99447, \"screening_calls_5h\": 6, \"screening_calls_24h\": 13, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 5, \"human_wait\": 1}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8029\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8029\", \"title\": \"Responses adapter never sends OpenAI's async tool field \\u2014 async tool calling (GPT-6+) is unreachable\", \"first_seen\": 1794079411.2457757, \"last_checked\": 1794193457.7744598, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
@@ -36917,8 +36897,28 @@
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1794193664.983716, \"comfyui\": 1794185089.1918907, \"hermes\": 1793785510.5671682, \"langfuse\": 1794187959.218708, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794191378.0443895, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1794194303.5125008, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1794194304.6935918"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1794194306.9360442"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1794194307.1306946"
+      },
+      {
+        "key": "usage:1682:1:screening-0ecad9ad5eac377d45c4",
+        "value": "{\"task\": 1682, \"repo\": \"github/spec-kit\", \"attempt\": 1, \"phase\": \"screening-0ecad9ad5eac377d45c4\", \"at\": 1794194308.17042, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
         "key": "task:1682",
-        "value": "{\"started\": 1794194303.5126188, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1794193396.7189012}"
+        "value": "{\"started\": 1794194303.5126188, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1794195208.1721268, \"folder\": \"jobs/1682/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1794194308.1752746}"
       }
     ],
     "calls": [
