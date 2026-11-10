@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794321696.3182352,
+  "saved_at": 1794321703.4694445,
   "tables": {
     "tasks": [
       {
@@ -22656,11 +22656,11 @@
         "repo": "comfyui",
         "number": 17657,
         "note": "",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1794321694.7237298,
-        "updated": 1794321696.3024735,
-        "result": "",
-        "attempts": 1
+        "updated": 1794321703.452788,
+        "result": "screening budget reached; retain pending work",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -37917,10 +37917,6 @@
         "value": "{\"task\": 1742, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794320388.1910064, \"seconds\": 36.652, \"tokens\": {\"totalTokens\": 156711, \"inputTokens\": 155732, \"cachedInputTokens\": 115456, \"cacheWriteInputTokens\": 0, \"outputTokens\": 979, \"reasoningOutputTokens\": 240}, \"first_event_ms\": 1794320363469, \"last_event_ms\": 1794320388186, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:1742",
         "value": "{\"started\": 1794320336.8055525, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1742/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"e411461aba724f066356eeb7b4a78492db9ff22b\", \"generation_started\": 1794320351.540278, \"dispatch_paid_date\": \"2026-11-10\", \"phase_started\": 1794320355.7123008, \"last_execution_phase\": \"generation\", \"finished\": 1794320388.1935947}"
       },
@@ -38185,10 +38181,6 @@
         "value": "{\"at\": 1794321681.3839593, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1794321681.730248"
-      },
-      {
         "key": "runner_resources",
         "value": "{\"at\": 1794321681.8366382, \"disk_free_bytes\": 88009105408, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15359324160, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
@@ -38201,12 +38193,20 @@
         "value": "{\"at\": 1794321685.53116, \"tasks\": {\"fix\": {\"blocked\": 2, \"execution_wait\": 1, \"human_wait\": 1, \"skipped\": 31, \"validation_wait\": 1}, \"respond\": {\"blocked\": 2, \"error\": 1, \"skipped\": 1, \"validation_wait\": 3}}}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1794321691.5264816"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794318178.545803, \"comfyui\": 1794321696.3022842, \"hermes\": 1794240004.2801356, \"langfuse\": 1794320336.8053637, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794211191.7894132, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1794319729.1398778, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1794321696.7313876"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1794321692.9814086"
+        "value": "1794321699.7382734"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1794321701.5266733"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -38214,15 +38214,19 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794321693.517031"
+        "value": "1794321703.0974233"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794318178.545803, \"comfyui\": 1794321696.3022842, \"hermes\": 1794240004.2801356, \"langfuse\": 1794320336.8053637, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794211191.7894132, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1794319729.1398778, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+        "key": "usage:1743:1:screening-5be11755098d631a3860",
+        "value": "{\"task\": 1743, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"screening-5be11755098d631a3860\", \"at\": 1794321703.4461038, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:1743",
-        "value": "{\"started\": 1794321696.3025377, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "value": "{\"started\": 1794321696.3025377, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 1794322603.4477348, \"folder\": \"jobs/1743/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1794321703.450756}"
       }
     ],
     "calls": [
