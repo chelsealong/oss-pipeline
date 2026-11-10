@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794311087.3288138,
+  "saved_at": 1794311146.8293102,
   "tables": {
     "tasks": [
       {
@@ -22578,10 +22578,10 @@
         "repo": "openclaw",
         "number": 196617,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1794308415.142775,
-        "updated": 1794309806.5934465,
-        "result": "",
+        "updated": 1794311146.5143247,
+        "result": "Before expensive validation: issue closed",
         "attempts": 1
       }
     ],
@@ -37751,10 +37751,6 @@
         "value": "{\"task\": 1736, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794309478.2881753, \"seconds\": 1305.049, \"tokens\": {\"totalTokens\": 20144972, \"inputTokens\": 20125924, \"cachedInputTokens\": 19963776, \"cacheWriteInputTokens\": 0, \"outputTokens\": 19048, \"reasoningOutputTokens\": 6619}, \"first_event_ms\": 1794308181381, \"last_event_ms\": 1794309478264, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1794309799.683045, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1736:1:review",
         "value": "{\"task\": 1736, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1794309799.7218406, \"seconds\": 318.125, \"tokens\": {\"totalTokens\": 3397234, \"inputTokens\": 3391665, \"cachedInputTokens\": 3305472, \"cacheWriteInputTokens\": 0, \"outputTokens\": 5569, \"reasoningOutputTokens\": 1870}, \"first_event_ms\": 1794309490123, \"last_event_ms\": 1794309799678, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -37775,16 +37771,8 @@
         "value": "{\"date\": \"2026-11-10\", \"used\": {\"openclaw\": 10, \"langfuse\": 4, \"comfyui\": 2, \"spec-kit\": 2}, \"replacement_used\": {\"openclaw\": 2}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1737\": {\"remaining\": 1, \"until\": 1794317109.7415278}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1794292820.6451929, \"group\": \"screening\", \"task\": 1733, \"phase\": \"screening-33d21b601617799b2f71\"}, {\"at\": 1794292888.7775416, \"group\": \"new_fix\", \"task\": 1733, \"phase\": \"generation\"}, {\"at\": 1794292942.1094747, \"group\": \"screening\", \"task\": 1732, \"phase\": \"screening-142ed8cb26093056151b\"}, {\"at\": 1794293008.2459536, \"group\": \"new_fix\", \"task\": 1732, \"phase\": \"generation\"}, {\"at\": 1794296550.651295, \"group\": \"new_fix\", \"task\": 1734, \"phase\": \"generation\"}, {\"at\": 1794299403.2918541, \"group\": \"new_fix\", \"task\": 1734, \"phase\": \"generation\"}, {\"at\": 1794304638.761044, \"group\": \"screening\", \"task\": 1735, \"phase\": \"screening-e867a782d1a56a93dafd\"}, {\"at\": 1794304653.6615345, \"group\": \"new_fix\", \"task\": 1735, \"phase\": \"generation\"}, {\"at\": 1794307731.357917, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1794307731.3636553, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1794307734.1869462, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1794307734.3493333, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1794307762.8205824, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1794307768.8914258, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1794308088.030435, \"group\": \"screening\", \"task\": 1736, \"phase\": \"screening-c9aad54046cfcb2da0c6\"}, {\"at\": 1794308173.2409918, \"group\": \"new_fix\", \"task\": 1736, \"phase\": \"generation\"}, {\"at\": 1794309481.5983164, \"group\": \"new_fix\", \"task\": 1736, \"phase\": \"review\"}, {\"at\": 1794309909.7415278, \"group\": \"new_fix\", \"task\": 1737, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "task:1737",
-        "value": "{\"started\": 1794309806.5934887, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1737/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"0ebc9d5ccd9c7b240356ba276f613e348057c3b7\", \"replacement_candidate_verified\": 1794309814.6974106, \"dispatch_replacement\": true, \"generation_started\": 1794309909.741329, \"dispatch_paid_date\": \"2026-11-10\", \"phase_started\": 1794309913.3057969}"
       },
       {
         "key": "publication_check:hermes",
@@ -37991,14 +37979,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8061\", \"title\": \"`adk deploy agent_engine` silently creates a duplicate Agent Runtime on every re-run; add a duplicate-display-name warning and an opt-in `--update_if_exists`\", \"first_seen\": 1794244763.1715717, \"last_checked\": 1794311023.125157, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1794311026.1401274, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 14, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1116.388200044632, \"judge_tokens_spent_24h\": 99191, \"screening_calls_5h\": 2, \"screening_calls_24h\": 10, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 4, \"execution_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 2, \"remaining\": 1, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8047\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8047\", \"title\": \"Optional node field without a default fails the next node with \\\"Field required\\\"\", \"first_seen\": 1794221518.8092995, \"last_checked\": 1794303114.402078, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8058\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8058\", \"title\": \"Resumable Workflow re-persists every fast-forwarded output on each resume: session grows quadratically with the number of resumes\", \"first_seen\": 1794240224.0365162, \"last_checked\": 1794309490.8216808, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8053\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8053\", \"title\": \"A per-agent max_llm_calls budget, in addition to the run-wide limit\", \"first_seen\": 1794228463.856993, \"last_checked\": 1794309493.1990647, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8051\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8051\", \"title\": \"DatabaseSessionService on PostgreSQL reloads events with equal timestamps out of append order\", \"first_seen\": 1794223363.7536597, \"last_checked\": 1794309495.6634874, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8077\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8077\", \"title\": \"Proposal: deterministic tool-call expectations for `conversation_scenario` eval cases\", \"first_seen\": 1794292773.9207158, \"last_checked\": 1794311011.9521356, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8064\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8064\", \"title\": \"OpenAPI tools ignore operation- and path-level server overrides\", \"first_seen\": 1794251985.8112895, \"last_checked\": 1794311015.6428368, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8063\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8063\", \"title\": \"Clarify partial=None semantics for on_event_callback replacements\", \"first_seen\": 1794249623.6957455, \"last_checked\": 1794311018.1072252, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8062\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8062\", \"title\": \"adk deploy agent_engine no longer validates that the agent imports (regressed in 2.2.0); broken agents deploy cleanly and fail only at query time\", \"first_seen\": 1794246353.0264468, \"last_checked\": 1794311021.1016953, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8061\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8061\", \"title\": \"`adk deploy agent_engine` silently creates a duplicate Agent Runtime on every re-run; add a duplicate-display-name warning and an opt-in `--update_if_exists`\", \"first_seen\": 1794244763.1715717, \"last_checked\": 1794311023.125157, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1794311026.1419697, \"tasks\": {\"fix\": {\"blocked\": 2, \"execution_wait\": 1, \"running\": 1, \"skipped\": 26, \"validation_wait\": 1}, \"respond\": {\"blocked\": 3, \"error\": 1, \"skipped\": 1, \"validation_wait\": 3}}}"
-      },
-      {
         "key": "coordination:google/adk-python#8058",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8058\", \"title\": \"Resumable Workflow re-persists every fast-forwarded output on each resume: session grows quadratically with the number of resumes\", \"first_seen\": 1794240224.0365162, \"last_checked\": 1794311026.1702087, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
@@ -38015,52 +37995,56 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8051\", \"title\": \"DatabaseSessionService on PostgreSQL reloads events with equal timestamps out of append order\", \"first_seen\": 1794223363.7536597, \"last_checked\": 1794311031.0397458, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
+        "key": "runner_resources",
+        "value": "{\"at\": 1794311087.3123581, \"disk_free_bytes\": 78855602176, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 13970100224, \"SwapTotal\": 3221221376, \"SwapFree\": 3221131264}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1794311092.7625453, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 14, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1183.0112063884735, \"judge_tokens_spent_24h\": 99191, \"screening_calls_5h\": 2, \"screening_calls_24h\": 10, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 4, \"execution_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 2, \"remaining\": 1, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8047\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8047\", \"title\": \"Optional node field without a default fails the next node with \\\"Field required\\\"\", \"first_seen\": 1794221518.8092995, \"last_checked\": 1794303114.402078, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8077\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8077\", \"title\": \"Proposal: deterministic tool-call expectations for `conversation_scenario` eval cases\", \"first_seen\": 1794292773.9207158, \"last_checked\": 1794311011.9521356, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8064\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8064\", \"title\": \"OpenAPI tools ignore operation- and path-level server overrides\", \"first_seen\": 1794251985.8112895, \"last_checked\": 1794311015.6428368, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8063\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8063\", \"title\": \"Clarify partial=None semantics for on_event_callback replacements\", \"first_seen\": 1794249623.6957455, \"last_checked\": 1794311018.1072252, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8062\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8062\", \"title\": \"adk deploy agent_engine no longer validates that the agent imports (regressed in 2.2.0); broken agents deploy cleanly and fail only at query time\", \"first_seen\": 1794246353.0264468, \"last_checked\": 1794311021.1016953, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8061\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8061\", \"title\": \"`adk deploy agent_engine` silently creates a duplicate Agent Runtime on every re-run; add a duplicate-display-name warning and an opt-in `--update_if_exists`\", \"first_seen\": 1794244763.1715717, \"last_checked\": 1794311023.125157, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8058\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8058\", \"title\": \"Resumable Workflow re-persists every fast-forwarded output on each resume: session grows quadratically with the number of resumes\", \"first_seen\": 1794240224.0365162, \"last_checked\": 1794311026.1702087, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8053\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8053\", \"title\": \"A per-agent max_llm_calls budget, in addition to the run-wide limit\", \"first_seen\": 1794228463.856993, \"last_checked\": 1794311028.5682952, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8051\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8051\", \"title\": \"DatabaseSessionService on PostgreSQL reloads events with equal timestamps out of append order\", \"first_seen\": 1794223363.7536597, \"last_checked\": 1794311031.0397458, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1794311092.7639515, \"tasks\": {\"fix\": {\"blocked\": 2, \"execution_wait\": 1, \"running\": 1, \"skipped\": 26, \"validation_wait\": 1}, \"respond\": {\"blocked\": 3, \"error\": 1, \"skipped\": 1, \"validation_wait\": 3}}}"
+      },
+      {
         "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1794311036.704436, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794311097.8550816, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1794311037.1729622, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794311098.284982, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1794311037.6007943, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794311098.7479992, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1794311038.0819101, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794311099.2338357, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1794311038.5893002, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794311099.7703412, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1794311039.1182637, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794311100.352496, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1794311040.150269, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794311101.5186844, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1794311040.675578, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794311102.0039883, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1794311041.2691257, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794311102.9007533, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1794311041.773206, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1794311066.4392586, \"windows\": [{\"name\": \"primary\", \"used_percent\": 31, \"resets_at\": 1794380323}]}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1794311082.3641582"
+        "value": "{\"at\": 1794311103.4333966, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -38068,19 +38052,39 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794311083.4494228"
+        "value": "1794311143.0988457"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1794311143.2136788, \"windows\": [{\"name\": \"primary\", \"used_percent\": 31, \"resets_at\": 1794380323}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1794311143.2162154, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1737:1:generation",
+        "value": "{\"task\": 1737, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794311143.2393525, \"seconds\": 1233.5, \"tokens\": {\"totalTokens\": 16720730, \"inputTokens\": 16702396, \"cachedInputTokens\": 16550528, \"cacheWriteInputTokens\": 0, \"outputTokens\": 18334, \"reasoningOutputTokens\": 6488}, \"first_event_ms\": 1794309918484, \"last_event_ms\": 1794311143213, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1794311143.5752218"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1737",
+        "value": "{\"started\": 1794309806.5934887, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1737/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"0ebc9d5ccd9c7b240356ba276f613e348057c3b7\", \"replacement_candidate_verified\": 1794309814.6974106, \"dispatch_replacement\": true, \"generation_started\": 1794309909.741329, \"dispatch_paid_date\": \"2026-11-10\", \"phase_started\": 1794309913.3057969, \"last_execution_phase\": \"generation\", \"finished\": 1794311145.0650327}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1794311086.0301805"
+        "value": "1794311146.0354006"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794311086.54456"
-      },
-      {
-        "key": "runner_resources",
-        "value": "{\"at\": 1794311087.3123581, \"disk_free_bytes\": 78855602176, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 13970100224, \"SwapTotal\": 3221221376, \"SwapFree\": 3221131264}, \"memory_events\": null}"
+        "value": "1794311146.5458355"
       }
     ],
     "calls": [
