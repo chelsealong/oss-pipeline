@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794300604.0964918,
+  "saved_at": 1794300609.8560038,
   "tables": {
     "tasks": [
       {
@@ -22539,10 +22539,10 @@
         "repo": "openclaw",
         "number": 196508,
         "note": "",
-        "status": "running",
+        "status": "execution_wait",
         "created": 1794296486.2208664,
-        "updated": 1794299309.3544774,
-        "result": "Command 'Codex generation' timed out after 2400 seconds",
+        "updated": 1794300609.8387358,
+        "result": "Command 'Codex generation' timed out after 1200 seconds",
         "attempts": 2
       }
     ],
@@ -37688,16 +37688,8 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794299309.3533444, \"comfyui\": 1794269103.654064, \"hermes\": 1794240004.2801356, \"langfuse\": 1794273605.4410853, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794211191.7894132, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1794270042.0564272, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1734\": {\"remaining\": 1, \"until\": 1794306603.2918541}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1794288131.0031579, \"group\": \"new_fix\", \"task\": 1730, \"phase\": \"generation\"}, {\"at\": 1794292820.6451929, \"group\": \"screening\", \"task\": 1733, \"phase\": \"screening-33d21b601617799b2f71\"}, {\"at\": 1794292888.7775416, \"group\": \"new_fix\", \"task\": 1733, \"phase\": \"generation\"}, {\"at\": 1794292942.1094747, \"group\": \"screening\", \"task\": 1732, \"phase\": \"screening-142ed8cb26093056151b\"}, {\"at\": 1794293008.2459536, \"group\": \"new_fix\", \"task\": 1732, \"phase\": \"generation\"}, {\"at\": 1794296550.651295, \"group\": \"new_fix\", \"task\": 1734, \"phase\": \"generation\"}, {\"at\": 1794299403.2918541, \"group\": \"new_fix\", \"task\": 1734, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "task:1734",
-        "value": "{\"started\": 1794299309.355889, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1734/attempt-2\", \"attempt\": 2, \"phase\": \"generation\", \"base\": \"09723cdcad18f028cc4eec6ff03dc6d0c6ae9b11\", \"generation_started\": 1794296550.6511335, \"dispatch_paid_date\": \"2026-11-10\", \"phase_started\": 1794299406.0030558, \"last_execution_phase\": \"generation\", \"finished\": 1794298956.663468, \"resume_progress\": {\"bundle\": \"1734-1.json\", \"sha256\": \"18663d9e896a346139e14a7e0479841277bc05998276f72066892410e0ea1083\", \"base\": \"cdd7ee54ee8df226291bb97a1077731f40fbd273\", \"phase\": \"generation\"}, \"timeout_continuations\": 1, \"progress_rebase_needed\": null, \"progress_restored\": true, \"restored_from\": \"1734-1.json\"}"
       },
       {
         "key": "coordination:google/adk-python#8077",
@@ -37916,24 +37908,12 @@
         "value": "{\"at\": 1794300343.9015708, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1794300543.1823578, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 7, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1139.881927728653, \"judge_tokens_spent_24h\": 99191, \"screening_calls_5h\": 2, \"screening_calls_24h\": 8, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 5}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8077\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8077\", \"title\": \"Proposal: deterministic tool-call expectations for `conversation_scenario` eval cases\", \"first_seen\": 1794292773.9207158, \"last_checked\": 1794299830.6193495, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8064\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8064\", \"title\": \"OpenAPI tools ignore operation- and path-level server overrides\", \"first_seen\": 1794251985.8112895, \"last_checked\": 1794299834.2086802, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8063\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8063\", \"title\": \"Clarify partial=None semantics for on_event_callback replacements\", \"first_seen\": 1794249623.6957455, \"last_checked\": 1794299836.6683137, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8062\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8062\", \"title\": \"adk deploy agent_engine no longer validates that the agent imports (regressed in 2.2.0); broken agents deploy cleanly and fail only at query time\", \"first_seen\": 1794246353.0264468, \"last_checked\": 1794299839.622224, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8061\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8061\", \"title\": \"`adk deploy agent_engine` silently creates a duplicate Agent Runtime on every re-run; add a duplicate-display-name warning and an opt-in `--update_if_exists`\", \"first_seen\": 1794244763.1715717, \"last_checked\": 1794299841.6465309, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8058\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8058\", \"title\": \"Resumable Workflow re-persists every fast-forwarded output on each resume: session grows quadratically with the number of resumes\", \"first_seen\": 1794240224.0365162, \"last_checked\": 1794299844.64818, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8053\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8053\", \"title\": \"A per-agent max_llm_calls budget, in addition to the run-wide limit\", \"first_seen\": 1794228463.856993, \"last_checked\": 1794299846.6715481, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8051\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8051\", \"title\": \"DatabaseSessionService on PostgreSQL reloads events with equal timestamps out of append order\", \"first_seen\": 1794223363.7536597, \"last_checked\": 1794299849.6208127, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8047\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8047\", \"title\": \"Optional node field without a default fails the next node with \\\"Field required\\\"\", \"first_seen\": 1794221518.8092995, \"last_checked\": 1794299852.0547307, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1794300543.184212, \"tasks\": {\"fix\": {\"blocked\": 1, \"running\": 1, \"skipped\": 29, \"validation_wait\": 2}, \"respond\": {\"blocked\": 3, \"done\": 1, \"error\": 1, \"skipped\": 2, \"validation_wait\": 3}}}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1794300553.9498277"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1794300590.574437, \"windows\": [{\"name\": \"primary\", \"used_percent\": 27, \"resets_at\": 1794380324}]}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1794300591.0564418"
+        "key": "runner_resources",
+        "value": "{\"at\": 1794300604.077374, \"disk_free_bytes\": 79579987968, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 13105520640, \"SwapTotal\": 3221221376, \"SwapFree\": 2777124864}, \"memory_events\": null}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -37941,15 +37921,39 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794300600.42499"
+        "value": "1794300605.5299625"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1794300606.0594888"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1794300607.6587355, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 7, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1204.3586966991425, \"judge_tokens_spent_24h\": 99191, \"screening_calls_5h\": 2, \"screening_calls_24h\": 8, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 5}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8077\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8077\", \"title\": \"Proposal: deterministic tool-call expectations for `conversation_scenario` eval cases\", \"first_seen\": 1794292773.9207158, \"last_checked\": 1794299830.6193495, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8064\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8064\", \"title\": \"OpenAPI tools ignore operation- and path-level server overrides\", \"first_seen\": 1794251985.8112895, \"last_checked\": 1794299834.2086802, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8063\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8063\", \"title\": \"Clarify partial=None semantics for on_event_callback replacements\", \"first_seen\": 1794249623.6957455, \"last_checked\": 1794299836.6683137, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8062\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8062\", \"title\": \"adk deploy agent_engine no longer validates that the agent imports (regressed in 2.2.0); broken agents deploy cleanly and fail only at query time\", \"first_seen\": 1794246353.0264468, \"last_checked\": 1794299839.622224, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8061\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8061\", \"title\": \"`adk deploy agent_engine` silently creates a duplicate Agent Runtime on every re-run; add a duplicate-display-name warning and an opt-in `--update_if_exists`\", \"first_seen\": 1794244763.1715717, \"last_checked\": 1794299841.6465309, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8058\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8058\", \"title\": \"Resumable Workflow re-persists every fast-forwarded output on each resume: session grows quadratically with the number of resumes\", \"first_seen\": 1794240224.0365162, \"last_checked\": 1794299844.64818, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8053\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8053\", \"title\": \"A per-agent max_llm_calls budget, in addition to the run-wide limit\", \"first_seen\": 1794228463.856993, \"last_checked\": 1794299846.6715481, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8051\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8051\", \"title\": \"DatabaseSessionService on PostgreSQL reloads events with equal timestamps out of append order\", \"first_seen\": 1794223363.7536597, \"last_checked\": 1794299849.6208127, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8047\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8047\", \"title\": \"Optional node field without a default fails the next node with \\\"Field required\\\"\", \"first_seen\": 1794221518.8092995, \"last_checked\": 1794299852.0547307, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1794300607.6661077, \"tasks\": {\"fix\": {\"blocked\": 1, \"running\": 1, \"skipped\": 29, \"validation_wait\": 2}, \"respond\": {\"blocked\": 3, \"done\": 1, \"error\": 1, \"skipped\": 2, \"validation_wait\": 3}}}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794300603.906852"
+        "value": "1794300608.9088316"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1794300604.077374, \"disk_free_bytes\": 79579987968, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 13105520640, \"SwapTotal\": 3221221376, \"SwapFree\": 2777124864}, \"memory_events\": null}"
+        "key": "codex_quota",
+        "value": "{\"at\": 1794300609.5400968, \"windows\": [{\"name\": \"primary\", \"used_percent\": 27, \"resets_at\": 1794380323}]}"
+      },
+      {
+        "key": "usage:1734:2:generation",
+        "value": "{\"task\": 1734, \"repo\": \"openclaw\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1794300609.5583885, \"seconds\": 1206.269, \"tokens\": {\"totalTokens\": 6863196, \"inputTokens\": 6855948, \"cachedInputTokens\": 6742784, \"cacheWriteInputTokens\": 0, \"outputTokens\": 7248, \"reasoningOutputTokens\": 1828}, \"first_event_ms\": 1794299409535, \"last_event_ms\": 1794300605520, \"model\": \"gpt-6-sol\", \"complete\": false, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1734",
+        "value": "{\"started\": 1794299309.355889, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1734/attempt-2\", \"attempt\": 2, \"phase\": \"execution_wait\", \"base\": \"09723cdcad18f028cc4eec6ff03dc6d0c6ae9b11\", \"generation_started\": 1794296550.6511335, \"dispatch_paid_date\": \"2026-11-10\", \"phase_started\": 1794299406.0030558, \"last_execution_phase\": \"generation\", \"finished\": 1794300609.564935, \"resume_progress\": {\"bundle\": \"1734-1.json\", \"sha256\": \"18663d9e896a346139e14a7e0479841277bc05998276f72066892410e0ea1083\", \"base\": \"cdd7ee54ee8df226291bb97a1077731f40fbd273\", \"phase\": \"generation\"}, \"timeout_continuations\": 1, \"progress_rebase_needed\": null, \"progress_restored\": true, \"restored_from\": \"1734-1.json\"}"
       }
     ],
     "calls": [
