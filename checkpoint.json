@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794286029.373628,
+  "saved_at": 1794286034.3525493,
   "tables": {
     "tasks": [
       {
@@ -22474,11 +22474,11 @@
         "repo": "openclaw",
         "number": 196444,
         "note": "",
-        "status": "running",
+        "status": "triage_wait",
         "created": 1794286025.2934222,
-        "updated": 1794286029.3603625,
-        "result": "",
-        "attempts": 1
+        "updated": 1794286034.3390362,
+        "result": "screening budget reached; retain pending work",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -37543,10 +37543,6 @@
         "value": "{\"task\": 1728, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-2b75eca4ccfa0da7d2a0\", \"at\": 1794279693.0372398, \"seconds\": 11.775, \"tokens\": {\"totalTokens\": 19685, \"inputTokens\": 19551, \"cachedInputTokens\": 0, \"cacheWriteInputTokens\": 0, \"outputTokens\": 134, \"reasoningOutputTokens\": 105}, \"first_event_ms\": 1794279688763, \"last_event_ms\": 1794279693033, \"model\": null, \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:1728",
         "value": "{\"started\": 1794279676.2330024, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1728/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": null, \"phase_started\": 1794279685.471719, \"screening_requests\": {\"2b75eca4ccfa0da7d2a0\": 1794279693.0385156}, \"last_execution_phase\": \"screening-2b75eca4ccfa0da7d2a0\", \"finished\": 1794279693.0502331}"
       },
@@ -37795,12 +37791,12 @@
         "value": "{\"at\": 1794286010.9177086, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 1, \"skipped\": 26, \"validation_wait\": 1}, \"respond\": {\"blocked\": 4, \"done\": 1, \"error\": 1, \"skipped\": 2, \"validation_wait\": 3}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1794286016.9508097"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794286029.3602114, \"comfyui\": 1794269103.654064, \"hermes\": 1794240004.2801356, \"langfuse\": 1794273605.4410853, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794211191.7894132, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1794270042.0564272, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1794286024.2532098"
+        "value": "1794286030.304974"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -37808,19 +37804,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794286024.9226868"
+        "value": "1794286030.3846226"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1794286031.9532664"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794286028.4651415"
+        "value": "1794286033.465236"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794286029.3602114, \"comfyui\": 1794269103.654064, \"hermes\": 1794240004.2801356, \"langfuse\": 1794273605.4410853, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794211191.7894132, \"langfuse-python\": 1793231501.3681066, \"spec-kit\": 1794270042.0564272, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+        "key": "usage:1729:1:screening-7f3844188acceacf584a",
+        "value": "{\"task\": 1729, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"screening-7f3844188acceacf584a\", \"at\": 1794286034.3324497, \"seconds\": 0.002, \"tokens\": null, \"first_event_ms\": null, \"last_event_ms\": null, \"model\": null, \"complete\": false, \"usage_available\": false}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:1729",
-        "value": "{\"started\": 1794286029.3604054, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "value": "{\"started\": 1794286029.3604054, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1794286934.334039, \"folder\": \"jobs/1729/attempt-1\", \"attempt\": 1, \"phase\": \"triage_wait\", \"base\": null, \"last_execution_phase\": \"screening\", \"finished\": 1794286034.3370605}"
       }
     ],
     "calls": [
