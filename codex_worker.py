@@ -292,6 +292,9 @@ def finish(task, status, result):
     with rt.db() as c:
         c.execute('UPDATE tasks SET status=?, result=?, updated=? WHERE id=?',
                   (status, result[:4000], time.time(), task['id']))
+    if status=='skipped' and task['kind']=='fix':
+        import candidate_budget
+        candidate_budget.reconcile()
     log(f"task {task['id']} {task['kind']} {task['repo']}#{task['number']}: {status}: {result[:300]}")
     rt.checkpoint()
     if rt.config().get('backend')=='codex-cloud':
@@ -333,6 +336,11 @@ def fix_eligible(key,cfg,number,task=None):
     up=cfg['upstream']
     issue=api(f'repos/{up}/issues/{number}')
     if issue['state']!='open': return False,'issue closed'
+    import candidate_budget
+    if candidate_budget.requires_replacement(key) and not (rt.task_state(task['id']) if task else {}).get('generation_started'):
+        if not candidate_budget.invited(cfg,issue):
+            return False,'replacement requires fresh upstream invitation or source reproduction'
+        if task:rt.task_state(task['id'],replacement_candidate_verified=time.time())
     if cfg.get('needs_assignment') and ME not in [a['login'] for a in issue.get('assignees',[])]:
         return False,'assignment required; no automated claim comment'
     import screening

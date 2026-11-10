@@ -672,7 +672,9 @@ def retain_for_vetting(key: str, node: dict) -> None:
     with PENDING_VET.with_suffix('.lock').open('w') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX)
         rows=pending_vet();repo=rows.setdefault(key,{})
-        repo.setdefault(str(node['number']),{'number':node['number'],'created_at':node['createdAt']})
+        item=repo.setdefault(str(node['number']),{'number':node['number'],'created_at':node['createdAt']})
+        if 'labels' in node:
+            item['labels']=[l['name'] for l in node['labels']['nodes']]
         rows[key]={n:repo[n] for n in sorted(repo,key=int)[-400:]}
         _write_pending_vet(rows)
 
@@ -735,7 +737,9 @@ def recheck_pending_vet(keys: list[str], limit: int = 4) -> int:
     # exhausting a high-volume repository's backlog before seeing the others.
     import itertools
     groups=[sorted(((key,n) for n in rows.get(key,{})),
-                   key=lambda pair:(rows[key][pair[1]].get('checked_at',0),-int(pair[1]))) for key in keys]
+                   key=lambda pair:(scan.candidate_priority(scan.REPOS[key],{'labels':[
+                       {'name':l} for l in rows[key][pair[1]].get('labels',[])]}),
+                       rows[key][pair[1]].get('checked_at',0),-int(pair[1]))) for key in keys]
     groups.sort(key=lambda group:min((rows[k][n].get('checked_at',0) for k,n in group),default=float('inf')))
     ordered=[pair for batch in itertools.zip_longest(*groups) for pair in batch if pair]
     for key,number in ordered:

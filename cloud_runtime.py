@@ -151,6 +151,7 @@ def configure(mode):
         'codex_screening_fallback':True,'codex_screening_per_5h':6,'codex_screening_per_day':18,
         'codex_screening_max_bytes':128000,'decouple_discovery':True,
         'judge_free_only_required':True,
+        'candidate_capacity_precheck':True,'no_work_replacement_limits':{'openclaw':3},
         'judge_free_only_models':[m.strip() for m in os.environ.get('QWEN_FREE_ONLY_MODELS','').split(',') if m.strip()]})+'\n')
     rt.DATA.mkdir(exist_ok=True)
 
@@ -272,6 +273,8 @@ def run(mode,seconds):
                 if cloud_enabled():raise RuntimeError('Drain ordinary production before the explicit recovery run')
             migrate_accounting()
             if mode=='live':
+                import candidate_budget
+                if candidate_budget.reconcile():rt.checkpoint()
                 task_recovery.migrate_model_retries()
                 task_recovery.recover_shallow_merge_errors()
                 task_recovery.recover_submission_regressions()

@@ -128,6 +128,15 @@ jobs:
                       restored=json.loads((rt.DATA/'evidence'/path.name.removesuffix('.enc')).read_text())
                       assert restored['task']>0
                   print('Real cloud restore verified:',len(snapshot['tables']['tasks']),'tasks,',len(encrypted),'authenticated evidence bundles; no production writes.')
+                  import cloud_runtime, candidate_budget
+                  cloud_runtime.configure('probe')
+                  candidate_budget.reconcile()
+                  with rt.db() as db:
+                      budget=rt._dispatch_budget(db)
+                      remaining=candidate_budget.remaining(db,'openclaw',budget)
+                  print('No-patch replacement rehearsal:',remaining,'remaining; ordinary starts',budget['used'].get('openclaw',0),'; original model-call ledger unchanged.')
+                  with rt.db() as db:
+                      assert db.execute('SELECT count(*) FROM calls').fetchone()[0]==len(snapshot['tables']['calls'])
           PY
       - name: Rehearse synthetic browser and database validation
         if: inputs.validation_canary == true

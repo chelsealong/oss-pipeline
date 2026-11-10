@@ -176,6 +176,7 @@ REPOS: dict[str, dict] = {
         # our PRs there were closed for exactly this. Every spec-kit PR of ours
         # that merged (#3929 #4012 #4016 #4045) is a plain code fix.
         "exclude_labels": {"extension-submission", "preset-submission",
+                           "triage-out-of-scope",
                            "bundle-submission",
                            # `agentic-workflows` marks auto-filed reports that
                            # spec-kit's OWN workflows failed — #4077 is the
@@ -1025,6 +1026,14 @@ def triage_ready(cfg, labels):
     return bool(required and set(required)<=labels and not labels & cfg.get('exclude_labels',set()))
 
 
+def candidate_priority(cfg, issue):
+    """Upstream-confirmed source bugs first; recency breaks ties only."""
+    labels={l['name'] for l in issue.get('labels',[])}
+    return (not triage_ready(cfg,labels),
+            'clawsweeper:fix-shape-clear' not in labels,
+            not bool(labels & {'help wanted','good first issue'}))
+
+
 def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
     # First, and before any API call. A paused repo is one we have established
     # cannot accept our work — spending a scan on it, let alone a session, is
@@ -1151,6 +1160,13 @@ def age_hours(iso: str) -> float:
 
 
 def vet_candidate(cfg, upstream, issue):
+    # Admission-only: an ordinary task that used the last start must remain
+    # eligible for final publication even when it lacks a replacement label.
+    if rt.local() and rt.config().get('candidate_capacity_precheck'):
+        import candidate_budget
+        key=rt.repo_key(cfg.get('implements_in') or upstream)
+        if candidate_budget.requires_replacement(key) and not candidate_budget.invited(cfg,issue):
+            return False,'replacement requires upstream invitation or source reproduction',{}
     import screening
     return screening.candidate(vet, cfg, upstream, issue)
 
@@ -1179,7 +1195,8 @@ def scan_repo(key: str, limit: int, max_vet: int) -> dict:
     # the 15 freshest, 7 already had a PR — so the queue came back empty while
     # most of the backlog was never looked at.
     depth = cfg.get("max_vet", max_vet)
-    ordered = sorted(seen.items(), key=lambda kv: kv[1]["created_at"], reverse=True)[:depth]
+    fresh = sorted(seen.items(), key=lambda kv: kv[1]["created_at"], reverse=True)
+    ordered = sorted(fresh, key=lambda kv:candidate_priority(cfg,kv[1]))[:depth]
     for num, it in ordered:
         try:
             passed, why, extra = vet_candidate(cfg, upstream, it)
@@ -1204,7 +1221,7 @@ def scan_repo(key: str, limit: int, max_vet: int) -> dict:
         (ok if passed else rejected).append(rec)
 
     # freshest first: unclaimed issues get taken within hours
-    ok.sort(key=lambda r: r["age_hours"])
+    ok.sort(key=lambda r: (candidate_priority(cfg,{'labels':[{'name':l} for l in r.get('labels',[])]}),r['age_hours']))
     return {
         "repo": key,
         "upstream": upstream,

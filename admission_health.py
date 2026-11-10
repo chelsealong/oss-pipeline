@@ -43,11 +43,16 @@ def status():
         screenings_5h=sum(x['at']>now-18000 for x in screening)
         screenings_day=sum(x['at']>now-86400 for x in screening)
         dispatch=rt._dispatch_budget(db)
+        import candidate_budget
+        replacements={key:{'used':dispatch.get('replacement_used',{}).get(key,0),
+                           'remaining':candidate_budget.remaining(db,key,dispatch),'limit':maximum}
+                      for key,maximum in rt.config().get('no_work_replacement_limits',{}).items()}
         task_limits={key:{'used':dispatch['used'].get(key,0),
                           'limit':watch.DISPATCH_BUDGET.get(key,watch.DEFAULT_BUDGET)}
                      for key,cfg in scan.REPOS.items()
                      if not repo_limits.disabled(key) and not cfg.get('paused')
-                     and dispatch['used'].get(key,0)>=watch.DISPATCH_BUDGET.get(key,watch.DEFAULT_BUDGET)}
+                     and dispatch['used'].get(key,0)>=watch.DISPATCH_BUDGET.get(key,watch.DEFAULT_BUDGET)
+                     and not candidate_budget.remaining(db,key,dispatch)}
         waits_24h=collections.Counter(row['status'] for row in db.execute(
             "SELECT repo,status FROM tasks WHERE updated>? AND status IN "
             "('human_wait','validation_wait','execution_wait','capacity_wait','publication_wait')",
@@ -66,6 +71,7 @@ def status():
             'seconds_since_codex_call':idle_seconds,'judge_tokens_spent_24h':spent,
             'screening_calls_5h':screenings_5h,'screening_calls_24h':screenings_day,
             'task_start_limits_reached':task_limits,'recent_wait_tasks_24h':dict(waits_24h),
+            'no_work_replacements':replacements,
             'coordination_requests':coordination,
             'warning':warning}
 

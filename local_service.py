@@ -67,6 +67,9 @@ def main():
                         holds=rt.publication_holds()
                         held_keys=[key for key in keys if holds.get(key,0)>time.time()]
                         active_keys=[key for key in keys if key not in held_keys]
+                        if rt.config().get('candidate_capacity_precheck'):
+                            import candidate_budget
+                            active_keys=[key for key in active_keys if candidate_budget.admission(key)[0]]
                         if not decoupled and held_keys and time.time()-last_capture>60:
                             last_capture=time.time()
                             watch.sweep(held_keys,seen,100,bootstrap,vetting=False)
@@ -91,6 +94,7 @@ def main():
                             res=scan.scan_repo(key,30,15)
                             if not res.get('partial'):
                                 (scan.QUEUE/f'{key}.json').write_text(json.dumps(res,indent=2)+'\n')
+                                if res.get('candidates'):last_drain=0
                             else:watch.log(f'{key}: partial scan, preserving existing queue')
                             last_scan=time.time()
                     else:

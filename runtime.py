@@ -136,7 +136,9 @@ def dispatch_headroom(key):
     with db() as c:
         budget=_dispatch_budget(c)
         if budget['used'].get(key,0)>=watch.DISPATCH_BUDGET.get(key,watch.DEFAULT_BUDGET):
-            return False,'daily viable-task budget reached'
+            import candidate_budget
+            if not candidate_budget.remaining(c,key,budget):
+                return False,'daily viable-task budget reached'
         starts=_meta(c,'fix_sessions',[])
     if sum(s['repo']==key and s['at']>time.time()-18000 for s in starts)>=scan.session_share(key):
         return False,'repository five-hour session share reached'
@@ -210,8 +212,16 @@ def reserve_call(kind, *, task=None, phase=None):
                     return False,'repository five-hour session share reached'
                 if state.get('dispatch_paid_date')!=budget['date']:
                     cap=watch.DISPATCH_BUDGET.get(key,watch.DEFAULT_BUDGET)
-                    if budget['used'].get(key,0)>=cap:return False,'daily viable-task budget reached'
-                    budget['used'][key]=budget['used'].get(key,0)+1
+                    if budget['used'].get(key,0)>=cap:
+                        import candidate_budget
+                        if not candidate_budget.remaining(c,key,budget):return False,'daily viable-task budget reached'
+                        if not state.get('replacement_candidate_verified'):
+                            return False,'replacement requires fresh upstream invitation or source reproduction'
+                        replacements=budget.setdefault('replacement_used',{})
+                        replacements[key]=replacements.get(key,0)+1
+                        state['dispatch_replacement']=True
+                    else:
+                        budget['used'][key]=budget['used'].get(key,0)+1
                 starts.append({'repo':key,'task':task['id'],'at':time.time()})
                 state.update(generation_started=time.time(),dispatch_paid_date=budget['date'])
                 _putmeta(c,f"task:{task['id']}",state)

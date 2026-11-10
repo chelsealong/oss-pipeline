@@ -51,8 +51,9 @@ On October 11 the user selected the two remaining free models for subsequent
 use: `qwen3.8-27b` first (expires November 17), then `deepseek-v4.1-flash`
 (expires December 13). The November 8 instruction adds `kimi-k3.1-pro` and
 `deepseek-v4.1-flash-1017` ahead of those two; the user explicitly confirmed
-provider-side free-quota-only protection for both new models. The deployment
-allowlist admits exactly these four. Preserve existing retirement and spending
+provider-side free-quota-only protection for both new models. The November 9
+billing audit narrowed the deployment allowlist to only these two new models,
+with both provider free-only switches observed enabled. Preserve retirement and spending
 records. When all approved models have confirmed free-tier exhaustion, use the
 existing bounded read-only Codex subscription screening before coding. This
 does not waive authentication/configuration holds or upstream eligibility;
@@ -175,6 +176,20 @@ pre-model promisor failures may resume once after the unchanged PR head is
 verified and no newer response task/publication exists.
 
 ## Recovery and validation
+
+On November 10 the user authorized fixing candidate selection and exhausted
+task-start admission. Do not refund model calls or reset the ordinary daily
+start ledger. OpenClaw may use at most three replacement starts per UTC day,
+each backed by a distinct same-day terminal SKIP with matching encrypted
+generation output, unchanged HEAD/base, empty tracked/untracked patch, no
+publication marker and no restored progress. Missing/truncated evidence grants
+nothing. Replacement tasks cannot supply further replacements. Require a fresh
+upstream invitation or source-reproduced triage before a replacement starts.
+All model, review, upstream, daily-PR and 20-open-PR gates still apply. Cache
+read-only admission capacity for at most 60 seconds; generation and publication
+always recheck current capacity. Reject upstream out-of-scope labels before
+judging, prioritize source-confirmed issues, and keep discovery running while
+admission waits. Never infer that public read access proves PR creation is allowed.
 
 The October 18 audit found that the one-time PR reply migration also re-offered
 new feedback already processed under the current reply policy. Restrict that

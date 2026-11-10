@@ -82,9 +82,22 @@ confirmed the provider's free-quota-only switch on October 10; this allowlist
 records that confirmation, not an API check of provider settings or balances.
 The November 8 selection adds `kimi-k3.1-pro`, then `deepseek-v4.1-flash-1017`.
 The user confirmed free-quota-only protection for both. Historical
-`qwen3.8-27b` and `deepseek-v4.1-flash` remain in the allowlist and source list,
-with their exhausted retirement records and all spending preserved.
+`qwen3.8-27b` and `deepseek-v4.1-flash` remain only in the historical source list,
+with their exhausted retirement records and all spending preserved. Since the
+November 9 billing audit, the deployment allowlist contains only the two new
+models; both provider free-only switches were directly verified enabled.
 Missing configuration fails closed. Quota/authentication errors retain work.
+Before semantic candidate vetting, admission checks task-start room and cached
+publication capacity (60-second maximum age). Worker generation and publication
+still perform fresh checks. Upstream-confirmed source bugs precede untriaged
+reports; Spec Kit's `triage-out-of-scope` verdict is excluded before judging.
+OpenClaw has at most three evidence-backed replacement starts per UTC day when
+ordinary starts are exhausted. Only completed no-patch SKIPs qualify: encrypted
+evidence must match the task/attempt/base and contain the complete SKIP output,
+an unchanged HEAD and no tracked/untracked changes or publication marker.
+Replacements require current upstream invitation/source reproduction and cannot
+generate further replacement credits. Actual model calls and ordinary start
+spending remain recorded; global call, review-reservation and PR caps still apply.
 Concurrent cache writes merge atomically and identical requests share a lock.
 Oversized, unavailable or uncertain judgments retain pending feedback/issues;
 discussion changes invalidate issue verdicts when optional issue classification
