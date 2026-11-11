@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794365720.6949503,
+  "saved_at": 1794365725.13888,
   "tables": {
     "tasks": [
       {
@@ -38311,14 +38311,6 @@
         "value": "{\"task\": 1753, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794365402.2553, \"seconds\": 1169.075, \"tokens\": {\"totalTokens\": 22233488, \"inputTokens\": 22214138, \"cachedInputTokens\": 22049280, \"cacheWriteInputTokens\": 0, \"outputTokens\": 19350, \"reasoningOutputTokens\": 7260}, \"first_event_ms\": 1794364243984, \"last_event_ms\": 1794365402226, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1753\": {\"remaining\": 0, \"until\": 1794372605.5009086}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1794351737.5246572, \"group\": \"new_fix\", \"task\": 1747, \"phase\": \"generation\"}, {\"at\": 1794355303.862984, \"group\": \"new_fix\", \"task\": 1748, \"phase\": \"generation\"}, {\"at\": 1794355469.2991028, \"group\": \"new_fix\", \"task\": 1749, \"phase\": \"generation\"}, {\"at\": 1794356574.6921725, \"group\": \"new_fix\", \"task\": 1749, \"phase\": \"review\"}, {\"at\": 1794356917.6781807, \"group\": \"repair\", \"task\": 1749, \"phase\": \"remediation\"}, {\"at\": 1794358096.8027916, \"group\": \"new_fix\", \"task\": 1750, \"phase\": \"generation\"}, {\"at\": 1794361904.3445451, \"group\": \"new_fix\", \"task\": 1751, \"phase\": \"generation\"}, {\"at\": 1794362401.8331985, \"group\": \"new_fix\", \"task\": 1752, \"phase\": \"generation\"}, {\"at\": 1794364233.1829162, \"group\": \"new_fix\", \"task\": 1753, \"phase\": \"generation\"}, {\"at\": 1794365405.5009086, \"group\": \"new_fix\", \"task\": 1753, \"phase\": \"review\"}]"
-      },
-      {
         "key": "task:1753",
         "value": "{\"started\": 1794364172.132073, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1753/attempt-1\", \"attempt\": 1, \"phase\": \"review\", \"base\": \"ab65615dcae158491f8b6b879b30aba3218bcc39\", \"generation_started\": 1794364233.1826944, \"dispatch_paid_date\": \"2026-11-11\", \"phase_started\": 1794365409.9739115}"
       },
@@ -38443,10 +38435,6 @@
         "value": "{\"status\": \"not_needed\", \"reason\": \"Existing linked PR; no coordination message should be sent.\", \"prs\": [\"closing-ref PR#8057(OPEN)\", \"xref PR#8057(OPEN)\"]}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1794365718.669624"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1794365718.8154814, \"windows\": [{\"name\": \"primary\", \"used_percent\": 35, \"resets_at\": 1794380323}]}"
       },
@@ -38469,6 +38457,18 @@
       {
         "key": "discovery_last_success",
         "value": "1794365720.2824726"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1794365723.669754"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"1753\": {\"remaining\": 1, \"until\": 1794372925.124037}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1794351737.5246572, \"group\": \"new_fix\", \"task\": 1747, \"phase\": \"generation\"}, {\"at\": 1794355303.862984, \"group\": \"new_fix\", \"task\": 1748, \"phase\": \"generation\"}, {\"at\": 1794355469.2991028, \"group\": \"new_fix\", \"task\": 1749, \"phase\": \"generation\"}, {\"at\": 1794356574.6921725, \"group\": \"new_fix\", \"task\": 1749, \"phase\": \"review\"}, {\"at\": 1794356917.6781807, \"group\": \"repair\", \"task\": 1749, \"phase\": \"remediation\"}, {\"at\": 1794358096.8027916, \"group\": \"new_fix\", \"task\": 1750, \"phase\": \"generation\"}, {\"at\": 1794361904.3445451, \"group\": \"new_fix\", \"task\": 1751, \"phase\": \"generation\"}, {\"at\": 1794362401.8331985, \"group\": \"new_fix\", \"task\": 1752, \"phase\": \"generation\"}, {\"at\": 1794364233.1829162, \"group\": \"new_fix\", \"task\": 1753, \"phase\": \"generation\"}, {\"at\": 1794365405.5009086, \"group\": \"new_fix\", \"task\": 1753, \"phase\": \"review\"}, {\"at\": 1794365725.124037, \"group\": \"repair\", \"task\": 1753, \"phase\": \"remediation\"}]"
       }
     ],
     "calls": [
@@ -40490,6 +40490,10 @@
       },
       {
         "at": 1794365405.5016072,
+        "kind": "codex"
+      },
+      {
+        "at": 1794365725.1247523,
         "kind": "codex"
       }
     ]
