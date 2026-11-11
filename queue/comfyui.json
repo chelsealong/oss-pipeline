@@ -3,7 +3,7 @@
   "upstream": "Comfy-Org/ComfyUI",
   "implements_in": "Comfy-Org/ComfyUI",
   "needs_assignment": false,
-  "scanned_at": "2026-11-11T23:23:06+00:00",
+  "scanned_at": "2026-11-11T23:29:45+00:00",
   "partial": false,
   "errors": [],
   "candidates": [
@@ -12,20 +12,121 @@
       "title": "MiniMax H3: malloc graph keeps its VRAM between sampling steps, so step 2 OOMs on model_output.float() with ~28 MB free",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17701",
       "created_at": "2026-11-11T23:02:59Z",
+      "age_hours": 0.4,
       "reason": "clear",
-      "age_hours": 0.27486657305555556,
       "labels": [],
       "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17700,
+      "title": "MiniMax H3 VSA: RoPE table cache misses every step, so step 2 of a long sparse-attention run OOMs in vsa_rope_freqs",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17700",
+      "created_at": "2026-11-11T23:02:58Z",
+      "age_hours": 0.4,
+      "reason": "clear",
+      "labels": [],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17695,
+      "title": "`--directml` crashes with a native DLL error when torch-directml is missing or incompatible",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17695",
+      "created_at": "2026-11-11T17:25:19Z",
+      "age_hours": 6.1,
+      "reason": "clear",
+      "labels": [],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17692,
+      "title": "MiniMax H3 Image: raw HF (non-curve) checkpoint loads silently and outputs pure color noise with no warning",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17692",
+      "created_at": "2026-11-11T15:14:50Z",
+      "age_hours": 8.2,
+      "reason": "clear",
+      "labels": [
+        "Potential Bug"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17687,
+      "title": "Running comfyui update broke comfyui (I think it installed cuda 13 instead of 12 so the app is dead now)",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17687",
+      "created_at": "2026-11-11T12:36:34Z",
+      "age_hours": 10.9,
+      "reason": "clear",
+      "labels": [
+        "Potential Bug"
+      ],
+      "comments": 3,
+      "self_claimed": false
+    },
+    {
+      "number": 17677,
+      "title": "DynamicVRAM (comfy-aimdo) causes secondary NVMe drive to hard-disconnect from Windows (error=433 / hostbuf_file_reader_read failed)",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17677",
+      "created_at": "2026-11-10T23:01:32Z",
+      "age_hours": 24.5,
+      "reason": "clear",
+      "labels": [
+        "Potential Bug"
+      ],
+      "comments": 2,
       "self_claimed": false
     }
   ],
   "rejected": [
     {
+      "number": 17704,
+      "title": "Dynamic VRAM: a LoRA patch on a module without comfy_cast_weights is silently dropped (Qwen-Image 2.1 txt_in.text_norm)",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17704",
+      "created_at": "2026-11-11T23:03:05Z",
+      "age_hours": 0.4,
+      "reason": "body lacks required in-scope signal"
+    },
+    {
+      "number": 17697,
+      "title": "YuE2 VAE: a grown decoder (YuE2-VAE-RS x3) loses 210 tensors silently under strict=False; a 35-line patch is ready",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17697",
+      "created_at": "2026-11-11T18:07:06Z",
+      "age_hours": 5.4,
+      "reason": "issue author igrbible offers to implement"
+    },
+    {
+      "number": 17694,
+      "title": "Sort workflows by name",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17694",
+      "created_at": "2026-11-11T16:43:00Z",
+      "age_hours": 6.8,
+      "reason": "body lacks required in-scope signal"
+    },
+    {
+      "number": 17693,
+      "title": "The hustler",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17693",
+      "created_at": "2026-11-11T16:32:00Z",
+      "age_hours": 7.0,
+      "reason": "body lacks required in-scope signal"
+    },
+    {
+      "number": 17690,
+      "title": "Dynamic VRAM applies LoRAs in the weight's dtype: on bf16 models, part of the LoRA rounds away",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17690",
+      "created_at": "2026-11-11T14:37:47Z",
+      "age_hours": 8.9,
+      "reason": "body lacks required in-scope signal"
+    },
+    {
       "number": 17683,
       "title": "MiniMax H3: Korean dialogue is clear in the first clip but garbled in later clips. Anyone else?",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17683",
       "created_at": "2026-11-11T07:10:38Z",
-      "age_hours": 7.4,
+      "age_hours": 16.3,
       "reason": "body lacks required in-scope signal"
     },
     {
@@ -33,64 +134,8 @@
       "title": "LLM templates don't work anymore",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17679",
       "created_at": "2026-11-11T01:18:28Z",
-      "age_hours": 13.3,
+      "age_hours": 22.2,
       "reason": "body lacks required in-scope signal"
-    },
-    {
-      "number": 17676,
-      "title": "rgthree node failure",
-      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17676",
-      "created_at": "2026-11-10T22:55:46Z",
-      "age_hours": 15.6,
-      "reason": "body lacks required in-scope signal"
-    },
-    {
-      "number": 17670,
-      "title": "NVIDIA issue",
-      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17670",
-      "created_at": "2026-11-10T20:37:47Z",
-      "age_hours": 17.9,
-      "reason": "body lacks required in-scope signal"
-    },
-    {
-      "number": 17662,
-      "title": "Snapshot restore doesn't clear pending install-scripts.txt; a stuck job then loops on every startup",
-      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17662",
-      "created_at": "2026-11-10T17:50:14Z",
-      "age_hours": 20.7,
-      "reason": "body lacks required in-scope signal"
-    },
-    {
-      "number": 17660,
-      "title": "Ubuntu Install Help",
-      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17660",
-      "created_at": "2026-11-10T16:00:51Z",
-      "age_hours": 22.6,
-      "reason": "body lacks required in-scope signal"
-    },
-    {
-      "number": 17648,
-      "title": "There's a major discrepancy in RAM utilization with ComfyUI v43 and up.",
-      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17648",
-      "created_at": "2026-11-10T03:26:22Z",
-      "age_hours": 35.1,
-      "reason": "body lacks required in-scope signal"
-    },
-    {
-      "number": 17641,
-      "title": "set workflow folder",
-      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17641",
-      "created_at": "2026-11-09T19:20:01Z",
-      "age_hours": 43.2,
-      "reason": "body lacks required in-scope signal"
-    },
-    {
-      "number": 17637,
-      "title": "Marigold V2 blueprints in `blueprints/` still use `ModelSamplingAuraFlow` sampling `flow`; albedo blueprint outputs near-uniform grey",
-      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17637",
-      "created_at": "2026-11-09T16:35:31Z",
-      "age_hours": 46.0,
-      "reason": "already has PR(s): ['closing-ref PR#17638(OPEN)', 'xref PR#17638(OPEN)']"
     }
   ]
 }
