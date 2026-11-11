@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794375983.0844479,
+  "saved_at": 1794376006.3360455,
   "tables": {
     "tasks": [
       {
@@ -22877,7 +22877,7 @@
         "repo": "openclaw",
         "number": 197024,
         "note": "",
-        "status": "execution_wait",
+        "status": "retry_wait",
         "created": 1794371728.5314665,
         "updated": 1794375968.4272344,
         "result": "Command 'Codex generation' timed out after 2400 seconds",
@@ -38618,10 +38618,6 @@
         "value": "{\"at\": 1794374929.136513, \"allowed\": true, \"reason\": \"\"}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1794375967.9280667, \"windows\": [{\"name\": \"primary\", \"used_percent\": 38, \"resets_at\": 1794380323}]}"
-      },
-      {
         "key": "usage:1760:1:generation",
         "value": "{\"task\": 1760, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794375968.0348694, \"seconds\": 2407.317, \"tokens\": {\"totalTokens\": 15004515, \"inputTokens\": 14991374, \"cachedInputTokens\": 14763904, \"cacheWriteInputTokens\": 0, \"outputTokens\": 13141, \"reasoningOutputTokens\": 3722}, \"first_event_ms\": 1794373567902, \"last_event_ms\": 1794375965927, \"model\": \"gpt-6-sol\", \"complete\": false, \"usage_available\": true}"
       },
@@ -38630,12 +38626,16 @@
         "value": "{}"
       },
       {
-        "key": "task:1760",
-        "value": "{\"started\": 1794373471.8547835, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1760/attempt-1\", \"attempt\": 1, \"phase\": \"execution_wait\", \"base\": \"61e2088cda229bff3a1d2c112f9ec847ad1000cb\", \"replacement_candidate_verified\": 1794373479.8709335, \"dispatch_replacement\": true, \"generation_started\": 1794373560.719653, \"dispatch_paid_date\": \"2026-11-11\", \"phase_started\": 1794373564.2002609, \"last_execution_phase\": \"generation\", \"finished\": 1794375968.0549307}"
+        "key": "worker_heartbeat",
+        "value": "1794375991.548497"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1794375976.5358536"
+        "key": "codex_quota",
+        "value": "{\"at\": 1794375991.8479242, \"windows\": [{\"name\": \"primary\", \"used_percent\": 38, \"resets_at\": 1794380323}]}"
+      },
+      {
+        "key": "task:1760",
+        "value": "{\"started\": 1794373471.8547835, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 1794376306.3138182, \"folder\": \"jobs/1760/attempt-1\", \"attempt\": 1, \"phase\": \"execution_wait\", \"base\": \"61e2088cda229bff3a1d2c112f9ec847ad1000cb\", \"replacement_candidate_verified\": 1794373479.8709335, \"dispatch_replacement\": true, \"generation_started\": 1794373560.719653, \"dispatch_paid_date\": \"2026-11-11\", \"phase_started\": 1794373564.2002609, \"last_execution_phase\": \"generation\", \"finished\": 1794375968.0549307, \"resume_progress\": {\"bundle\": \"1760-1.json\", \"sha256\": \"6c5326f050b5031a1e5585e61bb266707a71fa3000ceddebc37e6250842de586\", \"base\": \"61e2088cda229bff3a1d2c112f9ec847ad1000cb\", \"phase\": \"generation\"}, \"timeout_continuations\": 1}"
       }
     ],
     "calls": [
