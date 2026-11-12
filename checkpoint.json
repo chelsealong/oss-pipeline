@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794497612.3816462,
+  "saved_at": 1794497616.4452012,
   "tables": {
     "tasks": [
       {
@@ -23358,10 +23358,10 @@
         "repo": "openclaw/openclaw",
         "number": 197795,
         "note": "{\"authors\": \"ci\", \"events\": [\"check:ca125afd77a7:review (197795, ca125afd77a7250e851bcbba3cbd02d80055aff1)\"], \"screening_events\": [], \"is_issue\": false, \"head\": \"ca125afd77a7250e851bcbba3cbd02d80055aff1\"}",
-        "status": "running",
+        "status": "blocked",
         "created": 1794497379.9993272,
-        "updated": 1794497384.7305787,
-        "result": "",
+        "updated": 1794497613.4048257,
+        "result": "The review check failed before evaluating the PR because GitHub returned HTTP 503 while fetching PR #197795. The checkout is clean, and no source or description change addresses this service error.",
         "attempts": 1
       }
     ],
@@ -39555,24 +39555,12 @@
         "value": "{\"at\": 1794497401.742055, \"type\": \"RuntimeError\", \"reason\": \"GitHub control operation failed (exit 1)\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1794497548.7407465, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1797:1:generation",
         "value": "{\"task\": 1797, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794497548.7444825, \"seconds\": 83.82, \"tokens\": {\"totalTokens\": 372813, \"inputTokens\": 370941, \"cachedInputTokens\": 308992, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1872, \"reasoningOutputTokens\": 562}, \"first_event_ms\": 1794497472827, \"last_event_ms\": 1794497548738, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1797\": {\"remaining\": 0, \"until\": 1794504749.8700483}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1794485139.679866, \"group\": \"new_fix\", \"task\": 1793, \"phase\": \"generation\"}, {\"at\": 1794491790.667073, \"group\": \"new_fix\", \"task\": 1794, \"phase\": \"generation\"}, {\"at\": 1794492387.6134536, \"group\": \"new_fix\", \"task\": 1795, \"phase\": \"generation\"}, {\"at\": 1794494935.7906053, \"group\": \"new_fix\", \"task\": 1796, \"phase\": \"generation\"}, {\"at\": 1794496366.4815965, \"group\": \"new_fix\", \"task\": 1796, \"phase\": \"review\"}, {\"at\": 1794497464.9259408, \"group\": \"maintenance\", \"task\": 1797, \"phase\": \"generation\"}, {\"at\": 1794497549.8700483, \"group\": \"maintenance\", \"task\": 1797, \"phase\": \"reply-review\"}]"
-      },
-      {
-        "key": "task:1797",
-        "value": "{\"started\": 1794497384.7306406, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1797/attempt-1\", \"attempt\": 1, \"phase\": \"reply-review\", \"base\": \"ca125afd77a7250e851bcbba3cbd02d80055aff1\", \"remote_base\": \"ca125afd77a7250e851bcbba3cbd02d80055aff1\", \"base_update\": {\"original_head\": \"ca125afd77a7250e851bcbba3cbd02d80055aff1\", \"base\": \"ca125afd77a7250e851bcbba3cbd02d80055aff1\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794497553.4815452}"
       },
       {
         "key": "worker_heartbeat",
@@ -39580,7 +39568,27 @@
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1794497607.125321, \"windows\": [{\"name\": \"primary\", \"used_percent\": 9, \"resets_at\": 1794986766}]}"
+        "value": "{\"at\": 1794497612.7745512, \"windows\": [{\"name\": \"primary\", \"used_percent\": 9, \"resets_at\": 1794986766}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1794497612.7772336, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1797:1:reply-review",
+        "value": "{\"task\": 1797, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"reply-review\", \"at\": 1794497612.782884, \"seconds\": 62.915, \"tokens\": {\"totalTokens\": 196064, \"inputTokens\": 194277, \"cachedInputTokens\": 144128, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1787, \"reasoningOutputTokens\": 456}, \"first_event_ms\": 1794497557031, \"last_event_ms\": 1794497612773, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:reply:1797",
+        "value": "{\"status\": \"needs_human\", \"reason\": \"The CI log confirms the HTTP 503, and the recorded PostgreSQL checks were pending. But the PR has no unresolved review feedback\\u2014only ClawSweeper\\u2019s receipt comment. The proposed reply is a status update, so it is not useful feedback follow-up.\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1797",
+        "value": "{\"started\": 1794497384.7306406, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1797/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"ca125afd77a7250e851bcbba3cbd02d80055aff1\", \"remote_base\": \"ca125afd77a7250e851bcbba3cbd02d80055aff1\", \"base_update\": {\"original_head\": \"ca125afd77a7250e851bcbba3cbd02d80055aff1\", \"base\": \"ca125afd77a7250e851bcbba3cbd02d80055aff1\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794497553.4815452, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1794497613.198243}"
       }
     ],
     "calls": [
