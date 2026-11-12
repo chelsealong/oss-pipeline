@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794467296.1457143,
+  "saved_at": 1794467301.4683754,
   "tables": {
     "tasks": [
       {
@@ -23267,10 +23267,10 @@
         "repo": "openclaw",
         "number": 197591,
         "note": "",
-        "status": "running",
+        "status": "human_wait",
         "created": 1794465016.2718763,
-        "updated": 1794465596.4940314,
-        "result": "",
+        "updated": 1794467301.4528687,
+        "result": "HUMAN_REVIEW_REQUIRED: The current test-line policy in docs/ci/local-proof.md requires an approved exact grant to absorb existing ceiling debt. HEAD is already 25 test lines over the ceiling. The new 20-line regression has a matching allocation, but the gate still fails by 25. The tested patch is preserved for review.",
         "attempts": 1
       },
       {
@@ -39137,10 +39137,6 @@
         "value": "{}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1794465592.4281945, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1791:1:generation",
         "value": "{\"task\": 1791, \"repo\": \"langfuse/langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794465592.4373717, \"seconds\": 67.99, \"tokens\": {\"totalTokens\": 439027, \"inputTokens\": 436595, \"cachedInputTokens\": 370560, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2432, \"reasoningOutputTokens\": 1020}, \"first_event_ms\": 1794465532519, \"last_event_ms\": 1794465592425, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -39161,16 +39157,8 @@
         "value": "{\"date\": \"2026-11-12\", \"used\": {\"openclaw\": 9, \"langfuse\": 2, \"comfyui\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1790\": {\"remaining\": 1, \"until\": 1794472861.0322435}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1794449023.6105835, \"group\": \"new_fix\", \"task\": 1783, \"phase\": \"generation\"}, {\"at\": 1794449804.1179557, \"group\": \"new_fix\", \"task\": 1783, \"phase\": \"validation\"}, {\"at\": 1794450329.2715712, \"group\": \"new_fix\", \"task\": 1783, \"phase\": \"review\"}, {\"at\": 1794451037.142986, \"group\": \"new_fix\", \"task\": 1785, \"phase\": \"generation\"}, {\"at\": 1794456377.0464163, \"group\": \"new_fix\", \"task\": 1786, \"phase\": \"generation\"}, {\"at\": 1794459042.1743972, \"group\": \"new_fix\", \"task\": 1787, \"phase\": \"generation\"}, {\"at\": 1794459999.6644583, \"group\": \"new_fix\", \"task\": 1787, \"phase\": \"review\"}, {\"at\": 1794460409.3013275, \"group\": \"repair\", \"task\": 1787, \"phase\": \"remediation\"}, {\"at\": 1794460697.534027, \"group\": \"repair\", \"task\": 1787, \"phase\": \"rereview\"}, {\"at\": 1794461160.0525339, \"group\": \"new_fix\", \"task\": 1788, \"phase\": \"generation\"}, {\"at\": 1794463092.7445068, \"group\": \"new_fix\", \"task\": 1789, \"phase\": \"generation\"}, {\"at\": 1794465524.449903, \"group\": \"maintenance\", \"task\": 1791, \"phase\": \"generation\"}, {\"at\": 1794465661.0322435, \"group\": \"new_fix\", \"task\": 1790, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "task:1790",
-        "value": "{\"started\": 1794465596.49408, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1790/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"c7962d6a108ca4f3f46a76e254bf29a487e5145f\", \"generation_started\": 1794465661.0318866, \"dispatch_paid_date\": \"2026-11-12\", \"phase_started\": 1794465664.6185148}"
       },
       {
         "key": "task:44",
@@ -39397,12 +39385,32 @@
         "value": "1794466339.4597034"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1794467281.9256554, \"windows\": [{\"name\": \"primary\", \"used_percent\": 8, \"resets_at\": 1794986766}]}"
-      },
-      {
         "key": "worker_heartbeat",
         "value": "1794467295.1487327"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1794467301.075018, \"windows\": [{\"name\": \"primary\", \"used_percent\": 8, \"resets_at\": 1794986766}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1794467301.0782564, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1790:1:generation",
+        "value": "{\"task\": 1790, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794467301.1042686, \"seconds\": 1640.075, \"tokens\": {\"totalTokens\": 31795204, \"inputTokens\": 31764953, \"cachedInputTokens\": 31587968, \"cacheWriteInputTokens\": 0, \"outputTokens\": 30251, \"reasoningOutputTokens\": 13529}, \"first_event_ms\": 1794465668665, \"last_event_ms\": 1794467301075, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:1790",
+        "value": "{\"status\": \"needs_human\", \"task\": 1790, \"repo\": \"openclaw\", \"number\": 197591, \"reason\": \"HUMAN_REVIEW_REQUIRED: The current test-line policy in docs/ci/local-proof.md requires an approved exact grant to absorb existing ceiling debt. HEAD is already 25 test lines over the ceiling. The new 20-line regression has a matching allocation, but the gate still fails by 25. The tested patch is preserved for review.\", \"base\": \"c7962d6a108ca4f3f46a76e254bf29a487e5145f\", \"patch_digest\": \"0482e7ea53f93d5424361f033b676e55d4b2694525c3113772288f5ec63a1de8\", \"evidence_bundle\": \"1790-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1790",
+        "value": "{\"started\": 1794465596.49408, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1790/attempt-1\", \"attempt\": 1, \"phase\": \"human_wait\", \"base\": \"c7962d6a108ca4f3f46a76e254bf29a487e5145f\", \"generation_started\": 1794465661.0318866, \"dispatch_paid_date\": \"2026-11-12\", \"phase_started\": 1794465664.6185148, \"patch_digest\": \"0482e7ea53f93d5424361f033b676e55d4b2694525c3113772288f5ec63a1de8\", \"last_execution_phase\": \"generation\", \"finished\": 1794467301.2683282}"
       }
     ],
     "calls": [
