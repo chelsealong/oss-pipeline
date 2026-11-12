@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794456439.4898098,
+  "saved_at": 1794456443.4782283,
   "tables": {
     "tasks": [
       {
@@ -23215,10 +23215,10 @@
         "repo": "comfyui",
         "number": 17701,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1794456363.566474,
-        "updated": 1794456367.5345592,
-        "result": "",
+        "updated": 1794456441.8906698,
+        "result": "Issue #17701 needs a decision about whether MiniMax H3 should retain its malloc graph across sampling steps. The proposed per-forward cleanup would change graph reuse, and this checkout has no CUDA device, PyTorch, or comfy-aimdo to verify the reported VRAM behavior. Open PR #16245 also changes the H3 compiler path, though it addresses a different failure. No safe, CPU-verifiable fix is established.",
         "attempts": 1
       }
     ],
@@ -39012,10 +39012,6 @@
         "value": "[]"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1794455517.0688653, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -39200,10 +39196,6 @@
         "value": "{\"date\": \"2026-11-12\", \"used\": {\"openclaw\": 5, \"langfuse\": 2, \"comfyui\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1786\": {\"remaining\": 1, \"until\": 1794463577.0464163}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1794438527.7501934, \"group\": \"new_fix\", \"task\": 1775, \"phase\": \"generation\"}, {\"at\": 1794438591.4829497, \"group\": \"new_fix\", \"task\": 1776, \"phase\": \"generation\"}, {\"at\": 1794438920.5613675, \"group\": \"new_fix\", \"task\": 1776, \"phase\": \"review\"}, {\"at\": 1794439096.050174, \"group\": \"repair\", \"task\": 1776, \"phase\": \"remediation\"}, {\"at\": 1794440322.7562983, \"group\": \"new_fix\", \"task\": 1777, \"phase\": \"generation\"}, {\"at\": 1794440569.9882252, \"group\": \"new_fix\", \"task\": 1778, \"phase\": \"generation\"}, {\"at\": 1794440865.7959137, \"group\": \"new_fix\", \"task\": 1778, \"phase\": \"review\"}, {\"at\": 1794441020.513326, \"group\": \"new_fix\", \"task\": 1776, \"phase\": \"generation\"}, {\"at\": 1794441347.9444273, \"group\": \"new_fix\", \"task\": 1776, \"phase\": \"review\"}, {\"at\": 1794441625.0891733, \"group\": \"screening\", \"task\": 1779, \"phase\": \"screening-a9d87b99ff73b8a7e82d\"}, {\"at\": 1794441697.9376578, \"group\": \"new_fix\", \"task\": 1779, \"phase\": \"generation\"}, {\"at\": 1794441955.2195349, \"group\": \"new_fix\", \"task\": 1780, \"phase\": \"generation\"}, {\"at\": 1794444603.1823578, \"group\": \"new_fix\", \"task\": 1781, \"phase\": \"generation\"}, {\"at\": 1794444728.3390706, \"group\": \"new_fix\", \"task\": 1782, \"phase\": \"generation\"}, {\"at\": 1794444838.2937782, \"group\": \"new_fix\", \"task\": 1780, \"phase\": \"generation\"}, {\"at\": 1794446065.5227878, \"group\": \"new_fix\", \"task\": 1653, \"phase\": \"generation\"}, {\"at\": 1794446156.83147, \"group\": \"new_fix\", \"task\": 1654, \"phase\": \"generation\"}, {\"at\": 1794449023.6105835, \"group\": \"new_fix\", \"task\": 1783, \"phase\": \"generation\"}, {\"at\": 1794449804.1179557, \"group\": \"new_fix\", \"task\": 1783, \"phase\": \"validation\"}, {\"at\": 1794450329.2715712, \"group\": \"new_fix\", \"task\": 1783, \"phase\": \"review\"}, {\"at\": 1794451037.142986, \"group\": \"new_fix\", \"task\": 1785, \"phase\": \"generation\"}, {\"at\": 1794456377.0464163, \"group\": \"new_fix\", \"task\": 1786, \"phase\": \"generation\"}]"
       },
@@ -39214,10 +39206,6 @@
       {
         "key": "throughput_24h",
         "value": "{\"at\": 1794456378.5316236, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 4, \"error\": 1, \"execution_wait\": 2, \"human_wait\": 2, \"running\": 1, \"skipped\": 20, \"validation_wait\": 3}, \"respond\": {\"blocked\": 1}}}"
-      },
-      {
-        "key": "task:1786",
-        "value": "{\"started\": 1794456367.5346093, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1786/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"a592c0a654af22f75d97f214d6e3e34eb13cd9db\", \"generation_started\": 1794456377.0461843, \"dispatch_paid_date\": \"2026-11-12\", \"phase_started\": 1794456381.886902}"
       },
       {
         "key": "judge_usage",
@@ -39264,12 +39252,32 @@
         "value": "1794456430.560713"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1794456435.5814357, \"windows\": [{\"name\": \"primary\", \"used_percent\": 5, \"resets_at\": 1794986766}]}"
+        "key": "runner_resources",
+        "value": "{\"at\": 1794456439.4747539, \"disk_free_bytes\": 87800377344, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15372787712, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794456435.692143"
+        "value": "1794456440.692234"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1794456441.703083, \"windows\": [{\"name\": \"primary\", \"used_percent\": 5, \"resets_at\": 1794986766}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1794456441.7051575, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1786:1:generation",
+        "value": "{\"task\": 1786, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794456441.7082803, \"seconds\": 64.664, \"tokens\": {\"totalTokens\": 344570, \"inputTokens\": 342283, \"cachedInputTokens\": 298752, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2287, \"reasoningOutputTokens\": 643}, \"first_event_ms\": 1794456389195, \"last_event_ms\": 1794456441703, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1786",
+        "value": "{\"started\": 1794456367.5346093, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1786/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"a592c0a654af22f75d97f214d6e3e34eb13cd9db\", \"generation_started\": 1794456377.0461843, \"dispatch_paid_date\": \"2026-11-12\", \"phase_started\": 1794456381.886902, \"last_execution_phase\": \"generation\", \"finished\": 1794456441.7108319}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -39277,15 +39285,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794456437.1325233"
+        "value": "1794456442.150874"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1794456437.141137"
-      },
-      {
-        "key": "runner_resources",
-        "value": "{\"at\": 1794456439.4747539, \"disk_free_bytes\": 87800377344, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15372787712, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "1794456442.160514"
       }
     ],
     "calls": [
