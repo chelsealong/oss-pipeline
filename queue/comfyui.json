@@ -3,17 +3,75 @@
   "upstream": "Comfy-Org/ComfyUI",
   "implements_in": "Comfy-Org/ComfyUI",
   "needs_assignment": false,
-  "scanned_at": "2026-11-12T14:28:13+00:00",
+  "scanned_at": "2026-11-12T14:52:40+00:00",
   "partial": false,
   "errors": [],
-  "candidates": [],
+  "candidates": [
+    {
+      "number": 17703,
+      "title": "MiniMax H3: MLP runs fc1 on all tokens at once (6.3 GB at 15 s 1344x768), OOM on 12 GB; token-chunked MLP gives identical output",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17703",
+      "created_at": "2026-11-11T23:03:01Z",
+      "age_hours": 15.8,
+      "reason": "clear",
+      "labels": [],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17702,
+      "title": "Dynamic VRAM: second offload stream's cast buffer first grows after block 0's activations, \"VRAM grow failed: 424159232 bytes\" on 15 s FastH3 I2V/R2V",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17702",
+      "created_at": "2026-11-11T23:03:00Z",
+      "age_hours": 15.8,
+      "reason": "clear",
+      "labels": [],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17701,
+      "title": "MiniMax H3: malloc graph keeps its VRAM between sampling steps, so step 2 OOMs on model_output.float() with ~28 MB free",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17701",
+      "created_at": "2026-11-11T23:02:59Z",
+      "age_hours": 15.8,
+      "reason": "clear",
+      "labels": [],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17695,
+      "title": "`--directml` crashes with a native DLL error when torch-directml is missing or incompatible",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17695",
+      "created_at": "2026-11-11T17:25:19Z",
+      "age_hours": 21.5,
+      "reason": "clear",
+      "labels": [],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17687,
+      "title": "Running comfyui update broke comfyui (I think it installed cuda 13 instead of 12 so the app is dead now)",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17687",
+      "created_at": "2026-11-11T12:36:34Z",
+      "age_hours": 26.3,
+      "reason": "clear",
+      "labels": [
+        "Potential Bug"
+      ],
+      "comments": 6,
+      "self_claimed": false
+    }
+  ],
   "rejected": [
     {
       "number": 17719,
       "title": "[Please delete it]",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17719",
       "created_at": "2026-11-12T09:05:27Z",
-      "age_hours": 5.4,
+      "age_hours": 5.8,
       "reason": "body lacks required in-scope signal"
     },
     {
@@ -21,7 +79,7 @@
       "title": "Opt-in two-GPU sequence parallelism for MiniMax H3",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17717",
       "created_at": "2026-11-12T07:43:01Z",
-      "age_hours": 6.7,
+      "age_hours": 7.2,
       "reason": "body lacks required in-scope signal"
     },
     {
@@ -29,7 +87,7 @@
       "title": "MiniMax H3: token refiner gets fp32 q/k beside a bf16 v (sage refuses it), and preprocess_text_embeds drops transformer_options",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17713",
       "created_at": "2026-11-12T07:07:09Z",
-      "age_hours": 7.3,
+      "age_hours": 7.8,
       "reason": "already has PR(s): ['closing-ref PR#17715(OPEN)', 'xref PR#17715(OPEN)']"
     },
     {
@@ -37,7 +95,7 @@
       "title": "Dynamic VRAM: a LoRA patch on a module without comfy_cast_weights is silently dropped (Qwen-Image 2.1 txt_in.text_norm)",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17704",
       "created_at": "2026-11-11T23:03:05Z",
-      "age_hours": 15.4,
+      "age_hours": 15.8,
       "reason": "body lacks required in-scope signal"
     },
     {
@@ -45,7 +103,7 @@
       "title": "MiniMax H3 VSA: RoPE table cache misses every step, so step 2 of a long sparse-attention run OOMs in vsa_rope_freqs",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17700",
       "created_at": "2026-11-11T23:02:58Z",
-      "age_hours": 15.4,
+      "age_hours": 15.8,
       "reason": "already has PR(s): ['closing-ref PR#17706(OPEN)', 'xref PR#17706(OPEN)']"
     },
     {
@@ -53,7 +111,7 @@
       "title": "YuE2 VAE: a grown decoder (YuE2-VAE-RS x3) loses 210 tensors silently under strict=False; a 35-line patch is ready",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17697",
       "created_at": "2026-11-11T18:07:06Z",
-      "age_hours": 20.4,
+      "age_hours": 20.8,
       "reason": "issue author igrbible offers to implement"
     },
     {
@@ -61,7 +119,7 @@
       "title": "Sort workflows by name",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17694",
       "created_at": "2026-11-11T16:43:00Z",
-      "age_hours": 21.8,
+      "age_hours": 22.2,
       "reason": "body lacks required in-scope signal"
     },
     {
@@ -69,7 +127,7 @@
       "title": "The hustler",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17693",
       "created_at": "2026-11-11T16:32:00Z",
-      "age_hours": 21.9,
+      "age_hours": 22.3,
       "reason": "body lacks required in-scope signal"
     },
     {
@@ -77,7 +135,7 @@
       "title": "MiniMax H3 Image: raw HF (non-curve) checkpoint loads silently and outputs pure color noise with no warning",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17692",
       "created_at": "2026-11-11T15:14:50Z",
-      "age_hours": 23.2,
+      "age_hours": 23.6,
       "reason": "already has PR(s): ['closing-ref PR#17705(OPEN)', 'xref PR#17705(OPEN)']"
     },
     {
@@ -85,7 +143,7 @@
       "title": "Dynamic VRAM applies LoRAs in the weight's dtype: on bf16 models, part of the LoRA rounds away",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17690",
       "created_at": "2026-11-11T14:37:47Z",
-      "age_hours": 23.8,
+      "age_hours": 24.2,
       "reason": "body lacks required in-scope signal"
     }
   ]
