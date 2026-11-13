@@ -3,7 +3,7 @@
   "upstream": "Comfy-Org/ComfyUI",
   "implements_in": "Comfy-Org/ComfyUI",
   "needs_assignment": false,
-  "scanned_at": "2026-11-13T13:50:47+00:00",
+  "scanned_at": "2026-11-13T13:52:11+00:00",
   "partial": false,
   "errors": [],
   "candidates": [
@@ -12,8 +12,76 @@
       "title": "RAM pressure cache evicts the running workflow's loaded models when they aren't dynamic (e.g. --highvram), so every prompt reloads them from disk",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17732",
       "created_at": "2026-11-13T13:50:28Z",
+      "age_hours": 0.0,
       "reason": "clear",
-      "age_hours": 0.005285380555555556,
+      "labels": [],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17731,
+      "title": "Bug: ComfyUI crashes on Windows (Chinese locale) with TypeError when loading extra model paths (UTF-8/GBK issue)",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17731",
+      "created_at": "2026-11-13T11:41:55Z",
+      "age_hours": 2.2,
+      "reason": "clear",
+      "labels": [
+        "Potential Bug"
+      ],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17728,
+      "title": "Expose committed tokens during generation, so custom nodes can stream text without disabling MTP",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17728",
+      "created_at": "2026-11-13T04:22:58Z",
+      "age_hours": 9.5,
+      "reason": "clear",
+      "labels": [],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17703,
+      "title": "MiniMax H3: MLP runs fc1 on all tokens at once (6.3 GB at 15 s 1344x768), OOM on 12 GB; token-chunked MLP gives identical output",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17703",
+      "created_at": "2026-11-11T23:03:01Z",
+      "age_hours": 38.8,
+      "reason": "clear",
+      "labels": [],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17702,
+      "title": "Dynamic VRAM: second offload stream's cast buffer first grows after block 0's activations, \"VRAM grow failed: 424159232 bytes\" on 15 s FastH3 I2V/R2V",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17702",
+      "created_at": "2026-11-11T23:03:00Z",
+      "age_hours": 38.8,
+      "reason": "clear",
+      "labels": [],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17701,
+      "title": "MiniMax H3: malloc graph keeps its VRAM between sampling steps, so step 2 OOMs on model_output.float() with ~28 MB free",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17701",
+      "created_at": "2026-11-11T23:02:59Z",
+      "age_hours": 38.8,
+      "reason": "clear",
+      "labels": [],
+      "comments": 0,
+      "self_claimed": false
+    },
+    {
+      "number": 17695,
+      "title": "`--directml` crashes with a native DLL error when torch-directml is missing or incompatible",
+      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17695",
+      "created_at": "2026-11-11T17:25:19Z",
+      "age_hours": 44.4,
+      "reason": "clear",
       "labels": [],
       "comments": 0,
       "self_claimed": false
@@ -25,7 +93,7 @@
       "title": "Adaptive Projected Guidance changes the result at cfg 1.0",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17723",
       "created_at": "2026-11-12T17:00:15Z",
-      "age_hours": 19.5,
+      "age_hours": 20.9,
       "reason": "body lacks required in-scope signal"
     },
     {
@@ -33,7 +101,7 @@
       "title": "Opt-in two-GPU sequence parallelism for MiniMax H3",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17717",
       "created_at": "2026-11-12T07:43:01Z",
-      "age_hours": 28.7,
+      "age_hours": 30.2,
       "reason": "body lacks required in-scope signal"
     },
     {
@@ -41,7 +109,7 @@
       "title": "MiniMax H3: token refiner gets fp32 q/k beside a bf16 v (sage refuses it), and preprocess_text_embeds drops transformer_options",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17713",
       "created_at": "2026-11-12T07:07:09Z",
-      "age_hours": 29.3,
+      "age_hours": 30.7,
       "reason": "already has PR(s): ['closing-ref PR#17715(OPEN)', 'xref PR#17715(OPEN)']"
     },
     {
@@ -49,7 +117,7 @@
       "title": "Dynamic VRAM: a LoRA patch on a module without comfy_cast_weights is silently dropped (Qwen-Image 2.1 txt_in.text_norm)",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17704",
       "created_at": "2026-11-11T23:03:05Z",
-      "age_hours": 37.4,
+      "age_hours": 38.8,
       "reason": "body lacks required in-scope signal"
     },
     {
@@ -57,7 +125,7 @@
       "title": "MiniMax H3 VSA: RoPE table cache misses every step, so step 2 of a long sparse-attention run OOMs in vsa_rope_freqs",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17700",
       "created_at": "2026-11-11T23:02:58Z",
-      "age_hours": 37.4,
+      "age_hours": 38.8,
       "reason": "already has PR(s): ['closing-ref PR#17706(OPEN)', 'xref PR#17706(OPEN)']"
     },
     {
@@ -65,7 +133,7 @@
       "title": "YuE2 VAE: a grown decoder (YuE2-VAE-RS x3) loses 210 tensors silently under strict=False; a 35-line patch is ready",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17697",
       "created_at": "2026-11-11T18:07:06Z",
-      "age_hours": 42.4,
+      "age_hours": 43.8,
       "reason": "already has PR(s): ['xref PR#33(OPEN)']"
     },
     {
@@ -73,7 +141,7 @@
       "title": "Sort workflows by name",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17694",
       "created_at": "2026-11-11T16:43:00Z",
-      "age_hours": 43.8,
+      "age_hours": 45.2,
       "reason": "body lacks required in-scope signal"
     },
     {
@@ -81,16 +149,8 @@
       "title": "The hustler",
       "url": "https://github.com/Comfy-Org/ComfyUI/issues/17693",
       "created_at": "2026-11-11T16:32:00Z",
-      "age_hours": 43.9,
+      "age_hours": 45.3,
       "reason": "body lacks required in-scope signal"
-    },
-    {
-      "number": 17692,
-      "title": "MiniMax H3 Image: raw HF (non-curve) checkpoint loads silently and outputs pure color noise with no warning",
-      "url": "https://github.com/Comfy-Org/ComfyUI/issues/17692",
-      "created_at": "2026-11-11T15:14:50Z",
-      "age_hours": 45.2,
-      "reason": "already has PR(s): ['closing-ref PR#17705(OPEN)', 'xref PR#17705(OPEN)']"
     }
   ]
 }
