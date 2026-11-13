@@ -50,7 +50,7 @@ def codex_admit(db, task, phase, spent, limit):
     ident = str(task['id']) if task else ''
     remaining = sum(v['remaining'] for k, v in leases.items() if k != ident)
     own = leases.get(ident, {}).get('remaining', 0)
-    start = phase in ('generation', 'remediation')
+    start = phase in ('generation', 'remediation', 'description-remediation')
     need = 2 if task and start else 1
     allowed, why = quota_gate(db, starting=screening or (phase == 'generation' and not own))
     if not allowed:
@@ -67,7 +67,7 @@ def codex_admit(db, task, phase, spent, limit):
         calls.append({'at': now, 'task': task['id'] if task else None, 'phase': phase})
         rt._putmeta(db, 'codex_screening_calls', calls)
     group = ('screening' if screening else 'validation' if not task or task['kind'] == 'canary' else
-             'repair' if phase in ('remediation', 'rereview', 'review-policy', 'rereview-policy') else
+             'repair' if phase in ('remediation', 'description-remediation', 'rereview', 'review-policy', 'rereview-policy') else
              'maintenance' if task['kind'] == 'respond' else 'new_fix')
     usage = [x for x in rt._meta(db, 'codex_allocations', []) if x['at'] > now - 18000]
     # Soft shares can borrow idle capacity, but may not starve the other queue.

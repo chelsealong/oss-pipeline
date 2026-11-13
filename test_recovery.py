@@ -168,6 +168,83 @@ class RecoveryTests(unittest.TestCase):
         with patch.object(worker,'agent',side_effect=[block,generation,block]) as agent:
             _,review=worker.review_patch(task,work,folder,'hermes',base,generation,'review')
         self.assertEqual(review['verdict'],'BLOCK');self.assertEqual(agent.call_count,3)
+    def publication_fixture(self):
+        task=self.task();folder,work,base=self.checkout(task)
+        template=work/'.github/pull_request_template.md';template.parent.mkdir()
+        template.write_text('## What Problem This Solves\n\n## Evidence\n')
+        self.git(work,'add','.');self.git(work,'commit','-m','template')
+        base=self.git(work,'rev-parse','HEAD');rt.task_state(task['id'],base=base)
+        (work/'value.py').write_text('value = 2\n')
+        result={'outcome':'READY','reason':'fixed','title':'fix','body':'Codex','tests':'passed'}
+        body='## What Problem This Solves\nFixes the tested failure.\n## Evidence\nFocused test passes. Codex assistance.'
+        return task,folder,work,base,result,body
+    def test_description_corrected_readonly_before_independent_review(self):
+        task,folder,work,base,result,body=self.publication_fixture()
+        approve={'verdict':'APPROVE','reason':'verified','tests_verified':True,'repairable':False}
+        digest=worker.fingerprint(work)
+        with patch.object(worker,'agent',side_effect=[{'body':body},approve]) as agent:
+            corrected,review=worker.review_patch(task,work,folder,'openclaw',base,result,'review')
+        self.assertEqual([c.args[2].stem for c in agent.call_args_list],['description-remediation','review'])
+        self.assertTrue(agent.call_args_list[0].kwargs['read_only'])
+        self.assertEqual(corrected['body'],body);self.assertEqual(corrected['tests'],result['tests'])
+        self.assertEqual(worker.fingerprint(work),digest);self.assertEqual(review,approve)
+        self.assertEqual(json.loads((folder/'generation.json').read_text())['body'],body)
+    def test_description_repair_cannot_edit_patch_or_bypass_review(self):
+        task,folder,work,base,result,body=self.publication_fixture()
+        def mutate(*args,**kwargs):
+            (work/'value.py').write_text('value = 999\n');return {'body':body}
+        with patch.object(worker,'agent',side_effect=mutate):
+            with self.assertRaisesRegex(RuntimeError,'description correction changed'):
+                worker.review_patch(task,work,folder,'openclaw',base,result,'review')
+    def test_empty_or_commented_description_does_not_consume_expensive_review(self):
+        task,folder,work,base,result,body=self.publication_fixture()
+        bad='<!-- '+body+' -->\n## What Problem This Solves\n## Evidence\n'
+        with patch.object(worker,'agent',return_value={'body':bad}) as agent:
+            _,review=worker.review_patch(task,work,folder,'openclaw',base,result,'review')
+        self.assertEqual(review['verdict'],'BLOCK');self.assertFalse(review['tests_verified'])
+        self.assertEqual(agent.call_count,1)
+    def test_complete_description_needs_no_correction_call(self):
+        task,folder,work,base,result,body=self.publication_fixture();result['body']=body
+        approve={'verdict':'APPROVE','reason':'verified','tests_verified':True,'repairable':False}
+        with patch.object(worker,'agent',return_value=approve) as agent:
+            worker.review_patch(task,work,folder,'openclaw',base,result,'review')
+        self.assertEqual([c.args[2].stem for c in agent.call_args_list],['review'])
+    def test_description_lost_during_code_repair_is_checked_before_rereview(self):
+        task,folder,work,base,result,body=self.publication_fixture()
+        block={'verdict':'BLOCK','reason':'edge test missing','tests_verified':False,'repairable':True}
+        approve={'verdict':'APPROVE','reason':'verified','tests_verified':True,'repairable':False}
+        with patch.object(worker,'agent',side_effect=[block,result,{'body':body},approve]) as agent:
+            _,review=worker.review_patch(task,work,folder,'openclaw',base,result|{'body':body},'review')
+        self.assertEqual([c.args[2].stem for c in agent.call_args_list],
+                         ['review','remediation','description-remediation','rereview'])
+        self.assertEqual(review['verdict'],'APPROVE')
+    def test_description_correction_is_bounded_across_code_remediation(self):
+        task,folder,work,base,result,body=self.publication_fixture()
+        block={'verdict':'BLOCK','reason':'edge test missing','tests_verified':False,'repairable':True}
+        with patch.object(worker,'agent',side_effect=[{'body':body},block,result]) as agent:
+            _,review=worker.review_patch(task,work,folder,'openclaw',base,result,'review')
+        self.assertEqual(agent.call_count,3);self.assertEqual(review['verdict'],'BLOCK')
+
+    def test_response_contract_does_not_require_uncreated_sha(self):
+        import publication_contract as contract
+        with tempfile.TemporaryDirectory() as root:
+            self.assertIn('full new SHA',contract.prompt(Path(root),'spec-kit','respond'))
+            self.assertIn('REPLY without source changes gets',contract.prompt(Path(root),'spec-kit','respond'))
+            self.assertNotIn('full new SHA',contract.prompt(Path(root),'spec-kit','fix'))
+    def test_audited_publication_recovery_requires_exact_evidence_and_only_once(self):
+        import task_recovery
+        task={'id':1772,'kind':'respond','repo':'github/spec-kit','number':5391,'status':'blocked','attempts':1}
+        state={'base':'9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3',
+            'patch_digest':'4fe941f9761d7c805b686c0f14d68074129e92774dc46d8f1d318e3c3378b353',
+            'last_execution_phase':'generation'}
+        self.assertTrue(task_recovery.publication_contract_regression(task,state))
+        for change in ({'publication_started':True},{'publication_contract_repaired':{}},
+                       {'patch_digest':'different'},{'base':'different'}):
+            # The durable repair marker is a nonempty provenance record.
+            if 'publication_contract_repaired' in change:change['publication_contract_repaired']={'at':1}
+            self.assertFalse(task_recovery.publication_contract_regression(task,state|change))
+        self.assertFalse(task_recovery.publication_contract_regression(task|{'attempts':2},state))
+
     def test_duplicate_block_does_not_trigger_repair(self):
         task=self.task();folder,work,base=self.checkout(task)
         block={'verdict':'BLOCK','reason':'duplicate','tests_verified':True,'repairable':False}

@@ -574,6 +574,8 @@ class ProductionReliabilityTests(unittest.TestCase):
         self.assertNotEqual(new,original)
         self.git(source,'merge-base','--is-ancestor',original,new)
         self.assertEqual(call.args[2],new)
+        self.assertTrue(call.args[1].endswith('/commit/'+new))
+        self.assertIn('Commit: https://github.com/',call.args[1])
         self.assertEqual(self.git(source,'show','old-pr:fix'),'updated fix')
         self.assertEqual(state['publication_outcome'],'updated')
     def test_agent_environment_cannot_write_runner_control_files(self):

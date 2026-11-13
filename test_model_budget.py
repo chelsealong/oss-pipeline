@@ -45,6 +45,21 @@ class BudgetTests(unittest.TestCase):
     def response(self,decision=None,usage=None):
         return io.BytesIO(json.dumps({'choices':[{'message':{'content':json.dumps(decision or {'claim':False,'why':'report'})}}],
                                     'usage':usage or {'prompt_tokens':40,'completion_tokens':10,'total_tokens':50}}).encode())
+    def test_description_correction_reserves_new_review_without_resetting_calls(self):
+        self.cfg['codex_sessions_per_5h']=3;self.save();task=self.task()
+        self.assertTrue(rt.reserve_call('codex',task=task,phase='generation')[0])
+        self.assertTrue(rt.reserve_call('codex',task=task,phase='description-remediation')[0])
+        other=self.task(kind='respond')
+        self.assertFalse(rt.reserve_call('codex',task=other,phase='generation')[0])
+        self.assertTrue(rt.reserve_call('codex',task=task,phase='review')[0])
+        with rt.db() as db:self.assertEqual(db.execute("SELECT count(*) FROM calls WHERE kind='codex'").fetchone()[0],3)
+        self.assertEqual(rt.getmeta('dispatch_budget')['used']['openclaw'],1)
+    def test_description_correction_cannot_spend_last_review_slot(self):
+        self.cfg['codex_sessions_per_5h']=2;self.save();task=self.task()
+        self.assertTrue(rt.reserve_call('codex',task=task,phase='generation')[0])
+        self.assertFalse(rt.reserve_call('codex',task=task,phase='description-remediation')[0])
+        self.assertTrue(rt.reserve_call('codex',task=task,phase='review')[0])
+
     def test_unknown_free_only_models_never_send_http(self):
         self.cfg['judge_free_only_models']=[];self.save()
         with patch.object(intent.urllib.request,'urlopen',side_effect=AssertionError('network')):

@@ -177,6 +177,19 @@ verified and no newer response task/publication exists.
 
 ## Recovery and validation
 
+November 13: validate populated OpenClaw PR-template sections from the current
+checkout before expensive review. Permit at most one read-only description-only
+correction per review sequence, with immutable patch/HEAD checks, normal spending
+and a reserved independent review. It does not replace tests or authorize extra
+code remediation. Generation and remediation receive the same template contract.
+For code responses, the controller appends the actual full commit URL after the
+approved patch is committed and pushed; generators must not invent a future SHA
+or block solely because it has not yet been created. Reply-only work creates no
+commit. Only audited attempts 1758, 1772 and 1787 may resume once under this repair,
+with matching base/patch evidence, no publication, current remote reconciliation,
+and no newer response task. Restore source into a fresh checkout, never retained
+ignored dist locks; do not delete uncertain ownership locks or waive checks.
+
 On November 10 the user authorized fixing candidate selection and exhausted
 task-start admission. Do not refund model calls or reset the ordinary daily
 start ledger. OpenClaw may use at most three replacement starts per UTC day,

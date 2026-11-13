@@ -21,6 +21,7 @@ import task_recovery
 import pr_followup
 import execution_support as execution
 import repo_limits
+import publication_contract
 
 ME = 'chelsealong'
 EMAIL = 'chelsealong@126.com'
@@ -400,14 +401,44 @@ def scope_check(work,key):
     if not files: raise RuntimeError('READY without any changes')
 
 def review_patch(task, work, folder, key, base, result, prompt):
-    """At most one repair, always followed by a new immutable review."""
+    """Bound one code repair and one description correction; always review afresh."""
     policy_rechecked=False
+    description_repaired=False
+    prompt+=publication_contract.prompt(work,key,task['kind'])
     for round_no in range(2):
         import screenshot_evidence
         result,images=screenshot_evidence.prepare(result,task,folder)
         # The reviewer sees the exact proposed description, including planned
         # content-addressed image URLs. No screenshot is public before approval.
         (folder/('generation.json' if round_no==0 else 'remediation.json')).write_text(json.dumps(result,indent=2))
+        field='body' if task['kind']=='fix' else 'pr_body'
+        missing=publication_contract.missing_sections(result.get(field,''),
+            publication_contract.required_sections(work,key)) if task['kind']=='fix' or result.get(field) else []
+        if missing:
+            if description_repaired:
+                return result,{'verdict':'BLOCK','reason':'PR description still missing populated sections: '+', '.join(missing),
+                    'tests_verified':False,'repairable':False}
+            description_repaired=True
+            before=fingerprint(work)
+            corrected=agent(f'''Read context.json and the latest proposed result in
+{folder/('generation.json' if round_no==0 else 'remediation.json')}. Correct only its {field}.
+Read the upstream PR template and retained test evidence. Missing populated sections: {json.dumps(missing)}.
+Return only JSON with a body string containing the complete corrected description. Preserve actual
+scope, attribution, risks, failures and validation gaps. Do not invent results or human attestations.
+No source edits, commands that run tests/builds, commits, network writes, or publication. This is a
+description-only correction; a separate reviewer will still verify the exact patch and description.
+''',work,folder/'description-remediation.json',
+                {'type':'object','properties':{'body':{'type':'string'}},'required':['body'],'additionalProperties':False},
+                timeout=180,repo_key=key,task=task,read_only=True)
+            if before!=fingerprint(work) or git(work,'rev-parse','HEAD')!=base:
+                raise RuntimeError('description correction changed the patch; approval invalid')
+            result={**result,field:corrected['body']}
+            result,images=screenshot_evidence.prepare(result,task,folder)
+            (folder/('generation.json' if round_no==0 else 'remediation.json')).write_text(json.dumps(result,indent=2))
+            remaining=publication_contract.missing_sections(result[field],publication_contract.required_sections(work,key))
+            if remaining:
+                return result,{'verdict':'BLOCK','reason':'PR description still missing populated sections: '+', '.join(remaining),
+                    'tests_verified':False,'repairable':False}
         review_prompt=prompt
         if images:
             review_prompt+=f'\nRead {folder/"screenshots-review.json"} and visually inspect both local PNGs. Verify actual before/after rendering for this exact patch using synthetic data and no credentials/private user data. The controller will upload these exact immutable images to their planned URLs only after approval and before creating/updating the PR. The URL is not expected to exist yet; local evidence must be real and sufficient. Do not edit the images.\n'
@@ -451,7 +482,7 @@ resolved with permitted local work, return BLOCKED and explain. Refresh the prop
 actual test evidence in the requested JSON. Never claim human verification. Foreground commands only.
 Run the actual upstream pre-PR checks. For OpenClaw, PR CI supplies broad proof; check:changed
 is an optional diagnostic, not a controller prerequisite. Disclose any observed failure honestly.
-''',work,folder/'remediation.json',RESPONSE_SCHEMA if task['kind']=='respond' else GEN_SCHEMA,timeout=1200,repo_key=key,task=task)
+'''+publication_contract.prompt(work,key,task['kind']),work,folder/'remediation.json',RESPONSE_SCHEMA if task['kind']=='respond' else GEN_SCHEMA,timeout=1200,repo_key=key,task=task)
         if result['outcome']!='READY':
             return result,{'verdict':'BLOCK','reason':result['reason'],'repairable':False,'tests_verified':False}
         if git(work,'rev-parse','HEAD')!=base:raise RuntimeError('remediation unexpectedly committed')
@@ -641,6 +672,7 @@ a replacement PR description. State actual validation and disclose Codex assista
 Do not assert personal human validation.
 '''
     schema=RESPONSE_SCHEMA if kind=='respond' else GEN_SCHEMA
+    prompt+=publication_contract.prompt(work,key,kind)
     prompt+='\nBefore editing, identify validation needed for this exact change from CURRENT upstream contribution instructions. Historical outcomes are examples, not additional mandatory gates. Focused tests and direct local behavior checks can be sufficient for submission; do not infer a universal requirement for a live provider, authenticated messaging account, system service, or production deployment. Do not make paid API calls or use personal credentials for validation. If an explicit applicable upstream check or the actual affected behavior needs unavailable hardware/platform/services, cite that requirement and return the specific validation blocker. If upstream explicitly requires human oversight, retain a minimal tested draft for the exact-patch human review workflow and return BLOCKED with reason beginning HUMAN_REVIEW_REQUIRED: before publication review; do not invent approval. Generic optional attestations are not a gate.\n'
     if kind=='respond':
         prompt+='\nHEAD is the validation base; context.json includes the original remote PR. The controller preserves the branch unless GitHub reports an actual merge conflict. Do not rebase/commit yourself or refresh main merely because it advanced. Any approved update must be a fast-forward from the original PR head. Identify any concrete base-related blocker explicitly.\n'

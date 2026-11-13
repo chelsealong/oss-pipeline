@@ -13,9 +13,26 @@ import repo_limits
 
 WAIT_STATES=('capacity_wait','human_wait','validation_wait','execution_wait')
 
+def publication_contract_regression(task, state):
+    """Only the three audited unpublished attempts; no generic retry of blocks."""
+    evidence = {
+        1758: ('fix', 'openclaw', 197015, 'c5d53d03802bb9aa6562c222aa0668ee138b2f9c',
+               '7f2ff44b83a8655599151250f9a7075241747c4dfa1fcda67d911014b84ad353', 'rereview'),
+        1772: ('respond', 'github/spec-kit', 5391, '9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3',
+               '4fe941f9761d7c805b686c0f14d68074129e92774dc46d8f1d318e3c3378b353', 'generation'),
+        1787: ('fix', 'openclaw', 197532, '36afa92b2370c23bfd64d3f4a6f1b3aab68fd300',
+               'bd40ca61ddb7ed55a9c37a77fe8173979073dde3865013201fb6fb00f5930bb3', 'rereview'),
+    }
+    expected = evidence.get(task.get('id'))
+    return bool(expected and task['status']=='blocked' and task['attempts']==1
+        and not state.get('publication_contract_repaired') and not state.get('publication_started')
+        and (task['kind'],task['repo'],task['number'],state.get('base'),state.get('patch_digest'),
+             state.get('last_execution_phase',state.get('phase')))==expected)
+
 def submission_regression(task,state):
-    """Identify only the October 13 controller regressions, never approve work."""
+    """Identify audited controller regressions, never approve work."""
     if state.get('publication_started'):return None
+    if publication_contract_regression(task,state):return 'publication_contract'
     phase=state.get('last_execution_phase',state.get('phase'))
     reason=task.get('result','')
     failure=rt.getmeta('runner_failure',{})
@@ -89,6 +106,15 @@ def recover_submission_regressions():
         if not path:continue
         payload=json.loads(path.read_text())
         if payload['execution'].get('attempt')!=task['attempts']:continue
+        if repair=='publication_contract':
+            # Resume only complete source evidence in a fresh checkout. Ignored
+            # build artifacts/retained dist locks are not restored or deleted.
+            if not retained_progress(task):continue
+            if not publication_contract_regression(task,payload['execution']):continue
+            if task['kind']=='respond':
+                with rt.db() as db:
+                    if db.execute('SELECT 1 FROM tasks WHERE kind=? AND repo=? AND number=? AND id>?',
+                                  ('respond',task['repo'],task['number'],task['id'])).fetchone():continue
         if repair in ('optional_broad_check','ui_screenshot_delivery','checkpoint_resource_failure','langfuse_static_memory','browser_config_directory','screenshot_readback','submission_proof_policy') and not retained_progress(task):continue
         if repair=='unnecessary_main_merge':
             if payload.get('diff') or payload.get('untracked') or payload.get('files') or payload['execution'].get('base'):continue
@@ -250,7 +276,7 @@ def repaired_infrastructure(task,state):
             and not state.get('base') and (reason=='PR history exceeds bounded merge-base fetch; retained for follow-up'
                 or reason.strip()=='git failed (128): fatal: shallow file has changed since we read it')):
         return True
-    if (phase in ('checkout','generation','review','remediation','rereview')
+    if (phase in ('checkout','generation','review','remediation','description-remediation','rereview')
             and re.search(r"No such file or directory: .*?/jobs/\d+/attempt-\d+/work/\.aws",reason)):
         return True
     return (task['kind']=='respond' and bool(state.get('base'))
@@ -365,7 +391,7 @@ def audited_unpublished(task):
         return False,'A prior attempt may already have published'
     read_failure=failed_read(task.get('result',''))
     phase=state.get('last_execution_phase',state.get('phase'))
-    known_phase=phase in ('checkout','generation','review','remediation','rereview','validation')
+    known_phase=phase in ('checkout','generation','review','remediation','description-remediation','rereview','validation')
     if not read_failure and not repaired_infrastructure(task,state) and not submission_regression(task,state) and not (task['status']=='interrupted' and known_phase):
         return False,'No positive evidence of a pre-publication interruption'
     key,cfg=worker.configs(task);impl=cfg.get('implements_in') or cfg['upstream']
@@ -404,6 +430,7 @@ def requeue(task,repair=None):
                     'stale_prompt_cap':'stale_cap_repaired',
                     'response_promisor':'response_promisor_repaired',
                     'submission_proof_policy':'submission_proof_rechecked',
+                    'publication_contract':'publication_contract_repaired',
                     'screenshot_readback':'screenshot_readback_repaired'}.get(repair,'submission_repaired')
             state[marker]={'at':time.time(),'repair':repair,'attempt':current['attempts']}
         rt._putmeta(db,f"task:{task['id']}",state)
@@ -449,7 +476,7 @@ def reconcile(limit=8):
             if task['attempts']>=3 or state.get('publication_started'):continue
             phase=state.get('last_execution_phase',state.get('phase'))
             if status=='error' and not failed_read(reason) and not repaired:continue
-            if status=='interrupted' and phase not in ('checkout','generation','review','remediation','rereview','validation'):continue
+            if status=='interrupted' and phase not in ('checkout','generation','review','remediation','description-remediation','rereview','validation'):continue
         elif status not in WAIT_STATES:continue
         if checked>=limit:break
         checked+=1;rt.task_state(task['id'],recovery_checked_at=time.time())
