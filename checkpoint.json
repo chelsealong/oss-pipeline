@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794589890.6565778,
+  "saved_at": 1794589955.2162232,
   "tables": {
     "tasks": [
       {
@@ -40040,10 +40040,6 @@
         "value": "[{\"at\": 1794576425.3971856, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1794576425.4262953, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1794576428.4429739, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1794576428.79258, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1794576464.495878, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1794576464.8859236, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1794577862.991104, \"group\": \"new_fix\", \"task\": 1817, \"phase\": \"generation\"}, {\"at\": 1794578025.587479, \"group\": \"new_fix\", \"task\": 1817, \"phase\": \"review\"}, {\"at\": 1794581184.9792967, \"group\": \"new_fix\", \"task\": 1818, \"phase\": \"generation\"}, {\"at\": 1794582071.787957, \"group\": \"maintenance\", \"task\": 1819, \"phase\": \"generation\"}, {\"at\": 1794582196.3898096, \"group\": \"maintenance\", \"task\": 1819, \"phase\": \"reply-review\"}, {\"at\": 1794583358.8292453, \"group\": \"new_fix\", \"task\": 1820, \"phase\": \"generation\"}, {\"at\": 1794587373.9205716, \"group\": \"new_fix\", \"task\": 1821, \"phase\": \"generation\"}, {\"at\": 1794589470.073109, \"group\": \"new_fix\", \"task\": 1822, \"phase\": \"generation\"}]"
       },
       {
-        "key": "prwatch_heartbeat",
-        "value": "1794589512.1387508"
-      },
-      {
         "key": "task:1772",
         "value": "{\"started\": 1794433734.3683045, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1772/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"remote_base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base_update\": {\"original_head\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794433749.2429795, \"patch_digest\": \"4fe941f9761d7c805b686c0f14d68074129e92774dc46d8f1d318e3c3378b353\", \"last_execution_phase\": \"generation\", \"finished\": 1794433882.8292596, \"recovery_checked_at\": 1794589682.3025532}"
       },
@@ -40241,63 +40237,71 @@
       },
       {
         "key": "admission_health",
-        "value": "{\"at\": 1794589829.806799, \"state\": \"waiting\", \"pending_candidates\": 431, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 31, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 431}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 14, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 359.7238266468048, \"judge_tokens_spent_24h\": 85971, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 2, \"validation_wait\": 4, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8126\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8126\", \"title\": \"Typed guardrail exit-state on the confirmation ledger (PASS / DEGRADE / VETO)\", \"first_seen\": 1794569398.1318974, \"last_checked\": 1794588984.0356817, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
+        "value": "{\"at\": 1794589894.2872357, \"state\": \"waiting\", \"pending_candidates\": 431, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 31, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 431}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 14, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 424.2041153907776, \"judge_tokens_spent_24h\": 85971, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 2, \"validation_wait\": 4, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8126\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8126\", \"title\": \"Typed guardrail exit-state on the confirmation ledger (PASS / DEGRADE / VETO)\", \"first_seen\": 1794569398.1318974, \"last_checked\": 1794588984.0356817, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1794589829.8081548, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 2, \"done\": 4, \"human_wait\": 1, \"skipped\": 7}, \"respond\": {\"blocked\": 2, \"done\": 2, \"validation_wait\": 4}}}"
+        "value": "{\"at\": 1794589894.2887034, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 2, \"done\": 4, \"human_wait\": 1, \"skipped\": 7}, \"respond\": {\"blocked\": 2, \"done\": 2, \"validation_wait\": 4}}}"
       },
       {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1794589862.6411517, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1794589863.0893078, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1794589863.53641, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1794589863.9461446, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1794589864.3420646, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1794589865.137972, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1794589866.2459712, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1794589866.693208, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1794589867.1988487, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1794589867.7783437, \"allowed\": true, \"reason\": \"\"}"
+        "key": "prwatch_heartbeat",
+        "value": "1794589899.1652794"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1794589873.3372507, \"windows\": [{\"name\": \"primary\", \"used_percent\": 7, \"resets_at\": 1795158830}]}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1794589886.6767135"
+        "value": "{\"at\": 1794589933.630852, \"windows\": [{\"name\": \"primary\", \"used_percent\": 7, \"resets_at\": 1795158830}]}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1794589887.8484056"
+        "value": "1794589937.6413367"
+      },
+      {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1794589938.0384874, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1794589938.5152884, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1794589938.9080052, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1794589939.2656384, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1794589939.678814, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1794589940.0561314, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1794589941.0490596, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1794589941.6327925, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:autogpt",
+        "value": "{\"at\": 1794589941.9742901, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:comfyui",
+        "value": "{\"at\": 1794589942.4916446, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1794589949.7623413"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1794589951.6781301"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -40305,15 +40309,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794589888.4643848"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1794589889.756319"
+        "value": "1794589953.2842839"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1794589890.6402667, \"disk_free_bytes\": 87104790528, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15390617600, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1794589955.200666, \"disk_free_bytes\": 87103426560, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15337525248, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       }
     ],
     "calls": [
