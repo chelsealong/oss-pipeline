@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794567717.9673226,
+  "saved_at": 1794567722.7662466,
   "tables": {
     "tasks": [
       {
@@ -23592,10 +23592,10 @@
         "repo": "openclaw/openclaw",
         "number": 198216,
         "note": "{\"authors\": \"ci\", \"events\": [\"standing:needs proof:906352a45e1e\"], \"screening_events\": [], \"is_issue\": false, \"head\": \"906352a45e1e088225c0efb4746c76fc52c54743\"}",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1794566166.5501275,
-        "updated": 1794566431.2595143,
-        "result": "",
+        "updated": 1794567722.7504156,
+        "result": "VALIDATION_ENVIRONMENT: The requested clean upgrade proof could not complete. On this runner, `openclaw doctor --fix --yes` reported that its pre-repair recovery copy was unavailable because `/home` fails the SQLite staging-ancestor policy. The PR head is unchanged and the checkout is clean. Reply: https://github.com/openclaw/openclaw/pull/198216#issuecomment-6850952155",
         "attempts": 1
       }
     ],
@@ -40001,10 +40001,6 @@
         "value": "{\"task\": 1815, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794567567.7034435, \"seconds\": 1014.037, \"tokens\": {\"totalTokens\": 15135916, \"inputTokens\": 15115928, \"cachedInputTokens\": 14989184, \"cacheWriteInputTokens\": 0, \"outputTokens\": 19988, \"reasoningOutputTokens\": 6741}, \"first_event_ms\": 1794566562777, \"last_event_ms\": 1794567567686, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1815\": {\"remaining\": 0, \"until\": 1794574768.1276171}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1794554092.4403238, \"group\": \"new_fix\", \"task\": 1805, \"phase\": \"generation\"}, {\"at\": 1794554154.3718112, \"group\": \"new_fix\", \"task\": 1804, \"phase\": \"generation\"}, {\"at\": 1794556251.7408555, \"group\": \"new_fix\", \"task\": 1804, \"phase\": \"review\"}, {\"at\": 1794557094.3606083, \"group\": \"maintenance\", \"task\": 1807, \"phase\": \"generation\"}, {\"at\": 1794557213.775368, \"group\": \"maintenance\", \"task\": 1807, \"phase\": \"reply-review\"}, {\"at\": 1794557312.3996835, \"group\": \"new_fix\", \"task\": 1706, \"phase\": \"generation\"}, {\"at\": 1794557484.220326, \"group\": \"new_fix\", \"task\": 1806, \"phase\": \"generation\"}, {\"at\": 1794557608.3775544, \"group\": \"new_fix\", \"task\": 1717, \"phase\": \"generation\"}, {\"at\": 1794557730.944444, \"group\": \"maintenance\", \"task\": 1810, \"phase\": \"generation\"}, {\"at\": 1794558145.4696305, \"group\": \"maintenance\", \"task\": 1810, \"phase\": \"review\"}, {\"at\": 1794558411.355468, \"group\": \"new_fix\", \"task\": 1808, \"phase\": \"generation\"}, {\"at\": 1794558918.7449834, \"group\": \"new_fix\", \"task\": 1808, \"phase\": \"review\"}, {\"at\": 1794559270.18297, \"group\": \"repair\", \"task\": 1808, \"phase\": \"remediation\"}, {\"at\": 1794559929.6079593, \"group\": \"repair\", \"task\": 1808, \"phase\": \"rereview\"}, {\"at\": 1794560510.0496619, \"group\": \"maintenance\", \"task\": 1811, \"phase\": \"generation\"}, {\"at\": 1794560676.3489058, \"group\": \"maintenance\", \"task\": 1811, \"phase\": \"reply-review\"}, {\"at\": 1794560820.9020877, \"group\": \"new_fix\", \"task\": 1809, \"phase\": \"generation\"}, {\"at\": 1794563014.8202486, \"group\": \"new_fix\", \"task\": 1809, \"phase\": \"review\"}, {\"at\": 1794563280.6300142, \"group\": \"repair\", \"task\": 1809, \"phase\": \"remediation\"}, {\"at\": 1794564380.0587924, \"group\": \"repair\", \"task\": 1809, \"phase\": \"rereview\"}, {\"at\": 1794564967.3515348, \"group\": \"maintenance\", \"task\": 1813, \"phase\": \"generation\"}, {\"at\": 1794565388.1191702, \"group\": \"maintenance\", \"task\": 1813, \"phase\": \"review\"}, {\"at\": 1794565876.4288437, \"group\": \"maintenance\", \"task\": 1812, \"phase\": \"generation\"}, {\"at\": 1794566026.9348917, \"group\": \"maintenance\", \"task\": 1812, \"phase\": \"reply-review\"}, {\"at\": 1794566255.1221647, \"group\": \"maintenance\", \"task\": 1814, \"phase\": \"generation\"}, {\"at\": 1794566342.4607508, \"group\": \"maintenance\", \"task\": 1814, \"phase\": \"reply-review\"}, {\"at\": 1794566553.6681936, \"group\": \"maintenance\", \"task\": 1815, \"phase\": \"generation\"}, {\"at\": 1794567568.1276171, \"group\": \"maintenance\", \"task\": 1815, \"phase\": \"reply-review\"}]"
       },
@@ -40089,8 +40085,12 @@
         "value": "[{\"repo\": \"openclaw/openclaw\", \"number\": 197795, \"at\": 1794500080.565101, \"key\": \"pr_reply:ed5f496b3108e217dd5b5f96\"}, {\"repo\": \"openclaw/openclaw\", \"number\": 198173, \"at\": 1794558390.5071661, \"key\": \"pr_reply:338440980755a88ca7818302\"}, {\"repo\": \"openclaw/openclaw\", \"number\": 198216, \"at\": 1794567713.3037975, \"key\": \"pr_reply:b37c9c05e66e8c831cd058e3\"}]"
       },
       {
+        "key": "pr_reply:b37c9c05e66e8c831cd058e3",
+        "value": "{\"status\": \"sent\", \"task\": 1815, \"at\": 1794567717.9504695, \"url\": \"https://github.com/openclaw/openclaw/pull/198216#issuecomment-6850952155\"}"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1794567714.4974077"
+        "value": "1794567719.497555"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -40098,19 +40098,23 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794567716.2678123"
+        "value": "1794567721.012244"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1794567717.3252225"
+        "key": "followup:task:1815",
+        "value": "{\"status\": \"needs_human\", \"task\": 1815, \"repo\": \"openclaw/openclaw\", \"number\": 198216, \"reason\": \"VALIDATION_ENVIRONMENT: The requested clean upgrade proof could not complete. On this runner, `openclaw doctor --fix --yes` reported that its pre-repair recovery copy was unavailable because `/home` fails the SQLite staging-ancestor policy. The PR head is unchanged and the checkout is clean. Reply: https://github.com/openclaw/openclaw/pull/198216#issuecomment-6850952155\", \"base\": \"906352a45e1e088225c0efb4746c76fc52c54743\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"1815-1.json.enc\"}"
       },
       {
-        "key": "pr_reply:b37c9c05e66e8c831cd058e3",
-        "value": "{\"status\": \"sent\", \"task\": 1815, \"at\": 1794567717.9504695, \"url\": \"https://github.com/openclaw/openclaw/pull/198216#issuecomment-6850952155\"}"
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:1815",
-        "value": "{\"started\": 1794566431.2595856, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1815/attempt-1\", \"attempt\": 1, \"phase\": \"reply-review\", \"base\": \"906352a45e1e088225c0efb4746c76fc52c54743\", \"remote_base\": \"906352a45e1e088225c0efb4746c76fc52c54743\", \"base_update\": {\"original_head\": \"906352a45e1e088225c0efb4746c76fc52c54743\", \"base\": \"906352a45e1e088225c0efb4746c76fc52c54743\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794567572.2140372, \"replied_at\": 1794567717.9518845, \"reply_url\": \"https://github.com/openclaw/openclaw/pull/198216#issuecomment-6850952155\"}"
+        "value": "{\"started\": 1794566431.2595856, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1815/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"906352a45e1e088225c0efb4746c76fc52c54743\", \"remote_base\": \"906352a45e1e088225c0efb4746c76fc52c54743\", \"base_update\": {\"original_head\": \"906352a45e1e088225c0efb4746c76fc52c54743\", \"base\": \"906352a45e1e088225c0efb4746c76fc52c54743\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794567572.2140372, \"replied_at\": 1794567717.9518845, \"reply_url\": \"https://github.com/openclaw/openclaw/pull/198216#issuecomment-6850952155\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1794567722.3097465}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1794567722.3573031"
       }
     ],
     "calls": [
