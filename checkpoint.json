@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794556958.7001636,
+  "saved_at": 1794557014.4104779,
   "tables": {
     "tasks": [
       {
@@ -39574,10 +39574,6 @@
         "value": "{\"started\": 1794269982.028998, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1717/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"a479bb6eb76fa284b27cdbb45cd304d83cd98b82\", \"generation_started\": 1794269993.4924872, \"dispatch_paid_date\": \"2026-11-10\", \"phase_started\": 1794269996.6421978, \"last_execution_phase\": \"generation\", \"finished\": 1794270027.6582768}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1794556250.1654088, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1804:1:generation",
         "value": "{\"task\": 1804, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794556250.212829, \"seconds\": 2095.842, \"tokens\": {\"totalTokens\": 44498266, \"inputTokens\": 44462519, \"cachedInputTokens\": 44227712, \"cacheWriteInputTokens\": 0, \"outputTokens\": 35747, \"reasoningOutputTokens\": 13830}, \"first_event_ms\": 1794554164896, \"last_event_ms\": 1794556250154, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -39588,10 +39584,6 @@
       {
         "key": "codex_allocations",
         "value": "[{\"at\": 1794554092.4403238, \"group\": \"new_fix\", \"task\": 1805, \"phase\": \"generation\"}, {\"at\": 1794554154.3718112, \"group\": \"new_fix\", \"task\": 1804, \"phase\": \"generation\"}, {\"at\": 1794556251.7408555, \"group\": \"new_fix\", \"task\": 1804, \"phase\": \"review\"}]"
-      },
-      {
-        "key": "task:1804",
-        "value": "{\"started\": 1794554070.843528, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1804/attempt-1\", \"attempt\": 1, \"phase\": \"review\", \"base\": \"adf873aa07e5238d7f747336c26b65e37e89493d\", \"generation_started\": 1794554154.3716838, \"dispatch_paid_date\": \"2026-11-13\", \"phase_started\": 1794556254.7198417}"
       },
       {
         "key": "task:44",
@@ -39758,52 +39750,72 @@
         "value": "1794556862.3283558"
       },
       {
+        "key": "runner_resources",
+        "value": "{\"at\": 1794556958.69055, \"disk_free_bytes\": 78578573312, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 13160124416, \"SwapTotal\": 3221221376, \"SwapFree\": 2804244480}, \"memory_events\": null}"
+      },
+      {
         "key": "admission_health",
-        "value": "{\"at\": 1794556898.1201158, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 6, \"running_tasks\": 1, \"queued_tasks\": 5, \"codex_calls_5h\": 3, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 646.3725173473358, \"judge_tokens_spent_24h\": 41478, \"screening_calls_5h\": 0, \"screening_calls_24h\": 2, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 1, \"validation_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8106\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8106\", \"title\": \"Repeated cancellation can interrupt root cleanup and leave HTTP connections in use\", \"first_seen\": 1794480912.5788982, \"last_checked\": 1794482845.6011174, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8105\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8105\", \"title\": \"Opt-in way to stop sliding-window compaction from delaying the end of `Runner.run_async` (and of `/run_sse`)\", \"first_seen\": 1794479912.244716, \"last_checked\": 1794482848.127902, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8110\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8110\", \"title\": \"OpenAIResponsesLlm drops reasoning items between tool calls (never replayed or chained)\", \"first_seen\": 1794502918.8789313, \"last_checked\": 1794503124.0043418, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8109\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8109\", \"title\": \"[LiteLLM] Non-Anthropic reasoning_details (encrypted/signed) are dropped on replay\", \"first_seen\": 1794498086.7470152, \"last_checked\": 1794503127.016432, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+        "value": "{\"at\": 1794556961.6928656, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 6, \"running_tasks\": 1, \"queued_tasks\": 5, \"codex_calls_5h\": 3, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 709.9453868865967, \"judge_tokens_spent_24h\": 41478, \"screening_calls_5h\": 0, \"screening_calls_24h\": 2, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 1, \"validation_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8106\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8106\", \"title\": \"Repeated cancellation can interrupt root cleanup and leave HTTP connections in use\", \"first_seen\": 1794480912.5788982, \"last_checked\": 1794482845.6011174, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8105\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8105\", \"title\": \"Opt-in way to stop sliding-window compaction from delaying the end of `Runner.run_async` (and of `/run_sse`)\", \"first_seen\": 1794479912.244716, \"last_checked\": 1794482848.127902, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8110\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8110\", \"title\": \"OpenAIResponsesLlm drops reasoning items between tool calls (never replayed or chained)\", \"first_seen\": 1794502918.8789313, \"last_checked\": 1794503124.0043418, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8109\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8109\", \"title\": \"[LiteLLM] Non-Anthropic reasoning_details (encrypted/signed) are dropped on replay\", \"first_seen\": 1794498086.7470152, \"last_checked\": 1794503127.016432, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1794556898.1214006, \"tasks\": {\"fix\": {\"done\": 1, \"error\": 2, \"human_wait\": 1, \"queued\": 4, \"running\": 1, \"skipped\": 4, \"validation_wait\": 1}, \"respond\": {\"blocked\": 2, \"done\": 1, \"error\": 1, \"queued\": 1}}}"
+        "value": "{\"at\": 1794556961.6940525, \"tasks\": {\"fix\": {\"done\": 1, \"error\": 2, \"human_wait\": 1, \"queued\": 4, \"running\": 1, \"skipped\": 4, \"validation_wait\": 1}, \"respond\": {\"blocked\": 2, \"done\": 1, \"error\": 1, \"queued\": 1}}}"
       },
       {
         "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1794556911.9355025, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794556985.0381656, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1794556912.3638499, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794556985.4857953, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1794556912.8480349, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794556985.8607802, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1794556913.25756, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794556986.3320248, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1794556913.740751, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794556986.7951539, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1794556914.1810489, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794556987.2805119, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1794556915.4260283, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794556988.3450143, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1794556915.9310749, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794556988.7950764, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1794556916.3043535, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794556989.1909816, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1794556916.6466973, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794556989.5633876, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1794557000.6170635"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1794557008.2658956, \"windows\": [{\"name\": \"primary\", \"used_percent\": 2, \"resets_at\": 1795158830}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1794557008.267592, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1804:1:review",
+        "value": "{\"task\": 1804, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1794557008.273419, \"seconds\": 756.537, \"tokens\": {\"totalTokens\": 8027501, \"inputTokens\": 8018784, \"cachedInputTokens\": 7921920, \"cacheWriteInputTokens\": 0, \"outputTokens\": 8717, \"reasoningOutputTokens\": 1926}, \"first_event_ms\": 1794556257704, \"last_event_ms\": 1794557008266, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -39811,27 +39823,19 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794556955.366394"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1794556955.612426"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1794556956.3853035, \"windows\": [{\"name\": \"primary\", \"used_percent\": 2, \"resets_at\": 1795158831}]}"
+        "value": "1794557010.056027"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1794556957.0804005"
+        "value": "1794557013.421561"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794556958.5044658"
+        "value": "1794557013.5093522"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1794556958.69055, \"disk_free_bytes\": 78578573312, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 13160124416, \"SwapTotal\": 3221221376, \"SwapFree\": 2804244480}, \"memory_events\": null}"
+        "key": "task:1804",
+        "value": "{\"started\": 1794554070.843528, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1804/attempt-1\", \"attempt\": 1, \"phase\": \"publishing\", \"base\": \"adf873aa07e5238d7f747336c26b65e37e89493d\", \"generation_started\": 1794554154.3716838, \"dispatch_paid_date\": \"2026-11-13\", \"phase_started\": 1794556254.7198417, \"reviewed_screenshots\": [{\"path\": \"/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/1804/attempt-1/tool-cache/pr-evidence/before.png\", \"sha256\": \"ff957a4169c5ada00385bce7e4d6e5a0b9764695641966cd5ff73b8d022f046f\", \"size\": 69221, \"asset\": \"screenshots/ff957a4169c5ada00385bce7e4d6e5a0b9764695641966cd5ff73b8d022f046f.png\", \"blob\": \"83346c666ac7c1f822e4aa064210f50151e2d7de\", \"url\": \"https://raw.githubusercontent.com/chelsealong/oss-pipeline/pr-assets/screenshots/ff957a4169c5ada00385bce7e4d6e5a0b9764695641966cd5ff73b8d022f046f.png\", \"label\": \"Before\"}, {\"path\": \"/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/1804/attempt-1/tool-cache/pr-evidence/after.png\", \"sha256\": \"a751fc578692911e632fd1bb657b04fbe08db76735e1533b4852cdeedff18359\", \"size\": 70882, \"asset\": \"screenshots/a751fc578692911e632fd1bb657b04fbe08db76735e1533b4852cdeedff18359.png\", \"blob\": \"7b22eca7c514fe5991789b0045356b08d8680dc1\", \"url\": \"https://raw.githubusercontent.com/chelsealong/oss-pipeline/pr-assets/screenshots/a751fc578692911e632fd1bb657b04fbe08db76735e1533b4852cdeedff18359.png\", \"label\": \"After\"}], \"publication_started\": true, \"branch\": \"fix/codex-openclaw-198142\", \"head\": \"5ac2a1a14fd8fa17c49cc97740d0450210ea1c09\"}"
       }
     ],
     "calls": [
