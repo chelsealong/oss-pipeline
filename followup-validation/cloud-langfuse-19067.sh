@@ -30,5 +30,7 @@ trap - EXIT
 pnpm --filter=@langfuse/shared run test clickhouse-filter.events-full-routing.test.ts
 pnpm exec turbo run lint --force --filter=@langfuse/shared
 pnpm --filter=@langfuse/shared run typecheck
+pnpm --filter worker run typecheck
+pnpm --filter web run typecheck
 pnpm exec knip
 git diff --check
