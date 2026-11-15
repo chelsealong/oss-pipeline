@@ -1,0 +1,33 @@
+diff --git a/hermes_bootstrap.py b/hermes_bootstrap.py
+index 63b23fc346..2725c9e696 100644
+--- a/hermes_bootstrap.py
++++ b/hermes_bootstrap.py
+@@ -242,7 +242,7 @@ def install_happy_eyeballs_socket_connect() -> None:
+ # where the two happen to appear separately, e.g.
+ # ".../python3.12/config/site-packages-notes".
+ _PYVER_DIR_RE = re.compile(
+-    r"python(\d+)\.(\d+)[\\/]site-packages(?=[\\/]|$)", re.IGNORECASE
++    r"(?:^|[\\/])python(\d+)\.(\d+)[\\/]site-packages(?=[\\/]|$)", re.IGNORECASE
+ )
+ 
+ 
+diff --git a/tests/test_hermes_bootstrap.py b/tests/test_hermes_bootstrap.py
+index 8998591ab3..c1e0d55834 100644
+--- a/tests/test_hermes_bootstrap.py
++++ b/tests/test_hermes_bootstrap.py
+@@ -532,6 +532,15 @@ class TestHardenUserSiteVersion:
+         result = self._run(hb, seed, 3, 11)
+         assert isinstance(result, list)
+ 
++    def test_legacy_venv_requires_an_entire_version_directory(self):
++        """#127387: keep unrelated paths whose names only end in a Python version."""
++        hb = _fresh_import()
++        legacy = "/opt/hermes/venv/lib/python3.11/site-packages"
++        lookalike = "/opt/custom-python3.11/site-packages"
++        active = "/opt/hermes/managed/lib/python3.14/site-packages"
++        result = self._run(hb, [legacy, lookalike, active], 3, 14)
++        assert result == [lookalike, active]
++
+     def test_site_packages_substring_elsewhere_not_stripped(self):
+         """A path that independently contains "pythonX.Y/" and
+         "site-packages" as two *unrelated* components — rather than the
