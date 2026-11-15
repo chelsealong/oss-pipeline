@@ -1,8 +1,8 @@
 diff --git a/packages/shared/src/server/queries/clickhouse-sql/clickhouse-filter.events-full-routing.test.ts b/packages/shared/src/server/queries/clickhouse-sql/clickhouse-filter.events-full-routing.test.ts
-index 6858bfb8c..8a794c9a0 100644
+index 6858bfb8c..5cdb1babd 100644
 --- a/packages/shared/src/server/queries/clickhouse-sql/clickhouse-filter.events-full-routing.test.ts
 +++ b/packages/shared/src/server/queries/clickhouse-sql/clickhouse-filter.events-full-routing.test.ts
-@@ -117,6 +117,28 @@ describe("filtersRequireEventsFull metadata routing", () => {
+@@ -117,6 +117,30 @@ describe("filtersRequireEventsFull metadata routing", () => {
      expect(requires(metadataString("=", "7".repeat(199)))).toBe(true);
    });
  
@@ -10,10 +10,12 @@ index 6858bfb8c..8a794c9a0 100644
 +    "uses each representation's tokens for encoded metadata equality %j",
 +    (value) => {
 +      const { query, params } = metadataString("=", value).apply();
-+      const rawKey = Object.keys(params).find((key) => params[key] === value)!;
-+      const encodedKey = Object.keys(params).find(
-+        (key) => params[key] === JSON.stringify(value),
-+      )!;
++      const rawKey = Object.entries(params).find(
++        ([, param]) => param === value,
++      )?.[0];
++      const encodedKey = Object.entries(params).find(
++        ([, param]) => param === JSON.stringify(value),
++      )?.[0];
 +      expect(rawKey).toBeDefined();
 +      expect(encodedKey).toBeDefined();
 +      const raw = `{${rawKey}: String}`;

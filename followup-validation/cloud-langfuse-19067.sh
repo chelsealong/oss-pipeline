@@ -5,6 +5,7 @@ export NODE_ENV=test
 corepack enable
 corepack prepare pnpm@12.8.2 --activate
 pnpm install --frozen-lockfile
+pnpm --filter=@repo/eslint-plugin run build
 cp .env.dev.example .env
 pnpm --filter=@langfuse/shared run db:generate
 pnpm --filter=@langfuse/shared run build

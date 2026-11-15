@@ -1,0 +1,49 @@
+diff --git a/src/specify_cli/presets/_manifest.py b/src/specify_cli/presets/_manifest.py
+index e75ecb7..f8e1d89 100644
+--- a/src/specify_cli/presets/_manifest.py
++++ b/src/specify_cli/presets/_manifest.py
+@@ -267,13 +267,13 @@ class PresetManifest:
+             # Validate template name format
+             if tmpl["type"] == "command":
+                 # Commands use dot notation (e.g. speckit.specify)
+-                if not re.match(r'^[a-z0-9.-]+$', tmpl["name"]):
++                if not re.fullmatch(r'[a-z0-9.-]+', tmpl["name"]):
+                     raise PresetValidationError(
+                         f"Invalid command name '{tmpl['name']}': "
+                         "must be lowercase alphanumeric with hyphens and dots only"
+                     )
+             else:
+-                if not re.match(r'^[a-z0-9-]+$', tmpl["name"]):
++                if not re.fullmatch(r'[a-z0-9-]+', tmpl["name"]):
+                     raise PresetValidationError(
+                         f"Invalid template name '{tmpl['name']}': "
+                         "must be lowercase alphanumeric with hyphens only"
+diff --git a/tests/specify_cli/presets/test_manifest.py b/tests/specify_cli/presets/test_manifest.py
+index e2fb3bf..c0eb0e1 100644
+--- a/tests/specify_cli/presets/test_manifest.py
++++ b/tests/specify_cli/presets/test_manifest.py
+@@ -291,13 +291,20 @@ class TestPresetManifest:
+         with pytest.raises(PresetValidationError, match="missing 'type', 'name', or 'file'"):
+             PresetManifest(manifest_path)
+ 
+-    def test_invalid_template_name_format(self, temp_dir, valid_pack_data):
+-        """Test template with invalid name format."""
+-        valid_pack_data["provides"]["templates"][0]["name"] = "Invalid Name"
++    @pytest.mark.parametrize("template_type, name", [
++        ("template", "Invalid Name"),
++        ("template", "spec-template\n"),
++        ("command", "speckit.plan\n"),
++        ("script", "setup\n"),
++    ])
++    def test_invalid_template_name_format(self, temp_dir, valid_pack_data, template_type, name):
++        """Reject invalid names, including a newline after an otherwise valid name."""
++        valid_pack_data["provides"]["templates"][0]["type"] = template_type
++        valid_pack_data["provides"]["templates"][0]["name"] = name
+         manifest_path = temp_dir / "preset.yml"
+         with open(manifest_path, 'w') as f:
+             yaml.dump(valid_pack_data, f)
+-        with pytest.raises(PresetValidationError, match="Invalid template name"):
++        with pytest.raises(PresetValidationError, match="Invalid (template|command) name"):
+             PresetManifest(manifest_path)
+ 
+     def test_get_hash(self, pack_dir):

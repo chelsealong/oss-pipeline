@@ -58,6 +58,21 @@ jobs:
           python -m pytest tests-unit/comfy_quant/test_mixed_precision.py -q
           ruff check comfy/ops.py tests-unit/comfy_quant/test_mixed_precision.py
           git diff --check
+      - uses: actions/checkout@v4
+        with:
+          repository: chelsealong/ComfyUI
+          ref: 01f50fca1668789362375809b8a3f45694ef845f
+          persist-credentials: false
+          path: source17353
+      - name: Verify image filter device isolation
+        working-directory: source17353
+        run: |
+          git apply ../validation/followup-validation/comfy17353.patch
+          python -m pip install torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r requirements.txt pytest ruff
+          python -m pytest tests-unit/comfy_extras_test/image_filter_small_test.py -q
+          ruff check tests-unit/comfy_extras_test/image_filter_small_test.py
+          git diff --check
   hermes:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -75,7 +90,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install pytest pytest-asyncio ruff urllib3 pyyaml packaging python-dotenv
+      - run: python -m pip install pytest pytest-asyncio ruff urllib3 pyyaml packaging python-dotenv ruamel.yaml httpx openai truststore rich tenacity cryptography requests jinja2 fire prompt_toolkit psutil websockets pathspec fastapi pydantic filelock
       - name: Verify bootstrap regression and canonical tests
         working-directory: source
         run: |
@@ -115,7 +130,7 @@ jobs:
           git apply ../validation/followup-validation/spec5111.patch
           uv sync --extra test
           .venv/bin/python -m pytest tests/specify_cli/bundles/test_command_init.py tests/specify_cli/bundles/test_command_install.py -q
-          .venv/bin/python -m specify_cli --help
+          .venv/bin/specify --help
           git diff --check
       - uses: actions/checkout@v4
         with:
@@ -129,7 +144,27 @@ jobs:
           git apply ../validation/followup-validation/spec4796.patch
           uv sync --extra test
           .venv/bin/python -m pytest tests/integrations/test_integration_junie.py -q
-          .venv/bin/python -m specify_cli --help
+          .venv/bin/specify --help
+          git diff --check
+      - uses: actions/checkout@v4
+        with:
+          repository: chelsealong/spec-kit
+          ref: d4212256f60364a4d4396c45918455acb268f1f2
+          persist-credentials: false
+          path: source4745
+      - name: Verify preset name boundary and removal contracts
+        working-directory: source4745
+        run: |
+          git apply ../validation/followup-validation/spec4745.patch
+          uv sync --extra test
+          cp src/specify_cli/presets/_manifest.py /tmp/fixed-manifest.py
+          git show HEAD:src/specify_cli/presets/_manifest.py > src/specify_cli/presets/_manifest.py
+          if .venv/bin/python -m pytest tests/specify_cli/presets/test_manifest.py -k test_invalid_template_name_format -q; then
+            echo 'Newline regression unexpectedly passed without fix'
+            exit 1
+          fi
+          cp /tmp/fixed-manifest.py src/specify_cli/presets/_manifest.py
+          .venv/bin/python -m pytest tests/specify_cli/presets/test_manifest.py tests/specify_cli/presets/test_manager.py tests/specify_cli/bundles/test_primitives.py -q
           git diff --check
   langfuse:
     strategy:
