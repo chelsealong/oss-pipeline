@@ -1,0 +1,136 @@
+diff --git a/comfy/sd.py b/comfy/sd.py
+index 46c9acb..7070658 100644
+--- a/comfy/sd.py
++++ b/comfy/sd.py
+@@ -2183,6 +2183,8 @@ def load_state_dict_guess_config(sd, output_vae=True, output_clip=True, output_c
+         clip_target = model_config.clip_target(state_dict=sd)
+         if clip_target is not None:
+             clip_sd = model_config.process_clip_state_dict(sd)
++            if te_model_options.get("custom_operations", None) is None:
++                clip_sd, _ = comfy.utils.convert_old_quants(clip_sd)
+             if len(clip_sd) > 0:
+                 parameters = comfy.utils.calculate_parameters(clip_sd)
+                 clip = CLIP(clip_target, embedding_directory=embedding_directory, tokenizer_data=clip_sd, parameters=parameters, state_dict=clip_sd, model_options=te_model_options, disable_dynamic=disable_dynamic)
+diff --git a/comfy/utils.py b/comfy/utils.py
+index 2f86417..50fa9d4 100644
+--- a/comfy/utils.py
++++ b/comfy/utils.py
+@@ -1458,7 +1458,12 @@ def convert_old_quants(state_dict, model_prefix="", metadata={}):
+         for k, v in layers.items():
+             state_dict["{}.comfy_quant".format(k)] = torch.tensor(list(json.dumps(v).encode('utf-8')), dtype=torch.uint8)
+     else:
+-        quant_scale_keys = [k for k in state_dict if k.startswith(model_prefix) and k.endswith((".weight_scale", ".weight_scale_2", ".input_scale"))]
++        quant_scale_keys = [
++            k for k in state_dict
++            if k.startswith(model_prefix)
++            and k.endswith((".weight_scale", ".weight_scale_2", ".input_scale"))
++            and "{}.comfy_quant".format(k.rsplit(".", 1)[0]) not in state_dict
++        ]
+         if len(quant_scale_keys) > 0:
+             raise RuntimeError(
+                 "This checkpoint contains {} unrecognized quantization scale tensors (e.g. {}) "
+diff --git a/tests-unit/comfy_quant/test_unrecognized_quant_metadata.py b/tests-unit/comfy_quant/test_unrecognized_quant_metadata.py
+index ceab20f..69cbca5 100644
+--- a/tests-unit/comfy_quant/test_unrecognized_quant_metadata.py
++++ b/tests-unit/comfy_quant/test_unrecognized_quant_metadata.py
+@@ -1,4 +1,6 @@
+ import unittest
++from unittest.mock import MagicMock, patch
++import json
+ import torch
+ import sys
+ import os
+@@ -6,13 +8,17 @@ import os
+ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
+ 
+ from comfy.cli_args import args
+-if not torch.cuda.is_available():
+-    args.cpu = True
+-
+-from comfy import ops
+-import comfy.memory_management
+-import comfy.utils
+-from comfy.model_base import BaseModel
++original_cpu = args.cpu
++try:
++    if not torch.cuda.is_available() and not torch.backends.mps.is_available():
++        args.cpu = True
++    from comfy import ops
++    import comfy.memory_management
++    import comfy.utils
++    import comfy.sd
++    from comfy.model_base import BaseModel
++finally:
++    args.cpu = original_cpu
+ 
+ 
+ class SimpleModel(torch.nn.Module):
+@@ -77,6 +83,68 @@ class TestUnrecognizedQuantMetadata(unittest.TestCase):
+         ):
+             comfy.utils.convert_old_quants(state_dict, model_prefix="")
+ 
++    def test_existing_quant_marker_is_accepted(self):
++        marker = torch.tensor(list(b'{"format":"float8_e4m3fn"}'), dtype=torch.uint8)
++        state_dict = {"encoder.weight_scale": torch.tensor(1.0), "encoder.comfy_quant": marker}
++        converted, _ = comfy.utils.convert_old_quants(state_dict)
++        self.assertIs(converted["encoder.comfy_quant"], marker)
++        state_dict["other.weight_scale"] = torch.tensor(1.0)
++        with self.assertRaisesRegex(RuntimeError, "other.weight_scale"):
++            comfy.utils.convert_old_quants(state_dict)
++
++    def test_combined_checkpoint_clip_quantization(self):
++        for kind in ("unquantized", "native", "metadata", "legacy", "unrecognized", "custom"):
++            with self.subTest(kind=kind):
++                layer = "text_encoders.encoder.block.0"
++                state_dict = {layer + ".weight": torch.ones(2, 2)}
++                metadata = {}
++                model_options = {}
++                if kind != "unquantized":
++                    state_dict[layer + ".weight_scale"] = torch.tensor(1.0)
++                if kind == "native":
++                    state_dict[layer + ".comfy_quant"] = torch.tensor(
++                        list(b'{"format":"float8_e4m3fn"}'), dtype=torch.uint8,
++                    )
++                elif kind == "metadata":
++                    metadata["_quantization_metadata"] = json.dumps({
++                        "layers": {layer: {"format": "float8_e4m3fn"}},
++                    })
++                elif kind == "legacy":
++                    state_dict["text_encoders.scaled_fp8"] = torch.tensor(1.0)
++                    state_dict[layer + ".scale_weight"] = state_dict.pop(layer + ".weight_scale")
++                elif kind == "custom":
++                    model_options["custom_operations"] = object()
++
++                config = MagicMock()
++                config.supported_inference_dtypes = [torch.float32]
++                config.quant_config = None
++                config.clip_vision_prefix = None
++                config.process_clip_state_dict.side_effect = lambda sd: comfy.utils.state_dict_prefix_replace(
++                    sd, {"text_encoders.": ""}, filter_keys=True,
++                )
++                with patch.object(comfy.sd.model_detection, "unet_prefix_from_state_dict", return_value="model.diffusion_model."), \
++                     patch.object(comfy.sd.model_detection, "model_config_from_unet", return_value=config), \
++                     patch.object(comfy.sd.model_management, "get_torch_device", return_value=torch.device("cpu")), \
++                     patch.object(comfy.sd.model_management, "unet_dtype", return_value=torch.float32), \
++                     patch.object(comfy.sd.model_management, "unet_manual_cast", return_value=None), \
++                     patch.object(comfy.sd, "CLIP") as clip:
++                    if kind == "unrecognized":
++                        with self.assertRaisesRegex(RuntimeError, r"unrecognized quantization scale tensors.*encoder.block.0.weight_scale"):
++                            comfy.sd.load_state_dict_guess_config(
++                                state_dict, output_model=False, output_vae=False, metadata=metadata,
++                            )
++                        clip.assert_not_called()
++                    else:
++                        result = comfy.sd.load_state_dict_guess_config(
++                            state_dict, output_model=False, output_vae=False,
++                            metadata=metadata, te_model_options=model_options,
++                        )
++                        self.assertIs(result[1], clip.return_value)
++                        loaded = clip.call_args.kwargs["state_dict"]
++                        self.assertIn("encoder.block.0.weight", loaded)
++                        if kind in ("native", "metadata", "legacy"):
++                            self.assertIn("encoder.block.0.comfy_quant", loaded)
++
+ 
+ if __name__ == "__main__":
+     unittest.main()

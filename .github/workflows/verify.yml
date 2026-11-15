@@ -4,15 +4,9 @@ on:
 permissions:
   contents: read
 jobs:
-  langfuse:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - pr: '19067'
-            sha: a6b4530830bdf851de99e0fc2e443f51f24a97b0
+  comfy:
     runs-on: ubuntu-24.04
-    timeout-minutes: 35
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,17 +14,31 @@ jobs:
           path: validation
       - uses: actions/checkout@v4
         with:
-          repository: chelsealong/langfuse
-          ref: ${{ matrix.sha }}
+          repository: chelsealong/ComfyUI
+          ref: 7816fcb79c44794b56eb7db02b28ed97bba024d0
           persist-credentials: false
           path: source
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-python@v5
         with:
-          node-version: '24.22.1'
-      - name: Verify actual pricing and query paths
+          python-version: '3.12'
+      - run: |
+          python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+          cd source
+          python -m pip install -r requirements.txt pytest ruff pytest-subtests
+      - name: Verify combined checkpoint quantization
         working-directory: source
-        env:
-          FOLLOWUP_PR: ${{ matrix.pr }}
         run: |
-          git apply "../validation/followup-validation/langfuse-$FOLLOWUP_PR.patch"
-          bash "../validation/followup-validation/cloud-langfuse-$FOLLOWUP_PR.sh"
+          git apply ../validation/followup-validation/comfy15520.patch
+          cp comfy/sd.py /tmp/fixed-sd.py
+          cp comfy/utils.py /tmp/fixed-utils.py
+          git show HEAD:comfy/sd.py > comfy/sd.py
+          git show HEAD:comfy/utils.py > comfy/utils.py
+          if python -m pytest tests-unit/comfy_quant/test_unrecognized_quant_metadata.py -q; then
+            echo 'Quantization regressions unexpectedly passed without fix'
+            exit 1
+          fi
+          cp /tmp/fixed-sd.py comfy/sd.py
+          cp /tmp/fixed-utils.py comfy/utils.py
+          python -m pytest tests-unit/comfy_quant/test_unrecognized_quant_metadata.py -q
+          ruff check comfy/sd.py comfy/utils.py tests-unit/comfy_quant/test_unrecognized_quant_metadata.py
+          git diff --check
