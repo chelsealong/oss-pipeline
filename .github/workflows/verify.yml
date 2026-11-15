@@ -38,6 +38,26 @@ jobs:
           python -m pytest tests-unit/comfy_extras_test/mesh3d_uv_unwrap_parameterize_test.py -q
           ruff check comfy_extras/mesh3d/uv_unwrap/parameterize.py tests-unit/comfy_extras_test/mesh3d_uv_unwrap_parameterize_test.py
           git diff --check
+      - uses: actions/checkout@v4
+        with:
+          repository: chelsealong/ComfyUI
+          ref: 8f3d797e1de0b894c4f641779608b6f83da45736
+          persist-credentials: false
+          path: source16110
+      - name: Verify legacy FP8 regression
+        working-directory: source16110
+        run: |
+          git apply ../validation/followup-validation/comfy16110.patch
+          cp comfy/ops.py /tmp/fixed-ops.py
+          git show HEAD:comfy/ops.py > comfy/ops.py
+          if python -m pytest tests-unit/comfy_quant/test_mixed_precision.py -k test_fp8_upcast_when_device_cannot_cast -q; then
+            echo 'Legacy FP8 regression unexpectedly passed without fix'
+            exit 1
+          fi
+          cp /tmp/fixed-ops.py comfy/ops.py
+          python -m pytest tests-unit/comfy_quant/test_mixed_precision.py -q
+          ruff check comfy/ops.py tests-unit/comfy_quant/test_mixed_precision.py
+          git diff --check
   hermes:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -97,3 +117,49 @@ jobs:
           .venv/bin/python -m pytest tests/specify_cli/bundles/test_command_init.py tests/specify_cli/bundles/test_command_install.py -q
           .venv/bin/python -m specify_cli --help
           git diff --check
+      - uses: actions/checkout@v4
+        with:
+          repository: chelsealong/spec-kit
+          ref: 1ca963cee57b833283f4e6ea7843dac14c3687a0
+          persist-credentials: false
+          path: source4796
+      - name: Verify narrowed Junie change
+        working-directory: source4796
+        run: |
+          git apply ../validation/followup-validation/spec4796.patch
+          uv sync --extra test
+          .venv/bin/python -m pytest tests/integrations/test_integration_junie.py -q
+          .venv/bin/python -m specify_cli --help
+          git diff --check
+  langfuse:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - pr: '20175'
+            sha: bfe4d22f83141ba65bfb6d4db2c9a4bb13c13ae9
+          - pr: '19067'
+            sha: a6b4530830bdf851de99e0fc2e443f51f24a97b0
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          path: validation
+      - uses: actions/checkout@v4
+        with:
+          repository: chelsealong/langfuse
+          ref: ${{ matrix.sha }}
+          persist-credentials: false
+          path: source
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.22.1'
+      - name: Verify actual pricing and query paths
+        working-directory: source
+        env:
+          FOLLOWUP_PR: ${{ matrix.pr }}
+        run: |
+          git apply "../validation/followup-validation/langfuse-$FOLLOWUP_PR.patch"
+          bash "../validation/followup-validation/cloud-langfuse-$FOLLOWUP_PR.sh"
