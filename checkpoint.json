@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794813945.2683783,
+  "saved_at": 1794814010.1001534,
   "tables": {
     "tasks": [
       {
@@ -41425,10 +41425,6 @@
         "value": "{\"date\": \"2026-11-16\", \"used\": {\"comfyui\": 1, \"openclaw\": 4, \"langfuse\": 2, \"llama-index\": 1}}"
       },
       {
-        "key": "task:1869",
-        "value": "{\"started\": 1794797573.9906693, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1794797578.1831222, \"recovery_checked_at\": 1794813098.2023764}"
-      },
-      {
         "key": "usage:1875:1:generation",
         "value": "{\"task\": 1875, \"repo\": \"llama-index\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794813141.4458718, \"seconds\": 202.444, \"tokens\": {\"totalTokens\": 1433745, \"inputTokens\": 1426973, \"cachedInputTokens\": 1324416, \"cacheWriteInputTokens\": 0, \"outputTokens\": 6772, \"reasoningOutputTokens\": 2195}, \"first_event_ms\": 1794812949040, \"last_event_ms\": 1794813141440, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -41633,64 +41629,60 @@
         "value": "{\"started\": 1794813813.4882774, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1805/attempt-2\", \"attempt\": 2, \"phase\": \"skipped\", \"base\": \"e9afbccc2669677076feb08e52658f129cd8c12b\", \"generation_started\": 1794554092.4401314, \"dispatch_paid_date\": \"2026-11-13\", \"phase_started\": 1794813826.9815195, \"last_execution_phase\": \"generation\", \"finished\": 1794813870.0916994}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1794813884.7182188, \"state\": \"waiting\", \"pending_candidates\": 427, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 27, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 427}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 17, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 62.42276978492737, \"judge_tokens_spent_24h\": 97747, \"screening_calls_5h\": 5, \"screening_calls_24h\": 16, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 2, \"human_wait\": 2, \"validation_wait\": 4}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8130\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8130\", \"title\": \"Public way to cancel an invocation without sealing it as aborted (2.14)\", \"first_seen\": 1794603502.0550215, \"last_checked\": 1794745358.0380406, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8157\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8157\", \"title\": \"Docs say single_turn is \\\"Human in the Loop: Disallowed\\\", but the code and its own test support pausing for a human and resuming\", \"first_seen\": 1794701546.1556613, \"last_checked\": 1794800300.066107, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1794813884.7189534, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 2, \"done\": 2, \"human_wait\": 2, \"skipped\": 14, \"validation_wait\": 3}, \"respond\": {\"blocked\": 1, \"done\": 3, \"skipped\": 22, \"validation_wait\": 1}}}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1794813891.347137"
       },
       {
+        "key": "admission_health",
+        "value": "{\"at\": 1794813948.8540654, \"state\": \"waiting\", \"pending_candidates\": 427, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 27, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 427}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 17, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 126.55882000923157, \"judge_tokens_spent_24h\": 97747, \"screening_calls_5h\": 5, \"screening_calls_24h\": 16, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 2, \"human_wait\": 2, \"validation_wait\": 4}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8130\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8130\", \"title\": \"Public way to cancel an invocation without sealing it as aborted (2.14)\", \"first_seen\": 1794603502.0550215, \"last_checked\": 1794745358.0380406, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8157\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8157\", \"title\": \"Docs say single_turn is \\\"Human in the Loop: Disallowed\\\", but the code and its own test support pausing for a human and resuming\", \"first_seen\": 1794701546.1556613, \"last_checked\": 1794800300.066107, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1794813948.8549159, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 2, \"done\": 2, \"human_wait\": 2, \"skipped\": 14, \"validation_wait\": 3}, \"respond\": {\"blocked\": 1, \"done\": 3, \"skipped\": 22, \"validation_wait\": 1}}}"
+      },
+      {
         "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1794813919.0635407, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794813984.3839517, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1794813919.4302382, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794813984.7887383, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1794813919.9000015, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794813985.1732068, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1794813920.4317825, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794813985.6859837, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1794813920.830911, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794813986.0900495, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1794813921.2076318, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794813986.560505, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1794813922.442886, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+        "value": "{\"at\": 1794813987.5845988, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
       },
       {
         "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1794813923.0047746, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794813987.9119642, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1794813923.4650958, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794813988.4439416, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1794813923.9155054, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1794813932.9651845"
+        "value": "{\"at\": 1794813988.788525, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1794813933.007747, \"windows\": [{\"name\": \"primary\", \"used_percent\": 27, \"resets_at\": 1795158830}]}"
+        "value": "{\"at\": 1794813993.2767656, \"windows\": [{\"name\": \"primary\", \"used_percent\": 27, \"resets_at\": 1795158830}]}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -41698,19 +41690,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794813940.5243924"
+        "value": "1794814005.8983974"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1794814007.9712636"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1794813943.953865"
+        "value": "1794814008.82662"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794813944.1386707"
+        "value": "1794814009.1399028"
+      },
+      {
+        "key": "task:1869",
+        "value": "{\"started\": 1794797573.9906693, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1794797578.1831222, \"recovery_checked_at\": 1794814009.3485906}"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1794813945.2572112, \"disk_free_bytes\": 90578997248, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15085887488, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1794814010.090144, \"disk_free_bytes\": 90577014784, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15128764416, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       }
     ],
     "calls": [
