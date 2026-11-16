@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794846617.2282948,
+  "saved_at": 1794846680.9687707,
   "tables": {
     "tasks": [
       {
@@ -23670,9 +23670,9 @@
         "repo": "comfyui",
         "number": 17739,
         "note": "",
-        "status": "skipped",
+        "status": "queued",
         "created": 1794587359.319181,
-        "updated": 1794587464.7971606,
+        "updated": 1794846677.7140963,
         "result": "Issue #17739 remains an investigation, with no deterministic trigger or confirmed ComfyUI defect. The reported memory query is also required for pin budget decisions; removing or caching it could make those decisions stale. The Windows slowdown cannot be reproduced or validated in this CPU-only checkout.",
         "attempts": 1
       },
@@ -40706,10 +40706,6 @@
         "value": "{\"task\": 1821, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794587464.6377268, \"seconds\": 90.72, \"tokens\": {\"totalTokens\": 348825, \"inputTokens\": 346072, \"cachedInputTokens\": 287232, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2753, \"reasoningOutputTokens\": 861}, \"first_event_ms\": 1794587382818, \"last_event_ms\": 1794587464632, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "task:1821",
-        "value": "{\"started\": 1794587363.5068176, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1821/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"48a160ec665ff16d14469ae0f777d50eb323ca58\", \"generation_started\": 1794587373.9203022, \"dispatch_paid_date\": \"2026-11-13\", \"phase_started\": 1794587379.020446, \"last_execution_phase\": \"generation\", \"finished\": 1794587464.6400232}"
-      },
-      {
         "key": "usage:1822:1:generation",
         "value": "{\"task\": 1822, \"repo\": \"llama-index\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794589712.8291783, \"seconds\": 242.758, \"tokens\": {\"totalTokens\": 1526996, \"inputTokens\": 1518427, \"cachedInputTokens\": 1464192, \"cacheWriteInputTokens\": 0, \"outputTokens\": 8569, \"reasoningOutputTokens\": 2202}, \"first_event_ms\": 1794589479093, \"last_event_ms\": 1794589712817, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -41763,59 +41759,71 @@
       },
       {
         "key": "admission_health",
-        "value": "{\"at\": 1794846556.7660434, \"state\": \"stalled\", \"pending_candidates\": 467, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 67, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 467}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 2, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 5525.590069532394, \"judge_tokens_spent_24h\": 55818, \"screening_calls_5h\": 0, \"screening_calls_24h\": 12, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 2, \"human_wait\": 2, \"validation_wait\": 4}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8157\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8157\", \"title\": \"Docs say single_turn is \\\"Human in the Loop: Disallowed\\\", but the code and its own test support pausing for a human and resuming\", \"first_seen\": 1794701546.1556613, \"last_checked\": 1794800300.066107, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8183\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8183\", \"title\": \"[BUG] A delegated order reaches the event stream but not the next workflow step\", \"first_seen\": 1794825958.9808962, \"last_checked\": 1794828831.4565942, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8184\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8184\", \"title\": \"Eval judges drop their own reasoning (final_response_match_v2, hallucinations_v1)\", \"first_seen\": 1794841933.5816455, \"last_checked\": 1794845473.419804, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+        "value": "{\"at\": 1794846620.5281963, \"state\": \"stalled\", \"pending_candidates\": 467, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 67, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 467}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 2, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 5589.351916074753, \"judge_tokens_spent_24h\": 55818, \"screening_calls_5h\": 0, \"screening_calls_24h\": 12, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 2, \"human_wait\": 2, \"validation_wait\": 4}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8157\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8157\", \"title\": \"Docs say single_turn is \\\"Human in the Loop: Disallowed\\\", but the code and its own test support pausing for a human and resuming\", \"first_seen\": 1794701546.1556613, \"last_checked\": 1794800300.066107, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8183\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8183\", \"title\": \"[BUG] A delegated order reaches the event stream but not the next workflow step\", \"first_seen\": 1794825958.9808962, \"last_checked\": 1794828831.4565942, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8184\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8184\", \"title\": \"Eval judges drop their own reasoning (final_response_match_v2, hallucinations_v1)\", \"first_seen\": 1794841933.5816455, \"last_checked\": 1794845473.419804, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1794846556.7668867, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 2, \"done\": 1, \"human_wait\": 2, \"skipped\": 15, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 1, \"skipped\": 2, \"validation_wait\": 1}}}"
+        "value": "{\"at\": 1794846620.5291166, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 2, \"done\": 1, \"human_wait\": 2, \"skipped\": 14, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 1, \"skipped\": 2, \"validation_wait\": 1}}}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1794846571.5783281, \"windows\": [{\"name\": \"primary\", \"used_percent\": 66, \"resets_at\": 1795158830}]}"
+        "value": "{\"at\": 1794846631.8806622, \"windows\": [{\"name\": \"primary\", \"used_percent\": 66, \"resets_at\": 1795158831}]}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1794846664.1288142"
       },
       {
         "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1794846590.4335537, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794846664.5284543, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1794846591.0095685, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794846664.9990351, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1794846591.3666158, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794846665.579547, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1794846591.7760763, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794846665.9906685, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1794846592.154568, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794846666.3273842, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1794846592.577678, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794846666.7828915, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1794846593.5498936, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+        "value": "{\"at\": 1794846667.8062131, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
       },
       {
         "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1794846593.9751053, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794846668.1828792, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1794846594.4067347, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794846668.662043, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1794846594.790183, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794846669.0319061, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1794846676.2960253"
+      },
+      {
+        "key": "task:1821",
+        "value": "{\"started\": 1794587363.5068176, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1821/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"48a160ec665ff16d14469ae0f777d50eb323ca58\", \"generation_started\": 1794587373.9203022, \"dispatch_paid_date\": \"2026-11-13\", \"phase_started\": 1794587379.020446, \"last_execution_phase\": \"generation\", \"finished\": 1794587464.6400232}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794846612.776111"
+        "value": "1794846677.7776184"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -41823,19 +41831,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794846614.36314"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1794846614.8330336"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1794846616.2900908"
+        "value": "1794846679.2802098"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1794846617.2176564, \"disk_free_bytes\": 90591150080, \"memory_bytes\": {\"MemTotal\": 16464297984, \"MemAvailable\": 15249743872, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1794846680.954402, \"disk_free_bytes\": 90591924224, \"memory_bytes\": {\"MemTotal\": 16464297984, \"MemAvailable\": 15213817856, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       }
     ],
     "calls": [
