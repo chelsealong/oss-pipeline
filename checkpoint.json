@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794840994.343724,
+  "saved_at": 1794841022.4652348,
   "tables": {
     "tasks": [
       {
@@ -23631,11 +23631,11 @@
         "repo": "comfyui",
         "number": 17735,
         "note": "",
-        "status": "skipped",
+        "status": "running",
         "created": 1794581169.2610745,
-        "updated": 1794581238.389643,
+        "updated": 1794841022.451654,
         "result": "Issue #17735 shows an Electron main-process error while no ComfyUI server is running. This checkout contains no Electron launcher code; the affected application is maintained in Comfy-Org/Comfy-Desktop. There is no backend fix to make here.",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 1819,
@@ -40674,10 +40674,6 @@
         "value": "{\"task\": 1818, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794581238.2270153, \"seconds\": 53.25, \"tokens\": {\"totalTokens\": 249874, \"inputTokens\": 248399, \"cachedInputTokens\": 218496, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1475, \"reasoningOutputTokens\": 560}, \"first_event_ms\": 1794581197190, \"last_event_ms\": 1794581238221, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "task:1818",
-        "value": "{\"started\": 1794581174.6468709, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1818/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"dc9ffe6adde25671bf535e99556ca9f8085c7d0f\", \"generation_started\": 1794581184.9790447, \"dispatch_paid_date\": \"2026-11-13\", \"phase_started\": 1794581189.560712, \"last_execution_phase\": \"generation\", \"finished\": 1794581238.2296736}"
-      },
-      {
         "key": "usage:1819:1:generation",
         "value": "{\"task\": 1819, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794582196.1900935, \"seconds\": 124.404, \"tokens\": {\"totalTokens\": 675970, \"inputTokens\": 671511, \"cachedInputTokens\": 594816, \"cacheWriteInputTokens\": 0, \"outputTokens\": 4459, \"reasoningOutputTokens\": 1886}, \"first_event_ms\": 1794582078818, \"last_event_ms\": 1794582196173, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -41522,10 +41518,6 @@
         "value": "{\"started\": 1794819598.1056986, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1879/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"11fda8dd194840328dc3d02da6dee03d21bdab90\", \"phase_started\": 1794819628.379975, \"screening_requests\": {\"f3705ae4365e8a023d10\": 1794819618.0555832}, \"generation_started\": 1794819624.9451206, \"dispatch_paid_date\": \"2026-11-16\", \"last_execution_phase\": \"generation\", \"finished\": 1794819662.464997}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794799437.7599087, \"comfyui\": 1794828797.487842, \"hermes\": 1794240004.2801356, \"langfuse\": 1794819598.1055431, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794812900.96865, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1794748789.1238391, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"llama-index\", \"task\": 1875, \"at\": 1794812939.0027385}, {\"repo\": \"langfuse\", \"task\": 1876, \"at\": 1794815790.4603207}, {\"repo\": \"langfuse\", \"task\": 1879, \"at\": 1794819624.9451184}, {\"repo\": \"comfyui\", \"task\": 1880, \"at\": 1794828806.6735573}]"
       },
@@ -41754,64 +41746,72 @@
         "value": "1794840890.72253"
       },
       {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1794840931.1656084, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1794840931.790605, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1794840932.3974502, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1794840932.9697073, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1794840933.49328, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "admission_health",
-        "value": "{\"at\": 1794840933.8155923, \"state\": \"stalled\", \"pending_candidates\": 462, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 62, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 462}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 1, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 12127.135473489761, \"judge_tokens_spent_24h\": 57929, \"screening_calls_5h\": 0, \"screening_calls_24h\": 12, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 2, \"human_wait\": 2, \"validation_wait\": 4}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8157\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8157\", \"title\": \"Docs say single_turn is \\\"Human in the Loop: Disallowed\\\", but the code and its own test support pausing for a human and resuming\", \"first_seen\": 1794701546.1556613, \"last_checked\": 1794800300.066107, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8183\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8183\", \"title\": \"[BUG] A delegated order reaches the event stream but not the next workflow step\", \"first_seen\": 1794825958.9808962, \"last_checked\": 1794828831.4565942, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1794840933.8164294, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 2, \"done\": 1, \"human_wait\": 2, \"skipped\": 14, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 1, \"skipped\": 2, \"validation_wait\": 1}}}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1794840933.9935756, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1794840935.1587267, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1794840935.6755047, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1794840936.1749947, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1794840936.6016192, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1794840974.2106192, \"windows\": [{\"name\": \"primary\", \"used_percent\": 66, \"resets_at\": 1795158830}]}"
       },
       {
+        "key": "runner_resources",
+        "value": "{\"at\": 1794840994.3331497, \"disk_free_bytes\": 90530504704, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15180533760, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1794840997.7057962, \"state\": \"stalled\", \"pending_candidates\": 462, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 62, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 462}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 1, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 12191.02546262741, \"judge_tokens_spent_24h\": 57929, \"screening_calls_5h\": 0, \"screening_calls_24h\": 12, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 2, \"human_wait\": 2, \"validation_wait\": 4}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8157\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8157\", \"title\": \"Docs say single_turn is \\\"Human in the Loop: Disallowed\\\", but the code and its own test support pausing for a human and resuming\", \"first_seen\": 1794701546.1556613, \"last_checked\": 1794800300.066107, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8183\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8183\", \"title\": \"[BUG] A delegated order reaches the event stream but not the next workflow step\", \"first_seen\": 1794825958.9808962, \"last_checked\": 1794828831.4565942, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1794840997.7067578, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 2, \"done\": 1, \"human_wait\": 2, \"skipped\": 14, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 1, \"skipped\": 2, \"validation_wait\": 1}}}"
+      },
+      {
         "key": "watch_heartbeat",
-        "value": "1794840981.7075028"
+        "value": "1794841001.0583055"
+      },
+      {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1794841001.6887171, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1794841002.1791117, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1794841002.6403732, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1794841003.188975, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1794841003.550714, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1794841004.0595956, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1794841005.0934515, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1794841005.6358848, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:autogpt",
+        "value": "{\"at\": 1794841006.2438262, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:comfyui",
+        "value": "{\"at\": 1794841006.7003057, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1794840985.685818"
+        "value": "1794841015.6890562"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1794841019.2251928"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -41819,15 +41819,15 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794840990.7469285"
+        "value": "1794841020.8997478"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1794840994.2246928"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794799437.7599087, \"comfyui\": 1794841022.4515393, \"hermes\": 1794240004.2801356, \"langfuse\": 1794819598.1055431, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794812900.96865, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1794748789.1238391, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1794840994.3331497, \"disk_free_bytes\": 90530504704, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15180533760, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "key": "task:1818",
+        "value": "{\"started\": 1794841022.45169, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"claimed\", \"base\": null, \"generation_started\": 1794581184.9790447, \"dispatch_paid_date\": \"2026-11-13\", \"phase_started\": 1794581189.560712, \"last_execution_phase\": \"generation\", \"finished\": 1794581238.2296736}"
       }
     ],
     "calls": [
