@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794863217.6352615,
+  "saved_at": 1794863225.3936613,
   "tables": {
     "tasks": [
       {
@@ -41843,10 +41843,6 @@
         "value": "1794863108.6155257"
       },
       {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1794846692.283073, \"group\": \"new_fix\", \"task\": 1821, \"phase\": \"generation\"}, {\"at\": 1794857941.875788, \"group\": \"new_fix\", \"task\": 1881, \"phase\": \"generation\"}, {\"at\": 1794858024.324718, \"group\": \"new_fix\", \"task\": 1882, \"phase\": \"generation\"}, {\"at\": 1794863154.736443, \"group\": \"maintenance\", \"task\": 1883, \"phase\": \"generation\"}]"
-      },
-      {
         "key": "candidate_capacity:adk",
         "value": "{\"at\": 1794863172.948116, \"allowed\": true, \"reason\": \"\"}"
       },
@@ -41891,10 +41887,6 @@
         "value": "{\"at\": 1794863205.3628626, \"disk_free_bytes\": 90475970560, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15110275072, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1794863207.643974"
-      },
-      {
         "key": "admission_health",
         "value": "{\"at\": 1794863208.9001062, \"state\": \"active\", \"pending_candidates\": 491, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 91, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 491}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 54.15682649612427, \"judge_tokens_spent_24h\": 17759, \"screening_calls_5h\": 0, \"screening_calls_24h\": 10, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 2, \"validation_wait\": 4, \"human_wait\": 2}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8157\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8157\", \"title\": \"Docs say single_turn is \\\"Human in the Loop: Disallowed\\\", but the code and its own test support pausing for a human and resuming\", \"first_seen\": 1794701546.1556613, \"last_checked\": 1794800300.066107, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8183\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8183\", \"title\": \"[BUG] A delegated order reaches the event stream but not the next workflow step\", \"first_seen\": 1794825958.9808962, \"last_checked\": 1794828831.4565942, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8184\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8184\", \"title\": \"Eval judges drop their own reasoning (final_response_match_v2, hallucinations_v1)\", \"first_seen\": 1794841933.5816455, \"last_checked\": 1794862959.852567, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
@@ -41915,16 +41907,28 @@
         "value": "{\"task\": 1883, \"repo\": \"github/spec-kit\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794863213.339725, \"seconds\": 58.604, \"tokens\": {\"totalTokens\": 269546, \"inputTokens\": 267482, \"cachedInputTokens\": 216320, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2064, \"reasoningOutputTokens\": 628}, \"first_event_ms\": 1794863163768, \"last_event_ms\": 1794863213335, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:1883",
         "value": "{\"started\": 1794863146.1455214, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1883/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"1fe9169663a20f3ee32e0fc724fd6a2756b647b8\", \"remote_base\": \"1fe9169663a20f3ee32e0fc724fd6a2756b647b8\", \"base_update\": {\"original_head\": \"1fe9169663a20f3ee32e0fc724fd6a2756b647b8\", \"base\": \"1fe9169663a20f3ee32e0fc724fd6a2756b647b8\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794863160.3258889, \"last_execution_phase\": \"generation\", \"finished\": 1794863213.3411279}"
       },
       {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1794799437.7599087, \"comfyui\": 1794846681.35236, \"hermes\": 1794240004.2801356, \"langfuse\": 1794819598.1055431, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794858002.8744197, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1794863217.6237817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1794863222.426479"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1794863222.6449041"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1794863213.3493156"
+        "value": "1794863223.3494978"
+      },
+      {
+        "key": "task:1884",
+        "value": "{\"started\": 1794863217.6239495, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1884/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"5840a9c8e1df2ec32a9b92256241d35dcba02172\", \"remote_base\": \"5840a9c8e1df2ec32a9b92256241d35dcba02172\", \"base_update\": {\"original_head\": \"5840a9c8e1df2ec32a9b92256241d35dcba02172\", \"base\": \"5840a9c8e1df2ec32a9b92256241d35dcba02172\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -41932,19 +41936,15 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794863214.9712927"
+        "value": "1794863224.8199716"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1794863217.4130976"
+        "key": "codex_review_leases",
+        "value": "{\"1884\": {\"remaining\": 1, \"until\": 1794870425.3823624}}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1794799437.7599087, \"comfyui\": 1794846681.35236, \"hermes\": 1794240004.2801356, \"langfuse\": 1794819598.1055431, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794858002.8744197, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1794863217.6237817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
-      },
-      {
-        "key": "task:1884",
-        "value": "{\"started\": 1794863217.6239495, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1794846692.283073, \"group\": \"new_fix\", \"task\": 1821, \"phase\": \"generation\"}, {\"at\": 1794857941.875788, \"group\": \"new_fix\", \"task\": 1881, \"phase\": \"generation\"}, {\"at\": 1794858024.324718, \"group\": \"new_fix\", \"task\": 1882, \"phase\": \"generation\"}, {\"at\": 1794863154.736443, \"group\": \"maintenance\", \"task\": 1883, \"phase\": \"generation\"}, {\"at\": 1794863225.3823624, \"group\": \"maintenance\", \"task\": 1884, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
@@ -44758,6 +44758,10 @@
       },
       {
         "at": 1794863154.7371123,
+        "kind": "codex"
+      },
+      {
+        "at": 1794863225.3830066,
         "kind": "codex"
       }
     ]
