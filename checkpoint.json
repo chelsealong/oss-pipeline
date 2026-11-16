@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794863269.3956003,
+  "saved_at": 1794863309.9309053,
   "tables": {
     "tasks": [
       {
@@ -24489,10 +24489,10 @@
         "repo": "github/spec-kit",
         "number": 5134,
         "note": "{\"authors\": \"ci\", \"events\": [\"check:5840a9c8e1df:Dependency audit\"], \"screening_events\": [], \"is_issue\": false, \"head\": \"5840a9c8e1df2ec32a9b92256241d35dcba02172\"}",
-        "status": "running",
+        "status": "blocked",
         "created": 1794863151.1699731,
-        "updated": 1794863217.6239223,
-        "result": "",
+        "updated": 1794863309.9200072,
+        "result": "PR #5134 still hard-rejects collisions, while the maintainer requires a staged compatibility transition that preserves other extensions’ files. The new review identifies another unresolved output-path collision. The required Dependency audit also fails: the PR pins opentelemetry-api 1.45.1 (CVE-2026-126360); main has 1.45.2, but this task prohibits dependency and audit-snapshot edits. The current head cannot be presented as ready.",
         "attempts": 1
       },
       {
@@ -41843,18 +41843,6 @@
         "value": "1794863108.6155257"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1794863208.9001062, \"state\": \"active\", \"pending_candidates\": 491, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 91, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 491}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 54.15682649612427, \"judge_tokens_spent_24h\": 17759, \"screening_calls_5h\": 0, \"screening_calls_24h\": 10, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 2, \"validation_wait\": 4, \"human_wait\": 2}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8157\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8157\", \"title\": \"Docs say single_turn is \\\"Human in the Loop: Disallowed\\\", but the code and its own test support pausing for a human and resuming\", \"first_seen\": 1794701546.1556613, \"last_checked\": 1794800300.066107, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8183\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8183\", \"title\": \"[BUG] A delegated order reaches the event stream but not the next workflow step\", \"first_seen\": 1794825958.9808962, \"last_checked\": 1794828831.4565942, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8184\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8184\", \"title\": \"Eval judges drop their own reasoning (final_response_match_v2, hallucinations_v1)\", \"first_seen\": 1794841933.5816455, \"last_checked\": 1794862959.852567, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1794863208.9010682, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 2, \"done\": 1, \"human_wait\": 2, \"skipped\": 13, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 1, \"queued\": 2, \"running\": 1, \"skipped\": 2, \"validation_wait\": 1}}}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1794863213.337257, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1883:1:generation",
         "value": "{\"task\": 1883, \"repo\": \"github/spec-kit\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794863213.339725, \"seconds\": 58.604, \"tokens\": {\"totalTokens\": 269546, \"inputTokens\": 267482, \"cachedInputTokens\": 216320, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2064, \"reasoningOutputTokens\": 628}, \"first_event_ms\": 1794863163768, \"last_event_ms\": 1794863213335, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -41867,56 +41855,72 @@
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1794799437.7599087, \"comfyui\": 1794846681.35236, \"hermes\": 1794240004.2801356, \"langfuse\": 1794819598.1055431, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794858002.8744197, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1794863217.6237817, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1884\": {\"remaining\": 1, \"until\": 1794870425.3823624}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1794846692.283073, \"group\": \"new_fix\", \"task\": 1821, \"phase\": \"generation\"}, {\"at\": 1794857941.875788, \"group\": \"new_fix\", \"task\": 1881, \"phase\": \"generation\"}, {\"at\": 1794858024.324718, \"group\": \"new_fix\", \"task\": 1882, \"phase\": \"generation\"}, {\"at\": 1794863154.736443, \"group\": \"maintenance\", \"task\": 1883, \"phase\": \"generation\"}, {\"at\": 1794863225.3823624, \"group\": \"maintenance\", \"task\": 1884, \"phase\": \"generation\"}]"
       },
       {
-        "key": "task:1884",
-        "value": "{\"started\": 1794863217.6239495, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1884/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"5840a9c8e1df2ec32a9b92256241d35dcba02172\", \"remote_base\": \"5840a9c8e1df2ec32a9b92256241d35dcba02172\", \"base_update\": {\"original_head\": \"5840a9c8e1df2ec32a9b92256241d35dcba02172\", \"base\": \"5840a9c8e1df2ec32a9b92256241d35dcba02172\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794863228.9072006}"
+        "key": "runner_resources",
+        "value": "{\"at\": 1794863269.3851852, \"disk_free_bytes\": 90469564416, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15086768128, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1794863273.2519581, \"state\": \"active\", \"pending_candidates\": 491, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 91, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 491}, \"screening_wait_tasks\": 0, \"active_tasks\": 2, \"running_tasks\": 1, \"queued_tasks\": 1, \"codex_calls_5h\": 5, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 47.86263132095337, \"judge_tokens_spent_24h\": 17759, \"screening_calls_5h\": 0, \"screening_calls_24h\": 10, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 2, \"validation_wait\": 4, \"human_wait\": 2}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8157\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8157\", \"title\": \"Docs say single_turn is \\\"Human in the Loop: Disallowed\\\", but the code and its own test support pausing for a human and resuming\", \"first_seen\": 1794701546.1556613, \"last_checked\": 1794800300.066107, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8183\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8183\", \"title\": \"[BUG] A delegated order reaches the event stream but not the next workflow step\", \"first_seen\": 1794825958.9808962, \"last_checked\": 1794828831.4565942, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8184\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8184\", \"title\": \"Eval judges drop their own reasoning (final_response_match_v2, hallucinations_v1)\", \"first_seen\": 1794841933.5816455, \"last_checked\": 1794862959.852567, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1794863273.252931, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 2, \"done\": 1, \"human_wait\": 2, \"skipped\": 13, \"validation_wait\": 3}, \"respond\": {\"done\": 1, \"error\": 1, \"queued\": 1, \"running\": 1, \"skipped\": 3, \"validation_wait\": 1}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1794863297.6521928"
       },
       {
         "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1794863234.5343792, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794863299.0351975, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1794863234.9302158, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794863299.3083098, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1794863235.4322681, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794863299.9393685, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1794863235.7759352, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794863300.3013546, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1794863236.2054703, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794863300.75816, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1794863236.612708, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794863301.134044, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1794863237.422012, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+        "value": "{\"at\": 1794863302.0984874, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
       },
       {
         "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1794863237.8353155, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794863302.5553522, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1794863238.1436272, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794863303.014195, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1794863238.5135648, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794863303.334905, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1794863308.3403182"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1794863308.3514128"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -41924,27 +41928,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794863264.6542"
+        "value": "1794863309.6589003"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1794863265.449117, \"windows\": [{\"name\": \"primary\", \"used_percent\": 67, \"resets_at\": 1795158831}]}"
+        "value": "{\"at\": 1794863309.6975756, \"windows\": [{\"name\": \"primary\", \"used_percent\": 67, \"resets_at\": 1795158831}]}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1794863267.6491"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1794863309.699165, \"source\": \"completed task phase\"}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1794863268.3504872"
+        "key": "usage:1884:1:generation",
+        "value": "{\"task\": 1884, \"repo\": \"github/spec-kit\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794863309.7028553, \"seconds\": 84.321, \"tokens\": {\"totalTokens\": 466083, \"inputTokens\": 462683, \"cachedInputTokens\": 410368, \"cacheWriteInputTokens\": 0, \"outputTokens\": 3400, \"reasoningOutputTokens\": 1411}, \"first_event_ms\": 1794863232518, \"last_event_ms\": 1794863309697, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1794863268.5839908"
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1794863269.3851852, \"disk_free_bytes\": 90469564416, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15086768128, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "key": "task:1884",
+        "value": "{\"started\": 1794863217.6239495, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1884/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"5840a9c8e1df2ec32a9b92256241d35dcba02172\", \"remote_base\": \"5840a9c8e1df2ec32a9b92256241d35dcba02172\", \"base_update\": {\"original_head\": \"5840a9c8e1df2ec32a9b92256241d35dcba02172\", \"base\": \"5840a9c8e1df2ec32a9b92256241d35dcba02172\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794863228.9072006, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1794863309.8140695}"
       }
     ],
     "calls": [
