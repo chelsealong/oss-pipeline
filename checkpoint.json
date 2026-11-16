@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794789127.0554528,
+  "saved_at": 1794789132.6751027,
   "tables": {
     "tasks": [
       {
@@ -24203,10 +24203,10 @@
         "repo": "openclaw",
         "number": 199765,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1794786164.9710512,
-        "updated": 1794786849.5176222,
-        "result": "",
+        "updated": 1794789127.4660916,
+        "result": "review: VALIDATION_ENVIRONMENT: AGENTS.md requires user-visible fixes to be proved through the real product flow. The patch has no isolated Control UI or real Gateway/model reproduction; its new tests mock the MCP active view. I verified 94 focused tests, targeted typechecks, lint, format, the mock-export check, and git diff --check passed. The fix and PR body appear sound, and I found no applicable human-review requirement, but the required end-to-end proof remains unavailable.",
         "attempts": 1
       },
       {
@@ -41338,32 +41338,40 @@
         "value": "1794787721.907974"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1794788776.4602952, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1862:1:generation",
         "value": "{\"task\": 1862, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794788776.5109067, \"seconds\": 1846.582, \"tokens\": {\"totalTokens\": 18008476, \"inputTokens\": 17988263, \"cachedInputTokens\": 17817856, \"cacheWriteInputTokens\": 0, \"outputTokens\": 20213, \"reasoningOutputTokens\": 7249}, \"first_event_ms\": 1794786941016, \"last_event_ms\": 1794788776390, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"1862\": {\"remaining\": 0, \"until\": 1794795978.2229111}}"
       },
       {
         "key": "codex_allocations",
         "value": "[{\"at\": 1794771323.3117301, \"group\": \"new_fix\", \"task\": 1858, \"phase\": \"generation\"}, {\"at\": 1794771702.1941593, \"group\": \"screening\", \"task\": 1859, \"phase\": \"screening-ccdc4c8a5a93215f34ce\"}, {\"at\": 1794771733.1248257, \"group\": \"new_fix\", \"task\": 1859, \"phase\": \"generation\"}, {\"at\": 1794774128.2198572, \"group\": \"screening\", \"task\": 1860, \"phase\": \"screening-b1692b74c9678be4a6fb\"}, {\"at\": 1794774146.6754026, \"group\": \"new_fix\", \"task\": 1860, \"phase\": \"generation\"}, {\"at\": 1794785601.7721245, \"group\": \"screening\", \"task\": 1861, \"phase\": \"screening-e5812f91d9775a4fcf87\"}, {\"at\": 1794785618.1086197, \"group\": \"new_fix\", \"task\": 1861, \"phase\": \"generation\"}, {\"at\": 1794786016.8108037, \"group\": \"new_fix\", \"task\": 1861, \"phase\": \"review\"}, {\"at\": 1794786206.2293804, \"group\": \"repair\", \"task\": 1861, \"phase\": \"remediation\"}, {\"at\": 1794786641.1479738, \"group\": \"repair\", \"task\": 1861, \"phase\": \"rereview\"}, {\"at\": 1794786855.5586724, \"group\": \"screening\", \"task\": 1862, \"phase\": \"screening-6a7e5ee9509dc8484a8c\"}, {\"at\": 1794786929.930338, \"group\": \"new_fix\", \"task\": 1862, \"phase\": \"generation\"}, {\"at\": 1794788778.2229111, \"group\": \"new_fix\", \"task\": 1862, \"phase\": \"review\"}]"
       },
       {
-        "key": "task:1862",
-        "value": "{\"started\": 1794786849.5181627, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1862/attempt-1\", \"attempt\": 1, \"phase\": \"review\", \"base\": \"b58c23cac0f74ab00cdaa7166f3e9ca47702d4f3\", \"phase_started\": 1794788781.8946435, \"screening_requests\": {\"6a7e5ee9509dc8484a8c\": 1794786870.5893686}, \"generation_started\": 1794786929.9301517, \"dispatch_paid_date\": \"2026-11-15\"}"
+        "key": "worker_heartbeat",
+        "value": "1794789119.5554576"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1794789116.4929671, \"windows\": [{\"name\": \"primary\", \"used_percent\": 22, \"resets_at\": 1795158831}]}"
+        "value": "{\"at\": 1794789127.0712132, \"windows\": [{\"name\": \"primary\", \"used_percent\": 22, \"resets_at\": 1795158831}]}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1794789119.5554576"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1794789127.0743575, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1862:1:review",
+        "value": "{\"task\": 1862, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1794789127.0801334, \"seconds\": 348.861, \"tokens\": {\"totalTokens\": 1648310, \"inputTokens\": 1642931, \"cachedInputTokens\": 1564416, \"cacheWriteInputTokens\": 0, \"outputTokens\": 5379, \"reasoningOutputTokens\": 2510}, \"first_event_ms\": 1794788785609, \"last_event_ms\": 1794789127071, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:1862",
+        "value": "{\"status\": \"needs_human\", \"task\": 1862, \"repo\": \"openclaw\", \"number\": 199765, \"reason\": \"review: VALIDATION_ENVIRONMENT: AGENTS.md requires user-visible fixes to be proved through the real product flow. The patch has no isolated Control UI or real Gateway/model reproduction; its new tests mock the MCP active view. I verified 94 focused tests, targeted typechecks, lint, format, the mock-export check, and git diff --check passed. The fix and PR body appear sound, and I found no applicable human-review requirement, but the required end-to-end proof remains unavailable.\", \"base\": \"b58c23cac0f74ab00cdaa7166f3e9ca47702d4f3\", \"patch_digest\": \"738441b7b1131025e10304a82ff7fccd28f96b41ee2f63072ed3c9ba195ff52f\", \"evidence_bundle\": \"1862-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1862",
+        "value": "{\"started\": 1794786849.5181627, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1862/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"b58c23cac0f74ab00cdaa7166f3e9ca47702d4f3\", \"phase_started\": 1794788781.8946435, \"screening_requests\": {\"6a7e5ee9509dc8484a8c\": 1794786870.5893686}, \"generation_started\": 1794786929.9301517, \"dispatch_paid_date\": \"2026-11-15\", \"patch_digest\": \"738441b7b1131025e10304a82ff7fccd28f96b41ee2f63072ed3c9ba195ff52f\", \"last_execution_phase\": \"review\", \"finished\": 1794789127.333454}"
       }
     ],
     "calls": [
