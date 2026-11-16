@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794791497.5304027,
+  "saved_at": 1794791563.197314,
   "tables": {
     "tasks": [
       {
@@ -41052,10 +41052,6 @@
         "value": "{}"
       },
       {
-        "key": "publication_check:hermes",
-        "value": "{\"at\": 1794789315.1671076, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
-      },
-      {
         "key": "usage:1861:2:generation",
         "value": "{\"task\": 1861, \"repo\": \"langfuse\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1794789716.729568, \"seconds\": 394.637, \"tokens\": {\"totalTokens\": 3573258, \"inputTokens\": 3565356, \"cachedInputTokens\": 3476096, \"cacheWriteInputTokens\": 0, \"outputTokens\": 7902, \"reasoningOutputTokens\": 1972}, \"first_event_ms\": 1794789328775, \"last_event_ms\": 1794789716723, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -41324,30 +41320,6 @@
         "value": "{\"started\": 1794576702.3591177, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"capacity_wait\", \"base\": null, \"generation_started\": 1794459042.1741812, \"dispatch_paid_date\": \"2026-11-12\", \"phase_started\": 1794460701.8866563, \"patch_digest\": \"bd40ca61ddb7ed55a9c37a77fe8173979073dde3865013201fb6fb00f5930bb3\", \"last_execution_phase\": \"claimed\", \"finished\": 1794576707.8610897, \"recovery_checked_at\": 1794791296.629743, \"resume_progress\": {\"bundle\": \"1787-1.json\", \"sha256\": \"086be91263f507af5c4939de2089ec47c2749ec9424ac73a24cb0f9200ff0b5d\", \"base\": \"36afa92b2370c23bfd64d3f4a6f1b3aab68fd300\", \"phase\": \"rereview\"}, \"publication_contract_repaired\": {\"at\": 1794576676.175774, \"repair\": \"publication_contract\", \"attempt\": 1}}"
       },
       {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1794791388.8562233, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1794791394.2696583, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1794791394.7939079, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1794791395.2954452, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1794791395.8159795, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1794791396.0918972, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
         "key": "candidate_capacity:openclaw",
         "value": "{\"at\": 1794791397.1114662, \"allowed\": true, \"reason\": \"\"}"
       },
@@ -41389,19 +41361,55 @@
       },
       {
         "key": "admission_health",
-        "value": "{\"at\": 1794791436.888357, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 15, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 18.18976378440857, \"judge_tokens_spent_24h\": 97600, \"screening_calls_5h\": 3, \"screening_calls_24h\": 10, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 2, \"validation_wait\": 2}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8126\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8126\", \"title\": \"Typed guardrail exit-state on the confirmation ledger (PASS / DEGRADE / VETO)\", \"first_seen\": 1794569398.1318974, \"last_checked\": 1794706293.927082, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8130\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8130\", \"title\": \"Public way to cancel an invocation without sealing it as aborted (2.14)\", \"first_seen\": 1794603502.0550215, \"last_checked\": 1794745358.0380406, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8173\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8173\", \"title\": \"FsspecArtifactService: on file:// and memory://, an artifact and a nested artifact named '<it>/<number>' collide\", \"first_seen\": 1794765026.9214377, \"last_checked\": 1794790775.466872, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8157\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8157\", \"title\": \"Docs say single_turn is \\\"Human in the Loop: Disallowed\\\", but the code and its own test support pausing for a human and resuming\", \"first_seen\": 1794701546.1556613, \"last_checked\": 1794790778.4638288, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+        "value": "{\"at\": 1794791502.5171432, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 15, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 83.81920909881592, \"judge_tokens_spent_24h\": 97600, \"screening_calls_5h\": 3, \"screening_calls_24h\": 10, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 2, \"validation_wait\": 2}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8126\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8126\", \"title\": \"Typed guardrail exit-state on the confirmation ledger (PASS / DEGRADE / VETO)\", \"first_seen\": 1794569398.1318974, \"last_checked\": 1794706293.927082, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8130\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8130\", \"title\": \"Public way to cancel an invocation without sealing it as aborted (2.14)\", \"first_seen\": 1794603502.0550215, \"last_checked\": 1794745358.0380406, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8173\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8173\", \"title\": \"FsspecArtifactService: on file:// and memory://, an artifact and a nested artifact named '<it>/<number>' collide\", \"first_seen\": 1794765026.9214377, \"last_checked\": 1794790775.466872, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8157\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8157\", \"title\": \"Docs say single_turn is \\\"Human in the Loop: Disallowed\\\", but the code and its own test support pausing for a human and resuming\", \"first_seen\": 1794701546.1556613, \"last_checked\": 1794790778.4638288, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1794791436.8890722, \"tasks\": {\"fix\": {\"done\": 1, \"human_wait\": 2, \"queued\": 2, \"running\": 1, \"skipped\": 10, \"validation_wait\": 2}, \"respond\": {\"blocked\": 1, \"done\": 2, \"skipped\": 21}}}"
+        "value": "{\"at\": 1794791502.5179088, \"tasks\": {\"fix\": {\"done\": 1, \"human_wait\": 2, \"queued\": 2, \"running\": 1, \"skipped\": 10, \"validation_wait\": 2}, \"respond\": {\"blocked\": 1, \"done\": 2, \"skipped\": 21}}}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1794791558.7349808, \"windows\": [{\"name\": \"primary\", \"used_percent\": 23, \"resets_at\": 1795158831}]}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1794791443.3232694"
+        "value": "1794791559.6575027"
+      },
+      {
+        "key": "publication_check:hermes",
+        "value": "{\"at\": 1794791559.9673948, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
+      },
+      {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1794791560.4202569, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1794791560.8808877, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1794791486.065058"
+        "value": "1794791561.071677"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1794791561.1828244, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1794791561.542741, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1794791561.7278755"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1794791561.9636476, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1794791562.4417381, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -41409,19 +41417,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794791493.0294516"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1794791495.7076142, \"windows\": [{\"name\": \"primary\", \"used_percent\": 23, \"resets_at\": 1795158830}]}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1794791496.724452"
+        "value": "1794791563.0467553"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1794791497.5189795, \"disk_free_bytes\": 80307662848, \"memory_bytes\": {\"MemTotal\": 16464297984, \"MemAvailable\": 11101155328, \"SwapTotal\": 3221221376, \"SwapFree\": 3007401984}, \"memory_events\": null}"
+        "value": "{\"at\": 1794791563.186887, \"disk_free_bytes\": 80449241088, \"memory_bytes\": {\"MemTotal\": 16464297984, \"MemAvailable\": 10746155008, \"SwapTotal\": 3221221376, \"SwapFree\": 3007426560}, \"memory_events\": null}"
       }
     ],
     "calls": [
