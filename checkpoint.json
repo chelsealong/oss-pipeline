@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794863668.6771448,
+  "saved_at": 1794863675.2021518,
   "tables": {
     "tasks": [
       {
@@ -41726,10 +41726,6 @@
         "value": "{\"started\": 1794797573.9906693, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1794797578.1831222, \"recovery_checked_at\": 1794863397.7794135}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1794863439.833258, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1885:1:generation",
         "value": "{\"task\": 1885, \"repo\": \"github/spec-kit\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794863439.8365853, \"seconds\": 115.26, \"tokens\": {\"totalTokens\": 825342, \"inputTokens\": 820213, \"cachedInputTokens\": 743424, \"cacheWriteInputTokens\": 0, \"outputTokens\": 5129, \"reasoningOutputTokens\": 2877}, \"first_event_ms\": 1794863331295, \"last_event_ms\": 1794863439831, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -41890,14 +41886,6 @@
         "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1794799437.7599087, \"comfyui\": 1794846681.35236, \"hermes\": 1794240004.2801356, \"langfuse\": 1794819598.1055431, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794858002.8744197, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1794863563.1625602, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1886\": {\"remaining\": 1, \"until\": 1794870772.3634634}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1794846692.283073, \"group\": \"new_fix\", \"task\": 1821, \"phase\": \"generation\"}, {\"at\": 1794857941.875788, \"group\": \"new_fix\", \"task\": 1881, \"phase\": \"generation\"}, {\"at\": 1794858024.324718, \"group\": \"new_fix\", \"task\": 1882, \"phase\": \"generation\"}, {\"at\": 1794863154.736443, \"group\": \"maintenance\", \"task\": 1883, \"phase\": \"generation\"}, {\"at\": 1794863225.3823624, \"group\": \"maintenance\", \"task\": 1884, \"phase\": \"generation\"}, {\"at\": 1794863324.577689, \"group\": \"maintenance\", \"task\": 1885, \"phase\": \"generation\"}, {\"at\": 1794863572.3634634, \"group\": \"maintenance\", \"task\": 1886, \"phase\": \"generation\"}]"
-      },
-      {
         "key": "candidate_capacity:adk",
         "value": "{\"at\": 1794863574.7269475, \"allowed\": true, \"reason\": \"\"}"
       },
@@ -41966,20 +41954,28 @@
         "value": "{\"started\": 1794797561.7860248, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"capacity_wait\", \"base\": null, \"generation_started\": 1794459042.1741812, \"dispatch_paid_date\": \"2026-11-12\", \"phase_started\": 1794460701.8866563, \"patch_digest\": \"bd40ca61ddb7ed55a9c37a77fe8173979073dde3865013201fb6fb00f5930bb3\", \"last_execution_phase\": \"claimed\", \"finished\": 1794797565.97269, \"recovery_checked_at\": 1794863603.4414377, \"resume_progress\": {\"bundle\": \"1787-1.json\", \"sha256\": \"086be91263f507af5c4939de2089ec47c2749ec9424ac73a24cb0f9200ff0b5d\", \"base\": \"36afa92b2370c23bfd64d3f4a6f1b3aab68fd300\", \"phase\": \"rereview\"}, \"publication_contract_repaired\": {\"at\": 1794576676.175774, \"repair\": \"publication_contract\", \"attempt\": 1}}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1794863608.2263591, \"state\": \"active\", \"pending_candidates\": 491, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 91, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 491}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 7, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 35.85614514350891, \"judge_tokens_spent_24h\": 19946, \"screening_calls_5h\": 0, \"screening_calls_24h\": 10, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 2, \"validation_wait\": 4, \"human_wait\": 2}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8157\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8157\", \"title\": \"Docs say single_turn is \\\"Human in the Loop: Disallowed\\\", but the code and its own test support pausing for a human and resuming\", \"first_seen\": 1794701546.1556613, \"last_checked\": 1794800300.066107, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8183\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8183\", \"title\": \"[BUG] A delegated order reaches the event stream but not the next workflow step\", \"first_seen\": 1794825958.9808962, \"last_checked\": 1794828831.4565942, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8184\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8184\", \"title\": \"Eval judges drop their own reasoning (final_response_match_v2, hallucinations_v1)\", \"first_seen\": 1794841933.5816455, \"last_checked\": 1794862959.852567, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1794863608.2275317, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 2, \"done\": 1, \"human_wait\": 2, \"skipped\": 13, \"validation_wait\": 3}, \"respond\": {\"blocked\": 2, \"done\": 1, \"error\": 1, \"queued\": 2, \"running\": 1, \"skipped\": 3, \"validation_wait\": 1}}}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1794863628.7208102"
       },
       {
+        "key": "runner_resources",
+        "value": "{\"at\": 1794863668.6664906, \"disk_free_bytes\": 90434301952, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15059668992, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1794863672.0653963, \"state\": \"active\", \"pending_candidates\": 491, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 91, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 491}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 7, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 99.69477105140686, \"judge_tokens_spent_24h\": 19946, \"screening_calls_5h\": 0, \"screening_calls_24h\": 10, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"capacity_wait\": 2, \"validation_wait\": 4, \"human_wait\": 2}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8157\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8157\", \"title\": \"Docs say single_turn is \\\"Human in the Loop: Disallowed\\\", but the code and its own test support pausing for a human and resuming\", \"first_seen\": 1794701546.1556613, \"last_checked\": 1794800300.066107, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8183\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8183\", \"title\": \"[BUG] A delegated order reaches the event stream but not the next workflow step\", \"first_seen\": 1794825958.9808962, \"last_checked\": 1794828831.4565942, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8184\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8184\", \"title\": \"Eval judges drop their own reasoning (final_response_match_v2, hallucinations_v1)\", \"first_seen\": 1794841933.5816455, \"last_checked\": 1794862959.852567, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1794863672.0663288, \"tasks\": {\"fix\": {\"blocked\": 2, \"capacity_wait\": 2, \"done\": 1, \"human_wait\": 2, \"skipped\": 13, \"validation_wait\": 3}, \"respond\": {\"blocked\": 2, \"done\": 1, \"error\": 1, \"queued\": 2, \"running\": 1, \"skipped\": 3, \"validation_wait\": 1}}}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1794863657.6874676"
+        "value": "1794863672.68834"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1794863673.3604937"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -41987,19 +41983,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794863664.8611336"
+        "value": "1794863674.5711606"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1794863666.5710137, \"windows\": [{\"name\": \"primary\", \"used_percent\": 67, \"resets_at\": 1795158831}]}"
+        "value": "{\"at\": 1794863675.0685003, \"windows\": [{\"name\": \"primary\", \"used_percent\": 67, \"resets_at\": 1795158831}]}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1794863668.360377"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1794863675.0700307, \"source\": \"completed task phase\"}"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1794863668.6664906, \"disk_free_bytes\": 90434301952, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15059668992, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "key": "usage:1886:1:generation",
+        "value": "{\"task\": 1886, \"repo\": \"github/spec-kit\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794863675.0900621, \"seconds\": 102.727, \"tokens\": {\"totalTokens\": 905149, \"inputTokens\": 901450, \"cachedInputTokens\": 822400, \"cacheWriteInputTokens\": 0, \"outputTokens\": 3699, \"reasoningOutputTokens\": 1051}, \"first_event_ms\": 1794863578711, \"last_event_ms\": 1794863675068, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"1886\": {\"remaining\": 0, \"until\": 1794870875.1908355}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1794846692.283073, \"group\": \"new_fix\", \"task\": 1821, \"phase\": \"generation\"}, {\"at\": 1794857941.875788, \"group\": \"new_fix\", \"task\": 1881, \"phase\": \"generation\"}, {\"at\": 1794858024.324718, \"group\": \"new_fix\", \"task\": 1882, \"phase\": \"generation\"}, {\"at\": 1794863154.736443, \"group\": \"maintenance\", \"task\": 1883, \"phase\": \"generation\"}, {\"at\": 1794863225.3823624, \"group\": \"maintenance\", \"task\": 1884, \"phase\": \"generation\"}, {\"at\": 1794863324.577689, \"group\": \"maintenance\", \"task\": 1885, \"phase\": \"generation\"}, {\"at\": 1794863572.3634634, \"group\": \"maintenance\", \"task\": 1886, \"phase\": \"generation\"}, {\"at\": 1794863675.1908355, \"group\": \"maintenance\", \"task\": 1886, \"phase\": \"reply-review\"}]"
       }
     ],
     "calls": [
@@ -44841,6 +44845,10 @@
       },
       {
         "at": 1794863572.3641434,
+        "kind": "codex"
+      },
+      {
+        "at": 1794863675.1913488,
         "kind": "codex"
       }
     ]
