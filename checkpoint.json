@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794935104.763168,
+  "saved_at": 1794935169.806037,
   "tables": {
     "tasks": [
       {
@@ -42039,10 +42039,6 @@
         "value": "{\"at\": 1794934215.0539246, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
-        "key": "prwatch_heartbeat",
-        "value": "1794934747.3510664"
-      },
-      {
         "key": "task:1772",
         "value": "{\"started\": 1794433734.3683045, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1772/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"remote_base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base_update\": {\"original_head\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794433749.2429795, \"patch_digest\": \"4fe941f9761d7c805b686c0f14d68074129e92774dc46d8f1d318e3c3378b353\", \"last_execution_phase\": \"generation\", \"finished\": 1794433882.8292596, \"recovery_checked_at\": 1794934898.4524732}"
       },
@@ -42215,46 +42211,6 @@
         "value": "{\"started\": 1794797573.9906693, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1794797578.1831222, \"recovery_checked_at\": 1794935039.3926911}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1794935044.1407733, \"state\": \"stalled\", \"pending_candidates\": 605, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 205, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 605}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 3, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 8784.124703168869, \"judge_tokens_spent_24h\": 34322, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 2, \"execution_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8184\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8184\", \"title\": \"Eval judges drop their own reasoning (final_response_match_v2, hallucinations_v1)\", \"first_seen\": 1794841933.5816455, \"last_checked\": 1794887625.524545, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1794935044.1416073, \"tasks\": {\"fix\": {\"execution_wait\": 1, \"human_wait\": 2, \"skipped\": 6}, \"respond\": {\"blocked\": 6, \"done\": 1, \"skipped\": 2}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1794935047.7038894, \"windows\": [{\"name\": \"primary\", \"used_percent\": 69, \"resets_at\": 1795158830}]}"
-      },
-      {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1794935083.2572222, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1794935083.7527137, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1794935084.3282373, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1794935084.9011707, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1794935085.5015402, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1794935086.051816, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1794935087.733792, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
-      },
-      {
         "key": "candidate_capacity:dify",
         "value": "{\"at\": 1794935088.204048, \"allowed\": true, \"reason\": \"\"}"
       },
@@ -42267,12 +42223,60 @@
         "value": "{\"at\": 1794935089.4759033, \"allowed\": true, \"reason\": \"\"}"
       },
       {
+        "key": "admission_health",
+        "value": "{\"at\": 1794935109.2094965, \"state\": \"stalled\", \"pending_candidates\": 606, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 206, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 606}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 3, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 8849.193133831024, \"judge_tokens_spent_24h\": 34322, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 2, \"execution_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8184\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8184\", \"title\": \"Eval judges drop their own reasoning (final_response_match_v2, hallucinations_v1)\", \"first_seen\": 1794841933.5816455, \"last_checked\": 1794887625.524545, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1794935109.2103114, \"tasks\": {\"fix\": {\"execution_wait\": 1, \"human_wait\": 2, \"skipped\": 6}, \"respond\": {\"blocked\": 6, \"done\": 1, \"skipped\": 2}}}"
+      },
+      {
+        "key": "prwatch_heartbeat",
+        "value": "1794935153.3080454"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1794935089.9958801"
+        "value": "1794935165.0002692"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1794935165.2863216"
+      },
+      {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1794935165.9530513, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1794935166.7012482, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1794935167.1395755, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1794935167.5845318, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794935102.9357212"
+        "value": "1794935167.937104"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1794935168.0943623, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1794935168.5697725, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1794935168.6473627, \"windows\": [{\"name\": \"primary\", \"used_percent\": 69, \"resets_at\": 1795158831}]}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1794935169.5624895, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -42280,15 +42284,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794935104.2841883"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1794935104.5090435"
+        "value": "1794935169.6301594"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1794935104.7521436, \"disk_free_bytes\": 90511069184, \"memory_bytes\": {\"MemTotal\": 16464293888, \"MemAvailable\": 15204315136, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1794935169.7955885, \"disk_free_bytes\": 90509561856, \"memory_bytes\": {\"MemTotal\": 16464293888, \"MemAvailable\": 15151476736, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       }
     ],
     "calls": [
