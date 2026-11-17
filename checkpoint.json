@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794874146.4777422,
+  "saved_at": 1794874180.5189574,
   "tables": {
     "tasks": [
       {
@@ -24606,10 +24606,10 @@
         "repo": "llama-index",
         "number": 24279,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1794874112.0253828,
-        "updated": 1794874114.5961754,
-        "result": "",
+        "updated": 1794874180.2343907,
+        "result": "Open PR #22599 already changes the same parser function to select the final verdict token, fixing both reported reproductions. The issue is taken.",
         "attempts": 1
       }
     ],
@@ -41847,10 +41847,6 @@
         "value": "{\"task\": 1891, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794871488.2993355, \"seconds\": 294.445, \"tokens\": {\"totalTokens\": 2844715, \"inputTokens\": 2837575, \"cachedInputTokens\": 2761344, \"cacheWriteInputTokens\": 0, \"outputTokens\": 7140, \"reasoningOutputTokens\": 2064}, \"first_event_ms\": 1794871201549, \"last_event_ms\": 1794871488288, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1794872616.5095665, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1891:1:review",
         "value": "{\"task\": 1891, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1794872616.519227, \"seconds\": 1126.772, \"tokens\": {\"totalTokens\": 5880600, \"inputTokens\": 5867276, \"cachedInputTokens\": 5784192, \"cacheWriteInputTokens\": 0, \"outputTokens\": 13324, \"reasoningOutputTokens\": 5928}, \"first_event_ms\": 1794871496198, \"last_event_ms\": 1794872616507, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -42099,10 +42095,6 @@
         "value": "{\"at\": 1794874134.8536248, \"allowed\": true, \"reason\": \"\"}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1794874135.359457"
-      },
-      {
         "key": "candidate_capacity:openclaw",
         "value": "{\"at\": 1794874135.78545, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
       },
@@ -42127,24 +42119,40 @@
         "value": "{\"at\": 1794874137.9674764, \"allowed\": true, \"reason\": \"\"}"
       },
       {
-        "key": "task:1893",
-        "value": "{\"started\": 1794874114.596207, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1893/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"99d7433f6f71888951379ccca9294e272442c832\", \"generation_started\": 1794874136.0175245, \"dispatch_paid_date\": \"2026-11-17\", \"phase_started\": 1794874139.1178522}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"1893\": {\"remaining\": 1, \"until\": 1794881336.0177076}, \"1891\": {\"remaining\": 1, \"until\": 1794881340.6985471}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1794857941.875788, \"group\": \"new_fix\", \"task\": 1881, \"phase\": \"generation\"}, {\"at\": 1794858024.324718, \"group\": \"new_fix\", \"task\": 1882, \"phase\": \"generation\"}, {\"at\": 1794863154.736443, \"group\": \"maintenance\", \"task\": 1883, \"phase\": \"generation\"}, {\"at\": 1794863225.3823624, \"group\": \"maintenance\", \"task\": 1884, \"phase\": \"generation\"}, {\"at\": 1794863324.577689, \"group\": \"maintenance\", \"task\": 1885, \"phase\": \"generation\"}, {\"at\": 1794863572.3634634, \"group\": \"maintenance\", \"task\": 1886, \"phase\": \"generation\"}, {\"at\": 1794863675.1908355, \"group\": \"maintenance\", \"task\": 1886, \"phase\": \"reply-review\"}, {\"at\": 1794863743.6255627, \"group\": \"maintenance\", \"task\": 1887, \"phase\": \"generation\"}, {\"at\": 1794863858.0648806, \"group\": \"maintenance\", \"task\": 1887, \"phase\": \"review\"}, {\"at\": 1794864070.8513613, \"group\": \"maintenance\", \"task\": 1888, \"phase\": \"generation\"}, {\"at\": 1794864141.9383578, \"group\": \"maintenance\", \"task\": 1889, \"phase\": \"generation\"}, {\"at\": 1794864220.3099215, \"group\": \"maintenance\", \"task\": 1889, \"phase\": \"reply-review\"}, {\"at\": 1794864372.9501793, \"group\": \"maintenance\", \"task\": 1890, \"phase\": \"generation\"}, {\"at\": 1794864451.3282175, \"group\": \"maintenance\", \"task\": 1890, \"phase\": \"reply-review\"}, {\"at\": 1794871193.855498, \"group\": \"new_fix\", \"task\": 1891, \"phase\": \"generation\"}, {\"at\": 1794871489.7489595, \"group\": \"new_fix\", \"task\": 1891, \"phase\": \"review\"}, {\"at\": 1794872619.9903975, \"group\": \"repair\", \"task\": 1891, \"phase\": \"remediation\"}, {\"at\": 1794874136.0177076, \"group\": \"new_fix\", \"task\": 1893, \"phase\": \"generation\"}, {\"at\": 1794874140.6985471, \"group\": \"new_fix\", \"task\": 1891, \"phase\": \"generation\"}]"
       },
       {
+        "key": "task:1891",
+        "value": "{\"started\": 1794874131.3048637, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1891/attempt-2\", \"attempt\": 2, \"phase\": \"generation\", \"base\": \"a308f3f1d2c49deb22e177af8f406c2607878db8\", \"generation_started\": 1794871193.8553305, \"dispatch_paid_date\": \"2026-11-16\", \"phase_started\": 1794874146.4647095, \"last_execution_phase\": \"remediation\", \"finished\": 1794873826.6119478, \"resume_progress\": {\"bundle\": \"1891-1.json\", \"sha256\": \"0d395fa7d8c78a2e1116f8da6a1917a5e704a60358b2132097a0d33e8c6bc83b\", \"base\": \"9fa6bc598950993c2980c52169115f2968012605\", \"phase\": \"remediation\"}, \"timeout_continuations\": 1, \"progress_rebase_needed\": null, \"progress_restored\": true, \"restored_from\": \"1891-1.json\"}"
+      },
+      {
         "key": "watch_heartbeat",
-        "value": "1794874142.9808621"
+        "value": "1794874178.2357378"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794874143.8158472"
+        "value": "1794874178.8165507"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1794874179.658534, \"windows\": [{\"name\": \"primary\", \"used_percent\": 68, \"resets_at\": 1795158830}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1794874179.715185, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1893:1:generation",
+        "value": "{\"task\": 1893, \"repo\": \"llama-index\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794874179.718032, \"seconds\": 43.702, \"tokens\": {\"totalTokens\": 159912, \"inputTokens\": 158568, \"cachedInputTokens\": 126080, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1344, \"reasoningOutputTokens\": 284}, \"first_event_ms\": 1794874142701, \"last_event_ms\": 1794874179658, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"1891\": {\"remaining\": 1, \"until\": 1794881340.6985471}}"
+      },
+      {
+        "key": "task:1893",
+        "value": "{\"started\": 1794874114.596207, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1893/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"99d7433f6f71888951379ccca9294e272442c832\", \"generation_started\": 1794874136.0175245, \"dispatch_paid_date\": \"2026-11-17\", \"phase_started\": 1794874139.1178522, \"last_execution_phase\": \"generation\", \"finished\": 1794874179.7202086}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -42152,15 +42160,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794874144.9776402"
+        "value": "1794874180.3607984"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1794874145.9118717, \"windows\": [{\"name\": \"primary\", \"used_percent\": 68, \"resets_at\": 1795158831}]}"
-      },
-      {
-        "key": "task:1891",
-        "value": "{\"started\": 1794874131.3048637, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1891/attempt-2\", \"attempt\": 2, \"phase\": \"generation\", \"base\": \"a308f3f1d2c49deb22e177af8f406c2607878db8\", \"generation_started\": 1794871193.8553305, \"dispatch_paid_date\": \"2026-11-16\", \"phase_started\": 1794874146.4647095, \"last_execution_phase\": \"remediation\", \"finished\": 1794873826.6119478, \"resume_progress\": {\"bundle\": \"1891-1.json\", \"sha256\": \"0d395fa7d8c78a2e1116f8da6a1917a5e704a60358b2132097a0d33e8c6bc83b\", \"base\": \"9fa6bc598950993c2980c52169115f2968012605\", \"phase\": \"remediation\"}, \"timeout_continuations\": 1, \"progress_rebase_needed\": null, \"progress_restored\": true, \"restored_from\": \"1891-1.json\"}"
+        "key": "worker_heartbeat",
+        "value": "1794874180.3703299"
       }
     ],
     "calls": [
