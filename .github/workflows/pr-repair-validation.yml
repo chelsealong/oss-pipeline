@@ -10,26 +10,11 @@ jobs:
       max-parallel: 2
       matrix:
         include:
-        - pr: 7285
-          ref: e10396f9a6025958c332847b47d7a8be5f177954
-          sdk: a2a-sdk[http-server]>=1,<2
-          tests: tests/unittests/utils/test_schema_utils.py
-          files: src/google/adk/utils/_schema_utils.py tests/unittests/utils/test_schema_utils.py
         - pr: 7244
           ref: d21d187a704a3c5eeab7520dca48a5b47a66ac10
           sdk: a2a-sdk[http-server]>=1,<2
           tests: tests/unittests/telemetry/test_spans.py
           files: src/google/adk/telemetry/tracing.py tests/unittests/telemetry/test_spans.py
-        - pr: 7249
-          ref: 55115b093dd87576336f4ae278d70020e3f6e2b3
-          sdk: a2a-sdk[http-server]>=1,<2
-          tests: tests/unittests/tools/test_agent_tool.py
-          files: src/google/adk/tools/agent_tool.py tests/unittests/tools/test_agent_tool.py
-        - pr: 7252
-          ref: ed68fdcbcdb469f7e2046bde837eeb2c199b4056
-          sdk: a2a-sdk[http-server]>=1,<2
-          tests: tests/unittests/a2a/executor/test_a2a_agent_executor.py tests/unittests/a2a/converters/test_event_converter.py
-          files: src/google/adk/a2a/executor/a2a_agent_executor.py tests/unittests/a2a/executor/test_a2a_agent_executor.py
     steps:
     - uses: actions/checkout@v4
       with:
@@ -43,8 +28,8 @@ jobs:
         CHANGED_PY: ${{ matrix.files }}
       run: "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work -e A2A_SDK -e TEST_PATHS -e CHANGED_PY \\\n  python:3.12-slim\
         \ bash -euc '\n    pip install --disable-pip-version-check -q -e \".[a2a]\" \"$A2A_SDK\" pytest pytest-asyncio pytest-mock\
-        \ pyink isort mcp\n    python -m pytest $TEST_PATHS -q\n    pyink --check $CHANGED_PY\n    isort --check-only $CHANGED_PY\n\
-        \  '\n"
+        \ pyink isort mcp \"opentelemetry-instrumentation-google-genai>=0.7b1,<2\" \"google-cloud-discoveryengine>=0.13.12,<0.14\"\
+        \n    python -m pytest $TEST_PATHS -q\n    pyink --check $CHANGED_PY\n    isort --check-only $CHANGED_PY\n  '\n"
     name: 'ADK #${{ matrix.pr }} (${{ matrix.sdk }})'
   hermes:
     runs-on: ubuntu-24.04
@@ -53,7 +38,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         repository: chelsealong/hermes-agent
-        ref: b63e37d87040d3cf561cb6e2f65718203512797c
+        ref: ${{ matrix.ref }}
         persist-credentials: false
         fetch-depth: 20
     - name: Fetch frozen upstream audit base
@@ -61,24 +46,25 @@ jobs:
 
         git update-ref refs/remotes/origin/main FETCH_HEAD'
     - name: Validate Hermes repair without production credentials
-      run: "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work python:3.12-bookworm bash -euc '\n  git config --global\
-        \ --add safe.directory /work\n  python -m pm.build_env --source . --out /opt/test-env --group dev --group test\n \
-        \ export HERMES_PYTHON=/opt/test-env/bin/python\n  /opt/test-env/bin/python scripts/check --base f7e2898aaefc8f967dbf7345e3999a65672fe60e\n\
-        '\n"
-  openclaw-docs:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        repository: chelsealong/openclaw
-        ref: dfe64df7781d121921e7700e06a6f1bb909386b9
-        persist-credentials: false
-    - name: Check changed documentation formatting
-      run: "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work node:24.22.1-bookworm-slim sh -euc '\n npm install --prefix\
-        \ /tmp/formatter --ignore-scripts --no-audit --no-fund oxfmt@0.74.0\n /tmp/formatter/node_modules/.bin/oxfmt --check\
-        \ .agents/skills/test-audit/SKILL.md .agents/skills/test-audit/references/audit.md\n test -f .agents/skills/test-audit/references/audit.md\n\
-        '\n"
+      run: "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work -e TEST_PATHS python:3.12-bookworm bash -euc '\n  git\
+        \ config --global --add safe.directory /work\n  python -m pm.build_env --source . --out /opt/test-env --group dev\
+        \ --group test\n  export HERMES_PYTHON=/opt/test-env/bin/python\n  bash scripts/run_tests.sh -j 2 $TEST_PATHS -q\n\
+        \  /opt/test-env/bin/python scripts/check --base f7e2898aaefc8f967dbf7345e3999a65672fe60e\n'\n"
+      env:
+        TEST_PATHS: ${{ matrix.tests }}
+    name: 'Hermes #${{ matrix.pr }}'
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+        - pr: 76514
+          ref: 9136de85d515201c4916d73f1f8fd9c0daa71267
+          tests: tests/gateway/test_kanban_notifier.py tests/hermes_cli/test_kanban_cli.py
+        - pr: 81134
+          ref: c2bcb50a1731f9b049933bbb21d33db2d265b541
+          tests: tests/tools/test_threat_patterns.py tests/tools/test_skills_guard.py tests/cron/test_cron_prompt_injection.py
+            tests/cron/test_cronjob_tools.py
 'on':
   push:
     branches:
