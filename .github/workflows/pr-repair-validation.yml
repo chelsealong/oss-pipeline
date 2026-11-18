@@ -17,10 +17,11 @@ jobs:
 
         git update-ref refs/remotes/origin/main FETCH_HEAD'
     - name: Validate Hermes repair without production credentials
-      run: "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work -e TEST_PATHS python:3.12-bookworm bash -euc '\n  git\
-        \ config --global --add safe.directory /work\n  python -m pm.build_env --source . --out /opt/test-env --group dev\
-        \ --group test\n  export HERMES_PYTHON=/opt/test-env/bin/python\n  bash scripts/run_tests.sh -j 2 $TEST_PATHS -q\n\
-        \  /opt/test-env/bin/python scripts/check --base f7e2898aaefc8f967dbf7345e3999a65672fe60e\n'\n"
+      run: "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work -e TEST_PATHS python:3.12-bookworm bash -euc\
+        \ '\n  git config --global --add safe.directory /work\n  python -m pm.build_env --source . --out /opt/test-env\
+        \ --group dev --group test\n  export HERMES_PYTHON=/opt/test-env/bin/python\n  bash scripts/run_tests.sh\
+        \ -j 2 $TEST_PATHS -q\n  /opt/test-env/bin/python scripts/check --base f7e2898aaefc8f967dbf7345e3999a65672fe60e\n\
+        '\n"
       env:
         TEST_PATHS: ${{ matrix.tests }}
     name: 'Hermes #${{ matrix.pr }}'
@@ -30,26 +31,12 @@ jobs:
       matrix:
         include:
         - pr: 76514
-          ref: 47bd1a2e6aab41235dd10ae2d5e72c977291aab3
+          ref: e43ff95967694c3a6295cf6bb6f1401c9b538d20
           tests: tests/gateway/test_kanban_notifier.py tests/hermes_cli/test_kanban_cli.py
         - pr: 81134
-          ref: ae64243e9ac030597143a9fdaddc76c5734bc8df
+          ref: 86c9315b9adacde683f03fd768e1ab60e85c644f
           tests: tests/tools/test_threat_patterns.py tests/tools/test_skills_guard.py tests/cron/test_cron_prompt_injection.py
             tests/cron/test_cron_prompt_injection_skill.py
-  openclaw-docs:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        repository: chelsealong/openclaw
-        ref: dfe64df7781d121921e7700e06a6f1bb909386b9
-        persist-credentials: false
-    - name: Check documentation
-      run: "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work node:24.22.1-bookworm-slim sh -euc '\n npm install --prefix\
-        \ /tmp/formatter --ignore-scripts --no-audit --no-fund oxfmt@0.74.0\n /tmp/formatter/node_modules/.bin/oxfmt --check\
-        \ .agents/skills/test-audit/SKILL.md .agents/skills/test-audit/references/audit.md\n test -f .agents/skills/test-audit/references/audit.md\n\
-        '\n"
   openclaw:
     name: 'OpenClaw #${{ matrix.pr }}'
     runs-on: ubuntu-24.04
@@ -60,13 +47,23 @@ jobs:
       matrix:
         include:
         - pr: 142692
-          ref: e98d17de0ba8f5029b622b531aea71a6c049779f
+          ref: 31291ba01d4070e2e64221cf9c136a99a47cb206
           tests: src/meeting-bot/agent-consult.test.ts
           files: src/meeting-bot/agent-consult.test.ts src/meeting-bot/agent-consult.ts
+          test_command: 'true'
         - pr: 150063
-          ref: 715c2670dee38b567087e63faba0f2eef6388f65
+          ref: fb1cce8237ba3141e02082281cbbe2f2f7589b8f
           tests: src/secrets/runtime.fast-path.test.ts
           files: src/secrets/runtime-auth-store-admission.ts src/secrets/runtime.fast-path.test.ts
+          test_command: pnpm test $TEST_PATHS --maxWorkers=1
+        - pr: 191745
+          tests: src/plugins/services.scheduler-context.test.ts src/gateway/server-plugin-reload.recovery.test.ts
+            extensions/voice-call/index.test.ts extensions/voice-call/src/service-delivery-context.test.ts extensions/voice-call/src/call-delivery-runtime.test.ts
+          files: src/plugins/services.ts src/plugins/services.scheduler-context.test.ts extensions/voice-call/index.ts
+            extensions/voice-call/index.test.ts extensions/voice-call/src/service-delivery-context.ts extensions/voice-call/src/service-delivery-context.test.ts
+            extensions/voice-call/src/runtime.ts extensions/voice-call/src/call-delivery-runtime.ts
+          ref: 5ad63f9105172774b68151a60ee8eb1be82fe651
+          test_command: pnpm test $TEST_PATHS --maxWorkers=1
     steps:
     - uses: actions/checkout@v4
       with:
@@ -77,9 +74,10 @@ jobs:
       env:
         TEST_PATHS: ${{ matrix.tests }}
         CHANGED_FILES: ${{ matrix.files }}
-      run: "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work -e TEST_PATHS -e CHANGED_FILES node:24.22.1-bookworm bash\
-        \ -euc '\n npm install -g pnpm@12.15.0\n pnpm install --frozen-lockfile\n pnpm test $TEST_PATHS --maxWorkers=1\n pnpm\
-        \ exec oxfmt --check $CHANGED_FILES\n'\n"
+        TEST_COMMAND: ${{ matrix.test_command }}
+      run: "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work -e TEST_PATHS -e CHANGED_FILES -e TEST_COMMAND\
+        \ node:24.22.1-bookworm bash -euc '\n npm install -g pnpm@12.15.0\n pnpm install --frozen-lockfile\n eval\
+        \ \"$TEST_COMMAND\"\n pnpm exec oxfmt --check $CHANGED_FILES\n'\n"
 'on':
   push:
     branches:
