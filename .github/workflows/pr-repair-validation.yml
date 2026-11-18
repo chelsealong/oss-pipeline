@@ -1,8 +1,4 @@
 name: Isolated PR repair validation
-on:
-  push:
-    branches: [codex/pr-repair-validation-20261118]
-    paths: [.github/workflows/pr-repair-validation.yml]
 permissions:
   contents: read
 jobs:
@@ -13,20 +9,79 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        sdk: ['a2a-sdk[http-server]>=1,<2', 'a2a-sdk[http-server]>=0.3.4,<0.4']
+        include:
+        - pr: 7335
+          ref: 617da1fb5782f6404a0dbbfa5b9778c7bd389ce0
+          sdk: a2a-sdk[http-server]>=1,<2
+          tests: tests/unittests/a2a/agent/test_remote_a2a_agent.py tests/unittests/a2a/integration/test_client_server_v1.py
+          files: src/google/adk/a2a/agent/interceptors/new_integration_extension.py tests/unittests/a2a/agent/test_remote_a2a_agent.py
+            tests/unittests/a2a/integration/test_client_server_v1.py
+        - pr: 7335
+          ref: 617da1fb5782f6404a0dbbfa5b9778c7bd389ce0
+          sdk: a2a-sdk[http-server]>=0.3.4,<0.4
+          tests: tests/unittests/a2a/agent/test_remote_a2a_agent.py tests/unittests/a2a/integration/test_client_server_v1.py
+          files: src/google/adk/a2a/agent/interceptors/new_integration_extension.py tests/unittests/a2a/agent/test_remote_a2a_agent.py
+            tests/unittests/a2a/integration/test_client_server_v1.py
+        - pr: 7251
+          ref: b5f789ebb0c0058712a87cead90fb30da2ca34d8
+          sdk: a2a-sdk[http-server]>=1,<2
+          tests: tests/unittests/a2a/agent/test_remote_a2a_agent.py
+          files: src/google/adk/a2a/agent/_remote_a2a_agent.py tests/unittests/a2a/agent/test_remote_a2a_agent.py
+        - pr: 7285
+          ref: a344cdbf74e0fd7af7582c0f025c46c3d3e6dd41
+          sdk: a2a-sdk[http-server]>=1,<2
+          tests: tests/unittests/utils/test_schema_utils.py
+          files: src/google/adk/utils/_schema_utils.py tests/unittests/utils/test_schema_utils.py
+        - pr: 7244
+          ref: d21d187a704a3c5eeab7520dca48a5b47a66ac10
+          sdk: a2a-sdk[http-server]>=1,<2
+          tests: tests/unittests/telemetry/test_spans.py
+          files: src/google/adk/telemetry/tracing.py tests/unittests/telemetry/test_spans.py
+        - pr: 7249
+          ref: ca0d18d5db7bc9cc337bfb0f3bb0f2be209a5d7e
+          sdk: a2a-sdk[http-server]>=1,<2
+          tests: tests/unittests/tools/test_agent_tool.py
+          files: src/google/adk/tools/agent_tool.py tests/unittests/tools/test_agent_tool.py
+        - pr: 7252
+          ref: 8a8ea67316c87c0811d21ee711efdcf02a9f6ccd
+          sdk: a2a-sdk[http-server]>=1,<2
+          tests: tests/unittests/a2a/executor/test_a2a_agent_executor.py tests/unittests/a2a/converters/test_event_converter.py
+          files: src/google/adk/a2a/executor/a2a_agent_executor.py tests/unittests/a2a/executor/test_a2a_agent_executor.py
     steps:
-      - uses: actions/checkout@v4
-        with:
-          repository: chelsealong/adk-python
-          ref: e2beeaf5295a827172f173277c7255b1b44a4c51
-          persist-credentials: false
-      - name: Test reviewed ADK patch in a credential-free container
-        env:
-          A2A_SDK: ${{ matrix.sdk }}
-        run: |
-          docker run --rm -v "$GITHUB_WORKSPACE:/work" -w /work -e A2A_SDK \
-            python:3.12-slim bash -euc '
-              pip install --disable-pip-version-check -q -e ".[a2a]" "$A2A_SDK" pytest pytest-asyncio pytest-mock pyink isort
-              python -m pytest tests/unittests/a2a/agent/test_remote_a2a_agent.py tests/unittests/a2a/integration/test_client_server_v1.py -q
-              pyink --check src/google/adk/a2a/agent/interceptors/new_integration_extension.py tests/unittests/a2a/agent/test_remote_a2a_agent.py tests/unittests/a2a/integration/test_client_server_v1.py
-            '
+    - uses: actions/checkout@v4
+      with:
+        repository: chelsealong/adk-python
+        ref: ${{ matrix.ref }}
+        persist-credentials: false
+    - name: Test reviewed ADK patch in a credential-free container
+      env:
+        A2A_SDK: ${{ matrix.sdk }}
+        TEST_PATHS: ${{ matrix.tests }}
+        CHANGED_PY: ${{ matrix.files }}
+      run: "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work -e A2A_SDK -e TEST_PATHS -e CHANGED_PY \\\n  python:3.12-slim\
+        \ bash -euc '\n    pip install --disable-pip-version-check -q -e \".[a2a]\" \"$A2A_SDK\" pytest pytest-asyncio pytest-mock\
+        \ pyink isort\n    python -m pytest $TEST_PATHS -q\n    pyink --check $CHANGED_PY\n    isort --check-only $CHANGED_PY\n\
+        \  '\n"
+    name: 'ADK #${{ matrix.pr }} (${{ matrix.sdk }})'
+  hermes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: chelsealong/hermes-agent
+        ref: b63e37d87040d3cf561cb6e2f65718203512797c
+        persist-credentials: false
+    - name: Validate Hermes repair without production credentials
+      run: "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work python:3.12-bookworm bash -euc '\n  python -m pm.build_env\
+        \ --source . --out /opt/test-env --group dev --group test\n  export HERMES_PYTHON=/opt/test-env/bin/python\n  bash\
+        \ scripts/run_tests.sh -j 2 tests/tools/test_skill_manager_tool.py tests/tools/test_skill_linter.py tests/agent/test_prompt_builder.py\
+        \ tests/agent/test_skill_commands_reload.py tests/agent/test_skills_index_format.py tests/agent/test_curator.py tests/agent/test_learn_prompt.py\
+        \ tests/skills/test_authoring_standards.py tests/ci/test_prompt_surface.py -q\n  /opt/test-env/bin/python scripts/check\n\
+        '\n"
+'on':
+  push:
+    branches:
+    - codex/pr-repair-validation-20261118
+    paths:
+    - .github/workflows/pr-repair-validation.yml
