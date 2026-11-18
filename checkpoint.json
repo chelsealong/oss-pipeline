@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795012858.783063,
+  "saved_at": 1795012938.2678316,
   "tables": {
     "tasks": [
       {
@@ -24949,6 +24949,19 @@
         "updated": 1795012823.510882,
         "result": "",
         "attempts": 0
+      },
+      {
+        "id": 1920,
+        "identity": "fix:openclaw:200021:",
+        "kind": "fix",
+        "repo": "openclaw",
+        "number": 200021,
+        "note": "",
+        "status": "queued",
+        "created": 1795012858.8996475,
+        "updated": 1795012858.8996475,
+        "result": "",
+        "attempts": 0
       }
     ],
     "meta": [
@@ -42541,86 +42554,6 @@
         "value": "{\"at\": 1795011764.6003327, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
-        "key": "task:1772",
-        "value": "{\"started\": 1794433734.3683045, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1772/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"remote_base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base_update\": {\"original_head\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794433749.2429795, \"patch_digest\": \"4fe941f9761d7c805b686c0f14d68074129e92774dc46d8f1d318e3c3378b353\", \"last_execution_phase\": \"generation\", \"finished\": 1794433882.8292596, \"recovery_checked_at\": 1795011979.83286}"
-      },
-      {
-        "key": "submission_recovery:1772",
-        "value": "{\"at\": 1795011980.219923, \"error\": \"PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:44",
-        "value": "{\"recovery_checked_at\": 1795011980.2603865}"
-      },
-      {
-        "key": "followup:task:44",
-        "value": "{\"status\": \"needs_human\", \"task\": 44, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:45",
-        "value": "{\"recovery_checked_at\": 1795011980.6126132}"
-      },
-      {
-        "key": "followup:task:45",
-        "value": "{\"status\": \"needs_human\", \"task\": 45, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:54",
-        "value": "{\"recovery_checked_at\": 1795011980.966974}"
-      },
-      {
-        "key": "recovery_audit:54",
-        "value": "{\"at\": 1795011989.4879463, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:55",
-        "value": "{\"recovery_checked_at\": 1795011989.4897754}"
-      },
-      {
-        "key": "followup:task:55",
-        "value": "{\"status\": \"needs_human\", \"task\": 55, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:57",
-        "value": "{\"recovery_checked_at\": 1795011989.8087666}"
-      },
-      {
-        "key": "recovery_audit:57",
-        "value": "{\"at\": 1795011990.4429522, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:58",
-        "value": "{\"recovery_checked_at\": 1795011990.4445975}"
-      },
-      {
-        "key": "followup:task:58",
-        "value": "{\"status\": \"needs_human\", \"task\": 58, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:60",
-        "value": "{\"recovery_checked_at\": 1795011990.7748556}"
-      },
-      {
-        "key": "followup:task:60",
-        "value": "{\"status\": \"needs_human\", \"task\": 60, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:61",
-        "value": "{\"recovery_checked_at\": 1795011991.1109571}"
-      },
-      {
-        "key": "recovery_audit:61",
-        "value": "{\"at\": 1795011991.819638, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:checked",
-        "value": "1795011992.3175535"
-      },
-      {
-        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
-        "value": "{\"at\": 1795011992.6712685, \"reason\": \"PR closed or not owned by our fork\"}"
-      },
-      {
         "key": "task:166",
         "value": "{\"recovery_checked_at\": 1795012056.9330158}"
       },
@@ -42778,55 +42711,131 @@
       },
       {
         "key": "admission_health",
-        "value": "{\"at\": 1795012797.5839508, \"state\": \"active\", \"pending_candidates\": 697, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 297, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 694, \"judge_unavailable\": 3}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 13, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 20.728238821029663, \"judge_tokens_spent_24h\": 72765, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 5, \"validation_wait\": 4}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8204\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8204\", \"title\": \"Trigger endpoints take the run's `user_id` from the request body, so a trigger request can run as (and write into) any existing user\", \"first_seen\": 1794948781.1630285, \"last_checked\": 1794948781.163029, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8216\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8216\", \"title\": \"BufferedSessionService over DatabaseSessionService drops events from a Workflow with an LlmAgent node (StaleSessionError)\", \"first_seen\": 1794975053.5228071, \"last_checked\": 1794982654.8810916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8221\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8221\", \"title\": \"SkillToolset: a cancelled registry fetch leaves a stale Future in the per-invocation cache, so resuming that invocation hangs or silently does nothing\", \"first_seen\": 1794985019.3259983, \"last_checked\": 1794985019.3259985, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8228\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8228\", \"title\": \"Media in a tool result (FunctionResponse.parts) is dropped when another agent's turn is relayed as context\", \"first_seen\": 1794991426.0900571, \"last_checked\": 1794996223.7188606, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8226\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8226\", \"title\": \"url_context tool's retrieval status is discarded: LlmResponse drops candidate.url_context_metadata\", \"first_seen\": 1794991320.772496, \"last_checked\": 1794996225.8958778, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8225\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8225\", \"title\": \"Context cache size gate ignores function call/response parts, so caches.create still fails with 400 INVALID_ARGUMENT in tool loops\", \"first_seen\": 1794991111.9578304, \"last_checked\": 1794996228.3874815, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8230\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8230\", \"title\": \"adk eval --num_runs can pass hallucinations_v1 even when every run left it unscored\", \"first_seen\": 1795005931.073706, \"last_checked\": 1795007104.9414728, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+        "value": "{\"at\": 1795012862.8078916, \"state\": \"active\", \"pending_candidates\": 676, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 276, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 671, \"judge_unavailable\": 5}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 13, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 85.95278763771057, \"judge_tokens_spent_24h\": 72765, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 5, \"validation_wait\": 4}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8204\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8204\", \"title\": \"Trigger endpoints take the run's `user_id` from the request body, so a trigger request can run as (and write into) any existing user\", \"first_seen\": 1794948781.1630285, \"last_checked\": 1794948781.163029, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8216\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8216\", \"title\": \"BufferedSessionService over DatabaseSessionService drops events from a Workflow with an LlmAgent node (StaleSessionError)\", \"first_seen\": 1794975053.5228071, \"last_checked\": 1794982654.8810916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8221\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8221\", \"title\": \"SkillToolset: a cancelled registry fetch leaves a stale Future in the per-invocation cache, so resuming that invocation hangs or silently does nothing\", \"first_seen\": 1794985019.3259983, \"last_checked\": 1794985019.3259985, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8228\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8228\", \"title\": \"Media in a tool result (FunctionResponse.parts) is dropped when another agent's turn is relayed as context\", \"first_seen\": 1794991426.0900571, \"last_checked\": 1794996223.7188606, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8226\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8226\", \"title\": \"url_context tool's retrieval status is discarded: LlmResponse drops candidate.url_context_metadata\", \"first_seen\": 1794991320.772496, \"last_checked\": 1794996225.8958778, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8225\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8225\", \"title\": \"Context cache size gate ignores function call/response parts, so caches.create still fails with 400 INVALID_ARGUMENT in tool loops\", \"first_seen\": 1794991111.9578304, \"last_checked\": 1794996228.3874815, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8230\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8230\", \"title\": \"adk eval --num_runs can pass hallucinations_v1 even when every run left it unscored\", \"first_seen\": 1795005931.073706, \"last_checked\": 1795007104.9414728, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1795012797.5855362, \"tasks\": {\"fix\": {\"human_wait\": 4, \"running\": 1, \"skipped\": 6}, \"respond\": {\"blocked\": 3, \"error\": 1, \"human_wait\": 1, \"skipped\": 3, \"validation_wait\": 4}}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1795012844.6688545"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1795012848.3123858"
+        "value": "{\"at\": 1795012862.8089883, \"tasks\": {\"fix\": {\"human_wait\": 4, \"queued\": 2, \"running\": 1, \"skipped\": 6}, \"respond\": {\"blocked\": 3, \"error\": 1, \"human_wait\": 1, \"skipped\": 3, \"validation_wait\": 4}}}"
       },
       {
         "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795012848.8631322, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795012917.221241, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795012849.3587024, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795012917.691547, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795012849.9225152, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795012918.2312589, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795012850.5442946, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795012918.9677086, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795012851.1910055, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795012919.4560313, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795012851.752056, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795012919.9362447, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795012853.1783528, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795012921.5288815, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795012853.7175446, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795012921.9920714, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795012854.1641762, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795012922.3794918, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:comfyui",
+        "value": "{\"at\": 1795012923.0975978, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "task:1772",
+        "value": "{\"started\": 1794433734.3683045, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1772/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"remote_base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base_update\": {\"original_head\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794433749.2429795, \"patch_digest\": \"4fe941f9761d7c805b686c0f14d68074129e92774dc46d8f1d318e3c3378b353\", \"last_execution_phase\": \"generation\", \"finished\": 1794433882.8292596, \"recovery_checked_at\": 1795012923.4303062}"
+      },
+      {
+        "key": "submission_recovery:1772",
+        "value": "{\"at\": 1795012924.079215, \"error\": \"PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:44",
+        "value": "{\"recovery_checked_at\": 1795012924.1297803}"
+      },
+      {
+        "key": "followup:task:44",
+        "value": "{\"status\": \"needs_human\", \"task\": 44, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:45",
+        "value": "{\"recovery_checked_at\": 1795012924.513373}"
+      },
+      {
+        "key": "followup:task:45",
+        "value": "{\"status\": \"needs_human\", \"task\": 45, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:54",
+        "value": "{\"recovery_checked_at\": 1795012925.1754763}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795012931.2523112"
+      },
+      {
+        "key": "recovery_audit:54",
+        "value": "{\"at\": 1795012933.7721162, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:55",
+        "value": "{\"recovery_checked_at\": 1795012933.777499}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795012934.0241575"
+      },
+      {
+        "key": "followup:task:55",
+        "value": "{\"status\": \"needs_human\", \"task\": 55, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:57",
+        "value": "{\"recovery_checked_at\": 1795012934.2067835}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795012935.124405"
+      },
+      {
+        "key": "recovery_audit:57",
+        "value": "{\"at\": 1795012935.1607084, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:58",
+        "value": "{\"recovery_checked_at\": 1795012935.1634257}"
+      },
+      {
+        "key": "followup:task:58",
+        "value": "{\"status\": \"needs_human\", \"task\": 58, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:60",
+        "value": "{\"recovery_checked_at\": 1795012935.6762679}"
+      },
+      {
+        "key": "followup:task:60",
+        "value": "{\"status\": \"needs_human\", \"task\": 60, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:61",
+        "value": "{\"recovery_checked_at\": 1795012936.1616244}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -42834,23 +42843,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795012854.248325"
-      },
-      {
-        "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795012854.7817292, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1795012857.4206684"
+        "value": "1795012936.2250268"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795012858.149525, \"windows\": [{\"name\": \"primary\", \"used_percent\": 84, \"resets_at\": 1795158831}]}"
+        "value": "{\"at\": 1795012936.435658, \"windows\": [{\"name\": \"primary\", \"used_percent\": 84, \"resets_at\": 1795158831}]}"
+      },
+      {
+        "key": "recovery_audit:61",
+        "value": "{\"at\": 1795012936.981316, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:checked",
+        "value": "1795012937.7373745"
+      },
+      {
+        "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
+        "value": "{\"at\": 1795012938.2365344, \"reason\": \"PR closed or not owned by our fork\"}"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1795012858.7670116, \"disk_free_bytes\": 85081915392, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15141814272, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1795012938.241069, \"disk_free_bytes\": 78593269760, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 12176695296, \"SwapTotal\": 3221221376, \"SwapFree\": 3221196800}, \"memory_events\": null}"
       }
     ],
     "calls": [
