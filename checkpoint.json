@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794984032.4469044,
+  "saved_at": 1794984041.4599583,
   "tables": {
     "tasks": [
       {
@@ -42165,28 +42165,12 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8216\", \"title\": \"BufferedSessionService over DatabaseSessionService drops events from a Workflow with an LlmAgent node (StaleSessionError)\", \"first_seen\": 1794975053.5228071, \"last_checked\": 1794982654.8810916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"spec-kit\", \"task\": 1902, \"at\": 1794983033.6100018}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-11-18\", \"used\": {\"comfyui\": 1, \"spec-kit\": 1}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1794983033.6101406, \"group\": \"new_fix\", \"task\": 1902, \"phase\": \"generation\"}]"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1794983307.6234844, \"source\": \"completed task phase\"}"
       },
       {
         "key": "usage:1902:1:generation",
         "value": "{\"task\": 1902, \"repo\": \"spec-kit\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794983307.6290126, \"seconds\": 274.02, \"tokens\": {\"totalTokens\": 2020514, \"inputTokens\": 2012785, \"cachedInputTokens\": 1948160, \"cacheWriteInputTokens\": 0, \"outputTokens\": 7729, \"reasoningOutputTokens\": 3008}, \"first_event_ms\": 1794983041850, \"last_event_ms\": 1794983307621, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:1902",
@@ -42433,16 +42417,12 @@
         "value": "{\"at\": 1794984015.4603374, \"allowed\": true, \"reason\": \"\"}"
       },
       {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794799437.7599087, \"comfyui\": 1794964292.4438748, \"hermes\": 1794240004.2801356, \"langfuse\": 1794926248.164041, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794938742.710097, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1794984032.4356663, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1794984018.902269"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1794984030.1402576"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1794984030.4960184"
+        "value": "1794984033.904325"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -42450,26 +42430,38 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794984031.8796906"
+        "value": "1794984036.771123"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1794799437.7599087, \"comfyui\": 1794964292.4438748, \"hermes\": 1794240004.2801356, \"langfuse\": 1794926248.164041, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1794938742.710097, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1794984032.4356663, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+        "key": "watch_heartbeat",
+        "value": "1794984036.861594"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1794984040.1404798"
       },
       {
         "key": "task:1903",
-        "value": "{\"started\": 1794984032.4358668, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "value": "{\"started\": 1794984032.4358668, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1903/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"59d61c59630c3bd5a294f4c23e43a60d8ab98d02\", \"generation_started\": 1794984041.4485784, \"dispatch_paid_date\": \"2026-11-18\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"spec-kit\", \"task\": 1902, \"at\": 1794983033.6100018}, {\"repo\": \"spec-kit\", \"task\": 1903, \"at\": 1794984041.4485767}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-11-18\", \"used\": {\"comfyui\": 1, \"spec-kit\": 2}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"1903\": {\"remaining\": 1, \"until\": 1794991241.448712}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1794983033.6101406, \"group\": \"new_fix\", \"task\": 1902, \"phase\": \"generation\"}, {\"at\": 1794984041.448712, \"group\": \"new_fix\", \"task\": 1903, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1794378269.3957975,
-        "kind": "judge"
-      },
-      {
-        "at": 1794378287.9552367,
-        "kind": "judge"
-      },
       {
         "at": 1794380070.0886738,
         "kind": "codex"
@@ -44897,6 +44889,10 @@
       {
         "at": 1794983436.9723163,
         "kind": "judge"
+      },
+      {
+        "at": 1794984041.4492598,
+        "kind": "codex"
       }
     ]
   }
