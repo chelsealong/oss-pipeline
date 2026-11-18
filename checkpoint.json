@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1794993395.5435336,
+  "saved_at": 1794993446.7431881,
   "tables": {
     "tasks": [
       {
@@ -24775,10 +24775,10 @@
         "repo": "llama-index",
         "number": 24315,
         "note": "",
-        "status": "running",
+        "status": "human_wait",
         "created": 1794993191.6098742,
-        "updated": 1794993191.6347365,
-        "result": "",
+        "updated": 1794993446.7255838,
+        "result": "HUMAN_REVIEW_REQUIRED: CONTRIBUTING.md requires human oversight for every AI-assisted contribution. No human review attestation covers this patch. The tested draft remains in the checkout for review.",
         "attempts": 1
       }
     ],
@@ -42252,10 +42252,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8225\", \"title\": \"Context cache size gate ignores function call/response parts, so caches.create still fails with 400 INVALID_ARGUMENT in tool loops\", \"first_seen\": 1794991111.9578304, \"last_checked\": 1794992303.679684, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1794992570.4343371, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -42452,10 +42448,6 @@
         "value": "{\"date\": \"2026-11-18\", \"used\": {\"comfyui\": 2, \"spec-kit\": 2, \"llama-index\": 2}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1906\": {\"remaining\": 1, \"until\": 1795000414.6529844}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1794983033.6101406, \"group\": \"new_fix\", \"task\": 1902, \"phase\": \"generation\"}, {\"at\": 1794984041.448712, \"group\": \"new_fix\", \"task\": 1903, \"phase\": \"generation\"}, {\"at\": 1794986063.737396, \"group\": \"new_fix\", \"task\": 1904, \"phase\": \"generation\"}, {\"at\": 1794990523.276518, \"group\": \"new_fix\", \"task\": 1905, \"phase\": \"generation\"}, {\"at\": 1794993214.6529844, \"group\": \"new_fix\", \"task\": 1906, \"phase\": \"generation\"}]"
       },
@@ -42464,68 +42456,60 @@
         "value": "1794993215.0619237"
       },
       {
-        "key": "task:1906",
-        "value": "{\"started\": 1794993191.6347675, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1906/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"99d7433f6f71888951379ccca9294e272442c832\", \"generation_started\": 1794993214.6527848, \"dispatch_paid_date\": \"2026-11-18\", \"phase_started\": 1794993217.9234045}"
+        "key": "runner_resources",
+        "value": "{\"at\": 1794993395.5303454, \"disk_free_bytes\": 85591998464, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15345659904, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
       {
         "key": "admission_health",
-        "value": "{\"at\": 1794993334.7157192, \"state\": \"active\", \"pending_candidates\": 701, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 301, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 701}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 5, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 120.05439758300781, \"judge_tokens_spent_24h\": 26717, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 3}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8204\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8204\", \"title\": \"Trigger endpoints take the run's `user_id` from the request body, so a trigger request can run as (and write into) any existing user\", \"first_seen\": 1794948781.1630285, \"last_checked\": 1794948781.163029, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8216\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8216\", \"title\": \"BufferedSessionService over DatabaseSessionService drops events from a Workflow with an LlmAgent node (StaleSessionError)\", \"first_seen\": 1794975053.5228071, \"last_checked\": 1794982654.8810916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8221\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8221\", \"title\": \"SkillToolset: a cancelled registry fetch leaves a stale Future in the per-invocation cache, so resuming that invocation hangs or silently does nothing\", \"first_seen\": 1794985019.3259983, \"last_checked\": 1794985019.3259985, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8228\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8228\", \"title\": \"Media in a tool result (FunctionResponse.parts) is dropped when another agent's turn is relayed as context\", \"first_seen\": 1794991426.0900571, \"last_checked\": 1794992298.7195566, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8226\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8226\", \"title\": \"url_context tool's retrieval status is discarded: LlmResponse drops candidate.url_context_metadata\", \"first_seen\": 1794991320.772496, \"last_checked\": 1794992301.1401117, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8225\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8225\", \"title\": \"Context cache size gate ignores function call/response parts, so caches.create still fails with 400 INVALID_ARGUMENT in tool loops\", \"first_seen\": 1794991111.9578304, \"last_checked\": 1794992303.679684, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+        "value": "{\"at\": 1794993400.2103775, \"state\": \"active\", \"pending_candidates\": 702, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 302, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 702}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 5, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 185.5491259098053, \"judge_tokens_spent_24h\": 26717, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 3}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8204\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8204\", \"title\": \"Trigger endpoints take the run's `user_id` from the request body, so a trigger request can run as (and write into) any existing user\", \"first_seen\": 1794948781.1630285, \"last_checked\": 1794948781.163029, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8216\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8216\", \"title\": \"BufferedSessionService over DatabaseSessionService drops events from a Workflow with an LlmAgent node (StaleSessionError)\", \"first_seen\": 1794975053.5228071, \"last_checked\": 1794982654.8810916, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8221\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8221\", \"title\": \"SkillToolset: a cancelled registry fetch leaves a stale Future in the per-invocation cache, so resuming that invocation hangs or silently does nothing\", \"first_seen\": 1794985019.3259983, \"last_checked\": 1794985019.3259985, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8228\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8228\", \"title\": \"Media in a tool result (FunctionResponse.parts) is dropped when another agent's turn is relayed as context\", \"first_seen\": 1794991426.0900571, \"last_checked\": 1794992298.7195566, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8226\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8226\", \"title\": \"url_context tool's retrieval status is discarded: LlmResponse drops candidate.url_context_metadata\", \"first_seen\": 1794991320.772496, \"last_checked\": 1794992301.1401117, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8225\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8225\", \"title\": \"Context cache size gate ignores function call/response parts, so caches.create still fails with 400 INVALID_ARGUMENT in tool loops\", \"first_seen\": 1794991111.9578304, \"last_checked\": 1794992303.679684, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1794993334.7239761, \"tasks\": {\"fix\": {\"human_wait\": 3, \"running\": 1, \"skipped\": 6}, \"respond\": {\"blocked\": 2}}}"
+        "value": "{\"at\": 1794993400.2115579, \"tasks\": {\"fix\": {\"human_wait\": 3, \"running\": 1, \"skipped\": 6}, \"respond\": {\"blocked\": 2}}}"
       },
       {
         "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1794993349.048384, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794993413.369025, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1794993349.6053388, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794993413.87208, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1794993350.040341, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794993414.3381298, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1794993350.5728292, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794993414.8868232, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1794993350.9648542, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794993415.1921866, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1794993351.439939, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794993415.7254684, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1794993352.4044375, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+        "value": "{\"at\": 1794993416.6085284, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
       },
       {
         "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1794993353.0445764, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794993416.9924426, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1794993353.7256892, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794993417.635106, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1794993354.166067, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1794993418.0841775, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1794993387.5339646"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1794993391.9889102, \"windows\": [{\"name\": \"primary\", \"used_percent\": 70, \"resets_at\": 1795158830}]}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1794993392.8276098"
+        "value": "1794993432.5384784"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -42533,15 +42517,39 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1794993392.9689775"
+        "value": "1794993441.954332"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1794993443.1694815"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1794993443.9733589, \"windows\": [{\"name\": \"primary\", \"used_percent\": 70, \"resets_at\": 1795158831}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1794993443.9758003, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1906:1:generation",
+        "value": "{\"task\": 1906, \"repo\": \"llama-index\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1794993443.987993, \"seconds\": 229.337, \"tokens\": {\"totalTokens\": 1474349, \"inputTokens\": 1466155, \"cachedInputTokens\": 1413760, \"cacheWriteInputTokens\": 0, \"outputTokens\": 8194, \"reasoningOutputTokens\": 1965}, \"first_event_ms\": 1794993222634, \"last_event_ms\": 1794993443973, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:1906",
+        "value": "{\"status\": \"needs_human\", \"task\": 1906, \"repo\": \"llama-index\", \"number\": 24315, \"reason\": \"HUMAN_REVIEW_REQUIRED: CONTRIBUTING.md requires human oversight for every AI-assisted contribution. No human review attestation covers this patch. The tested draft remains in the checkout for review.\", \"base\": \"99d7433f6f71888951379ccca9294e272442c832\", \"patch_digest\": \"9d714ba86b7a9d4123cc0c2011f09991c48b327bec20fe06459fe0ae0484c790\", \"evidence_bundle\": \"1906-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1906",
+        "value": "{\"started\": 1794993191.6347675, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1906/attempt-1\", \"attempt\": 1, \"phase\": \"human_wait\", \"base\": \"99d7433f6f71888951379ccca9294e272442c832\", \"generation_started\": 1794993214.6527848, \"dispatch_paid_date\": \"2026-11-18\", \"phase_started\": 1794993217.9234045, \"patch_digest\": \"9d714ba86b7a9d4123cc0c2011f09991c48b327bec20fe06459fe0ae0484c790\", \"last_execution_phase\": \"generation\", \"finished\": 1794993445.3540761}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1794993395.4781425"
-      },
-      {
-        "key": "runner_resources",
-        "value": "{\"at\": 1794993395.5303454, \"disk_free_bytes\": 85591998464, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15345659904, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "1794993445.4791954"
       }
     ],
     "calls": [
