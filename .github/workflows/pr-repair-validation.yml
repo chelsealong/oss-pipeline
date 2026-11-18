@@ -2,35 +2,6 @@ name: Isolated PR repair validation
 permissions:
   contents: read
 jobs:
-  adk:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    strategy:
-      fail-fast: false
-      max-parallel: 2
-      matrix:
-        include:
-        - pr: 7244
-          ref: d21d187a704a3c5eeab7520dca48a5b47a66ac10
-          sdk: a2a-sdk[http-server]>=1,<2
-          tests: tests/unittests/telemetry/test_spans.py
-          files: src/google/adk/telemetry/tracing.py tests/unittests/telemetry/test_spans.py
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        repository: chelsealong/adk-python
-        ref: ${{ matrix.ref }}
-        persist-credentials: false
-    - name: Test reviewed ADK patch in a credential-free container
-      env:
-        A2A_SDK: ${{ matrix.sdk }}
-        TEST_PATHS: ${{ matrix.tests }}
-        CHANGED_PY: ${{ matrix.files }}
-      run: "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work -e A2A_SDK -e TEST_PATHS -e CHANGED_PY \\\n  python:3.12-slim\
-        \ bash -euc '\n    pip install --disable-pip-version-check -q -e \".[a2a]\" \"$A2A_SDK\" pytest pytest-asyncio pytest-mock\
-        \ pyink isort mcp \"opentelemetry-instrumentation-google-genai>=0.7b1,<2\" \"google-cloud-discoveryengine>=0.13.12,<0.14\"\
-        \n    python -m pytest $TEST_PATHS -q\n    pyink --check $CHANGED_PY\n    isort --check-only $CHANGED_PY\n  '\n"
-    name: 'ADK #${{ matrix.pr }} (${{ matrix.sdk }})'
   hermes:
     runs-on: ubuntu-24.04
     timeout-minutes: 35
@@ -59,12 +30,56 @@ jobs:
       matrix:
         include:
         - pr: 76514
-          ref: 9136de85d515201c4916d73f1f8fd9c0daa71267
+          ref: 47bd1a2e6aab41235dd10ae2d5e72c977291aab3
           tests: tests/gateway/test_kanban_notifier.py tests/hermes_cli/test_kanban_cli.py
         - pr: 81134
-          ref: c2bcb50a1731f9b049933bbb21d33db2d265b541
+          ref: ae64243e9ac030597143a9fdaddc76c5734bc8df
           tests: tests/tools/test_threat_patterns.py tests/tools/test_skills_guard.py tests/cron/test_cron_prompt_injection.py
             tests/cron/test_cron_prompt_injection_skill.py
+  openclaw-docs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: chelsealong/openclaw
+        ref: dfe64df7781d121921e7700e06a6f1bb909386b9
+        persist-credentials: false
+    - name: Check documentation
+      run: "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work node:24.22.1-bookworm-slim sh -euc '\n npm install --prefix\
+        \ /tmp/formatter --ignore-scripts --no-audit --no-fund oxfmt@0.74.0\n /tmp/formatter/node_modules/.bin/oxfmt --check\
+        \ .agents/skills/test-audit/SKILL.md .agents/skills/test-audit/references/audit.md\n test -f .agents/skills/test-audit/references/audit.md\n\
+        '\n"
+  openclaw:
+    name: 'OpenClaw #${{ matrix.pr }}'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+        - pr: 142692
+          ref: e98d17de0ba8f5029b622b531aea71a6c049779f
+          tests: src/meeting-bot/agent-consult.test.ts
+          files: src/meeting-bot/agent-consult.test.ts src/meeting-bot/agent-consult.ts
+        - pr: 150063
+          ref: 715c2670dee38b567087e63faba0f2eef6388f65
+          tests: src/secrets/runtime.fast-path.test.ts
+          files: src/secrets/runtime-auth-store-admission.ts src/secrets/runtime.fast-path.test.ts
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: chelsealong/openclaw
+        ref: ${{ matrix.ref }}
+        persist-credentials: false
+    - name: Focused isolated Node validation
+      env:
+        TEST_PATHS: ${{ matrix.tests }}
+        CHANGED_FILES: ${{ matrix.files }}
+      run: "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work -e TEST_PATHS -e CHANGED_FILES node:24.22.1-bookworm bash\
+        \ -euc '\n npm install -g pnpm@12.15.0\n pnpm install --frozen-lockfile\n pnpm test $TEST_PATHS --maxWorkers=1\n pnpm\
+        \ exec oxfmt --check $CHANGED_FILES\n'\n"
 'on':
   push:
     branches:
