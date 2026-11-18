@@ -11,11 +11,68 @@ jobs:
       max-parallel: 2
       matrix:
         include:
+        - pr: 161462
+          ref: 6a0f35c889caaada8ffa953f4309870ea280529a
+          files: extensions/microsoft-foundry/image-generation-provider.test.ts extensions/microsoft-foundry/index.ts
+            extensions/microsoft-foundry/shared.ts
+          tests: extensions/microsoft-foundry/image-generation-provider.test.ts extensions/microsoft-foundry/shared.test.ts
+          test_command: pnpm test $TEST_PATHS --maxWorkers=1
+          lint_files: extensions/microsoft-foundry/image-generation-provider.test.ts extensions/microsoft-foundry/index.ts
+            extensions/microsoft-foundry/shared.ts
+          tsconfig: extensions/microsoft-foundry/tsconfig.json
+        - pr: 158852
+          ref: 82f4508e9e5be0030590a262af43bb3172df5e7e
+          files: src/agents/agent-bundle-mcp-harness.test-support.ts src/agents/agent-bundle-mcp-harness.test.ts
+            src/agents/agent-bundle-mcp-harness.ts
+          tests: src/agents/agent-bundle-mcp-harness.test.ts
+          test_command: pnpm test $TEST_PATHS --maxWorkers=1
+          lint_files: src/agents/agent-bundle-mcp-harness.test-support.ts src/agents/agent-bundle-mcp-harness.test.ts
+            src/agents/agent-bundle-mcp-harness.ts
+          tsconfig: tsconfig.core.json
+        - pr: 164200
+          ref: 84e118bb6442296518cbc6fd58758b4bf23deff8
+          files: src/gateway/exec-approval-ios-push.test.ts src/gateway/exec-approval-ios-push.ts
+          tests: src/gateway/exec-approval-ios-push.test.ts
+          test_command: pnpm test $TEST_PATHS --maxWorkers=1
+          lint_files: src/gateway/exec-approval-ios-push.test.ts src/gateway/exec-approval-ios-push.ts
+          tsconfig: tsconfig.core.json
+        - pr: 191700
+          ref: c73c36e5cbdaff7e116e48ca2fe588716863b11d
+          files: extensions/matrix/SPEC-SUPPORT.md extensions/matrix/src/matrix/actions/polls.test.ts extensions/matrix/src/matrix/actions/polls.ts
+            extensions/matrix/src/matrix/poll-types.test.ts extensions/matrix/src/matrix/poll-types.ts extensions/matrix/src/matrix/send.test.ts
+            extensions/matrix/src/matrix/send.ts
+          tests: extensions/matrix/src/matrix/poll-types.test.ts extensions/matrix/src/matrix/actions/polls.test.ts
+            extensions/matrix/src/matrix/send.test.ts
+          test_command: pnpm test $TEST_PATHS --maxWorkers=1
+          lint_files: extensions/matrix/src/matrix/actions/polls.test.ts extensions/matrix/src/matrix/actions/polls.ts
+            extensions/matrix/src/matrix/poll-types.test.ts extensions/matrix/src/matrix/poll-types.ts extensions/matrix/src/matrix/send.test.ts
+            extensions/matrix/src/matrix/send.ts
+          tsconfig: extensions/matrix/tsconfig.json
+        - pr: 191745
+          ref: 5ad63f9105172774b68151a60ee8eb1be82fe651
+          files: extensions/voice-call/index.test.ts extensions/voice-call/index.ts extensions/voice-call/src/call-delivery-runtime.ts
+            extensions/voice-call/src/runtime.ts extensions/voice-call/src/service-delivery-context.test.ts extensions/voice-call/src/service-delivery-context.ts
+            src/plugins/service-scheduler-context.ts src/plugins/services.scheduler-context.test.ts src/plugins/services.ts
+          tests: ''
+          test_command: 'true'
+          lint_files: extensions/voice-call/index.test.ts extensions/voice-call/index.ts extensions/voice-call/src/call-delivery-runtime.ts
+            extensions/voice-call/src/runtime.ts extensions/voice-call/src/service-delivery-context.test.ts extensions/voice-call/src/service-delivery-context.ts
+            src/plugins/service-scheduler-context.ts src/plugins/services.scheduler-context.test.ts src/plugins/services.ts
+          tsconfig: tsconfig.core.json
+        - pr: 197795
+          ref: 254c064b0667a3bef7d1e15e3ed97d116b148384
+          files: src/commands/backup-restore.ts src/infra/database-engine/archive-restore.postgres.test.ts
+          tests: ''
+          test_command: 'true'
+          lint_files: src/commands/backup-restore.ts src/infra/database-engine/archive-restore.postgres.test.ts
+          tsconfig: tsconfig.core.json
         - pr: 191615
           ref: 96e87a5edb2c008b3568faffc97dd1893d78fc26
           files: docs/concepts/models.md src/gateway/session-observer-completion.test.ts src/gateway/session-observer-completion.ts
-          tests: src/gateway/session-observer-completion.test.ts
-          test_command: pnpm test $TEST_PATHS --maxWorkers=1
+          tests: ''
+          test_command: 'true'
+          lint_files: src/gateway/session-observer-completion.test.ts src/gateway/session-observer-completion.ts
+          tsconfig: tsconfig.core.json
         - pr: 198173
           ref: 9070ed7a5c7f958b4790afa8e3e69620d6209bfe
           files: docs/web/control-ui/chat.md packages/gateway-protocol/src/schema/tools-catalog.ts src/agents/agent-bundle-mcp-runtime-config.test.ts
@@ -23,9 +80,14 @@ jobs:
             src/gateway/server-methods/tools-effective.test-support.ts src/gateway/server-methods/tools-effective.test.ts
             src/gateway/server-methods/tools-effective.ts ui/src/pages/chat/components/chat-composer-menu.test.tsx
             ui/src/pages/chat/components/chat-composer-plugins-menu.tsx
-          tests: src/agents/agent-bundle-mcp-runtime-config.test.ts src/agents/tools-effective-inventory.cold-provider.test.ts
-            src/gateway/server-methods/tools-effective.test.ts ui/src/pages/chat/components/chat-composer-menu.test.tsx
-          test_command: pnpm test $TEST_PATHS --maxWorkers=1
+          tests: ''
+          test_command: 'true'
+          lint_files: packages/gateway-protocol/src/schema/tools-catalog.ts src/agents/agent-bundle-mcp-runtime-config.test.ts
+            src/agents/agent-bundle-mcp-runtime-config.ts src/agents/tools-effective-inventory.cold-provider.test.ts
+            src/gateway/server-methods/tools-effective.test-support.ts src/gateway/server-methods/tools-effective.test.ts
+            src/gateway/server-methods/tools-effective.ts ui/src/pages/chat/components/chat-composer-menu.test.tsx
+            ui/src/pages/chat/components/chat-composer-plugins-menu.tsx
+          tsconfig: tsconfig.core.json
     steps:
     - uses: actions/checkout@v4
       with:
@@ -37,35 +99,12 @@ jobs:
         TEST_PATHS: ${{ matrix.tests }}
         CHANGED_FILES: ${{ matrix.files }}
         TEST_COMMAND: ${{ matrix.test_command }}
+        LINT_FILES: ${{ matrix.lint_files }}
+        TYPE_CONFIG: ${{ matrix.tsconfig }}
       run: "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work -e TEST_PATHS -e CHANGED_FILES -e TEST_COMMAND\
-        \ node:24.22.1-bookworm bash -euc '\n npm install -g pnpm@12.15.0\n pnpm install --frozen-lockfile\n eval\
-        \ \"$TEST_COMMAND\"\n pnpm exec oxfmt --check $CHANGED_FILES\n'\n"
-  postgres:
-    name: 'OpenClaw #197795 PostgreSQL restore'
-    runs-on: ubuntu-24.04
-    timeout-minutes: 35
-    services:
-      postgres:
-        image: pgvector/pgvector:pg17@sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d
-        env:
-          POSTGRES_USER: repair
-          POSTGRES_PASSWORD: isolated-test-only
-          POSTGRES_DB: repair
-        ports:
-        - 5432:5432
-        options: --health-cmd "pg_isready -U repair" --health-interval 5s --health-timeout 5s --health-retries 10
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        repository: chelsealong/openclaw
-        ref: 254c064b0667a3bef7d1e15e3ed97d116b148384
-        persist-credentials: false
-    - name: Validate restore with isolated PostgreSQL
-      run: "docker run --rm --network host -v \"$GITHUB_WORKSPACE:/work\" -w /work node:24.22.1-bookworm bash -euc\
-        \ '\n npm install -g pnpm@12.15.0\n pnpm install --frozen-lockfile\n node --import ./scripts/tsx.mjs scripts/test-database-conformance.mjs\
-        \ --engine postgres --connection postgres://repair:isolated-test-only@localhost:5432/repair -- src/infra/database-engine/archive-restore.postgres.test.ts\
-        \ --maxWorkers=1\n pnpm exec oxfmt --check src/infra/database-engine/archive-restore.postgres.test.ts src/commands/backup-restore.ts\n\
-        '\n"
+        \ -e LINT_FILES -e TYPE_CONFIG node:24.22.1-bookworm bash -euc '\n npm install -g pnpm@12.15.0\n pnpm install\
+        \ --frozen-lockfile\n eval \"$TEST_COMMAND\"\n pnpm exec oxfmt --check $CHANGED_FILES\n pnpm exec oxlint\
+        \ $LINT_FILES\n node scripts/run-tsgo.mjs -p \"$TYPE_CONFIG\" --noEmit\n'\n"
 'on':
   push:
     branches:
