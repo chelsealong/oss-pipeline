@@ -1,0 +1,32 @@
+name: Isolated PR repair validation
+on:
+  push:
+    branches: [codex/pr-repair-validation-20261118]
+    paths: [.github/workflows/pr-repair-validation.yml]
+permissions:
+  contents: read
+jobs:
+  adk:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        sdk: ['a2a-sdk[http-server]>=1,<2', 'a2a-sdk[http-server]>=0.3.4,<0.4']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: chelsealong/adk-python
+          ref: e2beeaf5295a827172f173277c7255b1b44a4c51
+          persist-credentials: false
+      - name: Test reviewed ADK patch in a credential-free container
+        env:
+          A2A_SDK: ${{ matrix.sdk }}
+        run: |
+          docker run --rm -v "$GITHUB_WORKSPACE:/work" -w /work -e A2A_SDK \
+            python:3.12-slim bash -euc '
+              pip install --disable-pip-version-check -q -e ".[a2a]" "$A2A_SDK" pytest pytest-asyncio pytest-mock pyink isort
+              python -m pytest tests/unittests/a2a/agent/test_remote_a2a_agent.py tests/unittests/a2a/integration/test_client_server_v1.py -q
+              pyink --check src/google/adk/a2a/agent/interceptors/new_integration_extension.py tests/unittests/a2a/agent/test_remote_a2a_agent.py tests/unittests/a2a/integration/test_client_server_v1.py
+            '
