@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795193076.1235838,
+  "saved_at": 1795193111.6169283,
   "tables": {
     "tasks": [
       {
@@ -25438,10 +25438,10 @@
         "repo": "openclaw/openclaw",
         "number": 202424,
         "note": "{\"authors\": \"ci, clawsweeper\", \"events\": [\"IC_kwDOQb6kR88AAAABo3kS7w@2026-11-20T10:47:47Z\", \"standing:needs proof:b87a161b9605\"], \"screening_events\": [], \"is_issue\": false, \"head\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\"}",
-        "status": "running",
+        "status": "blocked",
         "created": 1795192283.0247774,
-        "updated": 1795192283.6928334,
-        "result": "",
+        "updated": 1795193111.605731,
+        "result": "ClawSweeper’s requested shipped-entry-point proof is complete on the unchanged PR head. No source changes were needed. Full PR CI remains outstanding.",
         "attempts": 1
       },
       {
@@ -43743,36 +43743,12 @@
         "value": "{\"at\": 1795193011.767709, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795193015.6166697, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 6, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 133.70365715026855, \"judge_tokens_spent_24h\": 98482, \"screening_calls_5h\": 2, \"screening_calls_24h\": 7, \"task_start_limits_reached\": {\"langfuse\": {\"used\": 6, \"limit\": 6}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 3, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 2, \"remaining\": 1, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8263\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8263\", \"title\": \"[Feature Request]: First-Class Composable `Skill` & `Command` Abstraction for Modular `LlmAgent` Capabilities\", \"first_seen\": 1795114457.7893999, \"last_checked\": 1795114476.2690992, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8265\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8265\", \"title\": \"[Feature Request]: Lightweight Non-Conversational `WorkerAgent(BaseAgent)` for Token-Efficient Workflows and Sub-Agents\", \"first_seen\": 1795119777.8737357, \"last_checked\": 1795142232.3503973, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795193015.6174326, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 2, \"interrupted\": 1, \"skipped\": 27, \"validation_wait\": 3}, \"respond\": {\"blocked\": 2, \"done\": 2, \"human_wait\": 1, \"queued\": 2, \"running\": 1, \"skipped\": 1}}}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795193044.3461428, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1957:1:generation",
         "value": "{\"task\": 1957, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795193044.3561146, \"seconds\": 679.753, \"tokens\": {\"totalTokens\": 12219449, \"inputTokens\": 12203300, \"cachedInputTokens\": 12070016, \"cacheWriteInputTokens\": 0, \"outputTokens\": 16149, \"reasoningOutputTokens\": 5944}, \"first_event_ms\": 1795192371765, \"last_event_ms\": 1795193044345, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1957\": {\"remaining\": 0, \"until\": 1795200245.0324044}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795191992.2058027, \"group\": \"maintenance\", \"task\": 1954, \"phase\": \"generation\"}, {\"at\": 1795192091.1348853, \"group\": \"new_fix\", \"task\": 1955, \"phase\": \"generation\"}, {\"at\": 1795192364.6036415, \"group\": \"maintenance\", \"task\": 1957, \"phase\": \"generation\"}, {\"at\": 1795192482.0395765, \"group\": \"screening\", \"task\": 1960, \"phase\": \"screening-2fc1f27de470b27e3c24\"}, {\"at\": 1795192497.2327957, \"group\": \"new_fix\", \"task\": 1960, \"phase\": \"generation\"}, {\"at\": 1795192881.906557, \"group\": \"screening\", \"task\": 1961, \"phase\": \"screening-7b78c0e5dc127165d8ad\"}, {\"at\": 1795193045.0324044, \"group\": \"maintenance\", \"task\": 1957, \"phase\": \"reply-review\"}]"
-      },
-      {
-        "key": "task:1957",
-        "value": "{\"started\": 1795192283.6928592, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1957/attempt-1\", \"attempt\": 1, \"phase\": \"reply-review\", \"base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"remote_base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"base_update\": {\"original_head\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1795193048.5401726}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1795193068.635354"
       },
       {
         "key": "candidate_capacity:adk",
@@ -43795,10 +43771,6 @@
         "value": "{\"at\": 1795193070.669247, \"allowed\": true, \"reason\": \"\"}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795193071.4935277"
-      },
-      {
         "key": "candidate_capacity:openclaw",
         "value": "{\"at\": 1795193071.6746805, \"allowed\": true, \"reason\": \"\"}"
       },
@@ -43811,12 +43783,28 @@
         "value": "{\"at\": 1795193072.3303106, \"allowed\": true, \"reason\": \"\"}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1795193072.4906034"
-      },
-      {
         "key": "candidate_capacity:comfyui",
         "value": "{\"at\": 1795193072.6645718, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "runner_resources",
+        "value": "{\"at\": 1795193076.1127372, \"disk_free_bytes\": 81305219072, \"memory_bytes\": {\"MemTotal\": 16464302080, \"MemAvailable\": 14892838912, \"SwapTotal\": 3221221376, \"SwapFree\": 3221139456}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1795193079.4545517, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 7, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 34.41559171676636, \"judge_tokens_spent_24h\": 98482, \"screening_calls_5h\": 2, \"screening_calls_24h\": 7, \"task_start_limits_reached\": {\"langfuse\": {\"used\": 6, \"limit\": 6}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 3, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 2, \"remaining\": 1, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8263\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8263\", \"title\": \"[Feature Request]: First-Class Composable `Skill` & `Command` Abstraction for Modular `LlmAgent` Capabilities\", \"first_seen\": 1795114457.7893999, \"last_checked\": 1795114476.2690992, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8265\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8265\", \"title\": \"[Feature Request]: Lightweight Non-Conversational `WorkerAgent(BaseAgent)` for Token-Efficient Workflows and Sub-Agents\", \"first_seen\": 1795119777.8737357, \"last_checked\": 1795142232.3503973, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795193079.4553452, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 2, \"interrupted\": 1, \"skipped\": 27, \"validation_wait\": 3}, \"respond\": {\"blocked\": 2, \"done\": 2, \"human_wait\": 1, \"queued\": 2, \"running\": 1, \"skipped\": 1}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795193101.4963036"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795193107.4915864"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -43824,15 +43812,35 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795193073.9800658"
+        "value": "1795193108.953798"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795193111.2129364"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795193074.9414194, \"windows\": [{\"name\": \"primary\", \"used_percent\": 6, \"resets_at\": 1795763698}]}"
+        "value": "{\"at\": 1795193111.290978, \"windows\": [{\"name\": \"primary\", \"used_percent\": 6, \"resets_at\": 1795763698}]}"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795193076.1127372, \"disk_free_bytes\": 81305219072, \"memory_bytes\": {\"MemTotal\": 16464302080, \"MemAvailable\": 14892838912, \"SwapTotal\": 3221221376, \"SwapFree\": 3221139456}, \"memory_events\": null}"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795193111.292332, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1957:1:reply-review",
+        "value": "{\"task\": 1957, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"reply-review\", \"at\": 1795193111.2954159, \"seconds\": 66.264, \"tokens\": {\"totalTokens\": 349940, \"inputTokens\": 347268, \"cachedInputTokens\": 283136, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2672, \"reasoningOutputTokens\": 977}, \"first_event_ms\": 1795193052086, \"last_event_ms\": 1795193111290, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:reply:1957",
+        "value": "{\"status\": \"needs_human\", \"reason\": \"The new Gateway results and 5/5 focused test pass are supported. The proposed PR body also claims earlier failing regressions and passing typechecks, lint, and formatting, but this job contains no execution evidence for those claims beyond the original PR body's self-report. Remove or qualify them before posting.\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1957",
+        "value": "{\"started\": 1795192283.6928592, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1957/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"remote_base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"base_update\": {\"original_head\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1795193048.5401726, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1795193111.496897}"
       }
     ],
     "calls": [
