@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795193949.3057556,
+  "saved_at": 1795193952.589041,
   "tables": {
     "tasks": [
       {
@@ -25373,11 +25373,11 @@
         "repo": "openclaw",
         "number": 202405,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1795169022.628931,
-        "updated": 1795193942.0189931,
+        "updated": 1795193951.5908678,
         "result": "Previous runner ended during task; inspect remote before retry",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 1953,
@@ -43649,10 +43649,6 @@
         "value": "1795193734.5634925"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795193340.7819126, \"comfyui\": 1795192476.3487952, \"hermes\": 1795158844.7137928, \"langfuse\": 1795192081.0677755, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795192876.526524, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795193760.3538008, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"langfuse\", \"task\": 1955, \"at\": 1795192091.134727}, {\"repo\": \"comfyui\", \"task\": 1960, \"at\": 1795192497.2326229}, {\"repo\": \"spec-kit\", \"task\": 1962, \"at\": 1795193156.6166122}, {\"repo\": \"spec-kit\", \"task\": 1963, \"at\": 1795193768.3694592}]"
       },
@@ -43663,34 +43659,6 @@
       {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795191992.2058027, \"group\": \"maintenance\", \"task\": 1954, \"phase\": \"generation\"}, {\"at\": 1795192091.1348853, \"group\": \"new_fix\", \"task\": 1955, \"phase\": \"generation\"}, {\"at\": 1795192364.6036415, \"group\": \"maintenance\", \"task\": 1957, \"phase\": \"generation\"}, {\"at\": 1795192482.0395765, \"group\": \"screening\", \"task\": 1960, \"phase\": \"screening-2fc1f27de470b27e3c24\"}, {\"at\": 1795192497.2327957, \"group\": \"new_fix\", \"task\": 1960, \"phase\": \"generation\"}, {\"at\": 1795192881.906557, \"group\": \"screening\", \"task\": 1961, \"phase\": \"screening-7b78c0e5dc127165d8ad\"}, {\"at\": 1795193045.0324044, \"group\": \"maintenance\", \"task\": 1957, \"phase\": \"reply-review\"}, {\"at\": 1795193156.6167839, \"group\": \"new_fix\", \"task\": 1962, \"phase\": \"generation\"}, {\"at\": 1795193186.9969478, \"group\": \"maintenance\", \"task\": 1958, \"phase\": \"generation\"}, {\"at\": 1795193281.6775403, \"group\": \"maintenance\", \"task\": 1958, \"phase\": \"reply-review\"}, {\"at\": 1795193419.4616008, \"group\": \"maintenance\", \"task\": 1959, \"phase\": \"generation\"}, {\"at\": 1795193542.0679104, \"group\": \"maintenance\", \"task\": 1959, \"phase\": \"reply-review\"}, {\"at\": 1795193768.3695848, \"group\": \"new_fix\", \"task\": 1963, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795193770.6570535, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795193771.1344378, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795193771.5730984, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795193771.8773508, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795193772.190903, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795193783.074555, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795193783.4156144, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
@@ -43849,14 +43817,6 @@
         "value": "{\"at\": 1795193876.2811165, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795193879.882876, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 13, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 111.50702142715454, \"judge_tokens_spent_24h\": 98076, \"screening_calls_5h\": 2, \"screening_calls_24h\": 7, \"task_start_limits_reached\": {\"langfuse\": {\"used\": 6, \"limit\": 6}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 4, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 2, \"remaining\": 1, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8263\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8263\", \"title\": \"[Feature Request]: First-Class Composable `Skill` & `Command` Abstraction for Modular `LlmAgent` Capabilities\", \"first_seen\": 1795114457.7893999, \"last_checked\": 1795114476.2690992, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8265\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8265\", \"title\": \"[Feature Request]: Lightweight Non-Conversational `WorkerAgent(BaseAgent)` for Token-Efficient Workflows and Sub-Agents\", \"first_seen\": 1795119777.8737357, \"last_checked\": 1795142232.3503973, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795193879.88354, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 2, \"interrupted\": 1, \"running\": 1, \"skipped\": 27, \"validation_wait\": 4}, \"respond\": {\"blocked\": 4, \"done\": 3, \"human_wait\": 1, \"skipped\": 1}}}"
-      },
-      {
         "key": "task:219",
         "value": "{\"recovery_checked_at\": 1795193940.1833105}"
       },
@@ -43881,10 +43841,6 @@
         "value": "{\"at\": 1795193942.0155308, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\"}"
       },
       {
-        "key": "task:1952",
-        "value": "{\"started\": 1795170875.0335839, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1952/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"3371825c090876c29f3fc850e04ee4b36595c6c7\", \"replacement_candidate_verified\": 1795170881.1103868, \"phase_started\": 1795170950.7644854, \"screening_requests\": {\"81aca0f4708aa5c2f80f\": 1795170892.5842621}, \"dispatch_replacement\": true, \"generation_started\": 1795170947.1099482, \"dispatch_paid_date\": \"2026-11-20\", \"recovery_checked_at\": 1795193941.5553021, \"resume_progress\": {\"bundle\": \"1952-1.json\", \"sha256\": \"5c7d3d30bef1b3aa7a76c9bee145ee26ebacaa84226c7a54004c9725ea999463\", \"base\": \"3371825c090876c29f3fc850e04ee4b36595c6c7\", \"phase\": \"generation\"}}"
-      },
-      {
         "key": "followup:task:1952",
         "value": "{\"status\": \"resumed\", \"task\": 1952}"
       },
@@ -43903,10 +43859,6 @@
       {
         "key": "usage:1963:1:generation",
         "value": "{\"task\": 1963, \"repo\": \"spec-kit\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795193947.0787325, \"seconds\": 178.71, \"tokens\": {\"totalTokens\": 1184107, \"inputTokens\": 1177385, \"cachedInputTokens\": 1117184, \"cacheWriteInputTokens\": 0, \"outputTokens\": 6722, \"reasoningOutputTokens\": 2639}, \"first_event_ms\": 1795193775082, \"last_event_ms\": 1795193947068, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1795193947.5158312"
       },
       {
         "key": "codex_review_leases",
@@ -43931,6 +43883,54 @@
       {
         "key": "publication_check:hermes",
         "value": "{\"at\": 1795193949.2231712, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1795193949.3331969, \"state\": \"queued\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 0, \"queued_tasks\": 1, \"codex_calls_5h\": 13, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 180.95418858528137, \"judge_tokens_spent_24h\": 98076, \"screening_calls_5h\": 2, \"screening_calls_24h\": 7, \"task_start_limits_reached\": {\"langfuse\": {\"used\": 6, \"limit\": 6}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 4, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 2, \"remaining\": 1, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8263\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8263\", \"title\": \"[Feature Request]: First-Class Composable `Skill` & `Command` Abstraction for Modular `LlmAgent` Capabilities\", \"first_seen\": 1795114457.7893999, \"last_checked\": 1795114476.2690992, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8265\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8265\", \"title\": \"[Feature Request]: Lightweight Non-Conversational `WorkerAgent(BaseAgent)` for Token-Efficient Workflows and Sub-Agents\", \"first_seen\": 1795119777.8737357, \"last_checked\": 1795142232.3503973, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795193949.3340282, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 2, \"queued\": 1, \"skipped\": 28, \"validation_wait\": 4}, \"respond\": {\"blocked\": 4, \"done\": 3, \"human_wait\": 1, \"skipped\": 1}}}"
+      },
+      {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1795193949.5684168, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1795193949.9750173, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1795193950.4191906, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1795193950.851153, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1795193951.3251128, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795193951.5907586, \"comfyui\": 1795192476.3487952, \"hermes\": 1795158844.7137928, \"langfuse\": 1795192081.0677755, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795192876.526524, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795193760.3538008, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1793638977.0108914}}"
+      },
+      {
+        "key": "task:1952",
+        "value": "{\"started\": 1795193951.5909004, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"claimed\", \"base\": null, \"replacement_candidate_verified\": 1795170881.1103868, \"phase_started\": 1795170950.7644854, \"screening_requests\": {\"81aca0f4708aa5c2f80f\": 1795170892.5842621}, \"dispatch_replacement\": true, \"generation_started\": 1795170947.1099482, \"dispatch_paid_date\": \"2026-11-20\", \"recovery_checked_at\": 1795193941.5553021, \"resume_progress\": {\"bundle\": \"1952-1.json\", \"sha256\": \"5c7d3d30bef1b3aa7a76c9bee145ee26ebacaa84226c7a54004c9725ea999463\", \"base\": \"3371825c090876c29f3fc850e04ee4b36595c6c7\", \"phase\": \"generation\"}}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1795193952.145883, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1795193952.5027256, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795193952.5159068"
       }
     ],
     "calls": [
