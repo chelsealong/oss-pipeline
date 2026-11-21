@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795226134.1868927,
+  "saved_at": 1795226146.2126155,
   "tables": {
     "tasks": [
       {
@@ -25620,10 +25620,10 @@
         "repo": "openclaw",
         "number": 202794,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1795221862.0747614,
-        "updated": 1795224626.0911984,
-        "result": "",
+        "updated": 1795226146.114355,
+        "result": "VALIDATION_ENVIRONMENT: `pnpm test:extension telegram --maxWorkers=1` stopped before running tests because the sandbox could not verify separation from managed Gateway artifacts. The optional `pnpm check:changed --base HEAD` also hit its 4 GiB heap limit. The three-file fix is preserved, but the required extension lane remains unverified.",
         "attempts": 1
       },
       {
@@ -44090,10 +44090,6 @@
         "value": "1795224610.386043"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795224622.7138202, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1970:1:review",
         "value": "{\"task\": 1970, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1795224622.7228448, \"seconds\": 288.959, \"tokens\": {\"totalTokens\": 2758468, \"inputTokens\": 2753370, \"cachedInputTokens\": 2679808, \"cacheWriteInputTokens\": 0, \"outputTokens\": 5098, \"reasoningOutputTokens\": 1400}, \"first_event_ms\": 1795224342128, \"last_event_ms\": 1795224622710, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -44126,24 +44122,36 @@
         "value": "{\"date\": \"2026-11-21\", \"used\": {\"langfuse\": 1, \"openclaw\": 5, \"comfyui\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"1971\": {\"remaining\": 1, \"until\": 1795231888.171609}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795219239.6755154, \"group\": \"new_fix\", \"task\": 1966, \"phase\": \"generation\"}, {\"at\": 1795219401.8463213, \"group\": \"screening\", \"task\": 1967, \"phase\": \"screening-01d9204fde4f758a035a\"}, {\"at\": 1795219481.3926008, \"group\": \"new_fix\", \"task\": 1967, \"phase\": \"generation\"}, {\"at\": 1795221498.6648045, \"group\": \"new_fix\", \"task\": 1968, \"phase\": \"generation\"}, {\"at\": 1795221624.9456563, \"group\": \"new_fix\", \"task\": 1969, \"phase\": \"generation\"}, {\"at\": 1795222349.5019193, \"group\": \"new_fix\", \"task\": 1969, \"phase\": \"review\"}, {\"at\": 1795222452.6090162, \"group\": \"new_fix\", \"task\": 1972, \"phase\": \"generation\"}, {\"at\": 1795222719.5531003, \"group\": \"repair\", \"task\": 1969, \"phase\": \"remediation\"}, {\"at\": 1795223501.6157892, \"group\": \"repair\", \"task\": 1969, \"phase\": \"rereview\"}, {\"at\": 1795223909.626548, \"group\": \"new_fix\", \"task\": 1970, \"phase\": \"generation\"}, {\"at\": 1795224333.764854, \"group\": \"new_fix\", \"task\": 1970, \"phase\": \"review\"}, {\"at\": 1795224688.171609, \"group\": \"new_fix\", \"task\": 1971, \"phase\": \"generation\"}]"
       },
       {
-        "key": "task:1971",
-        "value": "{\"started\": 1795224626.09126, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1971/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"ce74e42351ed141ca22b89e21e5179067899a5d3\", \"generation_started\": 1795224688.1714158, \"dispatch_paid_date\": \"2026-11-21\", \"phase_started\": 1795224691.2981865}"
-      },
-      {
         "key": "worker_heartbeat",
-        "value": "1795226122.9139404"
+        "value": "1795226137.915982"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795226129.1848278, \"windows\": [{\"name\": \"primary\", \"used_percent\": 10, \"resets_at\": 1795763698}]}"
+        "value": "{\"at\": 1795226145.6643586, \"windows\": [{\"name\": \"primary\", \"used_percent\": 10, \"resets_at\": 1795763698}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795226145.683449, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:1971:1:generation",
+        "value": "{\"task\": 1971, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795226145.7290218, \"seconds\": 1457.559, \"tokens\": {\"totalTokens\": 9624286, \"inputTokens\": 9610081, \"cachedInputTokens\": 9470848, \"cacheWriteInputTokens\": 0, \"outputTokens\": 14205, \"reasoningOutputTokens\": 4840}, \"first_event_ms\": 1795224695016, \"last_event_ms\": 1795226145673, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:1971",
+        "value": "{\"status\": \"needs_human\", \"task\": 1971, \"repo\": \"openclaw\", \"number\": 202794, \"reason\": \"VALIDATION_ENVIRONMENT: `pnpm test:extension telegram --maxWorkers=1` stopped before running tests because the sandbox could not verify separation from managed Gateway artifacts. The optional `pnpm check:changed --base HEAD` also hit its 4 GiB heap limit. The three-file fix is preserved, but the required extension lane remains unverified.\", \"base\": \"ce74e42351ed141ca22b89e21e5179067899a5d3\", \"patch_digest\": \"05f4f514241e65aa98de57df5ea28c2cff00a8d24b0a3dc95885edc2e286c9f4\", \"evidence_bundle\": \"1971-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:1971",
+        "value": "{\"started\": 1795224626.09126, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1971/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"ce74e42351ed141ca22b89e21e5179067899a5d3\", \"generation_started\": 1795224688.1714158, \"dispatch_paid_date\": \"2026-11-21\", \"phase_started\": 1795224691.2981865, \"patch_digest\": \"05f4f514241e65aa98de57df5ea28c2cff00a8d24b0a3dc95885edc2e286c9f4\", \"last_execution_phase\": \"generation\", \"finished\": 1795226145.902143}"
       }
     ],
     "calls": [
