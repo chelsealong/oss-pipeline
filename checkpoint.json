@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795321264.839835,
+  "saved_at": 1795321271.562033,
   "tables": {
     "tasks": [
       {
@@ -26036,10 +26036,10 @@
         "repo": "autogpt",
         "number": 17227,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1795320417.5434535,
-        "updated": 1795320422.2363408,
-        "result": "",
+        "updated": 1795321270.6678572,
+        "result": "VALIDATION_ENVIRONMENT: The mandatory `pnpm test:unit` check in `autogpt_platform/frontend/AGENTS.md` produced no test summary and stopped making progress while loading third-party scripts in a renderer test; I interrupted it. The focused Library regression, format, lint, and types checks passed. The patch is preserved, but the required full-suite validation remains incomplete.",
         "attempts": 1
       },
       {
@@ -44700,10 +44700,6 @@
         "value": "{\"at\": 1795320195.4241676, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
-        "key": "task:2003",
-        "value": "{\"started\": 1795320422.2363794, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2003/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"dd0b5f73266ea5f3dfab37ebccd93049af58e106\", \"generation_started\": 1795320438.4018269, \"dispatch_paid_date\": \"2026-11-22\", \"phase_started\": 1795320444.9269233}"
-      },
-      {
         "key": "task:219",
         "value": "{\"recovery_checked_at\": 1795320654.4055023}"
       },
@@ -44888,10 +44884,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8295\", \"title\": \"adk deploy ignores .gitignore patterns that start with **/\", \"first_seen\": 1795321139.259463, \"last_checked\": 1795321139.2594638, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795321165.0643814, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -44960,14 +44952,6 @@
         "value": "1795321250.2607899"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795321252.061869, \"windows\": [{\"name\": \"primary\", \"used_percent\": 35, \"resets_at\": 1795763698}]}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1795321253.4834986"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"autogpt\", \"task\": 1993, \"at\": 1795304107.4230325}, {\"repo\": \"openclaw\", \"task\": 1994, \"at\": 1795305711.740641}, {\"repo\": \"openclaw\", \"task\": 1995, \"at\": 1795306940.0047133}, {\"repo\": \"openclaw\", \"task\": 1996, \"at\": 1795307121.289808}, {\"repo\": \"openclaw\", \"task\": 1997, \"at\": 1795309359.815839}, {\"repo\": \"comfyui\", \"task\": 1998, \"at\": 1795310244.4602857}, {\"repo\": \"autogpt\", \"task\": 1999, \"at\": 1795313311.3226147}, {\"repo\": \"spec-kit\", \"task\": 2000, \"at\": 1795314821.8034952}, {\"repo\": \"comfyui\", \"task\": 2001, \"at\": 1795315065.4452639}, {\"repo\": \"openclaw\", \"task\": 2002, \"at\": 1795318604.4588904}, {\"repo\": \"autogpt\", \"task\": 2003, \"at\": 1795320438.4018264}, {\"repo\": \"openclaw\", \"task\": 2006, \"at\": 1795321259.070192}]"
       },
@@ -44976,16 +44960,24 @@
         "value": "{\"date\": \"2026-11-22\", \"used\": {\"openclaw\": 6, \"comfyui\": 2, \"autogpt\": 2, \"spec-kit\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"2003\": {\"remaining\": 1, \"until\": 1795327638.4020905}, \"2006\": {\"remaining\": 1, \"until\": 1795328459.0704155}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795304107.4231765, \"group\": \"new_fix\", \"task\": 1993, \"phase\": \"generation\"}, {\"at\": 1795305711.740899, \"group\": \"new_fix\", \"task\": 1994, \"phase\": \"generation\"}, {\"at\": 1795306880.0036561, \"group\": \"screening\", \"task\": 1995, \"phase\": \"screening-9cd275d593d4307c46c9\"}, {\"at\": 1795306940.004838, \"group\": \"new_fix\", \"task\": 1995, \"phase\": \"generation\"}, {\"at\": 1795307121.2899413, \"group\": \"new_fix\", \"task\": 1996, \"phase\": \"generation\"}, {\"at\": 1795309359.8159704, \"group\": \"new_fix\", \"task\": 1997, \"phase\": \"generation\"}, {\"at\": 1795310244.4604306, \"group\": \"new_fix\", \"task\": 1998, \"phase\": \"generation\"}, {\"at\": 1795313311.322782, \"group\": \"new_fix\", \"task\": 1999, \"phase\": \"generation\"}, {\"at\": 1795314808.0498567, \"group\": \"screening\", \"task\": 2000, \"phase\": \"screening-bf1a9442ad1ecb4cc311\"}, {\"at\": 1795314821.8036366, \"group\": \"new_fix\", \"task\": 2000, \"phase\": \"generation\"}, {\"at\": 1795315065.4454713, \"group\": \"new_fix\", \"task\": 2001, \"phase\": \"generation\"}, {\"at\": 1795318604.459136, \"group\": \"new_fix\", \"task\": 2002, \"phase\": \"generation\"}, {\"at\": 1795320438.4020905, \"group\": \"new_fix\", \"task\": 2003, \"phase\": \"generation\"}, {\"at\": 1795321259.0704155, \"group\": \"new_fix\", \"task\": 2006, \"phase\": \"generation\"}]"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1795321261.3856509"
+        "key": "task:2006",
+        "value": "{\"started\": 1795321195.0993884, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2006/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"ae8155cf5f5434132b578504716a60c62c3de4e6\", \"generation_started\": 1795321259.0701933, \"dispatch_paid_date\": \"2026-11-22\", \"phase_started\": 1795321264.8208196}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1795321266.4225981, \"windows\": [{\"name\": \"primary\", \"used_percent\": 35, \"resets_at\": 1795763698}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795321266.4302766, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2003:1:generation",
+        "value": "{\"task\": 2003, \"repo\": \"autogpt\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795321266.459815, \"seconds\": 828.06, \"tokens\": {\"totalTokens\": 8929088, \"inputTokens\": 8917320, \"cachedInputTokens\": 8830336, \"cacheWriteInputTokens\": 0, \"outputTokens\": 11768, \"reasoningOutputTokens\": 2513}, \"first_event_ms\": 1795320450107, \"last_event_ms\": 1795321266421, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -44993,11 +44985,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795321262.4442577"
+        "value": "1795321267.582446"
       },
       {
-        "key": "task:2006",
-        "value": "{\"started\": 1795321195.0993884, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2006/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"ae8155cf5f5434132b578504716a60c62c3de4e6\", \"generation_started\": 1795321259.0701933, \"dispatch_paid_date\": \"2026-11-22\", \"phase_started\": 1795321264.8208196}"
+        "key": "worker_heartbeat",
+        "value": "1795321268.4877973"
+      },
+      {
+        "key": "followup:task:2003",
+        "value": "{\"status\": \"needs_human\", \"task\": 2003, \"repo\": \"autogpt\", \"number\": 17227, \"reason\": \"VALIDATION_ENVIRONMENT: The mandatory `pnpm test:unit` check in `autogpt_platform/frontend/AGENTS.md` produced no test summary and stopped making progress while loading third-party scripts in a renderer test; I interrupted it. The focused Library regression, format, lint, and types checks passed. The patch is preserved, but the required full-suite validation remains incomplete.\", \"base\": \"dd0b5f73266ea5f3dfab37ebccd93049af58e106\", \"patch_digest\": \"77a7f9c2c7dfb723114ff5770721467fc16a69bbbfb791e741d956ed7f824675\", \"evidence_bundle\": \"2003-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"2006\": {\"remaining\": 1, \"until\": 1795328459.0704155}}"
+      },
+      {
+        "key": "task:2003",
+        "value": "{\"started\": 1795320422.2363794, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2003/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"dd0b5f73266ea5f3dfab37ebccd93049af58e106\", \"generation_started\": 1795320438.4018269, \"dispatch_paid_date\": \"2026-11-22\", \"phase_started\": 1795320444.9269233, \"patch_digest\": \"77a7f9c2c7dfb723114ff5770721467fc16a69bbbfb791e741d956ed7f824675\", \"last_execution_phase\": \"generation\", \"finished\": 1795321268.7466424}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795321271.385908"
       }
     ],
     "calls": [
