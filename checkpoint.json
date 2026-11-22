@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795331351.7325232,
+  "saved_at": 1795331390.8568313,
   "tables": {
     "tasks": [
       {
@@ -26140,10 +26140,10 @@
         "repo": "autogpt",
         "number": 17245,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1795331325.4219842,
-        "updated": 1795331330.0813742,
-        "result": "",
+        "updated": 1795331390.7235725,
+        "result": "The bug is still present: scheduler.py unschedules a workflow when validation fails. Issue #17245 explicitly leaves the required behavior undecided—keep the schedule and alert its owner, or remove it and notify the owner. Choosing either would settle a product question without maintainer direction. No code was changed.",
         "attempts": 1
       }
     ],
@@ -44833,10 +44833,6 @@
         "value": "{\"at\": 1795330766.6741695, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795330923.4800606, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -45029,46 +45025,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795331276.907187, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795331287.864404, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795331288.2210395, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795331288.6676443, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795331289.045069, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795331289.5676115, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795331290.0037658, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795331290.9506567, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795331291.5107718, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795331292.0336835, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795331304.1274686, \"windows\": [{\"name\": \"primary\", \"used_percent\": 38, \"resets_at\": 1795763698}]}"
-      },
-      {
         "key": "candidate_capacity:autogpt",
         "value": "{\"at\": 1795331312.3907156, \"allowed\": true, \"reason\": \"\"}"
       },
@@ -45085,20 +45041,12 @@
         "value": "{\"at\": 1795331344.3527868, \"disk_free_bytes\": 89713876992, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 14903996416, \"SwapTotal\": 0, \"SwapFree\": 0}, \"memory_events\": null}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1795331347.1886685"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"spec-kit\", \"task\": 2000, \"at\": 1795314821.8034952}, {\"repo\": \"comfyui\", \"task\": 2001, \"at\": 1795315065.4452639}, {\"repo\": \"openclaw\", \"task\": 2002, \"at\": 1795318604.4588904}, {\"repo\": \"autogpt\", \"task\": 2003, \"at\": 1795320438.4018264}, {\"repo\": \"openclaw\", \"task\": 2006, \"at\": 1795321259.070192}, {\"repo\": \"autogpt\", \"task\": 2005, \"at\": 1795321351.5268097}, {\"repo\": \"autogpt\", \"task\": 2007, \"at\": 1795322521.895401}, {\"repo\": \"autogpt\", \"task\": 2010, \"at\": 1795326041.2016318}, {\"repo\": \"autogpt\", \"task\": 2011, \"at\": 1795331347.225718}]"
       },
       {
         "key": "dispatch_budget",
         "value": "{\"date\": \"2026-11-22\", \"used\": {\"openclaw\": 6, \"comfyui\": 2, \"autogpt\": 6, \"spec-kit\": 1}}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"2011\": {\"remaining\": 1, \"until\": 1795338547.2258544}}"
       },
       {
         "key": "codex_allocations",
@@ -45113,12 +45061,72 @@
         "value": "{\"at\": 1795331348.189812, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"execution_wait\": 1, \"human_wait\": 1, \"running\": 1, \"skipped\": 14, \"validation_wait\": 10}, \"respond\": {\"blocked\": 1, \"skipped\": 1}}}"
       },
       {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1795331352.624189, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1795331353.0313478, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1795331353.5055308, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1795331353.8161635, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1795331354.1139195, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1795331354.5004249, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1795331355.3363576, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1795331355.8346975, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:comfyui",
+        "value": "{\"at\": 1795331356.2802427, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1795331348.7550495"
+        "value": "1795331378.7564948"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795331386.3431811"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795331349.027701"
+        "value": "1795331389.0284367"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1795331389.570936, \"windows\": [{\"name\": \"primary\", \"used_percent\": 38, \"resets_at\": 1795763698}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795331389.5722828, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2011:1:generation",
+        "value": "{\"task\": 2011, \"repo\": \"autogpt\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795331389.5762482, \"seconds\": 42.351, \"tokens\": {\"totalTokens\": 207164, \"inputTokens\": 206064, \"cachedInputTokens\": 156160, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1100, \"reasoningOutputTokens\": 238}, \"first_event_ms\": 1795331356583, \"last_event_ms\": 1795331389571, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:2011",
+        "value": "{\"started\": 1795331330.0813973, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2011/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"dd0b5f73266ea5f3dfab37ebccd93049af58e106\", \"generation_started\": 1795331347.225719, \"dispatch_paid_date\": \"2026-11-22\", \"phase_started\": 1795331351.7208197, \"last_execution_phase\": \"generation\", \"finished\": 1795331389.5776637}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -45126,11 +45134,7 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795331350.3388836"
-      },
-      {
-        "key": "task:2011",
-        "value": "{\"started\": 1795331330.0813973, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2011/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"dd0b5f73266ea5f3dfab37ebccd93049af58e106\", \"generation_started\": 1795331347.225719, \"dispatch_paid_date\": \"2026-11-22\", \"phase_started\": 1795331351.7208197}"
+        "value": "1795331390.4916027"
       }
     ],
     "calls": [
