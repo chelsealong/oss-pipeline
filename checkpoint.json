@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795351961.1147473,
+  "saved_at": 1795351966.0798824,
   "tables": {
     "tasks": [
       {
@@ -44963,24 +44963,8 @@
         "value": "{\"started\": 1795346725.855403, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"skipped\", \"base\": null, \"generation_started\": 1795340617.829429, \"dispatch_paid_date\": \"2026-11-22\", \"phase_started\": 1795342899.9182408, \"last_execution_phase\": \"claimed\", \"finished\": 1795346731.8658836, \"resume_progress\": {\"bundle\": \"2014-1.json\", \"sha256\": \"5c23ddb896c014e8ad463bbdc865e1d55035de0aa8ec4631467fbd9524595bc2\", \"base\": \"7a570c41bc27495dc4345855bde686fd4f67fa03\", \"phase\": \"remediation\"}, \"timeout_continuations\": 1}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"autogpt\", \"task\": 2011, \"at\": 1795331347.225718}, {\"repo\": \"openclaw\", \"task\": 2012, \"at\": 1795332562.583781}, {\"repo\": \"spec-kit\", \"task\": 2013, \"at\": 1795339846.355452}, {\"repo\": \"openclaw\", \"task\": 2014, \"at\": 1795340617.8294277}, {\"repo\": \"openclaw\", \"task\": 2015, \"at\": 1795344173.122181}, {\"repo\": \"openclaw\", \"task\": 2016, \"at\": 1795346831.5552285}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-11-22\", \"used\": {\"openclaw\": 10, \"comfyui\": 2, \"autogpt\": 6, \"spec-kit\": 2}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1795331347.2258544, \"group\": \"new_fix\", \"task\": 2011, \"phase\": \"generation\"}, {\"at\": 1795332562.5839112, \"group\": \"new_fix\", \"task\": 2012, \"phase\": \"generation\"}, {\"at\": 1795339846.3556972, \"group\": \"new_fix\", \"task\": 2013, \"phase\": \"generation\"}, {\"at\": 1795339978.464254, \"group\": \"new_fix\", \"task\": 2013, \"phase\": \"review\"}, {\"at\": 1795340617.8296676, \"group\": \"new_fix\", \"task\": 2014, \"phase\": \"generation\"}, {\"at\": 1795342461.6012707, \"group\": \"new_fix\", \"task\": 2014, \"phase\": \"review\"}, {\"at\": 1795342895.797898, \"group\": \"repair\", \"task\": 2014, \"phase\": \"remediation\"}, {\"at\": 1795344173.122403, \"group\": \"new_fix\", \"task\": 2015, \"phase\": \"generation\"}, {\"at\": 1795345887.6800723, \"group\": \"new_fix\", \"task\": 2015, \"phase\": \"review\"}, {\"at\": 1795346831.5554352, \"group\": \"new_fix\", \"task\": 2016, \"phase\": \"generation\"}]"
-      },
-      {
         "key": "usage:2016:1:generation",
         "value": "{\"task\": 2016, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795346932.5359063, \"seconds\": 100.983, \"tokens\": {\"totalTokens\": 827186, \"inputTokens\": 823476, \"cachedInputTokens\": 723456, \"cacheWriteInputTokens\": 0, \"outputTokens\": 3710, \"reasoningOutputTokens\": 921}, \"first_event_ms\": 1795346838986, \"last_event_ms\": 1795346932522, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:2016",
@@ -45259,16 +45243,36 @@
         "value": "1795351958.579022"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1795351959.3134775"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1795351959.4303415"
+        "key": "runner_resources",
+        "value": "{\"at\": 1795351961.1034923, \"disk_free_bytes\": 90044813312, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15126441984, \"SwapTotal\": 0, \"SwapFree\": 0}, \"memory_events\": null}"
       },
       {
         "key": "task:2017",
-        "value": "{\"started\": 1795351954.5947404, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2017/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": null}"
+        "value": "{\"started\": 1795351954.5947404, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2017/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"8b25bbc371b73e876996cf14c917d075d78de2ee\", \"generation_started\": 1795351963.409984, \"dispatch_paid_date\": \"2026-11-22\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"spec-kit\", \"task\": 2013, \"at\": 1795339846.355452}, {\"repo\": \"openclaw\", \"task\": 2014, \"at\": 1795340617.8294277}, {\"repo\": \"openclaw\", \"task\": 2015, \"at\": 1795344173.122181}, {\"repo\": \"openclaw\", \"task\": 2016, \"at\": 1795346831.5552285}, {\"repo\": \"comfyui\", \"task\": 2017, \"at\": 1795351963.4099827}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-11-22\", \"used\": {\"openclaw\": 10, \"comfyui\": 3, \"autogpt\": 6, \"spec-kit\": 2}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"2017\": {\"remaining\": 1, \"until\": 1795359163.4101183}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1795339846.3556972, \"group\": \"new_fix\", \"task\": 2013, \"phase\": \"generation\"}, {\"at\": 1795339978.464254, \"group\": \"new_fix\", \"task\": 2013, \"phase\": \"review\"}, {\"at\": 1795340617.8296676, \"group\": \"new_fix\", \"task\": 2014, \"phase\": \"generation\"}, {\"at\": 1795342461.6012707, \"group\": \"new_fix\", \"task\": 2014, \"phase\": \"review\"}, {\"at\": 1795342895.797898, \"group\": \"repair\", \"task\": 2014, \"phase\": \"remediation\"}, {\"at\": 1795344173.122403, \"group\": \"new_fix\", \"task\": 2015, \"phase\": \"generation\"}, {\"at\": 1795345887.6800723, \"group\": \"new_fix\", \"task\": 2015, \"phase\": \"review\"}, {\"at\": 1795346831.5554352, \"group\": \"new_fix\", \"task\": 2016, \"phase\": \"generation\"}, {\"at\": 1795351963.4101183, \"group\": \"new_fix\", \"task\": 2017, \"phase\": \"generation\"}]"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795351964.31352"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795351964.442848"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -45276,198 +45280,10 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795351961.0148718"
-      },
-      {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795351961.1034923, \"disk_free_bytes\": 90044813312, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15126441984, \"SwapTotal\": 0, \"SwapFree\": 0}, \"memory_events\": null}"
+        "value": "1795351965.8133566"
       }
     ],
     "calls": [
-      {
-        "at": 1794743975.7868702,
-        "kind": "judge"
-      },
-      {
-        "at": 1794743984.8189259,
-        "kind": "codex"
-      },
-      {
-        "at": 1794743994.4657567,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744294.7916546,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744306.7433064,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744327.410885,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744339.5770214,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744350.4961686,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744369.5619168,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744556.9830623,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744569.271847,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744585.5000582,
-        "kind": "codex"
-      },
-      {
-        "at": 1794744761.7655485,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744779.9767091,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744788.8676546,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744799.2337763,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744810.354597,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744820.0371501,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744830.9316387,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744840.0826347,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744849.0233974,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744878.7131512,
-        "kind": "codex"
-      },
-      {
-        "at": 1794744913.655499,
-        "kind": "judge"
-      },
-      {
-        "at": 1794744927.512177,
-        "kind": "judge"
-      },
-      {
-        "at": 1794745003.409074,
-        "kind": "codex"
-      },
-      {
-        "at": 1794745192.8959541,
-        "kind": "codex"
-      },
-      {
-        "at": 1794745217.7819605,
-        "kind": "judge"
-      },
-      {
-        "at": 1794745227.9407923,
-        "kind": "judge"
-      },
-      {
-        "at": 1794745238.8931727,
-        "kind": "judge"
-      },
-      {
-        "at": 1794745257.7412937,
-        "kind": "codex"
-      },
-      {
-        "at": 1794745350.6538978,
-        "kind": "codex"
-      },
-      {
-        "at": 1794745633.0992434,
-        "kind": "judge"
-      },
-      {
-        "at": 1794745660.2264903,
-        "kind": "judge"
-      },
-      {
-        "at": 1794745675.767074,
-        "kind": "judge"
-      },
-      {
-        "at": 1794745722.2838192,
-        "kind": "codex"
-      },
-      {
-        "at": 1794745836.7835793,
-        "kind": "codex"
-      },
-      {
-        "at": 1794746427.059422,
-        "kind": "judge"
-      },
-      {
-        "at": 1794746442.3025887,
-        "kind": "judge"
-      },
-      {
-        "at": 1794746452.5084875,
-        "kind": "judge"
-      },
-      {
-        "at": 1794746469.5769079,
-        "kind": "codex"
-      },
-      {
-        "at": 1794746489.7342434,
-        "kind": "codex"
-      },
-      {
-        "at": 1794746509.2407246,
-        "kind": "codex"
-      },
-      {
-        "at": 1794746521.734861,
-        "kind": "codex"
-      },
-      {
-        "at": 1794746570.0370402,
-        "kind": "codex"
-      },
-      {
-        "at": 1794746590.7616112,
-        "kind": "codex"
-      },
-      {
-        "at": 1794746609.1380467,
-        "kind": "codex"
-      },
       {
         "at": 1794747643.4290376,
         "kind": "judge"
@@ -48239,6 +48055,10 @@
       {
         "at": 1795351942.0790596,
         "kind": "judge"
+      },
+      {
+        "at": 1795351963.4107258,
+        "kind": "codex"
       }
     ]
   }
