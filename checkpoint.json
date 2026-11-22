@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795306871.7698143,
+  "saved_at": 1795306875.021119,
   "tables": {
     "tasks": [
       {
@@ -25932,11 +25932,11 @@
         "repo": "openclaw",
         "number": 203065,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1795305685.2297745,
-        "updated": 1795305685.2297745,
+        "updated": 1795306872.8667486,
         "result": "",
-        "attempts": 0
+        "attempts": 1
       },
       {
         "id": 1996,
@@ -44474,10 +44474,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795305387.2069266, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795305631.1937423, \"comfyui\": 1795245896.1344552, \"hermes\": 1795158844.7137928, \"langfuse\": 1795285289.5062828, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795265927.8130727, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795247794.4456356, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1795304093.3963702}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"autogpt\", \"task\": 1991, \"at\": 1795300896.5515776}, {\"repo\": \"autogpt\", \"task\": 1992, \"at\": 1795302984.6203234}, {\"repo\": \"autogpt\", \"task\": 1993, \"at\": 1795304107.4230325}, {\"repo\": \"openclaw\", \"task\": 1994, \"at\": 1795305711.740641}]"
       },
@@ -44674,14 +44670,6 @@
         "value": "{\"at\": 1795306803.7566543, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795306807.587518, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1095.8366694450378, \"judge_tokens_spent_24h\": 83834, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 5, \"execution_wait\": 1, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8288\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8288\", \"title\": \"Environment simulation: a seeded fault injection is not reproducible per eval case; adding an unrelated case or changing parallelism changes which runs fail\", \"first_seen\": 1795285332.4521303, \"last_checked\": 1795305384.9427655, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795305387.2069266, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795306807.5885117, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 2, \"error\": 1, \"execution_wait\": 1, \"human_wait\": 1, \"queued\": 2, \"running\": 1, \"skipped\": 11, \"validation_wait\": 5}, \"respond\": {\"blocked\": 1, \"done\": 2}}}"
-      },
-      {
         "key": "candidate_capacity:adk",
         "value": "{\"at\": 1795306850.1556911, \"allowed\": true, \"reason\": \"\"}"
       },
@@ -44742,10 +44730,6 @@
         "value": "{\"at\": 1795306868.0535893, \"disk_free_bytes\": 81711198208, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 14966431744, \"SwapTotal\": 3221221376, \"SwapFree\": 3221188608}, \"memory_events\": null}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1795306868.110333"
-      },
-      {
         "key": "codex_review_leases",
         "value": "{}"
       },
@@ -44754,8 +44738,28 @@
         "value": "{\"started\": 1795305631.1938815, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1994/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"41dce5629f2703bb894a5409b0e6692fd4dd2ef3\", \"generation_started\": 1795305711.740643, \"dispatch_paid_date\": \"2026-11-22\", \"phase_started\": 1795305717.630452, \"last_execution_phase\": \"generation\", \"finished\": 1795306868.2211323}"
       },
       {
+        "key": "admission_health",
+        "value": "{\"at\": 1795306871.7904174, \"state\": \"queued\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 2, \"running_tasks\": 0, \"queued_tasks\": 2, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1160.0393903255463, \"judge_tokens_spent_24h\": 83834, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 5, \"execution_wait\": 1, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8288\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8288\", \"title\": \"Environment simulation: a seeded fault injection is not reproducible per eval case; adding an unrelated case or changing parallelism changes which runs fail\", \"first_seen\": 1795285332.4521303, \"last_checked\": 1795305384.9427655, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795305387.2069266, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795306871.7912846, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 2, \"error\": 1, \"execution_wait\": 1, \"human_wait\": 1, \"queued\": 2, \"skipped\": 12, \"validation_wait\": 5}, \"respond\": {\"blocked\": 1, \"done\": 2}}}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795306872.866602, \"comfyui\": 1795245896.1344552, \"hermes\": 1795158844.7137928, \"langfuse\": 1795285289.5062828, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795265927.8130727, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795247794.4456356, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1795304093.3963702}}"
+      },
+      {
+        "key": "task:1995",
+        "value": "{\"started\": 1795306872.8667748, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795306873.1105165"
+      },
+      {
         "key": "watch_heartbeat",
-        "value": "1795306868.8358412"
+        "value": "1795306873.8480403"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -44763,7 +44767,7 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795306869.6038256"
+        "value": "1795306874.3204823"
       }
     ],
     "calls": [
