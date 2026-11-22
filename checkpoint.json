@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795307278.1835384,
+  "saved_at": 1795307341.948621,
   "tables": {
     "tasks": [
       {
@@ -44450,10 +44450,6 @@
         "value": "{}"
       },
       {
-        "key": "admission_warning_at",
-        "value": "1795304063.2303271"
-      },
-      {
         "key": "usage:1993:1:generation",
         "value": "{\"task\": 1993, \"repo\": \"autogpt\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795305763.2911773, \"seconds\": 1655.869, \"tokens\": {\"totalTokens\": 23257806, \"inputTokens\": 23228619, \"cachedInputTokens\": 23091968, \"cacheWriteInputTokens\": 0, \"outputTokens\": 29187, \"reasoningOutputTokens\": 11465}, \"first_event_ms\": 1795304113777, \"last_event_ms\": 1795305763247, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -44690,14 +44686,6 @@
         "value": "[{\"at\": 1795300896.5517302, \"group\": \"new_fix\", \"task\": 1991, \"phase\": \"generation\"}, {\"at\": 1795302984.6204674, \"group\": \"new_fix\", \"task\": 1992, \"phase\": \"generation\"}, {\"at\": 1795304107.4231765, \"group\": \"new_fix\", \"task\": 1993, \"phase\": \"generation\"}, {\"at\": 1795305711.740899, \"group\": \"new_fix\", \"task\": 1994, \"phase\": \"generation\"}, {\"at\": 1795306880.0036561, \"group\": \"screening\", \"task\": 1995, \"phase\": \"screening-9cd275d593d4307c46c9\"}, {\"at\": 1795306940.004838, \"group\": \"new_fix\", \"task\": 1995, \"phase\": \"generation\"}, {\"at\": 1795307121.2899413, \"group\": \"new_fix\", \"task\": 1996, \"phase\": \"generation\"}]"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795307217.6875405, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 7, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 96.39104104042053, \"judge_tokens_spent_24h\": 83834, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 5, \"execution_wait\": 1, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 1, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8288\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8288\", \"title\": \"Environment simulation: a seeded fault injection is not reproducible per eval case; adding an unrelated case or changing parallelism changes which runs fail\", \"first_seen\": 1795285332.4521303, \"last_checked\": 1795307034.2597778, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795307036.6227624, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795307217.688589, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 2, \"error\": 1, \"execution_wait\": 1, \"human_wait\": 1, \"running\": 1, \"skipped\": 13, \"validation_wait\": 5}, \"respond\": {\"blocked\": 1, \"done\": 2}}}"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1795307227.526797, \"source\": \"completed task phase\"}"
       },
@@ -44722,52 +44710,72 @@
         "value": "1795307241.2630627"
       },
       {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795307254.562628, \"allowed\": true, \"reason\": \"\"}"
+        "key": "admission_health",
+        "value": "{\"at\": 1795307281.4708195, \"state\": \"waiting\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 7, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 160.1741545200348, \"judge_tokens_spent_24h\": 83834, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 6, \"execution_wait\": 1, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 1, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8288\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8288\", \"title\": \"Environment simulation: a seeded fault injection is not reproducible per eval case; adding an unrelated case or changing parallelism changes which runs fail\", \"first_seen\": 1795285332.4521303, \"last_checked\": 1795307034.2597778, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795307036.6227624, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
       },
       {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795307254.8675587, \"allowed\": true, \"reason\": \"\"}"
+        "key": "admission_warning_at",
+        "value": "1795307281.4722896"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795307281.472767, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 2, \"error\": 1, \"execution_wait\": 1, \"human_wait\": 1, \"skipped\": 13, \"validation_wait\": 6}, \"respond\": {\"blocked\": 1, \"done\": 2}}}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795307254.9716, \"windows\": [{\"name\": \"primary\", \"used_percent\": 28, \"resets_at\": 1795763698}]}"
+        "value": "{\"at\": 1795307315.2112117, \"windows\": [{\"name\": \"primary\", \"used_percent\": 28, \"resets_at\": 1795763698}]}"
+      },
+      {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1795307319.6121714, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1795307319.8817234, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795307255.1808026, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795307320.1743429, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795307255.4664514, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795307320.4612787, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795307255.7166345, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795307320.7672675, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795307256.073934, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795307321.0334756, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795307256.8386066, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795307321.9164762, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795307257.158015, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795307322.1471174, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795307257.5358212, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795307322.528015, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795307257.837285, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795307322.8896935, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1795307269.15127"
+        "value": "1795307329.156853"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795307337.918934"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795307338.1223075"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -44775,19 +44783,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795307274.9116354"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1795307277.8789887"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1795307278.1208894"
+        "value": "1795307339.1683214"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1795307278.1723487, \"disk_free_bytes\": 89889054720, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15010779136, \"SwapTotal\": 3221221376, \"SwapFree\": 3221188608}, \"memory_events\": null}"
+        "value": "{\"at\": 1795307341.937061, \"disk_free_bytes\": 89887784960, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15058989056, \"SwapTotal\": 3221221376, \"SwapFree\": 3221188608}, \"memory_events\": null}"
       }
     ],
     "calls": [
