@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795363345.2383041,
+  "saved_at": 1795363385.1420667,
   "tables": {
     "tasks": [
       {
@@ -26257,10 +26257,10 @@
         "repo": "openclaw",
         "number": 203518,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1795362226.7280548,
-        "updated": 1795362233.5395596,
-        "result": "",
+        "updated": 1795363385.1285555,
+        "result": "VALIDATION_ENVIRONMENT: The patch and focused regression are in the checkout, but this Linux runner cannot verify HEIC conversion with macOS `sips` or capture the required Control UI before/after screenshots. The targeted E2E lane stopped during setup because it could not verify separation from managed Gateway artifacts; that guard was not bypassed.",
         "attempts": 1
       },
       {
@@ -45039,10 +45039,6 @@
         "value": "{\"started\": 1795351954.5947404, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2017/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"8b25bbc371b73e876996cf14c917d075d78de2ee\", \"generation_started\": 1795351963.409984, \"dispatch_paid_date\": \"2026-11-22\", \"phase_started\": 1795351969.7867594, \"last_execution_phase\": \"generation\", \"finished\": 1795352044.5365796}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795362204.5609143, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -45111,16 +45107,8 @@
         "value": "{\"date\": \"2026-11-22\", \"used\": {\"openclaw\": 10, \"comfyui\": 3, \"autogpt\": 6, \"spec-kit\": 2}, \"replacement_used\": {\"openclaw\": 2}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"2020\": {\"remaining\": 1, \"until\": 1795369512.7368917}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795345887.6800723, \"group\": \"new_fix\", \"task\": 2015, \"phase\": \"review\"}, {\"at\": 1795346831.5554352, \"group\": \"new_fix\", \"task\": 2016, \"phase\": \"generation\"}, {\"at\": 1795351963.4101183, \"group\": \"new_fix\", \"task\": 2017, \"phase\": \"generation\"}, {\"at\": 1795356969.4259353, \"group\": \"new_fix\", \"task\": 2018, \"phase\": \"generation\"}, {\"at\": 1795362312.7368917, \"group\": \"new_fix\", \"task\": 2020, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "task:2020",
-        "value": "{\"started\": 1795362233.539584, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2020/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"b949a1cb4dd24055a2dcb696643ee4a13cf17420\", \"replacement_candidate_verified\": 1795362238.0509148, \"dispatch_replacement\": true, \"generation_started\": 1795362312.7367277, \"dispatch_paid_date\": \"2026-11-22\", \"phase_started\": 1795362316.3946705}"
       },
       {
         "key": "task:1772",
@@ -45287,14 +45275,6 @@
         "value": "{\"at\": 1795363280.070278, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795363284.733794, \"state\": \"active\", \"pending_candidates\": 403, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 3, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 403}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 5, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 971.9862468242645, \"judge_tokens_spent_24h\": 77627, \"screening_calls_5h\": 0, \"screening_calls_24h\": 2, \"task_start_limits_reached\": {\"autogpt\": {\"used\": 6, \"limit\": 6}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 10}, \"no_work_replacements\": {\"openclaw\": {\"used\": 2, \"remaining\": 1, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8295\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8295\", \"title\": \"adk deploy ignores .gitignore patterns that start with **/\", \"first_seen\": 1795321139.259463, \"last_checked\": 1795321139.2594638, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8288\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8288\", \"title\": \"Environment simulation: a seeded fault injection is not reproducible per eval case; adding an unrelated case or changing parallelism changes which runs fail\", \"first_seen\": 1795285332.4521303, \"last_checked\": 1795362263.699525, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795362265.9935212, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795363284.7347164, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"queued\": 2, \"running\": 1, \"skipped\": 15, \"validation_wait\": 10}, \"respond\": {\"blocked\": 1, \"skipped\": 1}}}"
-      },
-      {
         "key": "candidate_capacity:adk",
         "value": "{\"at\": 1795363325.667006, \"allowed\": true, \"reason\": \"\"}"
       },
@@ -45331,20 +45311,52 @@
         "value": "{\"at\": 1795363329.0993145, \"allowed\": true, \"reason\": \"\"}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1795363340.3818486"
+        "key": "runner_resources",
+        "value": "{\"at\": 1795363345.226736, \"disk_free_bytes\": 81791696896, \"memory_bytes\": {\"MemTotal\": 16464302080, \"MemAvailable\": 13206097920, \"SwapTotal\": 3221221376, \"SwapFree\": 3221139456}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1795363349.2112744, \"state\": \"active\", \"pending_candidates\": 403, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 3, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 403}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 5, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1036.4675316810608, \"judge_tokens_spent_24h\": 77627, \"screening_calls_5h\": 0, \"screening_calls_24h\": 2, \"task_start_limits_reached\": {\"autogpt\": {\"used\": 6, \"limit\": 6}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 10}, \"no_work_replacements\": {\"openclaw\": {\"used\": 2, \"remaining\": 1, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8295\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8295\", \"title\": \"adk deploy ignores .gitignore patterns that start with **/\", \"first_seen\": 1795321139.259463, \"last_checked\": 1795321139.2594638, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8288\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8288\", \"title\": \"Environment simulation: a seeded fault injection is not reproducible per eval case; adding an unrelated case or changing parallelism changes which runs fail\", \"first_seen\": 1795285332.4521303, \"last_checked\": 1795362263.699525, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795362265.9935212, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795363349.2120447, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"queued\": 2, \"running\": 1, \"skipped\": 15, \"validation_wait\": 10}, \"respond\": {\"blocked\": 1, \"skipped\": 1}}}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1795363341.8957965"
+        "value": "1795363371.8984706"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795363380.4934855"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795363343.6006482"
+        "value": "1795363383.6015754"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795363344.293511, \"windows\": [{\"name\": \"primary\", \"used_percent\": 48, \"resets_at\": 1795763698}]}"
+        "value": "{\"at\": 1795363384.3878787, \"windows\": [{\"name\": \"primary\", \"used_percent\": 48, \"resets_at\": 1795763698}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795363384.3900933, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2020:1:generation",
+        "value": "{\"task\": 2020, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795363384.4083135, \"seconds\": 1071.672, \"tokens\": {\"totalTokens\": 18201013, \"inputTokens\": 18179819, \"cachedInputTokens\": 18028800, \"cacheWriteInputTokens\": 0, \"outputTokens\": 21194, \"reasoningOutputTokens\": 6582}, \"first_event_ms\": 1795362320107, \"last_event_ms\": 1795363384389, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:2020",
+        "value": "{\"status\": \"needs_human\", \"task\": 2020, \"repo\": \"openclaw\", \"number\": 203518, \"reason\": \"VALIDATION_ENVIRONMENT: The patch and focused regression are in the checkout, but this Linux runner cannot verify HEIC conversion with macOS `sips` or capture the required Control UI before/after screenshots. The targeted E2E lane stopped during setup because it could not verify separation from managed Gateway artifacts; that guard was not bypassed.\", \"base\": \"b949a1cb4dd24055a2dcb696643ee4a13cf17420\", \"patch_digest\": \"de5c7beaf83f097bb92e2cdbb4feeb3a7a4f8b878831b39fd58170479272c263\", \"evidence_bundle\": \"2020-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:2020",
+        "value": "{\"started\": 1795362233.539584, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2020/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"b949a1cb4dd24055a2dcb696643ee4a13cf17420\", \"replacement_candidate_verified\": 1795362238.0509148, \"dispatch_replacement\": true, \"generation_started\": 1795362312.7367277, \"dispatch_paid_date\": \"2026-11-22\", \"phase_started\": 1795362316.3946705, \"patch_digest\": \"de5c7beaf83f097bb92e2cdbb4feeb3a7a4f8b878831b39fd58170479272c263\", \"last_execution_phase\": \"generation\", \"finished\": 1795363384.7556162}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -45352,11 +45364,7 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795363345.0244951"
-      },
-      {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795363345.226736, \"disk_free_bytes\": 81791696896, \"memory_bytes\": {\"MemTotal\": 16464302080, \"MemAvailable\": 13206097920, \"SwapTotal\": 3221221376, \"SwapFree\": 3221139456}, \"memory_events\": null}"
+        "value": "1795363385.094619"
       }
     ],
     "calls": [
