@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795319328.931921,
+  "saved_at": 1795319360.3910718,
   "tables": {
     "tasks": [
       {
@@ -26023,10 +26023,10 @@
         "repo": "openclaw",
         "number": 203395,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1795318545.2612338,
-        "updated": 1795318545.2754366,
-        "result": "",
+        "updated": 1795319360.3746665,
+        "result": "VALIDATION_ENVIRONMENT: The reported failure requires an isolated macOS Gateway with an unreadable reused parent PID. This runner is Linux, so the required end-to-end macOS validation in AGENTS.md cannot be completed here. The source and regression patch remain in the checkout.",
         "attempts": 1
       }
     ],
@@ -44660,24 +44660,12 @@
         "value": "{\"date\": \"2026-11-22\", \"used\": {\"openclaw\": 5, \"comfyui\": 2, \"autogpt\": 1, \"spec-kit\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"2002\": {\"remaining\": 1, \"until\": 1795325804.459136}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795300896.5517302, \"group\": \"new_fix\", \"task\": 1991, \"phase\": \"generation\"}, {\"at\": 1795302984.6204674, \"group\": \"new_fix\", \"task\": 1992, \"phase\": \"generation\"}, {\"at\": 1795304107.4231765, \"group\": \"new_fix\", \"task\": 1993, \"phase\": \"generation\"}, {\"at\": 1795305711.740899, \"group\": \"new_fix\", \"task\": 1994, \"phase\": \"generation\"}, {\"at\": 1795306880.0036561, \"group\": \"screening\", \"task\": 1995, \"phase\": \"screening-9cd275d593d4307c46c9\"}, {\"at\": 1795306940.004838, \"group\": \"new_fix\", \"task\": 1995, \"phase\": \"generation\"}, {\"at\": 1795307121.2899413, \"group\": \"new_fix\", \"task\": 1996, \"phase\": \"generation\"}, {\"at\": 1795309359.8159704, \"group\": \"new_fix\", \"task\": 1997, \"phase\": \"generation\"}, {\"at\": 1795310244.4604306, \"group\": \"new_fix\", \"task\": 1998, \"phase\": \"generation\"}, {\"at\": 1795313311.322782, \"group\": \"new_fix\", \"task\": 1999, \"phase\": \"generation\"}, {\"at\": 1795314808.0498567, \"group\": \"screening\", \"task\": 2000, \"phase\": \"screening-bf1a9442ad1ecb4cc311\"}, {\"at\": 1795314821.8036366, \"group\": \"new_fix\", \"task\": 2000, \"phase\": \"generation\"}, {\"at\": 1795315065.4454713, \"group\": \"new_fix\", \"task\": 2001, \"phase\": \"generation\"}, {\"at\": 1795318604.459136, \"group\": \"new_fix\", \"task\": 2002, \"phase\": \"generation\"}]"
       },
       {
-        "key": "task:2002",
-        "value": "{\"started\": 1795318545.2754931, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2002/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"1eacdff456ad0964d9b8cd65945913c6ebf50c4b\", \"generation_started\": 1795318604.4588919, \"dispatch_paid_date\": \"2026-11-22\", \"phase_started\": 1795318608.016115}"
-      },
-      {
         "key": "publication_check:hermes",
         "value": "{\"at\": 1795318736.8086586, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795318761.5494592, \"source\": \"authenticated probe\"}"
       },
       {
         "key": "pause",
@@ -44844,72 +44832,68 @@
         "value": "{\"at\": 1795319067.6576433, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795319267.5974495, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 13, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 663.1245412826538, \"judge_tokens_spent_24h\": 94831, \"screening_calls_5h\": 2, \"screening_calls_24h\": 2, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"execution_wait\": 1, \"human_wait\": 1, \"validation_wait\": 7}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 2, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8288\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8288\", \"title\": \"Environment simulation: a seeded fault injection is not reproducible per eval case; adding an unrelated case or changing parallelism changes which runs fail\", \"first_seen\": 1795285332.4521303, \"last_checked\": 1795317937.4289017, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795317939.6893108, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795319267.5991821, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 1, \"execution_wait\": 1, \"human_wait\": 1, \"running\": 1, \"skipped\": 13, \"validation_wait\": 7}, \"respond\": {\"blocked\": 1, \"done\": 2}}}"
-      },
-      {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795319269.4296193, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795319269.7773416, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795319270.152971, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795319270.4479816, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795319270.817604, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795319271.1591954, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795319271.915318, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795319272.2169838, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795319272.4754014, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795319272.8318202, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1795319316.1737325"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795319318.1213467"
+        "key": "runner_resources",
+        "value": "{\"at\": 1795319328.903403, \"disk_free_bytes\": 78082572288, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 12454481920, \"SwapTotal\": 3221221376, \"SwapFree\": 3221192704}, \"memory_events\": null}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1795319324.634066"
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1795319330.0522392, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1795319330.3687725, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1795319330.6811175, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1795319331.0126786, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1795319331.3169973, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1795319331.702115, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1795319333.0698574, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 13, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 728.5979218482971, \"judge_tokens_spent_24h\": 94376, \"screening_calls_5h\": 2, \"screening_calls_24h\": 2, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"execution_wait\": 1, \"human_wait\": 1, \"validation_wait\": 7}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 2, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8288\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8288\", \"title\": \"Environment simulation: a seeded fault injection is not reproducible per eval case; adding an unrelated case or changing parallelism changes which runs fail\", \"first_seen\": 1795285332.4521303, \"last_checked\": 1795317937.4289017, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795317939.6893108, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795319333.0719805, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 1, \"execution_wait\": 1, \"human_wait\": 1, \"running\": 1, \"skipped\": 13, \"validation_wait\": 7}, \"respond\": {\"blocked\": 1, \"done\": 2}}}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1795319337.561711, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1795319337.8910515, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:autogpt",
+        "value": "{\"at\": 1795319338.1486535, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:comfyui",
+        "value": "{\"at\": 1795319338.486352, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795319348.1282413"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795319326.2440872"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795319326.587068, \"windows\": [{\"name\": \"primary\", \"used_percent\": 35, \"resets_at\": 1795763698}]}"
+        "value": "1795319356.244711"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -44917,11 +44901,35 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795319327.4130213"
+        "value": "1795319357.2428577"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795319328.903403, \"disk_free_bytes\": 78082572288, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 12454481920, \"SwapTotal\": 3221221376, \"SwapFree\": 3221192704}, \"memory_events\": null}"
+        "key": "watch_heartbeat",
+        "value": "1795319358.571085"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1795319360.0081997, \"windows\": [{\"name\": \"primary\", \"used_percent\": 35, \"resets_at\": 1795763698}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795319360.010965, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2002:1:generation",
+        "value": "{\"task\": 2002, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795319360.0313165, \"seconds\": 755.574, \"tokens\": {\"totalTokens\": 7436810, \"inputTokens\": 7425526, \"cachedInputTokens\": 7305472, \"cacheWriteInputTokens\": 0, \"outputTokens\": 11284, \"reasoningOutputTokens\": 3920}, \"first_event_ms\": 1795318613206, \"last_event_ms\": 1795319360009, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:2002",
+        "value": "{\"status\": \"needs_human\", \"task\": 2002, \"repo\": \"openclaw\", \"number\": 203395, \"reason\": \"VALIDATION_ENVIRONMENT: The reported failure requires an isolated macOS Gateway with an unreadable reused parent PID. This runner is Linux, so the required end-to-end macOS validation in AGENTS.md cannot be completed here. The source and regression patch remain in the checkout.\", \"base\": \"1eacdff456ad0964d9b8cd65945913c6ebf50c4b\", \"patch_digest\": \"1ef5732deef93cd751527af634241cfa50a0db1acadffa418cc2a4f2b2d7f98f\", \"evidence_bundle\": \"2002-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:2002",
+        "value": "{\"started\": 1795318545.2754931, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2002/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"1eacdff456ad0964d9b8cd65945913c6ebf50c4b\", \"generation_started\": 1795318604.4588919, \"dispatch_paid_date\": \"2026-11-22\", \"phase_started\": 1795318608.016115, \"patch_digest\": \"1ef5732deef93cd751527af634241cfa50a0db1acadffa418cc2a4f2b2d7f98f\", \"last_execution_phase\": \"generation\", \"finished\": 1795319360.2039165}"
       }
     ],
     "calls": [
