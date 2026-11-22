@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795314753.4880698,
+  "saved_at": 1795314803.824504,
   "tables": {
     "tasks": [
       {
@@ -25989,6 +25989,19 @@
         "updated": 1795314588.3144386,
         "result": "VALIDATION_ENVIRONMENT: autogpt_platform/frontend/AGENTS.md requires `pnpm test:unit` before completion. The full suite repeatedly hit `ECONNREFUSED` at localhost:3000 and did not finish; I stopped it. The focused fix and regression test remain in the checkout.",
         "attempts": 1
+      },
+      {
+        "id": 2000,
+        "identity": "fix:spec-kit:5514:",
+        "kind": "fix",
+        "repo": "spec-kit",
+        "number": 5514,
+        "note": "",
+        "status": "running",
+        "created": 1795314799.971126,
+        "updated": 1795314803.8128715,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -44557,10 +44570,6 @@
         "value": "{\"started\": 1795310237.4549086, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1998/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"4bff04177c25cf1f1448ee0e1209f175059a9b35\", \"generation_started\": 1795310244.4602861, \"dispatch_paid_date\": \"2026-11-22\", \"phase_started\": 1795310248.329312, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"generation\", \"finished\": 1795310314.814989}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795309280.919712, \"comfyui\": 1795310237.4547617, \"hermes\": 1795158844.7137928, \"langfuse\": 1795285289.5062828, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795265927.8130727, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795247794.4456356, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1795313297.233594}}"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"autogpt\", \"task\": 1991, \"at\": 1795300896.5515776}, {\"repo\": \"autogpt\", \"task\": 1992, \"at\": 1795302984.6203234}, {\"repo\": \"autogpt\", \"task\": 1993, \"at\": 1795304107.4230325}, {\"repo\": \"openclaw\", \"task\": 1994, \"at\": 1795305711.740641}, {\"repo\": \"openclaw\", \"task\": 1995, \"at\": 1795306940.0047133}, {\"repo\": \"openclaw\", \"task\": 1996, \"at\": 1795307121.289808}, {\"repo\": \"openclaw\", \"task\": 1997, \"at\": 1795309359.815839}, {\"repo\": \"comfyui\", \"task\": 1998, \"at\": 1795310244.4602857}, {\"repo\": \"autogpt\", \"task\": 1999, \"at\": 1795313311.3226147}]"
       },
@@ -44785,60 +44794,72 @@
         "value": "1795314629.2518725"
       },
       {
+        "key": "runner_resources",
+        "value": "{\"at\": 1795314753.4767885, \"disk_free_bytes\": 89661075456, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 14990430208, \"SwapTotal\": 3221221376, \"SwapFree\": 3221188608}, \"memory_events\": null}"
+      },
+      {
         "key": "admission_health",
-        "value": "{\"at\": 1795314693.0231833, \"state\": \"waiting\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 10, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1381.694054365158, \"judge_tokens_spent_24h\": 92495, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"execution_wait\": 1, \"human_wait\": 1, \"validation_wait\": 7}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 2, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8288\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8288\", \"title\": \"Environment simulation: a seeded fault injection is not reproducible per eval case; adding an unrelated case or changing parallelism changes which runs fail\", \"first_seen\": 1795285332.4521303, \"last_checked\": 1795314358.4834743, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795314360.7678452, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
+        "value": "{\"at\": 1795314756.8468962, \"state\": \"waiting\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 10, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1445.5175018310547, \"judge_tokens_spent_24h\": 92495, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"execution_wait\": 1, \"human_wait\": 1, \"validation_wait\": 7}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 2, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8288\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8288\", \"title\": \"Environment simulation: a seeded fault injection is not reproducible per eval case; adding an unrelated case or changing parallelism changes which runs fail\", \"first_seen\": 1795285332.4521303, \"last_checked\": 1795314358.4834743, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795314360.7678452, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1795314693.0240955, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"execution_wait\": 1, \"human_wait\": 1, \"skipped\": 11, \"validation_wait\": 7}, \"respond\": {\"blocked\": 1, \"done\": 2}}}"
-      },
-      {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795314724.144975, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795314724.4078395, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795314724.697647, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795314724.9667463, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795314725.4093213, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795314725.6658876, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795314726.3693216, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795314726.6985435, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795314727.0181484, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795314727.2813964, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795314756.8479662, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"execution_wait\": 1, \"human_wait\": 1, \"skipped\": 11, \"validation_wait\": 7}, \"respond\": {\"blocked\": 1, \"done\": 2}}}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795314733.914367, \"windows\": [{\"name\": \"primary\", \"used_percent\": 33, \"resets_at\": 1795763698}]}"
+        "value": "{\"at\": 1795314794.2750876, \"windows\": [{\"name\": \"primary\", \"used_percent\": 33, \"resets_at\": 1795763698}]}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795314794.9434338"
+      },
+      {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1795314795.331305, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1795314795.5969822, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1795314796.235629, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1795314796.6694303, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1795314797.1930532, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1795314797.551023, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1795314798.2151983, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1795314798.5242457, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:autogpt",
+        "value": "{\"at\": 1795314798.8580403, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:comfyui",
+        "value": "{\"at\": 1795314799.1255982, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1795314739.8735352"
+        "value": "1795314799.8790905"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795314802.2100325"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -44846,19 +44867,15 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795314748.2814245"
+        "value": "1795314803.585973"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1795314752.20903"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795309280.919712, \"comfyui\": 1795310237.4547617, \"hermes\": 1795158844.7137928, \"langfuse\": 1795285289.5062828, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795265927.8130727, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795314803.8127499, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1795313297.233594}}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1795314752.335337"
-      },
-      {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795314753.4767885, \"disk_free_bytes\": 89661075456, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 14990430208, \"SwapTotal\": 3221221376, \"SwapFree\": 3221188608}, \"memory_events\": null}"
+        "key": "task:2000",
+        "value": "{\"started\": 1795314803.8128946, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       }
     ],
     "calls": [
