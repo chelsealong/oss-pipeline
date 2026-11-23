@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795421174.5311744,
+  "saved_at": 1795421195.4931808,
   "tables": {
     "tasks": [
       {
@@ -26530,10 +26530,10 @@
         "repo": "openclaw",
         "number": 203989,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1795420071.4401205,
-        "updated": 1795420074.0899055,
-        "result": "",
+        "updated": 1795421195.373634,
+        "result": "VALIDATION_ENVIRONMENT: The required focused Vitest command reached RUN but produced no test result in repeated bounded attempts. The checkout patch is preserved; it cannot be marked ready without that test result.",
         "attempts": 1
       }
     ],
@@ -45611,10 +45611,6 @@
         "value": "{\"started\": 1795419360.3493588, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1935/attempt-2\", \"attempt\": 2, \"phase\": \"skipped\", \"base\": \"5c32cdff0743ce0b76d809ecd905348b142b4983\", \"generation_started\": 1795159289.2480252, \"dispatch_paid_date\": \"2026-11-20\", \"phase_started\": 1795419376.8521512, \"last_execution_phase\": \"generation\", \"finished\": 1795419425.5568671}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795419498.1996121, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1937:2:generation",
         "value": "{\"task\": 1937, \"repo\": \"langfuse\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1795419498.20462, \"seconds\": 55.816, \"tokens\": {\"totalTokens\": 283631, \"inputTokens\": 281705, \"cachedInputTokens\": 234496, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1926, \"reasoningOutputTokens\": 683}, \"first_event_ms\": 1795419450044, \"last_event_ms\": 1795419498194, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -45639,16 +45635,8 @@
         "value": "{\"date\": \"2026-11-23\", \"used\": {\"openclaw\": 10, \"langfuse\": 3, \"spec-kit\": 2}, \"replacement_used\": {\"openclaw\": 3}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"2041\": {\"remaining\": 1, \"until\": 1795427338.9213705}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795402915.4039812, \"group\": \"repair\", \"task\": 2031, \"phase\": \"remediation\"}, {\"at\": 1795403866.6842759, \"group\": \"new_fix\", \"task\": 2033, \"phase\": \"generation\"}, {\"at\": 1795404763.2933247, \"group\": \"new_fix\", \"task\": 2033, \"phase\": \"review\"}, {\"at\": 1795406259.7398095, \"group\": \"new_fix\", \"task\": 2034, \"phase\": \"generation\"}, {\"at\": 1795407573.0012722, \"group\": \"new_fix\", \"task\": 2035, \"phase\": \"generation\"}, {\"at\": 1795408318.8865604, \"group\": \"new_fix\", \"task\": 2035, \"phase\": \"review\"}, {\"at\": 1795408847.4685898, \"group\": \"new_fix\", \"task\": 2036, \"phase\": \"generation\"}, {\"at\": 1795411048.6906354, \"group\": \"new_fix\", \"task\": 2037, \"phase\": \"generation\"}, {\"at\": 1795414358.951399, \"group\": \"new_fix\", \"task\": 2038, \"phase\": \"generation\"}, {\"at\": 1795414941.4660792, \"group\": \"new_fix\", \"task\": 2038, \"phase\": \"review\"}, {\"at\": 1795415309.254178, \"group\": \"new_fix\", \"task\": 2039, \"phase\": \"generation\"}, {\"at\": 1795416346.41391, \"group\": \"new_fix\", \"task\": 2040, \"phase\": \"generation\"}, {\"at\": 1795418558.2482245, \"group\": \"new_fix\", \"task\": 1928, \"phase\": \"generation\"}, {\"at\": 1795419371.021598, \"group\": \"new_fix\", \"task\": 1935, \"phase\": \"generation\"}, {\"at\": 1795419442.390383, \"group\": \"new_fix\", \"task\": 1937, \"phase\": \"generation\"}, {\"at\": 1795420138.9213705, \"group\": \"new_fix\", \"task\": 2041, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "task:2041",
-        "value": "{\"started\": 1795420074.0899465, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2041/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"bcd6666917ed116688c901f45042baa0e4381452\", \"replacement_candidate_verified\": 1795420078.7216012, \"dispatch_replacement\": true, \"generation_started\": 1795420138.921126, \"dispatch_paid_date\": \"2026-11-23\", \"phase_started\": 1795420142.5779173}"
       },
       {
         "key": "coordination:google/adk-python#8312",
@@ -45747,14 +45735,6 @@
         "value": "{\"at\": 1795421038.947048, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795421101.152318, \"state\": \"active\", \"pending_candidates\": 401, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 1, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 401}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 15, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 962.2115068435669, \"judge_tokens_spent_24h\": 50262, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 9}, \"no_work_replacements\": {\"openclaw\": {\"used\": 3, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795409767.2153049, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8305\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8305\", \"title\": \"A2aAgentExecutor has no native way to emit TaskState.rejected on the server side\", \"first_seen\": 1795385135.9091156, \"last_checked\": 1795411236.968553, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795421101.153963, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 2, \"running\": 1, \"skipped\": 18, \"validation_wait\": 9}, \"respond\": {}}}"
-      },
-      {
         "key": "task:1772",
         "value": "{\"started\": 1794433734.3683045, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1772/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"remote_base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base_update\": {\"original_head\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794433749.2429795, \"patch_digest\": \"4fe941f9761d7c805b686c0f14d68074129e92774dc46d8f1d318e3c3378b353\", \"last_execution_phase\": \"generation\", \"finished\": 1794433882.8292596, \"recovery_checked_at\": 1795421161.5814786}"
       },
@@ -45783,10 +45763,6 @@
         "value": "{\"recovery_checked_at\": 1795421162.731826}"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1795421167.747294"
-      },
-      {
         "key": "candidate_capacity:adk",
         "value": "{\"at\": 1795421168.2370536, \"allowed\": true, \"reason\": \"\"}"
       },
@@ -45801,14 +45777,6 @@
       {
         "key": "candidate_capacity:llama-index",
         "value": "{\"at\": 1795421169.5286374, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "discovery_triage_ready:openclaw",
-        "value": "{\"195534\": true, \"195535\": true, \"195536\": true, \"195538\": true, \"195539\": true, \"195540\": true, \"195543\": true, \"195544\": true, \"195545\": true, \"195549\": true, \"195550\": true, \"195554\": true, \"195556\": true, \"195558\": true, \"195559\": true, \"195560\": true, \"195562\": true, \"195563\": true, \"195564\": true, \"195567\": true, \"195568\": true, \"195569\": true, \"195576\": true, \"195585\": true, \"195587\": true, \"195592\": true, \"195618\": true, \"195620\": true, \"195628\": true, \"195629\": true, \"195630\": true, \"195632\": true, \"195634\": true, \"195635\": true, \"195636\": true, \"195637\": true, \"195649\": true, \"195814\": true, \"195818\": true, \"195819\": true, \"195833\": true, \"195849\": true, \"195871\": true, \"195887\": true, \"195898\": true, \"195973\": true, \"195982\": true, \"196017\": true, \"196027\": true, \"196048\": true, \"196066\": true, \"196075\": true, \"196085\": true, \"196122\": true, \"196132\": true, \"196142\": true, \"196224\": true, \"196230\": true, \"196245\": true, \"196253\": true, \"196312\": true, \"196321\": true, \"196350\": true, \"196444\": true, \"196463\": true, \"196475\": true, \"196508\": true, \"196530\": true, \"196536\": true, \"196616\": true, \"196617\": true, \"196689\": true, \"196694\": true, \"196744\": true, \"196801\": true, \"196802\": true, \"196809\": true, \"196817\": true, \"196824\": true, \"196844\": true, \"196885\": true, \"196905\": true, \"196938\": true, \"196966\": true, \"196968\": true, \"197005\": true, \"197015\": true, \"197021\": true, \"197024\": true, \"197060\": true, \"197065\": true, \"197066\": true, \"197073\": true, \"197087\": true, \"197090\": true, \"197129\": true, \"197186\": true, \"197216\": true, \"197228\": true, \"197231\": true, \"197304\": true, \"197305\": true, \"197331\": true, \"197352\": true, \"197403\": true, \"197406\": true, \"197473\": true, \"197532\": true, \"197571\": true, \"197591\": true, \"197763\": true, \"197779\": true, \"197806\": true, \"197829\": true, \"197843\": true, \"197857\": true, \"197907\": true, \"197915\": true, \"197932\": true, \"197939\": true, \"197940\": true, \"197944\": true, \"197952\": true, \"197994\": true, \"197995\": true, \"197996\": true, \"198026\": true, \"198051\": true, \"198142\": true, \"198160\": true, \"198287\": true, \"198289\": true, \"198360\": true, \"198388\": true, \"198401\": true, \"198402\": true, \"198407\": true, \"198422\": true, \"198423\": true, \"198461\": true, \"198462\": true, \"198475\": true, \"198483\": true, \"198488\": true, \"198506\": true, \"198536\": true, \"198541\": true, \"198548\": true, \"198551\": true, \"198554\": true, \"198556\": true, \"198558\": true, \"198559\": true, \"198573\": true, \"198584\": true, \"198606\": true, \"198612\": true, \"198642\": true, \"198667\": true, \"198678\": true, \"198743\": true, \"198747\": true, \"198748\": true, \"198750\": true, \"198753\": true, \"198755\": true, \"198761\": true, \"198764\": true, \"198767\": true, \"198770\": true, \"198802\": true, \"198847\": true, \"198848\": true, \"198850\": true, \"198892\": true, \"198901\": true, \"198958\": true, \"198970\": true, \"198985\": true, \"198995\": true, \"198997\": true, \"199010\": true, \"199070\": true, \"199114\": true, \"199115\": true, \"199151\": true, \"199155\": true, \"199251\": true, \"199327\": true, \"199340\": true, \"199364\": true, \"199373\": true, \"199437\": true, \"199440\": true, \"199463\": true, \"199478\": true, \"199566\": true, \"199612\": true, \"199620\": true, \"199633\": true, \"199655\": true, \"199762\": true, \"199765\": true, \"199854\": true, \"199883\": true, \"199885\": true, \"199895\": true, \"199947\": true, \"199994\": true, \"200021\": true, \"200026\": true, \"200034\": true, \"200045\": true, \"200072\": true, \"200075\": true, \"200083\": true, \"200084\": true, \"200119\": true, \"200170\": true, \"200175\": true, \"200186\": true, \"200243\": true, \"200244\": true, \"200263\": true, \"200267\": true, \"200270\": true, \"200271\": true, \"200276\": true, \"200356\": true, \"200357\": true, \"200365\": true, \"200408\": true, \"200443\": true, \"200447\": true, \"200508\": true, \"200558\": true, \"200583\": true, \"200590\": true, \"200594\": true, \"200612\": true, \"200614\": true, \"200618\": true, \"200627\": true, \"200646\": true, \"200661\": true, \"200673\": true, \"200695\": true, \"200710\": true, \"200739\": true, \"200744\": true, \"200749\": true, \"200757\": true, \"200761\": true, \"200773\": true, \"200804\": true, \"200825\": true, \"200826\": true, \"200830\": true, \"200861\": true, \"200862\": true, \"200886\": true, \"200892\": true, \"200907\": true, \"200972\": true, \"201035\": true, \"201036\": true, \"201104\": true, \"201107\": true, \"201183\": true, \"201195\": true, \"201249\": true, \"201250\": true, \"201251\": true, \"201335\": true, \"201339\": true, \"201369\": true, \"201385\": true, \"201388\": true, \"201390\": true, \"201394\": true, \"201401\": true, \"201437\": true, \"201443\": true, \"201466\": true, \"201468\": true, \"201479\": true, \"201511\": true, \"201513\": true, \"201530\": true, \"201558\": true, \"201571\": true, \"201572\": true, \"201573\": true, \"201575\": true, \"201585\": true, \"201588\": true, \"201589\": true, \"201607\": true, \"201645\": true, \"201768\": true, \"201793\": true, \"201797\": true, \"201798\": true, \"201809\": true, \"201874\": true, \"201903\": true, \"201909\": true, \"201933\": true, \"201969\": true, \"201988\": true, \"201989\": true, \"201990\": true, \"201991\": true, \"201992\": true, \"201999\": true, \"202002\": true, \"202003\": true, \"202005\": true, \"202007\": true, \"202008\": true, \"202021\": true, \"202023\": true, \"202025\": true, \"202026\": true, \"202032\": true, \"202034\": true, \"202037\": true, \"202038\": true, \"202039\": true, \"202040\": true, \"202041\": true, \"202059\": true, \"202123\": true, \"202134\": true, \"202159\": true, \"202167\": true, \"202172\": true, \"202219\": true, \"202248\": true, \"202267\": true, \"202366\": true, \"202372\": true, \"202384\": true, \"202394\": true, \"202405\": true, \"202406\": true, \"202415\": true, \"202433\": true, \"202460\": true, \"202479\": true, \"202554\": true, \"202653\": true, \"202657\": true, \"202707\": true, \"202721\": true, \"202794\": true, \"202802\": true, \"202891\": true, \"202916\": true, \"202917\": true, \"203006\": true, \"203065\": true, \"203131\": true, \"203140\": true, \"203143\": true, \"203148\": true, \"203150\": true, \"203175\": true, \"203208\": true, \"203210\": true, \"203211\": true, \"203215\": true, \"203350\": true, \"203395\": true, \"203403\": true, \"203439\": true, \"203459\": true, \"203489\": true, \"203496\": true, \"203505\": true, \"203506\": true, \"203512\": true, \"203518\": true, \"203535\": true, \"203537\": true, \"203557\": true, \"203562\": true, \"203575\": true, \"203589\": true, \"203596\": true, \"203657\": true, \"203743\": true, \"203829\": true, \"203842\": true, \"203893\": true, \"203912\": true, \"203931\": true, \"203937\": true, \"203956\": true, \"203989\": true}"
-      },
-      {
-        "key": "discovery_last_success",
-        "value": "1795421169.7740803"
       },
       {
         "key": "candidate_capacity:spec-kit",
@@ -45855,10 +45823,6 @@
         "value": "{\"recovery_checked_at\": 1795421172.2097628}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795421172.2807007, \"windows\": [{\"name\": \"primary\", \"used_percent\": 56, \"resets_at\": 1795763698}]}"
-      },
-      {
         "key": "followup:task:58",
         "value": "{\"status\": \"needs_human\", \"task\": 58, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
       },
@@ -45875,10 +45839,6 @@
         "value": "{\"recovery_checked_at\": 1795421172.8971646}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1795421173.2576604"
-      },
-      {
         "key": "recovery_audit:61",
         "value": "{\"at\": 1795421173.5915504, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
@@ -45887,16 +45847,64 @@
         "value": "1795421174.1174676"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795421174.405703"
-      },
-      {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:error",
         "value": "{\"at\": 1795421174.5122714, \"reason\": \"PR closed or not owned by our fork\"}"
       },
       {
         "key": "runner_resources",
         "value": "{\"at\": 1795421174.5139015, \"disk_free_bytes\": 77234409472, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15455150080, \"SwapTotal\": 3221221376, \"SwapFree\": 2757447680}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1795421178.6264627, \"state\": \"active\", \"pending_candidates\": 401, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 1, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 401}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 15, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1039.6948370933533, \"judge_tokens_spent_24h\": 50262, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 9}, \"no_work_replacements\": {\"openclaw\": {\"used\": 3, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795409767.2153049, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8305\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8305\", \"title\": \"A2aAgentExecutor has no native way to emit TaskState.rejected on the server side\", \"first_seen\": 1795385135.9091156, \"last_checked\": 1795411236.968553, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795421178.6278408, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 2, \"running\": 1, \"skipped\": 18, \"validation_wait\": 9}, \"respond\": {}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795421189.4074645"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795421193.0674784"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795421193.258056"
+      },
+      {
+        "key": "discovery_triage_ready:openclaw",
+        "value": "{\"195534\": true, \"195535\": true, \"195536\": true, \"195538\": true, \"195539\": true, \"195540\": true, \"195543\": true, \"195544\": true, \"195545\": true, \"195549\": true, \"195550\": true, \"195554\": true, \"195556\": true, \"195558\": true, \"195559\": true, \"195560\": true, \"195562\": true, \"195563\": true, \"195564\": true, \"195567\": true, \"195568\": true, \"195569\": true, \"195576\": true, \"195585\": true, \"195587\": true, \"195592\": true, \"195618\": true, \"195620\": true, \"195628\": true, \"195629\": true, \"195630\": true, \"195632\": true, \"195634\": true, \"195635\": true, \"195636\": true, \"195637\": true, \"195649\": true, \"195814\": true, \"195818\": true, \"195819\": true, \"195833\": true, \"195849\": true, \"195871\": true, \"195887\": true, \"195898\": true, \"195973\": true, \"195982\": true, \"196017\": true, \"196027\": true, \"196048\": true, \"196066\": true, \"196075\": true, \"196085\": true, \"196122\": true, \"196132\": true, \"196142\": true, \"196224\": true, \"196230\": true, \"196245\": true, \"196253\": true, \"196312\": true, \"196321\": true, \"196350\": true, \"196444\": true, \"196463\": true, \"196475\": true, \"196508\": true, \"196530\": true, \"196536\": true, \"196616\": true, \"196617\": true, \"196689\": true, \"196694\": true, \"196744\": true, \"196801\": true, \"196802\": true, \"196809\": true, \"196817\": true, \"196824\": true, \"196844\": true, \"196885\": true, \"196905\": true, \"196938\": true, \"196966\": true, \"196968\": true, \"197005\": true, \"197015\": true, \"197021\": true, \"197024\": true, \"197060\": true, \"197065\": true, \"197066\": true, \"197073\": true, \"197087\": true, \"197090\": true, \"197129\": true, \"197186\": true, \"197216\": true, \"197228\": true, \"197231\": true, \"197304\": true, \"197305\": true, \"197331\": true, \"197352\": true, \"197403\": true, \"197406\": true, \"197473\": true, \"197532\": true, \"197571\": true, \"197591\": true, \"197763\": true, \"197779\": true, \"197806\": true, \"197829\": true, \"197843\": true, \"197857\": true, \"197907\": true, \"197915\": true, \"197932\": true, \"197939\": true, \"197940\": true, \"197944\": true, \"197952\": true, \"197994\": true, \"197995\": true, \"197996\": true, \"198026\": true, \"198051\": true, \"198142\": true, \"198160\": true, \"198287\": true, \"198289\": true, \"198360\": true, \"198388\": true, \"198401\": true, \"198402\": true, \"198407\": true, \"198422\": true, \"198423\": true, \"198461\": true, \"198462\": true, \"198475\": true, \"198483\": true, \"198488\": true, \"198506\": true, \"198536\": true, \"198541\": true, \"198548\": true, \"198551\": true, \"198554\": true, \"198556\": true, \"198558\": true, \"198559\": true, \"198573\": true, \"198584\": true, \"198606\": true, \"198612\": true, \"198642\": true, \"198667\": true, \"198678\": true, \"198743\": true, \"198747\": true, \"198748\": true, \"198750\": true, \"198753\": true, \"198755\": true, \"198761\": true, \"198764\": true, \"198767\": true, \"198770\": true, \"198802\": true, \"198847\": true, \"198848\": true, \"198850\": true, \"198892\": true, \"198901\": true, \"198958\": true, \"198970\": true, \"198985\": true, \"198995\": true, \"198997\": true, \"199010\": true, \"199070\": true, \"199114\": true, \"199115\": true, \"199151\": true, \"199155\": true, \"199251\": true, \"199327\": true, \"199340\": true, \"199364\": true, \"199373\": true, \"199437\": true, \"199440\": true, \"199463\": true, \"199478\": true, \"199566\": true, \"199612\": true, \"199620\": true, \"199633\": true, \"199655\": true, \"199762\": true, \"199765\": true, \"199854\": true, \"199883\": true, \"199885\": true, \"199895\": true, \"199947\": true, \"199994\": true, \"200021\": true, \"200026\": true, \"200034\": true, \"200045\": true, \"200072\": true, \"200075\": true, \"200083\": true, \"200084\": true, \"200119\": true, \"200170\": true, \"200175\": true, \"200186\": true, \"200243\": true, \"200244\": true, \"200263\": true, \"200267\": true, \"200270\": true, \"200271\": true, \"200276\": true, \"200356\": true, \"200357\": true, \"200365\": true, \"200408\": true, \"200443\": true, \"200447\": true, \"200508\": true, \"200558\": true, \"200583\": true, \"200590\": true, \"200594\": true, \"200612\": true, \"200614\": true, \"200618\": true, \"200627\": true, \"200646\": true, \"200661\": true, \"200673\": true, \"200695\": true, \"200710\": true, \"200739\": true, \"200744\": true, \"200749\": true, \"200757\": true, \"200761\": true, \"200773\": true, \"200804\": true, \"200825\": true, \"200826\": true, \"200830\": true, \"200861\": true, \"200862\": true, \"200886\": true, \"200892\": true, \"200907\": true, \"200972\": true, \"201035\": true, \"201036\": true, \"201104\": true, \"201107\": true, \"201183\": true, \"201195\": true, \"201249\": true, \"201250\": true, \"201251\": true, \"201335\": true, \"201339\": true, \"201369\": true, \"201385\": true, \"201388\": true, \"201390\": true, \"201394\": true, \"201401\": true, \"201437\": true, \"201443\": true, \"201466\": true, \"201468\": true, \"201479\": true, \"201511\": true, \"201513\": true, \"201530\": true, \"201558\": true, \"201571\": true, \"201572\": true, \"201573\": true, \"201575\": true, \"201585\": true, \"201588\": true, \"201589\": true, \"201607\": true, \"201645\": true, \"201768\": true, \"201793\": true, \"201797\": true, \"201798\": true, \"201809\": true, \"201874\": true, \"201903\": true, \"201909\": true, \"201933\": true, \"201969\": true, \"201988\": true, \"201989\": true, \"201990\": true, \"201991\": true, \"201992\": true, \"201999\": true, \"202002\": true, \"202003\": true, \"202005\": true, \"202007\": true, \"202008\": true, \"202021\": true, \"202023\": true, \"202025\": true, \"202026\": true, \"202032\": true, \"202034\": true, \"202037\": true, \"202038\": true, \"202039\": true, \"202040\": true, \"202041\": true, \"202059\": true, \"202123\": true, \"202134\": true, \"202159\": true, \"202167\": true, \"202172\": true, \"202219\": true, \"202248\": true, \"202267\": true, \"202366\": true, \"202372\": true, \"202384\": true, \"202394\": true, \"202405\": true, \"202406\": true, \"202415\": true, \"202433\": true, \"202460\": true, \"202479\": true, \"202554\": true, \"202653\": true, \"202657\": true, \"202707\": true, \"202721\": true, \"202794\": true, \"202802\": true, \"202891\": true, \"202916\": true, \"202917\": true, \"203006\": true, \"203065\": true, \"203131\": true, \"203140\": true, \"203143\": true, \"203148\": true, \"203150\": true, \"203175\": true, \"203208\": true, \"203210\": true, \"203211\": true, \"203215\": true, \"203350\": true, \"203395\": true, \"203403\": true, \"203439\": true, \"203459\": true, \"203489\": true, \"203496\": true, \"203505\": true, \"203506\": true, \"203512\": true, \"203518\": true, \"203535\": true, \"203537\": true, \"203557\": true, \"203562\": true, \"203575\": true, \"203589\": true, \"203596\": true, \"203657\": true, \"203743\": true, \"203829\": true, \"203842\": true, \"203893\": true, \"203912\": true, \"203931\": true, \"203937\": true, \"203956\": true, \"203989\": true}"
+      },
+      {
+        "key": "discovery_last_success",
+        "value": "1795421194.4690595"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1795421194.78355, \"windows\": [{\"name\": \"primary\", \"used_percent\": 56, \"resets_at\": 1795763698}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795421194.8023093, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2041:1:generation",
+        "value": "{\"task\": 2041, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795421194.8711722, \"seconds\": 1055.952, \"tokens\": {\"totalTokens\": 17283764, \"inputTokens\": 17263446, \"cachedInputTokens\": 17122944, \"cacheWriteInputTokens\": 0, \"outputTokens\": 20318, \"reasoningOutputTokens\": 7912}, \"first_event_ms\": 1795420146776, \"last_event_ms\": 1795421194791, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:2041",
+        "value": "{\"status\": \"needs_human\", \"task\": 2041, \"repo\": \"openclaw\", \"number\": 203989, \"reason\": \"VALIDATION_ENVIRONMENT: The required focused Vitest command reached RUN but produced no test result in repeated bounded attempts. The checkout patch is preserved; it cannot be marked ready without that test result.\", \"base\": \"bcd6666917ed116688c901f45042baa0e4381452\", \"patch_digest\": \"fb7719293d261c7b2e17d6a79076d4f62c29fceaff55418638b20a54a8a64d1d\", \"evidence_bundle\": \"2041-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:2041",
+        "value": "{\"started\": 1795420074.0899465, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2041/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"bcd6666917ed116688c901f45042baa0e4381452\", \"replacement_candidate_verified\": 1795420078.7216012, \"dispatch_replacement\": true, \"generation_started\": 1795420138.921126, \"dispatch_paid_date\": \"2026-11-23\", \"phase_started\": 1795420142.5779173, \"patch_digest\": \"fb7719293d261c7b2e17d6a79076d4f62c29fceaff55418638b20a54a8a64d1d\", \"last_execution_phase\": \"generation\", \"finished\": 1795421195.0725877}"
       }
     ],
     "calls": [
