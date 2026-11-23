@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795396692.995845,
+  "saved_at": 1795396720.3387945,
   "tables": {
     "tasks": [
       {
@@ -26387,10 +26387,10 @@
         "repo": "openclaw",
         "number": 203842,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1795395634.3041568,
-        "updated": 1795395697.172569,
-        "result": "",
+        "updated": 1795396720.3163927,
+        "result": "VALIDATION_ENVIRONMENT: This Linux runner has neither WSL2 nor Windows Chrome. The patch is tested locally, but the reported download flow still needs live validation before submission.",
         "attempts": 1
       }
     ],
@@ -45264,10 +45264,6 @@
         "value": "{\"at\": 1795395624.9812627, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795395690.093588, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:2029:1:generation",
         "value": "{\"task\": 2029, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795395690.0971313, \"seconds\": 69.477, \"tokens\": {\"totalTokens\": 473008, \"inputTokens\": 470851, \"cachedInputTokens\": 410240, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2157, \"reasoningOutputTokens\": 578}, \"first_event_ms\": 1795395628771, \"last_event_ms\": 1795395690091, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -45292,16 +45288,8 @@
         "value": "{\"date\": \"2026-11-23\", \"used\": {\"openclaw\": 7}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"2030\": {\"remaining\": 1, \"until\": 1795402980.509918}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795379404.7299452, \"group\": \"new_fix\", \"task\": 2023, \"phase\": \"generation\"}, {\"at\": 1795392073.89276, \"group\": \"new_fix\", \"task\": 2024, \"phase\": \"generation\"}, {\"at\": 1795393106.6584702, \"group\": \"new_fix\", \"task\": 2025, \"phase\": \"generation\"}, {\"at\": 1795393400.2445972, \"group\": \"new_fix\", \"task\": 2026, \"phase\": \"generation\"}, {\"at\": 1795393549.6982105, \"group\": \"new_fix\", \"task\": 2027, \"phase\": \"generation\"}, {\"at\": 1795395483.9253142, \"group\": \"new_fix\", \"task\": 2028, \"phase\": \"generation\"}, {\"at\": 1795395620.621476, \"group\": \"new_fix\", \"task\": 2029, \"phase\": \"generation\"}, {\"at\": 1795395780.509918, \"group\": \"new_fix\", \"task\": 2030, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "task:2030",
-        "value": "{\"started\": 1795395697.172594, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2030/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"5908eee98fd4a8f930708ee5e0a0045730c2bc3f\", \"generation_started\": 1795395780.5096302, \"dispatch_paid_date\": \"2026-11-23\", \"phase_started\": 1795395783.7356339}"
       },
       {
         "key": "task:1772",
@@ -45504,56 +45492,68 @@
         "value": "1795396510.4433496"
       },
       {
+        "key": "runner_resources",
+        "value": "{\"at\": 1795396692.9835427, \"disk_free_bytes\": 78096748544, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 12953329664, \"SwapTotal\": 3221221376, \"SwapFree\": 2796310528}, \"memory_events\": null}"
+      },
+      {
         "key": "admission_health",
-        "value": "{\"at\": 1795396632.3455055, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 8, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 851.8279976844788, \"judge_tokens_spent_24h\": 69075, \"screening_calls_5h\": 0, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 10}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 3, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8295\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8295\", \"title\": \"adk deploy ignores .gitignore patterns that start with **/\", \"first_seen\": 1795321139.259463, \"last_checked\": 1795321139.2594638, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8305\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8305\", \"title\": \"A2aAgentExecutor has no native way to emit TaskState.rejected on the server side\", \"first_seen\": 1795385135.9091156, \"last_checked\": 1795396284.9790173, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8288\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8288\", \"title\": \"Environment simulation: a seeded fault injection is not reproducible per eval case; adding an unrelated case or changing parallelism changes which runs fail\", \"first_seen\": 1795285332.4521303, \"last_checked\": 1795396288.1244726, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795396290.2648058, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+        "value": "{\"at\": 1795396696.5343623, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 8, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 916.0174989700317, \"judge_tokens_spent_24h\": 69075, \"screening_calls_5h\": 0, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 10}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 3, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8295\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8295\", \"title\": \"adk deploy ignores .gitignore patterns that start with **/\", \"first_seen\": 1795321139.259463, \"last_checked\": 1795321139.2594638, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8305\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8305\", \"title\": \"A2aAgentExecutor has no native way to emit TaskState.rejected on the server side\", \"first_seen\": 1795385135.9091156, \"last_checked\": 1795396284.9790173, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8288\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8288\", \"title\": \"Environment simulation: a seeded fault injection is not reproducible per eval case; adding an unrelated case or changing parallelism changes which runs fail\", \"first_seen\": 1795285332.4521303, \"last_checked\": 1795396288.1244726, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795396290.2648058, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1795396632.3468592, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 2, \"running\": 1, \"skipped\": 18, \"validation_wait\": 10}, \"respond\": {\"skipped\": 1}}}"
+        "value": "{\"at\": 1795396696.535598, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 2, \"running\": 1, \"skipped\": 18, \"validation_wait\": 10}, \"respond\": {\"skipped\": 1}}}"
       },
       {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795396636.3136644, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795396636.7713647, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795396637.1631858, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795396637.6027834, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795396638.1141999, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795396638.620235, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795396639.7102594, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795396640.3256407, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795396640.7387815, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795396641.147703, \"allowed\": true, \"reason\": \"\"}"
+        "key": "worker_heartbeat",
+        "value": "1795396705.6371605"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1795396686.2861185"
+        "value": "1795396712.0964086"
+      },
+      {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1795396712.4736693, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1795396712.9406362, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1795396713.3618839, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1795396713.815101, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1795396714.2210772, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1795396714.6641958, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1795396715.5965407, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1795396716.0105429, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795396716.189528"
+      },
+      {
+        "key": "candidate_capacity:autogpt",
+        "value": "{\"at\": 1795396716.4267547, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:comfyui",
+        "value": "{\"at\": 1795396716.8881392, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -45561,23 +45561,31 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795396688.1454306"
+        "value": "1795396717.7389684"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795396688.4724212, \"windows\": [{\"name\": \"primary\", \"used_percent\": 50, \"resets_at\": 1795763698}]}"
+        "value": "{\"at\": 1795396719.9876153, \"windows\": [{\"name\": \"primary\", \"used_percent\": 50, \"resets_at\": 1795763698}]}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795396690.6354394"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795396719.9930186, \"source\": \"completed task phase\"}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1795396691.1889784"
+        "key": "usage:2030:1:generation",
+        "value": "{\"task\": 2030, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795396720.0130713, \"seconds\": 939.504, \"tokens\": {\"totalTokens\": 9066950, \"inputTokens\": 9051642, \"cachedInputTokens\": 8848512, \"cacheWriteInputTokens\": 0, \"outputTokens\": 15308, \"reasoningOutputTokens\": 6660}, \"first_event_ms\": 1795395788121, \"last_event_ms\": 1795396719988, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795396692.9835427, \"disk_free_bytes\": 78096748544, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 12953329664, \"SwapTotal\": 3221221376, \"SwapFree\": 2796310528}, \"memory_events\": null}"
+        "key": "followup:task:2030",
+        "value": "{\"status\": \"needs_human\", \"task\": 2030, \"repo\": \"openclaw\", \"number\": 203842, \"reason\": \"VALIDATION_ENVIRONMENT: This Linux runner has neither WSL2 nor Windows Chrome. The patch is tested locally, but the reported download flow still needs live validation before submission.\", \"base\": \"5908eee98fd4a8f930708ee5e0a0045730c2bc3f\", \"patch_digest\": \"7f37efc9bf55f0a9890d9056b26b0e94dc6407c15f5887c4b4bf5ffd22c77782\", \"evidence_bundle\": \"2030-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:2030",
+        "value": "{\"started\": 1795395697.172594, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2030/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"5908eee98fd4a8f930708ee5e0a0045730c2bc3f\", \"generation_started\": 1795395780.5096302, \"dispatch_paid_date\": \"2026-11-23\", \"phase_started\": 1795395783.7356339, \"patch_digest\": \"7f37efc9bf55f0a9890d9056b26b0e94dc6407c15f5887c4b4bf5ffd22c77782\", \"last_execution_phase\": \"generation\", \"finished\": 1795396720.1564174}"
       }
     ],
     "calls": [
