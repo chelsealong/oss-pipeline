@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795429854.7739382,
+  "saved_at": 1795429878.8375385,
   "tables": {
     "tasks": [
       {
@@ -26569,10 +26569,10 @@
         "repo": "langfuse/langfuse",
         "number": 20706,
         "note": "{\"authors\": \"greptile-apps\", \"events\": [\"PRRC_kwDOJku7Qs8AAAABFgGKlA@2026-11-23T09:56:02Z\", \"PRRC_kwDOJku7Qs8AAAABFgGKng@2026-11-23T09:56:02Z\", \"PRRC_kwDOJku7Qs8AAAABFgGKpg@2026-11-23T09:56:02Z\"], \"screening_events\": [], \"is_issue\": false, \"head\": \"6edc1741e45b686f815719ebda2d801aa177d69f\"}",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1795428155.9488754,
-        "updated": 1795428161.095665,
-        "result": "",
+        "updated": 1795429878.8193526,
+        "result": "review: VALIDATION_ENVIRONMENT: Required verification is incomplete. The focused client suite passed (`Tests 41 passed (41)`), forced lint passed (`Tasks: 10 successful, 10 total; Cached: 0`), forced web typecheck passed, and Knip passed. A shared test failed before running any tests because ClickHouse and S3 environment variables are missing, so the full test gate required by the current [contributor guide](https://github.com/langfuse/langfuse/blob/main/CONTRIBUTING.md) remains unverified. Both PNGs show the reported before/after rendering, but they predate this remediation; no browser check of the exact patch was available. The prior large-ID objection is covered by a passing focused test. No current rule found requires named human attestation.",
         "attempts": 1
       }
     ],
@@ -45750,24 +45750,12 @@
         "value": "{\"status\": \"not_needed\", \"reason\": \"Existing linked PR; no coordination message should be sent.\", \"prs\": [\"closing-ref PR#8311(OPEN)\", \"xref PR#8311(OPEN)\"]}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795429539.1316776, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:2044:1:remediation",
         "value": "{\"task\": 2044, \"repo\": \"langfuse/langfuse\", \"attempt\": 1, \"phase\": \"remediation\", \"at\": 1795429539.1450698, \"seconds\": 608.267, \"tokens\": {\"totalTokens\": 1719031, \"inputTokens\": 1710531, \"cachedInputTokens\": 1642496, \"cacheWriteInputTokens\": 0, \"outputTokens\": 8500, \"reasoningOutputTokens\": 3987}, \"first_event_ms\": 1795428939691, \"last_event_ms\": 1795429539129, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"2044\": {\"remaining\": 0, \"until\": 1795436739.2736776}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795414358.951399, \"group\": \"new_fix\", \"task\": 2038, \"phase\": \"generation\"}, {\"at\": 1795414941.4660792, \"group\": \"new_fix\", \"task\": 2038, \"phase\": \"review\"}, {\"at\": 1795415309.254178, \"group\": \"new_fix\", \"task\": 2039, \"phase\": \"generation\"}, {\"at\": 1795416346.41391, \"group\": \"new_fix\", \"task\": 2040, \"phase\": \"generation\"}, {\"at\": 1795418558.2482245, \"group\": \"new_fix\", \"task\": 1928, \"phase\": \"generation\"}, {\"at\": 1795419371.021598, \"group\": \"new_fix\", \"task\": 1935, \"phase\": \"generation\"}, {\"at\": 1795419442.390383, \"group\": \"new_fix\", \"task\": 1937, \"phase\": \"generation\"}, {\"at\": 1795420138.9213705, \"group\": \"new_fix\", \"task\": 2041, \"phase\": \"generation\"}, {\"at\": 1795422880.3815591, \"group\": \"new_fix\", \"task\": 2042, \"phase\": \"generation\"}, {\"at\": 1795423777.9553444, \"group\": \"new_fix\", \"task\": 2042, \"phase\": \"validation\"}, {\"at\": 1795424291.4370646, \"group\": \"new_fix\", \"task\": 2042, \"phase\": \"review\"}, {\"at\": 1795424541.5471864, \"group\": \"repair\", \"task\": 2042, \"phase\": \"remediation\"}, {\"at\": 1795425813.7536218, \"group\": \"new_fix\", \"task\": 2043, \"phase\": \"generation\"}, {\"at\": 1795426165.0419242, \"group\": \"new_fix\", \"task\": 2042, \"phase\": \"generation\"}, {\"at\": 1795426795.6683738, \"group\": \"new_fix\", \"task\": 2042, \"phase\": \"validation\"}, {\"at\": 1795427358.140909, \"group\": \"new_fix\", \"task\": 2042, \"phase\": \"review\"}, {\"at\": 1795428173.9209015, \"group\": \"maintenance\", \"task\": 2044, \"phase\": \"generation\"}, {\"at\": 1795428704.2578633, \"group\": \"maintenance\", \"task\": 2044, \"phase\": \"review\"}, {\"at\": 1795428930.8803494, \"group\": \"repair\", \"task\": 2044, \"phase\": \"remediation\"}, {\"at\": 1795429539.2736776, \"group\": \"repair\", \"task\": 2044, \"phase\": \"rereview\"}]"
-      },
-      {
-        "key": "task:2044",
-        "value": "{\"started\": 1795428161.0957093, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2044/attempt-1\", \"attempt\": 1, \"phase\": \"rereview\", \"base\": \"6edc1741e45b686f815719ebda2d801aa177d69f\", \"remote_base\": \"6edc1741e45b686f815719ebda2d801aa177d69f\", \"base_update\": {\"original_head\": \"6edc1741e45b686f815719ebda2d801aa177d69f\", \"base\": \"6edc1741e45b686f815719ebda2d801aa177d69f\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1795429544.0301516}"
       },
       {
         "key": "prwatch_heartbeat",
@@ -45970,28 +45958,28 @@
         "value": "{\"at\": 1795429788.6020637, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795429793.6589978, \"state\": \"active\", \"pending_candidates\": 411, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 11, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 411}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 20, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 254.37257623672485, \"judge_tokens_spent_24h\": 50914, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 10}, \"no_work_replacements\": {\"openclaw\": {\"used\": 3, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795409767.2153049, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8305\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8305\", \"title\": \"A2aAgentExecutor has no native way to emit TaskState.rejected on the server side\", \"first_seen\": 1795385135.9091156, \"last_checked\": 1795411236.968553, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795429793.660412, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"skipped\": 18, \"validation_wait\": 10}, \"respond\": {\"running\": 1}}}"
-      },
-      {
         "key": "watch_heartbeat",
         "value": "1795429798.7802198"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795429844.206069"
+        "key": "runner_resources",
+        "value": "{\"at\": 1795429854.671398, \"disk_free_bytes\": 77731606528, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15452532736, \"SwapTotal\": 3221221376, \"SwapFree\": 2927726592}, \"memory_events\": null}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795429849.680647, \"windows\": [{\"name\": \"primary\", \"used_percent\": 58, \"resets_at\": 1795763698}]}"
+        "key": "admission_health",
+        "value": "{\"at\": 1795429859.5784721, \"state\": \"active\", \"pending_candidates\": 412, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 12, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 412}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 20, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 320.2918019294739, \"judge_tokens_spent_24h\": 50914, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 10}, \"no_work_replacements\": {\"openclaw\": {\"used\": 3, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795409767.2153049, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8305\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8305\", \"title\": \"A2aAgentExecutor has no native way to emit TaskState.rejected on the server side\", \"first_seen\": 1795385135.9091156, \"last_checked\": 1795411236.968553, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795429859.579854, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"skipped\": 18, \"validation_wait\": 10}, \"respond\": {\"running\": 1}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795429874.2090347"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795429849.8355272"
+        "value": "1795429874.8362002"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -45999,11 +45987,31 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795429851.3990164"
+        "value": "1795429876.4982786"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795429854.671398, \"disk_free_bytes\": 77731606528, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15452532736, \"SwapTotal\": 3221221376, \"SwapFree\": 2927726592}, \"memory_events\": null}"
+        "key": "codex_quota",
+        "value": "{\"at\": 1795429878.5290425, \"windows\": [{\"name\": \"primary\", \"used_percent\": 58, \"resets_at\": 1795763698}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795429878.532569, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2044:1:rereview",
+        "value": "{\"task\": 2044, \"repo\": \"langfuse/langfuse\", \"attempt\": 1, \"phase\": \"rereview\", \"at\": 1795429878.5414124, \"seconds\": 339.27, \"tokens\": {\"totalTokens\": 1423690, \"inputTokens\": 1417178, \"cachedInputTokens\": 1364224, \"cacheWriteInputTokens\": 0, \"outputTokens\": 6512, \"reasoningOutputTokens\": 2562}, \"first_event_ms\": 1795429548634, \"last_event_ms\": 1795429878530, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:2044",
+        "value": "{\"status\": \"needs_human\", \"task\": 2044, \"repo\": \"langfuse/langfuse\", \"number\": 20706, \"reason\": \"review: VALIDATION_ENVIRONMENT: Required verification is incomplete. The focused client suite passed (`Tests 41 passed (41)`), forced lint passed (`Tasks: 10 successful, 10 total; Cached: 0`), forced web typecheck passed, and Knip passed. A shared test failed before running any tests because ClickHouse and S3 environment variables are missing, so the full test gate required by the current [contributor guide](https://github.com/langfuse/langfuse/blob/main/CONTRIBUTING.md) remains unverified. Both PNGs show the reported before/after rendering, but they predate this remediation; no browser check of the exact patch was available. The prior large-ID objection is covered by a passing focused test. No current rule found requires named human attestation.\", \"base\": \"6edc1741e45b686f815719ebda2d801aa177d69f\", \"patch_digest\": \"4250ee900f9f57b5f0babac6f03794c65d2fbce00468c8b363240fcfd6e01614\", \"evidence_bundle\": \"2044-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:2044",
+        "value": "{\"started\": 1795428161.0957093, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2044/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"6edc1741e45b686f815719ebda2d801aa177d69f\", \"remote_base\": \"6edc1741e45b686f815719ebda2d801aa177d69f\", \"base_update\": {\"original_head\": \"6edc1741e45b686f815719ebda2d801aa177d69f\", \"base\": \"6edc1741e45b686f815719ebda2d801aa177d69f\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1795429544.0301516, \"patch_digest\": \"4250ee900f9f57b5f0babac6f03794c65d2fbce00468c8b363240fcfd6e01614\", \"last_execution_phase\": \"rereview\", \"finished\": 1795429878.6577473}"
       }
     ],
     "calls": [
