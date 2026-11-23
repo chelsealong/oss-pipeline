@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795403623.3938835,
+  "saved_at": 1795403641.314736,
   "tables": {
     "tasks": [
       {
@@ -26400,10 +26400,10 @@
         "repo": "langfuse",
         "number": 20669,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1795396924.207035,
-        "updated": 1795401386.6954606,
-        "result": "Command 'Codex remediation' timed out after 1200 seconds",
+        "updated": 1795403641.2261007,
+        "result": "review: The upstream `pnpm run test` gate failed outside the scoped patch. Worker reported `79 failed | 3081 passed | 19 skipped`; failures included missing LLM provider API keys, database constraint errors, and timeouts. Web also reported unrelated failures. Resolving those suites requires work outside the permitted scope, so the full gate cannot be marked verified.",
         "attempts": 3
       },
       {
@@ -45474,24 +45474,12 @@
         "value": "{\"at\": 1795402837.6866658, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795402911.8005474, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:2031:3:review",
         "value": "{\"task\": 2031, \"repo\": \"langfuse\", \"attempt\": 3, \"phase\": \"review\", \"at\": 1795402911.823598, \"seconds\": 879.685, \"tokens\": {\"totalTokens\": 2146151, \"inputTokens\": 2140296, \"cachedInputTokens\": 2080000, \"cacheWriteInputTokens\": 0, \"outputTokens\": 5855, \"reasoningOutputTokens\": 2005}, \"first_event_ms\": 1795402042091, \"last_event_ms\": 1795402911795, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"2031\": {\"remaining\": 1, \"until\": 1795410115.4039812}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795392073.89276, \"group\": \"new_fix\", \"task\": 2024, \"phase\": \"generation\"}, {\"at\": 1795393106.6584702, \"group\": \"new_fix\", \"task\": 2025, \"phase\": \"generation\"}, {\"at\": 1795393400.2445972, \"group\": \"new_fix\", \"task\": 2026, \"phase\": \"generation\"}, {\"at\": 1795393549.6982105, \"group\": \"new_fix\", \"task\": 2027, \"phase\": \"generation\"}, {\"at\": 1795395483.9253142, \"group\": \"new_fix\", \"task\": 2028, \"phase\": \"generation\"}, {\"at\": 1795395620.621476, \"group\": \"new_fix\", \"task\": 2029, \"phase\": \"generation\"}, {\"at\": 1795395780.509918, \"group\": \"new_fix\", \"task\": 2030, \"phase\": \"generation\"}, {\"at\": 1795396936.4788768, \"group\": \"new_fix\", \"task\": 2031, \"phase\": \"generation\"}, {\"at\": 1795397384.385792, \"group\": \"new_fix\", \"task\": 2031, \"phase\": \"review\"}, {\"at\": 1795397665.341897, \"group\": \"new_fix\", \"task\": 2032, \"phase\": \"generation\"}, {\"at\": 1795397827.5009851, \"group\": \"new_fix\", \"task\": 2032, \"phase\": \"review\"}, {\"at\": 1795397986.3138378, \"group\": \"new_fix\", \"task\": 2031, \"phase\": \"generation\"}, {\"at\": 1795398820.6310513, \"group\": \"new_fix\", \"task\": 2031, \"phase\": \"review\"}, {\"at\": 1795399809.6870003, \"group\": \"repair\", \"task\": 2031, \"phase\": \"remediation\"}, {\"at\": 1795401398.073072, \"group\": \"new_fix\", \"task\": 2031, \"phase\": \"generation\"}, {\"at\": 1795402032.139866, \"group\": \"new_fix\", \"task\": 2031, \"phase\": \"review\"}, {\"at\": 1795402915.4039812, \"group\": \"repair\", \"task\": 2031, \"phase\": \"remediation\"}]"
-      },
-      {
-        "key": "task:2031",
-        "value": "{\"started\": 1795401386.6970055, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2031/attempt-3\", \"attempt\": 3, \"phase\": \"remediation\", \"base\": \"a39972648160c6bb86f8e123d8e9981b023b06fc\", \"generation_started\": 1795396936.4787378, \"dispatch_paid_date\": \"2026-11-23\", \"phase_started\": 1795402918.5793612, \"patch_digest\": \"30e7524f8c02cc456e1cc3dca3b72721edd51b8c725c4675da7542e7c83dcaa5\", \"last_execution_phase\": \"remediation\", \"finished\": 1795401016.7759523, \"recovery_checked_at\": 1795397680.253174, \"resume_progress\": {\"bundle\": \"2031-2.json\", \"sha256\": \"d71eb1097d0d3fba20e1c969213a855c616e7a3c1ab328f0374e169d4c4e1a2b\", \"base\": \"a39972648160c6bb86f8e123d8e9981b023b06fc\", \"phase\": \"remediation\"}, \"progress_rebase_needed\": null, \"progress_restored\": true, \"restored_from\": \"2031-2.json\", \"timeout_continuations\": 1}"
       },
       {
         "key": "task:166",
@@ -45586,14 +45574,6 @@
         "value": "{\"at\": 1795403055.324298, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795403562.6709068, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 17, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 647.2600309848785, \"judge_tokens_spent_24h\": 58339, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 9}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 3, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8295\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8295\", \"title\": \"adk deploy ignores .gitignore patterns that start with **/\", \"first_seen\": 1795321139.259463, \"last_checked\": 1795321139.2594638, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8305\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8305\", \"title\": \"A2aAgentExecutor has no native way to emit TaskState.rejected on the server side\", \"first_seen\": 1795385135.9091156, \"last_checked\": 1795402215.018567, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795402218.7976608, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795403562.6719518, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 3, \"running\": 1, \"skipped\": 16, \"validation_wait\": 9}, \"respond\": {\"skipped\": 1}}}"
-      },
-      {
         "key": "candidate_capacity:adk",
         "value": "{\"at\": 1795403584.7279162, \"allowed\": true, \"reason\": \"\"}"
       },
@@ -45638,16 +45618,20 @@
         "value": "1795403600.2147005"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795403610.2265205"
+        "key": "runner_resources",
+        "value": "{\"at\": 1795403623.3788598, \"disk_free_bytes\": 65842900992, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 13429694464, \"SwapTotal\": 3221221376, \"SwapFree\": 885510144}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1795403629.8022275, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 17, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 714.3910145759583, \"judge_tokens_spent_24h\": 58339, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 9}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 3, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8295\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8295\", \"title\": \"adk deploy ignores .gitignore patterns that start with **/\", \"first_seen\": 1795321139.259463, \"last_checked\": 1795321139.2594638, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8305\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8305\", \"title\": \"A2aAgentExecutor has no native way to emit TaskState.rejected on the server side\", \"first_seen\": 1795385135.9091156, \"last_checked\": 1795402215.018567, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795402218.7976608, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795403629.8032846, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 3, \"running\": 1, \"skipped\": 16, \"validation_wait\": 9}, \"respond\": {\"skipped\": 1}}}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795403618.4536934"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1795403620.0606503"
+        "value": "1795403638.4539802"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -45655,15 +45639,35 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795403621.3302736"
+        "value": "1795403640.121929"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795403640.2102501"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795403640.243125"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795403623.1983073, \"windows\": [{\"name\": \"primary\", \"used_percent\": 51, \"resets_at\": 1795763698}]}"
+        "value": "{\"at\": 1795403640.8562489, \"windows\": [{\"name\": \"primary\", \"used_percent\": 51, \"resets_at\": 1795763698}]}"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795403623.3788598, \"disk_free_bytes\": 65842900992, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 13429694464, \"SwapTotal\": 3221221376, \"SwapFree\": 885510144}, \"memory_events\": null}"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795403640.8790462, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2031:3:remediation",
+        "value": "{\"task\": 2031, \"repo\": \"langfuse\", \"attempt\": 3, \"phase\": \"remediation\", \"at\": 1795403640.9291694, \"seconds\": 725.527, \"tokens\": {\"totalTokens\": 2653618, \"inputTokens\": 2646165, \"cachedInputTokens\": 2575104, \"cacheWriteInputTokens\": 0, \"outputTokens\": 7453, \"reasoningOutputTokens\": 2228}, \"first_event_ms\": 1795402922014, \"last_event_ms\": 1795403640868, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:2031",
+        "value": "{\"started\": 1795401386.6970055, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2031/attempt-3\", \"attempt\": 3, \"phase\": \"blocked\", \"base\": \"a39972648160c6bb86f8e123d8e9981b023b06fc\", \"generation_started\": 1795396936.4787378, \"dispatch_paid_date\": \"2026-11-23\", \"phase_started\": 1795402918.5793612, \"patch_digest\": \"30e7524f8c02cc456e1cc3dca3b72721edd51b8c725c4675da7542e7c83dcaa5\", \"last_execution_phase\": \"remediation\", \"finished\": 1795403641.0137403, \"recovery_checked_at\": 1795397680.253174, \"resume_progress\": {\"bundle\": \"2031-2.json\", \"sha256\": \"d71eb1097d0d3fba20e1c969213a855c616e7a3c1ab328f0374e169d4c4e1a2b\", \"base\": \"a39972648160c6bb86f8e123d8e9981b023b06fc\", \"phase\": \"remediation\"}, \"progress_rebase_needed\": null, \"progress_restored\": true, \"restored_from\": \"2031-2.json\", \"timeout_continuations\": 1}"
       }
     ],
     "calls": [
