@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795397656.4860058,
+  "saved_at": 1795397665.3662512,
   "tables": {
     "tasks": [
       {
@@ -45342,14 +45342,6 @@
         "value": "1795396760.7200797"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"comfyui\", \"task\": 2023, \"at\": 1795379404.7298295}, {\"repo\": \"openclaw\", \"task\": 2024, \"at\": 1795392073.8926063}, {\"repo\": \"openclaw\", \"task\": 2025, \"at\": 1795393106.6583335}, {\"repo\": \"openclaw\", \"task\": 2026, \"at\": 1795393400.2444556}, {\"repo\": \"openclaw\", \"task\": 2027, \"at\": 1795393549.6980448}, {\"repo\": \"openclaw\", \"task\": 2028, \"at\": 1795395483.9249828}, {\"repo\": \"openclaw\", \"task\": 2029, \"at\": 1795395620.6211736}, {\"repo\": \"openclaw\", \"task\": 2030, \"at\": 1795395780.5096297}, {\"repo\": \"langfuse\", \"task\": 2031, \"at\": 1795396936.4787374}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-11-23\", \"used\": {\"openclaw\": 7, \"langfuse\": 1}}"
-      },
-      {
         "key": "publication_check:hermes",
         "value": "{\"at\": 1795397099.5545313, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
@@ -45522,10 +45514,6 @@
         "value": "{\"task\": 2031, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795397382.8313413, \"seconds\": 446.354, \"tokens\": {\"totalTokens\": 5692723, \"inputTokens\": 5681340, \"cachedInputTokens\": 5596160, \"cacheWriteInputTokens\": 0, \"outputTokens\": 11383, \"reasoningOutputTokens\": 4056}, \"first_event_ms\": 1795396943034, \"last_event_ms\": 1795397382786, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1795379404.7299452, \"group\": \"new_fix\", \"task\": 2023, \"phase\": \"generation\"}, {\"at\": 1795392073.89276, \"group\": \"new_fix\", \"task\": 2024, \"phase\": \"generation\"}, {\"at\": 1795393106.6584702, \"group\": \"new_fix\", \"task\": 2025, \"phase\": \"generation\"}, {\"at\": 1795393400.2445972, \"group\": \"new_fix\", \"task\": 2026, \"phase\": \"generation\"}, {\"at\": 1795393549.6982105, \"group\": \"new_fix\", \"task\": 2027, \"phase\": \"generation\"}, {\"at\": 1795395483.9253142, \"group\": \"new_fix\", \"task\": 2028, \"phase\": \"generation\"}, {\"at\": 1795395620.621476, \"group\": \"new_fix\", \"task\": 2029, \"phase\": \"generation\"}, {\"at\": 1795395780.509918, \"group\": \"new_fix\", \"task\": 2030, \"phase\": \"generation\"}, {\"at\": 1795396936.4788768, \"group\": \"new_fix\", \"task\": 2031, \"phase\": \"generation\"}, {\"at\": 1795397384.385792, \"group\": \"new_fix\", \"task\": 2031, \"phase\": \"review\"}]"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1795397615.208012"
       },
@@ -45606,12 +45594,16 @@
         "value": "{\"status\": \"needs_human\", \"task\": 2031, \"repo\": \"langfuse\", \"number\": 20669, \"reason\": \"review: VALIDATION_ENVIRONMENT: The required database-backed web test could not run. It stopped before collecting tests because this checkout lacks ClickHouse and storage configuration; no service containers are running. The focused mock regression passed (1 test), forced lint passed (10/10, 0 cached), typecheck passed (12/12, 3 cached), and knip and formatting passed. Those checks do not verify the Prisma update against a real database. The PR body should not imply broader validation is complete. Current contributor guidance requires tests to pass before submission; its self-review checklist does not require a named human attestation.\", \"base\": \"a39972648160c6bb86f8e123d8e9981b023b06fc\", \"patch_digest\": \"30e7524f8c02cc456e1cc3dca3b72721edd51b8c725c4675da7542e7c83dcaa5\", \"evidence_bundle\": \"2031-1.json.enc\"}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{}"
-      },
-      {
         "key": "task:2031",
         "value": "{\"started\": 1795396925.7606783, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2031/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"a39972648160c6bb86f8e123d8e9981b023b06fc\", \"generation_started\": 1795396936.4787378, \"dispatch_paid_date\": \"2026-11-23\", \"phase_started\": 1795397387.9469175, \"patch_digest\": \"30e7524f8c02cc456e1cc3dca3b72721edd51b8c725c4675da7542e7c83dcaa5\", \"last_execution_phase\": \"review\", \"finished\": 1795397652.2221987}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795395697.172416, \"comfyui\": 1795379397.5314977, \"hermes\": 1795158844.7137928, \"langfuse\": 1795396925.760537, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795265927.8130727, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795397656.3455749, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1795331330.0812907}}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795397661.2310622"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -45619,19 +45611,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795397652.9376426"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1795397656.2309427"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795395697.172416, \"comfyui\": 1795379397.5314977, \"hermes\": 1795158844.7137928, \"langfuse\": 1795396925.760537, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795265927.8130727, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795397656.3455749, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1795331330.0812907}}"
+        "value": "1795397662.6484523"
       },
       {
         "key": "task:2032",
-        "value": "{\"started\": 1795397656.3476672, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "value": "{\"started\": 1795397656.3476672, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2032/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"a4d571229e164e440f8950cac034607bae7b7518\", \"generation_started\": 1795397665.3415542, \"dispatch_paid_date\": \"2026-11-23\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"openclaw\", \"task\": 2024, \"at\": 1795392073.8926063}, {\"repo\": \"openclaw\", \"task\": 2025, \"at\": 1795393106.6583335}, {\"repo\": \"openclaw\", \"task\": 2026, \"at\": 1795393400.2444556}, {\"repo\": \"openclaw\", \"task\": 2027, \"at\": 1795393549.6980448}, {\"repo\": \"openclaw\", \"task\": 2028, \"at\": 1795395483.9249828}, {\"repo\": \"openclaw\", \"task\": 2029, \"at\": 1795395620.6211736}, {\"repo\": \"openclaw\", \"task\": 2030, \"at\": 1795395780.5096297}, {\"repo\": \"langfuse\", \"task\": 2031, \"at\": 1795396936.4787374}, {\"repo\": \"spec-kit\", \"task\": 2032, \"at\": 1795397665.3415537}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-11-23\", \"used\": {\"openclaw\": 7, \"langfuse\": 1, \"spec-kit\": 1}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"2032\": {\"remaining\": 1, \"until\": 1795404865.341897}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1795392073.89276, \"group\": \"new_fix\", \"task\": 2024, \"phase\": \"generation\"}, {\"at\": 1795393106.6584702, \"group\": \"new_fix\", \"task\": 2025, \"phase\": \"generation\"}, {\"at\": 1795393400.2445972, \"group\": \"new_fix\", \"task\": 2026, \"phase\": \"generation\"}, {\"at\": 1795393549.6982105, \"group\": \"new_fix\", \"task\": 2027, \"phase\": \"generation\"}, {\"at\": 1795395483.9253142, \"group\": \"new_fix\", \"task\": 2028, \"phase\": \"generation\"}, {\"at\": 1795395620.621476, \"group\": \"new_fix\", \"task\": 2029, \"phase\": \"generation\"}, {\"at\": 1795395780.509918, \"group\": \"new_fix\", \"task\": 2030, \"phase\": \"generation\"}, {\"at\": 1795396936.4788768, \"group\": \"new_fix\", \"task\": 2031, \"phase\": \"generation\"}, {\"at\": 1795397384.385792, \"group\": \"new_fix\", \"task\": 2031, \"phase\": \"review\"}, {\"at\": 1795397665.341897, \"group\": \"new_fix\", \"task\": 2032, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
@@ -48245,6 +48245,10 @@
       },
       {
         "at": 1795397384.391076,
+        "kind": "codex"
+      },
+      {
+        "at": 1795397665.3426623,
         "kind": "codex"
       }
     ]
