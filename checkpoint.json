@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795443316.7861784,
+  "saved_at": 1795443328.5680583,
   "tables": {
     "tasks": [
       {
@@ -45756,28 +45756,12 @@
         "value": "[]"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"langfuse\", \"task\": 2042, \"at\": 1795422880.3813553}, {\"repo\": \"langfuse\", \"task\": 2043, \"at\": 1795425813.7532454}, {\"repo\": \"comfyui\", \"task\": 2045, \"at\": 1795439711.3125014}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-11-23\", \"used\": {\"openclaw\": 10, \"langfuse\": 5, \"spec-kit\": 2, \"comfyui\": 1}, \"replacement_used\": {\"openclaw\": 3}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1795422880.3815591, \"group\": \"new_fix\", \"task\": 2042, \"phase\": \"generation\"}, {\"at\": 1795423777.9553444, \"group\": \"new_fix\", \"task\": 2042, \"phase\": \"validation\"}, {\"at\": 1795424291.4370646, \"group\": \"new_fix\", \"task\": 2042, \"phase\": \"review\"}, {\"at\": 1795424541.5471864, \"group\": \"repair\", \"task\": 2042, \"phase\": \"remediation\"}, {\"at\": 1795425813.7536218, \"group\": \"new_fix\", \"task\": 2043, \"phase\": \"generation\"}, {\"at\": 1795426165.0419242, \"group\": \"new_fix\", \"task\": 2042, \"phase\": \"generation\"}, {\"at\": 1795426795.6683738, \"group\": \"new_fix\", \"task\": 2042, \"phase\": \"validation\"}, {\"at\": 1795427358.140909, \"group\": \"new_fix\", \"task\": 2042, \"phase\": \"review\"}, {\"at\": 1795428173.9209015, \"group\": \"maintenance\", \"task\": 2044, \"phase\": \"generation\"}, {\"at\": 1795428704.2578633, \"group\": \"maintenance\", \"task\": 2044, \"phase\": \"review\"}, {\"at\": 1795428930.8803494, \"group\": \"repair\", \"task\": 2044, \"phase\": \"remediation\"}, {\"at\": 1795429539.2736776, \"group\": \"repair\", \"task\": 2044, \"phase\": \"rereview\"}, {\"at\": 1795439711.312701, \"group\": \"new_fix\", \"task\": 2045, \"phase\": \"generation\"}]"
-      },
-      {
         "key": "usage:2045:1:generation",
         "value": "{\"task\": 2045, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795439946.8549385, \"seconds\": 235.544, \"tokens\": {\"totalTokens\": 2314026, \"inputTokens\": 2305926, \"cachedInputTokens\": 2236800, \"cacheWriteInputTokens\": 0, \"outputTokens\": 8100, \"reasoningOutputTokens\": 3751}, \"first_event_ms\": 1795439721170, \"last_event_ms\": 1795439946842, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "followup:task:2045",
         "value": "{\"status\": \"needs_human\", \"task\": 2045, \"repo\": \"comfyui\", \"number\": 17939, \"reason\": \"VALIDATION_ENVIRONMENT: The fix targets Apple MPS grid sampling. This Linux CPU runner can verify the sampling math and simulate the reported rejection, but cannot run the affected MPS workflow. Platform validation remains required.\", \"base\": \"f08f28aaac5447af3b2e8a83e2f53c8774d23151\", \"patch_digest\": \"cdf1aed11fc64e9248d46b56f320bd67c571c54b8dc476f6b0eaccf09ada5412\", \"evidence_bundle\": \"2045-1.json.enc\"}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:2045",
@@ -46028,16 +46012,20 @@
         "value": "{\"at\": 1795443283.433319, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 2, \"skipped\": 15, \"validation_wait\": 10}, \"respond\": {\"validation_wait\": 1}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795443309.811349"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795420074.0897024, \"comfyui\": 1795439702.4955053, \"hermes\": 1795158844.7137928, \"langfuse\": 1795443316.7644577, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795418535.382417, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795406247.672586, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1795331330.0812907}}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1795443310.816566"
+        "value": "1795443322.1123054"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795443314.4923267"
+        "value": "1795443324.492565"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795443324.8125532"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -46045,30 +46033,30 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795443315.7115512"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795420074.0897024, \"comfyui\": 1795439702.4955053, \"hermes\": 1795158844.7137928, \"langfuse\": 1795443316.7644577, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795418535.382417, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795406247.672586, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1795331330.0812907}}"
+        "value": "1795443326.0806167"
       },
       {
         "key": "task:2046",
-        "value": "{\"started\": 1795443316.7646563, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "value": "{\"started\": 1795443316.7646563, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2046/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"7905fb8319d5417ee105e6de7d6b3e7c9df9d562\", \"generation_started\": 1795443328.5493908, \"dispatch_paid_date\": \"2026-11-23\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"langfuse\", \"task\": 2043, \"at\": 1795425813.7532454}, {\"repo\": \"comfyui\", \"task\": 2045, \"at\": 1795439711.3125014}, {\"repo\": \"langfuse\", \"task\": 2046, \"at\": 1795443328.5493896}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-11-23\", \"used\": {\"openclaw\": 10, \"langfuse\": 6, \"spec-kit\": 2, \"comfyui\": 1}, \"replacement_used\": {\"openclaw\": 3}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"2046\": {\"remaining\": 1, \"until\": 1795450528.5496194}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1795425813.7536218, \"group\": \"new_fix\", \"task\": 2043, \"phase\": \"generation\"}, {\"at\": 1795426165.0419242, \"group\": \"new_fix\", \"task\": 2042, \"phase\": \"generation\"}, {\"at\": 1795426795.6683738, \"group\": \"new_fix\", \"task\": 2042, \"phase\": \"validation\"}, {\"at\": 1795427358.140909, \"group\": \"new_fix\", \"task\": 2042, \"phase\": \"review\"}, {\"at\": 1795428173.9209015, \"group\": \"maintenance\", \"task\": 2044, \"phase\": \"generation\"}, {\"at\": 1795428704.2578633, \"group\": \"maintenance\", \"task\": 2044, \"phase\": \"review\"}, {\"at\": 1795428930.8803494, \"group\": \"repair\", \"task\": 2044, \"phase\": \"remediation\"}, {\"at\": 1795429539.2736776, \"group\": \"repair\", \"task\": 2044, \"phase\": \"rereview\"}, {\"at\": 1795439711.312701, \"group\": \"new_fix\", \"task\": 2045, \"phase\": \"generation\"}, {\"at\": 1795443328.5496194, \"group\": \"new_fix\", \"task\": 2046, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1794837271.1819518,
-        "kind": "judge"
-      },
-      {
-        "at": 1794837282.9775107,
-        "kind": "judge"
-      },
-      {
-        "at": 1794837325.5757244,
-        "kind": "judge"
-      },
       {
         "at": 1794838606.6003442,
         "kind": "judge"
@@ -48740,6 +48728,10 @@
       {
         "at": 1795442534.0378115,
         "kind": "judge"
+      },
+      {
+        "at": 1795443328.55038,
+        "kind": "codex"
       }
     ]
   }
