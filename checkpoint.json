@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795523389.9393888,
+  "saved_at": 1795523432.4922945,
   "tables": {
     "tasks": [
       {
@@ -26894,10 +26894,10 @@
         "repo": "spec-kit",
         "number": 5551,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1795521974.8477278,
-        "updated": 1795521977.1563678,
-        "result": "",
+        "updated": 1795523432.475431,
+        "result": "review: The reviewer’s branch-name objection cannot be resolved with permitted local work. The branch remains fix/codex-spec-kit-5551; `git branch -m fix/5551-extension-url-install` failed because `.git` is read-only. The PR test count has been corrected below. No code changes were needed.",
         "attempts": 1
       }
     ],
@@ -46379,24 +46379,12 @@
         "value": "{\"task\": 2069, \"repo\": \"spec-kit\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795522228.9516335, \"seconds\": 243.14, \"tokens\": {\"totalTokens\": 2244306, \"inputTokens\": 2235546, \"cachedInputTokens\": 2161280, \"cacheWriteInputTokens\": 0, \"outputTokens\": 8760, \"reasoningOutputTokens\": 3335}, \"first_event_ms\": 1795521995799, \"last_event_ms\": 1795522228939, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795522364.6162152, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:2069:1:review",
         "value": "{\"task\": 2069, \"repo\": \"spec-kit\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1795522364.62657, \"seconds\": 133.976, \"tokens\": {\"totalTokens\": 663090, \"inputTokens\": 659157, \"cachedInputTokens\": 603392, \"cacheWriteInputTokens\": 0, \"outputTokens\": 3933, \"reasoningOutputTokens\": 1703}, \"first_event_ms\": 1795522238833, \"last_event_ms\": 1795522364614, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"2069\": {\"remaining\": 1, \"until\": 1795529568.9531057}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795505449.0233214, \"group\": \"new_fix\", \"task\": 2067, \"phase\": \"review\"}, {\"at\": 1795505709.6035666, \"group\": \"repair\", \"task\": 2067, \"phase\": \"remediation\"}, {\"at\": 1795506158.709755, \"group\": \"repair\", \"task\": 2067, \"phase\": \"rereview\"}, {\"at\": 1795508216.1801245, \"group\": \"maintenance\", \"task\": 2068, \"phase\": \"generation\"}, {\"at\": 1795509196.646154, \"group\": \"maintenance\", \"task\": 2068, \"phase\": \"reply-review\"}, {\"at\": 1795521985.8133078, \"group\": \"new_fix\", \"task\": 2069, \"phase\": \"generation\"}, {\"at\": 1795522230.6521719, \"group\": \"new_fix\", \"task\": 2069, \"phase\": \"review\"}, {\"at\": 1795522368.9531057, \"group\": \"repair\", \"task\": 2069, \"phase\": \"remediation\"}]"
-      },
-      {
-        "key": "task:2069",
-        "value": "{\"started\": 1795521977.156408, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2069/attempt-1\", \"attempt\": 1, \"phase\": \"remediation\", \"base\": \"a55782f1f1e7f2469cb204843c05d1a42fa2fae7\", \"generation_started\": 1795521985.813114, \"dispatch_paid_date\": \"2026-11-24\", \"phase_started\": 1795522372.774981}"
       },
       {
         "key": "publication_check:hermes",
@@ -46571,18 +46559,6 @@
         "value": "1795523241.8281615"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795523328.8845954, \"state\": \"active\", \"pending_candidates\": 447, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 47, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 447}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 8, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 959.9160404205322, \"judge_tokens_spent_24h\": 87001, \"screening_calls_5h\": 0, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 4, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 3, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8319\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8319\", \"title\": \"Live input screening: in-place edits to nested config, tools or live_connect_config still reach the live request after 17c4a10af\", \"first_seen\": 1795488484.3423147, \"last_checked\": 1795492943.3869402, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8318\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8318\", \"title\": \"MultimodalToolResultsPlugin(retention=\\\"session\\\") attaches tool parts to the model's turn when the request ends with a transient instruction (since 9c22a89fe)\", \"first_seen\": 1795488486.911777, \"last_checked\": 1795492946.1094315, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8320\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8320\", \"title\": \"feat(integrations): add a Gemini Decisions classifier\", \"first_seen\": 1795495090.6547198, \"last_checked\": 1795502892.7084162, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795523328.8862684, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 1, \"human_wait\": 1, \"running\": 1, \"skipped\": 16, \"validation_wait\": 4}, \"respond\": {\"blocked\": 1, \"done\": 1}}}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1795523373.0764055"
-      },
-      {
         "key": "candidate_capacity:adk",
         "value": "{\"at\": 1795523373.4159417, \"allowed\": true, \"reason\": \"\"}"
       },
@@ -46603,10 +46579,6 @@
         "value": "{\"at\": 1795523375.4788861, \"allowed\": true, \"reason\": \"\"}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795523375.9204419"
-      },
-      {
         "key": "candidate_capacity:langchain",
         "value": "{\"at\": 1795523375.969824, \"allowed\": true, \"reason\": \"\"}"
       },
@@ -46623,12 +46595,48 @@
         "value": "{\"at\": 1795523377.1291125, \"allowed\": true, \"reason\": \"\"}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795523384.877055, \"windows\": [{\"name\": \"primary\", \"used_percent\": 65, \"resets_at\": 1795763698}]}"
+        "key": "runner_resources",
+        "value": "{\"at\": 1795523389.908493, \"disk_free_bytes\": 84115148800, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 13921398784, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1795523394.3791857, \"state\": \"active\", \"pending_candidates\": 447, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 47, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 447}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 1, \"queued_tasks\": 0, \"codex_calls_5h\": 8, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1025.4149732589722, \"judge_tokens_spent_24h\": 87001, \"screening_calls_5h\": 0, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {\"openclaw\": {\"used\": 10, \"limit\": 10}}, \"recent_wait_tasks_24h\": {\"validation_wait\": 4, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 3, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8319\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8319\", \"title\": \"Live input screening: in-place edits to nested config, tools or live_connect_config still reach the live request after 17c4a10af\", \"first_seen\": 1795488484.3423147, \"last_checked\": 1795492943.3869402, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8318\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8318\", \"title\": \"MultimodalToolResultsPlugin(retention=\\\"session\\\") attaches tool parts to the model's turn when the request ends with a transient instruction (since 9c22a89fe)\", \"first_seen\": 1795488486.911777, \"last_checked\": 1795492946.1094315, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8320\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8320\", \"title\": \"feat(integrations): add a Gemini Decisions classifier\", \"first_seen\": 1795495090.6547198, \"last_checked\": 1795502892.7084162, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795523394.3808708, \"tasks\": {\"fix\": {\"blocked\": 3, \"done\": 1, \"human_wait\": 1, \"running\": 1, \"skipped\": 16, \"validation_wait\": 4}, \"respond\": {\"blocked\": 1, \"done\": 1}}}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795523420.92856"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795523428.6722019"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795523385.8843591"
+        "value": "1795523430.8853023"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1795523432.0992014, \"windows\": [{\"name\": \"primary\", \"used_percent\": 65, \"resets_at\": 1795763698}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795523432.1020284, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2069:1:remediation",
+        "value": "{\"task\": 2069, \"repo\": \"spec-kit\", \"attempt\": 1, \"phase\": \"remediation\", \"at\": 1795523432.1430414, \"seconds\": 1063.192, \"tokens\": {\"totalTokens\": 1526862, \"inputTokens\": 1521736, \"cachedInputTokens\": 1472896, \"cacheWriteInputTokens\": 0, \"outputTokens\": 5126, \"reasoningOutputTokens\": 1392}, \"first_event_ms\": 1795522376727, \"last_event_ms\": 1795523432099, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:2069",
+        "value": "{\"started\": 1795521977.156408, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2069/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"a55782f1f1e7f2469cb204843c05d1a42fa2fae7\", \"generation_started\": 1795521985.813114, \"dispatch_paid_date\": \"2026-11-24\", \"phase_started\": 1795522372.774981, \"patch_digest\": \"cd0ac17f64c8454ba32731e075589b1b71c3a60048e47822f2a6aa5d06d49f33\", \"last_execution_phase\": \"remediation\", \"finished\": 1795523432.293031}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -46636,11 +46644,7 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795523387.1126494"
-      },
-      {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795523389.908493, \"disk_free_bytes\": 84115148800, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 13921398784, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "1795523432.3948643"
       }
     ],
     "calls": [
