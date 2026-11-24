@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795485576.3945985,
+  "saved_at": 1795485624.3239207,
   "tables": {
     "tasks": [
       {
@@ -26777,10 +26777,10 @@
         "repo": "openclaw",
         "number": 204319,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1795484301.8274295,
-        "updated": 1795484303.7357385,
-        "result": "",
+        "updated": 1795485624.1896653,
+        "result": "Before expensive validation: only 29 min old; waiting 40 min for the repo's own triage",
         "attempts": 1
       },
       {
@@ -46123,10 +46123,6 @@
         "value": "[]"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795482933.2412062, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -46147,16 +46143,8 @@
         "value": "{\"date\": \"2026-11-24\", \"used\": {\"langfuse\": 1, \"openclaw\": 7}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"2060\": {\"remaining\": 1, \"until\": 1795491562.2150831}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795478445.068508, \"group\": \"screening\", \"task\": 2053, \"phase\": \"screening-f4e5395a1ca2c7671b1d\"}, {\"at\": 1795478466.8352365, \"group\": \"new_fix\", \"task\": 2053, \"phase\": \"generation\"}, {\"at\": 1795478578.3547137, \"group\": \"new_fix\", \"task\": 2054, \"phase\": \"generation\"}, {\"at\": 1795480083.926028, \"group\": \"new_fix\", \"task\": 1955, \"phase\": \"generation\"}, {\"at\": 1795480196.8944044, \"group\": \"new_fix\", \"task\": 2055, \"phase\": \"generation\"}, {\"at\": 1795480907.7404459, \"group\": \"new_fix\", \"task\": 2055, \"phase\": \"review\"}, {\"at\": 1795481178.3075576, \"group\": \"new_fix\", \"task\": 2056, \"phase\": \"generation\"}, {\"at\": 1795481325.1217837, \"group\": \"new_fix\", \"task\": 2057, \"phase\": \"generation\"}, {\"at\": 1795481427.4729633, \"group\": \"new_fix\", \"task\": 2058, \"phase\": \"generation\"}, {\"at\": 1795481539.6554575, \"group\": \"new_fix\", \"task\": 2059, \"phase\": \"generation\"}, {\"at\": 1795481985.247417, \"group\": \"new_fix\", \"task\": 1972, \"phase\": \"generation\"}, {\"at\": 1795484362.2150831, \"group\": \"new_fix\", \"task\": 2060, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "task:2060",
-        "value": "{\"started\": 1795484303.7357633, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2060/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"29bc3e3ee37076e9aa256c83ca5f9e02c609fd9a\", \"generation_started\": 1795484362.2149193, \"dispatch_paid_date\": \"2026-11-24\", \"phase_started\": 1795484365.6613295}"
       },
       {
         "key": "task:1772",
@@ -46331,60 +46319,68 @@
         "value": "1795485425.282713"
       },
       {
+        "key": "runner_resources",
+        "value": "{\"at\": 1795485576.3836672, \"disk_free_bytes\": 80644571136, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 12684070912, \"SwapTotal\": 3221221376, \"SwapFree\": 3221139456}, \"memory_events\": null}"
+      },
+      {
         "key": "admission_health",
-        "value": "{\"at\": 1795485515.9090497, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 2, \"running_tasks\": 1, \"queued_tasks\": 1, \"codex_calls_5h\": 12, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1153.6868500709534, \"judge_tokens_spent_24h\": 55176, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 8, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 3, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795409767.2153049, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8305\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8305\", \"title\": \"A2aAgentExecutor has no native way to emit TaskState.rejected on the server side\", \"first_seen\": 1795385135.9091156, \"last_checked\": 1795411236.968553, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+        "value": "{\"at\": 1795485579.9767609, \"state\": \"active\", \"pending_candidates\": 400, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 0, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400}, \"screening_wait_tasks\": 0, \"active_tasks\": 2, \"running_tasks\": 1, \"queued_tasks\": 1, \"codex_calls_5h\": 12, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1217.7550966739655, \"judge_tokens_spent_24h\": 55176, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 8, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 3, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8280\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8280\", \"title\": \"Example idea: Screwtape agent_fleet_compliance for ADK multi-agent apps\", \"first_seen\": 1795233920.9762347, \"last_checked\": 1795409767.2153049, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8305\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8305\", \"title\": \"A2aAgentExecutor has no native way to emit TaskState.rejected on the server side\", \"first_seen\": 1795385135.9091156, \"last_checked\": 1795411236.968553, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1795485515.909716, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 1, \"human_wait\": 1, \"queued\": 1, \"running\": 1, \"skipped\": 19, \"validation_wait\": 7}, \"respond\": {\"done\": 1, \"validation_wait\": 1}}}"
+        "value": "{\"at\": 1795485579.9775121, \"tasks\": {\"fix\": {\"blocked\": 4, \"done\": 1, \"human_wait\": 1, \"queued\": 1, \"running\": 1, \"skipped\": 19, \"validation_wait\": 7}, \"respond\": {\"done\": 1, \"validation_wait\": 1}}}"
       },
       {
         "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795485547.6262307, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795485610.4643137, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795485547.971872, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795485610.8517888, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795485548.2942097, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795485611.2250876, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795485548.6470509, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795485611.6494293, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795485549.0028048, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795485612.2136571, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795485549.2919571, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795485612.4895597, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795485550.1101897, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795485613.5038733, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795485550.5017273, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795485613.861502, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795485550.8600526, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795485614.2551098, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795485551.2156663, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795485614.613058, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1795485571.5755963"
+        "value": "1795485616.5790627"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795485619.6168041"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795485572.2553375"
+        "value": "1795485622.256279"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -46392,19 +46388,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795485573.642717"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1795485574.9988534"
+        "value": "1795485623.3414874"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795485575.2210102, \"windows\": [{\"name\": \"primary\", \"used_percent\": 61, \"resets_at\": 1795763698}]}"
+        "value": "{\"at\": 1795485623.7059584, \"windows\": [{\"name\": \"primary\", \"used_percent\": 61, \"resets_at\": 1795763698}]}"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795485576.3836672, \"disk_free_bytes\": 80644571136, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 12684070912, \"SwapTotal\": 3221221376, \"SwapFree\": 3221139456}, \"memory_events\": null}"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795485623.7080557, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2060:1:generation",
+        "value": "{\"task\": 2060, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795485623.7304957, \"seconds\": 1261.517, \"tokens\": {\"totalTokens\": 46989772, \"inputTokens\": 46963762, \"cachedInputTokens\": 46767360, \"cacheWriteInputTokens\": 0, \"outputTokens\": 26010, \"reasoningOutputTokens\": 5634}, \"first_event_ms\": 1795484370321, \"last_event_ms\": 1795485623707, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:2060",
+        "value": "{\"started\": 1795484303.7357633, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2060/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"29bc3e3ee37076e9aa256c83ca5f9e02c609fd9a\", \"generation_started\": 1795484362.2149193, \"dispatch_paid_date\": \"2026-11-24\", \"phase_started\": 1795484365.6613295, \"last_execution_phase\": \"generation\", \"finished\": 1795485624.0789127}"
       }
     ],
     "calls": [
