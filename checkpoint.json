@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795535650.103023,
+  "saved_at": 1795535661.0519404,
   "tables": {
     "tasks": [
       {
@@ -46427,14 +46427,6 @@
         "value": "{\"started\": 1795524207.9508986, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2070/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"b93418f1e6f135fa4e146a0cdad089ebced34537\", \"generation_started\": 1795524219.1718986, \"dispatch_paid_date\": \"2026-11-24\", \"phase_started\": 1795524224.5470061, \"last_execution_phase\": \"generation\", \"finished\": 1795524262.5137749}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"spec-kit\", \"task\": 2069, \"at\": 1795521985.813113}, {\"repo\": \"langfuse\", \"task\": 2070, \"at\": 1795524219.1718974}, {\"repo\": \"langfuse\", \"task\": 2071, \"at\": 1795525631.1712322}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-11-24\", \"used\": {\"langfuse\": 3, \"openclaw\": 10, \"spec-kit\": 1}, \"replacement_used\": {\"openclaw\": 3}}"
-      },
-      {
         "key": "usage:2071:1:generation",
         "value": "{\"task\": 2071, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795525690.6591256, \"seconds\": 59.49, \"tokens\": {\"totalTokens\": 350489, \"inputTokens\": 348560, \"cachedInputTokens\": 281088, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1929, \"reasoningOutputTokens\": 756}, \"first_event_ms\": 1795525640693, \"last_event_ms\": 1795525690652, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -46447,10 +46439,6 @@
         "value": "{\"task\": 2072, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795526743.7201807, \"seconds\": 367.119, \"tokens\": {\"totalTokens\": 8708823, \"inputTokens\": 8700580, \"cachedInputTokens\": 8589056, \"cacheWriteInputTokens\": 0, \"outputTokens\": 8243, \"reasoningOutputTokens\": 2194}, \"first_event_ms\": 1795526385064, \"last_event_ms\": 1795526743709, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1795509196.646154, \"group\": \"maintenance\", \"task\": 2068, \"phase\": \"reply-review\"}, {\"at\": 1795521985.8133078, \"group\": \"new_fix\", \"task\": 2069, \"phase\": \"generation\"}, {\"at\": 1795522230.6521719, \"group\": \"new_fix\", \"task\": 2069, \"phase\": \"review\"}, {\"at\": 1795522368.9531057, \"group\": \"repair\", \"task\": 2069, \"phase\": \"remediation\"}, {\"at\": 1795524219.1720896, \"group\": \"new_fix\", \"task\": 2070, \"phase\": \"generation\"}, {\"at\": 1795525631.1714437, \"group\": \"new_fix\", \"task\": 2071, \"phase\": \"generation\"}, {\"at\": 1795526376.6031063, \"group\": \"maintenance\", \"task\": 2072, \"phase\": \"generation\"}, {\"at\": 1795526744.157355, \"group\": \"maintenance\", \"task\": 2072, \"phase\": \"reply-review\"}]"
-      },
-      {
         "key": "usage:2072:1:reply-review",
         "value": "{\"task\": 2072, \"repo\": \"openclaw/openclaw\", \"attempt\": 1, \"phase\": \"reply-review\", \"at\": 1795526797.9151602, \"seconds\": 53.76, \"tokens\": {\"totalTokens\": 324007, \"inputTokens\": 322323, \"cachedInputTokens\": 255872, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1684, \"reasoningOutputTokens\": 652}, \"first_event_ms\": 1795526752640, \"last_event_ms\": 1795526797908, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -46461,10 +46449,6 @@
       {
         "key": "followup:task:2072",
         "value": "{\"status\": \"needs_human\", \"task\": 2072, \"repo\": \"openclaw/openclaw\", \"number\": 204482, \"reason\": \"VALIDATION_ENVIRONMENT: ClawSweeper requires a shipped-entry-point Gemini 4 tool-round trace and latest-stable-to-candidate session continuation. This isolated runner cannot start the CLI because its systemd user bus is unavailable; the requested proof remains incomplete.\", \"base\": \"c071b936d6f2d548d6ae455db0291e9e95e7d6f4\", \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"evidence_bundle\": \"2072-1.json.enc\"}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:2072",
@@ -46663,44 +46647,8 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8325\", \"title\": \"Parallel scalar state updates roll back when tool completion order differs from call order\", \"first_seen\": 1795531288.8097043, \"last_checked\": 1795535587.973324, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795535593.4381526, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795535593.8376539, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795535594.1843963, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795535594.9613018, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795535595.3594875, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795535595.8907993, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
         "key": "runner_resources",
         "value": "{\"at\": 1795535596.428592, \"disk_free_bytes\": 86208159744, \"memory_bytes\": {\"MemTotal\": 16759308288, \"MemAvailable\": 15421743104, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795535596.736689, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795535597.2528594, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795535597.9589884, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "admission_health",
@@ -46719,8 +46667,28 @@
         "value": "1795535618.9133272"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795535642.449218"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795526291.8368196, \"comfyui\": 1795481976.1506994, \"hermes\": 1795158844.7137928, \"langfuse\": 1795525618.870723, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795463789.0212533, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795535650.0826292, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1795331330.0812907}}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795535654.5821612"
+      },
+      {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1795535654.9986613, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1795535655.4866931, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1795535656.0059795, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1795535656.5586078, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -46728,34 +46696,58 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795535646.703069"
+        "value": "1795535656.5916424"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1795535648.1323009"
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1795535657.005815, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795535657.45138"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1795535657.5127418, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1795535657.9431953, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:autogpt",
+        "value": "{\"at\": 1795535658.5025327, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:comfyui",
+        "value": "{\"at\": 1795535658.981932, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795535649.7348776"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795526291.8368196, \"comfyui\": 1795481976.1506994, \"hermes\": 1795158844.7137928, \"langfuse\": 1795525618.870723, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795463789.0212533, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795535650.0826292, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1795331330.0812907}}"
+        "value": "1795535659.7350624"
       },
       {
         "key": "task:2073",
-        "value": "{\"started\": 1795535650.0827959, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "value": "{\"started\": 1795535650.0827959, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2073/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"e59953dd63947b16d1a3193903223dd3b52547c1\", \"generation_started\": 1795535661.0331411, \"dispatch_paid_date\": \"2026-11-24\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"spec-kit\", \"task\": 2069, \"at\": 1795521985.813113}, {\"repo\": \"langfuse\", \"task\": 2070, \"at\": 1795524219.1718974}, {\"repo\": \"langfuse\", \"task\": 2071, \"at\": 1795525631.1712322}, {\"repo\": \"spec-kit\", \"task\": 2073, \"at\": 1795535661.033139}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-11-24\", \"used\": {\"langfuse\": 3, \"openclaw\": 10, \"spec-kit\": 2}, \"replacement_used\": {\"openclaw\": 3}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"2073\": {\"remaining\": 1, \"until\": 1795542861.0333683}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1795521985.8133078, \"group\": \"new_fix\", \"task\": 2069, \"phase\": \"generation\"}, {\"at\": 1795522230.6521719, \"group\": \"new_fix\", \"task\": 2069, \"phase\": \"review\"}, {\"at\": 1795522368.9531057, \"group\": \"repair\", \"task\": 2069, \"phase\": \"remediation\"}, {\"at\": 1795524219.1720896, \"group\": \"new_fix\", \"task\": 2070, \"phase\": \"generation\"}, {\"at\": 1795525631.1714437, \"group\": \"new_fix\", \"task\": 2071, \"phase\": \"generation\"}, {\"at\": 1795526376.6031063, \"group\": \"maintenance\", \"task\": 2072, \"phase\": \"generation\"}, {\"at\": 1795526744.157355, \"group\": \"maintenance\", \"task\": 2072, \"phase\": \"reply-review\"}, {\"at\": 1795535661.0333683, \"group\": \"new_fix\", \"task\": 2073, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1794926233.6411116,
-        "kind": "judge"
-      },
-      {
-        "at": 1794926260.0102434,
-        "kind": "codex"
-      },
       {
         "at": 1794932105.3550055,
         "kind": "judge"
@@ -49643,6 +49635,10 @@
       {
         "at": 1795531604.793297,
         "kind": "judge"
+      },
+      {
+        "at": 1795535661.0341027,
+        "kind": "codex"
       }
     ]
   }
