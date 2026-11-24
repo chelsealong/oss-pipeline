@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795524259.1088953,
+  "saved_at": 1795524263.2819214,
   "tables": {
     "tasks": [
       {
@@ -26907,10 +26907,10 @@
         "repo": "langfuse",
         "number": 20770,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1795524206.6642148,
-        "updated": 1795524207.9508562,
-        "result": "",
+        "updated": 1795524262.8535347,
+        "result": "Issue #20770 requires a change to the rollout parser in the separate codex-observability-plugin repository. That parser is absent from the authorized langfuse/langfuse checkout, so this task cannot produce the fix here.",
         "attempts": 1
       }
     ],
@@ -46380,10 +46380,6 @@
         "value": "{\"task\": 2069, \"repo\": \"spec-kit\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1795522364.62657, \"seconds\": 133.976, \"tokens\": {\"totalTokens\": 663090, \"inputTokens\": 659157, \"cachedInputTokens\": 603392, \"cacheWriteInputTokens\": 0, \"outputTokens\": 3933, \"reasoningOutputTokens\": 1703}, \"first_event_ms\": 1795522238833, \"last_event_ms\": 1795522364614, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795523432.1020284, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:2069:1:remediation",
         "value": "{\"task\": 2069, \"repo\": \"spec-kit\", \"attempt\": 1, \"phase\": \"remediation\", \"at\": 1795523432.1430414, \"seconds\": 1063.192, \"tokens\": {\"totalTokens\": 1526862, \"inputTokens\": 1521736, \"cachedInputTokens\": 1472896, \"cacheWriteInputTokens\": 0, \"outputTokens\": 5126, \"reasoningOutputTokens\": 1392}, \"first_event_ms\": 1795522376727, \"last_event_ms\": 1795523432099, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -46624,28 +46620,24 @@
         "value": "{\"date\": \"2026-11-24\", \"used\": {\"langfuse\": 2, \"openclaw\": 10, \"spec-kit\": 1}, \"replacement_used\": {\"openclaw\": 3}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"2070\": {\"remaining\": 1, \"until\": 1795531419.1720896}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795508216.1801245, \"group\": \"maintenance\", \"task\": 2068, \"phase\": \"generation\"}, {\"at\": 1795509196.646154, \"group\": \"maintenance\", \"task\": 2068, \"phase\": \"reply-review\"}, {\"at\": 1795521985.8133078, \"group\": \"new_fix\", \"task\": 2069, \"phase\": \"generation\"}, {\"at\": 1795522230.6521719, \"group\": \"new_fix\", \"task\": 2069, \"phase\": \"review\"}, {\"at\": 1795522368.9531057, \"group\": \"repair\", \"task\": 2069, \"phase\": \"remediation\"}, {\"at\": 1795524219.1720896, \"group\": \"new_fix\", \"task\": 2070, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "task:2070",
-        "value": "{\"started\": 1795524207.9508986, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2070/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"b93418f1e6f135fa4e146a0cdad089ebced34537\", \"generation_started\": 1795524219.1718986, \"dispatch_paid_date\": \"2026-11-24\", \"phase_started\": 1795524224.5470061}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1795524246.027885"
       },
       {
         "key": "watch_heartbeat",
         "value": "1795524251.8556938"
       },
       {
+        "key": "runner_resources",
+        "value": "{\"at\": 1795524259.0914423, \"disk_free_bytes\": 84536066048, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15287062528, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1795524255.9049833"
+        "value": "1795524260.9050894"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795524261.0291064"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -46653,15 +46645,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795524257.5182064"
+        "value": "1795524262.1240058"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795524257.5649612, \"windows\": [{\"name\": \"primary\", \"used_percent\": 65, \"resets_at\": 1795763698}]}"
+        "value": "{\"at\": 1795524262.5052025, \"windows\": [{\"name\": \"primary\", \"used_percent\": 65, \"resets_at\": 1795763698}]}"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795524259.0914423, \"disk_free_bytes\": 84536066048, \"memory_bytes\": {\"MemTotal\": 16760344576, \"MemAvailable\": 15287062528, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795524262.507418, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2070:1:generation",
+        "value": "{\"task\": 2070, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795524262.5108194, \"seconds\": 43.341, \"tokens\": {\"totalTokens\": 233149, \"inputTokens\": 231903, \"cachedInputTokens\": 175872, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1246, \"reasoningOutputTokens\": 436}, \"first_event_ms\": 1795524230267, \"last_event_ms\": 1795524262504, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:2070",
+        "value": "{\"started\": 1795524207.9508986, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2070/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"b93418f1e6f135fa4e146a0cdad089ebced34537\", \"generation_started\": 1795524219.1718986, \"dispatch_paid_date\": \"2026-11-24\", \"phase_started\": 1795524224.5470061, \"last_execution_phase\": \"generation\", \"finished\": 1795524262.5137749}"
       }
     ],
     "calls": [
