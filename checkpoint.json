@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795505429.58295,
+  "saved_at": 1795505449.037068,
   "tables": {
     "tasks": [
       {
@@ -46285,10 +46285,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8320\", \"title\": \"feat(integrations): add a Gemini Decisions classifier\", \"first_seen\": 1795495090.6547198, \"last_checked\": 1795502892.7084162, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795503176.3322926, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -46319,14 +46315,6 @@
       {
         "key": "dispatch_budget",
         "value": "{\"date\": \"2026-11-24\", \"used\": {\"langfuse\": 1, \"openclaw\": 10}, \"replacement_used\": {\"openclaw\": 3}}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"2067\": {\"remaining\": 1, \"until\": 1795511499.9620423}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1795488323.344434, \"group\": \"new_fix\", \"task\": 2062, \"phase\": \"generation\"}, {\"at\": 1795490137.302773, \"group\": \"new_fix\", \"task\": 2063, \"phase\": \"generation\"}, {\"at\": 1795495145.740648, \"group\": \"new_fix\", \"task\": 2064, \"phase\": \"generation\"}, {\"at\": 1795496501.9971137, \"group\": \"new_fix\", \"task\": 2064, \"phase\": \"review\"}, {\"at\": 1795499520.0727978, \"group\": \"new_fix\", \"task\": 2066, \"phase\": \"generation\"}, {\"at\": 1795500590.8984447, \"group\": \"new_fix\", \"task\": 2066, \"phase\": \"review\"}, {\"at\": 1795500912.0012126, \"group\": \"repair\", \"task\": 2066, \"phase\": \"remediation\"}, {\"at\": 1795501183.2732275, \"group\": \"repair\", \"task\": 2066, \"phase\": \"rereview\"}, {\"at\": 1795504299.9620423, \"group\": \"new_fix\", \"task\": 2067, \"phase\": \"generation\"}]"
       },
       {
         "key": "task:2067",
@@ -46562,18 +46550,30 @@
       },
       {
         "key": "worker_heartbeat",
-        "value": "1795505415.463295"
+        "value": "1795505445.465857"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795505429.2134268, \"windows\": [{\"name\": \"primary\", \"used_percent\": 64, \"resets_at\": 1795763698}]}"
+        "value": "{\"at\": 1795505446.4294815, \"windows\": [{\"name\": \"primary\", \"used_percent\": 64, \"resets_at\": 1795763698}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795505446.431788, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2067:1:generation",
+        "value": "{\"task\": 2067, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795505446.4433088, \"seconds\": 1146.482, \"tokens\": {\"totalTokens\": 20586233, \"inputTokens\": 20568868, \"cachedInputTokens\": 20404096, \"cacheWriteInputTokens\": 0, \"outputTokens\": 17365, \"reasoningOutputTokens\": 5358}, \"first_event_ms\": 1795504314268, \"last_event_ms\": 1795505446430, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"2067\": {\"remaining\": 0, \"until\": 1795512649.0233214}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1795488323.344434, \"group\": \"new_fix\", \"task\": 2062, \"phase\": \"generation\"}, {\"at\": 1795490137.302773, \"group\": \"new_fix\", \"task\": 2063, \"phase\": \"generation\"}, {\"at\": 1795495145.740648, \"group\": \"new_fix\", \"task\": 2064, \"phase\": \"generation\"}, {\"at\": 1795496501.9971137, \"group\": \"new_fix\", \"task\": 2064, \"phase\": \"review\"}, {\"at\": 1795499520.0727978, \"group\": \"new_fix\", \"task\": 2066, \"phase\": \"generation\"}, {\"at\": 1795500590.8984447, \"group\": \"new_fix\", \"task\": 2066, \"phase\": \"review\"}, {\"at\": 1795500912.0012126, \"group\": \"repair\", \"task\": 2066, \"phase\": \"remediation\"}, {\"at\": 1795501183.2732275, \"group\": \"repair\", \"task\": 2066, \"phase\": \"rereview\"}, {\"at\": 1795504299.9620423, \"group\": \"new_fix\", \"task\": 2067, \"phase\": \"generation\"}, {\"at\": 1795505449.0233214, \"group\": \"new_fix\", \"task\": 2067, \"phase\": \"review\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1794899815.8062124,
-        "kind": "judge"
-      },
       {
         "at": 1794900994.0552266,
         "kind": "judge"
@@ -49288,6 +49288,10 @@
       },
       {
         "at": 1795504299.962616,
+        "kind": "codex"
+      },
+      {
+        "at": 1795505449.0239792,
         "kind": "codex"
       }
     ]
