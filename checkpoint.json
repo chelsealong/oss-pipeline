@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795594521.318104,
+  "saved_at": 1795594541.6491659,
   "tables": {
     "tasks": [
       {
@@ -27089,10 +27089,10 @@
         "repo": "comfyui",
         "number": 17979,
         "note": "",
-        "status": "running",
+        "status": "blocked",
         "created": 1795592721.2570307,
-        "updated": 1795593650.8917654,
-        "result": "",
+        "updated": 1795594541.6113625,
+        "result": "final eligibility: already has PR(s): ['closing-ref PR#17983(OPEN)', 'xref PR#17983(OPEN)']",
         "attempts": 1
       },
       {
@@ -46864,24 +46864,12 @@
         "value": "{\"at\": 1795593818.4255033, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795593956.218972, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:2084:1:generation",
         "value": "{\"task\": 2084, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795593956.225905, \"seconds\": 295.893, \"tokens\": {\"totalTokens\": 2926176, \"inputTokens\": 2918991, \"cachedInputTokens\": 2838400, \"cacheWriteInputTokens\": 0, \"outputTokens\": 7185, \"reasoningOutputTokens\": 2265}, \"first_event_ms\": 1795593668109, \"last_event_ms\": 1795593956210, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"2084\": {\"remaining\": 0, \"until\": 1795601157.7000256}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795579911.3582027, \"group\": \"new_fix\", \"task\": 1976, \"phase\": \"generation\"}, {\"at\": 1795591428.2206085, \"group\": \"new_fix\", \"task\": 2083, \"phase\": \"generation\"}, {\"at\": 1795591825.2254736, \"group\": \"new_fix\", \"task\": 2083, \"phase\": \"review\"}, {\"at\": 1795592084.359916, \"group\": \"repair\", \"task\": 2083, \"phase\": \"remediation\"}, {\"at\": 1795592738.6379118, \"group\": \"repair\", \"task\": 2083, \"phase\": \"rereview\"}, {\"at\": 1795593660.3340437, \"group\": \"new_fix\", \"task\": 2084, \"phase\": \"generation\"}, {\"at\": 1795593957.7000256, \"group\": \"new_fix\", \"task\": 2084, \"phase\": \"review\"}]"
-      },
-      {
-        "key": "task:2084",
-        "value": "{\"started\": 1795593650.891796, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2084/attempt-1\", \"attempt\": 1, \"phase\": \"review\", \"base\": \"b27006af3d753e4a94cd703d9a2432b68a7e6865\", \"generation_started\": 1795593660.3338892, \"dispatch_paid_date\": \"2026-11-25\", \"phase_started\": 1795593961.701424}"
       },
       {
         "key": "judge_usage",
@@ -47036,14 +47024,6 @@
         "value": "{\"at\": 1795594454.6540241, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795594460.4515853, \"state\": \"active\", \"pending_candidates\": 590, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 1, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 189, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 589, \"judge_unavailable\": 1}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 7, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 502.74249243736267, \"judge_tokens_spent_24h\": 95914, \"screening_calls_5h\": 0, \"screening_calls_24h\": 4, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8326\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8326\", \"title\": \"Docs: production deployment guide covering eval gates, human-in-the-loop approval, and guardrail exit handling\", \"first_seen\": 1795533378.1269233, \"last_checked\": 1795541465.7347813, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8325\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8325\", \"title\": \"Parallel scalar state updates roll back when tool completion order differs from call order\", \"first_seen\": 1795531288.8097043, \"last_checked\": 1795541468.2018383, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8342\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8342\", \"title\": \"to_a2a serves v0.3 JSON-RPC but its agent card has no v0.3 interface, so a2a-sdk 0.3 clients can't resolve it (missing url)\", \"first_seen\": 1795593695.4862874, \"last_checked\": 1795594351.195678, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795594460.4528081, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 4, \"queued\": 2, \"running\": 1, \"skipped\": 5}, \"respond\": {\"blocked\": 1, \"done\": 4, \"skipped\": 2, \"validation_wait\": 1}}}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1795594462.3096602"
       },
@@ -47088,12 +47068,40 @@
         "value": "{\"at\": 1795594502.180746, \"allowed\": true, \"reason\": \"\"}"
       },
       {
+        "key": "runner_resources",
+        "value": "{\"at\": 1795594521.3032055, \"disk_free_bytes\": 81564274688, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 13967982592, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1795594525.3405707, \"state\": \"active\", \"pending_candidates\": 590, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 1, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 189, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 589, \"judge_unavailable\": 1}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 7, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 567.6315050125122, \"judge_tokens_spent_24h\": 92826, \"screening_calls_5h\": 0, \"screening_calls_24h\": 4, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8326\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8326\", \"title\": \"Docs: production deployment guide covering eval gates, human-in-the-loop approval, and guardrail exit handling\", \"first_seen\": 1795533378.1269233, \"last_checked\": 1795541465.7347813, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8325\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8325\", \"title\": \"Parallel scalar state updates roll back when tool completion order differs from call order\", \"first_seen\": 1795531288.8097043, \"last_checked\": 1795541468.2018383, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8342\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8342\", \"title\": \"to_a2a serves v0.3 JSON-RPC but its agent card has no v0.3 interface, so a2a-sdk 0.3 clients can't resolve it (missing url)\", \"first_seen\": 1795593695.4862874, \"last_checked\": 1795594351.195678, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795594525.3419857, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 4, \"queued\": 2, \"running\": 1, \"skipped\": 5}, \"respond\": {\"blocked\": 1, \"done\": 4, \"skipped\": 2, \"validation_wait\": 1}}}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795594537.453068"
+      },
+      {
         "key": "worker_heartbeat",
-        "value": "1795594508.700449"
+        "value": "1795594538.7772994"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795594539.7127213"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795594515.9807112, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1796162550}]}"
+        "value": "{\"at\": 1795594539.8955147, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795594539.897606, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2084:1:review",
+        "value": "{\"task\": 2084, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1795594539.9261842, \"seconds\": 582.228, \"tokens\": {\"totalTokens\": 1456920, \"inputTokens\": 1452951, \"cachedInputTokens\": 1387264, \"cacheWriteInputTokens\": 0, \"outputTokens\": 3969, \"reasoningOutputTokens\": 1073}, \"first_event_ms\": 1795593965827, \"last_event_ms\": 1795594539895, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -47101,19 +47109,15 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795594516.349469"
+        "value": "1795594541.3451335"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1795594517.3546493"
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1795594519.7122617"
-      },
-      {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795594521.3032055, \"disk_free_bytes\": 81564274688, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 13967982592, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "key": "task:2084",
+        "value": "{\"started\": 1795593650.891796, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2084/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"b27006af3d753e4a94cd703d9a2432b68a7e6865\", \"generation_started\": 1795593660.3338892, \"dispatch_paid_date\": \"2026-11-25\", \"phase_started\": 1795593961.701424, \"reviewed_screenshots\": [], \"last_execution_phase\": \"review\", \"finished\": 1795594541.5763013}"
       }
     ],
     "calls": [
