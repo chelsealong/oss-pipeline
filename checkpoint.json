@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795648317.9271197,
+  "saved_at": 1795648331.2240462,
   "tables": {
     "tasks": [
       {
@@ -27310,10 +27310,10 @@
         "repo": "openclaw",
         "number": 205544,
         "note": "",
-        "status": "running",
+        "status": "validation_wait",
         "created": 1795645535.9685256,
-        "updated": 1795645538.9547148,
-        "result": "",
+        "updated": 1795648331.1908953,
+        "result": "review: VALIDATION_ENVIRONMENT: AGENTS.md requires a user-visible change to be reproduced through an isolated Gateway with a real agent and model. No live run was provided or possible with the available model credentials. Focused tests passed (8/8), the deep-research extension lane passed (105/105), and targeted typecheck, lint, format, and docs checks passed. The optional check:changed failed only on findings in untouched files; current upstream policy does not make it a pre-PR gate. The patch and PR body otherwise match the verified routing behavior.",
         "attempts": 1
       },
       {
@@ -47261,24 +47261,12 @@
         "value": "{\"date\": \"2026-11-25\", \"used\": {\"comfyui\": 4, \"langfuse\": 3, \"llama-index\": 6, \"spec-kit\": 1, \"openclaw\": 1}}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795647290.3408937, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:2101:1:generation",
         "value": "{\"task\": 2101, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795647290.4112084, \"seconds\": 1659.681, \"tokens\": {\"totalTokens\": 25801318, \"inputTokens\": 25782364, \"cachedInputTokens\": 25626112, \"cacheWriteInputTokens\": 0, \"outputTokens\": 18954, \"reasoningOutputTokens\": 3528}, \"first_event_ms\": 1795645643927, \"last_event_ms\": 1795647290327, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"2101\": {\"remaining\": 0, \"until\": 1795654492.3660684}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795632732.2351549, \"group\": \"new_fix\", \"task\": 2099, \"phase\": \"generation\"}, {\"at\": 1795633919.3503683, \"group\": \"new_fix\", \"task\": 2100, \"phase\": \"generation\"}, {\"at\": 1795638874.211235, \"group\": \"new_fix\", \"task\": 2023, \"phase\": \"generation\"}, {\"at\": 1795645630.732129, \"group\": \"new_fix\", \"task\": 2101, \"phase\": \"generation\"}, {\"at\": 1795647292.3660684, \"group\": \"new_fix\", \"task\": 2101, \"phase\": \"review\"}]"
-      },
-      {
-        "key": "task:2101",
-        "value": "{\"started\": 1795645538.9547431, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2101/attempt-1\", \"attempt\": 1, \"phase\": \"review\", \"base\": \"f00839db8eed9db1a8728ce941851ebd66b0440a\", \"generation_started\": 1795645630.7319088, \"dispatch_paid_date\": \"2026-11-25\", \"phase_started\": 1795647296.91113}"
       },
       {
         "key": "publication_check:hermes",
@@ -47509,14 +47497,6 @@
         "value": "{\"at\": 1795648052.0166273, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795648256.987954, \"state\": \"active\", \"pending_candidates\": 404, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 4, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400, \"judge_unavailable\": 4}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 5, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 964.6088213920593, \"judge_tokens_spent_24h\": 88660, \"screening_calls_5h\": 0, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {\"llama-index\": {\"used\": 6, \"limit\": 6}}, \"recent_wait_tasks_24h\": {\"human_wait\": 3, \"validation_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8365\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8365\", \"title\": \"feat(models): support forwarding extra_body in OpenAILlm\", \"first_seen\": 1795633704.9187405, \"last_checked\": 1795648001.3191159, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8364\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8364\", \"title\": \"Feature: Keep tool results from flooding the context window: offload oversized results to artifacts and clear stale ones, without breaking the context cache\", \"first_seen\": 1795632701.192445, \"last_checked\": 1795648003.819579, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8361\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8361\", \"title\": \"Workflow RequestInput: an object answer with a field named result is unwrapped, so the workflow can never resume\", \"first_seen\": 1795629136.1140573, \"last_checked\": 1795648006.338701, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8360\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8360\", \"title\": \"OpenAPIToolset: server URL variables are never substituted, so every request goes to the literal {var} URL\", \"first_seen\": 1795629124.6955233, \"last_checked\": 1795648008.7939553, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8359\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8359\", \"title\": \"Workflow RequestInput: an answer that leaves out optional fields gets None instead of the schema defaults, and resume crashes\", \"first_seen\": 1795629059.069342, \"last_checked\": 1795648011.3196118, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8358\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8358\", \"title\": \"Resumable Workflow: answering a RequestInput in a looping graph hangs 15 s and fails with \\\"Replay divergence detected\\\" (since 6dbe5bb6d)\", \"first_seen\": 1795627459.2220302, \"last_checked\": 1795648013.7803195, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8357\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8357\", \"title\": \"A2A (new executor): a state-only event becomes a status update whose agent message has no parts, and it lands in task history\", \"first_seen\": 1795624002.571899, \"last_checked\": 1795648016.3511848, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8353\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8353\", \"title\": \"InMemoryMemoryService.add_session_to_memory deletes older turns when the session is loaded with num_recent_events\", \"first_seen\": 1795618533.5183134, \"last_checked\": 1795648018.9257944, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8352\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8352\", \"title\": \"Tool results posted together for calls from two turns are duplicated in later LLM requests\", \"first_seen\": 1795618536.0574815, \"last_checked\": 1795648021.428593, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8351\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8351\", \"title\": \"AgentEvaluator with num_runs > 1 reuses the pinned session across runs, so later runs score wrong\", \"first_seen\": 1795618322.4482243, \"last_checked\": 1795648023.903133, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8345\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8345\", \"title\": \"A static \\\"will this upgrade break me?\\\" check for google-adk\", \"first_seen\": 1795598185.8719258, \"last_checked\": 1795648026.488267, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795648256.9893878, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 3, \"human_wait\": 3, \"queued\": 2, \"running\": 1, \"skipped\": 11, \"validation_wait\": 1}, \"respond\": {\"blocked\": 2, \"done\": 2}}}"
-      },
-      {
         "key": "candidate_capacity:adk",
         "value": "{\"at\": 1795648306.0129027, \"allowed\": true, \"reason\": \"\"}"
       },
@@ -47553,16 +47533,24 @@
         "value": "{\"at\": 1795648311.6283848, \"allowed\": true, \"reason\": \"\"}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795648313.388846, \"windows\": [{\"name\": \"primary\", \"used_percent\": 4, \"resets_at\": 1796162550}]}"
+        "key": "worker_heartbeat",
+        "value": "1795648317.4200995"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1795648315.152679"
+        "key": "runner_resources",
+        "value": "{\"at\": 1795648317.9126792, \"disk_free_bytes\": 77286449152, \"memory_bytes\": {\"MemTotal\": 16759279616, \"MemAvailable\": 15556894720, \"SwapTotal\": 3221221376, \"SwapFree\": 2786021376}, \"memory_events\": null}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1795648322.4007277, \"state\": \"active\", \"pending_candidates\": 404, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 4, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 400, \"judge_unavailable\": 4}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 5, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1030.02366232872, \"judge_tokens_spent_24h\": 88660, \"screening_calls_5h\": 0, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {\"llama-index\": {\"used\": 6, \"limit\": 6}}, \"recent_wait_tasks_24h\": {\"human_wait\": 3, \"validation_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8365\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8365\", \"title\": \"feat(models): support forwarding extra_body in OpenAILlm\", \"first_seen\": 1795633704.9187405, \"last_checked\": 1795648001.3191159, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8364\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8364\", \"title\": \"Feature: Keep tool results from flooding the context window: offload oversized results to artifacts and clear stale ones, without breaking the context cache\", \"first_seen\": 1795632701.192445, \"last_checked\": 1795648003.819579, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8361\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8361\", \"title\": \"Workflow RequestInput: an object answer with a field named result is unwrapped, so the workflow can never resume\", \"first_seen\": 1795629136.1140573, \"last_checked\": 1795648006.338701, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8360\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8360\", \"title\": \"OpenAPIToolset: server URL variables are never substituted, so every request goes to the literal {var} URL\", \"first_seen\": 1795629124.6955233, \"last_checked\": 1795648008.7939553, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8359\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8359\", \"title\": \"Workflow RequestInput: an answer that leaves out optional fields gets None instead of the schema defaults, and resume crashes\", \"first_seen\": 1795629059.069342, \"last_checked\": 1795648011.3196118, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8358\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8358\", \"title\": \"Resumable Workflow: answering a RequestInput in a looping graph hangs 15 s and fails with \\\"Replay divergence detected\\\" (since 6dbe5bb6d)\", \"first_seen\": 1795627459.2220302, \"last_checked\": 1795648013.7803195, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8357\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8357\", \"title\": \"A2A (new executor): a state-only event becomes a status update whose agent message has no parts, and it lands in task history\", \"first_seen\": 1795624002.571899, \"last_checked\": 1795648016.3511848, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8353\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8353\", \"title\": \"InMemoryMemoryService.add_session_to_memory deletes older turns when the session is loaded with num_recent_events\", \"first_seen\": 1795618533.5183134, \"last_checked\": 1795648018.9257944, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8352\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8352\", \"title\": \"Tool results posted together for calls from two turns are duplicated in later LLM requests\", \"first_seen\": 1795618536.0574815, \"last_checked\": 1795648021.428593, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8351\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8351\", \"title\": \"AgentEvaluator with num_runs > 1 reuses the pinned session across runs, so later runs score wrong\", \"first_seen\": 1795618322.4482243, \"last_checked\": 1795648023.903133, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8345\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8345\", \"title\": \"A static \\\"will this upgrade break me?\\\" check for google-adk\", \"first_seen\": 1795598185.8719258, \"last_checked\": 1795648026.488267, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795648322.4025526, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 3, \"human_wait\": 3, \"queued\": 2, \"running\": 1, \"skipped\": 11, \"validation_wait\": 1}, \"respond\": {\"blocked\": 2, \"done\": 2}}}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1795648316.6345444"
+        "value": "1795648326.6685207"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -47570,15 +47558,35 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795648316.7222676"
+        "value": "1795648326.7065449"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795648317.4200995"
+        "key": "detector_heartbeat",
+        "value": "1795648330.1529877"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795648317.9126792, \"disk_free_bytes\": 77286449152, \"memory_bytes\": {\"MemTotal\": 16759279616, \"MemAvailable\": 15556894720, \"SwapTotal\": 3221221376, \"SwapFree\": 2786021376}, \"memory_events\": null}"
+        "key": "codex_quota",
+        "value": "{\"at\": 1795648330.81849, \"windows\": [{\"name\": \"primary\", \"used_percent\": 4, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795648330.8272617, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2101:1:review",
+        "value": "{\"task\": 2101, \"repo\": \"openclaw\", \"attempt\": 1, \"phase\": \"review\", \"at\": 1795648330.8383927, \"seconds\": 1038.478, \"tokens\": {\"totalTokens\": 11300893, \"inputTokens\": 11287150, \"cachedInputTokens\": 11179776, \"cacheWriteInputTokens\": 0, \"outputTokens\": 13743, \"reasoningOutputTokens\": 4276}, \"first_event_ms\": 1795647305409, \"last_event_ms\": 1795648330825, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "followup:task:2101",
+        "value": "{\"status\": \"needs_human\", \"task\": 2101, \"repo\": \"openclaw\", \"number\": 205544, \"reason\": \"review: VALIDATION_ENVIRONMENT: AGENTS.md requires a user-visible change to be reproduced through an isolated Gateway with a real agent and model. No live run was provided or possible with the available model credentials. Focused tests passed (8/8), the deep-research extension lane passed (105/105), and targeted typecheck, lint, format, and docs checks passed. The optional check:changed failed only on findings in untouched files; current upstream policy does not make it a pre-PR gate. The patch and PR body otherwise match the verified routing behavior.\", \"base\": \"f00839db8eed9db1a8728ce941851ebd66b0440a\", \"patch_digest\": \"a220097262888ee350a646e818e4b12c460b024ca9a5ee7fa06b9c94f39dde77\", \"evidence_bundle\": \"2101-1.json.enc\"}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:2101",
+        "value": "{\"started\": 1795645538.9547431, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2101/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"f00839db8eed9db1a8728ce941851ebd66b0440a\", \"generation_started\": 1795645630.7319088, \"dispatch_paid_date\": \"2026-11-25\", \"phase_started\": 1795647296.91113, \"patch_digest\": \"a220097262888ee350a646e818e4b12c460b024ca9a5ee7fa06b9c94f39dde77\", \"last_execution_phase\": \"review\", \"finished\": 1795648331.0631094}"
       }
     ],
     "calls": [
