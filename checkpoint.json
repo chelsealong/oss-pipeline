@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795598665.8035834,
+  "saved_at": 1795598730.418204,
   "tables": {
     "tasks": [
       {
@@ -46835,10 +46835,6 @@
         "value": "[]"
       },
       {
-        "key": "pause",
-        "value": "{}"
-      },
-      {
         "key": "usage:2083:1:generation",
         "value": "{\"task\": 2083, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795591824.1051495, \"seconds\": 395.886, \"tokens\": {\"totalTokens\": 4047774, \"inputTokens\": 4036832, \"cachedInputTokens\": 3947392, \"cacheWriteInputTokens\": 0, \"outputTokens\": 10942, \"reasoningOutputTokens\": 4157}, \"first_event_ms\": 1795591437139, \"last_event_ms\": 1795591824077, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -46937,10 +46933,6 @@
       {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795579911.3582027, \"group\": \"new_fix\", \"task\": 1976, \"phase\": \"generation\"}, {\"at\": 1795591428.2206085, \"group\": \"new_fix\", \"task\": 2083, \"phase\": \"generation\"}, {\"at\": 1795591825.2254736, \"group\": \"new_fix\", \"task\": 2083, \"phase\": \"review\"}, {\"at\": 1795592084.359916, \"group\": \"repair\", \"task\": 2083, \"phase\": \"remediation\"}, {\"at\": 1795592738.6379118, \"group\": \"repair\", \"task\": 2083, \"phase\": \"rereview\"}, {\"at\": 1795593660.3340437, \"group\": \"new_fix\", \"task\": 2084, \"phase\": \"generation\"}, {\"at\": 1795593957.7000256, \"group\": \"new_fix\", \"task\": 2084, \"phase\": \"review\"}, {\"at\": 1795594574.9539456, \"group\": \"new_fix\", \"task\": 2086, \"phase\": \"generation\"}, {\"at\": 1795594850.0423055, \"group\": \"new_fix\", \"task\": 2086, \"phase\": \"review\"}, {\"at\": 1795595087.0013835, \"group\": \"maintenance\", \"task\": 2087, \"phase\": \"generation\"}, {\"at\": 1795595333.5446892, \"group\": \"maintenance\", \"task\": 2087, \"phase\": \"review\"}, {\"at\": 1795595832.09378, \"group\": \"screening\", \"task\": 2088, \"phase\": \"screening-4670e2f1f326373b9fef\"}, {\"at\": 1795595851.4677892, \"group\": \"new_fix\", \"task\": 2088, \"phase\": \"generation\"}, {\"at\": 1795596671.0394788, \"group\": \"new_fix\", \"task\": 2089, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795596892.3689713, \"source\": \"completed task phase\"}"
       },
       {
         "key": "usage:2089:1:generation",
@@ -47139,64 +47131,72 @@
         "value": "{\"at\": 1795598470.8323007, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795598604.939134, \"state\": \"stalled\", \"pending_candidates\": 599, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 199, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 599}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 13, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1933.8902893066406, \"judge_tokens_spent_24h\": 95116, \"screening_calls_5h\": 1, \"screening_calls_24h\": 5, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 1, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8326\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8326\", \"title\": \"Docs: production deployment guide covering eval gates, human-in-the-loop approval, and guardrail exit handling\", \"first_seen\": 1795533378.1269233, \"last_checked\": 1795541465.7347813, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8325\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8325\", \"title\": \"Parallel scalar state updates roll back when tool completion order differs from call order\", \"first_seen\": 1795531288.8097043, \"last_checked\": 1795541468.2018383, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8345\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8345\", \"title\": \"A static \\\"will this upgrade break me?\\\" check for google-adk\", \"first_seen\": 1795598185.8719258, \"last_checked\": 1795598284.7735624, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795598604.9581196, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 5, \"human_wait\": 1, \"skipped\": 7}, \"respond\": {\"done\": 5, \"skipped\": 2, \"validation_wait\": 1}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795598620.3938959, \"windows\": [{\"name\": \"primary\", \"used_percent\": 2, \"resets_at\": 1796162550}]}"
-      },
-      {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795598621.4178872, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795598621.9492097, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795598622.3370564, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795598622.7454317, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795598623.228501, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795598623.5588763, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795598624.6968887, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795598625.0223737, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795598625.359178, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795598626.021872, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
         "key": "prwatch_heartbeat",
         "value": "1795598632.0534782"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795598653.3630915"
+        "key": "admission_health",
+        "value": "{\"at\": 1795598669.605601, \"state\": \"stalled\", \"pending_candidates\": 600, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 200, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 600}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 13, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1998.5571689605713, \"judge_tokens_spent_24h\": 95116, \"screening_calls_5h\": 1, \"screening_calls_24h\": 5, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 1, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8326\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8326\", \"title\": \"Docs: production deployment guide covering eval gates, human-in-the-loop approval, and guardrail exit handling\", \"first_seen\": 1795533378.1269233, \"last_checked\": 1795541465.7347813, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8325\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8325\", \"title\": \"Parallel scalar state updates roll back when tool completion order differs from call order\", \"first_seen\": 1795531288.8097043, \"last_checked\": 1795541468.2018383, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8345\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8345\", \"title\": \"A static \\\"will this upgrade break me?\\\" check for google-adk\", \"first_seen\": 1795598185.8719258, \"last_checked\": 1795598284.7735624, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795598669.6144726, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 5, \"human_wait\": 1, \"skipped\": 7}, \"respond\": {\"done\": 5, \"skipped\": 2, \"validation_wait\": 1}}}"
+      },
+      {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1795598695.2623599, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1795598695.6695204, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1795598696.201079, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1795598696.6170392, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1795598697.08929, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1795598697.4628696, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1795598698.370146, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1795598698.8501585, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:autogpt",
+        "value": "{\"at\": 1795598699.6113162, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:comfyui",
+        "value": "{\"at\": 1795598700.2558706, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1795598701.793487, \"windows\": [{\"name\": \"primary\", \"used_percent\": 2, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795598701.7966433, \"source\": \"authenticated probe\"}"
+      },
+      {
+        "key": "pause",
+        "value": "{}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795598726.6420295"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -47204,19 +47204,19 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795598661.1230233"
+        "value": "1795598726.843183"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1795598661.2176592"
+        "key": "worker_heartbeat",
+        "value": "1795598728.4162602"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795598664.8065872"
+        "value": "1795598729.808012"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1795598665.7855785, \"disk_free_bytes\": 83054379008, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15203131392, \"SwapTotal\": 3221221376, \"SwapFree\": 3221135360}, \"memory_events\": null}"
+        "value": "{\"at\": 1795598730.403752, \"disk_free_bytes\": 83051933696, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15221694464, \"SwapTotal\": 3221221376, \"SwapFree\": 3221135360}, \"memory_events\": null}"
       }
     ],
     "calls": [
