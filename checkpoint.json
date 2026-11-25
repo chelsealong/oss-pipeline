@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795591821.366639,
+  "saved_at": 1795591825.2416494,
   "tables": {
     "tasks": [
       {
@@ -46769,10 +46769,6 @@
         "value": "1795590150.8929036"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795590888.654854, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -46807,14 +46803,6 @@
       {
         "key": "dispatch_budget",
         "value": "{\"date\": \"2026-11-25\", \"used\": {\"comfyui\": 1}}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"2083\": {\"remaining\": 1, \"until\": 1795598628.2206085}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1795574855.8717945, \"group\": \"new_fix\", \"task\": 2001, \"phase\": \"generation\"}, {\"at\": 1795579911.3582027, \"group\": \"new_fix\", \"task\": 1976, \"phase\": \"generation\"}, {\"at\": 1795591428.2206085, \"group\": \"new_fix\", \"task\": 2083, \"phase\": \"generation\"}]"
       },
       {
         "key": "task:2083",
@@ -47021,18 +47009,6 @@
         "value": "{\"at\": 1795591800.050956, \"allowed\": true, \"reason\": \"\"}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795591815.7227783, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1796162550}]}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1795591819.5573554"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1795591819.6388204"
-      },
-      {
         "key": "worker_heartbeat",
         "value": "1795591819.8788123"
       },
@@ -47047,17 +47023,37 @@
       {
         "key": "runner_resources",
         "value": "{\"at\": 1795591821.3068342, \"disk_free_bytes\": 82187550720, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 15331082240, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1795591824.0771, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795591824.0805418, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2083:1:generation",
+        "value": "{\"task\": 2083, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795591824.1051495, \"seconds\": 395.886, \"tokens\": {\"totalTokens\": 4047774, \"inputTokens\": 4036832, \"cachedInputTokens\": 3947392, \"cacheWriteInputTokens\": 0, \"outputTokens\": 10942, \"reasoningOutputTokens\": 4157}, \"first_event_ms\": 1795591437139, \"last_event_ms\": 1795591824077, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795591824.5772865"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795591824.6389124"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"2083\": {\"remaining\": 0, \"until\": 1795599025.2254736}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1795574855.8717945, \"group\": \"new_fix\", \"task\": 2001, \"phase\": \"generation\"}, {\"at\": 1795579911.3582027, \"group\": \"new_fix\", \"task\": 1976, \"phase\": \"generation\"}, {\"at\": 1795591428.2206085, \"group\": \"new_fix\", \"task\": 2083, \"phase\": \"generation\"}, {\"at\": 1795591825.2254736, \"group\": \"new_fix\", \"task\": 2083, \"phase\": \"review\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1794986683.6793656,
-        "kind": "judge"
-      },
-      {
-        "at": 1794986697.788732,
-        "kind": "judge"
-      },
       {
         "at": 1794990483.0415468,
         "kind": "judge"
@@ -50077,6 +50073,10 @@
       {
         "at": 1795591712.3504024,
         "kind": "judge"
+      },
+      {
+        "at": 1795591825.2261639,
+        "kind": "codex"
       }
     ]
   }
