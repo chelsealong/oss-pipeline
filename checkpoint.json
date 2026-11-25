@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795626644.884448,
+  "saved_at": 1795626711.4029038,
   "tables": {
     "tasks": [
       {
@@ -47176,22 +47176,6 @@
         "value": "{\"at\": 1795625528.690603, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
-        "key": "task:219",
-        "value": "{\"recovery_checked_at\": 1795625773.9011405}"
-      },
-      {
-        "key": "recovery_audit:219",
-        "value": "{\"at\": 1795625774.8178816, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:222",
-        "value": "{\"recovery_checked_at\": 1795625774.819463}"
-      },
-      {
-        "key": "recovery_audit:222",
-        "value": "{\"at\": 1795625775.8250506, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1795625789.3662808, \"source\": \"authenticated probe\"}"
       },
@@ -47385,55 +47369,71 @@
       },
       {
         "key": "admission_health",
-        "value": "{\"at\": 1795626584.0182037, \"state\": \"stalled\", \"pending_candidates\": 654, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 254, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 654}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 8, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 2875.9507880210876, \"judge_tokens_spent_24h\": 62408, \"screening_calls_5h\": 0, \"screening_calls_24h\": 5, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 3, \"validation_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8326\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8326\", \"title\": \"Docs: production deployment guide covering eval gates, human-in-the-loop approval, and guardrail exit handling\", \"first_seen\": 1795533378.1269233, \"last_checked\": 1795541465.7347813, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8325\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8325\", \"title\": \"Parallel scalar state updates roll back when tool completion order differs from call order\", \"first_seen\": 1795531288.8097043, \"last_checked\": 1795541468.2018383, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8357\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8357\", \"title\": \"A2A (new executor): a state-only event becomes a status update whose agent message has no parts, and it lands in task history\", \"first_seen\": 1795624002.571899, \"last_checked\": 1795626056.0096753, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8353\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8353\", \"title\": \"InMemoryMemoryService.add_session_to_memory deletes older turns when the session is loaded with num_recent_events\", \"first_seen\": 1795618533.5183134, \"last_checked\": 1795626058.4481342, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8352\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8352\", \"title\": \"Tool results posted together for calls from two turns are duplicated in later LLM requests\", \"first_seen\": 1795618536.0574815, \"last_checked\": 1795626061.0438151, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8351\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8351\", \"title\": \"AgentEvaluator with num_runs > 1 reuses the pinned session across runs, so later runs score wrong\", \"first_seen\": 1795618322.4482243, \"last_checked\": 1795626062.8647468, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8345\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8345\", \"title\": \"A static \\\"will this upgrade break me?\\\" check for google-adk\", \"first_seen\": 1795598185.8719258, \"last_checked\": 1795626065.5765076, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+        "value": "{\"at\": 1795626648.8797312, \"state\": \"stalled\", \"pending_candidates\": 654, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 254, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 654}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 8, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 2940.81383562088, \"judge_tokens_spent_24h\": 62408, \"screening_calls_5h\": 0, \"screening_calls_24h\": 5, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 3, \"validation_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8326\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8326\", \"title\": \"Docs: production deployment guide covering eval gates, human-in-the-loop approval, and guardrail exit handling\", \"first_seen\": 1795533378.1269233, \"last_checked\": 1795541465.7347813, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8325\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8325\", \"title\": \"Parallel scalar state updates roll back when tool completion order differs from call order\", \"first_seen\": 1795531288.8097043, \"last_checked\": 1795541468.2018383, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8357\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8357\", \"title\": \"A2A (new executor): a state-only event becomes a status update whose agent message has no parts, and it lands in task history\", \"first_seen\": 1795624002.571899, \"last_checked\": 1795626056.0096753, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8353\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8353\", \"title\": \"InMemoryMemoryService.add_session_to_memory deletes older turns when the session is loaded with num_recent_events\", \"first_seen\": 1795618533.5183134, \"last_checked\": 1795626058.4481342, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8352\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8352\", \"title\": \"Tool results posted together for calls from two turns are duplicated in later LLM requests\", \"first_seen\": 1795618536.0574815, \"last_checked\": 1795626061.0438151, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8351\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8351\", \"title\": \"AgentEvaluator with num_runs > 1 reuses the pinned session across runs, so later runs score wrong\", \"first_seen\": 1795618322.4482243, \"last_checked\": 1795626062.8647468, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8345\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8345\", \"title\": \"A static \\\"will this upgrade break me?\\\" check for google-adk\", \"first_seen\": 1795598185.8719258, \"last_checked\": 1795626065.5765076, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1795626584.019591, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 5, \"human_wait\": 3, \"skipped\": 8, \"validation_wait\": 1}, \"respond\": {\"blocked\": 2, \"done\": 4, \"skipped\": 2}}}"
+        "value": "{\"at\": 1795626648.8813047, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 5, \"human_wait\": 3, \"skipped\": 8, \"validation_wait\": 1}, \"respond\": {\"blocked\": 2, \"done\": 4, \"skipped\": 2}}}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795626611.0908732, \"windows\": [{\"name\": \"primary\", \"used_percent\": 2, \"resets_at\": 1796162550}]}"
+        "value": "{\"at\": 1795626671.4338477, \"windows\": [{\"name\": \"primary\", \"used_percent\": 2, \"resets_at\": 1796162550}]}"
       },
       {
         "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795626612.3221204, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795626676.9913325, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795626612.8533807, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795626677.4580133, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795626613.280828, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795626677.8653438, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795626613.6988652, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795626678.4043846, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795626614.1783416, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795626678.9213858, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795626614.6286402, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795626679.5316079, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795626615.5792136, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+        "value": "{\"at\": 1795626680.5574384, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
       },
       {
         "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795626616.050772, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795626681.0357878, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795626616.4825075, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795626681.4913673, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795626617.1668704, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795626682.0904546, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795626703.8358538"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795626707.1746318"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795626708.0059733"
+      },
+      {
+        "key": "task:219",
+        "value": "{\"recovery_checked_at\": 1795626709.3635645}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -47441,23 +47441,23 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795626639.8014772"
+        "value": "1795626709.378654"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1795626641.358131"
+        "key": "recovery_audit:219",
+        "value": "{\"at\": 1795626710.2218862, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1795626643.0045953"
+        "key": "task:222",
+        "value": "{\"recovery_checked_at\": 1795626710.223648}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795626643.8291967"
+        "key": "recovery_audit:222",
+        "value": "{\"at\": 1795626711.016159, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1795626644.8692567, \"disk_free_bytes\": 86113058816, \"memory_bytes\": {\"MemTotal\": 16760348672, \"MemAvailable\": 15335395328, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1795626711.3875334, \"disk_free_bytes\": 86111248384, \"memory_bytes\": {\"MemTotal\": 16760348672, \"MemAvailable\": 15333068800, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       }
     ],
     "calls": [
