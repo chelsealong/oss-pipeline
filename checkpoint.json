@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795593574.4958682,
+  "saved_at": 1795593631.967059,
   "tables": {
     "tasks": [
       {
@@ -46823,10 +46823,6 @@
         "value": "{\"at\": 1795592500.5082662, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795592738.6059222, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:2083:1:remediation",
         "value": "{\"task\": 2083, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"remediation\", \"at\": 1795592738.613503, \"seconds\": 654.255, \"tokens\": {\"totalTokens\": 2191330, \"inputTokens\": 2183538, \"cachedInputTokens\": 2137472, \"cacheWriteInputTokens\": 0, \"outputTokens\": 7792, \"reasoningOutputTokens\": 2521}, \"first_event_ms\": 1795592095880, \"last_event_ms\": 1795592738597, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -46837,10 +46833,6 @@
       {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795574855.8717945, \"group\": \"new_fix\", \"task\": 2001, \"phase\": \"generation\"}, {\"at\": 1795579911.3582027, \"group\": \"new_fix\", \"task\": 1976, \"phase\": \"generation\"}, {\"at\": 1795591428.2206085, \"group\": \"new_fix\", \"task\": 2083, \"phase\": \"generation\"}, {\"at\": 1795591825.2254736, \"group\": \"new_fix\", \"task\": 2083, \"phase\": \"review\"}, {\"at\": 1795592084.359916, \"group\": \"repair\", \"task\": 2083, \"phase\": \"remediation\"}, {\"at\": 1795592738.6379118, \"group\": \"repair\", \"task\": 2083, \"phase\": \"rereview\"}]"
-      },
-      {
-        "key": "task:2083",
-        "value": "{\"started\": 1795591418.8994572, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2083/attempt-1\", \"attempt\": 1, \"phase\": \"rereview\", \"base\": \"0d0e105153c02261519a6a552c52ec1cd5d9855e\", \"generation_started\": 1795591428.2204547, \"dispatch_paid_date\": \"2026-11-25\", \"phase_started\": 1795592742.7466488}"
       },
       {
         "key": "judge_usage",
@@ -47011,68 +47003,80 @@
         "value": "{\"at\": 1795593507.4153965, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
+        "key": "runner_resources",
+        "value": "{\"at\": 1795593574.462885, \"disk_free_bytes\": 81732632576, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 14834950144, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+      },
+      {
         "key": "admission_health",
-        "value": "{\"at\": 1795593513.6482944, \"state\": \"active\", \"pending_candidates\": 589, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 189, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 589}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 5, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 775.0014703273773, \"judge_tokens_spent_24h\": 94816, \"screening_calls_5h\": 0, \"screening_calls_24h\": 4, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8326\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8326\", \"title\": \"Docs: production deployment guide covering eval gates, human-in-the-loop approval, and guardrail exit handling\", \"first_seen\": 1795533378.1269233, \"last_checked\": 1795541465.7347813, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8325\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8325\", \"title\": \"Parallel scalar state updates roll back when tool completion order differs from call order\", \"first_seen\": 1795531288.8097043, \"last_checked\": 1795541468.2018383, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
+        "value": "{\"at\": 1795593580.4194393, \"state\": \"active\", \"pending_candidates\": 589, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 189, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 589}, \"screening_wait_tasks\": 0, \"active_tasks\": 3, \"running_tasks\": 1, \"queued_tasks\": 2, \"codex_calls_5h\": 5, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 841.7725775241852, \"judge_tokens_spent_24h\": 94816, \"screening_calls_5h\": 0, \"screening_calls_24h\": 4, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8326\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8326\", \"title\": \"Docs: production deployment guide covering eval gates, human-in-the-loop approval, and guardrail exit handling\", \"first_seen\": 1795533378.1269233, \"last_checked\": 1795541465.7347813, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8325\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8325\", \"title\": \"Parallel scalar state updates roll back when tool completion order differs from call order\", \"first_seen\": 1795531288.8097043, \"last_checked\": 1795541468.2018383, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1795593513.6495295, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 3, \"queued\": 2, \"running\": 1, \"skipped\": 5}, \"respond\": {\"blocked\": 1, \"done\": 4, \"skipped\": 2, \"validation_wait\": 1}}}"
+        "value": "{\"at\": 1795593580.522561, \"tasks\": {\"fix\": {\"blocked\": 1, \"done\": 3, \"queued\": 2, \"running\": 1, \"skipped\": 5}, \"respond\": {\"blocked\": 1, \"done\": 4, \"skipped\": 2, \"validation_wait\": 1}}}"
       },
       {
         "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795593519.4169786, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795593582.5267828, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795593519.8893132, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795593582.8044753, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795593520.3221881, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795593583.2355504, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795593520.6724637, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795593583.6127312, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795593521.2250283, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795593584.015105, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795593521.71656, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795593584.3145125, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795593522.6330338, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+        "value": "{\"at\": 1795593585.17472, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
       },
       {
         "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795593523.0304973, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795593585.6801322, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795593523.4065797, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795593586.2000592, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795593524.1117985, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795593550.3217325, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1796162550}]}"
+        "value": "{\"at\": 1795593586.9257581, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1795593561.5230854"
+        "value": "1795593621.6342466"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1795593569.3180416"
+        "value": "1795593628.4877498"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795593569.691725"
+        "value": "1795593629.6932116"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1795593630.3621273, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795593630.363968, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2083:1:rereview",
+        "value": "{\"task\": 2083, \"repo\": \"comfyui\", \"attempt\": 1, \"phase\": \"rereview\", \"at\": 1795593630.3932457, \"seconds\": 891.757, \"tokens\": {\"totalTokens\": 3477366, \"inputTokens\": 3469252, \"cachedInputTokens\": 3385600, \"cacheWriteInputTokens\": 0, \"outputTokens\": 8114, \"reasoningOutputTokens\": 2580}, \"first_event_ms\": 1795592750510, \"last_event_ms\": 1795593630362, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -47080,11 +47084,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795593571.0907097"
+        "value": "1795593631.3712842"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795593574.462885, \"disk_free_bytes\": 81732632576, \"memory_bytes\": {\"MemTotal\": 16760340480, \"MemAvailable\": 14834950144, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "key": "task:2083",
+        "value": "{\"started\": 1795591418.8994572, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2083/attempt-1\", \"attempt\": 1, \"phase\": \"publishing\", \"base\": \"0d0e105153c02261519a6a552c52ec1cd5d9855e\", \"generation_started\": 1795591428.2204547, \"dispatch_paid_date\": \"2026-11-25\", \"phase_started\": 1795592742.7466488, \"reviewed_screenshots\": [], \"publication_started\": true, \"branch\": \"fix/codex-comfyui-17977\", \"head\": \"bf8201c03af2ce6bc8b054cb5411c3a0e05ca343\"}"
       }
     ],
     "calls": [
