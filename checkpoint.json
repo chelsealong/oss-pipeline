@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795581712.9803424,
+  "saved_at": 1795581777.001195,
   "tables": {
     "tasks": [
       {
@@ -46760,14 +46760,6 @@
         "value": "[{\"at\": 1795565144.1681979, \"group\": \"maintenance\", \"task\": 2082, \"phase\": \"generation\"}, {\"at\": 1795565330.3726876, \"group\": \"maintenance\", \"task\": 2082, \"phase\": \"review\"}, {\"at\": 1795574855.8717945, \"group\": \"new_fix\", \"task\": 2001, \"phase\": \"generation\"}, {\"at\": 1795579911.3582027, \"group\": \"new_fix\", \"task\": 1976, \"phase\": \"generation\"}]"
       },
       {
-        "key": "pause",
-        "value": "{}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795579959.4393003, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:1976:2:generation",
         "value": "{\"task\": 1976, \"repo\": \"llama-index\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1795579959.4418833, \"seconds\": 48.084, \"tokens\": {\"totalTokens\": 102154, \"inputTokens\": 100786, \"cachedInputTokens\": 70016, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1368, \"reasoningOutputTokens\": 207}, \"first_event_ms\": 1795579921561, \"last_event_ms\": 1795579959437, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -46810,10 +46802,6 @@
       {
         "key": "task:54",
         "value": "{\"recovery_checked_at\": 1795581368.3333132}"
-      },
-      {
-        "key": "prwatch_heartbeat",
-        "value": "1795581371.7736554"
       },
       {
         "key": "recovery_audit:54",
@@ -46957,63 +46945,79 @@
       },
       {
         "key": "admission_health",
-        "value": "{\"at\": 1795581652.4848666, \"state\": \"waiting\", \"pending_candidates\": 570, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 1, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 169, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 569, \"judge_unavailable\": 1}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1741.1195628643036, \"judge_tokens_spent_24h\": 76755, \"screening_calls_5h\": 0, \"screening_calls_24h\": 4, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 2}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8320\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8320\", \"title\": \"feat(integrations): add a Gemini Decisions classifier\", \"first_seen\": 1795495090.6547198, \"last_checked\": 1795502892.7084162, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8326\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8326\", \"title\": \"Docs: production deployment guide covering eval gates, human-in-the-loop approval, and guardrail exit handling\", \"first_seen\": 1795533378.1269233, \"last_checked\": 1795541465.7347813, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8325\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8325\", \"title\": \"Parallel scalar state updates roll back when tool completion order differs from call order\", \"first_seen\": 1795531288.8097043, \"last_checked\": 1795541468.2018383, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
+        "value": "{\"at\": 1795581716.502526, \"state\": \"stalled\", \"pending_candidates\": 570, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 1, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 169, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 569, \"judge_unavailable\": 1}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1805.1373341083527, \"judge_tokens_spent_24h\": 76755, \"screening_calls_5h\": 0, \"screening_calls_24h\": 4, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 2}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8320\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8320\", \"title\": \"feat(integrations): add a Gemini Decisions classifier\", \"first_seen\": 1795495090.6547198, \"last_checked\": 1795502892.7084162, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8326\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8326\", \"title\": \"Docs: production deployment guide covering eval gates, human-in-the-loop approval, and guardrail exit handling\", \"first_seen\": 1795533378.1269233, \"last_checked\": 1795541465.7347813, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8325\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8325\", \"title\": \"Parallel scalar state updates roll back when tool completion order differs from call order\", \"first_seen\": 1795531288.8097043, \"last_checked\": 1795541468.2018383, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1795581652.4859319, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 4, \"skipped\": 6, \"validation_wait\": 1}, \"respond\": {\"blocked\": 1, \"done\": 4, \"skipped\": 2, \"validation_wait\": 1}}}"
+        "value": "{\"at\": 1795581716.5036154, \"tasks\": {\"fix\": {\"blocked\": 2, \"done\": 4, \"skipped\": 6, \"validation_wait\": 1}, \"respond\": {\"blocked\": 1, \"done\": 4, \"skipped\": 2, \"validation_wait\": 1}}}"
+      },
+      {
+        "key": "prwatch_heartbeat",
+        "value": "1795581735.1547422"
       },
       {
         "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795581681.3630142, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795581745.7767723, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795581681.695818, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795581746.234626, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795581682.0292964, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795581746.5793939, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795581682.3271942, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795581746.9980042, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795581682.8343117, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795581747.3499787, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795581683.2017744, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795581747.7212017, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795581683.9259274, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+        "value": "{\"at\": 1795581748.6781242, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
       },
       {
         "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795581684.3998685, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795581749.1256495, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795581684.811532, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795581749.4790943, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795581685.146548, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795581749.7945676, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795581704.4005947, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1796162550}]}"
+        "value": "{\"at\": 1795581772.261125, \"windows\": [{\"name\": \"primary\", \"used_percent\": 1, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795581772.2625384, \"source\": \"authenticated probe\"}"
+      },
+      {
+        "key": "pause",
+        "value": "{}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795581772.8373384"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795581709.705291"
+        "value": "1795581774.7069569"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1795581710.2085726"
+        "value": "1795581774.8565745"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -47021,15 +47025,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795581710.8872354"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1795581712.8318622"
+        "value": "1795581775.989581"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1795581712.963606, \"disk_free_bytes\": 89783869440, \"memory_bytes\": {\"MemTotal\": 16464297984, \"MemAvailable\": 15141523456, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1795581776.9891665, \"disk_free_bytes\": 89785782272, \"memory_bytes\": {\"MemTotal\": 16464297984, \"MemAvailable\": 15114182656, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       }
     ],
     "calls": [
