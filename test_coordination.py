@@ -134,4 +134,46 @@ class CoordinationTests(unittest.TestCase):
         self.assertEqual(self.post.call_count,1)
 
 
+
+class ObservedCoordinationRecoveryTests(unittest.TestCase):
+    def test_only_audited_empty_attempt_can_be_reassessed_once(self):
+        import task_recovery
+        task = {'id': 2116,
+         'identity': 'fix:adk:8376:',
+         'kind': 'fix',
+         'repo': 'adk',
+         'number': 8376,
+         'note': '',
+         'status': 'human_wait',
+         'created': 1795698221.2159526,
+         'updated': 1795698293.352414,
+         'result': 'HUMAN_REVIEW_REQUIRED: CONTRIBUTING.md says to ask before contributing to issues '
+                   'without a `good first issue` or `help wanted` label. #8376 has neither label. A '
+                   'request was posted on the issue, but no maintainer has answered it. The reported '
+                   '`json.dumps` behavior is still present; no source changes were made while coordination '
+                   'is pending.',
+         'attempts': 1}
+        state = {'started': 1795698223.3351123,
+         'worker_slot': 0,
+         'terminal': True,
+         'retry_after': 0,
+         'folder': 'jobs/2116/attempt-1',
+         'attempt': 1,
+         'phase': 'human_wait',
+         'base': '03725e8c67ca27b2c07569797a0c18e867e0b217',
+         'coordination_url': 'https://github.com/google/adk-python/issues/8376#issuecomment-7192825551',
+         'generation_started': 1795698244.8116837,
+         'dispatch_paid_date': '2026-11-26',
+         'phase_started': 1795698249.9297173,
+         'patch_digest': 'af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc',
+         'last_execution_phase': 'generation',
+         'finished': 1795698293.2375662}
+        with patch.object(rt, "getmeta", return_value={}):
+            self.assertEqual(task_recovery.submission_regression(task, state), "adk_coordination_policy")
+            for change in ({"publication_started": True}, {"coordination_policy_rechecked": True}, {"base": "different"}, {"patch_digest": "changed"}):
+                self.assertIsNone(task_recovery.submission_regression(task, {**state, **change}))
+            for change in ({"id": 2117}, {"attempts": 2}, {"result": "Maintainer explicitly asked to wait"}):
+                self.assertIsNone(task_recovery.submission_regression({**task, **change}, state))
+
+
 if __name__=='__main__':unittest.main()

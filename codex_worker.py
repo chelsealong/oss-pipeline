@@ -51,6 +51,12 @@ review after PR submission, or the fact that this patch was generated with AI as
 When no such requirement applies, independently assess the code, tests and upstream policy;
 the absence of a named human attestation alone is not a reason to BLOCK. Never invent an
 attestation, tick an unfulfilled checkbox, waive a genuine required gate, or call AI review human.
+Distinguish an ask-before-contributing rule from an explicit wait-for-approval rule.
+For ADK, inspect the actual request in context.json comments and CURRENT contribution
+instructions. A verified posted request satisfies wording that only requires asking;
+it is not maintainer approval. Do not infer mandatory affirmative approval merely
+from silence. If current instructions or maintainer feedback require waiting,
+permission or assignment, honor that requirement and cite its exact wording.
 '''
 
 def validate_result(value, schema):
@@ -599,6 +605,8 @@ def process_one(task):
              'human_review':human_review}
     issue_repo=impl if pr else cfg['upstream']
     context['issue']=api(f'repos/{issue_repo}/issues/{num}')
+    if key=='adk':
+        context['coordination']=rt.getmeta(f'coordination:{issue_repo}#{num}',{})
     for label,path in [('comments',f'issues/{num}/comments'),('reviews',f'pulls/{num}/reviews'),('inline',f'pulls/{num}/comments')]:
         if not pr and label!='comments':continue
         pages=run(['gh','api','--paginate','--slurp',f'repos/{issue_repo}/{path}'])
@@ -685,6 +693,7 @@ a replacement PR description. State actual validation and disclose Codex assista
 Do not assert personal human validation.
 '''
     schema=RESPONSE_SCHEMA if kind=='respond' else GEN_SCHEMA
+    prompt+='\n'+HUMAN_REVIEW_POLICY
     prompt+=publication_contract.prompt(work,key,kind)
     prompt+='\nBefore editing, identify validation needed for this exact change from CURRENT upstream contribution instructions. Historical outcomes are examples, not additional mandatory gates. Focused tests and direct local behavior checks can be sufficient for submission; do not infer a universal requirement for a live provider, authenticated messaging account, system service, or production deployment. Do not make paid API calls or use personal credentials for validation. If an explicit applicable upstream check or the actual affected behavior needs unavailable hardware/platform/services, cite that requirement and return the specific validation blocker. If upstream explicitly requires human oversight, retain a minimal tested draft for the exact-patch human review workflow and return BLOCKED with reason beginning HUMAN_REVIEW_REQUIRED: before publication review; do not invent approval. Generic optional attestations are not a gate.\n'
     if kind=='respond':

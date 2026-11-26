@@ -35,6 +35,16 @@ def submission_regression(task,state):
     if publication_contract_regression(task,state):return 'publication_contract'
     phase=state.get('last_execution_phase',state.get('phase'))
     reason=task.get('result','')
+    if (task.get('id')==2116 and task['kind']=='fix' and task['repo']=='adk'
+            and task['number']==8376 and task['status']=='human_wait' and task['attempts']==1
+            and phase=='generation' and not state.get('coordination_policy_rechecked')
+            and state.get('base')=='03725e8c67ca27b2c07569797a0c18e867e0b217'
+            and state.get('patch_digest')=='af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc'
+            and state.get('coordination_url')=='https://github.com/google/adk-python/issues/8376#issuecomment-7192825551'
+            and reason=='HUMAN_REVIEW_REQUIRED: CONTRIBUTING.md says to ask before contributing to issues without a `good first issue` or `help wanted` label. #8376 has neither label. A request was posted on the issue, but no maintainer has answered it. The reported `json.dumps` behavior is still present; no source changes were made while coordination is pending.'):
+        # One fresh policy assessment of the observed empty attempt, not an
+        # approval and never a generic replay of human-review holds.
+        return 'adk_coordination_policy'
     failure=rt.getmeta('runner_failure',{})
     if (task['kind']=='fix' and task['repo']=='openclaw' and task['status']=='validation_wait'
             and phase=='generation' and task['attempts']<3 and state.get('base')
@@ -95,7 +105,7 @@ def recover_submission_regressions():
     from execution_support import retained_progress
     resumed=[]
     with rt.db() as db:
-        tasks=[dict(r) for r in db.execute("SELECT * FROM tasks WHERE status IN ('blocked','error','interrupted','validation_wait') ORDER BY updated")]
+        tasks=[dict(r) for r in db.execute("SELECT * FROM tasks WHERE status IN ('blocked','error','interrupted','validation_wait') OR (id=2116 AND status='human_wait') ORDER BY updated")]
     for task in tasks:
         if repo_limits.disabled(task['repo']):continue
         state=rt.task_state(task['id']);repair=submission_regression(task,state)
@@ -106,6 +116,9 @@ def recover_submission_regressions():
         if not path:continue
         payload=json.loads(path.read_text())
         if payload['execution'].get('attempt')!=task['attempts']:continue
+        if repair=='adk_coordination_policy':
+            if payload.get('diff') or payload.get('untracked'):continue
+            if submission_regression(task,payload['execution'])!=repair:continue
         if repair=='publication_contract':
             # Resume only complete source evidence in a fresh checkout. Ignored
             # build artifacts/retained dist locks are not restored or deleted.
@@ -417,7 +430,7 @@ def requeue(task,repair=None):
         if not rt._room(db,current['kind'],current['repo'])[0]:return False
         state=rt._meta(db,f"task:{task['id']}",{})
         if state.get('publication_started'):return False
-        if current['status']=='human_wait' and not attestation_only_gate(current['result']):
+        if current['status']=='human_wait' and repair!='adk_coordination_policy' and not attestation_only_gate(current['result']):
             state['approval_resume']=True
         else:
             if progress:state['resume_progress']=progress
@@ -425,6 +438,7 @@ def requeue(task,repair=None):
         state.update(phase='queued',terminal=False,retry_after=0)
         if repair:
             marker={'ui_screenshot_delivery':'ui_evidence_repaired','checkpoint_resource_failure':'checkpoint_repaired',
+                    'adk_coordination_policy':'coordination_policy_rechecked',
                     'langfuse_static_memory':'validation_memory_repaired',
                     'browser_config_directory':'browser_config_repaired',
                     'stale_prompt_cap':'stale_cap_repaired',
