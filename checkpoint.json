@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795718734.409759,
+  "saved_at": 1795718738.255169,
   "tables": {
     "tasks": [
       {
@@ -27557,10 +27557,10 @@
         "repo": "langfuse",
         "number": 21013,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1795718184.7604482,
-        "updated": 1795718191.7048929,
-        "result": "",
+        "updated": 1795718737.5162942,
+        "result": "Migration 0050 still contains the reported statement, but an isolated legacy Compact-part reproduction passed on available ClickHouse 26.6.1.1193 (`baseline_materialize_exit=0`). The reported ClickHouse Cloud build, 26.6.1.2589, was unavailable, so the failure mechanism remains uncertain. Changing this shipped migration without a failing reproduction would be speculative. The `insert-optimize-avoid-final` rule also weighs against turning the reporter’s `OPTIMIZE TABLE ... FINAL` workaround into an automatic migration step.",
         "attempts": 1
       }
     ],
@@ -47946,10 +47946,6 @@
         "value": "{\"status\": \"needs_human\", \"task\": 177, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795718406.5281134, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:2120:1:generation",
         "value": "{\"task\": 2120, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795718406.5330503, \"seconds\": 204.044, \"tokens\": {\"totalTokens\": 1784753, \"inputTokens\": 1777010, \"cachedInputTokens\": 1704576, \"cacheWriteInputTokens\": 0, \"outputTokens\": 7743, \"reasoningOutputTokens\": 3031}, \"first_event_ms\": 1795718212950, \"last_event_ms\": 1795718406493, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -47974,20 +47970,12 @@
         "value": "{\"at\": 1795718472.2844577, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"2120\": {\"remaining\": 0, \"until\": 1795725749.716278}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795712928.1797817, \"group\": \"new_fix\", \"task\": 2118, \"phase\": \"generation\"}, {\"at\": 1795713220.8751755, \"group\": \"new_fix\", \"task\": 2119, \"phase\": \"generation\"}, {\"at\": 1795715048.9233232, \"group\": \"new_fix\", \"task\": 2049, \"phase\": \"generation\"}, {\"at\": 1795715132.3382003, \"group\": \"new_fix\", \"task\": 2048, \"phase\": \"generation\"}, {\"at\": 1795718202.4908917, \"group\": \"new_fix\", \"task\": 2120, \"phase\": \"generation\"}, {\"at\": 1795718549.716278, \"group\": \"new_fix\", \"task\": 2120, \"phase\": \"validation\"}]"
       },
       {
         "key": "prwatch_heartbeat",
         "value": "1795718550.097106"
-      },
-      {
-        "key": "task:2120",
-        "value": "{\"started\": 1795718191.7049215, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2120/attempt-1\", \"attempt\": 1, \"phase\": \"validation\", \"base\": \"538bd15fbaf6046a9d265f919655e57b7db2418c\", \"generation_started\": 1795718202.4906344, \"dispatch_paid_date\": \"2026-11-26\", \"phase_started\": 1795718556.8178108, \"validation_bootstrap_version\": \"1\"}"
       },
       {
         "key": "task:2103",
@@ -48046,12 +48034,12 @@
         "value": "1795718724.7798958"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795718725.0052931, \"windows\": [{\"name\": \"primary\", \"used_percent\": 12, \"resets_at\": 1796162550}]}"
+        "key": "runner_resources",
+        "value": "{\"at\": 1795718734.3898664, \"disk_free_bytes\": 75815424000, \"memory_bytes\": {\"MemTotal\": 16760348672, \"MemAvailable\": 10801393664, \"SwapTotal\": 3221221376, \"SwapFree\": 3221135360}, \"memory_events\": null}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795718729.398521"
+        "value": "1795718734.3986065"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48059,15 +48047,31 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795718730.5312128"
+        "value": "1795718736.0594077"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1795718732.0656204"
+        "value": "1795718737.0856032"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795718734.3898664, \"disk_free_bytes\": 75815424000, \"memory_bytes\": {\"MemTotal\": 16760348672, \"MemAvailable\": 10801393664, \"SwapTotal\": 3221221376, \"SwapFree\": 3221135360}, \"memory_events\": null}"
+        "key": "codex_quota",
+        "value": "{\"at\": 1795718737.3322995, \"windows\": [{\"name\": \"primary\", \"used_percent\": 12, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795718737.4237125, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2120:1:validation",
+        "value": "{\"task\": 2120, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"validation\", \"at\": 1795718737.4298935, \"seconds\": 187.717, \"tokens\": {\"totalTokens\": 948322, \"inputTokens\": 940489, \"cachedInputTokens\": 860544, \"cacheWriteInputTokens\": 0, \"outputTokens\": 7833, \"reasoningOutputTokens\": 4186}, \"first_event_ms\": 1795718561565, \"last_event_ms\": 1795718737332, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
+      },
+      {
+        "key": "task:2120",
+        "value": "{\"started\": 1795718191.7049215, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2120/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"538bd15fbaf6046a9d265f919655e57b7db2418c\", \"generation_started\": 1795718202.4906344, \"dispatch_paid_date\": \"2026-11-26\", \"phase_started\": 1795718556.8178108, \"validation_bootstrap_version\": \"1\", \"last_execution_phase\": \"validation\", \"finished\": 1795718737.43286}"
       }
     ],
     "calls": [
