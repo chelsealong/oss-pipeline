@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795662683.2215126,
+  "saved_at": 1795662686.9249814,
   "tables": {
     "tasks": [
       {
@@ -27380,6 +27380,19 @@
         "updated": 1795652818.621674,
         "result": "VALIDATION_ENVIRONMENT: ClawSweeper requires proof from an isolated Gateway deep_research job that the retained result shows the stage, field, and limit. This checkout has no installed dependencies or configured model credential, and no Gateway job was run. The existing mocked tests do not satisfy that request. The openclaw-testing skill also says, “Never execute untrusted contributor/fork code” locally; this PR comes from a fork. The patch and PR description are unchanged.",
         "attempts": 1
+      },
+      {
+        "id": 2107,
+        "identity": "fix:langfuse:20923:",
+        "kind": "fix",
+        "repo": "langfuse",
+        "number": 20923,
+        "note": "",
+        "status": "running",
+        "created": 1795662686.8099432,
+        "updated": 1795662686.9105434,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -47324,10 +47337,6 @@
         "value": "{\"started\": 1795651745.4703517, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2105/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"fde325bbf12989248ef9237e4ecaa34d65ff13d7\", \"remote_base\": \"fde325bbf12989248ef9237e4ecaa34d65ff13d7\", \"base_update\": {\"original_head\": \"fde325bbf12989248ef9237e4ecaa34d65ff13d7\", \"base\": \"fde325bbf12989248ef9237e4ecaa34d65ff13d7\", \"merged\": false, \"mergeable\": null, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1795652196.5423672, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1795652261.34226}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1795652525.8176348, \"comfyui\": 1795638865.2301536, \"hermes\": 1795158844.7137928, \"langfuse\": 1795609428.9248335, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795632708.761461, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795623077.0261106, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1795331330.0812907}}"
-      },
-      {
         "key": "codex_screening_calls",
         "value": "[{\"at\": 1795159052.9693196, \"task\": 1934, \"phase\": \"screening-d08386274543182d7121\"}, {\"at\": 1795159745.5733728, \"task\": 1941, \"phase\": \"screening-8e936c0be3cbc3923cc4\"}, {\"at\": 1795162563.7883542, \"task\": 1943, \"phase\": \"screening-249edb6a0adfa4abe25e\"}, {\"at\": 1795163304.0308833, \"task\": 1944, \"phase\": \"screening-702dfea9009d8eddb6b6\"}, {\"at\": 1795170881.787709, \"task\": 1952, \"phase\": \"screening-81aca0f4708aa5c2f80f\"}, {\"at\": 1795192482.0395765, \"task\": 1960, \"phase\": \"screening-2fc1f27de470b27e3c24\"}, {\"at\": 1795192881.906557, \"task\": 1961, \"phase\": \"screening-7b78c0e5dc127165d8ad\"}, {\"at\": 1795195246.6493113, \"task\": 1965, \"phase\": \"screening-3eceffa733e749b9ef7f\"}, {\"at\": 1795219401.8463213, \"task\": 1967, \"phase\": \"screening-01d9204fde4f758a035a\"}, {\"at\": 1795306880.0036561, \"task\": 1995, \"phase\": \"screening-9cd275d593d4307c46c9\"}, {\"at\": 1795314808.0498567, \"task\": 2000, \"phase\": \"screening-bf1a9442ad1ecb4cc311\"}, {\"at\": 1795478445.068508, \"task\": 2053, \"phase\": \"screening-f4e5395a1ca2c7671b1d\"}, {\"at\": 1795542393.9587631, \"task\": 2077, \"phase\": \"screening-52c28045ca2161ca7a3f\"}, {\"at\": 1795542761.3206306, \"task\": 2078, \"phase\": \"screening-6ed200556d2b1ffc4440\"}, {\"at\": 1795549432.6009057, \"task\": 2079, \"phase\": \"screening-1e7666df9bac94a20115\"}, {\"at\": 1795550060.0557604, \"task\": 2080, \"phase\": \"screening-19e0e3eec5226c1b4d47\"}, {\"at\": 1795595832.09378, \"task\": 2088, \"phase\": \"screening-4670e2f1f326373b9fef\"}, {\"at\": 1795652532.063235, \"task\": 2106, \"phase\": \"screening-24cb4d16795d86bc6874\"}]"
       },
@@ -47616,14 +47625,6 @@
         "value": "1795662539.3696525"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795662622.7427285, \"state\": \"stalled\", \"pending_candidates\": 431, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 31, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 431}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 9, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 9872.475142478943, \"judge_tokens_spent_24h\": 96293, \"screening_calls_5h\": 1, \"screening_calls_24h\": 2, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 3, \"validation_wait\": 4, \"capacity_wait\": 2}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8365\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8365\", \"title\": \"feat(models): support forwarding extra_body in OpenAILlm\", \"first_seen\": 1795633704.9187405, \"last_checked\": 1795661584.4042323, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8364\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8364\", \"title\": \"Feature: Keep tool results from flooding the context window: offload oversized results to artifacts and clear stale ones, without breaking the context cache\", \"first_seen\": 1795632701.192445, \"last_checked\": 1795661586.9134436, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8361\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8361\", \"title\": \"Workflow RequestInput: an object answer with a field named result is unwrapped, so the workflow can never resume\", \"first_seen\": 1795629136.1140573, \"last_checked\": 1795661589.406812, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8360\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8360\", \"title\": \"OpenAPIToolset: server URL variables are never substituted, so every request goes to the literal {var} URL\", \"first_seen\": 1795629124.6955233, \"last_checked\": 1795661591.9209142, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8359\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8359\", \"title\": \"Workflow RequestInput: an answer that leaves out optional fields gets None instead of the schema defaults, and resume crashes\", \"first_seen\": 1795629059.069342, \"last_checked\": 1795661594.3925161, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8358\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8358\", \"title\": \"Resumable Workflow: answering a RequestInput in a looping graph hangs 15 s and fails with \\\"Replay divergence detected\\\" (since 6dbe5bb6d)\", \"first_seen\": 1795627459.2220302, \"last_checked\": 1795661597.2107933, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8357\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8357\", \"title\": \"A2A (new executor): a state-only event becomes a status update whose agent message has no parts, and it lands in task history\", \"first_seen\": 1795624002.571899, \"last_checked\": 1795661599.382661, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8353\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8353\", \"title\": \"InMemoryMemoryService.add_session_to_memory deletes older turns when the session is loaded with num_recent_events\", \"first_seen\": 1795618533.5183134, \"last_checked\": 1795661601.8843386, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8352\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8352\", \"title\": \"Tool results posted together for calls from two turns are duplicated in later LLM requests\", \"first_seen\": 1795618536.0574815, \"last_checked\": 1795661604.40506, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8351\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8351\", \"title\": \"AgentEvaluator with num_runs > 1 reuses the pinned session across runs, so later runs score wrong\", \"first_seen\": 1795618322.4482243, \"last_checked\": 1795661607.1346076, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8345\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8345\", \"title\": \"A static \\\"will this upgrade break me?\\\" check for google-adk\", \"first_seen\": 1795598185.8719258, \"last_checked\": 1795661609.5088165, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795662622.7437506, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 2, \"done\": 4, \"human_wait\": 3, \"skipped\": 10, \"validation_wait\": 2}, \"respond\": {\"blocked\": 2, \"done\": 1, \"validation_wait\": 2}}}"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1795662651.8919156, \"windows\": [{\"name\": \"primary\", \"used_percent\": 5, \"resets_at\": 1796162550}]}"
       },
@@ -47668,16 +47669,20 @@
         "value": "{\"at\": 1795662657.542398, \"allowed\": true, \"reason\": \"\"}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795662670.6634078"
+        "key": "runner_resources",
+        "value": "{\"at\": 1795662683.2100203, \"disk_free_bytes\": 89650999296, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15188062208, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795662679.57696"
+        "value": "1795662684.5770597"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795662685.6652918"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1795662680.9039755"
+        "value": "1795662685.916846"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -47685,11 +47690,23 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795662681.3271637"
+        "value": "1795662685.974558"
       },
       {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795662683.2100203, \"disk_free_bytes\": 89650999296, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15188062208, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "key": "admission_health",
+        "value": "{\"at\": 1795662686.8680248, \"state\": \"stalled\", \"pending_candidates\": 431, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 31, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 431}, \"screening_wait_tasks\": 0, \"active_tasks\": 1, \"running_tasks\": 0, \"queued_tasks\": 1, \"codex_calls_5h\": 9, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 9936.599762678146, \"judge_tokens_spent_24h\": 96293, \"screening_calls_5h\": 1, \"screening_calls_24h\": 2, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 3, \"validation_wait\": 4, \"capacity_wait\": 2}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8365\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8365\", \"title\": \"feat(models): support forwarding extra_body in OpenAILlm\", \"first_seen\": 1795633704.9187405, \"last_checked\": 1795661584.4042323, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8364\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8364\", \"title\": \"Feature: Keep tool results from flooding the context window: offload oversized results to artifacts and clear stale ones, without breaking the context cache\", \"first_seen\": 1795632701.192445, \"last_checked\": 1795661586.9134436, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8361\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8361\", \"title\": \"Workflow RequestInput: an object answer with a field named result is unwrapped, so the workflow can never resume\", \"first_seen\": 1795629136.1140573, \"last_checked\": 1795661589.406812, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8360\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8360\", \"title\": \"OpenAPIToolset: server URL variables are never substituted, so every request goes to the literal {var} URL\", \"first_seen\": 1795629124.6955233, \"last_checked\": 1795661591.9209142, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8359\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8359\", \"title\": \"Workflow RequestInput: an answer that leaves out optional fields gets None instead of the schema defaults, and resume crashes\", \"first_seen\": 1795629059.069342, \"last_checked\": 1795661594.3925161, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8358\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8358\", \"title\": \"Resumable Workflow: answering a RequestInput in a looping graph hangs 15 s and fails with \\\"Replay divergence detected\\\" (since 6dbe5bb6d)\", \"first_seen\": 1795627459.2220302, \"last_checked\": 1795661597.2107933, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8357\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8357\", \"title\": \"A2A (new executor): a state-only event becomes a status update whose agent message has no parts, and it lands in task history\", \"first_seen\": 1795624002.571899, \"last_checked\": 1795661599.382661, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8353\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8353\", \"title\": \"InMemoryMemoryService.add_session_to_memory deletes older turns when the session is loaded with num_recent_events\", \"first_seen\": 1795618533.5183134, \"last_checked\": 1795661601.8843386, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8352\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8352\", \"title\": \"Tool results posted together for calls from two turns are duplicated in later LLM requests\", \"first_seen\": 1795618536.0574815, \"last_checked\": 1795661604.40506, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8351\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8351\", \"title\": \"AgentEvaluator with num_runs > 1 reuses the pinned session across runs, so later runs score wrong\", \"first_seen\": 1795618322.4482243, \"last_checked\": 1795661607.1346076, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8345\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8345\", \"title\": \"A static \\\"will this upgrade break me?\\\" check for google-adk\", \"first_seen\": 1795598185.8719258, \"last_checked\": 1795661609.5088165, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795662686.8689947, \"tasks\": {\"fix\": {\"blocked\": 1, \"capacity_wait\": 2, \"done\": 4, \"human_wait\": 3, \"queued\": 1, \"skipped\": 10, \"validation_wait\": 2}, \"respond\": {\"blocked\": 2, \"done\": 1, \"validation_wait\": 2}}}"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795652525.8176348, \"comfyui\": 1795638865.2301536, \"hermes\": 1795158844.7137928, \"langfuse\": 1795662686.9104588, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795632708.761461, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795623077.0261106, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1791454217.6595879, \"autogpt\": 1795331330.0812907}}"
+      },
+      {
+        "key": "task:2107",
+        "value": "{\"started\": 1795662686.9105663, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
       }
     ],
     "calls": [
