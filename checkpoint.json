@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795698234.7315881,
+  "saved_at": 1795698244.8238802,
   "tables": {
     "tasks": [
       {
@@ -47626,28 +47626,12 @@
         "value": "{\"at\": 1795691869.2210276, \"allowed\": true, \"reason\": \"\"}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"llama-index\", \"task\": 2111, \"at\": 1795674144.6406915}, {\"repo\": \"llama-index\", \"task\": 2112, \"at\": 1795675696.175524}, {\"repo\": \"llama-index\", \"task\": 2113, \"at\": 1795676962.884668}, {\"repo\": \"llama-index\", \"task\": 2114, \"at\": 1795677666.7052562}, {\"repo\": \"llama-index\", \"task\": 2115, \"at\": 1795691904.1872168}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-11-26\", \"used\": {\"spec-kit\": 2, \"llama-index\": 6}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1795691904.1873543, \"group\": \"new_fix\", \"task\": 2115, \"phase\": \"generation\"}, {\"at\": 1795697988.6246123, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1795697988.6693885, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1795697991.7305253, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1795697992.4138265, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1795698024.1517692, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1795698028.7114358, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}]"
-      },
-      {
         "key": "usage:2115:1:generation",
         "value": "{\"task\": 2115, \"repo\": \"llama-index\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795692135.3704858, \"seconds\": 231.184, \"tokens\": {\"totalTokens\": 1971105, \"inputTokens\": 1964043, \"cachedInputTokens\": 1900160, \"cacheWriteInputTokens\": 0, \"outputTokens\": 7062, \"reasoningOutputTokens\": 1963}, \"first_event_ms\": 1795691915363, \"last_event_ms\": 1795692135363, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "followup:task:2115",
         "value": "{\"status\": \"needs_human\", \"task\": 2115, \"repo\": \"llama-index\", \"number\": 24514, \"reason\": \"HUMAN_REVIEW_REQUIRED: CONTRIBUTING.md, \\u201cHow to Use AI when Contributing,\\u201d requires human oversight for every AI-assisted contribution. context.json contains no human_review attestation. The tested patch is preserved in the checkout for review.\", \"base\": \"40d4f79eb9d8f68430692d0cc156483ca2d7f4f6\", \"patch_digest\": \"e3508d036bf0faae4baa6ccf95575762a31a7fb10ccb88eba225b6291c0cd610\", \"evidence_bundle\": \"2115-1.json.enc\"}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:2115",
@@ -47890,10 +47874,6 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795652525.8176348, \"comfyui\": 1795638865.2301536, \"hermes\": 1795158844.7137928, \"langfuse\": 1795662686.9104588, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795691873.668837, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795672377.159479, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1795698223.3349643, \"autogpt\": 1795331330.0812907}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795698225.2996411"
-      },
-      {
         "key": "candidate_capacity:spec-kit",
         "value": "{\"at\": 1795698226.6588984, \"allowed\": true, \"reason\": \"\"}"
       },
@@ -47918,16 +47898,24 @@
         "value": "{\"at\": 1795698229.1756454, \"allowed\": true, \"reason\": \"\"}"
       },
       {
-        "key": "coordination:google/adk-python#8376",
-        "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8376\", \"title\": \"Token-threshold compaction overestimates non-ASCII tool responses ~2-3x (json.dumps ensure_ascii)\", \"first_seen\": 1795696274.1049984, \"last_checked\": 1795698230.1867454, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
-      },
-      {
         "key": "adk_coordination_ledger",
         "value": "[{\"number\": 8376, \"task\": 2116, \"at\": 1795698230.7768111}]"
       },
       {
+        "key": "adk_coordination_post:8376",
+        "value": "{\"status\": \"sent\", \"task\": 2116, \"at\": 1795698230.7768111, \"url\": \"https://github.com/google/adk-python/issues/8376#issuecomment-7192825551\"}"
+      },
+      {
+        "key": "coordination:google/adk-python#8376",
+        "value": "{\"status\": \"asked\", \"source\": \"https://github.com/google/adk-python/issues/8376#issuecomment-7192825551\", \"comment_id\": 7192825551, \"rule\": \"Upstream requires asking before contributing, not a particular approval phrase.\"}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795698240.30089"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1795698231.4120753"
+        "value": "1795698241.4122314"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -47935,46 +47923,34 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795698232.6515472"
+        "value": "1795698242.6195374"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1795698234.183786"
-      },
-      {
-        "key": "adk_coordination_post:8376",
-        "value": "{\"status\": \"sent\", \"task\": 2116, \"at\": 1795698230.7768111, \"url\": \"https://github.com/google/adk-python/issues/8376#issuecomment-7192825551\"}"
+        "value": "1795698244.2136123"
       },
       {
         "key": "task:2116",
-        "value": "{\"started\": 1795698223.3351123, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"coordination_url\": \"https://github.com/google/adk-python/issues/8376#issuecomment-7192825551\"}"
+        "value": "{\"started\": 1795698223.3351123, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2116/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8376#issuecomment-7192825551\", \"generation_started\": 1795698244.8116837, \"dispatch_paid_date\": \"2026-11-26\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"llama-index\", \"task\": 2115, \"at\": 1795691904.1872168}, {\"repo\": \"adk\", \"task\": 2116, \"at\": 1795698244.8116822}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-11-26\", \"used\": {\"spec-kit\": 2, \"llama-index\": 6, \"adk\": 1}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"2116\": {\"remaining\": 1, \"until\": 1795705444.81185}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1795691904.1873543, \"group\": \"new_fix\", \"task\": 2115, \"phase\": \"generation\"}, {\"at\": 1795697988.6246123, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1795697988.6693885, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1795697991.7305253, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1795697992.4138265, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1795698024.1517692, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1795698028.7114358, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1795698244.81185, \"group\": \"new_fix\", \"task\": 2116, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1795088695.4266677,
-        "kind": "judge"
-      },
-      {
-        "at": 1795089318.0228736,
-        "kind": "judge"
-      },
-      {
-        "at": 1795089563.594958,
-        "kind": "judge"
-      },
-      {
-        "at": 1795091544.2709532,
-        "kind": "judge"
-      },
-      {
-        "at": 1795091588.2879992,
-        "kind": "judge"
-      },
-      {
-        "at": 1795091948.0952168,
-        "kind": "judge"
-      },
       {
         "at": 1795093739.4436932,
         "kind": "judge"
@@ -51086,6 +51062,10 @@
       {
         "at": 1795698198.9402475,
         "kind": "judge"
+      },
+      {
+        "at": 1795698244.8123243,
+        "kind": "codex"
       }
     ]
   }
