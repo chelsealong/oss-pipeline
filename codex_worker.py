@@ -349,6 +349,11 @@ def fix_eligible(key,cfg,number,task=None):
         import coordination
         may_ask = bool(task and not rt.task_state(task['id']).get('generation_started') and coordination.enabled(up))
         ok,why,extra=scan.vet(cfg,up,issue,allow_coordination=may_ask)
+        if (not ok and why=='upstream coordination required' and may_ask
+                and coordination.can_offer(up,issue,ignore_budget=True)):
+            # Another queued task may have consumed the request slot after admission.
+            # This is a temporary wait, not a three-day terminal skip.
+            raise rt.JudgeDeferred('ADK coordination request budget reached; retain task')
         if ok and extra.get('coordination_required'):
             coordination.ensure_request(task,cfg,issue)
             # Re-read after publication; a fresh refusal, claim or competing PR wins.

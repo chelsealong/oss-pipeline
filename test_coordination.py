@@ -106,6 +106,16 @@ class CoordinationTests(unittest.TestCase):
             self.assertFalse(scan.vet_candidate(self.cfg,coordination.REPO,self.issue)[0])
         self.post.assert_not_called()
 
+    def test_queued_candidate_waits_without_losing_attempt_when_slot_is_consumed(self):
+        rt.setmeta('adk_coordination_ledger',[{'at':time.time()}])
+        with self.assertRaises(rt.JudgeDeferred) as error:
+            worker.fix_eligible('adk',self.cfg,8376,self.task)
+        worker.handle_task_error(self.task,error.exception)
+        with rt.db() as db:
+            row=db.execute('SELECT status,attempts FROM tasks WHERE id=?',(self.task['id'],)).fetchone()
+        self.assertEqual(row['status'],'triage_wait');self.assertEqual(row['attempts'],0)
+        self.post.assert_not_called()
+
     def test_fresh_capacity_and_task_identity_are_required(self):
         self.cap.return_value=(False,'daily PR cap')
         with self.assertRaisesRegex(rt.Paused,'daily PR cap'):coordination.ensure_request(self.task,self.cfg,self.issue)

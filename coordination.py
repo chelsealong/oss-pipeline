@@ -18,7 +18,7 @@ def enabled(upstream):
     return upstream == REPO and rt.config().get('adk_coordination_enabled') is True
 
 
-def can_offer(upstream, issue):
+def can_offer(upstream, issue, *, ignore_budget=False):
     if not enabled(upstream):
         return False
     state = rt.getmeta(f"coordination:{upstream}#{issue['number']}", {})
@@ -31,6 +31,8 @@ def can_offer(upstream, issue):
     # Do not mass-replay historical drafts. Normal invitation handling remains.
     if not 0 <= time.time() - created <= 72 * 3600:
         return False
+    if ignore_budget:
+        return True
     ledger = rt.getmeta('adk_coordination_ledger', [])
     return (sum(x['at'] > time.time()-3600 for x in ledger) < 1
             and sum(x['at'] > time.time()-86400 for x in ledger) < 5)
