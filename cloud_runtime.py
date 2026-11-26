@@ -151,7 +151,7 @@ def configure(mode):
         'codex_screening_fallback':True,'codex_screening_per_5h':6,'codex_screening_per_day':18,
         'codex_screening_max_bytes':128000,'decouple_discovery':True,
         'judge_free_only_required':True,
-        'candidate_capacity_precheck':True,'no_work_replacement_limits':{'openclaw':3},
+        'adk_coordination_enabled':True,'candidate_capacity_precheck':True,'no_work_replacement_limits':{'openclaw':3},
         'judge_free_only_models':[m.strip() for m in os.environ.get('QWEN_FREE_ONLY_MODELS','').split(',') if m.strip()]})+'\n')
     rt.DATA.mkdir(exist_ok=True)
 

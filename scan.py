@@ -988,9 +988,7 @@ def coordination_allowed(upstream, issue):
     labels={x['name'] for x in issue.get('labels',[])}
     assigned={x.get('login','').lower() for x in issue.get('assignees',[])}
     name=f"coordination:{upstream}#{issue['number']}"
-    if 'chelsealong' in assigned or labels & {'help wanted','good first issue'}:
-        rt.setmeta(name,{'status':'approved','source':'current assignment/invitation label'})
-        return True
+    invited = 'chelsealong' in assigned or bool(labels & {'help wanted','good first issue'})
     # A bare acknowledgement, arbitrary user's claim, or old local announcement
     # is not maintainer permission. Re-read current comments on every eligibility check.
     if issue.get('comments',0):
@@ -1005,6 +1003,9 @@ def coordination_allowed(upstream, issue):
             if comment.get('author_association') not in ('MEMBER','OWNER','COLLABORATOR') or not re.search(r'@chelsealong\b',body,re.I):continue
             if re.search(r"do not|don't|please wait|hold off|not approved|someone else|already working",body,re.I):decision=False
             elif re.search(r'go ahead|please proceed|feel free to (?:work|take)|you (?:can|may) (?:work|take)|assigned (?:this )?to you',body,re.I):decision=comment
+        if decision is False:
+            rt.setmeta(name,{'status':'refused','url':f"https://github.com/{upstream}/issues/{issue['number']}"})
+            return False
         if isinstance(decision,dict):
             rt.setmeta(name,{'status':'approved','source':decision.get('html_url'),'comment_id':decision['id']})
             return True
@@ -1012,6 +1013,9 @@ def coordination_allowed(upstream, issue):
             rt.setmeta(name,{'status':'asked','source':asked.get('html_url'),'comment_id':asked['id'],
                 'rule':'Upstream requires asking before contributing, not a particular approval phrase.'})
             return True
+    if invited:
+        rt.setmeta(name,{'status':'approved','source':'current assignment/invitation label'})
+        return True
     previous=rt.getmeta(name,{})
     import time
     rt.setmeta(name,{'status':'needs_human','url':f"https://github.com/{upstream}/issues/{issue['number']}",
@@ -1034,7 +1038,7 @@ def candidate_priority(cfg, issue):
             not bool(labels & {'help wanted','good first issue'}))
 
 
-def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
+def vet(cfg: dict, upstream: str, issue: dict, *, allow_coordination=False) -> tuple[bool, str, dict]:
     # First, and before any API call. A paused repo is one we have established
     # cannot accept our work — spending a scan on it, let alone a session, is
     # pure waste. litellm burned five full generate-and-review cycles being
@@ -1109,8 +1113,12 @@ def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
                 'reason':'Existing linked PR; no coordination message should be sent.', 'prs':prs[:3]})
         return False, f"already has PR(s): {prs[:3]}", {}
 
+    coordination_needed = False
     if rt.local() and cfg.get('announce_before_work') and not coordination_allowed(upstream,issue):
-        return False, 'upstream coordination required', {}
+        import coordination
+        if not (allow_coordination and coordination.can_offer(upstream, issue)):
+            return False, 'upstream coordination required', {}
+        coordination_needed = True  # Full claim/semantic checks still precede any request.
 
     # The author can claim work in the original issue, not just comments.
     author = (issue.get('user') or {}).get('login','')
@@ -1149,6 +1157,9 @@ def vet(cfg: dict, upstream: str, issue: dict) -> tuple[bool, str, dict]:
     if others:
         return False, f"claimed by {others[0]}", {}
 
+    if coordination_needed:
+        return True, 'pending bounded ADK coordination', {'coordination_required': True}
+
     return True, "clear", {"labels": sorted(labels),
                            "comments": issue.get("comments", 0),
                            "self_claimed": len(who) > len(others)}
@@ -1168,7 +1179,8 @@ def vet_candidate(cfg, upstream, issue):
         if candidate_budget.requires_replacement(key) and not candidate_budget.invited(cfg,issue):
             return False,'replacement requires upstream invitation or source reproduction',{}
     import screening
-    return screening.candidate(vet, cfg, upstream, issue)
+    from functools import partial
+    return screening.candidate(partial(vet, allow_coordination=True), cfg, upstream, issue)
 
 
 def scan_repo(key: str, limit: int, max_vet: int) -> dict:

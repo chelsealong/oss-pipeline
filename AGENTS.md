@@ -1,3 +1,16 @@
+# November 26 ADK coordination restoration
+
+The user explicitly requested fixing the diagnosed missing coordination-to-execution
+step. This supersedes the older ADK-only instructions below to leave every request
+unsent. With adk_coordination_enabled, the controller may post an issue-specific
+ask-before-work request for a fully screened, unclaimed ADK issue less than 72 hours
+old, only from its running fix task with available coding/publication capacity.
+Limit requests to one per rolling hour and five per rolling day. Reserve and
+checkpoint before sending, reconcile ambiguous writes without reposting, and never
+mass-send the historical draft backlog. Re-read issue, claims and refusals before
+coding and publication. No authorization to close PRs, delete comments, waive
+upstream rules, or send outreach to unrelated repositories is added.
+
 # OSS pipeline takeover
 
 ## Current operating state

@@ -346,7 +346,15 @@ def fix_eligible(key,cfg,number,task=None):
         return False,'assignment required; no automated claim comment'
     import screening
     with screening.worker(task,key) if task else contextlib.nullcontext():
-        ok,why,_=scan.vet(cfg,up,issue)
+        import coordination
+        may_ask = bool(task and not rt.task_state(task['id']).get('generation_started') and coordination.enabled(up))
+        ok,why,extra=scan.vet(cfg,up,issue,allow_coordination=may_ask)
+        if ok and extra.get('coordination_required'):
+            coordination.ensure_request(task,cfg,issue)
+            # Re-read after publication; a fresh refusal, claim or competing PR wins.
+            current=api(f'repos/{up}/issues/{number}')
+            if current.get('state')!='open':return False,'issue closed after coordination'
+            ok,why,_=scan.vet(cfg,up,current)
     return ok,why
 
 def cap_ok(key, impl):
