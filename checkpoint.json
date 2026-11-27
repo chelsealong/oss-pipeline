@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795740192.6747787,
+  "saved_at": 1795740204.4990895,
   "tables": {
     "tasks": [
       {
@@ -47781,14 +47781,6 @@
         "value": "{\"started\": 1795715124.0710227, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2048/attempt-2\", \"attempt\": 2, \"phase\": \"skipped\", \"base\": \"f2010547121b3351e4923fe467205079e4593a32\", \"generation_started\": 1795455588.7836936, \"dispatch_paid_date\": \"2026-11-23\", \"phase_started\": 1795715136.9060261, \"last_execution_phase\": \"generation\", \"finished\": 1795715195.3312564}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"spec-kit\", \"task\": 2118, \"at\": 1795712928.1796253}, {\"repo\": \"spec-kit\", \"task\": 2119, \"at\": 1795713220.874975}, {\"repo\": \"langfuse\", \"task\": 2120, \"at\": 1795718202.4906335}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-11-26\", \"used\": {\"spec-kit\": 4, \"llama-index\": 6, \"adk\": 1, \"langfuse\": 1}}"
-      },
-      {
         "key": "usage:2120:1:generation",
         "value": "{\"task\": 2120, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795718406.5330503, \"seconds\": 204.044, \"tokens\": {\"totalTokens\": 1784753, \"inputTokens\": 1777010, \"cachedInputTokens\": 1704576, \"cacheWriteInputTokens\": 0, \"outputTokens\": 7743, \"reasoningOutputTokens\": 3031}, \"first_event_ms\": 1795718212950, \"last_event_ms\": 1795718406493, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -47969,24 +47961,12 @@
         "value": "{\"at\": 1795739788.8940818, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1795739794.7263567, \"group\": \"new_fix\", \"task\": 1955, \"phase\": \"generation\"}]"
-      },
-      {
-        "key": "prwatch_heartbeat",
-        "value": "1795739830.4054205"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1795739841.9157166, \"source\": \"completed task phase\"}"
       },
       {
         "key": "usage:1955:3:generation",
         "value": "{\"task\": 1955, \"repo\": \"langfuse\", \"attempt\": 3, \"phase\": \"generation\", \"at\": 1795739841.9191067, \"seconds\": 47.194, \"tokens\": {\"totalTokens\": 219162, \"inputTokens\": 217628, \"cachedInputTokens\": 167424, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1534, \"reasoningOutputTokens\": 462}, \"first_event_ms\": 1795739803061, \"last_event_ms\": 1795739841913, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:1955",
@@ -48093,20 +48073,12 @@
         "value": "{\"at\": 1795740164.4371452, \"allowed\": true, \"reason\": \"\"}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795740178.2527387"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795652525.8176348, \"comfyui\": 1795638865.2301536, \"hermes\": 1795158844.7137928, \"langfuse\": 1795739782.3213782, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795691873.668837, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795715124.0708468, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1795740178.4997194, \"autogpt\": 1795331330.0812907}}"
       },
       {
         "key": "runner_resources",
         "value": "{\"at\": 1795740183.8258536, \"disk_free_bytes\": 85758197760, \"memory_bytes\": {\"MemTotal\": 16760315904, \"MemAvailable\": 15384813568, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
-      },
-      {
-        "key": "coordination:google/adk-python#8384",
-        "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8384\", \"title\": \"Toolset discovery can outlive Runner.run_async after a sibling listing cancels itself\", \"first_seen\": 1795740176.7943347, \"last_checked\": 1795740186.6728952, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
         "key": "adk_coordination_ledger",
@@ -48121,8 +48093,20 @@
         "value": "{\"at\": 1795740187.8934283, \"tasks\": {\"fix\": {\"human_wait\": 5, \"running\": 1, \"skipped\": 13, \"validation_wait\": 2}, \"respond\": {}}}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1795740188.3862612"
+        "key": "adk_coordination_post:8384",
+        "value": "{\"status\": \"sent\", \"task\": 2123, \"at\": 1795740187.3356338, \"url\": \"https://github.com/google/adk-python/issues/8384#issuecomment-7206695710\"}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795740193.2542627"
+      },
+      {
+        "key": "prwatch_heartbeat",
+        "value": "1795740195.0171268"
+      },
+      {
+        "key": "coordination:google/adk-python#8384",
+        "value": "{\"status\": \"asked\", \"source\": \"https://github.com/google/adk-python/issues/8384#issuecomment-7206695710\", \"comment_id\": 7206695710, \"rule\": \"Upstream requires asking before contributing, not a particular approval phrase.\"}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48130,19 +48114,35 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795740189.7210271"
+        "value": "1795740199.7434614"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1795740192.2604203"
+        "value": "1795740202.366513"
       },
       {
-        "key": "adk_coordination_post:8384",
-        "value": "{\"status\": \"sent\", \"task\": 2123, \"at\": 1795740187.3356338, \"url\": \"https://github.com/google/adk-python/issues/8384#issuecomment-7206695710\"}"
+        "key": "detector_heartbeat",
+        "value": "1795740203.3869948"
       },
       {
         "key": "task:2123",
-        "value": "{\"started\": 1795740178.4998815, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"coordination_url\": \"https://github.com/google/adk-python/issues/8384#issuecomment-7206695710\"}"
+        "value": "{\"started\": 1795740178.4998815, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2123/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8384#issuecomment-7206695710\", \"generation_started\": 1795740204.4844458, \"dispatch_paid_date\": \"2026-11-27\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"adk\", \"task\": 2123, \"at\": 1795740204.4844446}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-11-27\", \"used\": {\"adk\": 1}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"2123\": {\"remaining\": 1, \"until\": 1795747404.4846044}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1795739794.7263567, \"group\": \"new_fix\", \"task\": 1955, \"phase\": \"generation\"}, {\"at\": 1795740204.4846044, \"group\": \"new_fix\", \"task\": 2123, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
@@ -51116,6 +51116,10 @@
       },
       {
         "at": 1795739794.7270722,
+        "kind": "codex"
+      },
+      {
+        "at": 1795740204.4852548,
         "kind": "codex"
       }
     ]
