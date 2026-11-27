@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795757983.1937094,
+  "saved_at": 1795758059.5527635,
   "tables": {
     "tasks": [
       {
@@ -47947,80 +47947,8 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8384\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABrb3Cyg@2026-11-27T04:31:10Z\", \"author\": \"surajksharma07\", \"when\": \"2026-11-27T04:31:10Z\", \"kind\": \"comment\", \"assoc\": \"COLLABORATOR\", \"body\": \"@OUAO-FRANK Reproduced on main at 03725e8: plain exceptions get caught per toolset, but CancelledError gets past that, and the plain asyncio.gather in _agent_tools.process_agent_tools never cancels the other listings.\\n\\nA workaround that worked for me: wrap each _convert_tool_union_to_tools(...) call in asyncio.create_task and await _batch_executor._gather_or_cancel(tasks) in its place, the same helper the function-call path uses. Locally the slow sibling then finishes before run_async returns, and the normal run still works. Could you check whether that holds up on your side? Also, have you seen this with a real toolset like MCP, or only with the probe?\\n\\n@chelsealong feel free to pick this up. Please test it thoroughly first and add a regression test before you raise the PR. run_async still ending with zero events on a self-cancel is probably a separate discussion.\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
       {
-        "key": "task:1772",
-        "value": "{\"started\": 1794433734.3683045, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1772/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"remote_base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base_update\": {\"original_head\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794433749.2429795, \"patch_digest\": \"4fe941f9761d7c805b686c0f14d68074129e92774dc46d8f1d318e3c3378b353\", \"last_execution_phase\": \"generation\", \"finished\": 1794433882.8292596, \"recovery_checked_at\": 1795757113.6151233}"
-      },
-      {
-        "key": "submission_recovery:1772",
-        "value": "{\"at\": 1795757113.9695299, \"error\": \"PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:44",
-        "value": "{\"recovery_checked_at\": 1795757113.9982255}"
-      },
-      {
-        "key": "followup:task:44",
-        "value": "{\"status\": \"needs_human\", \"task\": 44, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:45",
-        "value": "{\"recovery_checked_at\": 1795757114.3161314}"
-      },
-      {
-        "key": "followup:task:45",
-        "value": "{\"status\": \"needs_human\", \"task\": 45, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:54",
-        "value": "{\"recovery_checked_at\": 1795757114.6459475}"
-      },
-      {
-        "key": "recovery_audit:54",
-        "value": "{\"at\": 1795757123.1211817, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:55",
-        "value": "{\"recovery_checked_at\": 1795757123.122248}"
-      },
-      {
-        "key": "followup:task:55",
-        "value": "{\"status\": \"needs_human\", \"task\": 55, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:57",
-        "value": "{\"recovery_checked_at\": 1795757123.5192564}"
-      },
-      {
-        "key": "recovery_audit:57",
-        "value": "{\"at\": 1795757124.3028479, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
-        "key": "task:58",
-        "value": "{\"recovery_checked_at\": 1795757124.3036723}"
-      },
-      {
-        "key": "followup:task:58",
-        "value": "{\"status\": \"needs_human\", \"task\": 58, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:60",
-        "value": "{\"recovery_checked_at\": 1795757124.6851964}"
-      },
-      {
         "key": "publication_check:hermes",
         "value": "{\"at\": 1795757124.7723718, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
-      },
-      {
-        "key": "followup:task:60",
-        "value": "{\"status\": \"needs_human\", \"task\": 60, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:61",
-        "value": "{\"recovery_checked_at\": 1795757125.024746}"
-      },
-      {
-        "key": "followup:task:61",
-        "value": "{\"status\": \"needs_human\", \"task\": 61, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
       },
       {
         "key": "pr_followup_upgrade:NousResearch/hermes-agent#125871:checked",
@@ -48140,63 +48068,91 @@
       },
       {
         "key": "admission_health",
-        "value": "{\"at\": 1795757922.6652744, \"state\": \"stalled\", \"pending_candidates\": 623, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 1, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 222, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 622, \"judge_unavailable\": 1}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 3, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 8725.242133617401, \"judge_tokens_spent_24h\": 37327, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 5, \"validation_wait\": 3}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8375\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8375\", \"title\": \"Deferred tier (`service_tier='deferred'`): every reply echoes the request's input steps, so a run with a tool call never finishes\", \"first_seen\": 1795693333.7101543, \"last_checked\": 1795747994.9145412, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8378\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8378\", \"title\": \"Eval results do not record why a simulated conversation ended; a run cut off by max_allowed_invocations is judged as if the user simulator had said </finished>\", \"first_seen\": 1795710734.0960038, \"last_checked\": 1795749303.416424, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+        "value": "{\"at\": 1795757987.6040397, \"state\": \"stalled\", \"pending_candidates\": 624, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 1, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 223, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 623, \"judge_unavailable\": 1}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 3, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 8790.181373357773, \"judge_tokens_spent_24h\": 37327, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 5, \"validation_wait\": 3}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8375\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8375\", \"title\": \"Deferred tier (`service_tier='deferred'`): every reply echoes the request's input steps, so a run with a tool call never finishes\", \"first_seen\": 1795693333.7101543, \"last_checked\": 1795747994.9145412, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8378\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8378\", \"title\": \"Eval results do not record why a simulated conversation ended; a run cut off by max_allowed_invocations is judged as if the user simulator had said </finished>\", \"first_seen\": 1795710734.0960038, \"last_checked\": 1795749303.416424, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1795757922.6673007, \"tasks\": {\"fix\": {\"human_wait\": 5, \"skipped\": 13, \"validation_wait\": 3}, \"respond\": {}}}"
+        "value": "{\"at\": 1795757987.6052363, \"tasks\": {\"fix\": {\"human_wait\": 5, \"skipped\": 13, \"validation_wait\": 3}, \"respond\": {}}}"
       },
       {
         "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795757945.5712864, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795758010.6050763, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795757946.108362, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795757946.5602171, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795757947.0016603, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795757947.3718562, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795757947.8340743, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795757948.7596693, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795757949.1809552, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795757949.6587687, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795757949.9803329, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795758011.1066747, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795757950.8859422, \"windows\": [{\"name\": \"primary\", \"used_percent\": 13, \"resets_at\": 1796162550}]}"
+        "value": "{\"at\": 1795758011.2989476, \"windows\": [{\"name\": \"primary\", \"used_percent\": 13, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1795758011.5086746, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1795758011.8801372, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1795758012.31712, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1795758012.6818478, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1795758013.4326494, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1795758013.8377733, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:autogpt",
+        "value": "{\"at\": 1795758014.3138618, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:comfyui",
+        "value": "{\"at\": 1795758014.6384633, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "task:1772",
+        "value": "{\"started\": 1794433734.3683045, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1772/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"remote_base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base_update\": {\"original_head\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794433749.2429795, \"patch_digest\": \"4fe941f9761d7c805b686c0f14d68074129e92774dc46d8f1d318e3c3378b353\", \"last_execution_phase\": \"generation\", \"finished\": 1794433882.8292596, \"recovery_checked_at\": 1795758047.9024029}"
+      },
+      {
+        "key": "submission_recovery:1772",
+        "value": "{\"at\": 1795758048.2323074, \"error\": \"PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:44",
+        "value": "{\"recovery_checked_at\": 1795758048.2622876}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1795757973.5063996"
+        "value": "1795758048.5146227"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1795757978.578991"
+        "key": "followup:task:44",
+        "value": "{\"status\": \"needs_human\", \"task\": 44, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:45",
+        "value": "{\"recovery_checked_at\": 1795758048.6121676}"
+      },
+      {
+        "key": "followup:task:45",
+        "value": "{\"status\": \"needs_human\", \"task\": 45, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:54",
+        "value": "{\"recovery_checked_at\": 1795758048.9296308}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795758054.7506583"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48204,15 +48160,59 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795757979.8755982"
+        "value": "1795758055.3143687"
       },
       {
-        "key": "watch_heartbeat",
-        "value": "1795757980.0638175"
+        "key": "recovery_audit:54",
+        "value": "{\"at\": 1795758057.386041, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:55",
+        "value": "{\"recovery_checked_at\": 1795758057.3875287}"
+      },
+      {
+        "key": "followup:task:55",
+        "value": "{\"status\": \"needs_human\", \"task\": 55, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:57",
+        "value": "{\"recovery_checked_at\": 1795758057.7070372}"
+      },
+      {
+        "key": "recovery_audit:57",
+        "value": "{\"at\": 1795758058.3582063, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "task:58",
+        "value": "{\"recovery_checked_at\": 1795758058.3595762}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795758058.581515"
+      },
+      {
+        "key": "followup:task:58",
+        "value": "{\"status\": \"needs_human\", \"task\": 58, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:60",
+        "value": "{\"recovery_checked_at\": 1795758058.6598349}"
+      },
+      {
+        "key": "followup:task:60",
+        "value": "{\"status\": \"needs_human\", \"task\": 60, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:61",
+        "value": "{\"recovery_checked_at\": 1795758059.0094812}"
+      },
+      {
+        "key": "followup:task:61",
+        "value": "{\"status\": \"needs_human\", \"task\": 61, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1795757983.1806974, \"disk_free_bytes\": 89671155712, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15165890560, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1795758059.5335827, \"disk_free_bytes\": 89669341184, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15126323200, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       }
     ],
     "calls": [
