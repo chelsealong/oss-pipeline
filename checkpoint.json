@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795762220.3648543,
+  "saved_at": 1795762284.9166226,
   "tables": {
     "tasks": [
       {
@@ -48164,14 +48164,6 @@
         "value": "{\"at\": 1795761823.1111097, \"reason\": \"PR closed or not owned by our fork\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795762150.6696272, \"state\": \"waiting\", \"pending_candidates\": 633, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 233, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 633}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 6, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1339.4583678245544, \"judge_tokens_spent_24h\": 40523, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 4, \"validation_wait\": 3}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8375\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8375\", \"title\": \"Deferred tier (`service_tier='deferred'`): every reply echoes the request's input steps, so a run with a tool call never finishes\", \"first_seen\": 1795693333.7101543, \"last_checked\": 1795747994.9145412, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8378\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8378\", \"title\": \"Eval results do not record why a simulated conversation ended; a run cut off by max_allowed_invocations is judged as if the user simulator had said </finished>\", \"first_seen\": 1795710734.0960038, \"last_checked\": 1795749303.416424, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795762150.6705313, \"tasks\": {\"fix\": {\"blocked\": 1, \"human_wait\": 4, \"skipped\": 10, \"validation_wait\": 3}, \"respond\": {}}}"
-      },
-      {
         "key": "candidate_capacity:adk",
         "value": "{\"at\": 1795762160.1298769, \"allowed\": true, \"reason\": \"\"}"
       },
@@ -48216,10 +48208,6 @@
         "value": "1795762176.6497664"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795762177.0606031, \"windows\": [{\"name\": \"primary\", \"used_percent\": 13, \"resets_at\": 1796162550}]}"
-      },
-      {
         "key": "task:166",
         "value": "{\"recovery_checked_at\": 1795762210.9851193}"
       },
@@ -48244,8 +48232,28 @@
         "value": "1795762214.6583686"
       },
       {
+        "key": "recovery_audit:171",
+        "value": "{\"at\": 1795762220.1476696, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1795762224.319985, \"state\": \"waiting\", \"pending_candidates\": 633, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 233, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 633}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 6, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 1413.1099383831024, \"judge_tokens_spent_24h\": 40523, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 4, \"validation_wait\": 3}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8375\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8375\", \"title\": \"Deferred tier (`service_tier='deferred'`): every reply echoes the request's input steps, so a run with a tool call never finishes\", \"first_seen\": 1795693333.7101543, \"last_checked\": 1795747994.9145412, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8378\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8378\", \"title\": \"Eval results do not record why a simulated conversation ended; a run cut off by max_allowed_invocations is judged as if the user simulator had said </finished>\", \"first_seen\": 1795710734.0960038, \"last_checked\": 1795749303.416424, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"No active tasks: repository task-start limits or unresolved handoffs remain; process health does not prove PR production.\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795762224.321304, \"tasks\": {\"fix\": {\"blocked\": 1, \"human_wait\": 4, \"skipped\": 10, \"validation_wait\": 3}, \"respond\": {}}}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1795762237.4945276, \"windows\": [{\"name\": \"primary\", \"used_percent\": 13, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795762279.090145"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1795762215.6497197"
+        "value": "1795762280.651488"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48253,19 +48261,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795762217.1762912"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1795762219.0852883"
-      },
-      {
-        "key": "recovery_audit:171",
-        "value": "{\"at\": 1795762220.1476696, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
+        "value": "1795762282.1303666"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1795762220.352806, \"disk_free_bytes\": 89593413632, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15038537728, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1795762284.9046462, \"disk_free_bytes\": 89591635968, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15085154304, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       }
     ],
     "calls": [
