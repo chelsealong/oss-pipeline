@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795783338.9184678,
+  "saved_at": 1795783404.7370842,
   "tables": {
     "tasks": [
       {
@@ -48169,30 +48169,6 @@
         "value": "{\"status\": \"asked\", \"source\": \"https://github.com/google/adk-python/issues/8398#issuecomment-7212068947\", \"comment_id\": 7212068947, \"rule\": \"Upstream requires asking before contributing, not a particular approval phrase.\"}"
       },
       {
-        "key": "task:166",
-        "value": "{\"recovery_checked_at\": 1795782490.8584282}"
-      },
-      {
-        "key": "followup:task:166",
-        "value": "{\"status\": \"needs_human\", \"task\": 166, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:167",
-        "value": "{\"recovery_checked_at\": 1795782491.148435}"
-      },
-      {
-        "key": "followup:task:167",
-        "value": "{\"status\": \"needs_human\", \"task\": 167, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:171",
-        "value": "{\"recovery_checked_at\": 1795782491.454438}"
-      },
-      {
-        "key": "recovery_audit:171",
-        "value": "{\"at\": 1795782492.8639355, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
-      },
-      {
         "key": "task:172",
         "value": "{\"recovery_checked_at\": 1795782621.936008}"
       },
@@ -48354,59 +48330,91 @@
       },
       {
         "key": "admission_health",
-        "value": "{\"at\": 1795783278.3774998, \"state\": \"stalled\", \"pending_candidates\": 685, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 285, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 685}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 4098.96698307991, \"judge_tokens_spent_24h\": 36877, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 4, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8375\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8375\", \"title\": \"Deferred tier (`service_tier='deferred'`): every reply echoes the request's input steps, so a run with a tool call never finishes\", \"first_seen\": 1795693333.7101543, \"last_checked\": 1795747994.9145412, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8378\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8378\", \"title\": \"Eval results do not record why a simulated conversation ended; a run cut off by max_allowed_invocations is judged as if the user simulator had said </finished>\", \"first_seen\": 1795710734.0960038, \"last_checked\": 1795749303.416424, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8412\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8412\", \"title\": \"`OpenAILlm` and `OpenAIResponsesLlm` count reasoning tokens twice in output usage\", \"first_seen\": 1795779989.3932903, \"last_checked\": 1795782226.2770803, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8411\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8411\", \"title\": \"LLM-as-judge evaluators should accept a BaseLlm instance, not only a model name\", \"first_seen\": 1795776974.0166593, \"last_checked\": 1795782228.728608, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+        "value": "{\"at\": 1795783342.7971227, \"state\": \"stalled\", \"pending_candidates\": 685, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 285, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 685}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 4163.386605024338, \"judge_tokens_spent_24h\": 36877, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 4, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8375\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8375\", \"title\": \"Deferred tier (`service_tier='deferred'`): every reply echoes the request's input steps, so a run with a tool call never finishes\", \"first_seen\": 1795693333.7101543, \"last_checked\": 1795747994.9145412, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8378\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8378\", \"title\": \"Eval results do not record why a simulated conversation ended; a run cut off by max_allowed_invocations is judged as if the user simulator had said </finished>\", \"first_seen\": 1795710734.0960038, \"last_checked\": 1795749303.416424, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8412\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8412\", \"title\": \"`OpenAILlm` and `OpenAIResponsesLlm` count reasoning tokens twice in output usage\", \"first_seen\": 1795779989.3932903, \"last_checked\": 1795782226.2770803, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8411\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8411\", \"title\": \"LLM-as-judge evaluators should accept a BaseLlm instance, not only a model name\", \"first_seen\": 1795776974.0166593, \"last_checked\": 1795782228.728608, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1795783278.3785088, \"tasks\": {\"fix\": {\"blocked\": 1, \"human_wait\": 1, \"skipped\": 13, \"validation_wait\": 4}, \"respond\": {}}}"
+        "value": "{\"at\": 1795783342.7983267, \"tasks\": {\"fix\": {\"blocked\": 1, \"human_wait\": 1, \"skipped\": 13, \"validation_wait\": 4}, \"respond\": {}}}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795783315.0005896, \"windows\": [{\"name\": \"primary\", \"used_percent\": 15, \"resets_at\": 1796162550}]}"
+        "value": "{\"at\": 1795783375.3613071, \"windows\": [{\"name\": \"primary\", \"used_percent\": 15, \"resets_at\": 1796162550}]}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1795783329.817551"
+        "value": "1795783389.8241692"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795783395.0904171"
       },
       {
         "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795783330.1421998, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795783395.6098537, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795783330.5050924, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795783395.9507031, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795783330.8423858, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795783396.5224876, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795783331.1754873, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795783396.8962374, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795783331.5638626, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795783397.2411985, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795783331.9920223, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795783397.8990064, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795783332.7032871, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+        "value": "{\"at\": 1795783398.7359142, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
       },
       {
         "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795783333.0283492, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795783400.103389, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795783333.3105288, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795783400.4547753, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795783333.75576, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795783400.868799, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "task:166",
+        "value": "{\"recovery_checked_at\": 1795783403.1126628}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795783403.2295678"
+      },
+      {
+        "key": "followup:task:166",
+        "value": "{\"status\": \"needs_human\", \"task\": 166, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:167",
+        "value": "{\"recovery_checked_at\": 1795783403.549914}"
+      },
+      {
+        "key": "followup:task:167",
+        "value": "{\"status\": \"needs_human\", \"task\": 167, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:171",
+        "value": "{\"recovery_checked_at\": 1795783403.8588839}"
+      },
+      {
+        "key": "recovery_audit:171",
+        "value": "{\"at\": 1795783404.5193822, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48414,19 +48422,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795783334.4535656"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1795783338.227632"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1795783338.762737"
+        "value": "1795783404.723851"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1795783338.9057672, \"disk_free_bytes\": 89612881920, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15120543744, \"SwapTotal\": 0, \"SwapFree\": 0}, \"memory_events\": null}"
+        "value": "{\"at\": 1795783404.7241774, \"disk_free_bytes\": 89611038720, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15123542016, \"SwapTotal\": 0, \"SwapFree\": 0}, \"memory_events\": null}"
       }
     ],
     "calls": [
