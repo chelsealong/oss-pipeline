@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795783691.2881026,
+  "saved_at": 1795783726.9636734,
   "tables": {
     "tasks": [
       {
@@ -26907,10 +26907,10 @@
         "repo": "langfuse",
         "number": 20770,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1795524206.6642148,
-        "updated": 1795783676.9573576,
-        "result": "Issue #20770 requires a change to the rollout parser in the separate codex-observability-plugin repository. That parser is absent from the authorized langfuse/langfuse checkout, so this task cannot produce the fix here.",
+        "updated": 1795783726.8270288,
+        "result": "Issue #20770 requires changing plugins/tracing/src/parse.ts in the separate langfuse/codex-observability-plugin repository. That parser is absent from the authorized langfuse/langfuse checkout. The issue remains open, but there is no in-scope fix here.",
         "attempts": 2
       },
       {
@@ -48105,10 +48105,6 @@
         "value": "{\"at\": 1795782998.6615222, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795783000.6629748, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -48393,24 +48389,20 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795652525.8176348, \"comfyui\": 1795770289.5816014, \"hermes\": 1795158844.7137928, \"langfuse\": 1795783676.9572165, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795779155.0432513, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795715124.0708468, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1795770900.694459, \"autogpt\": 1795331330.0812907}}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795783677.0432699, \"windows\": [{\"name\": \"primary\", \"used_percent\": 15, \"resets_at\": 1796162550}]}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{\"2070\": {\"remaining\": 1, \"until\": 1795790887.57486}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795765909.2503183, \"group\": \"new_fix\", \"task\": 2128, \"phase\": \"generation\"}, {\"at\": 1795770297.4957805, \"group\": \"new_fix\", \"task\": 2129, \"phase\": \"generation\"}, {\"at\": 1795770927.2350726, \"group\": \"new_fix\", \"task\": 2130, \"phase\": \"generation\"}, {\"at\": 1795779179.4030993, \"group\": \"new_fix\", \"task\": 2131, \"phase\": \"generation\"}, {\"at\": 1795783687.57486, \"group\": \"new_fix\", \"task\": 2070, \"phase\": \"generation\"}]"
       },
       {
+        "key": "worker_heartbeat",
+        "value": "1795783719.8539963"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1795783688.2369397"
+        "value": "1795783723.2379725"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1795783688.8688564"
+        "value": "1795783723.9826982"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48418,15 +48410,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795783689.2971432"
+        "value": "1795783724.6032972"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795783689.8518512"
+        "key": "codex_quota",
+        "value": "{\"at\": 1795783726.7503057, \"windows\": [{\"name\": \"primary\", \"used_percent\": 15, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795783726.7517805, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2070:2:generation",
+        "value": "{\"task\": 2070, \"repo\": \"langfuse\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1795783726.7544706, \"seconds\": 39.18, \"tokens\": {\"totalTokens\": 213200, \"inputTokens\": 211774, \"cachedInputTokens\": 159104, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1426, \"reasoningOutputTokens\": 277}, \"first_event_ms\": 1795783695020, \"last_event_ms\": 1795783726750, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:2070",
-        "value": "{\"started\": 1795783676.9573913, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2070/attempt-2\", \"attempt\": 2, \"phase\": \"generation\", \"base\": \"e6c11c617b309cc09263a9459341399a7d5b01c7\", \"generation_started\": 1795524219.1718986, \"dispatch_paid_date\": \"2026-11-24\", \"phase_started\": 1795783691.2744162, \"last_execution_phase\": \"generation\", \"finished\": 1795524262.5137749}"
+        "value": "{\"started\": 1795783676.9573913, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2070/attempt-2\", \"attempt\": 2, \"phase\": \"skipped\", \"base\": \"e6c11c617b309cc09263a9459341399a7d5b01c7\", \"generation_started\": 1795524219.1718986, \"dispatch_paid_date\": \"2026-11-24\", \"phase_started\": 1795783691.2744162, \"last_execution_phase\": \"generation\", \"finished\": 1795783726.75606}"
       }
     ],
     "calls": [
