@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795748378.2802181,
+  "saved_at": 1795748401.487805,
   "tables": {
     "tasks": [
       {
@@ -47838,28 +47838,12 @@
         "value": "{\"status\": \"sent\", \"task\": 2123, \"at\": 1795740187.3356338, \"url\": \"https://github.com/google/adk-python/issues/8384#issuecomment-7206695710\"}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"adk\", \"task\": 2123, \"at\": 1795740204.4844446}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-11-27\", \"used\": {\"adk\": 1}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1795739794.7263567, \"group\": \"new_fix\", \"task\": 1955, \"phase\": \"generation\"}, {\"at\": 1795740204.4846044, \"group\": \"new_fix\", \"task\": 2123, \"phase\": \"generation\"}]"
-      },
-      {
         "key": "usage:2123:1:generation",
         "value": "{\"task\": 2123, \"repo\": \"adk\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795740861.9994082, \"seconds\": 657.516, \"tokens\": {\"totalTokens\": 3915088, \"inputTokens\": 3905331, \"cachedInputTokens\": 3819904, \"cacheWriteInputTokens\": 0, \"outputTokens\": 9757, \"reasoningOutputTokens\": 3188}, \"first_event_ms\": 1795740212903, \"last_event_ms\": 1795740861982, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "followup:task:2123",
         "value": "{\"status\": \"needs_human\", \"task\": 2123, \"repo\": \"adk\", \"number\": 8384, \"reason\": \"VALIDATION_ENVIRONMENT: CONTRIBUTING.md requires the full tox matrix before a PR. With a temporary local lockfile, Python 3.11 stopped during CrewAI test collection because it tried to write to read-only /home/runner/.local/share. The same error occurs without the source fix. The patch remains in the checkout; the temporary lockfile was removed.\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"patch_digest\": \"a483997bfacfffc782800b1bd45e59cba6c069e02f8d203f7acb7ed19ab6d6dc\", \"evidence_bundle\": \"2123-1.json.enc\"}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:2123",
@@ -48146,12 +48130,20 @@
         "value": "{\"at\": 1795748361.6238856, \"windows\": [{\"name\": \"primary\", \"used_percent\": 12, \"resets_at\": 1796162550}]}"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1795748374.104573"
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795652525.8176348, \"comfyui\": 1795638865.2301536, \"hermes\": 1795158844.7137928, \"langfuse\": 1795739782.3213782, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795748378.2654452, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795715124.0708468, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1795740178.4997194, \"autogpt\": 1795331330.0812907}}"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1795748375.002084"
+        "value": "1795748386.0736315"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795748391.794617"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795748399.1050036"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48159,42 +48151,30 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795748375.5250146"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1795748376.7927487"
-      },
-      {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795652525.8176348, \"comfyui\": 1795638865.2301536, \"hermes\": 1795158844.7137928, \"langfuse\": 1795739782.3213782, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795748378.2654452, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795715124.0708468, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1795740178.4997194, \"autogpt\": 1795331330.0812907}}"
+        "value": "1795748400.1883602"
       },
       {
         "key": "task:2124",
-        "value": "{\"started\": 1795748378.2655761, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null}"
+        "value": "{\"started\": 1795748378.2655761, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2124/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"40d4f79eb9d8f68430692d0cc156483ca2d7f4f6\", \"generation_started\": 1795748401.4747915, \"dispatch_paid_date\": \"2026-11-27\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"adk\", \"task\": 2123, \"at\": 1795740204.4844446}, {\"repo\": \"llama-index\", \"task\": 2124, \"at\": 1795748401.47479}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-11-27\", \"used\": {\"adk\": 1, \"llama-index\": 1}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"2124\": {\"remaining\": 1, \"until\": 1795755601.4749045}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1795739794.7263567, \"group\": \"new_fix\", \"task\": 1955, \"phase\": \"generation\"}, {\"at\": 1795740204.4846044, \"group\": \"new_fix\", \"task\": 2123, \"phase\": \"generation\"}, {\"at\": 1795748401.4749045, \"group\": \"new_fix\", \"task\": 2124, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1795136015.5398169,
-        "kind": "judge"
-      },
-      {
-        "at": 1795136030.0017858,
-        "kind": "judge"
-      },
-      {
-        "at": 1795136492.7398598,
-        "kind": "judge"
-      },
-      {
-        "at": 1795136506.6713748,
-        "kind": "judge"
-      },
-      {
-        "at": 1795139358.3131592,
-        "kind": "judge"
-      },
       {
         "at": 1795148934.167718,
         "kind": "judge"
@@ -51149,6 +51129,10 @@
       },
       {
         "at": 1795740204.4852548,
+        "kind": "codex"
+      },
+      {
+        "at": 1795748401.4755,
         "kind": "codex"
       }
     ]
