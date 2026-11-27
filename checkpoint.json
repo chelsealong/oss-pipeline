@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795764651.5737548,
+  "saved_at": 1795764656.0278213,
   "tables": {
     "tasks": [
       {
@@ -47941,10 +47941,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8386\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABra4uuw@2026-11-27T03:15:47Z\", \"author\": \"krishras23\", \"when\": \"2026-11-27T03:15:47Z\", \"kind\": \"comment\", \"assoc\": \"NONE\", \"body\": \"Thanks for the offer! I filed this and planned to send the PR myself, since I have the live trace and the interaction to test a fix against. I'm waiting on a maintainer to answer the two questions above first, though. The right fix depends on whether the polled interaction is supposed to carry a continuation_token. Happy to coordinate if a maintainer would rather assign it differently.\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
       {
-        "key": "runner_restarts",
-        "value": "[]"
-      },
-      {
         "key": "followup:google/adk-python#8384",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8384\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABrb3Cyg@2026-11-27T04:31:10Z\", \"author\": \"surajksharma07\", \"when\": \"2026-11-27T04:31:10Z\", \"kind\": \"comment\", \"assoc\": \"COLLABORATOR\", \"body\": \"@OUAO-FRANK Reproduced on main at 03725e8: plain exceptions get caught per toolset, but CancelledError gets past that, and the plain asyncio.gather in _agent_tools.process_agent_tools never cancels the other listings.\\n\\nA workaround that worked for me: wrap each _convert_tool_union_to_tools(...) call in asyncio.create_task and await _batch_executor._gather_or_cancel(tasks) in its place, the same helper the function-call path uses. Locally the slow sibling then finishes before run_async returns, and the normal run still works. Could you check whether that holds up on your side? Also, have you seen this with a real toolset like MCP, or only with the probe?\\n\\n@chelsealong feel free to pick this up. Please test it thoroughly first and add a regression test before you raise the PR. run_async still ending with zero events on a self-cancel is probably a separate discussion.\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
@@ -48303,6 +48299,10 @@
       {
         "key": "discovery_last_success",
         "value": "1795764611.9996154"
+      },
+      {
+        "key": "runner_restarts",
+        "value": "[]"
       }
     ],
     "calls": [
