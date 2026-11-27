@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795755050.3965373,
+  "saved_at": 1795755117.0806537,
   "tables": {
     "tasks": [
       {
@@ -47967,14 +47967,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8384\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABrb3Cyg@2026-11-27T04:31:10Z\", \"author\": \"surajksharma07\", \"when\": \"2026-11-27T04:31:10Z\", \"kind\": \"comment\", \"assoc\": \"COLLABORATOR\", \"body\": \"@OUAO-FRANK Reproduced on main at 03725e8: plain exceptions get caught per toolset, but CancelledError gets past that, and the plain asyncio.gather in _agent_tools.process_agent_tools never cancels the other listings.\\n\\nA workaround that worked for me: wrap each _convert_tool_union_to_tools(...) call in asyncio.create_task and await _batch_executor._gather_or_cancel(tasks) in its place, the same helper the function-call path uses. Locally the slow sibling then finishes before run_async returns, and the normal run still works. Could you check whether that holds up on your side? Also, have you seen this with a real toolset like MCP, or only with the probe?\\n\\n@chelsealong feel free to pick this up. Please test it thoroughly first and add a regression test before you raise the PR. run_async still ending with zero events on a self-cancel is probably a separate discussion.\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
       {
-        "key": "task:2103",
-        "value": "{\"started\": 1795650353.6238272, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1795650359.5201652, \"recovery_checked_at\": 1795754181.6715052}"
-      },
-      {
-        "key": "task:2104",
-        "value": "{\"started\": 1795650373.6744266, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1795650378.976439, \"recovery_checked_at\": 1795754182.629654}"
-      },
-      {
         "key": "task:1772",
         "value": "{\"started\": 1794433734.3683045, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1772/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"remote_base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base_update\": {\"original_head\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794433749.2429795, \"patch_digest\": \"4fe941f9761d7c805b686c0f14d68074129e92774dc46d8f1d318e3c3378b353\", \"last_execution_phase\": \"generation\", \"finished\": 1794433882.8292596, \"recovery_checked_at\": 1795754312.8287094}"
       },
@@ -48140,67 +48132,59 @@
       },
       {
         "key": "admission_health",
-        "value": "{\"at\": 1795754989.8567402, \"state\": \"stalled\", \"pending_candidates\": 621, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 221, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 621}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 5792.434036493301, \"judge_tokens_spent_24h\": 29703, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 5, \"validation_wait\": 3}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8375\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8375\", \"title\": \"Deferred tier (`service_tier='deferred'`): every reply echoes the request's input steps, so a run with a tool call never finishes\", \"first_seen\": 1795693333.7101543, \"last_checked\": 1795747994.9145412, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8378\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8378\", \"title\": \"Eval results do not record why a simulated conversation ended; a run cut off by max_allowed_invocations is judged as if the user simulator had said </finished>\", \"first_seen\": 1795710734.0960038, \"last_checked\": 1795749303.416424, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+        "value": "{\"at\": 1795755054.8357778, \"state\": \"stalled\", \"pending_candidates\": 621, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 221, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 621}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 4, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 5857.4132168293, \"judge_tokens_spent_24h\": 29703, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"human_wait\": 5, \"validation_wait\": 3}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8375\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8375\", \"title\": \"Deferred tier (`service_tier='deferred'`): every reply echoes the request's input steps, so a run with a tool call never finishes\", \"first_seen\": 1795693333.7101543, \"last_checked\": 1795747994.9145412, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8378\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8378\", \"title\": \"Eval results do not record why a simulated conversation ended; a run cut off by max_allowed_invocations is judged as if the user simulator had said </finished>\", \"first_seen\": 1795710734.0960038, \"last_checked\": 1795749303.416424, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1795754989.8582282, \"tasks\": {\"fix\": {\"human_wait\": 5, \"skipped\": 13, \"validation_wait\": 3}, \"respond\": {}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795754993.9989538, \"windows\": [{\"name\": \"primary\", \"used_percent\": 12, \"resets_at\": 1796162550}]}"
+        "value": "{\"at\": 1795755054.8370402, \"tasks\": {\"fix\": {\"human_wait\": 5, \"skipped\": 13, \"validation_wait\": 3}, \"respond\": {}}}"
       },
       {
         "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795755035.075168, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795755096.909004, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795755035.8071892, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795755097.3449898, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795755036.332612, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795755097.6661727, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795755036.854441, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795755098.063395, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795755037.2486668, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795755098.6493845, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795755037.5753164, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795755098.9823873, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795755038.6196873, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+        "value": "{\"at\": 1795755099.7722237, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
       },
       {
         "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795755039.0480936, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795755100.1967146, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795755039.329127, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795755100.5357473, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795755039.8177168, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795755100.824816, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1795755048.2309096"
+        "value": "1795755108.2371168"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795755048.5011077"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1795755049.8382545"
+        "value": "1795755113.5031066"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48208,11 +48192,27 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795755049.8824637"
+        "value": "1795755114.7214694"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1795755114.808254, \"windows\": [{\"name\": \"primary\", \"used_percent\": 12, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "task:2103",
+        "value": "{\"started\": 1795650353.6238272, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1795650359.5201652, \"recovery_checked_at\": 1795755115.350051}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795755115.8607316"
+      },
+      {
+        "key": "task:2104",
+        "value": "{\"started\": 1795650373.6744266, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1795650378.976439, \"recovery_checked_at\": 1795755116.2266517}"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1795755050.3839514, \"disk_free_bytes\": 89722195968, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15158194176, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1795755117.0675104, \"disk_free_bytes\": 89724637184, \"memory_bytes\": {\"MemTotal\": 16464306176, \"MemAvailable\": 15148404736, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       }
     ],
     "calls": [
