@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795797516.402331,
+  "saved_at": 1795797580.8439434,
   "tables": {
     "tasks": [
       {
@@ -48142,14 +48142,6 @@
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8376\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABrlDs_Q@2026-11-27T13:27:45Z\", \"author\": \"vadimguma\", \"when\": \"2026-11-27T13:27:45Z\", \"kind\": \"comment\", \"assoc\": \"NONE\", \"body\": \"thanks for picking this up\\nhappy to help verify a fix if something: our repro is Ukrainian and German tool responses on a long research turn, where the estimate runs ~2\\u20133x over the real prompt_token_count and in-turn summarization fires early\\nany approach that counts characters without ensure_ascii (or measures tokens) works for us\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795795763.9620168, \"source\": \"authenticated probe\"}"
-      },
-      {
-        "key": "pause",
-        "value": "{}"
-      },
-      {
         "key": "admission_warning_at",
         "value": "1795796596.722152"
       },
@@ -48382,60 +48374,84 @@
         "value": "{\"at\": 1795797386.0010178, \"safe\": false, \"reason\": \"Current PR head must match the retained base\"}"
       },
       {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795797447.2889118, \"allowed\": true, \"reason\": \"\"}"
+        "key": "prwatch_heartbeat",
+        "value": "1795797514.9361477"
       },
       {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795797452.7071686, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795797453.0873835, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795797453.5474863, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795797453.9489982, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795797454.3284616, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795797455.1410906, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795797455.5621452, \"allowed\": true, \"reason\": \"\"}"
+        "key": "runner_resources",
+        "value": "{\"at\": 1795797516.3850813, \"disk_free_bytes\": 85707841536, \"memory_bytes\": {\"MemTotal\": 16759283712, \"MemAvailable\": 15372132352, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
       {
         "key": "admission_health",
-        "value": "{\"at\": 1795797455.6670258, \"state\": \"stalled\", \"pending_candidates\": 712, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 312, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 712}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 2, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 12571.4497859478, \"judge_tokens_spent_24h\": 36139, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 3, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8375\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8375\", \"title\": \"Deferred tier (`service_tier='deferred'`): every reply echoes the request's input steps, so a run with a tool call never finishes\", \"first_seen\": 1795693333.7101543, \"last_checked\": 1795747994.9145412, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8378\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8378\", \"title\": \"Eval results do not record why a simulated conversation ended; a run cut off by max_allowed_invocations is judged as if the user simulator had said </finished>\", \"first_seen\": 1795710734.0960038, \"last_checked\": 1795749303.416424, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+        "value": "{\"at\": 1795797520.743877, \"state\": \"stalled\", \"pending_candidates\": 712, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 312, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 712}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 2, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 12636.52669787407, \"judge_tokens_spent_24h\": 36139, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 3, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8375\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8375\", \"title\": \"Deferred tier (`service_tier='deferred'`): every reply echoes the request's input steps, so a run with a tool call never finishes\", \"first_seen\": 1795693333.7101543, \"last_checked\": 1795747994.9145412, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8378\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8378\", \"title\": \"Eval results do not record why a simulated conversation ended; a run cut off by max_allowed_invocations is judged as if the user simulator had said </finished>\", \"first_seen\": 1795710734.0960038, \"last_checked\": 1795749303.416424, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1795797455.6689832, \"tasks\": {\"fix\": {\"blocked\": 1, \"human_wait\": 1, \"skipped\": 15, \"validation_wait\": 3}, \"respond\": {}}}"
+        "value": "{\"at\": 1795797520.746092, \"tasks\": {\"fix\": {\"blocked\": 1, \"human_wait\": 1, \"skipped\": 15, \"validation_wait\": 3}, \"respond\": {}}}"
+      },
+      {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1795797525.2147257, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1795797525.6818798, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1795797526.0978734, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1795797526.5605955, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1795797527.0898626, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1795797527.437254, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1795797528.3458798, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1795797528.7314403, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795797456.2050693, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795797529.1543403, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795797456.6776748, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795797530.0451257, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795797494.1701858, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1796162550}]}"
+        "value": "{\"at\": 1795797566.665102, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795797566.6694741, \"source\": \"authenticated probe\"}"
+      },
+      {
+        "key": "pause",
+        "value": "{}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795797575.759703"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795797575.9642642"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1795797501.8511634"
+        "value": "1795797576.6100993"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48443,23 +48459,7 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795797512.2525952"
-      },
-      {
-        "key": "prwatch_heartbeat",
-        "value": "1795797514.9361477"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1795797515.7504454"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1795797515.9629135"
-      },
-      {
-        "key": "runner_resources",
-        "value": "{\"at\": 1795797516.3850813, \"disk_free_bytes\": 85707841536, \"memory_bytes\": {\"MemTotal\": 16759283712, \"MemAvailable\": 15372132352, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "1795797577.3067102"
       }
     ],
     "calls": [
