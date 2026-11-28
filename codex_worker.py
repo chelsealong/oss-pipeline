@@ -192,6 +192,9 @@ def _agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_ke
                     'RUSTUP_HOME':str(cache/'rustup'),
                     'UV_CACHE_DIR':str(cache/'uv'),
                     'UV_PYTHON_INSTALL_DIR':str(cache/'uv-python')})
+    if cache is not None and repo_key=='adk':
+        import adk_validation
+        prompt+=adk_validation.configure(env)
     for name in ('OPENAI_API_KEY','CODEX_API_KEY','ANTHROPIC_API_KEY','CLAUDE_CODE_OAUTH_TOKEN',
                  'GH_TOKEN','GITHUB_TOKEN','GH_PAT','QWEN_API_KEY','DASHSCOPE_API_KEY','CODEX_AUTH_JSON','OSS_ARTIFACT_KEY',
                  'GITHUB_STEP_SUMMARY','GITHUB_OUTPUT','GITHUB_ENV','GITHUB_PATH','GITHUB_STATE'):
@@ -207,7 +210,7 @@ def _agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_ke
         if cache is not None:roots.append(str(cache))
         if repo_key=='hermes' and cache is not None:roots.append(str(scratch))
         cache_names=('OSS_TASK_CACHE','COREPACK_HOME','XDG_CACHE_HOME','XDG_DATA_HOME','XDG_CONFIG_HOME','XDG_STATE_HOME','NODE_OPTIONS','npm_config_cache',
-                     'npm_config_store_dir','CARGO_HOME','RUSTUP_HOME','UV_CACHE_DIR','UV_PYTHON_INSTALL_DIR','PATH','VIRTUAL_ENV')
+                     'npm_config_store_dir','CARGO_HOME','RUSTUP_HOME','UV_CACHE_DIR','UV_PYTHON_INSTALL_DIR','PATH','VIRTUAL_ENV','TOX_OVERRIDE')
         request={'prompt':prompt,'work':str(work),'roots':roots,'schema':schema,'model':model,
             'effort':effort,'cache_env':{k:env[k] for k in cache_names if k in env},
             'timeout':timeout,'probe':probe,'read_only':read_only,'phase':output.stem}

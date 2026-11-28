@@ -29,10 +29,35 @@ def publication_contract_regression(task, state):
         and (task['kind'],task['repo'],task['number'],state.get('base'),state.get('patch_digest'),
              state.get('last_execution_phase',state.get('phase')))==expected)
 
+def adk_tox_regression(task, state):
+    """Only the five audited CrewAI/XDG failures, once, with exact evidence."""
+    evidence = {
+        2116: (8376, 2, '03725e8c67ca27b2c07569797a0c18e867e0b217',
+               '30809ecf1858634f60504bb356d0ddd9703c6606238c6cc8821faefc5b726a14'),
+        2123: (8384, 1, '03725e8c67ca27b2c07569797a0c18e867e0b217',
+               'a483997bfacfffc782800b1bd45e59cba6c069e02f8d203f7acb7ed19ab6d6dc'),
+        2127: (8398, 1, '03725e8c67ca27b2c07569797a0c18e867e0b217',
+               '0c597cda709c688e3816efa10d4c0fbab5298e29e57d9a6975d769e3475673e6'),
+        2134: (8419, 1, '03725e8c67ca27b2c07569797a0c18e867e0b217',
+               'c2b7e4ef9984b83bc4c00f42377391a2263cd3e2ee96df152c820935b80dfb03'),
+        2135: (8417, 1, '03725e8c67ca27b2c07569797a0c18e867e0b217',
+               '67c9287f29b42d1482f85acb506cb62d415fa19227342fbd6703f6d172656228'),
+    }
+    expected = evidence.get(task.get('id'))
+    return bool(expected and task['kind']=='fix' and task['repo']=='adk'
+        and task['status']=='validation_wait'
+        and not state.get('adk_tox_repaired') and not state.get('publication_started')
+        and state.get('last_execution_phase',state.get('phase'))=='generation'
+        and (task['number'],task['attempts'],state.get('base'),state.get('patch_digest'))==expected
+        and 'CrewAI' in task.get('result','')
+        and '/home/runner/.local/share' in task.get('result',''))
+
+
 def submission_regression(task,state):
     """Identify audited controller regressions, never approve work."""
     if state.get('publication_started'):return None
     if publication_contract_regression(task,state):return 'publication_contract'
+    if adk_tox_regression(task,state):return 'adk_tox_environment'
     phase=state.get('last_execution_phase',state.get('phase'))
     reason=task.get('result','')
     if (task.get('id')==2116 and task['kind']=='fix' and task['repo']=='adk'
@@ -119,6 +144,8 @@ def recover_submission_regressions():
         if repair=='adk_coordination_policy':
             if payload.get('diff') or payload.get('untracked'):continue
             if submission_regression(task,payload['execution'])!=repair:continue
+        if repair=='adk_tox_environment':
+            if not retained_progress(task) or not adk_tox_regression(task,payload['execution']):continue
         if repair=='publication_contract':
             # Resume only complete source evidence in a fresh checkout. Ignored
             # build artifacts/retained dist locks are not restored or deleted.
@@ -439,6 +466,7 @@ def requeue(task,repair=None):
         if repair:
             marker={'ui_screenshot_delivery':'ui_evidence_repaired','checkpoint_resource_failure':'checkpoint_repaired',
                     'adk_coordination_policy':'coordination_policy_rechecked',
+                    'adk_tox_environment':'adk_tox_repaired',
                     'langfuse_static_memory':'validation_memory_repaired',
                     'browser_config_directory':'browser_config_repaired',
                     'stale_prompt_cap':'stale_cap_repaired',

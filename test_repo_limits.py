@@ -78,7 +78,7 @@ class RepoLimitTests(unittest.TestCase):
             impl=cfg.get('implements_in') or cfg['upstream']
             with patch.object(worker,'run',return_value=json.dumps([{}]*maximum)):
                 self.assertEqual(worker.cap_ok(key,impl),(False,'daily PR cap'))
-            replies=[json.dumps([{}]*(maximum-1))]+([json.dumps([{}]*19)] if key=='openclaw' else [])
+            replies=[json.dumps([{}]*(maximum-1))]+([json.dumps([{}]*(limits.OPEN_PR_CAPS[key]-1))] if key in limits.OPEN_PR_CAPS else [])
             with patch.object(worker,'run',side_effect=replies):
                 self.assertTrue(worker.cap_ok(key,impl)[0])
     def test_openclaw_twenty_open_blocks_even_below_daily_cap(self):
@@ -87,6 +87,11 @@ class RepoLimitTests(unittest.TestCase):
             query=read.call_args.args[0]
             self.assertEqual(query[query.index('--state')+1],'open')
             self.assertNotIn('--draft',query)
+
+    def test_hermes_five_open_blocks_but_four_keeps_one_slot(self):
+        for count,allowed in [(4,True),(5,False),(6,False)]:
+            with patch.object(worker,'run',side_effect=['[]',json.dumps([{}]*count)]):
+                self.assertEqual(worker.cap_ok('hermes','NousResearch/hermes-agent')[0],allowed)
 
     def test_generation_receives_current_caps_and_no_obsolete_lesson_threshold(self):
         source=Path(__file__).parent

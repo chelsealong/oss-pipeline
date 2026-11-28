@@ -1,3 +1,15 @@
+# November 28 validation and capacity recovery
+
+ADK tox filters task environment variables. Forward only the four controller-owned
+XDG directory variables with additive TOX_OVERRIDE pass_env; keep upstream commands,
+dependencies and the full interpreter matrix unchanged. The five audited CrewAI
+read-only-home failures may resume once from complete retained evidence, after
+remote branch/PR reconciliation, with attempts/spending preserved and fresh review.
+Other validation or human holds are not waived. Hermes now has an explicit pipeline
+cap of five concurrently open PRs, including drafts; OpenClaw remains at twenty.
+A historical Hermes creation denial needs real ordinary-PR evidence to clear;
+read access and an available slot alone do not prove creation permission.
+
 # November 26 ADK coordination restoration
 
 The user explicitly requested fixing the diagnosed missing coordination-to-execution
