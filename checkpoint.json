@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795867930.690753,
+  "saved_at": 1795867960.839023,
   "tables": {
     "tasks": [
       {
@@ -27739,9 +27739,9 @@
         "repo": "adk",
         "number": 8419,
         "note": "",
-        "status": "validation_wait",
+        "status": "queued",
         "created": 1795840298.5236645,
-        "updated": 1795841005.1776474,
+        "updated": 1795867960.1109657,
         "result": "VALIDATION_ENVIRONMENT: CONTRIBUTING.md requires the full tox matrix before a PR. The Python 3.11 run fails during collection because CrewAI tries to create /home/runner/.local/share/crewai/credentials outside the writable sandbox. The same failure occurs with my source edit temporarily removed. The completed source and regression-test patch is preserved.",
         "attempts": 1
       },
@@ -48237,10 +48237,6 @@
         "value": "{\"task\": 2134, \"repo\": \"adk\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795841005.1296105, \"seconds\": 680.969, \"tokens\": {\"totalTokens\": 5613504, \"inputTokens\": 5597587, \"cachedInputTokens\": 5507584, \"cacheWriteInputTokens\": 0, \"outputTokens\": 15917, \"reasoningOutputTokens\": 6063}, \"first_event_ms\": 1795840334570, \"last_event_ms\": 1795841005117, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
-        "key": "followup:task:2134",
-        "value": "{\"status\": \"needs_human\", \"task\": 2134, \"repo\": \"adk\", \"number\": 8419, \"reason\": \"VALIDATION_ENVIRONMENT: CONTRIBUTING.md requires the full tox matrix before a PR. The Python 3.11 run fails during collection because CrewAI tries to create /home/runner/.local/share/crewai/credentials outside the writable sandbox. The same failure occurs with my source edit temporarily removed. The completed source and regression-test patch is preserved.\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"patch_digest\": \"c2b7e4ef9984b83bc4c00f42377391a2263cd3e2ee96df152c820935b80dfb03\", \"evidence_bundle\": \"2134-1.json.enc\"}"
-      },
-      {
         "key": "cleanup:2134",
         "value": "{\"at\": 1795841011.8069806, \"path\": \"/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/2134/attempt-1/tool-cache\", \"error\": \"PermissionError\", \"reason\": \"[Errno 13] Permission denied: '/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/2134/attempt-1/tool-cache/xdg-cache/virtualenv/wheel/3.11/image/1/CopyPipInstall/ca140b45d5325a9478f880e351484f62fef15f336462e449ca0c03c873d589c2/setuptools-84.2\"}"
       },
@@ -48341,14 +48337,6 @@
         "value": "{\"started\": 1795866726.162548, \"worker_slot\": \"creation-recovery\", \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2139/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"3ef8bf4f68c91dce2870eba5625426b32ac6ba58\", \"creation_retry_request\": \"creation_retry:46141780570\", \"generation_started\": 1795866783.0460184, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795866787.8089733, \"last_execution_phase\": \"generation\", \"finished\": 1795866849.7635677}"
       },
       {
-        "key": "task:1772",
-        "value": "{\"started\": 1794433734.3683045, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1772/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"remote_base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base_update\": {\"original_head\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794433749.2429795, \"patch_digest\": \"4fe941f9761d7c805b686c0f14d68074129e92774dc46d8f1d318e3c3378b353\", \"last_execution_phase\": \"generation\", \"finished\": 1794433882.8292596, \"recovery_checked_at\": 1795867027.7583778}"
-      },
-      {
-        "key": "submission_recovery:1772",
-        "value": "{\"at\": 1795867028.1634986, \"error\": \"PR closed or not owned by our fork\"}"
-      },
-      {
         "key": "recovery_audit:1988",
         "value": "{\"at\": 1795867029.0591912, \"safe\": true, \"reason\": \"Current PR head must match the retained base\", \"repair\": \"reply_wording\"}"
       },
@@ -48379,22 +48367,6 @@
       {
         "key": "followup:task:2127",
         "value": "{\"status\": \"resumed\", \"task\": 2127}"
-      },
-      {
-        "key": "task:2134",
-        "value": "{\"started\": 1795840302.6326187, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2134/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8419#issuecomment-7234098050\", \"generation_started\": 1795840324.1613605, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795840330.9763086, \"patch_digest\": \"c2b7e4ef9984b83bc4c00f42377391a2263cd3e2ee96df152c820935b80dfb03\", \"last_execution_phase\": \"generation\", \"finished\": 1795841005.1511793, \"recovery_checked_at\": 1795867030.906477}"
-      },
-      {
-        "key": "recovery_audit:2134",
-        "value": "{\"at\": 1795867031.5091596, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"adk_tox_environment\"}"
-      },
-      {
-        "key": "task:2135",
-        "value": "{\"started\": 1795847201.0274022, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2135/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8417#issuecomment-7235300121\", \"generation_started\": 1795847224.9476697, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795847229.1622088, \"patch_digest\": \"67c9287f29b42d1482f85acb506cb62d415fa19227342fbd6703f6d172656228\", \"last_execution_phase\": \"generation\", \"finished\": 1795847876.9015336, \"recovery_checked_at\": 1795867031.5343618}"
-      },
-      {
-        "key": "recovery_audit:2135",
-        "value": "{\"at\": 1795867032.1138163, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"adk_tox_environment\"}"
       },
       {
         "key": "task:44",
@@ -48665,56 +48637,12 @@
         "value": "{\"started\": 1795867071.0766823, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1988/attempt-2\", \"attempt\": 2, \"phase\": \"blocked\", \"base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"remote_base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"base_update\": {\"original_head\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"merged\": false, \"mergeable\": null, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1795867690.0541084, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1795867764.5149183, \"recovery_checked_at\": 1795867028.1973324, \"reply_wording_repaired\": {\"at\": 1795867029.0658603, \"repair\": \"reply_wording\", \"attempt\": 1}}"
       },
       {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795867815.3251123, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795867815.83291, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795867816.2398176, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795867816.6260643, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795867816.981064, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795867817.4903102, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
         "key": "task:2103",
         "value": "{\"started\": 1795867811.9059517, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"skipped\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1795867817.8051348, \"recovery_checked_at\": 1795867132.4105544}"
       },
       {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795867818.6190844, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795867819.1127198, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795867819.5804615, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795867819.9766097, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795867832.55736, \"comfyui\": 1795838430.4489846, \"hermes\": 1795158844.7137928, \"langfuse\": 1795783676.9572165, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795847291.9800625, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795715124.0708468, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1795867096.1416998, \"autogpt\": 1795331330.0812907}}"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1795867836.9518185"
       },
       {
         "key": "runner_resources",
@@ -48727,10 +48655,6 @@
       {
         "key": "throughput_24h",
         "value": "{\"at\": 1795867898.2851686, \"tasks\": {\"fix\": {\"queued\": 3, \"running\": 2, \"skipped\": 10, \"validation_wait\": 2}, \"respond\": {\"blocked\": 1}}}"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1795867921.6267145"
       },
       {
         "key": "fix_sessions",
@@ -48749,12 +48673,88 @@
         "value": "[{\"at\": 1795861112.3052945, \"group\": \"new_fix\", \"task\": 2137, \"phase\": \"generation\"}, {\"at\": 1795865711.0394773, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1795865711.064409, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1795865713.9453785, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1795865716.505061, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1795865743.2038822, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1795865745.767686, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1795866167.0213563, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1795866167.106819, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1795866171.129988, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1795866171.5229256, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1795866200.495789, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1795866230.4354336, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1795866401.352694, \"group\": \"new_fix\", \"task\": 2138, \"phase\": \"generation\"}, {\"at\": 1795866783.0461566, \"group\": \"new_fix\", \"task\": 2139, \"phase\": \"generation\"}, {\"at\": 1795867109.500127, \"group\": \"new_fix\", \"task\": 2127, \"phase\": \"generation\"}, {\"at\": 1795867159.126171, \"group\": \"maintenance\", \"task\": 1988, \"phase\": \"generation\"}, {\"at\": 1795867684.5590746, \"group\": \"maintenance\", \"task\": 1988, \"phase\": \"reply-review\"}, {\"at\": 1795867925.3603537, \"group\": \"new_fix\", \"task\": 2140, \"phase\": \"generation\"}]"
       },
       {
+        "key": "task:2140",
+        "value": "{\"started\": 1795867832.5576806, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2140/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"70220b13c43f6a1db2171dc80c39273d0839a753\", \"generation_started\": 1795867925.3600998, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795867930.6641767}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795867951.634969"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795867952.4798543"
+      },
+      {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1795867952.8760536, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1795867953.3639083, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1795867953.7664564, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1795867954.292448, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1795867954.7495887, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1795867955.181871, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1795867956.0840743, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1795867956.4700077, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:autogpt",
+        "value": "{\"at\": 1795867956.895411, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
         "key": "codex_quota",
-        "value": "{\"at\": 1795867928.3469675, \"windows\": [{\"name\": \"primary\", \"used_percent\": 27, \"resets_at\": 1796162550}]}"
+        "value": "{\"at\": 1795867957.1997743, \"windows\": [{\"name\": \"primary\", \"used_percent\": 27, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "candidate_capacity:comfyui",
+        "value": "{\"at\": 1795867957.3447115, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795867928.865773"
+        "value": "1795867958.8696883"
+      },
+      {
+        "key": "task:1772",
+        "value": "{\"started\": 1794433734.3683045, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1772/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"remote_base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base_update\": {\"original_head\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794433749.2429795, \"patch_digest\": \"4fe941f9761d7c805b686c0f14d68074129e92774dc46d8f1d318e3c3378b353\", \"last_execution_phase\": \"generation\", \"finished\": 1794433882.8292596, \"recovery_checked_at\": 1795867958.8840678}"
+      },
+      {
+        "key": "submission_recovery:1772",
+        "value": "{\"at\": 1795867959.3707738, \"error\": \"PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "recovery_audit:2134",
+        "value": "{\"at\": 1795867960.0947938, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"adk_tox_environment\"}"
+      },
+      {
+        "key": "task:2134",
+        "value": "{\"started\": 1795840302.6326187, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2134/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8419#issuecomment-7234098050\", \"generation_started\": 1795840324.1613605, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795840330.9763086, \"patch_digest\": \"c2b7e4ef9984b83bc4c00f42377391a2263cd3e2ee96df152c820935b80dfb03\", \"last_execution_phase\": \"generation\", \"finished\": 1795841005.1511793, \"recovery_checked_at\": 1795867959.4676414, \"resume_progress\": {\"bundle\": \"2134-1.json\", \"sha256\": \"9a07870b7e2dea1ba97fe6bc7097d28a15d30c3615e2c5558f04108093a9f685\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"phase\": \"generation\"}, \"adk_tox_repaired\": {\"at\": 1795867960.1107569, \"repair\": \"adk_tox_environment\", \"attempt\": 1}}"
+      },
+      {
+        "key": "followup:task:2134",
+        "value": "{\"status\": \"resumed\", \"task\": 2134}"
+      },
+      {
+        "key": "task:2135",
+        "value": "{\"started\": 1795847201.0274022, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2135/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8417#issuecomment-7235300121\", \"generation_started\": 1795847224.9476697, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795847229.1622088, \"patch_digest\": \"67c9287f29b42d1482f85acb506cb62d415fa19227342fbd6703f6d172656228\", \"last_execution_phase\": \"generation\", \"finished\": 1795847876.9015336, \"recovery_checked_at\": 1795867960.1438174}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48762,11 +48762,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795867930.3865206"
+        "value": "1795867960.5109742"
       },
       {
-        "key": "task:2140",
-        "value": "{\"started\": 1795867832.5576806, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2140/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"70220b13c43f6a1db2171dc80c39273d0839a753\", \"generation_started\": 1795867925.3600998, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795867930.6641767}"
+        "key": "recovery_audit:2135",
+        "value": "{\"at\": 1795867960.7865615, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"adk_tox_environment\"}"
       }
     ],
     "calls": [
