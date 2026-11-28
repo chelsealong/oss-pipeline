@@ -1,0 +1,49 @@
+name: ADK November 28 exact-commit validation
+on:
+  push:
+    branches: [validation/adk7335-nov28]
+    paths: [.github/workflows/adk-nov28-validation.yml]
+permissions:
+  contents: read
+jobs:
+  suite:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: chelsealong/adk-python
+          ref: f39adcccd540597afe06cd24b7583dbf9355674e
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v6
+      - name: Full upstream tox matrix
+        run: |
+          uv sync --all-extras
+          uv tool install tox --with tox-uv
+          tox
+  a2a:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        sdk: ['a2a-sdk>=1,<2', 'a2a-sdk>=0.3,<0.4']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: chelsealong/adk-python
+          ref: f39adcccd540597afe06cd24b7583dbf9355674e
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: astral-sh/setup-uv@v6
+      - name: SDK compatibility and real in-process negotiation
+        env:
+          SDK_REQUIREMENT: ${{ matrix.sdk }}
+        run: |
+          uv venv --python 3.11
+          uv pip install -e '.[test,a2a]' "$SDK_REQUIREMENT" pyink isort
+          uv run --no-sync pytest tests/unittests/a2a -q
+          uv run --no-sync pyink --check src/google/adk/a2a/agent/interceptors/new_integration_extension.py tests/unittests/a2a/agent/test_remote_a2a_agent.py tests/unittests/a2a/integration/test_client_server_v1.py
+          uv run --no-sync isort --check-only src/google/adk/a2a/agent/interceptors/new_integration_extension.py tests/unittests/a2a/agent/test_remote_a2a_agent.py tests/unittests/a2a/integration/test_client_server_v1.py
