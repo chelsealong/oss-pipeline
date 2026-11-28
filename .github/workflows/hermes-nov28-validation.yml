@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: chelsealong/hermes-agent
-          ref: d9e38cedde46c3fff464fa678983daaace747b96
+          ref: b3f19cbc46bc290c6a09feaa79d9e32063cf486d
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
@@ -33,6 +33,20 @@ jobs:
         run: |
           python -m pm.build_env --source . --out .venv --group dev --group test
           python -c "import os,pathlib; p=pathlib.Path('.venv') / ('Scripts/python.exe' if os.name=='nt' else 'bin/python'); f=open(os.environ['GITHUB_ENV'],'a'); print('HERMES_PYTHON='+str(p.absolute()),file=f); f.close()"
+      - name: Confirm pre-existing POSIX-only test failure on Windows main
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          git fetch --no-tags --depth=1 origin 3ef8bf4f68c91dce2870eba5625426b32ac6ba58
+          git worktree add --detach ../hermes-baseline 3ef8bf4f68c91dce2870eba5625426b32ac6ba58
+          cd ../hermes-baseline
+          python - <<'PY'
+          import subprocess
+          result = subprocess.run(['bash', 'scripts/run_tests.sh', 'tests/hermes_cli/test_gateway_service_owner.py', '-k', 'detects_tmp_home_in_systemd_unit'], capture_output=True, text=True)
+          output = result.stdout + result.stderr
+          print(output)
+          assert result.returncode == 1 and 'AssertionError' in output and "None == '/tmp/hermes-e2e-41264'" in output, 'Expected the same pre-existing native path assertion failure'
+          PY
       - name: Run actual host identity and discovery regressions
         shell: bash
         run: |
