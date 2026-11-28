@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795866854.7829447,
+  "saved_at": 1795867032.144674,
   "tables": {
     "tasks": [
       {
@@ -25841,9 +25841,9 @@
         "repo": "openclaw/openclaw",
         "number": 202424,
         "note": "{\"authors\": \"clawsweeper\", \"events\": [\"IC_kwDOQb6kR88AAAABo3kS7w@2026-11-21T15:36:09Z\"], \"screening_events\": [], \"is_issue\": false, \"head\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\"}",
-        "status": "blocked",
+        "status": "queued",
         "created": 1795278762.7357447,
-        "updated": 1795279334.4715397,
+        "updated": 1795867029.0659668,
         "result": "ClawSweeper’s only actionable request was after-fix proof through a shipped entry point. An isolated Gateway `commands.list` call supplied it. The PR head is unchanged and no source files were edited; broad PR CI remains incomplete.",
         "attempts": 1
       },
@@ -27505,9 +27505,9 @@
         "repo": "adk",
         "number": 8376,
         "note": "",
-        "status": "validation_wait",
+        "status": "queued",
         "created": 1795698221.2159526,
-        "updated": 1795699590.9142547,
+        "updated": 1795867029.7294128,
         "result": "VALIDATION_ENVIRONMENT: CONTRIBUTING.md requires the full tox matrix before PR submission. `tox -p 1` failed during Python 3.11 test collection because CrewAI tries to write under the read-only `/home/runner/.local/share`. The same error occurs with only my source edit removed. The matrix did not complete.",
         "attempts": 2
       },
@@ -27596,9 +27596,9 @@
         "repo": "adk",
         "number": 8384,
         "note": "",
-        "status": "validation_wait",
+        "status": "queued",
         "created": 1795740177.0630205,
-        "updated": 1795740862.3323398,
+        "updated": 1795867030.3191936,
         "result": "VALIDATION_ENVIRONMENT: CONTRIBUTING.md requires the full tox matrix before a PR. With a temporary local lockfile, Python 3.11 stopped during CrewAI test collection because it tried to write to read-only /home/runner/.local/share. The same error occurs without the source fix. The patch remains in the checkout; the temporary lockfile was removed.",
         "attempts": 1
       },
@@ -27648,9 +27648,9 @@
         "repo": "adk",
         "number": 8398,
         "note": "",
-        "status": "validation_wait",
+        "status": "queued",
         "created": 1795762879.0450518,
-        "updated": 1795763460.5234797,
+        "updated": 1795867030.8950167,
         "result": "VALIDATION_ENVIRONMENT: CONTRIBUTING.md says, “You must run the full test suite across all supported versions using tox” before a PR. `tox -q` stopped during Python 3.11 collection because CrewAI tried to create `/home/runner/.local/share/crewai/credentials` on this read-only filesystem. The identical collection failure occurs with the source fix temporarily removed. The tested patch is preserved; the required full matrix cannot pass here.",
         "attempts": 1
       },
@@ -46201,10 +46201,6 @@
         "value": "{\"status\": \"needs_human\", \"reason\": \"The Gateway command-listing proof is verified, and the reply addresses the unresolved feedback. The proposed PR body also repeats specific passing-test and typecheck claims from the original description, but this job contains no actual results for those checks. Those claims need evidence or a clear attribution before the description is safe to publish.\"}"
       },
       {
-        "key": "task:1988",
-        "value": "{\"started\": 1795278769.4407046, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1988/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"remote_base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"base_update\": {\"original_head\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"merged\": false, \"mergeable\": null, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1795279235.3208716, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1795279334.3407993}"
-      },
-      {
         "key": "usage:1989:1:generation",
         "value": "{\"task\": 1989, \"repo\": \"langfuse\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795285284.7155595, \"seconds\": 917.382, \"tokens\": {\"totalTokens\": 14927590, \"inputTokens\": 14904226, \"cachedInputTokens\": 14777984, \"cacheWriteInputTokens\": 0, \"outputTokens\": 23364, \"reasoningOutputTokens\": 8785}, \"first_event_ms\": 1795284375465, \"last_event_ms\": 1795285284698, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -47917,20 +47913,8 @@
         "value": "{\"at\": 1795698732.70006, \"calls\": 6}"
       },
       {
-        "key": "recovery_audit:2116",
-        "value": "{\"at\": 1795698816.0241408, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"adk_coordination_policy\"}"
-      },
-      {
         "key": "usage:2116:2:generation",
         "value": "{\"task\": 2116, \"repo\": \"adk\", \"attempt\": 2, \"phase\": \"generation\", \"at\": 1795699590.6732988, \"seconds\": 740.488, \"tokens\": {\"totalTokens\": 8437971, \"inputTokens\": 8421709, \"cachedInputTokens\": 8326016, \"cacheWriteInputTokens\": 0, \"outputTokens\": 16262, \"reasoningOutputTokens\": 6058}, \"first_event_ms\": 1795698858340, \"last_event_ms\": 1795699590655, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "followup:task:2116",
-        "value": "{\"status\": \"needs_human\", \"task\": 2116, \"repo\": \"adk\", \"number\": 8376, \"reason\": \"VALIDATION_ENVIRONMENT: CONTRIBUTING.md requires the full tox matrix before PR submission. `tox -p 1` failed during Python 3.11 test collection because CrewAI tries to write under the read-only `/home/runner/.local/share`. The same error occurs with only my source edit removed. The matrix did not complete.\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"patch_digest\": \"30809ecf1858634f60504bb356d0ddd9703c6606238c6cc8821faefc5b726a14\", \"evidence_bundle\": \"2116-2.json.enc\"}"
-      },
-      {
-        "key": "task:2116",
-        "value": "{\"started\": 1795698836.0883396, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2116/attempt-2\", \"attempt\": 2, \"phase\": \"validation_wait\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8376#issuecomment-7192825551\", \"generation_started\": 1795698244.8116837, \"dispatch_paid_date\": \"2026-11-26\", \"phase_started\": 1795698854.7518942, \"patch_digest\": \"30809ecf1858634f60504bb356d0ddd9703c6606238c6cc8821faefc5b726a14\", \"last_execution_phase\": \"generation\", \"finished\": 1795699590.7920804, \"recovery_checked_at\": 1795698814.8487685, \"policy_gate_rechecked\": true, \"coordination_policy_rechecked\": {\"at\": 1795698816.1832924, \"repair\": \"adk_coordination_policy\", \"attempt\": 1}}"
       },
       {
         "key": "task:2117",
@@ -48011,14 +47995,6 @@
       {
         "key": "usage:2123:1:generation",
         "value": "{\"task\": 2123, \"repo\": \"adk\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795740861.9994082, \"seconds\": 657.516, \"tokens\": {\"totalTokens\": 3915088, \"inputTokens\": 3905331, \"cachedInputTokens\": 3819904, \"cacheWriteInputTokens\": 0, \"outputTokens\": 9757, \"reasoningOutputTokens\": 3188}, \"first_event_ms\": 1795740212903, \"last_event_ms\": 1795740861982, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "followup:task:2123",
-        "value": "{\"status\": \"needs_human\", \"task\": 2123, \"repo\": \"adk\", \"number\": 8384, \"reason\": \"VALIDATION_ENVIRONMENT: CONTRIBUTING.md requires the full tox matrix before a PR. With a temporary local lockfile, Python 3.11 stopped during CrewAI test collection because it tried to write to read-only /home/runner/.local/share. The same error occurs without the source fix. The patch remains in the checkout; the temporary lockfile was removed.\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"patch_digest\": \"a483997bfacfffc782800b1bd45e59cba6c069e02f8d203f7acb7ed19ab6d6dc\", \"evidence_bundle\": \"2123-1.json.enc\"}"
-      },
-      {
-        "key": "task:2123",
-        "value": "{\"started\": 1795740178.4998815, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2123/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8384#issuecomment-7206695710\", \"generation_started\": 1795740204.4844458, \"dispatch_paid_date\": \"2026-11-27\", \"phase_started\": 1795740208.9086106, \"patch_digest\": \"a483997bfacfffc782800b1bd45e59cba6c069e02f8d203f7acb7ed19ab6d6dc\", \"last_execution_phase\": \"generation\", \"finished\": 1795740862.1669478}"
       },
       {
         "key": "cleanup:2123",
@@ -48111,14 +48087,6 @@
       {
         "key": "usage:2127:1:generation",
         "value": "{\"task\": 2127, \"repo\": \"adk\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795763460.2812157, \"seconds\": 554.523, \"tokens\": {\"totalTokens\": 6052338, \"inputTokens\": 6038161, \"cachedInputTokens\": 5940736, \"cacheWriteInputTokens\": 0, \"outputTokens\": 14177, \"reasoningOutputTokens\": 4782}, \"first_event_ms\": 1795762915517, \"last_event_ms\": 1795763460271, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
-      },
-      {
-        "key": "followup:task:2127",
-        "value": "{\"status\": \"needs_human\", \"task\": 2127, \"repo\": \"adk\", \"number\": 8398, \"reason\": \"VALIDATION_ENVIRONMENT: CONTRIBUTING.md says, \\u201cYou must run the full test suite across all supported versions using tox\\u201d before a PR. `tox -q` stopped during Python 3.11 collection because CrewAI tried to create `/home/runner/.local/share/crewai/credentials` on this read-only filesystem. The identical collection failure occurs with the source fix temporarily removed. The tested patch is preserved; the required full matrix cannot pass here.\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"patch_digest\": \"0c597cda709c688e3816efa10d4c0fbab5298e29e57d9a6975d769e3475673e6\", \"evidence_bundle\": \"2127-1.json.enc\"}"
-      },
-      {
-        "key": "task:2127",
-        "value": "{\"started\": 1795762880.4447312, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2127/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8398#issuecomment-7212068947\", \"generation_started\": 1795762905.7587347, \"dispatch_paid_date\": \"2026-11-27\", \"phase_started\": 1795762911.408831, \"patch_digest\": \"0c597cda709c688e3816efa10d4c0fbab5298e29e57d9a6975d769e3475673e6\", \"last_execution_phase\": \"generation\", \"finished\": 1795763460.3991697}"
       },
       {
         "key": "cleanup:2127",
@@ -48233,10 +48201,6 @@
         "value": "{\"status\": \"needs_human\", \"task\": 2134, \"repo\": \"adk\", \"number\": 8419, \"reason\": \"VALIDATION_ENVIRONMENT: CONTRIBUTING.md requires the full tox matrix before a PR. The Python 3.11 run fails during collection because CrewAI tries to create /home/runner/.local/share/crewai/credentials outside the writable sandbox. The same failure occurs with my source edit temporarily removed. The completed source and regression-test patch is preserved.\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"patch_digest\": \"c2b7e4ef9984b83bc4c00f42377391a2263cd3e2ee96df152c820935b80dfb03\", \"evidence_bundle\": \"2134-1.json.enc\"}"
       },
       {
-        "key": "task:2134",
-        "value": "{\"started\": 1795840302.6326187, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2134/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8419#issuecomment-7234098050\", \"generation_started\": 1795840324.1613605, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795840330.9763086, \"patch_digest\": \"c2b7e4ef9984b83bc4c00f42377391a2263cd3e2ee96df152c820935b80dfb03\", \"last_execution_phase\": \"generation\", \"finished\": 1795841005.1511793}"
-      },
-      {
         "key": "cleanup:2134",
         "value": "{\"at\": 1795841011.8069806, \"path\": \"/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/2134/attempt-1/tool-cache\", \"error\": \"PermissionError\", \"reason\": \"[Errno 13] Permission denied: '/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/2134/attempt-1/tool-cache/xdg-cache/virtualenv/wheel/3.11/image/1/CopyPipInstall/ca140b45d5325a9478f880e351484f62fef15f336462e449ca0c03c873d589c2/setuptools-84.2\"}"
       },
@@ -48263,10 +48227,6 @@
       {
         "key": "followup:task:2135",
         "value": "{\"status\": \"needs_human\", \"task\": 2135, \"repo\": \"adk\", \"number\": 8417, \"reason\": \"VALIDATION_ENVIRONMENT: CONTRIBUTING.md requires the full four-version tox suite before a PR. Tox stops during Python 3.11 collection because CrewAI tries to write to read-only /home/runner/.local/share/crewai/credentials. The same error occurs with my source edits temporarily removed. The tested patch remains in the checkout; the required matrix is incomplete.\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"patch_digest\": \"67c9287f29b42d1482f85acb506cb62d415fa19227342fbd6703f6d172656228\", \"evidence_bundle\": \"2135-1.json.enc\"}"
-      },
-      {
-        "key": "task:2135",
-        "value": "{\"started\": 1795847201.0274022, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2135/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8417#issuecomment-7235300121\", \"generation_started\": 1795847224.9476697, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795847229.1622088, \"patch_digest\": \"67c9287f29b42d1482f85acb506cb62d415fa19227342fbd6703f6d172656228\", \"last_execution_phase\": \"generation\", \"finished\": 1795847876.9015336}"
       },
       {
         "key": "runner_restarts",
@@ -48465,14 +48425,6 @@
         "value": "{\"started\": 1795650373.6744266, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1795650378.976439, \"recovery_checked_at\": 1795865202.6335425}"
       },
       {
-        "key": "task:1772",
-        "value": "{\"started\": 1794433734.3683045, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1772/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"remote_base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base_update\": {\"original_head\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794433749.2429795, \"patch_digest\": \"4fe941f9761d7c805b686c0f14d68074129e92774dc46d8f1d318e3c3378b353\", \"last_execution_phase\": \"generation\", \"finished\": 1794433882.8292596, \"recovery_checked_at\": 1795865395.5084126}"
-      },
-      {
-        "key": "submission_recovery:1772",
-        "value": "{\"at\": 1795865395.7758934, \"error\": \"PR closed or not owned by our fork\"}"
-      },
-      {
         "key": "task:44",
         "value": "{\"recovery_checked_at\": 1795865395.8063915}"
       },
@@ -48641,16 +48593,8 @@
         "value": "[{\"at\": 1795861112.3052945, \"group\": \"new_fix\", \"task\": 2137, \"phase\": \"generation\"}, {\"at\": 1795865711.0394773, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1795865711.064409, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1795865713.9453785, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1795865716.505061, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1795865743.2038822, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1795865745.767686, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1795866167.0213563, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1795866167.106819, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1795866171.129988, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1795866171.5229256, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1795866200.495789, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1795866230.4354336, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1795866401.352694, \"group\": \"new_fix\", \"task\": 2138, \"phase\": \"generation\"}, {\"at\": 1795866783.0461566, \"group\": \"new_fix\", \"task\": 2139, \"phase\": \"generation\"}]"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795866844.2222989"
-      },
-      {
         "key": "codex_quota",
         "value": "{\"at\": 1795866849.7574182, \"windows\": [{\"name\": \"primary\", \"used_percent\": 25, \"resets_at\": 1796162550}]}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795866849.759292, \"source\": \"completed task phase\"}"
       },
       {
         "key": "usage:2139:1:generation",
@@ -48663,6 +48607,78 @@
       {
         "key": "task:2139",
         "value": "{\"started\": 1795866726.162548, \"worker_slot\": \"creation-recovery\", \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2139/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"3ef8bf4f68c91dce2870eba5625426b32ac6ba58\", \"creation_retry_request\": \"creation_retry:46141780570\", \"generation_started\": 1795866783.0460184, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795866787.8089733, \"last_execution_phase\": \"generation\", \"finished\": 1795866849.7635677}"
+      },
+      {
+        "key": "task:1772",
+        "value": "{\"started\": 1794433734.3683045, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/1772/attempt-1\", \"attempt\": 1, \"phase\": \"blocked\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"remote_base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base_update\": {\"original_head\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"base\": \"9ddb34e34a1c760c4a19c2f1d8510801d5bd7ed3\", \"merged\": false, \"mergeable\": true, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1794433749.2429795, \"patch_digest\": \"4fe941f9761d7c805b686c0f14d68074129e92774dc46d8f1d318e3c3378b353\", \"last_execution_phase\": \"generation\", \"finished\": 1794433882.8292596, \"recovery_checked_at\": 1795867027.7583778}"
+      },
+      {
+        "key": "submission_recovery:1772",
+        "value": "{\"at\": 1795867028.1634986, \"error\": \"PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "recovery_audit:1988",
+        "value": "{\"at\": 1795867029.0591912, \"safe\": true, \"reason\": \"Current PR head must match the retained base\", \"repair\": \"reply_wording\"}"
+      },
+      {
+        "key": "task:1988",
+        "value": "{\"started\": 1795278769.4407046, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1988/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"remote_base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"base_update\": {\"original_head\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"merged\": false, \"mergeable\": null, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1795279235.3208716, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1795279334.3407993, \"recovery_checked_at\": 1795867028.1973324, \"reply_wording_repaired\": {\"at\": 1795867029.0658603, \"repair\": \"reply_wording\", \"attempt\": 1}}"
+      },
+      {
+        "key": "followup:task:1988",
+        "value": "{\"status\": \"resumed\", \"task\": 1988}"
+      },
+      {
+        "key": "recovery_audit:2116",
+        "value": "{\"at\": 1795867029.720819, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"adk_tox_environment\"}"
+      },
+      {
+        "key": "task:2116",
+        "value": "{\"started\": 1795698836.0883396, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2116/attempt-2\", \"attempt\": 2, \"phase\": \"queued\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8376#issuecomment-7192825551\", \"generation_started\": 1795698244.8116837, \"dispatch_paid_date\": \"2026-11-26\", \"phase_started\": 1795698854.7518942, \"patch_digest\": \"30809ecf1858634f60504bb356d0ddd9703c6606238c6cc8821faefc5b726a14\", \"last_execution_phase\": \"generation\", \"finished\": 1795699590.7920804, \"recovery_checked_at\": 1795867029.0983207, \"policy_gate_rechecked\": true, \"coordination_policy_rechecked\": {\"at\": 1795698816.1832924, \"repair\": \"adk_coordination_policy\", \"attempt\": 1}, \"resume_progress\": {\"bundle\": \"2116-2.json\", \"sha256\": \"8e8fbe3d476a00f2aaf0b366daba9bba8c84edf30b3727c7053f41877dd13bab\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"phase\": \"generation\"}, \"adk_tox_repaired\": {\"at\": 1795867029.729301, \"repair\": \"adk_tox_environment\", \"attempt\": 2}}"
+      },
+      {
+        "key": "followup:task:2116",
+        "value": "{\"status\": \"resumed\", \"task\": 2116}"
+      },
+      {
+        "key": "recovery_audit:2123",
+        "value": "{\"at\": 1795867030.3120978, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"adk_tox_environment\"}"
+      },
+      {
+        "key": "task:2123",
+        "value": "{\"started\": 1795740178.4998815, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2123/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8384#issuecomment-7206695710\", \"generation_started\": 1795740204.4844458, \"dispatch_paid_date\": \"2026-11-27\", \"phase_started\": 1795740208.9086106, \"patch_digest\": \"a483997bfacfffc782800b1bd45e59cba6c069e02f8d203f7acb7ed19ab6d6dc\", \"last_execution_phase\": \"generation\", \"finished\": 1795740862.1669478, \"recovery_checked_at\": 1795867029.7398877, \"resume_progress\": {\"bundle\": \"2123-1.json\", \"sha256\": \"1d1005e69e75cbf83386376a65cfec3df1b5fe8cf6043b217d151daaf6c3adf5\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"phase\": \"generation\"}, \"adk_tox_repaired\": {\"at\": 1795867030.31906, \"repair\": \"adk_tox_environment\", \"attempt\": 1}}"
+      },
+      {
+        "key": "followup:task:2123",
+        "value": "{\"status\": \"resumed\", \"task\": 2123}"
+      },
+      {
+        "key": "recovery_audit:2127",
+        "value": "{\"at\": 1795867030.8872025, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"adk_tox_environment\"}"
+      },
+      {
+        "key": "task:2127",
+        "value": "{\"started\": 1795762880.4447312, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2127/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8398#issuecomment-7212068947\", \"generation_started\": 1795762905.7587347, \"dispatch_paid_date\": \"2026-11-27\", \"phase_started\": 1795762911.408831, \"patch_digest\": \"0c597cda709c688e3816efa10d4c0fbab5298e29e57d9a6975d769e3475673e6\", \"last_execution_phase\": \"generation\", \"finished\": 1795763460.3991697, \"recovery_checked_at\": 1795867030.3306892, \"resume_progress\": {\"bundle\": \"2127-1.json\", \"sha256\": \"19817bcace7d7b6f96c4869b3bf736e68087d5fddd73cf60e9d58b72113ee435\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"phase\": \"generation\"}, \"adk_tox_repaired\": {\"at\": 1795867030.8948772, \"repair\": \"adk_tox_environment\", \"attempt\": 1}}"
+      },
+      {
+        "key": "followup:task:2127",
+        "value": "{\"status\": \"resumed\", \"task\": 2127}"
+      },
+      {
+        "key": "task:2134",
+        "value": "{\"started\": 1795840302.6326187, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2134/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8419#issuecomment-7234098050\", \"generation_started\": 1795840324.1613605, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795840330.9763086, \"patch_digest\": \"c2b7e4ef9984b83bc4c00f42377391a2263cd3e2ee96df152c820935b80dfb03\", \"last_execution_phase\": \"generation\", \"finished\": 1795841005.1511793, \"recovery_checked_at\": 1795867030.906477}"
+      },
+      {
+        "key": "recovery_audit:2134",
+        "value": "{\"at\": 1795867031.5091596, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"adk_tox_environment\"}"
+      },
+      {
+        "key": "task:2135",
+        "value": "{\"started\": 1795847201.0274022, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2135/attempt-1\", \"attempt\": 1, \"phase\": \"validation_wait\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8417#issuecomment-7235300121\", \"generation_started\": 1795847224.9476697, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795847229.1622088, \"patch_digest\": \"67c9287f29b42d1482f85acb506cb62d415fa19227342fbd6703f6d172656228\", \"last_execution_phase\": \"generation\", \"finished\": 1795847876.9015336, \"recovery_checked_at\": 1795867031.5343618}"
+      },
+      {
+        "key": "recovery_audit:2135",
+        "value": "{\"at\": 1795867032.1138163, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"adk_tox_environment\"}"
       }
     ],
     "calls": [
