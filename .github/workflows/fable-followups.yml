@@ -1,0 +1,75 @@
+{
+  "name": "Fable follow-up validation",
+  "on": {
+    "push": {
+      "branches": [
+        "validation/fable-followups-nov29"
+      ],
+      "paths": [
+        ".github/workflows/fable-followups.yml"
+      ]
+    }
+  },
+  "permissions": {
+    "contents": "read"
+  },
+  "jobs": {
+    "validate": {
+      "runs-on": "ubuntu-24.04",
+      "timeout-minutes": 40,
+      "strategy": {
+        "fail-fast": false,
+        "max-parallel": 3,
+        "matrix": {
+          "include": [
+            {
+              "pr": 198173,
+              "ref": "752371f316a1adc3abe757b62e89c9a6ac53f608",
+              "files": "docs/web/control-ui/chat.md packages/gateway-protocol/src/schema/tools-catalog.ts src/agents/agent-bundle-mcp-runtime-config.test.ts src/agents/agent-bundle-mcp-runtime-config.ts src/agents/tools-effective-inventory.cold-provider.test.ts src/gateway/server-methods/tools-effective.test-support.ts src/gateway/server-methods/tools-effective.test.ts src/gateway/server-methods/tools-effective.ts ui/src/pages/chat/components/chat-composer-menu.test.tsx ui/src/pages/chat/components/chat-composer-plugins-menu.tsx",
+              "lint_files": "packages/gateway-protocol/src/schema/tools-catalog.ts src/agents/agent-bundle-mcp-runtime-config.test.ts src/agents/agent-bundle-mcp-runtime-config.ts src/agents/tools-effective-inventory.cold-provider.test.ts src/gateway/server-methods/tools-effective.test-support.ts src/gateway/server-methods/tools-effective.test.ts src/gateway/server-methods/tools-effective.ts ui/src/pages/chat/components/chat-composer-menu.test.tsx ui/src/pages/chat/components/chat-composer-plugins-menu.tsx",
+              "test_command": "pnpm test src/agents/agent-bundle-mcp-runtime-config.test.ts src/agents/tools-effective-inventory.cold-provider.test.ts src/gateway/server-methods/tools-effective.test.ts ui/src/pages/chat/components/chat-composer-menu.test.tsx --maxWorkers=1",
+              "prepare_types": "printf '%s' '{\"extends\": \"./test/tsconfig/tsconfig.test.json\", \"include\": [\"src/**/*.d.ts\", \"ui/**/*.d.ts\", \"packages/**/*.d.ts\", \"test/types/**/*.d.ts\", \"packages/gateway-protocol/src/schema/tools-catalog.ts\", \"src/agents/agent-bundle-mcp-runtime-config.test.ts\", \"src/agents/agent-bundle-mcp-runtime-config.ts\", \"src/agents/tools-effective-inventory.cold-provider.test.ts\", \"src/gateway/server-methods/tools-effective.test-support.ts\", \"src/gateway/server-methods/tools-effective.test.ts\", \"src/gateway/server-methods/tools-effective.ts\", \"ui/src/pages/chat/components/chat-composer-menu.test.tsx\", \"ui/src/pages/chat/components/chat-composer-plugins-menu.tsx\"]}' > .fable-types.json"
+            },
+            {
+              "pr": 191745,
+              "ref": "d465e50e1e8889d2a97e3cae71e076d48e113f03",
+              "files": "extensions/voice-call/index.test.ts extensions/voice-call/index.ts extensions/voice-call/src/call-delivery-runtime.ts extensions/voice-call/src/runtime.ts extensions/voice-call/src/service-delivery-context.test.ts extensions/voice-call/src/service-delivery-context.ts src/plugins/service-scheduler-context.ts src/plugins/services.scheduler-context.test.ts src/plugins/services.ts",
+              "lint_files": "extensions/voice-call/index.test.ts extensions/voice-call/index.ts extensions/voice-call/src/call-delivery-runtime.ts extensions/voice-call/src/runtime.ts extensions/voice-call/src/service-delivery-context.test.ts extensions/voice-call/src/service-delivery-context.ts src/plugins/service-scheduler-context.ts src/plugins/services.scheduler-context.test.ts src/plugins/services.ts",
+              "test_command": "pnpm test extensions/voice-call/index.test.ts extensions/voice-call/src/service-delivery-context.test.ts src/plugins/services.scheduler-context.test.ts src/plugins/services.reload.test.ts --maxWorkers=1",
+              "prepare_types": "printf '%s' '{\"extends\": \"./test/tsconfig/tsconfig.test.json\", \"include\": [\"src/**/*.d.ts\", \"ui/**/*.d.ts\", \"packages/**/*.d.ts\", \"test/types/**/*.d.ts\", \"extensions/voice-call/index.test.ts\", \"extensions/voice-call/index.ts\", \"extensions/voice-call/src/call-delivery-runtime.ts\", \"extensions/voice-call/src/runtime.ts\", \"extensions/voice-call/src/service-delivery-context.test.ts\", \"extensions/voice-call/src/service-delivery-context.ts\", \"src/plugins/service-scheduler-context.ts\", \"src/plugins/services.scheduler-context.test.ts\", \"src/plugins/services.ts\"]}' > .fable-types.json"
+            },
+            {
+              "pr": 198216,
+              "ref": "906352a45e1e088225c0efb4746c76fc52c54743",
+              "files": "src/config/io.factory.ts src/config/io.observe-recovery.ts src/config/io.observe-state.ts src/config/io.observe-suspicious.ts src/config/io.observe.ts src/config/io.snapshot.promotion.test.ts",
+              "lint_files": "src/config/io.factory.ts src/config/io.observe-recovery.ts src/config/io.observe-state.ts src/config/io.observe-suspicious.ts src/config/io.observe.ts src/config/io.snapshot.promotion.test.ts",
+              "test_command": "pnpm test src/config/io.snapshot.promotion.test.ts --maxWorkers=1",
+              "prepare_types": "printf '%s' '{\"extends\": \"./test/tsconfig/tsconfig.test.json\", \"include\": [\"src/**/*.d.ts\", \"ui/**/*.d.ts\", \"packages/**/*.d.ts\", \"test/types/**/*.d.ts\", \"src/config/io.factory.ts\", \"src/config/io.observe-recovery.ts\", \"src/config/io.observe-state.ts\", \"src/config/io.observe-suspicious.ts\", \"src/config/io.observe.ts\", \"src/config/io.snapshot.promotion.test.ts\"]}' > .fable-types.json"
+            }
+          ]
+        }
+      },
+      "name": "PR ${{ matrix.pr }}",
+      "steps": [
+        {
+          "uses": "actions/checkout@v4",
+          "with": {
+            "repository": "chelsealong/openclaw",
+            "ref": "${{ matrix.ref }}",
+            "persist-credentials": false
+          }
+        },
+        {
+          "name": "Isolated focused tests and static checks",
+          "env": {
+            "TEST_COMMAND": "${{ matrix.test_command }}",
+            "CHANGED_FILES": "${{ matrix.files }}",
+            "LINT_FILES": "${{ matrix.lint_files }}",
+            "PREPARE_TYPES": "${{ matrix.prepare_types }}"
+          },
+          "run": "docker run --rm -v \"$GITHUB_WORKSPACE:/work\" -w /work -e TEST_COMMAND -e CHANGED_FILES -e LINT_FILES -e PREPARE_TYPES node:24.22.1-bookworm bash -euc '\nnpm install -g pnpm@12.15.0\npnpm install --frozen-lockfile\neval \"$TEST_COMMAND\"\npnpm exec oxfmt --check $CHANGED_FILES\npnpm exec oxlint $LINT_FILES\neval \"$PREPARE_TYPES\"\nnode scripts/run-tsgo.mjs -p .fable-types.json --noEmit\n' "
+        }
+      ]
+    }
+  }
+}
