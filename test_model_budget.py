@@ -33,6 +33,32 @@ class BudgetTests(unittest.TestCase):
         for p in self.patches:p.start()
         self.save();rt.setmeta('health',{'ok':True,'at':time.time()});rt.setmeta('worker_heartbeat',time.time())
     def save(self):rt.CONFIG.write_text(json.dumps(self.cfg))
+    def test_temporary_grant_unblocks_canary_then_expires_without_refund(self):
+        now=time.time()
+        with rt.db() as db:
+            db.executemany('INSERT INTO calls(at,kind) VALUES (?,?)',[(now-60,'codex')]*41)
+        self.assertGreater(budget.canary_delay(6),0)
+        self.cfg['codex_temporary_budget']={'limit':60,'issued_at':now-1,'expires_at':now+3600}
+        self.save()
+        self.assertEqual(budget.canary_delay(6),0)
+        self.assertEqual(rt.config()['codex_sessions_per_5h'],60)
+        self.assertEqual(rt.config()['judge_tokens_per_day'],100000)
+        with patch.object(rt.time,'time',return_value=now+3601):
+            self.assertEqual(rt.config()['codex_sessions_per_5h'],45)
+            self.assertGreater(budget.canary_delay(6),0)
+        with rt.db() as db:
+            self.assertEqual(db.execute('SELECT count(*) FROM calls').fetchone()[0],41)
+        self.assertEqual(json.loads(rt.CONFIG.read_text())['codex_sessions_per_5h'],45)
+
+    def test_temporary_grant_does_not_accept_permanent_or_invalid_overrides(self):
+        now=time.time()
+        for grant in [None,[],{'limit':600,'issued_at':now-1,'expires_at':now+3600},
+                      {'limit':60,'issued_at':now+30,'expires_at':now+3600},
+                      {'limit':60,'issued_at':now-1,'expires_at':now+86400},
+                      {'limit':60,'issued_at':'bad','expires_at':now+3600},
+                      {'limit':60,'issued_at':now-3600,'expires_at':now-1}]:
+            self.cfg['codex_temporary_budget']=grant;self.save()
+            self.assertEqual(rt.config()['codex_sessions_per_5h'],45,grant)
     def tearDown(self):
         for p in reversed(self.patches):p.stop()
         self.tmp.cleanup()

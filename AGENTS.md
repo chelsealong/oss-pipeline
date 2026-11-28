@@ -1,5 +1,11 @@
 # November 28 validation and capacity recovery
 
+The user subsequently authorized a one-time call-budget increase to unblock this
+deployment. CODEX_TEMP_BUDGET may grant 60 calls/5h for five hours, with absolute
+issued/expiry timestamps (maximum six-hour grant). Re-evaluate expiry on each
+admission and restore the existing 45 ceiling automatically. Never erase calls,
+raise repository caps, disable provider quota gates, or enable paid APIs.
+
 ADK #7335's exact-commit full tox run 46141439001 took 3444 seconds. Give
 ADK generation (including retained-patch continuation) 4800 seconds instead of
 the generic 2400/1200 second limits. Preserve model-call/spending budgets and

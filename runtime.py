@@ -17,7 +17,18 @@ DATA = ROOT / '.runtime'
 
 def config():
     try:
-        return json.loads(CONFIG.read_text())
+        cfg=json.loads(CONFIG.read_text())
+        grant=cfg.get('codex_temporary_budget',{})
+        # Re-evaluate expiry on every admission, including long-running workers.
+        # The underlying configured ceiling and complete spending ledger survive.
+        if isinstance(grant,dict):
+            issued,expires=grant.get('issued_at'),grant.get('expires_at')
+            if (grant.get('limit')==60 and type(issued) in (int,float)
+                    and type(expires) in (int,float)
+                    and issued<=time.time()<expires and 0<expires-issued<=21600
+                    and cfg.get('codex_sessions_per_5h',45)==45):
+                cfg['codex_sessions_per_5h']=60
+        return cfg
     except (OSError, ValueError):
         return {'enabled': False, 'backend': 'codex-local'}
 

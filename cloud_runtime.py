@@ -134,6 +134,8 @@ def wait_canary_capacity():
         time.sleep(min(30,delay))
 
 def configure(mode):
+    try:temporary_budget=json.loads(os.environ.get('CODEX_TEMP_BUDGET','{}'))
+    except ValueError:temporary_budget={}
     rt.CONFIG.parent.mkdir(exist_ok=True)
     rt.CONFIG.write_text(json.dumps({'backend':'codex-cloud' if mode in ('live','recover-hermes') else 'codex-local',
         'enabled':True,'cloud_environment':True,'model':'gpt-6-sol','max_pending':8,
@@ -141,6 +143,7 @@ def configure(mode):
         'public_pr_replies':True,'maintain_existing_prs':True,
         'codex_socket':str(rt.DATA/'codex-host.sock'),
         'codex_sessions_per_5h':45,'codex_review_reservations':True,
+        'codex_temporary_budget':temporary_budget,
         'codex_phase_shares':{'new_fix':24,'maintenance':10,'repair':6,'validation':5},
         'codex_start_used_percent':85,'codex_stop_used_percent':95,
         'judge_requests_per_hour':30,'judge_requests_per_day':150,'judge_tokens_per_day':100000,
