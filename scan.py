@@ -262,10 +262,15 @@ REPOS: dict[str, dict] = {
     "openclaw": {
         "upstream": "openclaw/openclaw",
         "searches": ["label:clawsweeper:queueable-fix", "sort:created-desc"],
-        # Wait past ClawSweeper's p90 triage latency (36 min) before taking an
-        # untriaged issue, so its verdict is visible rather than raced.
-        "min_age_minutes": 40,
+        # Wait for ClawSweeper before taking an untriaged issue. Measured on the
+        # 182 issues queued in the three weeks to 2026-11-28: its first label
+        # arrived at about 3 minutes and both positive labels within 10 (p90),
+        # while the median competing PR opened at 38. The earlier 40-minute
+        # wait conceded those races without seeing any more triage.
+        "min_age_minutes": 15,
         "triage_ready_labels": {"clawsweeper:queueable-fix", "clawsweeper:source-repro"},
+        # A ClawSweeper verdict without both positive labels: 0 PRs from 38 tasks.
+        "triage_label_prefix": "clawsweeper:",
         "exclude_labels": {
             "clawsweeper:no-new-fix-pr",
             "clawsweeper:linked-pr-open",
@@ -1030,12 +1035,21 @@ def triage_ready(cfg, labels):
     return bool(required and set(required)<=labels and not labels & cfg.get('exclude_labels',set()))
 
 
+def triage_declined(cfg, labels):
+    """Upstream triage has ruled on the issue without marking it queueable."""
+    prefix=cfg.get('triage_label_prefix')
+    return bool(prefix and not triage_ready(cfg,labels) and any(l.startswith(prefix) for l in labels))
+
+
 def candidate_priority(cfg, issue):
     """Upstream-confirmed source bugs first; recency breaks ties only."""
     labels={l['name'] for l in issue.get('labels',[])}
     return (not triage_ready(cfg,labels),
             'clawsweeper:fix-shape-clear' not in labels,
-            not bool(labels & {'help wanted','good first issue'}))
+            not bool(labels & {'help wanted','good first issue'}),
+            # Past contributors opened their own closing PR on 36% of 174 issues
+            # (9% for first-time reporters), so their reports go last, not out.
+            issue.get('author_association')=='CONTRIBUTOR')
 
 
 def vet(cfg: dict, upstream: str, issue: dict, *, allow_coordination=False) -> tuple[bool, str, dict]:
@@ -1082,6 +1096,8 @@ def vet(cfg: dict, upstream: str, issue: dict, *, allow_coordination=False) -> t
                                   f"waiting {mins} min for the repo's own triage", {}
             except Exception:  # noqa: BLE001
                 pass
+    if triage_declined(cfg, labels):
+        return False, "upstream triage verdict is not queueable", {}
 
     if re.search(r"<\s*(short description|title|summary|brief description|one line)\s*>"
                  r"|^\s*(bug|feature|\[bug\]|\[feature\])\s*:\s*$", title, re.I):

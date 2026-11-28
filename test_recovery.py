@@ -95,6 +95,15 @@ class RecoveryTests(unittest.TestCase):
         with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:tasks=list(pool.map(lambda _:claim(),range(2)))
         self.assertEqual({rt.repo_key(t['repo'])for t in tasks},{'hermes','adk'})
         self.assertEqual({t['kind']for t in tasks},{'respond','fix'})
+    def test_newest_untouched_fix_is_claimed_first_but_started_work_keeps_its_turn(self):
+        old=self.task('hermes',1);new=self.task('hermes',2)
+        def claim():
+            with rt.db() as db:
+                db.execute('BEGIN IMMEDIATE');return worker.next_queued(db,{})
+        self.assertEqual(claim()['id'],new['id'])
+        # Work that already spent a generation is not pushed behind new arrivals.
+        rt.task_state(old['id'],generation_started=time.time())
+        self.assertEqual(claim()['id'],old['id'])
     def test_failed_claim_checkpoint_releases_running_repo_without_executing(self):
         task=self.task();task['attempts']=1
         with rt.db() as db:db.execute("UPDATE tasks SET status='running' WHERE id=?",(task['id'],))

@@ -99,6 +99,24 @@ class ScreeningTests(unittest.TestCase):
             self.assertFalse(self.eligible()[0])
         self.agent.assert_not_called()
 
+    def test_untriaged_wait_is_short_and_a_non_queueable_verdict_is_declined(self):
+        cfg=scan.REPOS['openclaw'];self.cfg['judge_issue_triage']=False
+        self.assertEqual(cfg['min_age_minutes'],15)
+        with patch.object(intent,'is_claim',return_value=(False,'')):
+            # No verdict yet: wait 15 minutes, then admit as before.
+            with patch.object(scan,'age_hours',return_value=14/60):
+                self.assertIn('waiting 15 min',scan.vet(cfg,cfg['upstream'],self.issue)[1])
+            with patch.object(scan,'age_hours',return_value=16/60):
+                self.assertTrue(scan.vet(cfg,cfg['upstream'],self.issue)[0])
+                # ClawSweeper ruled without both positive labels: 0 PRs from 38 tasks.
+                self.issue['labels']=[{'name':'clawsweeper:source-repro'}]
+                self.assertEqual(scan.vet(cfg,cfg['upstream'],self.issue)[1],'upstream triage verdict is not queueable')
+                self.issue['labels']=[{'name':name} for name in cfg['triage_ready_labels']]
+                self.assertTrue(scan.vet(cfg,cfg['upstream'],self.issue)[0])
+        # Repositories without a triage bot are unaffected.
+        self.assertFalse(scan.triage_declined({},{'clawsweeper:source-repro'}))
+        self.agent.assert_not_called()
+
     def test_positive_upstream_triage_ends_age_wait_but_preserves_claim_and_pr_checks(self):
         cfg=scan.REPOS['openclaw']
         self.issue['labels']=[{'name':name} for name in cfg['triage_ready_labels']]

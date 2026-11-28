@@ -965,9 +965,15 @@ def next_queued(db, holds):
     if not candidates:return None
     if active and any(rt.repo_key(t['repo'])=='langfuse' for t in candidates):
         return None  # Let existing work finish before admitting this heavy task.
-    chosen=min(candidates,key=lambda t:(not bool(rt._meta(db,f"task:{t['id']}",{}).get('resume_progress')),
-        t['kind']!=schedule['prefer'],
-        schedule['repos'].get(rt.repo_key(t['repo']),0),t['created']))
+    def order(t):
+        state=rt._meta(db,f"task:{t['id']}",{})
+        # A fix that has not started generation is a race: over 60 lost races the
+        # competing PR opened a median of 38 minutes after the issue. Take the
+        # newest such task first; started work and feedback stay oldest-first.
+        fresh=t['kind']=='fix' and not state.get('generation_started')
+        return (not bool(state.get('resume_progress')),t['kind']!=schedule['prefer'],
+            schedule['repos'].get(rt.repo_key(t['repo']),0),fresh,-t['created'] if fresh else t['created'])
+    chosen=min(candidates,key=order)
     schedule['prefer']='fix' if chosen['kind']=='respond' else 'respond'
     schedule['repos'][rt.repo_key(chosen['repo'])]=time.time()
     rt._putmeta(db,'scheduler',schedule)

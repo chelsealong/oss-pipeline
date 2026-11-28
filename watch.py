@@ -67,7 +67,7 @@ def build_query(keys: list[str], per_repo: int) -> str:
             f'r{i}: repository(owner:"{owner}", name:"{name}") {{'
             f"  issues(first:{per_repo}, states:OPEN,"
             f"         orderBy:{{field:CREATED_AT, direction:DESC}}) {{"
-            f"    nodes {{ number title url createdAt body author{{login}}"
+            f"    nodes {{ number title url createdAt body author{{login}} authorAssociation"
             f"             assignees(first:20){{ totalCount nodes{{login}} }}"
             f"             comments {{ totalCount }}"
             f"             labels(first:20){{ nodes {{ name }} }} }}"
@@ -110,6 +110,7 @@ def to_rest_shape(node: dict) -> dict:
         "comments": (node.get("comments") or {}).get("totalCount", 0),
         "labels": [{"name": l["name"]} for l in (node.get("labels") or {}).get("nodes", [])],
         "user": node.get('author') or {},
+        "author_association": node.get('authorAssociation') or '',
         "assignees": (node.get("assignees") or {}).get("nodes", []),
     }
 
@@ -675,6 +676,7 @@ def retain_for_vetting(key: str, node: dict) -> None:
         item=repo.setdefault(str(node['number']),{'number':node['number'],'created_at':node['createdAt']})
         if 'labels' in node:
             item['labels']=[l['name'] for l in node['labels']['nodes']]
+        if node.get('authorAssociation'):item['association']=node['authorAssociation']
         rows[key]={n:repo[n] for n in sorted(repo,key=int)[-400:]}
         _write_pending_vet(rows)
 
@@ -738,7 +740,8 @@ def recheck_pending_vet(keys: list[str], limit: int = 4) -> int:
     import itertools
     groups=[sorted(((key,n) for n in rows.get(key,{})),
                    key=lambda pair:(scan.candidate_priority(scan.REPOS[key],{'labels':[
-                       {'name':l} for l in rows[key][pair[1]].get('labels',[])]}),
+                       {'name':l} for l in rows[key][pair[1]].get('labels',[])],
+                       'author_association':rows[key][pair[1]].get('association')}),
                        rows[key][pair[1]].get('checked_at',0),-int(pair[1]))) for key in keys]
     groups.sort(key=lambda group:min((rows[k][n].get('checked_at',0) for k,n in group),default=float('inf')))
     ordered=[pair for batch in itertools.zip_longest(*groups) for pair in batch if pair]

@@ -97,6 +97,20 @@ class CandidateBudgetTests(unittest.TestCase):
         confirmed={'labels':[{'name':x} for x in cfg['triage_ready_labels']]}
         self.assertLess(scan.candidate_priority(cfg,confirmed),scan.candidate_priority(cfg,{'labels':[]}))
         self.assertTrue(cb.invited(cfg,confirmed));self.assertFalse(cb.invited(cfg,{'labels':[]}))
+    def test_past_contributor_reports_rank_after_first_time_reporters(self):
+        cfg=scan.REPOS['openclaw']
+        first_time=scan.candidate_priority(cfg,{'labels':[],'author_association':'NONE'})
+        self.assertLess(first_time,scan.candidate_priority(cfg,{'labels':[],'author_association':'CONTRIBUTOR'}))
+        # Members' issues drew fewer competing PRs than anyone's; do not demote them.
+        self.assertEqual(first_time,scan.candidate_priority(cfg,{'labels':[],'author_association':'MEMBER'}))
+        self.assertEqual(first_time,scan.candidate_priority(cfg,{'labels':[]}))
+        # Positive triage still outranks who reported it.
+        confirmed={'labels':[{'name':x} for x in cfg['triage_ready_labels']],'author_association':'CONTRIBUTOR'}
+        self.assertLess(scan.candidate_priority(cfg,confirmed),first_time)
+        # Discovery carries the association through to the stored issue shape.
+        self.assertIn('authorAssociation',watch.build_query(['openclaw'],1))
+        node={'number':1,'createdAt':'2026-11-08T00:00:00Z','authorAssociation':'CONTRIBUTOR'}
+        self.assertEqual(watch.to_rest_shape(node)['author_association'],'CONTRIBUTOR')
     def test_small_scan_window_spends_its_only_vet_on_confirmed_source_bug(self):
         cfg=scan.REPOS['openclaw']|{'max_vet':1}
         confirmed={'number':10,'title':'Reproduced source bug','created_at':'2026-11-08T00:00:00Z',
