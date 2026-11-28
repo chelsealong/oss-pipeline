@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795847214.0156925,
+  "saved_at": 1795847224.97127,
   "tables": {
     "tasks": [
       {
@@ -48173,28 +48173,12 @@
         "value": "{\"status\": \"sent\", \"task\": 2134, \"at\": 1795840310.2208233, \"url\": \"https://github.com/google/adk-python/issues/8419#issuecomment-7234098050\"}"
       },
       {
-        "key": "fix_sessions",
-        "value": "[{\"repo\": \"comfyui\", \"task\": 2133, \"at\": 1795838449.1550107}, {\"repo\": \"adk\", \"task\": 2134, \"at\": 1795840324.1613588}]"
-      },
-      {
-        "key": "dispatch_budget",
-        "value": "{\"date\": \"2026-11-28\", \"used\": {\"comfyui\": 1, \"adk\": 1}}"
-      },
-      {
-        "key": "codex_allocations",
-        "value": "[{\"at\": 1795838435.4979577, \"group\": \"screening\", \"task\": 2133, \"phase\": \"screening-2c7cc2e46800b927f39b\"}, {\"at\": 1795838449.1551242, \"group\": \"new_fix\", \"task\": 2133, \"phase\": \"generation\"}, {\"at\": 1795840324.1614833, \"group\": \"new_fix\", \"task\": 2134, \"phase\": \"generation\"}]"
-      },
-      {
         "key": "usage:2134:1:generation",
         "value": "{\"task\": 2134, \"repo\": \"adk\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795841005.1296105, \"seconds\": 680.969, \"tokens\": {\"totalTokens\": 5613504, \"inputTokens\": 5597587, \"cachedInputTokens\": 5507584, \"cacheWriteInputTokens\": 0, \"outputTokens\": 15917, \"reasoningOutputTokens\": 6063}, \"first_event_ms\": 1795840334570, \"last_event_ms\": 1795841005117, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
       {
         "key": "followup:task:2134",
         "value": "{\"status\": \"needs_human\", \"task\": 2134, \"repo\": \"adk\", \"number\": 8419, \"reason\": \"VALIDATION_ENVIRONMENT: CONTRIBUTING.md requires the full tox matrix before a PR. The Python 3.11 run fails during collection because CrewAI tries to create /home/runner/.local/share/crewai/credentials outside the writable sandbox. The same failure occurs with my source edit temporarily removed. The completed source and regression-test patch is preserved.\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"patch_digest\": \"c2b7e4ef9984b83bc4c00f42377391a2263cd3e2ee96df152c820935b80dfb03\", \"evidence_bundle\": \"2134-1.json.enc\"}"
-      },
-      {
-        "key": "codex_review_leases",
-        "value": "{}"
       },
       {
         "key": "task:2134",
@@ -48211,26 +48195,6 @@
       {
         "key": "runner_restarts",
         "value": "[]"
-      },
-      {
-        "key": "task:166",
-        "value": "{\"recovery_checked_at\": 1795846288.455293}"
-      },
-      {
-        "key": "followup:task:166",
-        "value": "{\"status\": \"needs_human\", \"task\": 166, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:167",
-        "value": "{\"recovery_checked_at\": 1795846288.7486994}"
-      },
-      {
-        "key": "followup:task:167",
-        "value": "{\"status\": \"needs_human\", \"task\": 167, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
-      },
-      {
-        "key": "task:171",
-        "value": "{\"recovery_checked_at\": 1795846289.0290194}"
       },
       {
         "key": "recovery_audit:171",
@@ -48457,42 +48421,6 @@
         "value": "1795847103.4246454"
       },
       {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795847146.6352704, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795847147.312933, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795847147.875492, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795847148.3295689, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795847148.738067, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795847149.5515437, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795847149.856906, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795847150.3012357, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795847150.8107054, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
         "key": "runner_resources",
         "value": "{\"at\": 1795847157.7837722, \"disk_free_bytes\": 85811879936, \"memory_bytes\": {\"MemTotal\": 16760307712, \"MemAvailable\": 15436263424, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       },
@@ -48517,28 +48445,60 @@
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795652525.8176348, \"comfyui\": 1795838430.4489846, \"hermes\": 1795158844.7137928, \"langfuse\": 1795783676.9572165, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795779155.0432513, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795715124.0708468, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1795847201.0272279, \"autogpt\": 1795331330.0812907}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795847205.9666653"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1795847206.126712"
-      },
-      {
         "key": "candidate_capacity:adk",
         "value": "{\"at\": 1795847206.6037807, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "coordination:google/adk-python#8417",
-        "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8417\", \"title\": \"a2a: a CancelledError from runner.run_async now leaves the task in TASK_STATE_WORKING\", \"first_seen\": 1795840258.7826014, \"last_checked\": 1795847208.7828627, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
       {
         "key": "adk_coordination_ledger",
         "value": "[{\"number\": 8398, \"task\": 2127, \"at\": 1795762889.5028617}, {\"number\": 8409, \"task\": 2130, \"at\": 1795770909.6912236}, {\"number\": 8411, \"task\": 2132, \"at\": 1795784869.2349927}, {\"number\": 8419, \"task\": 2134, \"at\": 1795840310.2208233}, {\"number\": 8417, \"task\": 2135, \"at\": 1795847209.378063}]"
       },
       {
-        "key": "detector_heartbeat",
-        "value": "1795847209.7406344"
+        "key": "adk_coordination_post:8417",
+        "value": "{\"status\": \"sent\", \"task\": 2135, \"at\": 1795847209.378063, \"url\": \"https://github.com/google/adk-python/issues/8417#issuecomment-7235300121\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1795847216.0246136, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1795847216.460534, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1795847216.9281306, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1795847217.3362622, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1795847217.6697795, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1795847218.749236, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+      },
+      {
+        "key": "coordination:google/adk-python#8417",
+        "value": "{\"status\": \"asked\", \"source\": \"https://github.com/google/adk-python/issues/8417#issuecomment-7235300121\", \"comment_id\": 7235300121, \"rule\": \"Upstream requires asking before contributing, not a particular approval phrase.\"}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1795847219.1003134, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:autogpt",
+        "value": "{\"at\": 1795847219.358419, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:comfyui",
+        "value": "{\"at\": 1795847219.9299278, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795847220.9757962"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48546,78 +48506,58 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795847210.9102185"
+        "value": "1795847221.0936618"
       },
       {
-        "key": "adk_coordination_post:8417",
-        "value": "{\"status\": \"sent\", \"task\": 2135, \"at\": 1795847209.378063, \"url\": \"https://github.com/google/adk-python/issues/8417#issuecomment-7235300121\"}"
+        "key": "task:166",
+        "value": "{\"recovery_checked_at\": 1795847222.3130612}"
+      },
+      {
+        "key": "followup:task:166",
+        "value": "{\"status\": \"needs_human\", \"task\": 166, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:167",
+        "value": "{\"recovery_checked_at\": 1795847222.6870775}"
+      },
+      {
+        "key": "followup:task:167",
+        "value": "{\"status\": \"needs_human\", \"task\": 167, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
+      },
+      {
+        "key": "task:171",
+        "value": "{\"recovery_checked_at\": 1795847222.9808567}"
+      },
+      {
+        "key": "detector_heartbeat",
+        "value": "1795847224.7409127"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795847224.9390807"
       },
       {
         "key": "task:2135",
-        "value": "{\"started\": 1795847201.0274022, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"coordination_url\": \"https://github.com/google/adk-python/issues/8417#issuecomment-7235300121\"}"
+        "value": "{\"started\": 1795847201.0274022, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2135/attempt-1\", \"attempt\": 1, \"phase\": \"checkout\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8417#issuecomment-7235300121\", \"generation_started\": 1795847224.9476697, \"dispatch_paid_date\": \"2026-11-28\"}"
+      },
+      {
+        "key": "fix_sessions",
+        "value": "[{\"repo\": \"comfyui\", \"task\": 2133, \"at\": 1795838449.1550107}, {\"repo\": \"adk\", \"task\": 2134, \"at\": 1795840324.1613588}, {\"repo\": \"adk\", \"task\": 2135, \"at\": 1795847224.9476686}]"
+      },
+      {
+        "key": "dispatch_budget",
+        "value": "{\"date\": \"2026-11-28\", \"used\": {\"comfyui\": 1, \"adk\": 2}}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"2135\": {\"remaining\": 1, \"until\": 1795854424.9478512}}"
+      },
+      {
+        "key": "codex_allocations",
+        "value": "[{\"at\": 1795838435.4979577, \"group\": \"screening\", \"task\": 2133, \"phase\": \"screening-2c7cc2e46800b927f39b\"}, {\"at\": 1795838449.1551242, \"group\": \"new_fix\", \"task\": 2133, \"phase\": \"generation\"}, {\"at\": 1795840324.1614833, \"group\": \"new_fix\", \"task\": 2134, \"phase\": \"generation\"}, {\"at\": 1795847224.9478512, \"group\": \"new_fix\", \"task\": 2135, \"phase\": \"generation\"}]"
       }
     ],
     "calls": [
-      {
-        "at": 1795235908.3198252,
-        "kind": "judge"
-      },
-      {
-        "at": 1795235932.3467803,
-        "kind": "judge"
-      },
-      {
-        "at": 1795236535.7947612,
-        "kind": "codex"
-      },
-      {
-        "at": 1795236673.623112,
-        "kind": "judge"
-      },
-      {
-        "at": 1795236695.4805334,
-        "kind": "judge"
-      },
-      {
-        "at": 1795236709.5488062,
-        "kind": "judge"
-      },
-      {
-        "at": 1795237088.97656,
-        "kind": "judge"
-      },
-      {
-        "at": 1795237101.0340965,
-        "kind": "judge"
-      },
-      {
-        "at": 1795237113.3560245,
-        "kind": "judge"
-      },
-      {
-        "at": 1795238029.4237924,
-        "kind": "judge"
-      },
-      {
-        "at": 1795238043.532998,
-        "kind": "judge"
-      },
-      {
-        "at": 1795238506.7439194,
-        "kind": "judge"
-      },
-      {
-        "at": 1795238521.894055,
-        "kind": "judge"
-      },
-      {
-        "at": 1795239145.5647755,
-        "kind": "judge"
-      },
-      {
-        "at": 1795239161.0427015,
-        "kind": "judge"
-      },
       {
         "at": 1795243581.149765,
         "kind": "judge"
@@ -51285,6 +51225,10 @@
       {
         "at": 1795847185.4046555,
         "kind": "judge"
+      },
+      {
+        "at": 1795847224.9485407,
+        "kind": "codex"
       }
     ]
   }
