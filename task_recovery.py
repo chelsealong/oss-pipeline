@@ -57,6 +57,7 @@ def submission_regression(task,state):
     """Identify audited controller regressions, never approve work."""
     if state.get('publication_started'):return None
     if publication_contract_regression(task,state):return 'publication_contract'
+    if adk_crewai_regression(task,state):return 'adk_crewai_storage'
     if adk_tox_regression(task,state):return 'adk_tox_environment'
     if reply_wording_regression(task,state):return 'reply_wording'
     if reply_evidence_regression(task,state):return 'reply_command_evidence'
@@ -127,6 +128,14 @@ def submission_regression(task,state):
     return None
 
 
+def adk_crewai_regression(task,state):
+    original={2116:2,2123:1,2127:1,2134:1,2135:1}.get(task.get('id'))
+    if original is None or state.get('adk_crewai_repaired'):return False
+    if task['attempts'] not in (original,original+1):return False
+    return adk_tox_regression({**task,'attempts':original},
+        {k:v for k,v in state.items() if k!='adk_tox_repaired'})
+
+
 def reply_wording_regression(task,state):
     """One audited text-only dead end; never waive proof or replay publication."""
     return bool(task.get('id')==1988 and task['kind']=='respond'
@@ -178,6 +187,8 @@ def recover_submission_regressions():
             if submission_regression(task,payload['execution'])!=repair:continue
         if repair=='adk_tox_environment':
             if not retained_progress(task) or not adk_tox_regression(task,payload['execution']):continue
+        if repair=='adk_crewai_storage':
+            if not retained_progress(task) or not adk_crewai_regression(task,payload['execution']):continue
         if repair=='publication_contract':
             # Resume only complete source evidence in a fresh checkout. Ignored
             # build artifacts/retained dist locks are not restored or deleted.
@@ -499,6 +510,7 @@ def requeue(task,repair=None):
             marker={'ui_screenshot_delivery':'ui_evidence_repaired','checkpoint_resource_failure':'checkpoint_repaired',
                     'adk_coordination_policy':'coordination_policy_rechecked',
                     'adk_tox_environment':'adk_tox_repaired',
+                    'adk_crewai_storage':'adk_crewai_repaired',
                     'reply_wording':'reply_wording_repaired',
                     'reply_command_evidence':'reply_command_evidence_repaired',
                     'langfuse_static_memory':'validation_memory_repaired',

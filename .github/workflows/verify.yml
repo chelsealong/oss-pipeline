@@ -22,6 +22,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install --quiet tox==4.67.17 PyYAML==6.0.3 cryptography==48.0.1
+      - run: pip install --quiet --no-deps crewai-core==1.15.45
 
       - name: bash --version
         run: bash --version | head -1

@@ -1,5 +1,14 @@
 # November 28 validation and capacity recovery
 
+Real CrewAI Core 1.15.45 ignores XDG for token storage and hardcodes the home
+credential path. On ephemeral GitHub runners only, map that path to the current
+ADK task cache with a controller-owned symlink. Refuse existing account stores,
+redirected parents and cache paths outside owned jobs. Never modify desktop HOME,
+dependency source, or broaden the writable sandbox to the whole home directory.
+The actual upstream TokenManager regression must pass. The earlier XDG-only
+repair did not resolve task 2127; its exact retained patch may retry once with
+this storage repair, preserving attempts/spending and fresh eligibility/review.
+
 ADK tox filters task environment variables. Forward only the four controller-owned
 XDG directory variables with additive TOX_OVERRIDE pass_env; keep upstream commands,
 dependencies and the full interpreter matrix unchanged. The five audited CrewAI

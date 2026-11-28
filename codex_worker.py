@@ -194,6 +194,7 @@ def _agent(prompt, work, output, schema=None, timeout=1800, probe=False, repo_ke
                     'UV_PYTHON_INSTALL_DIR':str(cache/'uv-python')})
     if cache is not None and repo_key=='adk':
         import adk_validation
+        adk_validation.prepare_cloud_cache(cache)
         prompt+=adk_validation.configure(env)
     for name in ('OPENAI_API_KEY','CODEX_API_KEY','ANTHROPIC_API_KEY','CLAUDE_CODE_OAUTH_TOKEN',
                  'GH_TOKEN','GITHUB_TOKEN','GH_PAT','QWEN_API_KEY','DASHSCOPE_API_KEY','CODEX_AUTH_JSON','OSS_ARTIFACT_KEY',
