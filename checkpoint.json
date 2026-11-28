@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795867086.1335096,
+  "saved_at": 1795867096.1735027,
   "tables": {
     "tasks": [
       {
@@ -27648,11 +27648,11 @@
         "repo": "adk",
         "number": 8398,
         "note": "",
-        "status": "queued",
+        "status": "running",
         "created": 1795762879.0450518,
-        "updated": 1795867030.8950167,
+        "updated": 1795867096.1418908,
         "result": "VALIDATION_ENVIRONMENT: CONTRIBUTING.md says, “You must run the full test suite across all supported versions using tox” before a PR. `tox -q` stopped during Python 3.11 collection because CrewAI tried to create `/home/runner/.local/share/crewai/credentials` on this read-only filesystem. The identical collection failure occurs with the source fix temporarily removed. The tested patch is preserved; the required full matrix cannot pass here.",
-        "attempts": 1
+        "attempts": 2
       },
       {
         "id": 2128,
@@ -48434,10 +48434,6 @@
         "value": "{\"at\": 1795867030.8872025, \"safe\": true, \"reason\": \"Verified pre-publication failure and no remote branch/PR\", \"repair\": \"adk_tox_environment\"}"
       },
       {
-        "key": "task:2127",
-        "value": "{\"started\": 1795762880.4447312, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2127/attempt-1\", \"attempt\": 1, \"phase\": \"queued\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"coordination_url\": \"https://github.com/google/adk-python/issues/8398#issuecomment-7212068947\", \"generation_started\": 1795762905.7587347, \"dispatch_paid_date\": \"2026-11-27\", \"phase_started\": 1795762911.408831, \"patch_digest\": \"0c597cda709c688e3816efa10d4c0fbab5298e29e57d9a6975d769e3475673e6\", \"last_execution_phase\": \"generation\", \"finished\": 1795763460.3991697, \"recovery_checked_at\": 1795867030.3306892, \"resume_progress\": {\"bundle\": \"2127-1.json\", \"sha256\": \"19817bcace7d7b6f96c4869b3bf736e68087d5fddd73cf60e9d58b72113ee435\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"phase\": \"generation\"}, \"adk_tox_repaired\": {\"at\": 1795867030.8948772, \"repair\": \"adk_tox_environment\", \"attempt\": 1}}"
-      },
-      {
         "key": "followup:task:2127",
         "value": "{\"status\": \"resumed\", \"task\": 2127}"
       },
@@ -48674,10 +48670,6 @@
         "value": "{\"at\": 1795867069.8923104, \"tasks\": {\"fix\": {\"queued\": 1, \"running\": 1, \"skipped\": 8, \"validation_wait\": 2}, \"respond\": {\"queued\": 1}}}"
       },
       {
-        "key": "scheduler",
-        "value": "{\"prefer\": \"fix\", \"repos\": {\"openclaw\": 1795867071.076393, \"comfyui\": 1795838430.4489846, \"hermes\": 1795158844.7137928, \"langfuse\": 1795783676.9572165, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795847291.9800625, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795715124.0708468, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1795867065.0417912, \"autogpt\": 1795331330.0812907}}"
-      },
-      {
         "key": "codex_review_leases",
         "value": "{}"
       },
@@ -48690,10 +48682,6 @@
         "value": "{\"started\": 1795867071.0766823, \"worker_slot\": 0, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/1988/attempt-2\", \"attempt\": 2, \"phase\": \"checkout\", \"base\": null, \"remote_base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"base_update\": {\"original_head\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"base\": \"b87a161b96050626fac5eb920b08871fcf7b7d7b\", \"merged\": false, \"mergeable\": null, \"reason\": \"No confirmed merge conflict\"}, \"phase_started\": 1795279235.3208716, \"patch_digest\": \"af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc\", \"last_execution_phase\": \"reply-review\", \"finished\": 1795279334.3407993, \"recovery_checked_at\": 1795867028.1973324, \"reply_wording_repaired\": {\"at\": 1795867029.0658603, \"repair\": \"reply_wording\", \"attempt\": 1}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795867080.0549624"
-      },
-      {
         "key": "coordination:google/adk-python#8425",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8425\", \"title\": \"GenAI telemetry reports finish reason \\\"stop\\\" for model turns that end in a function call\", \"first_seen\": 1795863777.8650103, \"last_checked\": 1795867082.9568229, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}"
       },
@@ -48703,7 +48691,11 @@
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795867083.8236232"
+        "value": "1795867093.8269691"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795867095.0566263"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48711,7 +48703,15 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795867085.150854"
+        "value": "1795867095.2705216"
+      },
+      {
+        "key": "scheduler",
+        "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795867071.076393, \"comfyui\": 1795838430.4489846, \"hermes\": 1795158844.7137928, \"langfuse\": 1795783676.9572165, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795847291.9800625, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795715124.0708468, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1795867096.1416998, \"autogpt\": 1795331330.0812907}}"
+      },
+      {
+        "key": "task:2127",
+        "value": "{\"started\": 1795867096.1419733, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 2, \"phase\": \"claimed\", \"base\": null, \"coordination_url\": \"https://github.com/google/adk-python/issues/8398#issuecomment-7212068947\", \"generation_started\": 1795762905.7587347, \"dispatch_paid_date\": \"2026-11-27\", \"phase_started\": 1795762911.408831, \"patch_digest\": \"0c597cda709c688e3816efa10d4c0fbab5298e29e57d9a6975d769e3475673e6\", \"last_execution_phase\": \"generation\", \"finished\": 1795763460.3991697, \"recovery_checked_at\": 1795867030.3306892, \"resume_progress\": {\"bundle\": \"2127-1.json\", \"sha256\": \"19817bcace7d7b6f96c4869b3bf736e68087d5fddd73cf60e9d58b72113ee435\", \"base\": \"03725e8c67ca27b2c07569797a0c18e867e0b217\", \"phase\": \"generation\"}, \"adk_tox_repaired\": {\"at\": 1795867030.8948772, \"repair\": \"adk_tox_environment\", \"attempt\": 1}}"
       }
     ],
     "calls": [
