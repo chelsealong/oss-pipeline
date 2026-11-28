@@ -7,6 +7,8 @@ permissions:
   contents: read
 jobs:
   identity:
+    env:
+      PYTHONUTF8: '1'
     strategy:
       fail-fast: false
       matrix:
@@ -43,7 +45,7 @@ jobs:
           cd ../hermes-baseline
           OSS_VALIDATION_BASH="$(cygpath -w "$BASH")" python - <<'PY'
           import os, subprocess
-          result = subprocess.run([os.environ['OSS_VALIDATION_BASH'], 'scripts/run_tests.sh', 'tests/hermes_cli/test_gateway_service_owner.py', '-k', 'detects_tmp_home_in_systemd_unit'], capture_output=True, text=True)
+          result = subprocess.run([os.environ['OSS_VALIDATION_BASH'], 'scripts/run_tests.sh', 'tests/hermes_cli/test_gateway_service_owner.py', '-k', 'detects_tmp_home_in_systemd_unit'], capture_output=True, text=True, encoding='utf-8')
           output = result.stdout + result.stderr
           print(output)
           assert result.returncode == 1 and 'AssertionError' in output and "None == '/tmp/hermes-e2e-41264'" in output, 'Expected the same pre-existing native path assertion failure'
