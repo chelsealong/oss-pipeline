@@ -72,6 +72,39 @@ class ReplyTests(unittest.TestCase):
         with patch.object(worker,'fingerprint',side_effect=['before','after']),patch.object(worker,'agent',return_value=verdict),patch.object(replies,'publish') as post:
             with self.assertRaisesRegex(RuntimeError,'changed the patch'):worker.reviewed_reply(self.task,work,folder,'langfuse','base','answer')
             post.assert_not_called()
+
+    def test_reply_wording_gets_one_readonly_correction_and_fresh_review(self):
+        work=self.root/'work';work.mkdir();folder=self.root/'job';folder.mkdir()
+        block={'verdict':'BLOCK','tests_verified':False,'reason':'attribute historical checks','repairable':True}
+        approved={**block,'verdict':'APPROVE','tests_verified':True}
+        corrected={'body':'Verified current runtime proof; historical tests were reported earlier.',
+                   'pr_body':'Evidence: current runtime verified; prior tests attributed.'}
+        with patch.object(worker,'fingerprint',return_value='digest'),patch.object(worker,'git',return_value='base'), \
+             patch.object(worker,'agent',side_effect=[block,corrected,approved]) as agent, \
+             patch.object(replies,'publish',return_value='remote') as post:
+            self.assertEqual(worker.reviewed_reply(self.task,work,folder,'openclaw','base','old','old body'),'remote')
+            self.assertEqual(agent.call_count,3)
+            self.assertTrue(agent.call_args_list[1].kwargs['read_only'])
+            self.assertEqual(agent.call_args_list[1].args[2].name,'description-remediation.json')
+            self.assertEqual(agent.call_args_list[2].args[2].name,'reply-rereview.json')
+            self.assertEqual(post.call_args.args[1],corrected['body'])
+            self.assertEqual(post.call_args.kwargs['pr_body'],corrected['pr_body'])
+
+    def test_second_reply_rejection_and_correction_mutation_never_publish(self):
+        work=self.root/'work';work.mkdir();folder=self.root/'job';folder.mkdir()
+        block={'verdict':'BLOCK','tests_verified':False,'reason':'unverified claim','repairable':True}
+        corrected={'body':'still unsupported','pr_body':''}
+        with patch.object(worker,'fingerprint',return_value='digest'),patch.object(worker,'git',return_value='base'), \
+             patch.object(worker,'agent',side_effect=[block,corrected,block]) as agent, \
+             patch.object(replies,'publish') as post:
+            self.assertIsNone(worker.reviewed_reply(self.task,work,folder,'openclaw','base','old'))
+            self.assertEqual(agent.call_count,3);post.assert_not_called()
+        with patch.object(worker,'fingerprint',side_effect=['before','before','changed']), \
+             patch.object(worker,'git',return_value='base'), \
+             patch.object(worker,'agent',side_effect=[block,corrected]),patch.object(replies,'publish') as post:
+            with self.assertRaisesRegex(RuntimeError,'correction changed the patch'):
+                worker.reviewed_reply(self.task,work,folder,'openclaw','base','old')
+            post.assert_not_called()
     def test_new_policy_reoffers_old_block_once_without_replaying_push(self):
         self.assertTrue(rt.enqueue('respond','langfuse/langfuse',17876,'{"events":["old"]}',only_new=True))
         with rt.db() as db:db.execute("UPDATE tasks SET status='blocked',result='Draft reply',attempts=3,created=?",

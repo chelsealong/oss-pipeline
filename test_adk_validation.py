@@ -12,6 +12,18 @@ import task_recovery
 
 
 class AdkValidationTests(unittest.TestCase):
+    def test_reply_wording_recovery_is_exact_and_once_only(self):
+        task=dict(id=1988,kind='respond',repo='openclaw/openclaw',number=202424,status='blocked',attempts=1)
+        state=dict(last_execution_phase='reply-review',base='b87a161b96050626fac5eb920b08871fcf7b7d7b',
+                   remote_base='b87a161b96050626fac5eb920b08871fcf7b7d7b',
+                   patch_digest='af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc')
+        self.assertTrue(task_recovery.reply_wording_regression(task,state))
+        for change in ({'reply_wording_repaired':True},{'publication_started':True},
+                       {'remote_base':'changed'},{'patch_digest':'changed'}):
+            self.assertFalse(task_recovery.reply_wording_regression(task,{**state,**change}))
+        for change in ({'id':2068},{'attempts':2},{'status':'human_wait'}):
+            self.assertFalse(task_recovery.reply_wording_regression({**task,**change},state))
+
     def test_tox_forwards_cache_roots_without_secrets_or_changed_configuration(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp)

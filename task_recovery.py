@@ -58,6 +58,7 @@ def submission_regression(task,state):
     if state.get('publication_started'):return None
     if publication_contract_regression(task,state):return 'publication_contract'
     if adk_tox_regression(task,state):return 'adk_tox_environment'
+    if reply_wording_regression(task,state):return 'reply_wording'
     phase=state.get('last_execution_phase',state.get('phase'))
     reason=task.get('result','')
     if (task.get('id')==2116 and task['kind']=='fix' and task['repo']=='adk'
@@ -125,6 +126,17 @@ def submission_regression(task,state):
     return None
 
 
+def reply_wording_regression(task,state):
+    """One audited text-only dead end; never waive proof or replay publication."""
+    return bool(task.get('id')==1988 and task['kind']=='respond'
+        and task['repo']=='openclaw/openclaw' and task['number']==202424
+        and task['status']=='blocked' and task['attempts']==1
+        and not state.get('reply_wording_repaired') and not state.get('publication_started')
+        and state.get('last_execution_phase')=='reply-review'
+        and state.get('base')==state.get('remote_base')=='b87a161b96050626fac5eb920b08871fcf7b7d7b'
+        and state.get('patch_digest')=='af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc')
+
+
 def recover_submission_regressions():
     """One audited retry; preserve patches, attempts, spending and fresh review."""
     from execution_support import retained_progress
@@ -141,6 +153,12 @@ def recover_submission_regressions():
         if not path:continue
         payload=json.loads(path.read_text())
         if payload['execution'].get('attempt')!=task['attempts']:continue
+        if repair=='reply_wording':
+            if payload.get('diff') or payload.get('untracked') or payload.get('omitted'):continue
+            if not reply_wording_regression(task,payload['execution']):continue
+            with rt.db() as db:
+                if db.execute('SELECT 1 FROM tasks WHERE kind=? AND repo=? AND number=? AND id>?',
+                              ('respond',task['repo'],task['number'],task['id'])).fetchone():continue
         if repair=='adk_coordination_policy':
             if payload.get('diff') or payload.get('untracked'):continue
             if submission_regression(task,payload['execution'])!=repair:continue
@@ -467,6 +485,7 @@ def requeue(task,repair=None):
             marker={'ui_screenshot_delivery':'ui_evidence_repaired','checkpoint_resource_failure':'checkpoint_repaired',
                     'adk_coordination_policy':'coordination_policy_rechecked',
                     'adk_tox_environment':'adk_tox_repaired',
+                    'reply_wording':'reply_wording_repaired',
                     'langfuse_static_memory':'validation_memory_repaired',
                     'browser_config_directory':'browser_config_repaired',
                     'stale_prompt_cap':'stale_cap_repaired',

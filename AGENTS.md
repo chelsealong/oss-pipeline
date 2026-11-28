@@ -9,6 +9,10 @@ Other validation or human holds are not waived. Hermes now has an explicit pipel
 cap of five concurrently open PRs, including drafts; OpenClaw remains at twenty.
 A historical Hermes creation denial needs real ordinary-PR evidence to clear;
 read access and an available slot alone do not prove creation permission.
+PR reply review permits one read-only wording/attribution correction and fresh
+independent review, without relaxing evidence requirements. Audited OpenClaw task
+1988 may retry once only from complete empty-patch evidence and an unchanged
+remote head, if no newer follow-up exists. Preserve attempts and spending.
 
 # November 26 ADK coordination restoration
 
