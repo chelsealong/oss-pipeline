@@ -7,6 +7,43 @@ conditions and validation records.
 
 # OSS pipeline — managed Codex runtime
 
+## Lightweight checkout for development and independent review
+
+Clone only the source branch to retain its complete history without downloading
+the separate production-state branch:
+
+```sh
+git clone --single-branch --branch main https://github.com/chelsealong/oss-pipeline.git oss-pipeline-review
+cd oss-pipeline-review
+git switch -c review/pipeline-recovery
+```
+
+For just the current source, add `--depth=1` to the clone command. To later
+restore source history in that shallow clone, run `git fetch --unshallow origin
+main`. Keep the single-branch fetch configuration; fetching all branches also
+downloads the large state history. On November 28, 2026, the checkout measured
+3.4 MiB shallow or 7.9 MiB with complete `main` history, before dependencies and
+test caches; the tracked source itself totaled 2,420,260 bytes at `1178b9aa`.
+
+The repository's roughly 2 GiB GitHub storage figure includes other branches and
+history. The current `codex-state` tree alone contains approximately 532 MB of
+encrypted per-attempt evidence. These are retained patches and validation logs,
+not disposable build output. `checkpoint.json`, `queue/`, and `state/` on that
+branch preserve tasks, spending and deduplication. `pr-assets` contains images
+referenced by published PRs. Do not delete or rewrite these branches as source
+cleanup: doing so needs a separately verified archival/migration plan. The cloud
+workflow already fetches the current state with `--depth=1`.
+
+Independent source review and offline tests need no production credentials or
+state checkout. Do not copy `.runtime/`, `.env`, personal authentication caches,
+or production Secrets into a review clone. In a disposable Python environment,
+install `PyYAML` and `cryptography`, then run `python verify_codex.py`; this gate
+does not call model APIs or publish changes. Keep production workflows disabled
+in any review fork. Existing source, tests, lessons and historical workflows
+remain available for comparison; no runtime behavior is changed by this checkout.
+
+## Production runtime
+
 Production runs on GitHub-hosted Ubuntu runners after the 2026-10-02 cloud
 cutover. The Mac can be shut down; its three launchd services are unloaded and
 its runtime config is disabled. Cloud canary [36958589558](https://github.com/chelsealong/oss-pipeline/actions/runs/36958589558)
