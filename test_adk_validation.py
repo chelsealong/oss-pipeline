@@ -23,6 +23,11 @@ class AdkValidationTests(unittest.TestCase):
             self.assertFalse(task_recovery.reply_wording_regression(task,{**state,**change}))
         for change in ({'id':2068},{'attempts':2},{'status':'human_wait'}):
             self.assertFalse(task_recovery.reply_wording_regression({**task,**change},state))
+        self.assertTrue(task_recovery.reply_evidence_regression({**task,'attempts':2},
+            {**state,'reply_wording_repaired':True}))
+        self.assertFalse(task_recovery.reply_evidence_regression({**task,'attempts':3},state))
+        self.assertFalse(task_recovery.reply_evidence_regression({**task,'attempts':2},
+            {**state,'reply_command_evidence_repaired':True}))
 
     def test_tox_forwards_cache_roots_without_secrets_or_changed_configuration(self):
         with tempfile.TemporaryDirectory() as temp:

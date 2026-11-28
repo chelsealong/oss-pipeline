@@ -280,6 +280,38 @@ class ProductionReliabilityTests(unittest.TestCase):
         self.assertEqual(brief['results']['generation.json'],findings)
         self.assertNotIn('OLD_TRANSCRIPT',path.read_text());self.assertLess(path.stat().st_size,2048)
         self.assertTrue(task_recovery.latest_bundle(task['id']).exists())
+    def test_resume_exposes_real_command_results_with_identity_not_agent_claims(self):
+        task=self.task();folder,work,base=self.checkout(task)
+        events=[{'method':'item/completed','params':{'item':{'type':'commandExecution',
+            'id':'rpc','command':'gateway call commands.list','exitCode':0,'aggregatedOutput':'{"commands": ["hello"]}'}}},
+            {'type':'item.completed','item':{'type':'command_execution','id':'baseline',
+                'command':'pytest test_regression.py','exit_code':1,'aggregated_output':'1 failed'}},
+            {'method':'item/completed','params':{'item':{'type':'agentMessage','text':'UNVERIFIED CLAIM'}}},
+            {'method':'item/completed','params':{'item':{'type':'commandExecution',
+                'command':'unfinished','exitCode':None,'aggregatedOutput':'incomplete'}}}]
+        (folder/'generation.events.jsonl').write_text('\n'.join(json.dumps(x) for x in events))
+        worker.finish(task,'blocked','proof needs review')
+        following=rt.DATA/'jobs'/str(task['id'])/'attempt-2';following.mkdir()
+        brief=json.loads(work_evidence.recovery_context(task['id'],2,following).read_text())
+        proof=Path(brief['command_evidence']).read_text();records=json.loads(proof)['commands']
+        self.assertEqual([x['exit_code'] for x in records],[0,1])
+        self.assertEqual(records[0]['base'],base)
+        self.assertEqual(records[0]['output'],'{"commands": ["hello"]}')
+        self.assertEqual(len(records[0]['bundle_sha256']),64)
+        self.assertNotIn('UNVERIFIED CLAIM',proof);self.assertNotIn('unfinished',proof)
+        # A later summary-only attempt must not erase the earlier raw proof.
+        payload=json.loads((rt.DATA/'evidence'/f'{task["id"]}-1.json').read_text())
+        payload['files']={};payload['execution']['attempt']=2
+        (rt.DATA/'evidence'/f'{task["id"]}-2.json').write_text(json.dumps(payload))
+        self.assertEqual(len(work_evidence.prior_command_evidence(task['id'],3)['commands']),2)
+    def test_oversized_or_malformed_command_evidence_is_omitted_not_silently_truncated(self):
+        task=self.task();folder,work,base=self.checkout(task)
+        event={'method':'item/completed','params':{'item':{'type':'commandExecution',
+            'id':'large','command':'test','exitCode':0,'aggregatedOutput':'x'*70000}}}
+        (folder/'generation.events.jsonl').write_text('invalid partial record\n'+json.dumps(event))
+        worker.finish(task,'blocked','proof needs review')
+        proof=work_evidence.prior_command_evidence(task['id'],2)
+        self.assertEqual(proof['commands'],[]);self.assertTrue(proof['omitted'])
     def test_resource_diagnostics_record_pressure_and_tolerate_unavailable_cgroups(self):
         import runner_resources
         memory=self.root/'meminfo';memory.write_text('MemTotal: 16000000 kB\nMemAvailable: 900000 kB\nSwapTotal: 0 kB\nSwapFree: 0 kB\n')

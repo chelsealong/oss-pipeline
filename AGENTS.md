@@ -13,6 +13,11 @@ PR reply review permits one read-only wording/attribution correction and fresh
 independent review, without relaxing evidence requirements. Audited OpenClaw task
 1988 may retry once only from complete empty-patch evidence and an unchanged
 remote head, if no newer follow-up exists. Preserve attempts and spending.
+Recovery now exposes bounded, decoded historical command-result records, tagged
+with source bundle hash, base and patch digest, separately from advisory summaries.
+Never treat old approval or summary prose as raw proof. Incomplete evidence must
+be reproduced. Task 1988's second attempt may resume once only if matching retained
+commands.list output actually exists; all remote/publication safeguards still apply.
 
 # November 26 ADK coordination restoration
 

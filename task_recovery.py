@@ -59,6 +59,7 @@ def submission_regression(task,state):
     if publication_contract_regression(task,state):return 'publication_contract'
     if adk_tox_regression(task,state):return 'adk_tox_environment'
     if reply_wording_regression(task,state):return 'reply_wording'
+    if reply_evidence_regression(task,state):return 'reply_command_evidence'
     phase=state.get('last_execution_phase',state.get('phase'))
     reason=task.get('result','')
     if (task.get('id')==2116 and task['kind']=='fix' and task['repo']=='adk'
@@ -137,6 +138,12 @@ def reply_wording_regression(task,state):
         and state.get('patch_digest')=='af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc')
 
 
+def reply_evidence_regression(task,state):
+    if task.get('attempts')!=2 or state.get('reply_command_evidence_repaired'):return False
+    return reply_wording_regression({**task,'attempts':1},
+        {k:v for k,v in state.items() if k!='reply_wording_repaired'})
+
+
 def recover_submission_regressions():
     """One audited retry; preserve patches, attempts, spending and fresh review."""
     from execution_support import retained_progress
@@ -153,12 +160,19 @@ def recover_submission_regressions():
         if not path:continue
         payload=json.loads(path.read_text())
         if payload['execution'].get('attempt')!=task['attempts']:continue
-        if repair=='reply_wording':
+        if repair in ('reply_wording','reply_command_evidence'):
             if payload.get('diff') or payload.get('untracked') or payload.get('omitted'):continue
-            if not reply_wording_regression(task,payload['execution']):continue
+            matcher=reply_wording_regression if repair=='reply_wording' else reply_evidence_regression
+            if not matcher(task,payload['execution']):continue
             with rt.db() as db:
                 if db.execute('SELECT 1 FROM tasks WHERE kind=? AND repo=? AND number=? AND id>?',
                               ('respond',task['repo'],task['number'],task['id'])).fetchone():continue
+            if repair=='reply_command_evidence':
+                import work_evidence
+                proof=work_evidence.prior_command_evidence(task['id'],task['attempts']+1)
+                if not any(c['base']==state['base'] and c['patch_digest']==state['patch_digest']
+                           and c['exit_code']==0 and c['output'].strip()
+                           and 'commands.list' in c['command']+'\n'+c['output'] for c in proof['commands']):continue
         if repair=='adk_coordination_policy':
             if payload.get('diff') or payload.get('untracked'):continue
             if submission_regression(task,payload['execution'])!=repair:continue
@@ -486,6 +500,7 @@ def requeue(task,repair=None):
                     'adk_coordination_policy':'coordination_policy_rechecked',
                     'adk_tox_environment':'adk_tox_repaired',
                     'reply_wording':'reply_wording_repaired',
+                    'reply_command_evidence':'reply_command_evidence_repaired',
                     'langfuse_static_memory':'validation_memory_repaired',
                     'browser_config_directory':'browser_config_repaired',
                     'stale_prompt_cap':'stale_cap_repaired',
