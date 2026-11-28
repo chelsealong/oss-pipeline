@@ -1,5 +1,14 @@
 # November 28 validation and capacity recovery
 
+ADK #7335's exact-commit full tox run 46141439001 took 3444 seconds. Give
+ADK generation (including retained-patch continuation) 4800 seconds instead of
+the generic 2400/1200 second limits. Preserve model-call/spending budgets and
+the 9000-second drain. Review verifies exact-current-patch raw full-matrix logs
+plus independent focused checks; old summaries or changed patches are not proof.
+Task 2127 attempt 3 actually hit the 1200-second deadline on base bee78e7c.
+Only its exact preserved patch may resume once after remote reconciliation under
+the repaired deadline. Keep attempt IDs, prior spending, eligibility and review.
+
 Real CrewAI Core 1.15.45 ignores XDG for token storage and hardcodes the home
 credential path. On ephemeral GitHub runners only, map that path to the current
 ADK task cache with a controller-owned symlink. Refuse existing account stores,

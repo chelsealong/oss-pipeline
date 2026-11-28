@@ -15,6 +15,35 @@ import task_recovery
 
 
 class AdkValidationTests(unittest.TestCase):
+    def test_observed_adk_deadline_recovery_is_exact_and_once_only(self):
+        task=dict(id=2127,kind='fix',repo='adk',number=8398,attempts=3,
+                  status='execution_wait',result="Command 'Codex generation' timed out after 1200 seconds")
+        state=dict(adk_crewai_repaired=True,last_execution_phase='generation',
+                   base='bee78e7ce1bc1bfd16cccb0d0f8190ca6d401871',
+                   patch_digest='0c597cda709c688e3816efa10d4c0fbab5298e29e57d9a6975d769e3475673e6')
+        self.assertEqual(task_recovery.submission_regression(task,state),'adk_matrix_deadline')
+        for key,value in [('publication_started',True),('adk_deadline_repaired',True),
+                          ('base','0'*40),('patch_digest','0'*64),('last_execution_phase','review'),
+                          ('adk_crewai_repaired',False)]:
+            self.assertFalse(task_recovery.adk_deadline_regression(task,{**state,key:value}),key)
+        for key,value in [('id',9999),('attempts',4),('status','validation_wait'),
+                          ('result','unrelated failure'),('number',8417),('repo','openclaw')]:
+            self.assertFalse(task_recovery.adk_deadline_regression({**task,key:value},state),key)
+
+    def test_adk_full_matrix_fits_both_new_and_retained_patch_deadlines(self):
+        import codex_worker
+        observed_matrix_seconds=3444.24
+        for continued in (False,True):
+            limit=codex_worker.generation_timeout('adk',continued)
+            self.assertGreater(limit,observed_matrix_seconds+600)
+            self.assertEqual(limit,4800)
+            # Generation + both 20-minute reviews and bounded remediation
+            # must still fit the existing 150-minute cloud drain.
+            self.assertLess(limit+3*1200,9000)
+        for key in ('hermes','openclaw','langfuse'):
+            self.assertEqual(codex_worker.generation_timeout(key,False),2400)
+            self.assertEqual(codex_worker.generation_timeout(key,True),1200)
+
     def test_real_crewai_ignores_xdg_but_writes_through_owned_cache_link(self):
         # Load the actual pinned upstream module without importing unrelated
         # CrewAI integrations, telemetry or provider clients.

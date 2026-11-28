@@ -423,11 +423,19 @@ def scope_check(work,key):
     if banned: raise RuntimeError('excluded paths: '+', '.join(sorted(banned)))
     if not files: raise RuntimeError('READY without any changes')
 
+def generation_timeout(key, continued):
+    # Real ADK #7335 full tox took 3444s across four Python versions. A
+    # restored source patch still needs that matrix; it is not a cheap retry.
+    return 4800 if key=='adk' else (1200 if continued else 2400)
+
+
 def review_patch(task, work, folder, key, base, result, prompt):
     """Bound one code repair and one description correction; always review afresh."""
     policy_rechecked=False
     description_repaired=False
     prompt+=publication_contract.prompt(work,key,task['kind'])
+    if key=='adk':
+        prompt+='\nVerify full tox results from raw command logs for the exact current patch and base, and independently run focused regression/lint checks. A completed unchanged four-interpreter matrix need not be rerun solely because this is review. Summaries, incomplete runs, different patches or missing raw logs are insufficient; require new applicable validation. Never waive upstream tests or claim unrun checks.\n'
     for round_no in range(2):
         import screenshot_evidence
         result,images=screenshot_evidence.prepare(result,task,folder)
@@ -730,7 +738,9 @@ Do not assert personal human validation.
     prompt+='\nRunner resource limits: run builds, lint, typechecking and browser suites sequentially, never as concurrent shell calls or background jobs. Wait for each command to finish before starting another heavy check. Use one test/lint worker where supported; do not narrow required coverage. NODE_OPTIONS bounds each Node heap to 8 GiB for the exclusive Langfuse task, 4 GiB otherwise; XDG_STATE_HOME is task-owned for pnpm concurrency locks. Do not increase heap limits or start competing full-workspace checks.\n'
     if key=='langfuse':
         prompt+='\nFor web-only changes, read web/AGENTS.md Quick Commands and use the web-scoped lint/typecheck scripts, not root Turbo tasks that also build unrelated Rust packages. Run the same full web lint with --concurrency=1 to bound memory, sequentially with typecheck. Inspect actual upstream requirements; never describe unavailable or failing checks as passed.\n'
-    result=agent(prompt,work,folder/'generation.json',schema,timeout=1200 if continued else 2400,repo_key=key,task=task)
+    if key=='adk':
+        prompt+='\nThis generation phase allows up to 80 minutes so the full required four-interpreter tox matrix can finish. Keep raw complete foreground test output in the task cache, record exact base and patch identity with the result, and give the independent reviewer its paths. Do not skip matrix lanes or replace test results with summary assertions. Existing model-call and spending limits are unchanged.\n'
+    result=agent(prompt,work,folder/'generation.json',schema,timeout=generation_timeout(key,continued),repo_key=key,task=task)
     if (key=='langfuse' and result['outcome']=='BLOCKED'
             and task_recovery.wait_kind(result['reason'])=='validation_wait'):
         import validation_setup

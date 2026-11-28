@@ -56,6 +56,7 @@ def adk_tox_regression(task, state):
 def submission_regression(task,state):
     """Identify audited controller regressions, never approve work."""
     if state.get('publication_started'):return None
+    if adk_deadline_regression(task,state):return 'adk_matrix_deadline'
     if publication_contract_regression(task,state):return 'publication_contract'
     if adk_crewai_regression(task,state):return 'adk_crewai_storage'
     if adk_tox_regression(task,state):return 'adk_tox_environment'
@@ -128,6 +129,18 @@ def submission_regression(task,state):
     return None
 
 
+def adk_deadline_regression(task,state):
+    """One observed 20-minute timeout after the CrewAI storage repair."""
+    return bool(task.get('id')==2127 and task['kind']=='fix' and task['repo']=='adk'
+        and task['number']==8398 and task['attempts']==3 and task['status']=='execution_wait'
+        and task['result']=="Command 'Codex generation' timed out after 1200 seconds"
+        and not state.get('adk_deadline_repaired') and not state.get('publication_started')
+        and state.get('adk_crewai_repaired')
+        and state.get('last_execution_phase')=='generation'
+        and state.get('base')=='bee78e7ce1bc1bfd16cccb0d0f8190ca6d401871'
+        and state.get('patch_digest')=='0c597cda709c688e3816efa10d4c0fbab5298e29e57d9a6975d769e3475673e6')
+
+
 def adk_crewai_regression(task,state):
     original={2116:2,2123:1,2127:1,2134:1,2135:1}.get(task.get('id'))
     if original is None or state.get('adk_crewai_repaired'):return False
@@ -158,7 +171,7 @@ def recover_submission_regressions():
     from execution_support import retained_progress
     resumed=[]
     with rt.db() as db:
-        tasks=[dict(r) for r in db.execute("SELECT * FROM tasks WHERE status IN ('blocked','error','interrupted','validation_wait') OR (id=2116 AND status='human_wait') ORDER BY updated")]
+        tasks=[dict(r) for r in db.execute("SELECT * FROM tasks WHERE status IN ('blocked','error','interrupted','validation_wait') OR (id=2116 AND status='human_wait') OR (id=2127 AND status='execution_wait') ORDER BY updated")]
     for task in tasks:
         if repo_limits.disabled(task['repo']):continue
         state=rt.task_state(task['id']);repair=submission_regression(task,state)
@@ -189,6 +202,8 @@ def recover_submission_regressions():
             if not retained_progress(task) or not adk_tox_regression(task,payload['execution']):continue
         if repair=='adk_crewai_storage':
             if not retained_progress(task) or not adk_crewai_regression(task,payload['execution']):continue
+        if repair=='adk_matrix_deadline':
+            if not retained_progress(task) or not adk_deadline_regression(task,payload['execution']):continue
         if repair=='publication_contract':
             # Resume only complete source evidence in a fresh checkout. Ignored
             # build artifacts/retained dist locks are not restored or deleted.
@@ -511,6 +526,7 @@ def requeue(task,repair=None):
                     'adk_coordination_policy':'coordination_policy_rechecked',
                     'adk_tox_environment':'adk_tox_repaired',
                     'adk_crewai_storage':'adk_crewai_repaired',
+                    'adk_matrix_deadline':'adk_deadline_repaired',
                     'reply_wording':'reply_wording_repaired',
                     'reply_command_evidence':'reply_command_evidence_repaired',
                     'langfuse_static_memory':'validation_memory_repaired',
