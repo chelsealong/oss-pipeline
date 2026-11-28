@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795842901.9627473,
+  "saved_at": 1795842966.039592,
   "tables": {
     "tasks": [
       {
@@ -48204,10 +48204,6 @@
         "value": "{\"at\": 1795841011.8069806, \"path\": \"/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/2134/attempt-1/tool-cache\", \"error\": \"PermissionError\", \"reason\": \"[Errno 13] Permission denied: '/home/runner/work/oss-pipeline/oss-pipeline/.runtime/jobs/2134/attempt-1/tool-cache/xdg-cache/virtualenv/wheel/3.11/image/1/CopyPipInstall/ca140b45d5325a9478f880e351484f62fef15f336462e449ca0c03c873d589c2/setuptools-84.2\"}"
       },
       {
-        "key": "admission_warning_at",
-        "value": "1795841055.9001052"
-      },
-      {
         "key": "followup:google/adk-python#8419",
         "value": "{\"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8419\", \"events\": [{\"id\": \"IC_kwDOOSaYQ88AAAABrzIZTQ@2026-11-28T04:47:40Z\", \"author\": \"Angelhand\", \"when\": \"2026-11-28T04:47:40Z\", \"kind\": \"comment\", \"assoc\": \"NONE\", \"body\": \"Thanks @chelsealong for offering to help \\u2014 I already have a fix verified locally and would like to confirm the direction before opening a PR.\\n\\n**Proposed change** in `_DefaultAppRewriteMiddleware.__call__`:\\n\\n- Refresh `raw_path` only when the path is actually rewritten.\\n- Build it by prepending the `/apps/<name>` prefix to the client's original `raw_path` bytes, instead of re-encoding the decoded `scope[\\\"path\\\"]`.\\n\\n```diff\\n--- a/src/google/adk/cli/api_server.py\\n+++ b/src/google/adk/cli/api_server.py\\n@@ -637,10 +637,15 @@ class _DefaultAppRewriteMiddleware:\\n         if any(\\n             pattern.match(path) for pattern in self._PRODUCTION_PATH_PATTERNS\\n         ):\\n-          scope[\\\"path\\\"] = f\\\"/apps/{self._default_app_name}{path}\\\"\\n-\\n-        if \\\"raw_path\\\" in scope:\\n-          scope[\\\"raw_path\\\"] = scope[\\\"path\\\"].encode(\\\"latin-1\\\")\\n+          prefix = f\\\"/apps/{self._default_app_name}\\\"\\n+          scope[\\\"path\\\"] = f\\\"{prefix}{path}\\\"\\n+          if \\\"raw_path\\\" in scope:\\n+            # Prefix the client's bytes; re-encoding the decoded path both\\n+            # fails on non-ASCII characters and drops percent-encoding.\\n+            scope[\\\"raw_path\\\"] = (\\n+                urllib.parse.quote(prefix, safe=\\\"/\\\").encode(\\\"ascii\\\")\\n+                + scope[\\\"raw_path\\\"]\\n+            )\\n \\n     await self._app(scope, receive, send)\\n```\\n\\n**Verification** (current `main`, Python 3.12, Windows):\\n\\n| Case | Before | After |\\n| --- | --- | --- |\\n| non-ASCII artifact path | `UnicodeEncodeError` \\u2192 HTTP 500 | no exception; `raw_path` unchanged |\\n| `/users/u/sessions/a%7Eb` | `%7E` normalized to `~` | `%7E` preserved |\\n| plain `/users/...` rewrite | works | works, prefix prepended |\\n\\nTwo regression tests added in `tests/unittests/cli/test_fast_api.py`:\\n\\n- `pytest tests/unittests/cli/test_fast_api.py -k default_app`\\n  - without the fix: 2 failed, 4 passed\\n  - with the fix: 6 passed\\n- Full file: 231 passed with the fix vs 229 without. Both runs show the same 10 failures / 5 errors caused by optional dependencies missing in my local env (`agentplatform`, `agentidentitycredentials_v1`), unrelated to this change.\\n- `pyink` and `isort` checks pass.\\n\\nWould the maintainers accept this direction? I am happy to adjust it (for example, stop updating `raw_path` entirely) and open a PR with the regression tests.\"}], \"reason\": \"Issue coordination requires a human response; no message sent.\"}"
       },
@@ -48452,60 +48448,72 @@
         "value": "{}"
       },
       {
+        "key": "task:2103",
+        "value": "{\"started\": 1795650353.6238272, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1795650359.5201652, \"recovery_checked_at\": 1795842900.5737147}"
+      },
+      {
+        "key": "task:2104",
+        "value": "{\"started\": 1795650373.6744266, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1795650378.976439, \"recovery_checked_at\": 1795842901.2877939}"
+      },
+      {
         "key": "admission_health",
-        "value": "{\"at\": 1795842840.1076386, \"state\": \"stalled\", \"pending_candidates\": 791, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 391, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 791}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 3, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 2515.9383556842804, \"judge_tokens_spent_24h\": 30492, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 2, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8418\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8418\", \"title\": \"optimization: clone_agent_with_params misses an agent shared across levels, drops planner thinking fields, and ignores duplicate names\", \"first_seen\": 1795840236.447878, \"last_checked\": 1795841768.2654896, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8417\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8417\", \"title\": \"a2a: a CancelledError from runner.run_async now leaves the task in TASK_STATE_WORKING\", \"first_seen\": 1795840258.7826014, \"last_checked\": 1795841770.771242, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+        "value": "{\"at\": 1795842905.5201948, \"state\": \"stalled\", \"pending_candidates\": 791, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 391, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 791}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 3, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 2581.3510274887085, \"judge_tokens_spent_24h\": 30492, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 2, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8418\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8418\", \"title\": \"optimization: clone_agent_with_params misses an agent shared across levels, drops planner thinking fields, and ignores duplicate names\", \"first_seen\": 1795840236.447878, \"last_checked\": 1795841768.2654896, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8417\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8417\", \"title\": \"a2a: a CancelledError from runner.run_async now leaves the task in TASK_STATE_WORKING\", \"first_seen\": 1795840258.7826014, \"last_checked\": 1795841770.771242, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+      },
+      {
+        "key": "admission_warning_at",
+        "value": "1795842905.5214267"
       },
       {
         "key": "throughput_24h",
-        "value": "{\"at\": 1795842840.1087315, \"tasks\": {\"fix\": {\"blocked\": 1, \"human_wait\": 1, \"skipped\": 6, \"validation_wait\": 2}, \"respond\": {}}}"
+        "value": "{\"at\": 1795842905.5219374, \"tasks\": {\"fix\": {\"blocked\": 1, \"human_wait\": 1, \"skipped\": 6, \"validation_wait\": 2}, \"respond\": {}}}"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795842863.4848554, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1796162550}]}"
+        "value": "{\"at\": 1795842923.7372472, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1796162550}]}"
       },
       {
         "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795842877.3529952, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795842941.9411075, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795842877.6628494, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795842942.2070768, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795842878.0134118, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795842942.5635388, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795842878.2680445, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795842943.0125935, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795842878.543441, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795842943.3081381, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795842878.831319, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795842943.6784177, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795842879.7652407, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+        "value": "{\"at\": 1795842944.6405842, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
       },
       {
         "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795842880.0677617, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795842944.996344, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795842880.2905989, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795842945.409754, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795842880.613248, \"allowed\": true, \"reason\": \"\"}"
+        "value": "{\"at\": 1795842945.7524238, \"allowed\": true, \"reason\": \"\"}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795842889.7110934"
+        "key": "detector_heartbeat",
+        "value": "1795842961.5634181"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48513,27 +48521,19 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795842897.7931645"
-      },
-      {
-        "key": "task:2103",
-        "value": "{\"started\": 1795650353.6238272, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1795650359.5201652, \"recovery_checked_at\": 1795842900.5737147}"
+        "value": "1795842963.0736003"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1795842900.6681876"
+        "value": "1795842964.3517752"
       },
       {
-        "key": "task:2104",
-        "value": "{\"started\": 1795650373.6744266, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1795650378.976439, \"recovery_checked_at\": 1795842901.2877939}"
-      },
-      {
-        "key": "detector_heartbeat",
-        "value": "1795842901.5619402"
+        "key": "worker_heartbeat",
+        "value": "1795842964.718213"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1795842901.9505942, \"disk_free_bytes\": 88289112064, \"memory_bytes\": {\"MemTotal\": 16464277504, \"MemAvailable\": 11806736384, \"SwapTotal\": 3221221376, \"SwapFree\": 3221159936}, \"memory_events\": null}"
+        "value": "{\"at\": 1795842966.0272613, \"disk_free_bytes\": 88287248384, \"memory_bytes\": {\"MemTotal\": 16464277504, \"MemAvailable\": 11825123328, \"SwapTotal\": 3221221376, \"SwapFree\": 3221159936}, \"memory_events\": null}"
       }
     ],
     "calls": [
