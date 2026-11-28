@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795847093.0884945,
+  "saved_at": 1795847157.7996037,
   "tables": {
     "tasks": [
       {
@@ -48372,10 +48372,6 @@
         "value": "{\"started\": 1795650373.6744266, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1795650378.976439, \"recovery_checked_at\": 1795846626.1200237}"
       },
       {
-        "key": "prwatch_heartbeat",
-        "value": "1795846738.8561716"
-      },
-      {
         "key": "health",
         "value": "{\"ok\": true, \"at\": 1795846770.4810164, \"source\": \"authenticated probe\"}"
       },
@@ -48456,72 +48452,76 @@
         "value": "{\"status\": \"needs_human\", \"task\": 61, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795847032.2874515, \"state\": \"stalled\", \"pending_candidates\": 797, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 1, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 396, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 796, \"judge_unavailable\": 1}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 3, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 6708.116971492767, \"judge_tokens_spent_24h\": 28804, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 2, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8418\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8418\", \"title\": \"optimization: clone_agent_with_params misses an agent shared across levels, drops planner thinking fields, and ignores duplicate names\", \"first_seen\": 1795840236.447878, \"last_checked\": 1795846303.5025327, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8417\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8417\", \"title\": \"a2a: a CancelledError from runner.run_async now leaves the task in TASK_STATE_WORKING\", \"first_seen\": 1795840258.7826014, \"last_checked\": 1795846306.0008209, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795847032.2889118, \"tasks\": {\"fix\": {\"blocked\": 1, \"human_wait\": 1, \"skipped\": 6, \"validation_wait\": 2}, \"respond\": {}}}"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795847077.8294537, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1796162550}]}"
-      },
-      {
         "key": "publication_check:hermes",
         "value": "{\"at\": 1795847080.6074042, \"denied_at\": 1793711972.0665295, \"status\": \"held\"}"
       },
       {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795847081.016192, \"allowed\": true, \"reason\": \"\"}"
+        "key": "admission_health",
+        "value": "{\"at\": 1795847096.9517646, \"state\": \"stalled\", \"pending_candidates\": 797, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 1, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 396, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 796, \"judge_unavailable\": 1}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 3, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 6772.781044483185, \"judge_tokens_spent_24h\": 28804, \"screening_calls_5h\": 1, \"screening_calls_24h\": 1, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 2, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8418\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8418\", \"title\": \"optimization: clone_agent_with_params misses an agent shared across levels, drops planner thinking fields, and ignores duplicate names\", \"first_seen\": 1795840236.447878, \"last_checked\": 1795846303.5025327, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}, {\"key\": \"coordination:google/adk-python#8417\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8417\", \"title\": \"a2a: a CancelledError from runner.run_async now leaves the task in TASK_STATE_WORKING\", \"first_seen\": 1795840258.7826014, \"last_checked\": 1795846306.0008209, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
       },
       {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795847081.3652153, \"allowed\": true, \"reason\": \"\"}"
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795847096.9531503, \"tasks\": {\"fix\": {\"blocked\": 1, \"human_wait\": 1, \"skipped\": 6, \"validation_wait\": 2}, \"respond\": {}}}"
       },
       {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795847081.8161345, \"allowed\": true, \"reason\": \"\"}"
+        "key": "prwatch_heartbeat",
+        "value": "1795847103.4246454"
       },
       {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795847082.2266343, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795847082.732216, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795847083.1565435, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795847084.0918515, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795847084.4937382, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795847084.7780128, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795847085.1766794, \"allowed\": true, \"reason\": \"\"}"
+        "key": "codex_quota",
+        "value": "{\"at\": 1795847138.0806935, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1796162550}]}"
       },
       {
         "key": "worker_heartbeat",
-        "value": "1795847085.9030159"
+        "value": "1795847145.9101572"
+      },
+      {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1795847146.1078203, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1795847146.6352704, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1795847147.312933, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1795847147.875492, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1795847148.3295689, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1795847148.738067, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1795847149.5515437, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1795847149.856906, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:autogpt",
+        "value": "{\"at\": 1795847150.3012357, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:comfyui",
+        "value": "{\"at\": 1795847150.8107054, \"allowed\": true, \"reason\": \"\"}"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795847089.7379453"
+        "value": "1795847154.7394423"
       },
       {
         "key": "watch_heartbeat",
-        "value": "1795847090.2011921"
+        "value": "1795847155.819742"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48529,11 +48529,11 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795847091.2967534"
+        "value": "1795847156.2235444"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1795847093.0735633, \"disk_free_bytes\": 85813673984, \"memory_bytes\": {\"MemTotal\": 16760307712, \"MemAvailable\": 15461277696, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1795847157.7837722, \"disk_free_bytes\": 85811879936, \"memory_bytes\": {\"MemTotal\": 16760307712, \"MemAvailable\": 15436263424, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       }
     ],
     "calls": [
