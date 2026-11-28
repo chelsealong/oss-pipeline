@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795866447.0762527,
+  "saved_at": 1795866726.1758897,
   "tables": {
     "tasks": [
       {
@@ -27796,6 +27796,19 @@
         "updated": 1795866442.6979249,
         "result": "Issue #161079 describes the same duplicate-PID restart obligation already addressed by open PR #147888 (https://github.com/NousResearch/hermes-agent/pull/147888). Its diff fixes both obligation recording and discharge for a mapped gateway and stopped_unmapped row sharing a PID, with a regression test. A second fix would compete with that PR.",
         "attempts": 1
+      },
+      {
+        "id": 2139,
+        "identity": "fix:hermes:161070:",
+        "kind": "fix",
+        "repo": "hermes",
+        "number": 161070,
+        "note": "User explicitly requested one real, current-issue Hermes fix and ordinary PR attempt. The historical creation hold is not permission clearance. All current upstream policy, duplicate/claim checks, tests, independent review and budgets still apply.",
+        "status": "running",
+        "created": 1795866726.1623821,
+        "updated": 1795866726.1623821,
+        "result": "",
+        "attempts": 1
       }
     ],
     "meta": [
@@ -48592,10 +48605,6 @@
         "value": "{\"at\": 1795866255.3053727, \"calls\": 6}"
       },
       {
-        "key": "pause",
-        "value": "{}"
-      },
-      {
         "key": "creation_retry:46141311260",
         "value": "{\"at\": 1795866367.3807766, \"task\": 2138, \"repo\": \"hermes\", \"issue\": 161079, \"source\": \"explicit user-requested real PR recovery\"}"
       },
@@ -48616,18 +48625,6 @@
         "value": "[{\"at\": 1795861112.3052945, \"group\": \"new_fix\", \"task\": 2137, \"phase\": \"generation\"}, {\"at\": 1795865711.0394773, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1795865711.064409, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1795865713.9453785, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1795865716.505061, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1795865743.2038822, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1795865745.767686, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1795866167.0213563, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1795866167.106819, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1795866171.129988, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1795866171.5229256, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1795866200.495789, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1795866230.4354336, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1795866401.352694, \"group\": \"new_fix\", \"task\": 2138, \"phase\": \"generation\"}]"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795866440.9634213"
-      },
-      {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795866441.993865, \"windows\": [{\"name\": \"primary\", \"used_percent\": 25, \"resets_at\": 1796162550}]}"
-      },
-      {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795866441.9954503, \"source\": \"completed task phase\"}"
-      },
-      {
         "key": "usage:2138:1:generation",
         "value": "{\"task\": 2138, \"repo\": \"hermes\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795866441.9994135, \"seconds\": 40.648, \"tokens\": {\"totalTokens\": 264725, \"inputTokens\": 263498, \"cachedInputTokens\": 189312, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1227, \"reasoningOutputTokens\": 271}, \"first_event_ms\": 1795866411232, \"last_event_ms\": 1795866441993, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
       },
@@ -48638,6 +48635,30 @@
       {
         "key": "task:2138",
         "value": "{\"started\": 1795866367.3809104, \"worker_slot\": \"creation-recovery\", \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2138/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"3ef8bf4f68c91dce2870eba5625426b32ac6ba58\", \"creation_retry_request\": \"creation_retry:46141311260\", \"generation_started\": 1795866401.3525057, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795866406.7829099, \"last_execution_phase\": \"generation\", \"finished\": 1795866442.001048}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795866724.2054198"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1795866726.1417515, \"windows\": [{\"name\": \"primary\", \"used_percent\": 25, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795866726.143718, \"source\": \"authenticated probe\"}"
+      },
+      {
+        "key": "pause",
+        "value": "{}"
+      },
+      {
+        "key": "creation_retry:46141780570",
+        "value": "{\"at\": 1795866726.1623821, \"task\": 2139, \"repo\": \"hermes\", \"issue\": 161070, \"source\": \"explicit user-requested real PR recovery\"}"
+      },
+      {
+        "key": "task:2139",
+        "value": "{\"started\": 1795866726.162548, \"worker_slot\": \"creation-recovery\", \"terminal\": false, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"claimed\", \"base\": null, \"creation_retry_request\": \"creation_retry:46141780570\"}"
       }
     ],
     "calls": [
