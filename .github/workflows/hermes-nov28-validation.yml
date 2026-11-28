@@ -30,7 +30,9 @@ jobs:
         env:
           HERMES_HOME: ${{ runner.temp }}/hermes-home
           HERMES_RUNTIME_DIR: ${{ runner.temp }}/hermes-runtime
-        run: python -m pm.build_env --source . --out .venv --group dev --group test
+        run: |
+          python -m pm.build_env --source . --out .venv --group dev --group test
+          python -c "import os,pathlib; p=pathlib.Path('.venv') / ('Scripts/python.exe' if os.name=='nt' else 'bin/python'); f=open(os.environ['GITHUB_ENV'],'a'); print('HERMES_PYTHON='+str(p.absolute()),file=f); f.close()"
       - name: Run actual host identity and discovery regressions
         shell: bash
         run: |
