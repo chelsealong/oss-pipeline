@@ -16,11 +16,22 @@ DEFAULT_TASK_BUDGET = 6
 TASK_BUDGETS = {'hermes': 16, 'openclaw': 10, 'adk': 10,
                 **dict.fromkeys(DISABLED_REPOS, 0)}
 OPEN_PR_CAPS = {'openclaw': 20, 'hermes': 5}
+# Added-line ceilings the controller enforces before publication, tests included.
+MAX_ADDED_LINES = {'openclaw': 120, 'comfyui': 150, 'litellm': 150}
 DISABLED_REASON = 'repository quota disabled by user on 2026-10-10'
 
 
 def disabled(repo):
     return bool(repo and repo.lower() in DISABLED_NAMES)
+
+
+def size_policy(repo):
+    """State the enforced ceiling up front; a larger patch is refused after review."""
+    maximum=MAX_ADDED_LINES.get(repo)
+    if maximum is None:return ''
+    return (f' The controller refuses to publish a {repo} patch that adds more than {maximum} '
+        'lines in total, counting new tests. If the smallest correct fix with its regression '
+        'test cannot fit, return BLOCKED and say so instead of writing a larger patch.')
 
 
 def executor_policy(repo):
@@ -33,7 +44,7 @@ def executor_policy(repo):
         'before publication. These current settings supersede historical lessons and earlier '
         'PR_CAP outcomes. Do not stop at an older or invented safety threshold. Existing-PR '
         'maintenance does not use new-PR capacity. Follow any stricter CURRENT upstream '
-        'requirement, citing its exact source when it prevents submission.')
+        'requirement, citing its exact source when it prevents submission.'+size_policy(repo))
 
 
 def hold_pending(db):

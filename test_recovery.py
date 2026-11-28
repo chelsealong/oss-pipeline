@@ -149,6 +149,17 @@ class RecoveryTests(unittest.TestCase):
         with rt.db() as db:self.assertEqual(db.execute('SELECT status FROM tasks').fetchone()[0],'error')
         worker.handle_task_error(task,RuntimeError('Codex: quota exceeded'))
         self.assertFalse(rt.ready()[0])
+    def test_model_access_refusal_opens_circuit_and_retains_task(self):
+        # Recorded from tasks 1801-1803 (2026-11-12): each claim ended as a terminal error.
+        refusal=RuntimeError('Codex: {\'message\': \'{"type":"error","status":400,"error":{"type":"invalid_request_error",'
+            '"message":"The \\\'gpt-6-sol\\\' model is not supported when using Codex with a ChatGPT account.",'
+            '"code":"model_not_found"}}\', \'codexErrorInfo\': \'other\'}')
+        self.assertEqual(worker.failure_cooldown(refusal),1800)
+        self.assertEqual(worker.failure_cooldown(RuntimeError('Codex: completed without structured answer')),0)
+        task=self.task();task['attempts']=1
+        worker.handle_task_error(task,refusal)
+        with rt.db() as db:self.assertEqual(db.execute('SELECT status FROM tasks').fetchone()[0],'retry_wait')
+        self.assertFalse(rt.ready()[0])
     def test_migration_keeps_old_spending_and_prepaid_queue(self):
         task=self.task();(self.root/'state').mkdir()
         (self.root/'state/dispatch-budget.json').write_text(json.dumps({'date':time.strftime('%Y-%m-%d',time.gmtime()),'used':{'hermes':19}}))

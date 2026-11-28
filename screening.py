@@ -115,7 +115,13 @@ def feedback(task, key, repo):
           ... on PullRequestReview{body pullRequest{number repository{nameWithOwner}}}
           ... on PullRequestReviewComment{body pullRequest{number repository{nameWithOwner}}}
         }}'''
-        data=json.loads(codex_worker.run(['gh','api','graphql','-f','query='+query,'-f','id='+ident]))
+        try:
+            data=json.loads(codex_worker.run(['gh','api','graphql','-f','query='+query,'-f','id='+ident]))
+        except RuntimeError as error:
+            # gh exits non-zero on the NOT_FOUND GraphQL error, so the null-node
+            # branch below never saw a deleted comment and the task ended in error.
+            if 'Could not resolve to a node with the global id' not in str(error):raise
+            continue  # Deleted event, no remaining request.
         if data.get('errors'):raise rt.JudgeDeferred('feedback lookup unavailable')
         node=data.get('data',{}).get('node')
         if node is None:continue  # Deleted event, no remaining request.

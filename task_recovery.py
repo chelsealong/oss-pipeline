@@ -500,8 +500,7 @@ def audited_unpublished(task):
     branch=f"fix/codex-{key}-{task['number']}"
     remote=optional_api(f'repos/{worker.ME}/{impl.split("/")[1]}/git/ref/heads/{branch}')
     if remote:return False,'Remote branch exists; inspect publication before resuming'
-    prs=json.loads(worker.run(['gh','pr','list','--repo',impl,'--head',worker.ME+':'+branch,
-                              '--state','all','--json','number']))
+    prs=worker.prs_for_branch(impl,branch)
     if prs:return False,'A remote PR already uses this task branch'
     return True,'Verified pre-publication failure and no remote branch/PR'
 

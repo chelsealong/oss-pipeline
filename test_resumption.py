@@ -75,6 +75,22 @@ class ResumptionTests(unittest.TestCase):
             self.assertFalse(recovery.audited_unpublished(task)[0]);run.assert_not_called()
         with patch.object(recovery,'optional_api',return_value=None),patch.object(worker,'run',return_value='[]'):
             self.assertTrue(recovery.audited_unpublished(task)[0])
+    def test_existing_pr_is_found_by_supported_head_lookup(self):
+        task=self.task('interrupted');rt.task_state(task['id'],phase='generation')
+        label='chelsealong:fix/codex-hermes-1'
+        rows=[{'number':7,'html_url':'https://example.invalid/pull/7','head':{'label':label}},
+              {'number':8,'html_url':'https://example.invalid/pull/8','head':{'label':'someone:other'}}]
+        # The branch was deleted but its PR remains: the PR check is the only gate left.
+        with patch.object(recovery,'optional_api',return_value=None),patch.object(worker,'run',return_value=json.dumps(rows)) as run:
+            ok,why=recovery.audited_unpublished(task)
+        self.assertFalse(ok);self.assertIn('remote PR',why)
+        command=run.call_args.args[0]
+        # `gh pr list --head owner:branch` is unsupported and returns nothing.
+        self.assertEqual(command[:2],['gh','api']);self.assertNotIn('--head',command)
+        self.assertIn('/pulls?head='+label+'&state=all',command[2])
+        # GitHub ignores an unparseable head filter; unrelated PRs are not ours.
+        with patch.object(worker,'run',return_value=json.dumps(rows[1:])):
+            self.assertEqual(worker.prs_for_branch('NousResearch/hermes-agent','fix/codex-hermes-1'),[])
     def test_unknown_or_published_interruption_is_never_replayed(self):
         task=self.task('interrupted');rt.task_state(task['id'],phase='unknown')
         with patch.object(recovery,'optional_api') as api:

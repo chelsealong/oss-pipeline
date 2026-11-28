@@ -77,7 +77,9 @@ def failure_cooldown(error):
         return 0  # Local start admission must not pause another task's reserved review.
     # Only account/service failures warrant an account-wide circuit breaker.
     if re.search(r'quota|usage.limit|credits|auth unavailable|Codex unavailable',message,re.I):return 1800
-    if message.startswith('Codex:') and re.search(r'401|403|auth|capacity|rate.limit',message,re.I):return 1800
+    # A model-access refusal is account-wide too: without a circuit every claimed
+    # task spends a call and ends as a terminal error (tasks 1801-1803, Nov 12).
+    if message.startswith('Codex:') and re.search(r'401|403|auth|capacity|rate.limit|model_not_found|model is not supported',message,re.I):return 1800
     return 0
 
 def repo_pr_permission_denied(task, error):
@@ -104,6 +106,13 @@ def api(path):
 
 def git(work, *args):
     return run(['git', *args], cwd=work, timeout=300)
+
+def prs_for_branch(impl, branch):
+    """PRs from our fork branch. `gh pr list --head owner:branch` matches nothing."""
+    label=f'{ME}:{branch}'
+    # GitHub ignores a head filter it cannot parse, so confirm each label.
+    return [pr for pr in api(f'repos/{impl}/pulls?head={label}&state=all&per_page=100')
+            if pr['head']['label'].lower()==label.lower()]
 
 def binary():
     configured = rt.config().get('codex_bin')
@@ -513,7 +522,7 @@ resolved with permitted local work, return BLOCKED and explain. Refresh the prop
 actual test evidence in the requested JSON. Never claim human verification. Foreground commands only.
 Run the actual upstream pre-PR checks. For OpenClaw, PR CI supplies broad proof; check:changed
 is an optional diagnostic, not a controller prerequisite. Disclose any observed failure honestly.
-'''+publication_contract.prompt(work,key,task['kind']),work,folder/'remediation.json',RESPONSE_SCHEMA if task['kind']=='respond' else GEN_SCHEMA,timeout=1200,repo_key=key,task=task)
+'''+repo_limits.size_policy(key)+publication_contract.prompt(work,key,task['kind']),work,folder/'remediation.json',RESPONSE_SCHEMA if task['kind']=='respond' else GEN_SCHEMA,timeout=1200,repo_key=key,task=task)
         if result['outcome']!='READY':
             return result,{'verdict':'BLOCK','reason':result['reason'],'repairable':False,'tests_verified':False}
         if git(work,'rev-parse','HEAD')!=base:raise RuntimeError('remediation unexpectedly committed')
@@ -801,7 +810,7 @@ Also review pr_body when nonempty; preserve scope/disclosure and do not invent h
     # Stage only after both phases. Enforce sizes including newly added tests.
     git(work,'add','--all')
     added=sum(int(x.split('\t')[0]) for x in git(work,'diff','--cached','--numstat').splitlines() if x.split('\t')[0].isdigit())
-    if added>{'openclaw':120,'comfyui':150,'litellm':150}.get(key,100000):
+    if added>repo_limits.MAX_ADDED_LINES.get(key,100000):
         finish(task,'blocked',f'patch too large: +{added}');return
     if not rt.ready(check_budget=False)[0]: raise rt.Paused(rt.ready(check_budget=False)[1])
     if kind=='fix':
@@ -836,10 +845,10 @@ Also review pr_body when nonempty; preserve scope/disclosure and do not invent h
         finish(task,'done','Updated '+pr['html_url']+' commit '+head+'; replied '+url);return
     if key=='transformers':
         finish(task,'done','prepare-only branch '+branch);return
-    existing=json.loads(run(['gh','pr','list','--repo',impl,'--head',ME+':'+branch,'--state','all','--json','url']))
+    existing=prs_for_branch(impl,branch)
     if existing:
         rt.task_state(task['id'],published_at=time.time(),publication_outcome='reconciled')
-        finish(task,'done',existing[0]['url']);return
+        finish(task,'done',existing[0]['html_url']);return
     url=run(['gh','pr','create','--repo',impl,'--base',default,'--head',ME+':'+branch,'--title',title,'--body-file',str(bodypath)])
     rt.task_state(task['id'],published_at=time.time(),publication_outcome='created')
     finish(task,'done',url)

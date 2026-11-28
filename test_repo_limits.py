@@ -26,6 +26,16 @@ class RepoLimitTests(unittest.TestCase):
     def tearDown(self):
         for p in reversed(self.patches):p.stop()
         self.tmp.cleanup()
+    def test_size_ceiling_is_stated_to_the_executor_it_is_enforced_on(self):
+        self.assertEqual(limits.MAX_ADDED_LINES,{'openclaw':120,'comfyui':150,'litellm':150})
+        for repo,maximum in limits.MAX_ADDED_LINES.items():
+            self.assertIn(f'more than {maximum} lines in total, counting new tests',limits.executor_policy(repo))
+        self.assertEqual(limits.size_policy('adk'),'')
+        self.assertNotIn('lines in total',limits.executor_policy('adk'))
+        # Enforcement and the remediation prompt read the same table.
+        source=Path(worker.__file__).read_text()
+        self.assertIn('added>repo_limits.MAX_ADDED_LINES.get(key,100000)',source)
+        self.assertIn('repo_limits.size_policy(key)',source)
     def test_disabled_aliases_reject_new_and_old_tasks_before_spending(self):
         for key,upstream in limits.DISABLED_REPOS.items():
             self.assertEqual(watch.DISPATCH_BUDGET[key],0)

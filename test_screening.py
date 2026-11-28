@@ -316,6 +316,17 @@ class ScreeningTests(unittest.TestCase):
             self.assertFalse(screening.feedback(self.task,'openclaw','openclaw/openclaw'))
         self.assertTrue(self.agent.call_args.kwargs['read_only'])
 
+    def test_deleted_feedback_comment_is_skipped_not_a_task_error(self):
+        self.task.update(kind='respond',repo='openclaw/openclaw',note=json.dumps({'events':['IC_1@date'],'screening_events':['IC_1@date']}))
+        # gh exits 1 on the NOT_FOUND GraphQL error (recorded from tasks 772 and 1684).
+        gone=RuntimeError("gh failed (1): gh: Could not resolve to a node with the global id of 'IC_1'.\n")
+        with patch.object(codex_worker,'run',side_effect=gone):
+            self.assertFalse(screening.feedback(self.task,'openclaw','openclaw/openclaw'))
+        self.agent.assert_not_called()
+        with patch.object(codex_worker,'run',side_effect=RuntimeError('gh failed (1): HTTP 502')):
+            with self.assertRaisesRegex(RuntimeError,'HTTP 502'):
+                screening.feedback(self.task,'openclaw','openclaw/openclaw')
+
     def test_failed_screening_response_is_not_repeated_forever(self):
         def fail(*args,**kwargs):
             self.fake_agent(*args,**kwargs)
