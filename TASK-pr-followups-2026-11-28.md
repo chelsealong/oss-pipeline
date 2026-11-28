@@ -2,7 +2,7 @@
 
 Hand-off for the agent or person acting as `chelsealong`. The owner asked for these
 on 2026-11-28 after a read-only audit of the 31 open PRs on OpenClaw, Hermes and ADK
-(see `REVIEW-open-prs-2026-11-28.md`). Nothing below has been posted.
+(see `REVIEW-open-prs-2026-11-28.md`). Execution results are recorded in [REVIEW-followups-2026-11-29.md](REVIEW-followups-2026-11-29.md).
 
 ## Rules for whoever runs this
 
@@ -26,7 +26,7 @@ on 2026-11-28 after a read-only audit of the 31 open PRs on OpenClaw, Hermes and
 Its `PR context and evidence` check requires authored `## What Problem This Solves`
 and `## Evidence` sections. Keep everything else in the description unchanged.
 
-- [ ] Description edited
+- [x] Description edited
 
 Replace the first paragraph ("Clarify that completeness claims...") with:
 
@@ -51,7 +51,7 @@ Then put this heading directly above the line "Validation: `git diff --check`...
 
 The command must be on its own line. Post the #161925 comment only after step 1.
 
-- [ ] #161925  - [ ] #161462  - [ ] #192685  - [ ] #202424
+- [x] #161925  - [x] #161462  - [x] #192685  - [x] #202424
 
 ```sh
 gh pr comment 161925 --repo openclaw/openclaw --body "Added an incident citation (#161798) to each new rule and rejoined the junk-pattern list in 158e8dcd5; the description now has the required sections.
@@ -76,7 +76,7 @@ gh pr comment 202424 --repo openclaw/openclaw --body "Shipped-entry-point proof 
 Main gained `!isStatePostgres()` on the same expression in #204502. Whether that
 fully covers this PR was not proven, so ask instead of closing.
 
-- [ ] Comment posted
+- [x] Comment posted
 
 ```sh
 gh pr comment 202906 --repo openclaw/openclaw --body "#204502 added a PostgreSQL check to the same expression on main. If that covers #202891, I'm happy to close this, or to reduce it to the PostgreSQL regression test only. Which would you prefer?"
@@ -92,8 +92,8 @@ Checked on 2026-11-28: #191763 was closed by a maintainer as fixed by #194560;
 (about 2026-11-05) suggesting it be closed in favour of an internal change. Find
 that comment first; if it is not there, leave the PR open and report.
 
-- [ ] openclaw #190917  - [ ] openclaw #191797  - [ ] openclaw #195500
-- [ ] adk #7256  - [ ] adk #7251 (only after confirming the maintainer's comment)
+- [x] openclaw #190917  - [x] openclaw #191797  - [x] openclaw #195500
+- [x] adk #7256  - [ ] adk #7251 (only after confirming the maintainer's comment)
 
 ```sh
 gh pr close 190917 --repo openclaw/openclaw --comment "Closing: #191105 on main now covers this path, and this PR's regression no longer shows a gap. Thanks for the review time."
@@ -113,12 +113,12 @@ These need OpenClaw's own tests run on the result. Merge main into the PR branch
 (no rebase, no force-push), resolve conflicts, run the focused tests and applicable
 lint/type checks, then request re-review.
 
-- [ ] openclaw #198173: conflicts with main. Minor: the MCP label reuses the i18n key
+- [x] openclaw #198173: conflicts with main. Minor: the MCP label reuses the i18n key
       `chat.composer.menu.skillBlocked` in `chat-composer-plugins-menu.tsx`.
-- [ ] openclaw #191745: conflicts with main. The bot's P1 ("preserve the admitted
+- [x] openclaw #191745: conflicts with main. The bot's P1 ("preserve the admitted
       reload root during recovery startup") was raised on an older head and needs
       re-review after the merge.
-- [ ] openclaw #198216: no conflict. Explain in the description why the test near
+- [x] openclaw #198216: no conflict. Explain in the description why the test near
       line 368 of `src/config/io.snapshot.promotion.test.ts` changed from
       `[conflict, applied]` to `[conflict]`, then request re-review.
 
@@ -134,3 +134,5 @@ lint/type checks, then request re-review.
 
 List each item as done, skipped (with the reason) or failed (with the exact error),
 and link every comment posted.
+
+ADK #7251 was deliberately left open: the alleged maintainer closure instruction could not be found. All other listed actions were completed; see the linked report for exact heads, test results and every posted comment.
