@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795847322.853414,
+  "saved_at": 1795847361.441093,
   "tables": {
     "tasks": [
       {
@@ -27765,10 +27765,10 @@
         "repo": "llama-index",
         "number": 24548,
         "note": "",
-        "status": "running",
+        "status": "skipped",
         "created": 1795847291.5203881,
-        "updated": 1795847291.9801822,
-        "result": "",
+        "updated": 1795847361.1897812,
+        "result": "Issue #24548 requests a LlamaHub listing for an external HelmSwap package, not a fix for a bug in this checkout. The repository has no HelmSwap entry or standalone listing to update; its documentation builder reads metadata from packages inside the repository. CONTRIBUTING.md explicitly says new integration packages are no longer accepted here. The issue has no comments, and no open HelmSwap PR was found.",
         "attempts": 1
       }
     ],
@@ -48278,10 +48278,6 @@
         "value": "{\"started\": 1795650373.6744266, \"worker_slot\": 0, \"terminal\": true, \"retry_after\": 0, \"folder\": null, \"attempt\": 1, \"phase\": \"capacity_wait\", \"base\": null, \"last_execution_phase\": \"claimed\", \"finished\": 1795650378.976439, \"recovery_checked_at\": 1795846626.1200237}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795846770.4810164, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -48458,46 +48454,6 @@
         "value": "{\"at\": 1795847233.9106085, \"reason\": \"PR closed or not owned by our fork\"}"
       },
       {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795847270.6527865, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795847281.4204712, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795847281.783809, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795847282.2596166, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795847282.657903, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795847283.1256564, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795847284.0255027, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795847284.5226738, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795847284.8225224, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795847285.2272344, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
         "key": "scheduler",
         "value": "{\"prefer\": \"respond\", \"repos\": {\"openclaw\": 1795652525.8176348, \"comfyui\": 1795838430.4489846, \"hermes\": 1795158844.7137928, \"langfuse\": 1795783676.9572165, \"firecrawl\": 1791627722.0891626, \"mem0\": 1791614333.2471364, \"llama-index\": 1795847291.9800625, \"langfuse-python\": 1794746482.1502907, \"spec-kit\": 1795715124.0708468, \"crawl4ai\": 1791353431.2624507, \"dify\": 1794149728.4937809, \"litellm\": 1791438141.3063986, \"adk\": 1795847201.0272279, \"autogpt\": 1795331330.0812907}}"
       },
@@ -48530,10 +48486,6 @@
         "value": "{\"at\": 1795847304.31299, \"tasks\": {\"fix\": {\"blocked\": 1, \"human_wait\": 1, \"running\": 2, \"skipped\": 6, \"validation_wait\": 2}, \"respond\": {}}}"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795847310.9853184"
-      },
-      {
         "key": "fix_sessions",
         "value": "[{\"repo\": \"comfyui\", \"task\": 2133, \"at\": 1795838449.1550107}, {\"repo\": \"adk\", \"task\": 2134, \"at\": 1795840324.1613588}, {\"repo\": \"adk\", \"task\": 2135, \"at\": 1795847224.9476686}, {\"repo\": \"llama-index\", \"task\": 2136, \"at\": 1795847318.858257}]"
       },
@@ -48542,20 +48494,80 @@
         "value": "{\"date\": \"2026-11-28\", \"used\": {\"comfyui\": 1, \"adk\": 2, \"llama-index\": 1}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"2135\": {\"remaining\": 1, \"until\": 1795854424.9478512}, \"2136\": {\"remaining\": 1, \"until\": 1795854518.8584254}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795838435.4979577, \"group\": \"screening\", \"task\": 2133, \"phase\": \"screening-2c7cc2e46800b927f39b\"}, {\"at\": 1795838449.1551242, \"group\": \"new_fix\", \"task\": 2133, \"phase\": \"generation\"}, {\"at\": 1795840324.1614833, \"group\": \"new_fix\", \"task\": 2134, \"phase\": \"generation\"}, {\"at\": 1795847224.9478512, \"group\": \"new_fix\", \"task\": 2135, \"phase\": \"generation\"}, {\"at\": 1795847318.8584254, \"group\": \"new_fix\", \"task\": 2136, \"phase\": \"generation\"}]"
       },
       {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1795847341.150979, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795847352.0835385"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1795847352.552452, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1795847352.973936, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1795847353.4367023, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1795847353.7568836, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1795847354.2107613, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1795847355.175105, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1795847355.606218, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795847355.9906025"
+      },
+      {
+        "key": "candidate_capacity:autogpt",
+        "value": "{\"at\": 1795847356.044493, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:comfyui",
+        "value": "{\"at\": 1795847356.336298, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
         "key": "detector_heartbeat",
-        "value": "1795847319.743363"
+        "value": "1795847359.744958"
       },
       {
         "key": "codex_quota",
-        "value": "{\"at\": 1795847320.5115945, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1796162550}]}"
+        "value": "{\"at\": 1795847360.5297396, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795847360.540753, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2136:1:generation",
+        "value": "{\"task\": 2136, \"repo\": \"llama-index\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795847360.5443099, \"seconds\": 41.687, \"tokens\": {\"totalTokens\": 128302, \"inputTokens\": 126806, \"cachedInputTokens\": 94464, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1496, \"reasoningOutputTokens\": 528}, \"first_event_ms\": 1795847327450, \"last_event_ms\": 1795847360529, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{\"2135\": {\"remaining\": 1, \"until\": 1795854424.9478512}}"
+      },
+      {
+        "key": "task:2136",
+        "value": "{\"started\": 1795847291.9802136, \"worker_slot\": 1, \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2136/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"40d4f79eb9d8f68430692d0cc156483ca2d7f4f6\", \"generation_started\": 1795847318.8582585, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795847322.838662, \"last_execution_phase\": \"generation\", \"finished\": 1795847360.546548}"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48563,15 +48575,7 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795847321.129234"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1795847321.834957"
-      },
-      {
-        "key": "task:2136",
-        "value": "{\"started\": 1795847291.9802136, \"worker_slot\": 1, \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2136/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"40d4f79eb9d8f68430692d0cc156483ca2d7f4f6\", \"generation_started\": 1795847318.8582585, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795847322.838662}"
+        "value": "1795847361.1665745"
       }
     ],
     "calls": [
