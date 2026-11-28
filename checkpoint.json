@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795835377.3627865,
+  "saved_at": 1795835441.4071848,
   "tables": {
     "tasks": [
       {
@@ -48234,10 +48234,6 @@
         "value": "{\"status\": \"needs_human\", \"task\": 61, \"reason\": \"Recovery check failed: PR closed or not owned by our fork\"}"
       },
       {
-        "key": "prwatch_heartbeat",
-        "value": "1795835031.903157"
-      },
-      {
         "key": "task:166",
         "value": "{\"recovery_checked_at\": 1795835172.437359}"
       },
@@ -48378,64 +48374,76 @@
         "value": "{\"status\": \"not_needed\", \"reason\": \"Existing linked PR; no coordination message should be sent.\", \"prs\": [\"closing-ref PR#8389(OPEN)\", \"xref PR#8389(OPEN)\"]}"
       },
       {
-        "key": "admission_health",
-        "value": "{\"at\": 1795835316.869225, \"state\": \"stalled\", \"pending_candidates\": 777, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 377, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 777}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 0, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 50432.65395784378, \"judge_tokens_spent_24h\": 31357, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 1, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8378\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8378\", \"title\": \"Eval results do not record why a simulated conversation ended; a run cut off by max_allowed_invocations is judged as if the user simulator had said </finished>\", \"first_seen\": 1795710734.0960038, \"last_checked\": 1795749303.416424, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
-      },
-      {
-        "key": "throughput_24h",
-        "value": "{\"at\": 1795835316.8700266, \"tasks\": {\"fix\": {\"blocked\": 1, \"human_wait\": 1, \"skipped\": 6, \"validation_wait\": 1}, \"respond\": {}}}"
-      },
-      {
-        "key": "candidate_capacity:adk",
-        "value": "{\"at\": 1795835316.8934426, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse",
-        "value": "{\"at\": 1795835317.2454717, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langfuse-python",
-        "value": "{\"at\": 1795835317.5964181, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:llama-index",
-        "value": "{\"at\": 1795835317.891178, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:spec-kit",
-        "value": "{\"at\": 1795835318.1759703, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:langchain",
-        "value": "{\"at\": 1795835318.4003148, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:openclaw",
-        "value": "{\"at\": 1795835319.0885527, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
-      },
-      {
-        "key": "candidate_capacity:dify",
-        "value": "{\"at\": 1795835319.3713334, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:autogpt",
-        "value": "{\"at\": 1795835319.603782, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
-        "key": "candidate_capacity:comfyui",
-        "value": "{\"at\": 1795835320.123951, \"allowed\": true, \"reason\": \"\"}"
-      },
-      {
         "key": "coordination:google/adk-python#8411",
         "value": "{\"status\": \"asked\", \"source\": \"https://github.com/google/adk-python/issues/8411#issuecomment-7219096025\", \"comment_id\": 7219096025, \"rule\": \"Upstream requires asking before contributing, not a particular approval phrase.\"}"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795835321.7356539, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1796162550}]}"
-      },
-      {
         "key": "coordination:google/adk-python#8398",
         "value": "{\"status\": \"asked\", \"source\": \"https://github.com/google/adk-python/issues/8398#issuecomment-7212068947\", \"comment_id\": 7212068947, \"rule\": \"Upstream requires asking before contributing, not a particular approval phrase.\"}"
+      },
+      {
+        "key": "candidate_capacity:adk",
+        "value": "{\"at\": 1795835379.4910188, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse",
+        "value": "{\"at\": 1795835379.8198912, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langfuse-python",
+        "value": "{\"at\": 1795835380.190451, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:llama-index",
+        "value": "{\"at\": 1795835380.6073081, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "admission_health",
+        "value": "{\"at\": 1795835380.9139514, \"state\": \"stalled\", \"pending_candidates\": 778, \"pending_by_repo\": {\"hermes\": 400, \"langchain\": 0, \"comfyui\": 0, \"adk\": 0, \"langfuse\": 0, \"langfuse-python\": 0, \"llama-index\": 0, \"spec-kit\": 0, \"openclaw\": 378, \"autogpt\": 0, \"dify\": 0}, \"pending_reasons\": {\"awaiting_admission\": 778}, \"screening_wait_tasks\": 0, \"active_tasks\": 0, \"running_tasks\": 0, \"queued_tasks\": 0, \"codex_calls_5h\": 0, \"codex_call_limit\": 45, \"seconds_since_codex_call\": 50496.69876074791, \"judge_tokens_spent_24h\": 31357, \"screening_calls_5h\": 0, \"screening_calls_24h\": 0, \"task_start_limits_reached\": {}, \"recent_wait_tasks_24h\": {\"validation_wait\": 1, \"human_wait\": 1}, \"no_work_replacements\": {\"openclaw\": {\"used\": 0, \"remaining\": 0, \"limit\": 3}}, \"coordination_requests\": [{\"key\": \"coordination:google/adk-python#8378\", \"status\": \"needs_human\", \"url\": \"https://github.com/google/adk-python/issues/8378\", \"title\": \"Eval results do not record why a simulated conversation ended; a run cut off by max_allowed_invocations is judged as if the user simulator had said </finished>\", \"first_seen\": 1795710734.0960038, \"last_checked\": 1795749303.416424, \"delivery\": \"not_sent\", \"draft\": \"May I work on this issue and submit a focused, tested fix? Please let me know if someone is already handling it.\"}], \"warning\": \"Candidates are waiting but no work is active; inspect admission budgets and handoffs.\"}"
+      },
+      {
+        "key": "throughput_24h",
+        "value": "{\"at\": 1795835380.9147341, \"tasks\": {\"fix\": {\"blocked\": 1, \"human_wait\": 1, \"skipped\": 6, \"validation_wait\": 1}, \"respond\": {}}}"
+      },
+      {
+        "key": "candidate_capacity:spec-kit",
+        "value": "{\"at\": 1795835380.9264617, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:langchain",
+        "value": "{\"at\": 1795835381.2804854, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:openclaw",
+        "value": "{\"at\": 1795835381.9659717, \"allowed\": false, \"reason\": \"openclaw open PR cap (20)\"}"
+      },
+      {
+        "key": "codex_quota",
+        "value": "{\"at\": 1795835382.019752, \"windows\": [{\"name\": \"primary\", \"used_percent\": 21, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "candidate_capacity:dify",
+        "value": "{\"at\": 1795835382.3501003, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:autogpt",
+        "value": "{\"at\": 1795835382.7630997, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "candidate_capacity:comfyui",
+        "value": "{\"at\": 1795835383.0764134, \"allowed\": true, \"reason\": \"\"}"
+      },
+      {
+        "key": "prwatch_heartbeat",
+        "value": "1795835396.5978916"
+      },
+      {
+        "key": "watch_heartbeat",
+        "value": "1795835433.2245119"
+      },
+      {
+        "key": "worker_heartbeat",
+        "value": "1795835434.0612886"
       },
       {
         "key": "discovery_triage_ready:openclaw",
@@ -48443,23 +48451,15 @@
       },
       {
         "key": "discovery_last_success",
-        "value": "1795835372.477809"
-      },
-      {
-        "key": "worker_heartbeat",
-        "value": "1795835374.0562806"
-      },
-      {
-        "key": "watch_heartbeat",
-        "value": "1795835374.186841"
+        "value": "1795835437.7771072"
       },
       {
         "key": "detector_heartbeat",
-        "value": "1795835376.381844"
+        "value": "1795835441.3831935"
       },
       {
         "key": "runner_resources",
-        "value": "{\"at\": 1795835377.351275, \"disk_free_bytes\": 89419866112, \"memory_bytes\": {\"MemTotal\": 16464277504, \"MemAvailable\": 15220744192, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
+        "value": "{\"at\": 1795835441.394803, \"disk_free_bytes\": 89418063872, \"memory_bytes\": {\"MemTotal\": 16464277504, \"MemAvailable\": 15175643136, \"SwapTotal\": 3221221376, \"SwapFree\": 3221221376}, \"memory_events\": null}"
       }
     ],
     "calls": [
