@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "saved_at": 1795866787.821952,
+  "saved_at": 1795866850.3221622,
   "tables": {
     "tasks": [
       {
@@ -27804,10 +27804,10 @@
         "repo": "hermes",
         "number": 161070,
         "note": "User explicitly requested one real, current-issue Hermes fix and ordinary PR attempt. The historical creation hold is not permission clearance. All current upstream policy, duplicate/claim checks, tests, independent review and budgets still apply.",
-        "status": "running",
+        "status": "skipped",
         "created": 1795866726.1623821,
-        "updated": 1795866726.1623821,
-        "result": "",
+        "updated": 1795866850.1933465,
+        "result": "The bypass is still present, but a complete fix requires a new confirmation handshake across both session.create handlers, their wire contracts, and Desktop’s draft picker. The issue leaves CLI/TUI behavior and older-client compatibility undecided. A small client-only patch would leave the server bypass open, so this is outside the requested small, unambiguous fix scope. No directly competing PR was found.",
         "attempts": 1
       }
     ],
@@ -48617,10 +48617,6 @@
         "value": "{\"started\": 1795866367.3809104, \"worker_slot\": \"creation-recovery\", \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2138/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"3ef8bf4f68c91dce2870eba5625426b32ac6ba58\", \"creation_retry_request\": \"creation_retry:46141311260\", \"generation_started\": 1795866401.3525057, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795866406.7829099, \"last_execution_phase\": \"generation\", \"finished\": 1795866442.001048}"
       },
       {
-        "key": "health",
-        "value": "{\"ok\": true, \"at\": 1795866726.143718, \"source\": \"authenticated probe\"}"
-      },
-      {
         "key": "pause",
         "value": "{}"
       },
@@ -48641,24 +48637,32 @@
         "value": "{\"date\": \"2026-11-28\", \"used\": {\"comfyui\": 1, \"adk\": 3, \"llama-index\": 1, \"hermes\": 2}}"
       },
       {
-        "key": "codex_review_leases",
-        "value": "{\"2139\": {\"remaining\": 1, \"until\": 1795873983.0461566}}"
-      },
-      {
         "key": "codex_allocations",
         "value": "[{\"at\": 1795861112.3052945, \"group\": \"new_fix\", \"task\": 2137, \"phase\": \"generation\"}, {\"at\": 1795865711.0394773, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1795865711.064409, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1795865713.9453785, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1795865716.505061, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1795865743.2038822, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1795865745.767686, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1795866167.0213563, \"group\": \"validation\", \"task\": 1, \"phase\": \"screening-363adc4f15dc4de1e999\"}, {\"at\": 1795866167.106819, \"group\": \"validation\", \"task\": 2, \"phase\": \"screening-4aed921b9b34ef56d7ec\"}, {\"at\": 1795866171.129988, \"group\": \"validation\", \"task\": 2, \"phase\": \"generation\"}, {\"at\": 1795866171.5229256, \"group\": \"validation\", \"task\": 1, \"phase\": \"generation\"}, {\"at\": 1795866200.495789, \"group\": \"validation\", \"task\": 2, \"phase\": \"review\"}, {\"at\": 1795866230.4354336, \"group\": \"validation\", \"task\": 1, \"phase\": \"review\"}, {\"at\": 1795866401.352694, \"group\": \"new_fix\", \"task\": 2138, \"phase\": \"generation\"}, {\"at\": 1795866783.0461566, \"group\": \"new_fix\", \"task\": 2139, \"phase\": \"generation\"}]"
       },
       {
-        "key": "codex_quota",
-        "value": "{\"at\": 1795866784.1751683, \"windows\": [{\"name\": \"primary\", \"used_percent\": 25, \"resets_at\": 1796162550}]}"
+        "key": "worker_heartbeat",
+        "value": "1795866844.2222989"
       },
       {
-        "key": "worker_heartbeat",
-        "value": "1795866784.2114635"
+        "key": "codex_quota",
+        "value": "{\"at\": 1795866849.7574182, \"windows\": [{\"name\": \"primary\", \"used_percent\": 25, \"resets_at\": 1796162550}]}"
+      },
+      {
+        "key": "health",
+        "value": "{\"ok\": true, \"at\": 1795866849.759292, \"source\": \"completed task phase\"}"
+      },
+      {
+        "key": "usage:2139:1:generation",
+        "value": "{\"task\": 2139, \"repo\": \"hermes\", \"attempt\": 1, \"phase\": \"generation\", \"at\": 1795866849.7619374, \"seconds\": 66.717, \"tokens\": {\"totalTokens\": 562839, \"inputTokens\": 560711, \"cachedInputTokens\": 483584, \"cacheWriteInputTokens\": 0, \"outputTokens\": 2128, \"reasoningOutputTokens\": 682}, \"first_event_ms\": 1795866791900, \"last_event_ms\": 1795866849757, \"model\": \"gpt-6-sol\", \"complete\": true, \"usage_available\": true}"
+      },
+      {
+        "key": "codex_review_leases",
+        "value": "{}"
       },
       {
         "key": "task:2139",
-        "value": "{\"started\": 1795866726.162548, \"worker_slot\": \"creation-recovery\", \"terminal\": false, \"retry_after\": 0, \"folder\": \"jobs/2139/attempt-1\", \"attempt\": 1, \"phase\": \"generation\", \"base\": \"3ef8bf4f68c91dce2870eba5625426b32ac6ba58\", \"creation_retry_request\": \"creation_retry:46141780570\", \"generation_started\": 1795866783.0460184, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795866787.8089733}"
+        "value": "{\"started\": 1795866726.162548, \"worker_slot\": \"creation-recovery\", \"terminal\": true, \"retry_after\": 0, \"folder\": \"jobs/2139/attempt-1\", \"attempt\": 1, \"phase\": \"skipped\", \"base\": \"3ef8bf4f68c91dce2870eba5625426b32ac6ba58\", \"creation_retry_request\": \"creation_retry:46141780570\", \"generation_started\": 1795866783.0460184, \"dispatch_paid_date\": \"2026-11-28\", \"phase_started\": 1795866787.8089733, \"last_execution_phase\": \"generation\", \"finished\": 1795866849.7635677}"
       }
     ],
     "calls": [
