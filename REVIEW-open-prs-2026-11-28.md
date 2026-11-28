@@ -28,7 +28,7 @@ maintainers cherry-pick into their own PRs, so those two rows undercount accepte
 
 ## What stands out
 
-- **ComfyUI has 80 open PRs against 7 merged.** Median age 71 days, oldest 117; 70 untouched for over two weeks, 20 conflicting, 13 with changes requested. The pipeline has no open-PR cap for this repository (`repo_limits.OPEN_PR_CAPS` covers only openclaw and hermes), so the backlog grows without limit.
+- **ComfyUI has 80 open PRs against 7 merged.** Median age 71 days, oldest 117; 70 untouched for over two weeks, 20 conflicting, 13 with changes requested. The pipeline has no open-PR cap for this repository (`repo_limits.OPEN_PR_CAPS` covers only openclaw and hermes), so the backlog grew without limit. This branch adds a default cap of 20, which holds new ComfyUI fixes until the backlog is below it.
 - **OpenClaw is at 19 of its 20-PR cap,** and 11 of those have failing CI. Each PR that is fixed and merged, or closed, frees a slot for a new fix. This cap and the 10-starts-a-day limit bind on OpenClaw; the model budget does not.
 - **5 PRs are approved but not merged.** 4 of them have failing CI. These are the closest to a merge.
 - **14 PRs sit on repositories the pipeline has disabled** (firecrawl, litellm, crawl4ai, vllm), so nothing maintains them.

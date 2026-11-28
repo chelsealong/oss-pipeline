@@ -88,9 +88,17 @@ class RepoLimitTests(unittest.TestCase):
             impl=cfg.get('implements_in') or cfg['upstream']
             with patch.object(worker,'run',return_value=json.dumps([{}]*maximum)):
                 self.assertEqual(worker.cap_ok(key,impl),(False,'daily PR cap'))
-            replies=[json.dumps([{}]*(maximum-1))]+([json.dumps([{}]*(limits.OPEN_PR_CAPS[key]-1))] if key in limits.OPEN_PR_CAPS else [])
+            replies=[json.dumps([{}]*(maximum-1)),json.dumps([{}]*(limits.open_pr_cap(key)-1))]
             with patch.object(worker,'run',side_effect=replies):
                 self.assertTrue(worker.cap_ok(key,impl)[0])
+    def test_every_repository_has_an_open_pr_cap(self):
+        # ComfyUI had no cap and reached 80 open PRs against 7 merged.
+        self.assertEqual(limits.open_pr_cap('comfyui'),20);self.assertEqual(limits.open_pr_cap('hermes'),5)
+        with patch.object(worker,'run',side_effect=['[]',json.dumps([{}]*80)]):
+            self.assertEqual(worker.cap_ok('comfyui','Comfy-Org/ComfyUI'),(False,'comfyui open PR cap (20)'))
+        with patch.object(worker,'run',side_effect=['[]',json.dumps([{}]*19)]):
+            self.assertTrue(worker.cap_ok('comfyui','Comfy-Org/ComfyUI')[0])
+        self.assertIn('20 simultaneously open PRs, including drafts',limits.executor_policy('comfyui'))
     def test_openclaw_twenty_open_blocks_even_below_daily_cap(self):
         with patch.object(worker,'run',side_effect=['[]',json.dumps([{}]*20)]) as read:
             self.assertEqual(worker.cap_ok('openclaw','openclaw/openclaw'),(False,'openclaw open PR cap (20)'))

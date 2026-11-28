@@ -16,6 +16,9 @@ DEFAULT_TASK_BUDGET = 6
 TASK_BUDGETS = {'hermes': 16, 'openclaw': 10, 'adk': 10,
                 **dict.fromkeys(DISABLED_REPOS, 0)}
 OPEN_PR_CAPS = {'openclaw': 20, 'hermes': 5}
+# Every other repository. Without one, ComfyUI reached 80 open PRs against 7
+# merged (2026-11-28), 70 of them untouched for over two weeks.
+DEFAULT_OPEN_PR_CAP = 20
 # Added-line ceilings the controller enforces before publication, tests included.
 MAX_ADDED_LINES = {'openclaw': 120, 'comfyui': 150, 'litellm': 150}
 DISABLED_REASON = 'repository quota disabled by user on 2026-10-10'
@@ -23,6 +26,10 @@ DISABLED_REASON = 'repository quota disabled by user on 2026-10-10'
 
 def disabled(repo):
     return bool(repo and repo.lower() in DISABLED_NAMES)
+
+
+def open_pr_cap(repo):
+    return OPEN_PR_CAPS.get(repo,DEFAULT_OPEN_PR_CAP)
 
 
 def size_policy(repo):
@@ -36,9 +43,7 @@ def size_policy(repo):
 
 def executor_policy(repo):
     """Use the same limits in model instructions and controller admission."""
-    maximum=OPEN_PR_CAPS.get(repo)
-    concurrent=(f'{maximum} simultaneously open PRs, including drafts'
-                if maximum is not None else 'no additional pipeline concurrency cap')
+    concurrent=f'{open_pr_cap(repo)} simultaneously open PRs, including drafts'
     return (f'Current pipeline PR limits for {repo}: {PR_CAPS.get(repo,DEFAULT_PR_CAP)} new PRs '
         f'per UTC day; {concurrent}. The controller checks these before generation and again '
         'before publication. These current settings supersede historical lessons and earlier '

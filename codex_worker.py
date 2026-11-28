@@ -387,10 +387,9 @@ def cap_ok(key, impl):
     prs=json.loads(run(['gh','pr','list','--repo',impl,'--author',ME,'--state','all','--limit','100',
                        '--search','created:>='+time.strftime('%Y-%m-%d',time.gmtime()),'--json','number']))
     if len(prs)>=CAPS.get(key,repo_limits.DEFAULT_PR_CAP): return False,'daily PR cap'
-    if key in repo_limits.OPEN_PR_CAPS:
-        opens=json.loads(run(['gh','pr','list','--repo',impl,'--author',ME,'--state','open','--limit','100','--json','number']))
-        maximum=repo_limits.OPEN_PR_CAPS[key]
-        if len(opens)>=maximum: return False,f'{key} open PR cap ({maximum})'
+    opens=json.loads(run(['gh','pr','list','--repo',impl,'--author',ME,'--state','open','--limit','100','--json','number']))
+    maximum=repo_limits.open_pr_cap(key)
+    if len(opens)>=maximum: return False,f'{key} open PR cap ({maximum})'
     return True,''
 
 def response_context(repo,number):
