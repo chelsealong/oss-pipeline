@@ -1,0 +1,95 @@
+name: OpenClaw 202424 shipped Gateway proof
+on:
+  push:
+    branches: [validation/adk7335-nov28]
+    paths: [.github/workflows/openclaw-command-proof.yml]
+permissions:
+  contents: read
+jobs:
+  proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: chelsealong/openclaw
+          ref: b87a161b96050626fac5eb920b08871fcf7b7d7b
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.22.1'
+      - name: Install and build unchanged PR head
+        run: |
+          corepack enable
+          corepack prepare pnpm@12.15.0 --activate
+          pnpm install --frozen-lockfile
+          pnpm build
+      - name: Exercise shipped CLI against real local Gateway
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib, signal, subprocess, tempfile, time
+          root=pathlib.Path(tempfile.mkdtemp(prefix='oss-command-proof-'))
+          evidence=pathlib.Path('rpc-proof');evidence.mkdir()
+          cli=['node',str(pathlib.Path('openclaw.mjs').resolve())]
+          results=[]
+          for index,mode in enumerate(('file','array','overlap','symlink')):
+              case=root/mode;workspace=case/'workspace';bundle=workspace/'bundle'
+              folder=bundle/('commands' if mode=='overlap' else 'extra')
+              folder.mkdir(parents=True);(bundle/'.claude-plugin').mkdir()
+              name='nov28_review';unselected='nov28_unselected'
+              (folder/(name+'.md')).write_text('---\ndescription: Local fixture command\n---\nReview fixture only.\n')
+              declared='./'+folder.name+'/'+name+'.md'
+              manifest={'name':'oss-fixture'}
+              if mode=='array':manifest['commands']=[declared]
+              elif mode!='symlink':manifest['commands']=declared
+              if mode in ('file','array'):(folder/(unselected+'.md')).write_text('Not selected.\n')
+              if mode=='symlink':(bundle/'commands').symlink_to(folder,target_is_directory=True)
+              (bundle/'.claude-plugin/plugin.json').write_text(json.dumps(manifest))
+              port=19487+index;token='isolated-local-fixture-only'
+              config=case/'config.json';state=case/'state';state.mkdir()
+              config.write_text(json.dumps({
+                  'gateway':{'mode':'local','port':port,'bind':'loopback',
+                             'auth':{'mode':'token','token':token}},
+                  'agents':{'defaults':{'workspace':str(workspace)}},
+                  'plugins':{'allow':['oss-fixture'],'load':{'paths':[str(bundle)]},
+                             'entries':{'oss-fixture':{'enabled':True}}}}))
+              env=dict(os.environ,OPENCLAW_STATE_DIR=str(state),OPENCLAW_CONFIG_PATH=str(config))
+              for key in list(env):
+                  if key.endswith(('API_KEY','TOKEN','SECRET')):env.pop(key,None)
+              log=(evidence/(mode+'-gateway.log')).open('w')
+              proc=subprocess.Popen(cli+['gateway','run','--allow-unconfigured'],env=env,
+                                    stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+              try:
+                  command=cli+['gateway','call','commands.list','--url',f'ws://127.0.0.1:{port}',
+                               '--token',token,'--params',json.dumps({'agentId':'main'}),'--json']
+                  last=None
+                  for _ in range(30):
+                      if proc.poll() is not None:raise RuntimeError(mode+' Gateway exited before RPC')
+                      last=subprocess.run(command,env=env,capture_output=True,text=True,timeout=30)
+                      if last.returncode==0:break
+                      time.sleep(2)
+                  assert last is not None and last.returncode==0,(mode,last.stderr if last else '')
+                  (evidence/(mode+'-commands-list.json')).write_text(last.stdout)
+                  response=json.loads(last.stdout);data=response.get('result',response)
+                  commands=data['commands']
+                  selected=[c for c in commands if c.get('name')==name or '/'+name in c.get('textAliases',[])]
+                  assert len(selected)==1,(mode,selected)
+                  assert not any(c.get('name')==unselected or '/'+unselected in c.get('textAliases',[]) for c in commands)
+                  results.append({'case':mode,'selected_count':len(selected),'unselected_count':0,
+                                  'command':selected[0],'rpc':'commands.list','exit_code':last.returncode})
+              finally:
+                  os.killpg(proc.pid,signal.SIGTERM)
+                  try:proc.wait(timeout=20)
+                  except subprocess.TimeoutExpired:os.killpg(proc.pid,signal.SIGKILL);proc.wait()
+                  log.close()
+          report={'head':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+                  'model_calls':0,'results':results}
+          (evidence/'summary.json').write_text(json.dumps(report,indent=2))
+          print(json.dumps(report,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: openclaw-202424-local-gateway-proof
+          path: rpc-proof/
+          retention-days: 30
